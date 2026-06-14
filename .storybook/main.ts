@@ -19,12 +19,9 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
-  async viteFinal(viteConfig, { configType }) {
+  async viteFinal(viteConfig) {
     const { mergeConfig } = await import('vite');
     return mergeConfig(viteConfig, {
-      // The static build is served under the playground at `/storybook/`, so
-      // asset URLs must carry that prefix. Dev keeps the root base on port 6006.
-      base: configType === 'PRODUCTION' ? '/storybook/' : '/',
       css: {
         transformer: 'lightningcss',
         lightningcss: { targets: evergreen },

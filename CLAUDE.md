@@ -34,19 +34,18 @@ Node `>=22.12.0`, pnpm 10. Run from the repo root.
 
 ```bash
 pnpm install          # install workspace deps
-pnpm dev              # playground at localhost:5173 (Vite consumer app)
+pnpm dev              # Storybook at localhost:6006 (alias of pnpm storybook)
 pnpm storybook        # Storybook at localhost:6006
-pnpm dev:all          # playground + storybook together
 pnpm lint             # eslint
 pnpm typecheck        # per-package tsc + stories
-pnpm build            # build all packages, then playground, then storybook
+pnpm build            # build all packages, then Storybook (storybook-static/)
 pnpm verify           # lint + typecheck + build — the required green gate
 pnpm format           # prettier --write .
 ```
 
 **`pnpm verify` must stay green and is the gate before any change is done.** There
 is no unit-test framework yet; verification is `verify` + Storybook (use the a11y
-panel) + manual checks in `playground/`. To build one package alone:
+panel and the per-story controls/variants). To build one package alone:
 `pnpm --filter @manti-ui/styles build`.
 
 ## Architecture: the four-package split
@@ -59,7 +58,7 @@ these boundaries — do not duplicate behavior, tokens, or styles across them.
 @manti-ui/styles   all CSS, keyed to data-scope/data-part/data-state  →  depends on tokens
 @manti-ui/folds    Zag.js machines + behavior contract (re-exports @zag-js/*)
 @manti-ui/react    thin renderers that wire folds + styles together   →  depends on folds, styles, tokens
-playground/        Vite app for integration testing
+.storybook/        Storybook (react-vite) — the single dev surface + visual gallery
 ```
 
 Dependency direction is strict: `tokens ← styles`, `folds ← react`, `styles ← react`.
@@ -126,7 +125,7 @@ Vite/Lightning CSS setup is tuned to preserve this — these are easy to silentl
   `grep -c prefers-color-scheme dist/index.css` == 0.
 - **`@manti-ui/react` ships NO CSS side effects.** Apps import
   `@manti-ui/styles/index.css` (or `tailwind.css` / `tokens.css` /
-  `tailwind-theme.css`) explicitly; playground and Storybook do this themselves.
+  `tailwind-theme.css`) explicitly; Storybook does this in `.storybook/preview.tsx`.
 - The Tailwind CSS entry points are emitted **verbatim** into `dist` by the
   `manti:emit-standalone-css` plugin and must not pass through Lightning CSS or
   `@theme inline` gets mangled. The react Vite config must externalize

@@ -8,11 +8,10 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "build": "pnpm build:packages && pnpm --filter @manti-ui/playground build && pnpm build:storybook",
+    "build": "pnpm build:packages && pnpm build:storybook",
     "build:packages": "pnpm --filter @manti-ui/tokens build && pnpm --filter @manti-ui/styles build && pnpm --filter @manti-ui/folds build && pnpm --filter @manti-ui/react build",
-    "build:storybook": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 storybook build --output-dir playground/dist/storybook",
-    "dev": "pnpm --filter @manti-ui/playground dev",
-    "dev:all": "concurrently --kill-others-on-fail --names playground,storybook --prefix-colors blue,magenta \"pnpm dev\" \"pnpm storybook\"",
+    "build:storybook": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 storybook build",
+    "dev": "pnpm storybook",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
@@ -30,7 +29,6 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
-    "concurrently": "^9.1.2",
     "eslint": "^10.0.0",
     "globals": "^16.0.0",
     "prettier": "^3.8.4",
