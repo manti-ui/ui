@@ -7,7 +7,12 @@ import {
   Card,
   Checkbox,
   Collapsible,
+  createToaster,
+  Dialog,
+  HoverCard,
   mantiUi,
+  Menu,
+  Popover,
   RadioGroup,
   Spinner,
   Switch,
@@ -98,6 +103,8 @@ const SauceIcon = (
     <path d="M12 3c4 5 6 7.6 6 10a6 6 0 1 1-12 0c0-2.4 2-5 6-10Z" />
   </svg>
 );
+
+const { toaster, Toaster } = createToaster({ placement: 'bottom-end' });
 
 type MotionTier = 'none' | 'default' | 'full';
 
@@ -420,6 +427,85 @@ export function App() {
               </div>
             </Card.Body>
           </Card>
+
+          <Card>
+            <Card.Header>
+              <Card.Title>Overlays</Card.Title>
+              <Card.Description>
+                Dialog, popover, menu, hover card, and toast.
+              </Card.Description>
+            </Card.Header>
+            <Card.Body>
+              <div className="stack">
+                <div className="cluster">
+                  <Dialog
+                    title="Freeze a batch?"
+                    description="Raw mantı freeze beautifully — lay them on a floured tray first."
+                    trigger={<Button>Open dialog</Button>}
+                    footer={
+                      <>
+                        <Button variant="ghost">Cancel</Button>
+                        <Button tone="primary">Freeze them</Button>
+                      </>
+                    }
+                  >
+                    They keep for up to three months and cook straight from
+                    frozen.
+                  </Dialog>
+                  <Popover
+                    title="Dough resting"
+                    trigger={<Button variant="soft">Popover</Button>}
+                  >
+                    Let the dough rest 30 minutes so it rolls paper-thin without
+                    springing back.
+                  </Popover>
+                  <Menu
+                    trigger={<Button variant="outline">Serve as…</Button>}
+                    onSelect={(value) =>
+                      toaster.info({ title: `Serving: ${value}` })
+                    }
+                    items={[
+                      { value: 'yogurt', label: 'Garlic yogurt', shortcut: '⌘1' },
+                      { value: 'butter', label: 'Chili butter', shortcut: '⌘2' },
+                      { type: 'separator' },
+                      { value: 'plain', label: 'Plain', disabled: true },
+                    ]}
+                  />
+                </div>
+                <HoverCard
+                  trigger={
+                    <a href="https://en.wikipedia.org/wiki/Manti_(food)">
+                      What is mantı?
+                    </a>
+                  }
+                >
+                  <strong>Mantı</strong> — tiny Turkish dumplings under garlicky
+                  yogurt and chili butter.
+                </HoverCard>
+                <div className="cluster">
+                  <Button
+                    onClick={() =>
+                      toaster.success({
+                        title: 'Saved',
+                        description: 'Your recipe is in the cookbook.',
+                      })
+                    }
+                  >
+                    Toast: success
+                  </Button>
+                  <Button
+                    tone="danger"
+                    variant="soft"
+                    onClick={() =>
+                      toaster.error({ title: 'Dough too dry' })
+                    }
+                  >
+                    Toast: error
+                  </Button>
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
         </div>
 
         <footer className="page__footer">
@@ -427,6 +513,7 @@ export function App() {
           {mantiUi.behaviorFoundation}
         </footer>
       </main>
+      <Toaster />
     </div>
   );
 }

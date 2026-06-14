@@ -35,15 +35,15 @@ Legend: ✅ done · ⬜ todo
 | Tabs        | `@zag-js/tabs`        |   ✅   |
 | Tooltip     | `@zag-js/tooltip`     |   ✅   |
 
-### Batch 2 — overlays & floating ⬜
+### Batch 2 — overlays & floating ✅
 
 | Component  | Package              | Status |
 | ---------- | -------------------- | :----: |
-| Dialog     | `@zag-js/dialog`     |   ⬜   |
-| Popover    | `@zag-js/popover`    |   ⬜   |
-| Hover Card | `@zag-js/hover-card` |   ⬜   |
-| Menu       | `@zag-js/menu`       |   ⬜   |
-| Toast      | `@zag-js/toast`      |   ⬜   |
+| Dialog     | `@zag-js/dialog`     |   ✅   |
+| Popover    | `@zag-js/popover`    |   ✅   |
+| Hover Card | `@zag-js/hover-card` |   ✅   |
+| Menu       | `@zag-js/menu`       |   ✅   |
+| Toast      | `@zag-js/toast`      |   ✅   |
 
 ### Batch 3 — form inputs ⬜
 

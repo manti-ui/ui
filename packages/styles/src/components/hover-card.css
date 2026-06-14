@@ -1,0 +1,72 @@
+/**
+ * Hover Card — backed by the Zag.js hover-card machine. A richer floating
+ * preview than the tooltip, sharing the frosted panel material. Fades and lifts
+ * in on open.
+ */
+@layer manti.components {
+  [data-scope='hover-card'][data-part='positioner'] {
+    z-index: var(--manti-z-popover, 1100);
+  }
+
+  [data-scope='hover-card'][data-part='content'] {
+    position: relative;
+    width: max-content;
+    max-width: 20rem;
+    padding: var(--manti-space-4);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      var(--manti-glass-shadow);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    line-height: var(--manti-leading-normal);
+    transform-origin: var(--transform-origin);
+
+    &[data-state='open'] {
+      animation: manti-hover-card-in var(--manti-duration-fast)
+        var(--manti-ease-smooth);
+    }
+
+    &[data-state='closed'] {
+      animation: manti-hover-card-out var(--manti-duration-fast)
+        var(--manti-ease-soft);
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='hover-card'][data-part='content'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='hover-card'][data-part='arrow'] {
+    --arrow-size: 8px;
+    --arrow-background: var(--manti-glass-tint-strong);
+  }
+
+  @keyframes manti-hover-card-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(-2px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes manti-hover-card-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}

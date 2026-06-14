@@ -1,5 +1,23 @@
 # Repository Guidelines
 
+## Rules (always apply)
+
+These rules are mandatory for every agent working in this repo. The identical set
+lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
+
+1. **Keep CLAUDE.md and AGENTS.md synchronized.** Whenever `CLAUDE.md` (Claude's
+   memory) is changed, mirror the same change into `AGENTS.md`, and vice versa, so
+   all agents read one shared source of truth. Never let the two drift.
+2. **Design tokens are mandatory.** When adapting any Zag.js component into Manti
+   UI or authoring a new Manti UI component, every visual value — color, spacing,
+   radius, typography, motion, elevation, z-index — must come from the design
+   tokens (`@manti-ui/tokens` / token-backed `--manti-*` and `--tone-*` CSS
+   variables). Never hard-code raw values (hex colors, px sizes, magic numbers);
+   if a token is missing, add it to `@manti-ui/tokens` first, then consume it.
+3. **Match the user's language.** Always reply in the same language the user wrote
+   their prompt in (e.g. Turkish prompt → Turkish answer). This applies to chat
+   responses only; code, identifiers, comments, and docs stay in English.
+
 ## Project Structure & Module Organization
 
 This is a `pnpm` workspace for a framework-agnostic design system powered by

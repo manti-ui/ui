@@ -1,0 +1,119 @@
+/**
+ * Popover — backed by the Zag.js popover machine. A frosted panel anchored to
+ * its trigger, with an optional arrow. Fades and lifts in on open.
+ */
+@layer manti.components {
+  [data-scope='popover'][data-part='positioner'] {
+    z-index: var(--manti-z-popover, 1100);
+  }
+
+  [data-scope='popover'][data-part='content'] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    width: max-content;
+    max-width: 20rem;
+    padding: var(--manti-space-4);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      var(--manti-glass-shadow);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    line-height: var(--manti-leading-normal);
+    transform-origin: var(--transform-origin);
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &[data-state='open'] {
+      animation: manti-popover-in var(--manti-duration-fast)
+        var(--manti-ease-smooth);
+    }
+
+    &[data-state='closed'] {
+      animation: manti-popover-out var(--manti-duration-fast)
+        var(--manti-ease-soft);
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='popover'][data-part='content'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='popover'][data-part='title'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-semibold);
+    line-height: var(--manti-leading-snug);
+    color: var(--manti-text);
+  }
+
+  [data-scope='popover'][data-part='description'] {
+    color: var(--manti-text-muted);
+  }
+
+  [data-scope='popover'][data-part='arrow'] {
+    --arrow-size: 8px;
+    --arrow-background: var(--manti-glass-tint-strong);
+  }
+
+  [data-scope='popover'][data-part='close-trigger'] {
+    position: absolute;
+    top: var(--manti-space-2);
+    inset-inline-end: var(--manti-space-2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--manti-space-6);
+    height: var(--manti-space-6);
+    padding: 0;
+    color: var(--manti-text-muted);
+    background: transparent;
+    border: 0;
+    border-radius: var(--manti-radius-sm);
+    cursor: pointer;
+    transition:
+      background var(--manti-duration-fast) var(--manti-ease-soft),
+      color var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &:hover {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      color: var(--manti-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+  }
+
+  @keyframes manti-popover-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(-2px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes manti-popover-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}
