@@ -27,8 +27,7 @@ Zag.js behavior machines.
 - `packages/styles/`: shared CSS and state selectors.
 - `packages/folds/`: framework-agnostic Zag.js behavior.
 - `packages/react/`: React renderer and Storybook stories.
-- `playground/`: Vite consumer application for integration testing.
-- `.storybook/`: shared Storybook configuration.
+- `.storybook/`: Storybook (react-vite) configuration — the single dev surface and visual gallery.
 - `design/logo-explorations/`: non-production brand exploration assets.
 - `docs/`: architecture and product vision.
 
@@ -41,12 +40,12 @@ Use Node `>=22.12.0` and `pnpm 10`.
 
 ```bash
 pnpm install          # Install all workspace dependencies
-pnpm dev              # Run the playground at localhost:5173
+pnpm dev              # Run Storybook at localhost:6006 (alias of pnpm storybook)
 pnpm storybook        # Run Storybook at localhost:6006
-pnpm build            # Build the package and playground
+pnpm build            # Build the packages and Storybook (storybook-static/)
 pnpm build:storybook  # Generate storybook-static/
 pnpm lint             # Run ESLint
-pnpm typecheck        # Check package, playground, and stories
+pnpm typecheck        # Check packages and stories
 pnpm verify           # Run lint, typecheck, and all production builds
 ```
 
@@ -69,7 +68,7 @@ screen-reader semantics.
 
 ## Testing Guidelines
 
-No unit-test framework or coverage threshold is configured yet. Every public component must include Storybook coverage for variants, disabled/error states, and meaningful interactions. Use the Storybook accessibility panel for WCAG checks and verify integration behavior in `playground/`.
+No unit-test framework or coverage threshold is configured yet. Every public component must include Storybook coverage for variants, disabled/error states, and meaningful interactions. Use the Storybook accessibility panel for WCAG checks and verify integration behavior through the component's stories.
 
 When automated tests are introduced, colocate them as `ComponentName.test.tsx`.
 
@@ -77,4 +76,4 @@ When automated tests are introduced, colocate them as `ComponentName.test.tsx`.
 
 This workspace currently has no readable Git history. Until a project convention is established, use concise Conventional Commit messages, for example `feat(button): add loading state` or `docs: clarify token naming`.
 
-Pull requests should explain the behavioral change, list verification commands, link relevant issues, and include Storybook or playground screenshots for visual changes. Avoid committing generated `dist/`, `storybook-static/`, or cache directories.
+Pull requests should explain the behavioral change, list verification commands, link relevant issues, and include Storybook screenshots for visual changes. Avoid committing generated `dist/`, `storybook-static/`, or cache directories.

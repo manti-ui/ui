@@ -1,0 +1,15 @@
+# Netlify deploy config for Manti UI.
+# The site is the Storybook static build — the single dev surface / visual
+# gallery for every component. `pnpm build` builds all packages first, then
+# emits Storybook into `storybook-static/`.
+[build]
+  command = "pnpm build"
+  publish = "storybook-static"
+
+[build.environment]
+  # Repo requires Node >=22.12.0 (see package.json engines); "22" resolves to
+  # the latest 22.x LTS, which satisfies it.
+  NODE_VERSION = "22"
+  # pnpm version is pinned via the root package.json `packageManager` field,
+  # which Netlify honors through Corepack.
+  STORYBOOK_DISABLE_TELEMETRY = "1"
