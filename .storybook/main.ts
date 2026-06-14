@@ -15,6 +15,9 @@ const config: StorybookConfig = {
     '../packages/react/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: ['@storybook/addon-docs', '@storybook/addon-a11y'],
+  // Serve the Manti UI brand assets (sidebar wordmark + favicon) at the site
+  // root so `manager.ts` / `manager-head.html` can reference them.
+  staticDirs: ['./assets'],
   framework: {
     name: '@storybook/react-vite',
     options: {},
