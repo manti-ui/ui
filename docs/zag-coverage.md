@@ -79,20 +79,20 @@ Legend: ✅ done · ⬜ todo
 | File Upload   | `@zag-js/file-upload`   |   ✅   |
 | Signature Pad | `@zag-js/signature-pad` |   ✅   |
 
-### Batch 6 — date, time & advanced ⬜
+### Batch 6 — date, time & advanced ✅
 
 | Component       | Package                   | Status |
 | --------------- | ------------------------- | :----: |
-| Date Picker     | `@zag-js/date-picker`     |   ⬜   |
-| Time Picker     | `@zag-js/time-picker`     |   ⬜   |
-| Timer           | `@zag-js/timer`           |   ⬜   |
-| Steps           | `@zag-js/steps`           |   ⬜   |
-| Tour            | `@zag-js/tour`            |   ⬜   |
-| Splitter        | `@zag-js/splitter`        |   ⬜   |
-| Angle Slider    | `@zag-js/angle-slider`    |   ⬜   |
-| Color Picker    | `@zag-js/color-picker`    |   ⬜   |
-| Navigation Menu | `@zag-js/navigation-menu` |   ⬜   |
-| Floating Panel  | `@zag-js/floating-panel`  |   ⬜   |
+| Date Picker     | `@zag-js/date-picker`     |   ✅   |
+| Time Picker     | `@zag-js/time-picker`     |   ✅   |
+| Timer           | `@zag-js/timer`           |   ✅   |
+| Steps           | `@zag-js/steps`           |   ✅   |
+| Tour            | `@zag-js/tour`            |   ✅   |
+| Splitter        | `@zag-js/splitter`        |   ✅   |
+| Angle Slider    | `@zag-js/angle-slider`    |   ✅   |
+| Color Picker    | `@zag-js/color-picker`    |   ✅   |
+| Navigation Menu | `@zag-js/navigation-menu` |   ✅   |
+| Floating Panel  | `@zag-js/floating-panel`  |   ✅   |
 
 Variants that reuse a batch package: Context/Nested Menu (`menu`), Range Slider
 (`slider`), Segmented Control (`radio-group`), Drawer (`dialog`), Circular vs

@@ -30,6 +30,16 @@ export * as qrCode from '@zag-js/qr-code';
 export * as clipboard from '@zag-js/clipboard';
 export * as fileUpload from '@zag-js/file-upload';
 export * as signaturePad from '@zag-js/signature-pad';
+export * as datePicker from '@zag-js/date-picker';
+export * as timePicker from '@zag-js/time-picker';
+export * as timer from '@zag-js/timer';
+export * as steps from '@zag-js/steps';
+export * as tour from '@zag-js/tour';
+export * as splitter from '@zag-js/splitter';
+export * as angleSlider from '@zag-js/angle-slider';
+export * as colorPicker from '@zag-js/color-picker';
+export * as navigationMenu from '@zag-js/navigation-menu';
+export * as floatingPanel from '@zag-js/floating-panel';
 
 export const mantiBehaviorContract = {
   packageName: '@manti-ui/folds',

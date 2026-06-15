@@ -1,0 +1,80 @@
+/**
+ * Timer — count-up/down display backed by the Zag.js timer machine. Each part is
+ * a tabular-numeral cell with a caption; an optional control row drives it.
+ */
+@layer manti.components {
+  [data-scope='timer'][data-part='root'] {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    align-items: center;
+  }
+
+  [data-scope='timer'][data-part='area'] {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--manti-space-2);
+  }
+
+  [data-scope='timer'][data-part='item'] {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--manti-space-1);
+    min-width: 3.5rem;
+    padding: var(--manti-space-2);
+    background: var(--manti-glass-tint);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+  }
+
+  [data-scope='timer'][data-part='item-value'] {
+    font-size: var(--manti-text-2xl);
+    font-weight: var(--manti-weight-semibold);
+    font-variant-numeric: tabular-nums;
+    color: var(--manti-text);
+  }
+
+  [data-scope='timer'][data-part='item-label'] {
+    font-size: var(--manti-text-xs);
+    color: var(--manti-text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  [data-scope='timer'][data-part='separator'] {
+    align-self: center;
+    font-size: var(--manti-text-xl);
+    font-weight: var(--manti-weight-semibold);
+    color: var(--manti-text-subtle);
+  }
+
+  [data-scope='timer'][data-part='control'] {
+    display: inline-flex;
+    gap: var(--manti-space-2);
+
+    & button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2rem;
+      padding-inline: var(--manti-space-3);
+      background: var(--manti-glass-tint);
+      border: 1px solid var(--manti-glass-border);
+      border-radius: var(--manti-radius-sm);
+      color: var(--manti-text);
+      font-size: var(--manti-text-sm);
+      font-weight: var(--manti-weight-medium);
+      cursor: pointer;
+      transition: background var(--manti-duration-fast) var(--manti-ease-smooth);
+
+      &:hover {
+        background: var(--manti-surface-raised);
+      }
+
+      &:focus-visible {
+        outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+        outline-offset: var(--manti-focus-ring-offset);
+      }
+    }
+  }
+}

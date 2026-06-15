@@ -1,0 +1,129 @@
+/**
+ * Navigation Menu — backed by the Zag.js navigation-menu machine. Triggers sit
+ * in a horizontal bar; the active dropdown reveals a frosted content card of
+ * links. The indicator tracks the open trigger.
+ */
+@layer manti.components {
+  [data-scope='navigation-menu'][data-part='root'] {
+    position: relative;
+    display: inline-flex;
+  }
+
+  [data-scope='navigation-menu'][data-part='list'] {
+    position: relative;
+    display: inline-flex;
+    gap: var(--manti-space-1);
+    padding: var(--manti-space-1);
+    background: var(--manti-glass-tint);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='navigation-menu'][data-part='list'] {
+      background: var(--manti-surface);
+    }
+  }
+
+  [data-scope='navigation-menu'][data-part='trigger'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-1);
+    padding: var(--manti-space-2) var(--manti-space-3);
+    background: none;
+    border: none;
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text-muted);
+    font-family: var(--manti-font-sans);
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    cursor: pointer;
+    transition:
+      background-color var(--manti-duration-fast) var(--manti-ease-smooth),
+      color var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover,
+    &[data-state='open'] {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      color: var(--manti-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+
+    & [data-part='trigger-icon'] {
+      transition: transform var(--manti-duration-base) var(--manti-ease-smooth);
+    }
+
+    &[data-state='open'] [data-part='trigger-icon'] {
+      transform: rotate(180deg);
+    }
+  }
+
+  [data-scope='navigation-menu'][data-part='content'] {
+    position: absolute;
+    top: calc(100% + var(--manti-space-2));
+    inset-inline-start: 0;
+    display: grid;
+    gap: var(--manti-space-1);
+    min-width: 16rem;
+    padding: var(--manti-space-2);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      var(--manti-glass-shadow);
+
+    &[hidden],
+    &[data-state='closed'] {
+      display: none;
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='navigation-menu'][data-part='content'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='navigation-menu'][data-part='link'] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    padding: var(--manti-space-2) var(--manti-space-3);
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text);
+    text-decoration: none;
+    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &:hover {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+
+    & [data-part='link-label'] {
+      font-size: var(--manti-text-sm);
+      font-weight: var(--manti-weight-medium);
+    }
+
+    & [data-part='link-description'] {
+      font-size: var(--manti-text-xs);
+      color: var(--manti-text-subtle);
+    }
+  }
+}

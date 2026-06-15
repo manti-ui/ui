@@ -1,0 +1,52 @@
+/**
+ * Splitter — a resizable split layout backed by the Zag.js splitter machine.
+ * Panels are framed surfaces; the resize trigger is a slim handle that thickens
+ * and tones on hover/drag.
+ */
+@layer manti.components {
+  [data-scope='splitter'][data-part='root'] {
+    display: flex;
+    width: 100%;
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    overflow: hidden;
+
+    &[data-orientation='vertical'] {
+      flex-direction: column;
+    }
+  }
+
+  [data-scope='splitter'][data-part='panel'] {
+    overflow: auto;
+    background: var(--manti-surface);
+  }
+
+  [data-scope='splitter'][data-part='resize-trigger'] {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--manti-glass-border);
+    transition: background var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &[data-orientation='horizontal'] {
+      width: 0.375rem;
+      cursor: col-resize;
+    }
+
+    &[data-orientation='vertical'] {
+      height: 0.375rem;
+      cursor: row-resize;
+    }
+
+    &:hover,
+    &[data-focus] {
+      background: var(--tone-solid);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+  }
+}

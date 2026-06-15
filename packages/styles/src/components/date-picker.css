@@ -1,0 +1,188 @@
+/**
+ * Date Picker — backed by the Zag.js date-picker machine. The control reuses the
+ * frosted field; the portalled calendar matches the Select/Menu panels. Day
+ * cells carry machine state (`data-selected`, `data-today`, `data-in-range`,
+ * `data-disabled`, `data-outside-range`).
+ */
+@layer manti.components {
+  [data-scope='date-picker'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    min-width: 0;
+  }
+
+  [data-scope='date-picker'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='date-picker'][data-part='control'] {
+    display: flex;
+    align-items: center;
+    min-height: 2.5rem;
+    padding-inline: var(--manti-space-3);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow: inset 0 1px 0 0 var(--manti-glass-highlight);
+
+    &:focus-within {
+      border-color: var(--tone-ring, var(--manti-focus-ring));
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='date-picker'][data-part='control'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='date-picker'][data-part='input'] {
+    flex: 1;
+    min-width: 0;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+  }
+
+  [data-scope='date-picker'][data-part='trigger'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--manti-text-muted);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--manti-text);
+    }
+  }
+
+  [data-scope='date-picker'][data-part='positioner'] {
+    z-index: var(--manti-z-popover, 1100);
+  }
+
+  [data-scope='date-picker'][data-part='content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    padding: var(--manti-space-3);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      var(--manti-glass-shadow);
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='date-picker'][data-part='content'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='date-picker'][data-part='view-control'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-2);
+  }
+
+  [data-scope='date-picker'][data-part='prev-trigger'],
+  [data-scope='date-picker'][data-part='next-trigger'],
+  [data-scope='date-picker'][data-part='view-trigger'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2rem;
+    padding-inline: var(--manti-space-2);
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    cursor: pointer;
+
+    &:hover {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+    }
+  }
+
+  [data-scope='date-picker'][data-part='table'] {
+    border-collapse: collapse;
+  }
+
+  [data-scope='date-picker'][data-part='table-head'] {
+    padding: var(--manti-space-1);
+    color: var(--manti-text-subtle);
+    font-size: var(--manti-text-xs);
+    font-weight: var(--manti-weight-medium);
+  }
+
+  [data-scope='date-picker'][data-part='day-table-cell'] {
+    padding: 0.0625rem;
+  }
+
+  [data-scope='date-picker'][data-part='day-table-cell-trigger'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &:hover {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+    }
+
+    &[data-today] {
+      box-shadow: inset 0 0 0 1px var(--tone-border);
+    }
+
+    &[data-in-range] {
+      background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
+      border-radius: 0;
+    }
+
+    &[data-selected] {
+      background: var(--tone-solid);
+      color: var(--tone-on-solid);
+    }
+
+    &[data-outside-range] {
+      color: var(--manti-text-subtle);
+    }
+
+    &[data-disabled],
+    &[data-unavailable] {
+      color: var(--manti-text-subtle);
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+  }
+}

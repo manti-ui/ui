@@ -48,6 +48,16 @@
 @import './components/clipboard.css';
 @import './components/file-upload.css';
 @import './components/signature-pad.css';
+@import './components/date-picker.css';
+@import './components/time-picker.css';
+@import './components/timer.css';
+@import './components/steps.css';
+@import './components/tour.css';
+@import './components/splitter.css';
+@import './components/angle-slider.css';
+@import './components/color-picker.css';
+@import './components/navigation-menu.css';
+@import './components/floating-panel.css';
 
 /* Motion tiers — declared last so [data-motion] overrides win by layer order.
    Import `none` after `full` so an inner [data-motion="none"] subtree reliably

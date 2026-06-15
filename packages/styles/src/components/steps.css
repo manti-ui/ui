@@ -1,0 +1,171 @@
+/**
+ * Steps — a step-by-step flow backed by the Zag.js steps machine. The indicator
+ * fills with the active tone on the current/completed steps; the separator and
+ * progress track the journey.
+ */
+@layer manti.components {
+  [data-scope='steps'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-5);
+
+    &[data-orientation='vertical'] {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--manti-space-6);
+    }
+  }
+
+  [data-scope='steps'][data-part='list'] {
+    display: flex;
+    gap: var(--manti-space-2);
+
+    [data-orientation='vertical'] & {
+      flex-direction: column;
+    }
+  }
+
+  [data-scope='steps'][data-part='item'] {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: var(--manti-space-2);
+
+    [data-orientation='vertical'] & {
+      flex: none;
+    }
+  }
+
+  [data-scope='steps'][data-part='trigger'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+    padding: var(--manti-space-1);
+    background: none;
+    border: none;
+    color: var(--manti-text-muted);
+    text-align: start;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+      border-radius: var(--manti-radius-sm);
+    }
+  }
+
+  [data-scope='steps'][data-part='indicator'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: var(--manti-glass-tint);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-full);
+    color: var(--manti-text-muted);
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-semibold);
+    font-variant-numeric: tabular-nums;
+    transition:
+      background-color var(--manti-duration-base) var(--manti-ease-smooth),
+      color var(--manti-duration-base) var(--manti-ease-smooth);
+  }
+
+  [data-scope='steps'][data-part='item'][data-current] [data-part='indicator'],
+  [data-scope='steps'][data-part='item'][data-complete]
+    [data-part='indicator'] {
+    background: var(--tone-solid);
+    border-color: transparent;
+    color: var(--tone-on-solid);
+  }
+
+  [data-scope='steps'][data-part='item'][data-current] [data-part='trigger'] {
+    color: var(--manti-text);
+  }
+
+  [data-scope='steps'][data-part='root']
+    [data-part='item']
+    [data-part='item-content'] {
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  [data-scope='steps'][data-part='root']
+    [data-part='item']
+    [data-part='item-title'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: inherit;
+  }
+
+  [data-scope='steps'][data-part='root']
+    [data-part='item']
+    [data-part='item-description'] {
+    font-size: var(--manti-text-xs);
+    color: var(--manti-text-subtle);
+  }
+
+  [data-scope='steps'][data-part='separator'] {
+    flex: 1;
+    height: 1px;
+    min-width: var(--manti-space-4);
+    background: var(--manti-border-strong);
+
+    [data-orientation='vertical'] & {
+      width: 1px;
+      min-height: var(--manti-space-4);
+      flex: none;
+    }
+  }
+
+  [data-scope='steps'][data-part='item'][data-complete]
+    [data-part='separator'] {
+    background: var(--tone-solid);
+  }
+
+  [data-scope='steps'][data-part='content'] {
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  [data-scope='steps'][data-part='root'] [data-part='controls'] {
+    display: flex;
+    gap: var(--manti-space-2);
+
+    & button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.25rem;
+      padding-inline: var(--manti-space-4);
+      border-radius: var(--manti-radius-sm);
+      font-size: var(--manti-text-sm);
+      font-weight: var(--manti-weight-semibold);
+      cursor: pointer;
+      border: 1px solid var(--tone-border);
+      color: var(--tone-text);
+      background: none;
+
+      &:last-child {
+        background: var(--tone-solid);
+        border-color: transparent;
+        color: var(--tone-on-solid);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      &:focus-visible {
+        outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+        outline-offset: var(--manti-focus-ring-offset);
+      }
+    }
+  }
+}

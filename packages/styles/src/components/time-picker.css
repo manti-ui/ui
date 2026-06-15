@@ -1,0 +1,138 @@
+/**
+ * Time Picker — backed by the Zag.js time-picker machine. The control reuses the
+ * frosted field; the portalled panel lays out hour/minute/period columns of
+ * selectable cells (`data-selected` highlights the active value).
+ */
+@layer manti.components {
+  [data-scope='time-picker'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    min-width: 0;
+  }
+
+  [data-scope='time-picker'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='time-picker'][data-part='control'] {
+    display: flex;
+    align-items: center;
+    min-height: 2.5rem;
+    padding-inline: var(--manti-space-3);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow: inset 0 1px 0 0 var(--manti-glass-highlight);
+
+    &:focus-within {
+      border-color: var(--tone-ring, var(--manti-focus-ring));
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='time-picker'][data-part='control'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='time-picker'][data-part='input'] {
+    flex: 1;
+    min-width: 0;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-scope='time-picker'][data-part='trigger'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--manti-text-muted);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--manti-text);
+    }
+  }
+
+  [data-scope='time-picker'][data-part='positioner'] {
+    z-index: var(--manti-z-popover, 1100);
+  }
+
+  [data-scope='time-picker'][data-part='content'] {
+    display: flex;
+    gap: var(--manti-space-1);
+    padding: var(--manti-space-2);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      var(--manti-glass-shadow);
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='time-picker'][data-part='content'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='time-picker'][data-part='column'] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    max-height: 14rem;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  [data-scope='time-picker'][data-part='hour-cell'],
+  [data-scope='time-picker'][data-part='minute-cell'],
+  [data-scope='time-picker'][data-part='second-cell'],
+  [data-scope='time-picker'][data-part='period-cell'] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    padding: var(--manti-space-2);
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &:hover {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+    }
+
+    &[data-selected] {
+      background: var(--tone-solid);
+      color: var(--tone-on-solid);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+  }
+}

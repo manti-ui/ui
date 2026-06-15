@@ -1,0 +1,145 @@
+/**
+ * Color Picker — backed by the Zag.js color-picker machine. The trigger shows a
+ * live swatch; the portalled panel holds the saturation area, hue/alpha sliders,
+ * and a hex input. The swatch background is user data, not a token.
+ */
+@layer manti.components {
+  [data-scope='color-picker'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    min-width: 0;
+  }
+
+  [data-scope='color-picker'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='color-picker'][data-part='trigger'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+    min-height: 2.5rem;
+    padding-inline: var(--manti-space-2) var(--manti-space-3);
+    background: var(--manti-glass-tint-strong);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    font-family: var(--manti-font-mono);
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--manti-text-subtle);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+  }
+
+  [data-scope='color-picker'][data-part='root'] [data-part='value-swatch'] {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-sm);
+  }
+
+  [data-scope='color-picker'][data-part='positioner'] {
+    z-index: var(--manti-z-popover, 1100);
+  }
+
+  [data-scope='color-picker'][data-part='content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    width: 16rem;
+    padding: var(--manti-space-3);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      var(--manti-glass-shadow);
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='color-picker'][data-part='content'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='color-picker'][data-part='area'] {
+    position: relative;
+    height: 9rem;
+    border-radius: var(--manti-radius-sm);
+    overflow: hidden;
+  }
+
+  [data-scope='color-picker'][data-part='area-background'] {
+    width: 100%;
+    height: 100%;
+  }
+
+  [data-scope='color-picker'][data-part='area-thumb'] {
+    width: 0.875rem;
+    height: 0.875rem;
+    border: 2px solid var(--manti-dough-50);
+    border-radius: var(--manti-radius-full);
+    box-shadow: var(--manti-shadow-md);
+  }
+
+  [data-scope='color-picker'][data-part='channel-slider'] {
+    position: relative;
+    height: 0.75rem;
+    border-radius: var(--manti-radius-full);
+    overflow: hidden;
+  }
+
+  [data-scope='color-picker'][data-part='channel-slider-track'] {
+    width: 100%;
+    height: 100%;
+  }
+
+  [data-scope='color-picker'][data-part='channel-slider-thumb'] {
+    width: 0.875rem;
+    height: 0.875rem;
+    border: 2px solid var(--manti-dough-50);
+    border-radius: var(--manti-radius-full);
+    box-shadow: var(--manti-shadow-md);
+  }
+
+  [data-scope='color-picker'][data-part='transparency-grid'] {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--manti-radius-full);
+  }
+
+  [data-scope='color-picker'][data-part='channel-input'] {
+    min-width: 0;
+    padding: var(--manti-space-2) var(--manti-space-3);
+    background: var(--manti-surface-sunken);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-sm);
+    outline: none;
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    font-family: var(--manti-font-mono);
+    text-transform: uppercase;
+
+    &:focus {
+      border-color: var(--tone-ring, var(--manti-focus-ring));
+    }
+  }
+}
