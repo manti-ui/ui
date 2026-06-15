@@ -1,0 +1,93 @@
+/**
+ * Pin Input — segmented code entry backed by the Zag.js pin-input machine. Each
+ * cell is a frosted field box; the focused cell rings with the active tone.
+ */
+@layer manti.components {
+  [data-scope='pin-input'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+  }
+
+  [data-scope='pin-input'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='pin-input'][data-part='control'] {
+    display: flex;
+    gap: var(--manti-space-2);
+  }
+
+  [data-scope='pin-input'][data-part='input'] {
+    --_size: 2.75rem;
+
+    width: var(--_size);
+    height: var(--_size);
+    padding: 0;
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      inset 0 2px 5px -3px var(--manti-glass-shadow-color);
+    outline: none;
+    text-align: center;
+    color: var(--manti-text);
+    font-size: var(--manti-text-lg);
+    font-weight: var(--manti-weight-semibold);
+    font-variant-numeric: tabular-nums;
+    transition:
+      border-color var(--manti-duration-base) var(--manti-ease-smooth),
+      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &:hover {
+      border-color: var(--manti-text-subtle);
+    }
+
+    &:focus {
+      border-color: var(--tone-ring, var(--manti-focus-ring));
+      box-shadow:
+        inset 0 1px 0 0 var(--manti-glass-highlight),
+        0 0 0 3px
+          color-mix(
+            in oklab,
+            var(--tone-ring, var(--manti-focus-ring)) 30%,
+            transparent
+          );
+    }
+
+    &:disabled {
+      background: var(--manti-surface-sunken);
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='pin-input'][data-part='input'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='pin-input'][data-part='root'][data-size='sm']
+    [data-part='input'] {
+    --_size: 2.25rem;
+    font-size: var(--manti-text-base);
+  }
+
+  [data-scope='pin-input'][data-part='root'][data-size='lg']
+    [data-part='input'] {
+    --_size: 3.25rem;
+    font-size: var(--manti-text-xl);
+  }
+
+  [data-scope='pin-input'][data-part='root'][data-invalid] [data-part='input'] {
+    border-color: light-dark(var(--manti-chili-500), var(--manti-chili-400));
+  }
+}

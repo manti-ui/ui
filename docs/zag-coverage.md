@@ -45,16 +45,16 @@ Legend: ✅ done · ⬜ todo
 | Menu       | `@zag-js/menu`       |   ✅   |
 | Toast      | `@zag-js/toast`      |   ✅   |
 
-### Batch 3 — form inputs ⬜
+### Batch 3 — form inputs ✅
 
 | Component    | Package                | Status |
 | ------------ | ---------------------- | :----: |
-| Number Input | `@zag-js/number-input` |   ⬜   |
-| Pin Input    | `@zag-js/pin-input`    |   ⬜   |
-| Slider       | `@zag-js/slider`       |   ⬜   |
-| Tags Input   | `@zag-js/tags-input`   |   ⬜   |
-| Editable     | `@zag-js/editable`     |   ⬜   |
-| Toggle Group | `@zag-js/toggle-group` |   ⬜   |
+| Number Input | `@zag-js/number-input` |   ✅   |
+| Pin Input    | `@zag-js/pin-input`    |   ✅   |
+| Slider       | `@zag-js/slider`       |   ✅   |
+| Tags Input   | `@zag-js/tags-input`   |   ✅   |
+| Editable     | `@zag-js/editable`     |   ✅   |
+| Toggle Group | `@zag-js/toggle-group` |   ✅   |
 
 ### Batch 4 — selection & data ⬜
 

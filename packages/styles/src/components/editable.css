@@ -1,0 +1,129 @@
+/**
+ * Editable — an inline text field that toggles between a preview and an input,
+ * backed by the Zag.js editable machine. Preview reads as plain text with a
+ * hover affordance; edit mode shows the frosted field input plus triggers.
+ */
+@layer manti.components {
+  [data-scope='editable'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    min-width: 0;
+  }
+
+  [data-scope='editable'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='editable'][data-part='area'] {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+  }
+
+  [data-scope='editable'][data-part='preview'] {
+    padding: var(--manti-space-2) var(--manti-space-3);
+    border: 1px solid transparent;
+    border-radius: var(--manti-radius-md);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    cursor: text;
+    transition: background-color var(--manti-duration-fast)
+      var(--manti-ease-smooth);
+
+    &:hover {
+      background: color-mix(
+        in oklab,
+        var(--manti-surface-raised) 70%,
+        transparent
+      );
+    }
+
+    &[data-empty] {
+      color: var(--manti-text-subtle);
+    }
+  }
+
+  [data-scope='editable'][data-part='input'] {
+    min-width: 0;
+    padding: var(--manti-space-2) var(--manti-space-3);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    outline: none;
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    box-shadow: inset 0 1px 0 0 var(--manti-glass-highlight);
+    transition:
+      border-color var(--manti-duration-base) var(--manti-ease-smooth),
+      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &:focus {
+      border-color: var(--tone-ring, var(--manti-focus-ring));
+      box-shadow:
+        inset 0 1px 0 0 var(--manti-glass-highlight),
+        0 0 0 3px
+          color-mix(
+            in oklab,
+            var(--tone-ring, var(--manti-focus-ring)) 30%,
+            transparent
+          );
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='editable'][data-part='input'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='editable'][data-part='control'] {
+    display: inline-flex;
+    gap: var(--manti-space-2);
+  }
+
+  [data-scope='editable'][data-part='edit-trigger'],
+  [data-scope='editable'][data-part='submit-trigger'],
+  [data-scope='editable'][data-part='cancel-trigger'] {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding-inline: var(--manti-space-3);
+    border: 1px solid var(--tone-border);
+    border-radius: var(--manti-radius-sm);
+    color: var(--tone-text);
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    cursor: pointer;
+    transition:
+      background-color var(--manti-duration-fast) var(--manti-ease-smooth),
+      border-color var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
+      border-color: var(--tone-soft-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+  }
+
+  [data-scope='editable'][data-part='submit-trigger'] {
+    background: var(--tone-solid);
+    border-color: transparent;
+    color: var(--tone-on-solid);
+
+    &:hover {
+      background: var(--tone-solid-hover);
+      border-color: transparent;
+    }
+  }
+}
