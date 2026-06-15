@@ -1,0 +1,37 @@
+/**
+ * QR Code — backed by the Zag.js qr-code machine. Zag renders the pattern path;
+ * we frame it on a light plate so it scans on any surface, with an optional
+ * centered overlay.
+ */
+@layer manti.components {
+  [data-scope='qr-code'][data-part='root'] {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    padding: var(--manti-space-3);
+    background: var(--manti-dough-50);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+  }
+
+  [data-scope='qr-code'][data-part='frame'] {
+    width: 100%;
+    height: 100%;
+  }
+
+  [data-scope='qr-code'][data-part='pattern'] {
+    fill: var(--manti-dough-950);
+  }
+
+  [data-scope='qr-code'][data-part='overlay'] {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 24%;
+    height: 24%;
+    padding: var(--manti-space-1);
+    background: var(--manti-dough-50);
+    border-radius: var(--manti-radius-sm);
+    overflow: hidden;
+  }
+}

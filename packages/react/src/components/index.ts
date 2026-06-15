@@ -4,6 +4,9 @@ export type { AccordionItem, AccordionProps } from './Accordion/Accordion';
 export { Alert } from './Alert/Alert';
 export type { AlertProps } from './Alert/Alert';
 
+export { Avatar } from './Avatar/Avatar';
+export type { AvatarProps } from './Avatar/Avatar';
+
 export { Badge } from './Badge/Badge';
 export type { BadgeProps, BadgeVariant } from './Badge/Badge';
 
@@ -13,8 +16,14 @@ export type { ButtonProps, ButtonSize, ButtonVariant } from './Button/Button';
 export { Card } from './Card/Card';
 export type { CardProps } from './Card/Card';
 
+export { Carousel } from './Carousel/Carousel';
+export type { CarouselProps } from './Carousel/Carousel';
+
 export { Checkbox } from './Checkbox/Checkbox';
 export type { CheckboxProps } from './Checkbox/Checkbox';
+
+export { Clipboard } from './Clipboard/Clipboard';
+export type { ClipboardProps } from './Clipboard/Clipboard';
 
 export { Collapsible } from './Collapsible/Collapsible';
 export type { CollapsibleProps } from './Collapsible/Collapsible';
@@ -27,6 +36,9 @@ export type { DialogProps, DialogSize } from './Dialog/Dialog';
 
 export { Editable } from './Editable/Editable';
 export type { EditableProps } from './Editable/Editable';
+
+export { FileUpload } from './FileUpload/FileUpload';
+export type { FileUploadProps } from './FileUpload/FileUpload';
 
 export { HoverCard } from './HoverCard/HoverCard';
 export type { HoverCardProps } from './HoverCard/HoverCard';
@@ -55,11 +67,23 @@ export type { PinInputProps } from './PinInput/PinInput';
 export { Popover } from './Popover/Popover';
 export type { PopoverProps } from './Popover/Popover';
 
+export { Progress } from './Progress/Progress';
+export type { ProgressProps } from './Progress/Progress';
+
+export { QrCode } from './QrCode/QrCode';
+export type { QrCodeProps } from './QrCode/QrCode';
+
 export { RadioGroup } from './RadioGroup/RadioGroup';
 export type { RadioGroupItem, RadioGroupProps } from './RadioGroup/RadioGroup';
 
+export { RatingGroup } from './RatingGroup/RatingGroup';
+export type { RatingGroupProps } from './RatingGroup/RatingGroup';
+
 export { Select } from './Select/Select';
 export type { SelectItem, SelectProps } from './Select/Select';
+
+export { SignaturePad } from './SignaturePad/SignaturePad';
+export type { SignaturePadProps } from './SignaturePad/SignaturePad';
 
 export { Slider } from './Slider/Slider';
 export type { SliderProps } from './Slider/Slider';

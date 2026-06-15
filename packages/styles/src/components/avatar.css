@@ -1,0 +1,55 @@
+/**
+ * Avatar — image with graceful fallback, backed by the Zag.js avatar machine.
+ * The fallback (initials) shows until the image reports a successful load.
+ */
+@layer manti.components {
+  [data-scope='avatar'][data-part='root'] {
+    --_size: 2.5rem;
+
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--_size);
+    height: var(--_size);
+    overflow: hidden;
+    background: var(--manti-surface-sunken);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-full);
+    color: var(--manti-text-muted);
+    font-size: calc(var(--_size) * 0.4);
+    font-weight: var(--manti-weight-semibold);
+    user-select: none;
+
+    &[data-size='sm'] {
+      --_size: 2rem;
+    }
+
+    &[data-size='lg'] {
+      --_size: 3.5rem;
+    }
+
+    &[data-size='xl'] {
+      --_size: 4.5rem;
+    }
+
+    &[data-shape='square'] {
+      border-radius: var(--manti-radius-md);
+    }
+  }
+
+  [data-scope='avatar'][data-part='image'] {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  [data-scope='avatar'][data-part='fallback'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+}
