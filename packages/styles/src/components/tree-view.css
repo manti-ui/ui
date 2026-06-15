@@ -1,0 +1,92 @@
+/**
+ * Tree View — a nested, keyboard-navigable tree backed by the Zag.js tree-view
+ * machine. Rows are quiet until hovered/focused; the selected row
+ * (`data-selected`) takes the soft tone. Branch content indents one step per
+ * depth and the chevron rotates on expand (`data-state='open'`).
+ */
+@layer manti.components {
+  [data-scope='tree-view'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+  }
+
+  [data-scope='tree-view'][data-part='label'] {
+    margin: 0;
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-semibold);
+    color: var(--manti-text);
+  }
+
+  [data-scope='tree-view'][data-part='tree'] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  [data-scope='tree-view'][data-part='item'],
+  [data-scope='tree-view'][data-part='branch-control'] {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+    padding: var(--manti-space-2) var(--manti-space-3);
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    cursor: pointer;
+    user-select: none;
+    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &:hover {
+      background: color-mix(in oklab, var(--manti-text) 6%, transparent);
+    }
+
+    &[data-selected] {
+      background: color-mix(in oklab, var(--tone-soft-bg) 70%, transparent);
+      color: var(--tone-soft-text);
+    }
+
+    &[data-focus] {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+
+    &[data-disabled] {
+      color: var(--manti-text-subtle);
+      cursor: not-allowed;
+    }
+  }
+
+  [data-scope='tree-view'][data-part='branch-indicator'] {
+    display: inline-flex;
+    flex: none;
+    color: var(--manti-text-muted);
+    transition: transform var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &[data-state='open'] {
+      transform: rotate(90deg);
+    }
+  }
+
+  [data-scope='tree-view'][data-part='branch-text'],
+  [data-scope='tree-view'][data-part='item-text'] {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Indent each nested level. Leaf items align with their branch text by adding
+     the indicator's width to the inset. */
+  [data-scope='tree-view'][data-part='branch-content'] {
+    padding-inline-start: var(--manti-space-4);
+  }
+
+  [data-scope='tree-view'][data-part='branch-content'] [data-part='item'] {
+    padding-inline-start: calc(var(--manti-space-3) + var(--manti-space-5));
+  }
+}

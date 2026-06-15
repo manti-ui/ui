@@ -56,15 +56,15 @@ Legend: ✅ done · ⬜ todo
 | Editable     | `@zag-js/editable`     |   ✅   |
 | Toggle Group | `@zag-js/toggle-group` |   ✅   |
 
-### Batch 4 — selection & data ⬜
+### Batch 4 — selection & data ✅
 
 | Component  | Package              | Status |
 | ---------- | -------------------- | :----: |
-| Select     | `@zag-js/select`     |   ⬜   |
-| Combobox   | `@zag-js/combobox`   |   ⬜   |
-| Listbox    | `@zag-js/listbox`    |   ⬜   |
-| Tree View  | `@zag-js/tree-view`  |   ⬜   |
-| Pagination | `@zag-js/pagination` |   ⬜   |
+| Select     | `@zag-js/select`     |   ✅   |
+| Combobox   | `@zag-js/combobox`   |   ✅   |
+| Listbox    | `@zag-js/listbox`    |   ✅   |
+| Tree View  | `@zag-js/tree-view`  |   ✅   |
+| Pagination | `@zag-js/pagination` |   ✅   |
 
 ### Batch 5 — display & media ⬜
 
