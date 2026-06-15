@@ -22,6 +22,9 @@ export type { CollapsibleProps } from './Collapsible/Collapsible';
 export { Dialog } from './Dialog/Dialog';
 export type { DialogProps, DialogSize } from './Dialog/Dialog';
 
+export { Editable } from './Editable/Editable';
+export type { EditableProps } from './Editable/Editable';
+
 export { HoverCard } from './HoverCard/HoverCard';
 export type { HoverCardProps } from './HoverCard/HoverCard';
 
@@ -34,11 +37,20 @@ export type {
   MenuSeparator,
 } from './Menu/Menu';
 
+export { NumberInput } from './NumberInput/NumberInput';
+export type { NumberInputProps } from './NumberInput/NumberInput';
+
+export { PinInput } from './PinInput/PinInput';
+export type { PinInputProps } from './PinInput/PinInput';
+
 export { Popover } from './Popover/Popover';
 export type { PopoverProps } from './Popover/Popover';
 
 export { RadioGroup } from './RadioGroup/RadioGroup';
 export type { RadioGroupItem, RadioGroupProps } from './RadioGroup/RadioGroup';
+
+export { Slider } from './Slider/Slider';
+export type { SliderProps } from './Slider/Slider';
 
 export { Spinner } from './Spinner/Spinner';
 export type { SpinnerProps } from './Spinner/Spinner';
@@ -48,6 +60,9 @@ export type { SwitchProps } from './Switch/Switch';
 
 export { Tabs } from './Tabs/Tabs';
 export type { TabItem, TabsProps } from './Tabs/Tabs';
+
+export { TagsInput } from './TagsInput/TagsInput';
+export type { TagsInputProps } from './TagsInput/TagsInput';
 
 export { createToaster } from './Toast/Toast';
 export type {
@@ -63,6 +78,12 @@ export type { TextFieldProps } from './TextField/TextField';
 
 export { Toggle } from './Toggle/Toggle';
 export type { ToggleProps } from './Toggle/Toggle';
+
+export { ToggleGroup } from './ToggleGroup/ToggleGroup';
+export type {
+  ToggleGroupItem,
+  ToggleGroupProps,
+} from './ToggleGroup/ToggleGroup';
 
 export { Tooltip } from './Tooltip/Tooltip';
 export type { TooltipProps } from './Tooltip/Tooltip';

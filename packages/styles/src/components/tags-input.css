@@ -1,0 +1,125 @@
+/**
+ * Tags Input — a multi-value entry field backed by the Zag.js tags-input
+ * machine. Tags are tonal soft pills inside the shared frosted field surface;
+ * the entry input flows after the last tag and wraps as needed.
+ */
+@layer manti.components {
+  [data-scope='tags-input'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    min-width: 0;
+  }
+
+  [data-scope='tags-input'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='tags-input'][data-part='control'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--manti-space-2);
+    min-height: 2.5rem;
+    padding: var(--manti-space-2) var(--manti-space-3);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      inset 0 2px 5px -3px var(--manti-glass-shadow-color);
+    transition:
+      border-color var(--manti-duration-base) var(--manti-ease-smooth),
+      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &:focus-within {
+      border-color: var(--tone-ring, var(--manti-focus-ring));
+      box-shadow:
+        inset 0 1px 0 0 var(--manti-glass-highlight),
+        0 0 0 3px
+          color-mix(
+            in oklab,
+            var(--tone-ring, var(--manti-focus-ring)) 30%,
+            transparent
+          );
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='tags-input'][data-part='control'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='tags-input'][data-part='root'][data-invalid]
+    [data-part='control'] {
+    border-color: light-dark(var(--manti-chili-500), var(--manti-chili-400));
+  }
+
+  [data-scope='tags-input'][data-part='root'][data-disabled]
+    [data-part='control'] {
+    background: var(--manti-surface-sunken);
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  [data-scope='tags-input'][data-part='item-preview'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-1);
+    height: 1.625rem;
+    padding-inline: var(--manti-space-2);
+    background: color-mix(in oklab, var(--tone-soft-bg) 80%, transparent);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-sm);
+    color: var(--tone-soft-text);
+    font-size: var(--manti-text-xs);
+    font-weight: var(--manti-weight-medium);
+
+    &[data-highlighted] {
+      background: var(--tone-soft-bg-hover);
+    }
+  }
+
+  [data-scope='tags-input'][data-part='item-delete-trigger'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: currentcolor;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  [data-scope='tags-input'][data-part='item-input'] {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--manti-text);
+    font-size: var(--manti-text-xs);
+  }
+
+  [data-scope='tags-input'][data-part='input'] {
+    flex: 1;
+    min-width: 6ch;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+
+    &::placeholder {
+      color: var(--manti-text-subtle);
+    }
+  }
+}

@@ -1,0 +1,137 @@
+/**
+ * Number Input — a numeric stepper backed by the Zag.js number-input machine.
+ * The control wraps decrement/input/increment in the shared frosted field
+ * surface; state (`data-disabled`, `data-invalid`, `data-focus`) comes from the
+ * machine.
+ */
+@layer manti.components {
+  [data-scope='number-input'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    min-width: 0;
+  }
+
+  [data-scope='number-input'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='number-input'][data-part='control'] {
+    --_min-height: 2.5rem;
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: stretch;
+    min-height: var(--_min-height);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      inset 0 2px 5px -3px var(--manti-glass-shadow-color);
+    transition:
+      border-color var(--manti-duration-base) var(--manti-ease-smooth),
+      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &:hover {
+      border-color: var(--manti-text-subtle);
+    }
+
+    &:focus-within {
+      border-color: var(--tone-ring, var(--manti-focus-ring));
+      box-shadow:
+        inset 0 1px 0 0 var(--manti-glass-highlight),
+        0 0 0 3px
+          color-mix(
+            in oklab,
+            var(--tone-ring, var(--manti-focus-ring)) 30%,
+            transparent
+          );
+    }
+  }
+
+  [data-scope='number-input'][data-part='root'][data-size='sm']
+    [data-part='control'] {
+    --_min-height: 2rem;
+  }
+
+  [data-scope='number-input'][data-part='root'][data-size='lg']
+    [data-part='control'] {
+    --_min-height: 3rem;
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='number-input'][data-part='control'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='number-input'][data-part='root'][data-invalid]
+    [data-part='control'] {
+    border-color: light-dark(var(--manti-chili-500), var(--manti-chili-400));
+  }
+
+  [data-scope='number-input'][data-part='root'][data-disabled]
+    [data-part='control'] {
+    background: var(--manti-surface-sunken);
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  [data-scope='number-input'][data-part='input'] {
+    min-width: 0;
+    background: none;
+    border: none;
+    outline: none;
+    text-align: center;
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    font-variant-numeric: tabular-nums;
+
+    &::placeholder {
+      color: var(--manti-text-subtle);
+    }
+  }
+
+  [data-scope='number-input'][data-part='decrement-trigger'],
+  [data-scope='number-input'][data-part='increment-trigger'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    color: var(--manti-text-muted);
+    cursor: pointer;
+    transition:
+      background-color var(--manti-duration-fast) var(--manti-ease-smooth),
+      color var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
+      color: var(--tone-soft-text);
+    }
+
+    &[data-disabled] {
+      color: var(--manti-text-subtle);
+      cursor: not-allowed;
+      background: none;
+    }
+  }
+
+  [data-scope='number-input'][data-part='decrement-trigger'] {
+    border-inline-end: 1px solid var(--manti-glass-border);
+    border-start-start-radius: var(--manti-radius-md);
+    border-end-start-radius: var(--manti-radius-md);
+  }
+
+  [data-scope='number-input'][data-part='increment-trigger'] {
+    border-inline-start: 1px solid var(--manti-glass-border);
+    border-start-end-radius: var(--manti-radius-md);
+    border-end-end-radius: var(--manti-radius-md);
+  }
+}

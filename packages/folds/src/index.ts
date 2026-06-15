@@ -11,6 +11,12 @@ export * as popover from '@zag-js/popover';
 export * as hoverCard from '@zag-js/hover-card';
 export * as menu from '@zag-js/menu';
 export * as toast from '@zag-js/toast';
+export * as numberInput from '@zag-js/number-input';
+export * as pinInput from '@zag-js/pin-input';
+export * as slider from '@zag-js/slider';
+export * as tagsInput from '@zag-js/tags-input';
+export * as editable from '@zag-js/editable';
+export * as toggleGroup from '@zag-js/toggle-group';
 
 export const mantiBehaviorContract = {
   packageName: '@manti-ui/folds',
