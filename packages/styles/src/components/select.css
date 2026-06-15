@@ -1,0 +1,176 @@
+/**
+ * Select — single/multi select backed by the Zag.js select machine. The trigger
+ * reuses the frosted field surface; the portalled content is a frosted listbox
+ * matching the Listbox/Menu panels.
+ */
+@layer manti.components {
+  [data-scope='select'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    min-width: 0;
+  }
+
+  [data-scope='select'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='select'][data-part='trigger'] {
+    --_min-height: 2.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-2);
+    width: 100%;
+    min-height: var(--_min-height);
+    padding-inline: var(--manti-space-3);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    color: var(--manti-text);
+    font-family: var(--manti-font-sans);
+    font-size: var(--manti-text-sm);
+    text-align: start;
+    cursor: pointer;
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      inset 0 2px 5px -3px var(--manti-glass-shadow-color);
+    transition:
+      border-color var(--manti-duration-base) var(--manti-ease-smooth),
+      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &:hover {
+      border-color: var(--manti-text-subtle);
+    }
+
+    &[data-state='open'],
+    &:focus-visible {
+      outline: none;
+      border-color: var(--tone-ring, var(--manti-focus-ring));
+      box-shadow:
+        inset 0 1px 0 0 var(--manti-glass-highlight),
+        0 0 0 3px
+          color-mix(
+            in oklab,
+            var(--tone-ring, var(--manti-focus-ring)) 30%,
+            transparent
+          );
+    }
+
+    &[data-disabled] {
+      background: var(--manti-surface-sunken);
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='select'][data-part='trigger'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='select'][data-part='root'][data-size='sm']
+    [data-part='trigger'] {
+    --_min-height: 2rem;
+  }
+
+  [data-scope='select'][data-part='root'][data-size='lg']
+    [data-part='trigger'] {
+    --_min-height: 3rem;
+  }
+
+  [data-scope='select'][data-part='root'][data-invalid] [data-part='trigger'] {
+    border-color: light-dark(var(--manti-chili-500), var(--manti-chili-400));
+  }
+
+  [data-scope='select'][data-part='value-text'][data-placeholder] {
+    color: var(--manti-text-subtle);
+  }
+
+  [data-scope='select'][data-part='indicator'] {
+    display: inline-flex;
+    flex: none;
+    color: var(--manti-text-muted);
+    transition: transform var(--manti-duration-base) var(--manti-ease-smooth);
+  }
+
+  [data-scope='select'][data-part='trigger'][data-state='open']
+    [data-part='indicator'] {
+    transform: rotate(180deg);
+  }
+
+  [data-scope='select'][data-part='positioner'] {
+    z-index: var(--manti-z-popover, 1100);
+  }
+
+  [data-scope='select'][data-part='content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-1);
+    max-height: 18rem;
+    overflow-y: auto;
+    padding: var(--manti-space-2);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      var(--manti-glass-shadow);
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='select'][data-part='content'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='select'][data-part='item'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-2);
+    padding: var(--manti-space-2) var(--manti-space-3);
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    cursor: pointer;
+    user-select: none;
+    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &[data-highlighted] {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+    }
+
+    &[data-state='checked'] {
+      color: var(--tone-text);
+      font-weight: var(--manti-weight-medium);
+    }
+
+    &[data-disabled] {
+      color: var(--manti-text-subtle);
+      cursor: not-allowed;
+    }
+  }
+
+  [data-scope='select'][data-part='item-indicator'] {
+    display: inline-flex;
+    flex: none;
+    color: var(--tone-text);
+  }
+}

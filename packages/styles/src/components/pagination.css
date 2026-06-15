@@ -1,0 +1,96 @@
+/**
+ * Pagination — a page navigator backed by the Zag.js pagination machine. Items
+ * are quiet ghost buttons; the current page (`data-selected`) fills with the
+ * active tone.
+ */
+@layer manti.components {
+  [data-scope='pagination'][data-part='root'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-1);
+  }
+
+  [data-scope='pagination'][data-part='item'],
+  [data-scope='pagination'][data-part='prev-trigger'],
+  [data-scope='pagination'][data-part='next-trigger'],
+  [data-scope='pagination'][data-part='ellipsis'] {
+    --_size: 2.25rem;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--_size);
+    height: var(--_size);
+    padding-inline: var(--manti-space-2);
+    border: 1px solid transparent;
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text-muted);
+    font-family: var(--manti-font-sans);
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-scope='pagination'][data-part='root'][data-size='sm']
+    :is(
+      [data-part='item'],
+      [data-part='prev-trigger'],
+      [data-part='next-trigger'],
+      [data-part='ellipsis']
+    ) {
+    --_size: 1.875rem;
+    font-size: var(--manti-text-xs);
+  }
+
+  [data-scope='pagination'][data-part='root'][data-size='lg']
+    :is(
+      [data-part='item'],
+      [data-part='prev-trigger'],
+      [data-part='next-trigger'],
+      [data-part='ellipsis']
+    ) {
+    --_size: 2.75rem;
+    font-size: var(--manti-text-base);
+  }
+
+  [data-scope='pagination'][data-part='item'],
+  [data-scope='pagination'][data-part='prev-trigger'],
+  [data-scope='pagination'][data-part='next-trigger'] {
+    cursor: pointer;
+    transition:
+      background-color var(--manti-duration-fast) var(--manti-ease-smooth),
+      color var(--manti-duration-fast) var(--manti-ease-smooth),
+      border-color var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
+      color: var(--tone-soft-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+
+    &:disabled {
+      color: var(--manti-text-subtle);
+      cursor: not-allowed;
+      background: none;
+    }
+  }
+
+  [data-scope='pagination'][data-part='item'][data-selected] {
+    background: var(--tone-solid);
+    color: var(--tone-on-solid);
+    box-shadow: var(--manti-shadow-sm);
+
+    &:hover {
+      background: var(--tone-solid-hover);
+      color: var(--tone-on-solid);
+    }
+  }
+
+  [data-scope='pagination'][data-part='ellipsis'] {
+    color: var(--manti-text-subtle);
+  }
+}
