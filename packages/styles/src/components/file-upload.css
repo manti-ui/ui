@@ -1,0 +1,124 @@
+/**
+ * File Upload — a dropzone with previews backed by the Zag.js file-upload
+ * machine. The dropzone is a dashed frosted panel that lights up on drag; each
+ * accepted file lists its name, size, and a delete trigger.
+ */
+@layer manti.components {
+  [data-scope='file-upload'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    min-width: 0;
+  }
+
+  [data-scope='file-upload'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='file-upload'][data-part='dropzone'] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--manti-space-3);
+    padding: var(--manti-space-6);
+    background: var(--manti-glass-tint);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px dashed var(--manti-border-strong);
+    border-radius: var(--manti-radius-md);
+    color: var(--manti-text-muted);
+    font-size: var(--manti-text-sm);
+    text-align: center;
+    cursor: pointer;
+    transition:
+      border-color var(--manti-duration-base) var(--manti-ease-smooth),
+      background-color var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &[data-dragging] {
+      border-color: var(--tone-solid);
+      background: color-mix(in oklab, var(--tone-soft-bg) 50%, transparent);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='file-upload'][data-part='dropzone'] {
+      background: var(--manti-surface);
+    }
+  }
+
+  [data-scope='file-upload'][data-part='trigger'] {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding-inline: var(--manti-space-4);
+    background: var(--tone-solid);
+    border: 1px solid transparent;
+    border-radius: var(--manti-radius-sm);
+    color: var(--tone-on-solid);
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-semibold);
+    cursor: pointer;
+    transition: background-color var(--manti-duration-fast)
+      var(--manti-ease-smooth);
+
+    &:hover {
+      background: var(--tone-solid-hover);
+    }
+  }
+
+  [data-scope='file-upload'][data-part='item-group'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+  }
+
+  [data-scope='file-upload'][data-part='item'] {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-3);
+    padding: var(--manti-space-2) var(--manti-space-3);
+    background: var(--manti-surface-raised);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-sm);
+    font-size: var(--manti-text-sm);
+  }
+
+  [data-scope='file-upload'][data-part='item-name'] {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--manti-text);
+  }
+
+  [data-scope='file-upload'][data-part='item-size-text'] {
+    flex: none;
+    color: var(--manti-text-subtle);
+    font-size: var(--manti-text-xs);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-scope='file-upload'][data-part='item-delete-trigger'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--manti-text-muted);
+    cursor: pointer;
+    transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      color: light-dark(var(--manti-chili-600), var(--manti-chili-400));
+    }
+  }
+}

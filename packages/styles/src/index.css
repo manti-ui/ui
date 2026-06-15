@@ -40,6 +40,14 @@
 @import './components/listbox.css';
 @import './components/tree-view.css';
 @import './components/pagination.css';
+@import './components/avatar.css';
+@import './components/progress.css';
+@import './components/rating-group.css';
+@import './components/carousel.css';
+@import './components/qr-code.css';
+@import './components/clipboard.css';
+@import './components/file-upload.css';
+@import './components/signature-pad.css';
 
 /* Motion tiers — declared last so [data-motion] overrides win by layer order.
    Import `none` after `full` so an inner [data-motion="none"] subtree reliably
