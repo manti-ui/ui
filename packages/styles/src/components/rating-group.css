@@ -1,0 +1,87 @@
+/**
+ * Rating Group — a star rating backed by the Zag.js rating-group machine. Items
+ * read as muted outlines until highlighted/checked, when they take the active
+ * tone. Half state clips the icon to 50% width.
+ */
+@layer manti.components {
+  [data-scope='rating-group'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+  }
+
+  [data-scope='rating-group'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='rating-group'][data-part='control'] {
+    display: inline-flex;
+    gap: var(--manti-space-1);
+  }
+
+  [data-scope='rating-group'][data-part='item'] {
+    --_size: 1.5rem;
+
+    position: relative;
+    display: inline-flex;
+    width: var(--_size);
+    height: var(--_size);
+    cursor: pointer;
+
+    &[data-disabled] {
+      cursor: not-allowed;
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+      border-radius: var(--manti-radius-xs);
+    }
+  }
+
+  [data-scope='rating-group'][data-part='root'][data-size='sm']
+    [data-part='item'] {
+    --_size: 1.25rem;
+  }
+
+  [data-scope='rating-group'][data-part='root'][data-size='lg']
+    [data-part='item'] {
+    --_size: 2rem;
+  }
+
+  [data-scope='rating-group'][data-part='item'] [data-part='star-bg'],
+  [data-scope='rating-group'][data-part='item'] [data-part='star-fill'] {
+    position: absolute;
+    inset: 0;
+
+    & svg {
+      width: 100%;
+      height: 100%;
+      fill: currentcolor;
+    }
+  }
+
+  [data-scope='rating-group'][data-part='item'] [data-part='star-bg'] {
+    color: var(--manti-border-strong);
+  }
+
+  /* Filled overlay: hidden until the item is highlighted, then revealed in the
+     active tone. The last highlighted item may be half-filled. */
+  [data-scope='rating-group'][data-part='item'] [data-part='star-fill'] {
+    color: var(--tone-solid);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path var(--manti-duration-fast) var(--manti-ease-smooth);
+  }
+
+  [data-scope='rating-group'][data-part='item'][data-highlighted]
+    [data-part='star-fill'] {
+    clip-path: inset(0 0 0 0);
+  }
+
+  [data-scope='rating-group'][data-part='item'][data-highlighted]
+    [data-part='star-fill'][data-half] {
+    clip-path: inset(0 50% 0 0);
+  }
+}

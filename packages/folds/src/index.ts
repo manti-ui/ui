@@ -22,6 +22,14 @@ export * as combobox from '@zag-js/combobox';
 export * as listbox from '@zag-js/listbox';
 export * as treeView from '@zag-js/tree-view';
 export * as pagination from '@zag-js/pagination';
+export * as avatar from '@zag-js/avatar';
+export * as progress from '@zag-js/progress';
+export * as ratingGroup from '@zag-js/rating-group';
+export * as carousel from '@zag-js/carousel';
+export * as qrCode from '@zag-js/qr-code';
+export * as clipboard from '@zag-js/clipboard';
+export * as fileUpload from '@zag-js/file-upload';
+export * as signaturePad from '@zag-js/signature-pad';
 
 export const mantiBehaviorContract = {
   packageName: '@manti-ui/folds',

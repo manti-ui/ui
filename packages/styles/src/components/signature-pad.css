@@ -1,0 +1,76 @@
+/**
+ * Signature Pad — a drawable surface backed by the Zag.js signature-pad machine.
+ * Zag emits the stroke paths; we frame the canvas, draw a baseline guide, and
+ * float a clear trigger.
+ */
+@layer manti.components {
+  [data-scope='signature-pad'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    min-width: 0;
+  }
+
+  [data-scope='signature-pad'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='signature-pad'][data-part='control'] {
+    position: relative;
+    height: 12rem;
+    background: var(--manti-surface-raised);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  [data-scope='signature-pad'][data-part='segment'] {
+    width: 100%;
+    height: 100%;
+  }
+
+  [data-scope='signature-pad'][data-part='segment-path'] {
+    fill: var(--manti-text);
+  }
+
+  [data-scope='signature-pad'][data-part='guide'] {
+    position: absolute;
+    inset-inline: var(--manti-space-4);
+    bottom: 2.5rem;
+    border-bottom: 1px dashed var(--manti-border-strong);
+    pointer-events: none;
+  }
+
+  [data-scope='signature-pad'][data-part='clear-trigger'] {
+    position: absolute;
+    top: var(--manti-space-2);
+    inset-inline-end: var(--manti-space-2);
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.75rem;
+    padding-inline: var(--manti-space-3);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text);
+    font-size: var(--manti-text-xs);
+    font-weight: var(--manti-weight-medium);
+    cursor: pointer;
+    transition: background-color var(--manti-duration-fast)
+      var(--manti-ease-smooth);
+
+    &:hover {
+      background: var(--manti-surface-raised);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+  }
+}

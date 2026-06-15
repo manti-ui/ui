@@ -1,0 +1,93 @@
+/**
+ * Carousel — a slide carousel backed by the Zag.js carousel machine. Zag owns
+ * scroll-snap and per-slide sizing; we style the controls and indicators.
+ */
+@layer manti.components {
+  [data-scope='carousel'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+  }
+
+  [data-scope='carousel'][data-part='item-group'] {
+    display: flex;
+    gap: var(--manti-space-3);
+    overflow: hidden;
+
+    &[data-orientation='vertical'] {
+      flex-direction: column;
+      max-height: 22rem;
+    }
+  }
+
+  [data-scope='carousel'][data-part='item'] {
+    border-radius: var(--manti-radius-lg);
+    overflow: hidden;
+  }
+
+  [data-scope='carousel'][data-part='control'] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--manti-space-3);
+  }
+
+  [data-scope='carousel'][data-part='prev-trigger'],
+  [data-scope='carousel'][data-part='next-trigger'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--manti-glass-tint);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-full);
+    color: var(--manti-text);
+    cursor: pointer;
+    transition: background-color var(--manti-duration-fast)
+      var(--manti-ease-smooth);
+
+    &:hover {
+      background: var(--manti-surface-raised);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  [data-scope='carousel'][data-part='indicator-group'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+  }
+
+  [data-scope='carousel'][data-part='indicator'] {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--manti-border-strong);
+    border-radius: var(--manti-radius-full);
+    cursor: pointer;
+    transition:
+      width var(--manti-duration-base) var(--manti-ease-smooth),
+      background-color var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &[data-current] {
+      width: 1.25rem;
+      background: var(--tone-solid);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+  }
+}

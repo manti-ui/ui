@@ -66,18 +66,18 @@ Legend: ✅ done · ⬜ todo
 | Tree View  | `@zag-js/tree-view`  |   ✅   |
 | Pagination | `@zag-js/pagination` |   ✅   |
 
-### Batch 5 — display & media ⬜
+### Batch 5 — display & media ✅
 
 | Component     | Package                 | Status |
 | ------------- | ----------------------- | :----: |
-| Avatar        | `@zag-js/avatar`        |   ⬜   |
-| Progress      | `@zag-js/progress`      |   ⬜   |
-| Rating Group  | `@zag-js/rating-group`  |   ⬜   |
-| Carousel      | `@zag-js/carousel`      |   ⬜   |
-| QR Code       | `@zag-js/qr-code`       |   ⬜   |
-| Clipboard     | `@zag-js/clipboard`     |   ⬜   |
-| File Upload   | `@zag-js/file-upload`   |   ⬜   |
-| Signature Pad | `@zag-js/signature-pad` |   ⬜   |
+| Avatar        | `@zag-js/avatar`        |   ✅   |
+| Progress      | `@zag-js/progress`      |   ✅   |
+| Rating Group  | `@zag-js/rating-group`  |   ✅   |
+| Carousel      | `@zag-js/carousel`      |   ✅   |
+| QR Code       | `@zag-js/qr-code`       |   ✅   |
+| Clipboard     | `@zag-js/clipboard`     |   ✅   |
+| File Upload   | `@zag-js/file-upload`   |   ✅   |
+| Signature Pad | `@zag-js/signature-pad` |   ✅   |
 
 ### Batch 6 — date, time & advanced ⬜
 
