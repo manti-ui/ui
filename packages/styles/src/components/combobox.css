@@ -1,0 +1,178 @@
+/**
+ * Combobox — a typeahead select backed by the Zag.js combobox machine. The
+ * control is the frosted field with an inline toggle; the portalled content
+ * matches the Select/Listbox panels.
+ */
+@layer manti.components {
+  [data-scope='combobox'][data-part='root'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    min-width: 0;
+  }
+
+  [data-scope='combobox'][data-part='label'] {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  [data-scope='combobox'][data-part='control'] {
+    --_min-height: 2.5rem;
+
+    display: flex;
+    align-items: center;
+    min-height: var(--_min-height);
+    padding-inline: var(--manti-space-3);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      inset 0 2px 5px -3px var(--manti-glass-shadow-color);
+    transition:
+      border-color var(--manti-duration-base) var(--manti-ease-smooth),
+      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &:hover {
+      border-color: var(--manti-text-subtle);
+    }
+
+    &:focus-within {
+      border-color: var(--tone-ring, var(--manti-focus-ring));
+      box-shadow:
+        inset 0 1px 0 0 var(--manti-glass-highlight),
+        0 0 0 3px
+          color-mix(
+            in oklab,
+            var(--tone-ring, var(--manti-focus-ring)) 30%,
+            transparent
+          );
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='combobox'][data-part='control'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='combobox'][data-part='root'][data-size='sm']
+    [data-part='control'] {
+    --_min-height: 2rem;
+  }
+
+  [data-scope='combobox'][data-part='root'][data-size='lg']
+    [data-part='control'] {
+    --_min-height: 3rem;
+  }
+
+  [data-scope='combobox'][data-part='root'][data-invalid]
+    [data-part='control'] {
+    border-color: light-dark(var(--manti-chili-500), var(--manti-chili-400));
+  }
+
+  [data-scope='combobox'][data-part='input'] {
+    flex: 1;
+    min-width: 0;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+
+    &::placeholder {
+      color: var(--manti-text-subtle);
+    }
+  }
+
+  [data-scope='combobox'][data-part='trigger'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    margin-inline-start: var(--manti-space-2);
+    color: var(--manti-text-muted);
+    cursor: pointer;
+    transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      color: var(--manti-text);
+    }
+  }
+
+  [data-scope='combobox'][data-part='positioner'] {
+    z-index: var(--manti-z-popover, 1100);
+  }
+
+  [data-scope='combobox'][data-part='content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-1);
+    max-height: 18rem;
+    overflow-y: auto;
+    padding: var(--manti-space-2);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow:
+      inset 0 1px 0 0 var(--manti-glass-highlight),
+      var(--manti-glass-shadow);
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='combobox'][data-part='content'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='combobox'][data-part='item'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-2);
+    padding: var(--manti-space-2) var(--manti-space-3);
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    cursor: pointer;
+    user-select: none;
+    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &[data-highlighted] {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+    }
+
+    &[data-state='checked'] {
+      color: var(--tone-text);
+      font-weight: var(--manti-weight-medium);
+    }
+
+    &[data-disabled] {
+      color: var(--manti-text-subtle);
+      cursor: not-allowed;
+    }
+  }
+
+  [data-scope='combobox'][data-part='item-indicator'] {
+    display: inline-flex;
+    flex: none;
+    color: var(--tone-text);
+  }
+}

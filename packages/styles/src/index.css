@@ -35,6 +35,11 @@
 @import './components/tags-input.css';
 @import './components/editable.css';
 @import './components/toggle-group.css';
+@import './components/select.css';
+@import './components/combobox.css';
+@import './components/listbox.css';
+@import './components/tree-view.css';
+@import './components/pagination.css';
 
 /* Motion tiers — declared last so [data-motion] overrides win by layer order.
    Import `none` after `full` so an inner [data-motion="none"] subtree reliably

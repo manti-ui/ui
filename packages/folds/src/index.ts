@@ -17,6 +17,11 @@ export * as slider from '@zag-js/slider';
 export * as tagsInput from '@zag-js/tags-input';
 export * as editable from '@zag-js/editable';
 export * as toggleGroup from '@zag-js/toggle-group';
+export * as select from '@zag-js/select';
+export * as combobox from '@zag-js/combobox';
+export * as listbox from '@zag-js/listbox';
+export * as treeView from '@zag-js/tree-view';
+export * as pagination from '@zag-js/pagination';
 
 export const mantiBehaviorContract = {
   packageName: '@manti-ui/folds',

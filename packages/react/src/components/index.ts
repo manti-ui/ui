@@ -19,6 +19,9 @@ export type { CheckboxProps } from './Checkbox/Checkbox';
 export { Collapsible } from './Collapsible/Collapsible';
 export type { CollapsibleProps } from './Collapsible/Collapsible';
 
+export { Combobox } from './Combobox/Combobox';
+export type { ComboboxItem, ComboboxProps } from './Combobox/Combobox';
+
 export { Dialog } from './Dialog/Dialog';
 export type { DialogProps, DialogSize } from './Dialog/Dialog';
 
@@ -27,6 +30,9 @@ export type { EditableProps } from './Editable/Editable';
 
 export { HoverCard } from './HoverCard/HoverCard';
 export type { HoverCardProps } from './HoverCard/HoverCard';
+
+export { Listbox } from './Listbox/Listbox';
+export type { ListboxItem, ListboxProps } from './Listbox/Listbox';
 
 export { Menu } from './Menu/Menu';
 export type {
@@ -40,6 +46,9 @@ export type {
 export { NumberInput } from './NumberInput/NumberInput';
 export type { NumberInputProps } from './NumberInput/NumberInput';
 
+export { Pagination } from './Pagination/Pagination';
+export type { PaginationProps } from './Pagination/Pagination';
+
 export { PinInput } from './PinInput/PinInput';
 export type { PinInputProps } from './PinInput/PinInput';
 
@@ -48,6 +57,9 @@ export type { PopoverProps } from './Popover/Popover';
 
 export { RadioGroup } from './RadioGroup/RadioGroup';
 export type { RadioGroupItem, RadioGroupProps } from './RadioGroup/RadioGroup';
+
+export { Select } from './Select/Select';
+export type { SelectItem, SelectProps } from './Select/Select';
 
 export { Slider } from './Slider/Slider';
 export type { SliderProps } from './Slider/Slider';
@@ -63,6 +75,9 @@ export type { TabItem, TabsProps } from './Tabs/Tabs';
 
 export { TagsInput } from './TagsInput/TagsInput';
 export type { TagsInputProps } from './TagsInput/TagsInput';
+
+export { TreeView } from './TreeView/TreeView';
+export type { TreeNode, TreeViewProps } from './TreeView/TreeView';
 
 export { createToaster } from './Toast/Toast';
 export type {
