@@ -5,7 +5,7 @@
  */
 @layer manti.components {
   [data-scope='floating-panel'][data-part='positioner'] {
-    z-index: var(--manti-z-modal, 1300);
+    z-index: var(--manti-z-modal);
   }
 
   [data-scope='floating-panel'][data-part='content'] {
@@ -37,6 +37,17 @@
     }
   }
 
+  /* Minimized: the body is hidden by the machine, so collapse to the header,
+     and let a click on the header restore the panel (wired in the renderer). */
+  [data-scope='floating-panel'][data-part='content'][data-minimized] {
+    min-height: 0;
+  }
+
+  [data-scope='floating-panel'][data-part='content'][data-minimized]
+    [data-part='drag-trigger'] {
+    cursor: pointer;
+  }
+
   [data-scope='floating-panel'][data-part='header'] {
     display: flex;
     align-items: center;
@@ -61,21 +72,43 @@
     color: var(--manti-text);
   }
 
+  [data-scope='floating-panel'][data-part='control'] {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--manti-space-1);
+  }
+
+  [data-scope='floating-panel'][data-part='stage-trigger'],
   [data-scope='floating-panel'][data-part='close-trigger'] {
     display: inline-flex;
     flex: none;
     align-items: center;
     justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: var(--manti-radius-sm);
     color: var(--manti-text-muted);
     cursor: pointer;
+    transition:
+      color var(--manti-duration-fast) var(--manti-ease-smooth),
+      background var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
       color: var(--manti-text);
     }
 
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--tone-ring);
-      outline-offset: var(--manti-focus-ring-offset);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+
+    /* Zag hides the stage triggers that don't apply to the current stage
+       (minimize/maximize while staged, restore while not) via `hidden`; an
+       explicit `display` would otherwise override `[hidden]` and show all. */
+    &[hidden] {
+      display: none;
     }
   }
 
