@@ -37,6 +37,9 @@ export type { ColorPickerProps } from './ColorPicker/ColorPicker';
 export { Combobox } from './Combobox/Combobox';
 export type { ComboboxItem, ComboboxProps } from './Combobox/Combobox';
 
+export { ContextMenu } from './ContextMenu/ContextMenu';
+export type { ContextMenuProps } from './ContextMenu/ContextMenu';
+
 export { DatePicker } from './DatePicker/DatePicker';
 export type { DatePickerProps } from './DatePicker/DatePicker';
 
