@@ -58,6 +58,9 @@ export type { HoverCardProps } from './HoverCard/HoverCard';
 export { Listbox } from './Listbox/Listbox';
 export type { ListboxItem, ListboxProps } from './Listbox/Listbox';
 
+export { Marquee } from './Marquee/Marquee';
+export type { MarqueeProps } from './Marquee/Marquee';
+
 export { Menu } from './Menu/Menu';
 export type {
   MenuCommand,
