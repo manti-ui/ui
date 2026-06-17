@@ -37,6 +37,9 @@ export type { ColorPickerProps } from './ColorPicker/ColorPicker';
 export { Combobox } from './Combobox/Combobox';
 export type { ComboboxItem, ComboboxProps } from './Combobox/Combobox';
 
+export { ContextMenu } from './ContextMenu/ContextMenu';
+export type { ContextMenuProps } from './ContextMenu/ContextMenu';
+
 export { DatePicker } from './DatePicker/DatePicker';
 export type { DatePickerProps } from './DatePicker/DatePicker';
 
@@ -57,6 +60,9 @@ export type { HoverCardProps } from './HoverCard/HoverCard';
 
 export { Listbox } from './Listbox/Listbox';
 export type { ListboxItem, ListboxProps } from './Listbox/Listbox';
+
+export { Marquee } from './Marquee/Marquee';
+export type { MarqueeProps } from './Marquee/Marquee';
 
 export { Menu } from './Menu/Menu';
 export type {

@@ -15,7 +15,12 @@
   :root {
     color-scheme: light dark;
 
-    /* Primitive ramps ----------------------------------------------------- */
+    /* ─────────────────────────────────────────────────────────────────────
+     * Generated from the @manti-ui/tokens contract — DO NOT EDIT BY HAND.
+     * Run `pnpm gen:tokens` after editing packages/tokens/src/index.ts.
+     * ───────────────────────────────────────────────────────────────────── */
+    /* @tokens:generated:start */
+    /* Primitive ramps — fixed OKLCH scales, identical in light and dark. */
     --manti-dough-50: oklch(0.985 0.004 80);
     --manti-dough-100: oklch(0.968 0.006 80);
     --manti-dough-200: oklch(0.934 0.008 78);
@@ -27,7 +32,6 @@
     --manti-dough-800: oklch(0.352 0.011 66);
     --manti-dough-900: oklch(0.268 0.01 64);
     --manti-dough-950: oklch(0.196 0.008 62);
-
     --manti-paprika-50: oklch(0.972 0.018 50);
     --manti-paprika-100: oklch(0.94 0.04 48);
     --manti-paprika-200: oklch(0.888 0.072 46);
@@ -39,7 +43,6 @@
     --manti-paprika-800: oklch(0.43 0.122 35);
     --manti-paprika-900: oklch(0.35 0.092 34);
     --manti-paprika-950: oklch(0.262 0.064 33);
-
     --manti-herb-50: oklch(0.972 0.022 150);
     --manti-herb-100: oklch(0.94 0.044 151);
     --manti-herb-200: oklch(0.89 0.072 152);
@@ -51,7 +54,6 @@
     --manti-herb-800: oklch(0.398 0.08 158);
     --manti-herb-900: oklch(0.32 0.062 159);
     --manti-herb-950: oklch(0.238 0.044 160);
-
     --manti-sumac-50: oklch(0.978 0.022 85);
     --manti-sumac-100: oklch(0.952 0.046 83);
     --manti-sumac-200: oklch(0.908 0.082 80);
@@ -63,7 +65,6 @@
     --manti-sumac-800: oklch(0.462 0.096 64);
     --manti-sumac-900: oklch(0.382 0.074 62);
     --manti-sumac-950: oklch(0.286 0.054 60);
-
     --manti-chili-50: oklch(0.971 0.018 25);
     --manti-chili-100: oklch(0.936 0.04 24);
     --manti-chili-200: oklch(0.882 0.074 23);
@@ -75,7 +76,6 @@
     --manti-chili-800: oklch(0.42 0.15 27);
     --manti-chili-900: oklch(0.352 0.115 27);
     --manti-chili-950: oklch(0.262 0.078 26);
-
     --manti-broth-50: oklch(0.974 0.014 235);
     --manti-broth-100: oklch(0.94 0.03 236);
     --manti-broth-200: oklch(0.89 0.054 237);
@@ -87,6 +87,98 @@
     --manti-broth-800: oklch(0.402 0.104 247);
     --manti-broth-900: oklch(0.336 0.08 248);
     --manti-broth-950: oklch(0.252 0.056 249);
+
+    /* Radius */
+    --manti-radius-xs: 4px;
+    --manti-radius-sm: 6px;
+    --manti-radius-md: 10px;
+    --manti-radius-lg: 14px;
+    --manti-radius-xl: 20px;
+    --manti-radius-2xl: 28px;
+    --manti-radius-full: 9999px;
+
+    /* Spacing */
+    --manti-space-0: 0;
+    --manti-space-1: 0.25rem;
+    --manti-space-2: 0.5rem;
+    --manti-space-3: 0.75rem;
+    --manti-space-4: 1rem;
+    --manti-space-5: 1.25rem;
+    --manti-space-6: 1.5rem;
+    --manti-space-8: 2rem;
+    --manti-space-10: 2.5rem;
+    --manti-space-12: 3rem;
+    --manti-space-16: 4rem;
+
+    /* Typography */
+    --manti-font-sans:
+      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+      'Segoe UI', sans-serif;
+    --manti-font-mono:
+      ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    --manti-text-xs: 0.75rem;
+    --manti-text-sm: 0.875rem;
+    --manti-text-base: 1rem;
+    --manti-text-lg: 1.125rem;
+    --manti-text-xl: 1.25rem;
+    --manti-text-2xl: 1.5rem;
+    --manti-text-3xl: 1.875rem;
+    --manti-text-4xl: 2.25rem;
+    --manti-text-5xl: 3rem;
+    --manti-leading-tight: 1.15;
+    --manti-leading-snug: 1.3;
+    --manti-leading-normal: 1.5;
+    --manti-leading-relaxed: 1.7;
+    --manti-weight-regular: 400;
+    --manti-weight-medium: 500;
+    --manti-weight-semibold: 600;
+    --manti-weight-bold: 700;
+
+    /* Motion */
+    --manti-duration-fast: 120ms;
+    --manti-duration-base: 200ms;
+    --manti-duration-slow: 320ms;
+    --manti-duration-slower: 440ms;
+    --manti-ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
+    --manti-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+    --manti-ease-spring: linear(
+      0,
+      0.006 1.1%,
+      0.025 2.3%,
+      0.097 4.7%,
+      0.207 7.3%,
+      0.835 18.5%,
+      1.018 22.6%,
+      1.078 25.5%,
+      1.094 28.8%,
+      1.054 36%,
+      1.007 44.8%,
+      0.991 53.3%,
+      1.001 73.2%,
+      1
+    );
+    --manti-ease-bounce: linear(
+      0,
+      0.218 6.2%,
+      0.652 13.5%,
+      1.062 21.6%,
+      1.166 26%,
+      1.184 30.6%,
+      1.13 36.1%,
+      1.04 44.6%,
+      0.996 52.8%,
+      0.998 70%,
+      1
+    );
+
+    /* Z-index */
+    --manti-z-base: 0;
+    --manti-z-raised: 10;
+    --manti-z-overlay: 1000;
+    --manti-z-popover: 1100;
+    --manti-z-toast: 1200;
+    --manti-z-modal: 1300;
+    /* @tokens:generated:end */
 
     /* Semantic surfaces & text ------------------------------------------- *
      * Cool and near-neutral. Dark is the hero — a deep near-black with a faint
@@ -120,10 +212,7 @@
     );
 
     --manti-text: light-dark(oklch(0.24 0.01 280), oklch(0.96 0.004 280));
-    --manti-text-muted: light-dark(
-      oklch(0.46 0.01 280),
-      oklch(0.72 0.006 280)
-    );
+    --manti-text-muted: light-dark(oklch(0.46 0.01 280), oklch(0.72 0.006 280));
     --manti-text-subtle: light-dark(
       oklch(0.58 0.01 280),
       oklch(0.56 0.007 280)
@@ -138,55 +227,6 @@
     --manti-focus-ring-width: 3px;
     --manti-focus-ring-offset: 2px;
 
-    /* Radius ------------------------------------------------------------- */
-    --manti-radius-xs: 4px;
-    --manti-radius-sm: 6px;
-    --manti-radius-md: 10px;
-    --manti-radius-lg: 14px;
-    --manti-radius-xl: 20px;
-    --manti-radius-2xl: 28px;
-    --manti-radius-full: 9999px;
-
-    /* Spacing ------------------------------------------------------------ */
-    --manti-space-0: 0;
-    --manti-space-1: 0.25rem;
-    --manti-space-2: 0.5rem;
-    --manti-space-3: 0.75rem;
-    --manti-space-4: 1rem;
-    --manti-space-5: 1.25rem;
-    --manti-space-6: 1.5rem;
-    --manti-space-8: 2rem;
-    --manti-space-10: 2.5rem;
-    --manti-space-12: 3rem;
-    --manti-space-16: 4rem;
-
-    /* Typography --------------------------------------------------------- */
-    --manti-font-sans:
-      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-      'Segoe UI', sans-serif;
-    --manti-font-mono:
-      ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
-
-    --manti-text-xs: 0.75rem;
-    --manti-text-sm: 0.875rem;
-    --manti-text-base: 1rem;
-    --manti-text-lg: 1.125rem;
-    --manti-text-xl: 1.25rem;
-    --manti-text-2xl: 1.5rem;
-    --manti-text-3xl: 1.875rem;
-    --manti-text-4xl: 2.25rem;
-    --manti-text-5xl: 3rem;
-
-    --manti-leading-tight: 1.15;
-    --manti-leading-snug: 1.3;
-    --manti-leading-normal: 1.5;
-    --manti-leading-relaxed: 1.7;
-
-    --manti-weight-regular: 400;
-    --manti-weight-medium: 500;
-    --manti-weight-semibold: 600;
-    --manti-weight-bold: 700;
-
     /* Elevation ---------------------------------------------------------- */
     --manti-shadow-sm: light-dark(
       0 1px 2px -1px oklch(0.2 0.03 280 / 0.1),
@@ -199,25 +239,6 @@
     --manti-shadow-lg: light-dark(
       0 24px 50px -16px oklch(0.2 0.03 280 / 0.2),
       0 28px 60px -18px oklch(0 0 0 / 0.7)
-    );
-
-    /* Motion ------------------------------------------------------------- */
-    --manti-duration-fast: 120ms;
-    --manti-duration-base: 200ms;
-    --manti-duration-slow: 320ms;
-    --manti-duration-slower: 440ms;
-    --manti-ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
-    --manti-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
-    /* Expressive curves — used only by [data-motion="full"]. Authored with
-       linear() so the spring/overshoot is native (evergreen build target). */
-    --manti-ease-spring: linear(
-      0, 0.006 1.1%, 0.025 2.3%, 0.097 4.7%, 0.207 7.3%, 0.835 18.5%,
-      1.018 22.6%, 1.078 25.5%, 1.094 28.8%, 1.054 36%, 1.007 44.8%,
-      0.991 53.3%, 1.001 73.2%, 1
-    );
-    --manti-ease-bounce: linear(
-      0, 0.218 6.2%, 0.652 13.5%, 1.062 21.6%, 1.166 26%, 1.184 30.6%,
-      1.13 36.1%, 1.04 44.6%, 0.996 52.8%, 0.998 70%, 1
     );
 
     /* Material — sleek panel glass --------------------------------------- *
@@ -326,10 +347,7 @@
     /* The default tone. Solid inverts the theme — near-white on dark, near-black
        on light — for the crisp neutral button of the reference. */
     --tone-solid: light-dark(oklch(0.22 0.01 280), oklch(0.96 0.004 280));
-    --tone-solid-hover: light-dark(
-      oklch(0.3 0.012 280),
-      oklch(0.88 0.005 280)
-    );
+    --tone-solid-hover: light-dark(oklch(0.3 0.012 280), oklch(0.88 0.005 280));
     --tone-solid-active: light-dark(
       oklch(0.36 0.012 280),
       oklch(0.8 0.006 280)

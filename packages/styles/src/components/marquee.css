@@ -1,0 +1,84 @@
+/**
+ * Marquee — a continuously scrolling strip of content. Static (no Zag machine):
+ * the content is duplicated and the track is translated by half its length for a
+ * seamless loop. Reduced motion and `data-motion="none"` hold the strip still
+ * (the reset/motion layers zero the animation), so the first copy stays legible.
+ */
+@layer manti.components {
+  [data-scope='marquee'][data-part='root'] {
+    --_gap: var(--manti-space-8);
+    --_duration: 20s;
+
+    display: flex;
+    max-width: 100%;
+    overflow: hidden;
+
+    &[data-gap='sm'] {
+      --_gap: var(--manti-space-4);
+    }
+
+    &[data-gap='lg'] {
+      --_gap: var(--manti-space-12);
+    }
+
+    &[data-orientation='vertical'] {
+      flex-direction: column;
+      max-width: none;
+      max-height: 100%;
+    }
+  }
+
+  [data-scope='marquee'][data-part='content'] {
+    display: flex;
+    flex: none;
+    width: max-content;
+    animation: manti-marquee-x var(--_duration) linear infinite;
+  }
+
+  [data-scope='marquee'][data-orientation='vertical'] [data-part='content'] {
+    flex-direction: column;
+    width: auto;
+    height: max-content;
+    animation-name: manti-marquee-y;
+  }
+
+  /* `right`/`down` reuse the same keyframes played backwards. */
+  [data-scope='marquee'][data-direction='right'] [data-part='content'],
+  [data-scope='marquee'][data-direction='down'] [data-part='content'] {
+    animation-direction: reverse;
+  }
+
+  [data-scope='marquee'][data-part='group'] {
+    display: flex;
+    flex: none;
+    gap: var(--_gap);
+    align-items: center;
+  }
+
+  /* A trailing gap equal to the inner gap keeps the -50% loop seamless. */
+  [data-scope='marquee'][data-orientation='horizontal'] [data-part='group'] {
+    margin-inline-end: var(--_gap);
+  }
+
+  [data-scope='marquee'][data-orientation='vertical'] [data-part='group'] {
+    flex-direction: column;
+    margin-block-end: var(--_gap);
+  }
+
+  [data-scope='marquee'][data-part='root'][data-pause-on-hover]:hover
+    [data-part='content'] {
+    animation-play-state: paused;
+  }
+
+  @keyframes manti-marquee-x {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes manti-marquee-y {
+    to {
+      transform: translateY(-50%);
+    }
+  }
+}

@@ -14,6 +14,13 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    tokens (`@manti-ui/tokens` / token-backed `--manti-*` and `--tone-*` CSS
    variables). Never hard-code raw values (hex colors, px sizes, magic numbers);
    if a token is missing, add it to `@manti-ui/tokens` first, then consume it.
+   `@manti-ui/tokens` is the single source of truth: its primitive ramps and
+   scale values are **generated** into the `--manti-*` custom properties in
+   `packages/styles/src/tokens.css` (the `@tokens:generated` region) by
+   `pnpm gen:tokens`. Never hand-edit that region; after changing the contract,
+   regenerate it — the styles build fails if it is stale. The theme-aware roles
+   (`light-dark()` surfaces/text/elevation/glass) and the tonal `--tone-*`
+   vocabulary below the region stay hand-authored.
 3. **Match the user's language.** Always reply in the same language the user wrote
    their prompt in (e.g. Turkish prompt → Turkish answer). This applies to chat
    responses only; code, identifiers, comments, and docs stay in English.
@@ -47,6 +54,7 @@ pnpm build:storybook  # Generate storybook-static/
 pnpm lint             # Run ESLint
 pnpm typecheck        # Check packages and stories
 pnpm verify           # Run lint, typecheck, and all production builds
+pnpm gen:tokens       # Regenerate --manti-* CSS vars from the token contract
 ```
 
 Run `pnpm verify` before opening a pull request.

@@ -12,6 +12,7 @@
     "build:packages": "pnpm --filter @manti-ui/tokens build && pnpm --filter @manti-ui/styles build && pnpm --filter @manti-ui/folds build && pnpm --filter @manti-ui/react build",
     "build:storybook": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 storybook build",
     "dev": "pnpm storybook",
+    "gen:tokens": "pnpm --filter @manti-ui/styles gen:tokens",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",

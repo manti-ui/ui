@@ -58,9 +58,21 @@
 @import './components/color-picker.css';
 @import './components/navigation-menu.css';
 @import './components/floating-panel.css';
+@import './components/marquee.css';
 
 /* Motion tiers — declared last so [data-motion] overrides win by layer order.
    Import `none` after `full` so an inner [data-motion="none"] subtree reliably
    suppresses an outer [data-motion="full"] ancestor on selectivity ties. */
 @import './motion/full.css';
 @import './motion/none.css';
+
+/* Zag marks closed/inactive parts (popper content, swapped indicators, …) with
+   the native `hidden` attribute. A component's `display` rule would otherwise
+   beat `[hidden]` and leave the part on screen — e.g. a Select/Combobox panel
+   that never visually closes. Re-assert `hidden` once, at a specificity that
+   outranks any single `[data-scope][data-part]` display rule. */
+@layer manti.components {
+  [data-scope][data-part][hidden] {
+    display: none;
+  }
+}

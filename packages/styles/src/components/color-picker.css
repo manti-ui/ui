@@ -49,7 +49,7 @@
   }
 
   [data-scope='color-picker'][data-part='positioner'] {
-    z-index: var(--manti-z-popover, 1100);
+    z-index: var(--manti-z-popover);
   }
 
   [data-scope='color-picker'][data-part='content'] {

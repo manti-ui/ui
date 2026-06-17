@@ -7,7 +7,7 @@
   [data-scope='dialog'][data-part='backdrop'] {
     position: fixed;
     inset: 0;
-    z-index: var(--manti-z-overlay, 1000);
+    z-index: var(--manti-z-overlay);
     background: var(--manti-overlay);
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
@@ -21,7 +21,7 @@
   [data-scope='dialog'][data-part='positioner'] {
     position: fixed;
     inset: 0;
-    z-index: var(--manti-z-overlay, 1000);
+    z-index: var(--manti-z-overlay);
     display: flex;
     align-items: center;
     justify-content: center;

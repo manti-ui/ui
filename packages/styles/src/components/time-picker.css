@@ -67,7 +67,7 @@
   }
 
   [data-scope='time-picker'][data-part='positioner'] {
-    z-index: var(--manti-z-popover, 1100);
+    z-index: var(--manti-z-popover);
   }
 
   [data-scope='time-picker'][data-part='content'] {

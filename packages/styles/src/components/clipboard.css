@@ -81,5 +81,11 @@
 
   [data-scope='clipboard'][data-part='indicator'] {
     display: inline-flex;
+
+    /* Zag hides the non-matching indicator with the `hidden` attribute; an
+       explicit `display` would otherwise override `[hidden]` and show both. */
+    &[hidden] {
+      display: none;
+    }
   }
 }

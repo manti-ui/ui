@@ -7,9 +7,11 @@
  * palette is built from warm, edible references — dough, paprika, herbs, sumac,
  * chili, and broth — expressed as perceptually-smooth OKLCH ramps.
  *
- * This module is the typed source of truth. The runtime values are mirrored as
- * CSS custom properties in `@manti-ui/styles`, where light/dark resolution is
- * handled with the CSS `light-dark()` function.
+ * This module is the typed source of truth. Its primitive ramps and scale
+ * values are generated into the `--manti-*` custom properties of
+ * `@manti-ui/styles` (`packages/styles/scripts/gen-tokens-css.mjs`, run via
+ * `pnpm gen:tokens`); the theme-aware roles there layer light/dark resolution on
+ * top with the CSS `light-dark()` function.
  */
 
 /** Primitive color ramps. Fixed values, identical in light and dark themes. */
@@ -227,6 +229,7 @@ export const zIndex = {
   overlay: '1000',
   popover: '1100',
   toast: '1200',
+  modal: '1300',
 } as const;
 
 /** The complete Manti UI token contract. */

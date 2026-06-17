@@ -36,7 +36,9 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "vite build && tsc -p tsconfig.build.json",
+    "gen:tokens": "node scripts/gen-tokens-css.mjs",
+    "gen:tokens:check": "node scripts/gen-tokens-css.mjs --check",
+    "build": "node scripts/gen-tokens-css.mjs --check && vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
