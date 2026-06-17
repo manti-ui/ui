@@ -6,7 +6,7 @@
  */
 @layer manti.components {
   [data-scope='toast'][data-part='group'] {
-    z-index: var(--manti-z-toast, 1200);
+    z-index: var(--manti-z-toast);
   }
 
   [data-scope='toast'][data-part='root'] {

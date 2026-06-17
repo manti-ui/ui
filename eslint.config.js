@@ -9,6 +9,15 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    // Node build scripts (e.g. packages/styles/scripts/gen-tokens-css.mjs).
+    files: ['**/*.mjs', '**/scripts/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       globals: {

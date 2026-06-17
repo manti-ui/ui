@@ -8,18 +8,18 @@
     position: fixed;
     inset: 0;
     background: var(--manti-overlay);
-    z-index: var(--manti-z-modal, 1300);
+    z-index: var(--manti-z-modal);
   }
 
   [data-scope='tour'][data-part='spotlight'] {
     position: absolute;
     border-radius: var(--manti-radius-md);
     box-shadow: 0 0 0 9999px var(--manti-overlay);
-    z-index: var(--manti-z-modal, 1300);
+    z-index: var(--manti-z-modal);
   }
 
   [data-scope='tour'][data-part='positioner'] {
-    z-index: var(--manti-z-modal, 1300);
+    z-index: var(--manti-z-modal);
   }
 
   [data-scope='tour'][data-part='content'] {

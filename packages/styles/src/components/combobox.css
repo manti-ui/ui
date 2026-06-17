@@ -106,7 +106,7 @@
   }
 
   [data-scope='combobox'][data-part='positioner'] {
-    z-index: var(--manti-z-popover, 1100);
+    z-index: var(--manti-z-popover);
   }
 
   [data-scope='combobox'][data-part='content'] {
