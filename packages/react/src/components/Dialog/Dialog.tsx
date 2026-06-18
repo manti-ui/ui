@@ -9,6 +9,14 @@ import { CloseIcon } from '../../internal/icons';
 
 export type DialogSize = 'sm' | 'md' | 'lg';
 
+/** Helpers passed to render-prop slots so consumers can dismiss the dialog. */
+export interface DialogRenderProps {
+  /** Close the dialog. */
+  close: () => void;
+}
+
+type DialogSlot = ReactNode | ((props: DialogRenderProps) => ReactNode);
+
 export interface DialogProps {
   /** Element that opens the dialog. Cloned with the machine's trigger props. */
   trigger?: ReactElement;
@@ -16,10 +24,14 @@ export interface DialogProps {
   title?: ReactNode;
   /** Supporting copy rendered under the title. */
   description?: ReactNode;
-  /** Dialog body. */
-  children?: ReactNode;
-  /** Footer content, typically actions, pinned to the trailing edge. */
-  footer?: ReactNode;
+  /** Dialog body. Accepts a render function receiving `{ close }`. */
+  children?: DialogSlot;
+  /**
+   * Footer content, typically actions, pinned to the trailing edge. Accepts a
+   * render function receiving `{ close }` so action buttons can dismiss the
+   * dialog (e.g. `footer={({ close }) => <Button onClick={close}>Cancel</Button>}`).
+   */
+  footer?: DialogSlot;
   /** Width preset. */
   size?: DialogSize;
   /** Render an `alertdialog` instead of a `dialog`. */
@@ -79,6 +91,9 @@ export function Dialog({
       : undefined,
   });
   const api = dialog.connect(service, normalizeProps);
+  const renderProps: DialogRenderProps = { close: () => api.setOpen(false) };
+  const renderSlot = (slot: DialogSlot) =>
+    typeof slot === 'function' ? slot(renderProps) : slot;
 
   return (
     <>
@@ -103,12 +118,12 @@ export function Dialog({
               )}
               {children != null && (
                 <div data-scope="dialog" data-part="body">
-                  {children}
+                  {renderSlot(children)}
                 </div>
               )}
               {footer != null && (
                 <div data-scope="dialog" data-part="footer">
-                  {footer}
+                  {renderSlot(footer)}
                 </div>
               )}
             </div>

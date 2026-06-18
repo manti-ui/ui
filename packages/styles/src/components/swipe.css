@@ -1,0 +1,25 @@
+/**
+ * Swipe — a Manti-original gesture surface (not Zag-backed). The renderer
+ * translates the root to follow the pointer; this layer only owns the spring
+ * back and the grab affordance. `touch-action` is set inline by the renderer so
+ * the gesture works without this stylesheet.
+ */
+@layer manti.components {
+  [data-scope='swipe'][data-part='root'] {
+    cursor: grab;
+    transition: transform var(--manti-duration-base) var(--manti-ease-smooth);
+  }
+
+  /* While dragging the root follows the pointer 1:1, so suppress the transition
+     and text selection and switch the affordance to grabbing. */
+  [data-scope='swipe'][data-part='root'][data-dragging] {
+    cursor: grabbing;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: none;
+  }
+
+  [data-scope='swipe'][data-part='root'][data-disabled] {
+    cursor: default;
+  }
+}

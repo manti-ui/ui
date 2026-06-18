@@ -94,14 +94,17 @@
       }
     }
 
+    /* Outline & ghost intentionally skip a hover `backdrop-filter`: a blur that
+       toggles only on hover snaps in (it isn't transition-able) and, when the
+       button sits inside an already-frosted surface like a Dialog, the nested
+       backdrop-filter flickers in Chromium. The translucent tonal fill alone
+       carries the hover. */
     &[data-variant='outline'] {
       border-color: var(--tone-border);
       color: var(--tone-text);
 
       &:hover {
         background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
-        -webkit-backdrop-filter: var(--manti-glass-blur);
-        backdrop-filter: var(--manti-glass-blur);
         border-color: var(--tone-soft-text);
         box-shadow: inset 0 1px 0 0 var(--manti-glass-highlight);
       }
@@ -112,8 +115,6 @@
 
       &:hover {
         background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
-        -webkit-backdrop-filter: var(--manti-glass-blur);
-        backdrop-filter: var(--manti-glass-blur);
       }
     }
 

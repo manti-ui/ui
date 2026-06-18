@@ -59,6 +59,7 @@
 @import './components/navigation-menu.css';
 @import './components/floating-panel.css';
 @import './components/marquee.css';
+@import './components/swipe.css';
 
 /* Motion tiers — declared last so [data-motion] overrides win by layer order.
    Import `none` after `full` so an inner [data-motion="none"] subtree reliably
