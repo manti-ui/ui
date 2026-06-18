@@ -13,7 +13,7 @@ const meta = {
     description:
       'Raw mantı freeze beautifully. Lay them on a floured tray, freeze solid, then bag them.',
     size: 'md',
-    trigger: <Button>Open dialog</Button>,
+    trigger: <Button tone="primary">Open dialog</Button>,
     children:
       'They keep for up to three months and cook straight from frozen — just add a minute to the boil.',
   },
@@ -24,10 +24,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
   args: {
-    footer: (
+    footer: ({ close }) => (
       <>
-        <Button variant="ghost">Cancel</Button>
-        <Button tone="primary">Freeze them</Button>
+        <Button variant="ghost" onClick={close}>
+          Cancel
+        </Button>
+        <Button tone="primary" onClick={close}>
+          Freeze them
+        </Button>
       </>
     ),
   },
@@ -41,10 +45,14 @@ export const AlertDialog: Story = {
     size: 'sm',
     trigger: <Button tone="danger">Discard</Button>,
     children: null,
-    footer: (
+    footer: ({ close }) => (
       <>
-        <Button variant="ghost">Keep editing</Button>
-        <Button tone="danger">Discard</Button>
+        <Button variant="ghost" onClick={close}>
+          Keep editing
+        </Button>
+        <Button tone="danger" onClick={close}>
+          Discard
+        </Button>
       </>
     ),
   },
