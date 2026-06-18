@@ -41,6 +41,12 @@ export * as colorPicker from '@zag-js/color-picker';
 export * as navigationMenu from '@zag-js/navigation-menu';
 export * as floatingPanel from '@zag-js/floating-panel';
 
+/**
+ * Manti-original behaviors. Not from Zag.js — these are framework-agnostic
+ * primitives Manti UI authors directly to fill gaps in the Zag catalog.
+ */
+export * as swipe from './swipe';
+
 export const mantiBehaviorContract = {
   packageName: '@manti-ui/folds',
   engine: 'Zag.js',

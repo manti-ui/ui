@@ -122,6 +122,15 @@ export type { SplitterPanel, SplitterProps } from './Splitter/Splitter';
 export { Steps } from './Steps/Steps';
 export type { StepItem, StepsProps } from './Steps/Steps';
 
+export { Swipe } from './Swipe/Swipe';
+export type {
+  SwipeAxis,
+  SwipeDetails,
+  SwipeDirection,
+  SwipeProps,
+  SwipeVector,
+} from './Swipe/Swipe';
+
 export { Switch } from './Switch/Switch';
 export type { SwitchProps } from './Switch/Switch';
 
