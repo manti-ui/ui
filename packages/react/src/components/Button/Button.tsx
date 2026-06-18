@@ -48,8 +48,6 @@ export function Button({
   return (
     <button
       type={type}
-      data-scope="button"
-      data-part="root"
       data-variant={variant}
       data-tone={tone}
       data-size={size}
@@ -60,6 +58,11 @@ export function Button({
       aria-busy={loading || undefined}
       className={cx(className)}
       {...rest}
+      // Identity attributes are re-asserted after `rest` so a cloned trigger
+      // (e.g. a Dialog/Popover trigger merging in `data-scope='dialog'`) can't
+      // clobber the button's own scope and drop its styling.
+      data-scope="button"
+      data-part="root"
     >
       {loading && (
         <span data-scope="button" data-part="spinner">
