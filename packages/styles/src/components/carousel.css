@@ -18,6 +18,18 @@
       flex-direction: column;
       max-height: 22rem;
     }
+
+    /* Mouse-drag swipe (Zag `allowMouseDrag`): hint grab, lock to grabbing while
+       a drag is in flight, and suppress text selection so the gesture is clean.
+       Touch swipe needs none of this — it rides native scroll-snap. */
+    &[data-draggable] {
+      cursor: grab;
+    }
+
+    &[data-dragging] {
+      cursor: grabbing;
+      user-select: none;
+    }
   }
 
   [data-scope='carousel'][data-part='item'] {
@@ -82,7 +94,9 @@
 
     &[data-current] {
       width: 1.25rem;
-      background: var(--tone-solid);
+      /* Fallback keeps the active dot visible even if no tone is in scope —
+         without it, an undefined --tone-solid computes to transparent. */
+      background: var(--tone-solid, var(--manti-text));
     }
 
     &:focus-visible {
