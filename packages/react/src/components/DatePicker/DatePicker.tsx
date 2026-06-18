@@ -98,7 +98,7 @@ export function DatePicker({
         </button>
       </div>
       <Portal>
-        <div {...api.getPositionerProps()}>
+        <div {...api.getPositionerProps()} data-tone={tone}>
           <div {...api.getContentProps()}>
             <div {...api.getViewControlProps()}>
               <button
