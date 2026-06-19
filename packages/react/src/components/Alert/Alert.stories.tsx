@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-
 import { Alert } from './Alert';
 
 const InfoIcon = (

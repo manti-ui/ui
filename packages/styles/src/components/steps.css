@@ -73,15 +73,18 @@
       color var(--manti-duration-base) var(--manti-ease-smooth);
   }
 
-  [data-scope='steps'][data-part='item'][data-current] [data-part='indicator'],
-  [data-scope='steps'][data-part='item'][data-complete]
+  /* Zag carries the progress state on the `trigger` and `separator` parts
+     (`data-current` / `data-complete` / `data-incomplete`), not on `item`. */
+  [data-scope='steps'][data-part='trigger'][data-current]
+    [data-part='indicator'],
+  [data-scope='steps'][data-part='trigger'][data-complete]
     [data-part='indicator'] {
     background: var(--tone-solid);
     border-color: transparent;
     color: var(--tone-on-solid);
   }
 
-  [data-scope='steps'][data-part='item'][data-current] [data-part='trigger'] {
+  [data-scope='steps'][data-part='trigger'][data-current] {
     color: var(--manti-text);
   }
 
@@ -120,8 +123,7 @@
     }
   }
 
-  [data-scope='steps'][data-part='item'][data-complete]
-    [data-part='separator'] {
+  [data-scope='steps'][data-part='separator'][data-complete] {
     background: var(--tone-solid);
   }
 

@@ -96,7 +96,7 @@ export function TimePicker({
         </button>
       </div>
       <Portal>
-        <div {...api.getPositionerProps()}>
+        <div {...api.getPositionerProps()} data-tone={tone}>
           <div {...api.getContentProps()}>
             <div {...api.getColumnProps({ unit: 'hour' })}>
               {api.getHours().map((cell) => (

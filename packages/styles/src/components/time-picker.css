@@ -72,8 +72,8 @@
 
   [data-scope='time-picker'][data-part='content'] {
     display: flex;
-    gap: var(--manti-space-1);
-    padding: var(--manti-space-2);
+    gap: var(--manti-space-2);
+    padding: var(--manti-space-3);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);
     backdrop-filter: var(--manti-glass-blur);
@@ -100,26 +100,38 @@
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
-    max-height: 14rem;
+    max-height: 15rem;
+    padding-inline: var(--manti-space-1);
     overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-snap-type: y proximity;
     scrollbar-width: thin;
+    scrollbar-color: var(--manti-border-strong) transparent;
   }
 
-  [data-scope='time-picker'][data-part='hour-cell'],
-  [data-scope='time-picker'][data-part='minute-cell'],
-  [data-scope='time-picker'][data-part='second-cell'],
-  [data-scope='time-picker'][data-part='period-cell'] {
+  /* Hairline divider between the hour / minute / period columns. */
+  [data-scope='time-picker'][data-part='column']:not(:last-child) {
+    border-inline-end: 1px solid var(--manti-glass-border);
+  }
+
+  /* Zag emits a single `cell` part for every column; `data-unit` distinguishes
+     hour / minute / period. Style them uniformly. */
+  [data-scope='time-picker'][data-part='cell'] {
     display: flex;
     align-items: center;
     justify-content: center;
     min-width: 2.75rem;
-    padding: var(--manti-space-2);
+    padding-block: var(--manti-space-2);
+    padding-inline: var(--manti-space-3);
     border-radius: var(--manti-radius-sm);
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
     font-variant-numeric: tabular-nums;
+    scroll-snap-align: center;
     cursor: pointer;
-    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+    transition:
+      background var(--manti-duration-fast) var(--manti-ease-smooth),
+      color var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
       background: color-mix(in oklab, var(--manti-text) 8%, transparent);
@@ -128,6 +140,12 @@
     &[data-selected] {
       background: var(--tone-solid);
       color: var(--tone-on-solid);
+      font-weight: var(--manti-weight-semibold);
+    }
+
+    &[data-disabled] {
+      color: var(--manti-text-subtle);
+      cursor: not-allowed;
     }
 
     &:focus-visible {
