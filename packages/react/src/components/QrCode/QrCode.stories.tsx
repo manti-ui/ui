@@ -8,7 +8,7 @@ const meta = {
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
   args: {
-    value: 'https://manti-ui.dev',
+    value: 'https://manti.design',
     size: 160,
   },
 } satisfies Meta<typeof QrCode>;
