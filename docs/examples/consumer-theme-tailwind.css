@@ -1,0 +1,86 @@
+/* ───────────────────────────────────────────────────────────────────────────
+ * Manti UI — kullanıcı tarafı tema override'ı (TAILWIND CSS v4)
+ *
+ * Tek dosya; uygulamanın app.css'i olarak düşün. İçinde 3 şey var:
+ *   1) Manti + Tailwind import'ları (SIRA ÖNEMLİ)
+ *   2) Manti token'larını override (düz CSS ile birebir aynı yöntem)
+ *   3) Tailwind utility'leri ile bileşen ezme örnekleri (.tsx tarafında)
+ *
+ * KRİTİK SIRA: Manti, tailwindcss'TEN ÖNCE import edilmeli. Aksi halde Tailwind
+ * layer sırasını önce ilan eder, `manti` layer'ı `utilities`'in ÜSTÜNE düşer ve
+ * utility override'ları sessizce çalışmayı bırakır.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+/* 1) Manti her şeyi getirir: stiller + doğru layer sırası
+ *    (theme, base, manti, components, utilities) + token→Tailwind köprüsü. */
+@import '@manti-ui/styles/tailwind.css';
+@import 'tailwindcss';
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 2) TOKEN OVERRIDE — düz CSS ile aynı. Bu :root blokları layer'sız olduğundan
+ *    Manti'nin manti.tokens layer'ını ezer. `bg-surface`, `text-primary-600`,
+ *    `rounded-manti-lg` gibi utility'ler runtime'da var(--manti-*)'a çözüldüğü
+ *    için bu override'ları OTOMATİK takip eder (tema köprüsü sayesinde).
+ * ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Primitive ramp (primary = paprika) */
+  --manti-paprika-100: oklch(0.94 0.03 275);
+  --manti-paprika-500: oklch(0.62 0.19 275);
+  --manti-paprika-600: oklch(0.55 0.2 275);
+  --manti-paprika-700: oklch(0.46 0.17 275);
+
+  /* Semantic roller — light-dark() formunu koru */
+  --manti-bg: light-dark(#fafafb, #0c0c10);
+  --manti-surface: light-dark(#ffffff, #15151b);
+  --manti-text: light-dark(#16161a, #f4f4f6);
+  --manti-border: light-dark(#e6e6ea, #2a2a33);
+
+  /* Radius skalası */
+  --manti-radius-md: 6px;
+  --manti-radius-lg: 10px;
+
+  /* Tipografi & focus */
+  --manti-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --manti-focus-ring: var(--manti-paprika-500);
+}
+
+/* Yeni tone — <Button tone="brand"> */
+[data-tone='brand'] {
+  --tone-solid: light-dark(#0d9488, #14b8a6);
+  --tone-solid-hover: light-dark(#0b8076, #2dd4bf);
+  --tone-solid-active: light-dark(#096a62, #5eead4);
+  --tone-on-solid: #ffffff;
+  --tone-soft-bg: light-dark(#d6f5f0, #0b2e2a);
+  --tone-soft-text: light-dark(#0b6a60, #99f6e4);
+  --tone-border: light-dark(#9fe5db, #155e54);
+  --tone-text: light-dark(#0b6a60, #5eead4);
+  --tone-ring: #14b8a6;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 3) (İsteğe bağlı) Kendi @theme token'larını ekle.
+ *    Tailwind v4 @theme bloğu yeni utility üretir; bunları Manti token'larına
+ *    bağlarsan tek kaynaktan beslenirler.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+@theme {
+  --color-brand: var(--manti-paprika-600); /* → bg-brand, text-brand, border-brand */
+  --radius-pill: 100px; /* → rounded-pill */
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * .tsx tarafında kullanım — utility'ler Manti bileşenini her zaman ezer,
+ * çünkü `utilities` layer'ı `manti`'nin üstünde:
+ *
+ *   // Tema köprüsünden gelen, token-farkında utility'ler:
+ *   <Card className="bg-surface border-border text-text rounded-manti-lg" />
+ *   <Button tone="brand">Kaydet</Button>
+ *
+ *   // Bileşene özel görsel ezme (radius/padding/shadow):
+ *   <Button className="rounded-pill px-8 shadow-none">Sharp</Button>
+ *
+ *   // Durum, data attribute'lerden okunur — Tailwind native targetlar:
+ *   <Button className="data-[loading=true]:opacity-70" />
+ *
+ * Burada da private --_* knob'lara DEĞİL, public utility + data attribute
+ * kontratına yaslanıyoruz.
+ * ─────────────────────────────────────────────────────────────────────────── */

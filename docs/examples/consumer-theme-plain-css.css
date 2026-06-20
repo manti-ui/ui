@@ -1,0 +1,115 @@
+/* ───────────────────────────────────────────────────────────────────────────
+ * Manti UI — kullanıcı tarafı tema override'ı (DÜZ CSS)
+ *
+ * Bu dosya, @manti-ui/react'i npm'den kuran bir uygulamanın KENDİ tasarım
+ * token'larını Manti'ye nasıl bağlayacağını gösterir. Hiçbir bileşen fork
+ * edilmez, hiçbir private (--_*) değişkene dokunulmaz, !important kullanılmaz.
+ *
+ * Yükleme sırası (önemli):
+ *   import '@manti-ui/styles/index.css';   // 1) önce Manti (layer'lı)
+ *   import './consumer-theme-plain-css.css'; // 2) sonra bu dosya (layer'sız → kazanır)
+ *
+ * Neden kazanır: Manti'nin tüm CSS'i `@layer manti.*` içinde. Bu dosyadaki
+ * kurallar layer'sız olduğu için specificity savaşı olmadan daima üstte gelir.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 1) PRIMITIVE RAMP — markanın ham paletini değiştir
+ *    (tone'lar bu ramp'lardan beslendiği için renk her yere yayılır)
+ * ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* "paprika" Manti'nin primary ramp'i. Kendi marka renginle ez. */
+  --manti-paprika-100: oklch(0.94 0.03 275);
+  --manti-paprika-200: oklch(0.89 0.06 275);
+  --manti-paprika-300: oklch(0.82 0.09 275);
+  --manti-paprika-500: oklch(0.62 0.19 275);
+  --manti-paprika-600: oklch(0.55 0.2 275);
+  --manti-paprika-700: oklch(0.46 0.17 275);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 2) SEMANTIC ROLLER — yüzey, metin, kenarlık, focus, skala
+ *    Renk rolleri light-dark(açık, koyu) formunda; bu formu KORU ki açık/koyu
+ *    tema (data-theme + OS tercihi) otomatik çalışmaya devam etsin.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Yüzeyler & metin */
+  --manti-bg: light-dark(#fafafb, #0c0c10);
+  --manti-surface: light-dark(#ffffff, #15151b);
+  --manti-surface-raised: light-dark(#ffffff, #1b1b22);
+  --manti-text: light-dark(#16161a, #f4f4f6);
+  --manti-text-muted: light-dark(#5c5c66, #b6b6c0);
+  --manti-border: light-dark(#e6e6ea, #2a2a33);
+
+  /* Radius skalası — kendi yuvarlaklık dilin */
+  --manti-radius-xs: 2px;
+  --manti-radius-sm: 4px;
+  --manti-radius-md: 6px;
+  --manti-radius-lg: 10px;
+  --manti-radius-xl: 16px;
+
+  /* Tipografi & motion */
+  --manti-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --manti-focus-ring: var(--manti-paprika-500);
+  --manti-duration-base: 180ms;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 3) TONE — bir tone'un anlamını yeniden tanımla veya YENİ tone ekle
+ *    Renk Manti'de yalnızca tone'dan gelir; markanı burada da görmek istersin.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* (a) Mevcut "primary" tone'unu doğrudan kendi marka rengine sabitle.
+ *     (Primitive ramp'i 1. adımda ezdiysen bu çoğu zaman gereksiz; ince ayar
+ *     veya ramp'tan bağımsız özel bir renk istiyorsan kullan.) */
+[data-tone='primary'] {
+  --tone-solid: light-dark(#5b3df5, #6d52ff);
+  --tone-solid-hover: light-dark(#4f33e0, #7e66ff);
+  --tone-solid-active: light-dark(#4329c4, #8f7aff);
+  --tone-on-solid: #ffffff;
+  --tone-soft-bg: light-dark(#eeeafd, #211c46);
+  --tone-soft-text: light-dark(#4329c4, #c4b8f8);
+  --tone-border: light-dark(#c9bdf8, #3a2f73);
+  --tone-text: light-dark(#4329c4, #b3a3f6);
+  --tone-ring: #6d52ff;
+}
+
+/* (b) Tamamen yeni bir tone: <Button tone="brand"> ile kullanılır.
+ *     Tonal prop'lar herhangi bir string kabul eder. */
+[data-tone='brand'] {
+  --tone-solid: light-dark(#0d9488, #14b8a6);
+  --tone-solid-hover: light-dark(#0b8076, #2dd4bf);
+  --tone-solid-active: light-dark(#096a62, #5eead4);
+  --tone-on-solid: #ffffff;
+  --tone-soft-bg: light-dark(#d6f5f0, #0b2e2a);
+  --tone-soft-text: light-dark(#0b6a60, #99f6e4);
+  --tone-border: light-dark(#9fe5db, #155e54);
+  --tone-text: light-dark(#0b6a60, #5eead4);
+  --tone-ring: #14b8a6;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 4) NOKTA ATIŞI override'lar — anatomy selector'a layer'sız yaz
+ *    Token'la ifade edemediğin tek bileşene özel görsel kararlar burada.
+ *    Public kontrat: data-scope / data-part / data-variant / data-tone / data-size
+ *    + durum attribute'leri (data-state, data-loading, disabled...).
+ *    Asla --_radius gibi private knob'lara dokunma — onlar semver garantisi dışı.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Sadece Button: büyük harf + hap şekli */
+[data-scope='button'][data-part='root'] {
+  letter-spacing: 0.02em;
+  border-radius: var(--manti-radius-full);
+}
+
+/* Sadece solid Button hover'da hafif kalksın */
+[data-scope='button'][data-part='root'][data-variant='solid']:hover {
+  translate: 0 -1px;
+}
+
+/* Tek bir instance için her zaman className/style de kullanabilirsin:
+ *   <Button className="my-cta">…</Button>
+ */
+.my-cta {
+  box-shadow: 0 8px 24px -8px var(--manti-paprika-600);
+}
