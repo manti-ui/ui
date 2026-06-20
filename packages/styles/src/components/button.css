@@ -5,22 +5,27 @@
  */
 @layer manti.components {
   [data-scope='button'][data-part='root'] {
-    --_radius: var(--manti-radius-md);
-    --_min-height: 2.5rem;
-    --_px: var(--manti-space-4);
-    --_font: var(--manti-text-sm);
+    /* Component tokens (Tier 3) — public, semver-stable per-button override
+       surface; each defaults to a Tier-2 semantic token. Redefine these to
+       restyle buttons without touching internals. Derived/computed values stay
+       private `--_*` knobs. See docs/styling.md. */
+    --manti-button-radius: var(--manti-radius-md);
+    --manti-button-height: var(--manti-control-height-md);
+    --manti-button-padding-x: var(--manti-space-4);
+    --manti-button-font-size: var(--manti-text-sm);
+    --manti-button-gap: var(--manti-space-2);
 
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--manti-space-2);
-    min-height: var(--_min-height);
-    padding-inline: var(--_px);
+    gap: var(--manti-button-gap);
+    min-height: var(--manti-button-height);
+    padding-inline: var(--manti-button-padding-x);
     border: 1px solid transparent;
-    border-radius: var(--_radius);
+    border-radius: var(--manti-button-radius);
     font-family: var(--manti-font-sans);
-    font-size: var(--_font);
+    font-size: var(--manti-button-font-size);
     font-weight: var(--manti-weight-semibold);
     line-height: var(--manti-leading-tight);
     white-space: nowrap;
@@ -35,16 +40,16 @@
       transform var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &[data-size='sm'] {
-      --_min-height: 2rem;
-      --_px: var(--manti-space-3);
-      --_radius: var(--manti-radius-sm);
+      --manti-button-height: var(--manti-control-height-sm);
+      --manti-button-padding-x: var(--manti-space-3);
+      --manti-button-radius: var(--manti-radius-sm);
     }
 
     &[data-size='lg'] {
-      --_min-height: 3rem;
-      --_px: var(--manti-space-6);
-      --_font: var(--manti-text-base);
-      --_radius: var(--manti-radius-lg);
+      --manti-button-height: var(--manti-control-height-lg);
+      --manti-button-padding-x: var(--manti-space-6);
+      --manti-button-font-size: var(--manti-text-base);
+      --manti-button-radius: var(--manti-radius-lg);
     }
 
     &[data-full-width='true'] {

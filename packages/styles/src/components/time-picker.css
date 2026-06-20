@@ -18,9 +18,12 @@
   }
 
   [data-scope='time-picker'][data-part='control'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-time-picker-height: var(--manti-control-height-md);
+
     display: flex;
     align-items: center;
-    min-height: 2.5rem;
+    min-height: var(--manti-time-picker-height);
     padding-inline: var(--manti-space-3);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);
@@ -97,10 +100,12 @@
   }
 
   [data-scope='time-picker'][data-part='column'] {
+    --manti-time-picker-column-height: 15rem;
+
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
-    max-height: 15rem;
+    max-height: var(--manti-time-picker-column-height);
     padding-inline: var(--manti-space-1);
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -117,10 +122,12 @@
   /* Zag emits a single `cell` part for every column; `data-unit` distinguishes
      hour / minute / period. Style them uniformly. */
   [data-scope='time-picker'][data-part='cell'] {
+    --manti-time-picker-cell-min-width: 2.75rem;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 2.75rem;
+    min-width: var(--manti-time-picker-cell-min-width);
     padding-block: var(--manti-space-2);
     padding-inline: var(--manti-space-3);
     border-radius: var(--manti-radius-sm);

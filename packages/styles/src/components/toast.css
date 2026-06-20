@@ -13,6 +13,9 @@
   }
 
   [data-scope='toast'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-toast-width: 20rem;
+
     translate: var(--x) var(--y);
     scale: var(--scale);
     z-index: var(--z-index);
@@ -31,7 +34,7 @@
     grid-template-columns: auto 1fr auto;
     align-items: start;
     gap: var(--manti-space-1) var(--manti-space-3);
-    width: 20rem;
+    width: var(--manti-toast-width);
     max-width: calc(100vw - var(--manti-space-8));
     padding: var(--manti-space-4);
     overflow: hidden;

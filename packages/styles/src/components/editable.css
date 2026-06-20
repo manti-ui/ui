@@ -18,9 +18,12 @@
   }
 
   [data-scope='editable'][data-part='area'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-editable-height: var(--manti-control-height-md);
+
     display: inline-flex;
     align-items: center;
-    min-height: 2.5rem;
+    min-height: var(--manti-editable-height);
   }
 
   [data-scope='editable'][data-part='preview'] {

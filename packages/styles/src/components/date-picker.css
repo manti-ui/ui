@@ -19,9 +19,12 @@
   }
 
   [data-scope='date-picker'][data-part='control'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-date-picker-height: var(--manti-control-height-md);
+
     display: flex;
     align-items: center;
-    min-height: 2.5rem;
+    min-height: var(--manti-date-picker-height);
     padding-inline: var(--manti-space-3);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);

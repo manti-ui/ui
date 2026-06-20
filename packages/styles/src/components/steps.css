@@ -55,12 +55,15 @@
   }
 
   [data-scope='steps'][data-part='indicator'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-steps-indicator-size: 2rem;
+
     display: inline-flex;
     flex: none;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
+    width: var(--manti-steps-indicator-size);
+    height: var(--manti-steps-indicator-size);
     background: var(--manti-glass-tint);
     border: 1px solid var(--manti-glass-border);
     border-radius: var(--manti-radius-full);

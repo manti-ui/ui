@@ -92,23 +92,72 @@ altitude:
   --manti-paprika-500: oklch(0.65 0.2 280); /* paprika is now purple */
 }
 
-/* 2. Semantic role — adjust surfaces, text, borders, focus. */
+/* 2. Semantic role — THE primary theming lever. Cascades to every component
+      consistently (this radius change rounds buttons, cards, inputs alike). */
 :root {
   --manti-radius-md: 4px;
   --manti-focus-ring: var(--manti-broth-500);
 }
 
-/* 3. Tone — remap what a tone means, globally or per subtree. */
+/* 3. Component token — escape hatch. Reach for it only to make ONE component
+      diverge from the system on purpose; otherwise prefer altitude 2. */
+:root {
+  --manti-button-radius: 9999px; /* buttons specifically become pills */
+}
+
+/* 4. Tone — remap what a tone means, globally or per subtree. */
 .marketing-section [data-tone='primary'] {
   --tone-solid: var(--manti-broth-600);
   --tone-solid-hover: var(--manti-broth-700);
 }
 
-/* 4. One instance — className or style, as usual. */
+/* 5. One instance — className or style, as usual. */
 ```
 
-Per-component knobs are intentionally private (the `--_*` variables inside
-component CSS); rely on tokens and the selector contract instead.
+### Component tokens (Tier 3)
+
+Manti tokens form three tiers, each defaulting into the one above it:
+
+| Tier             | Example                  | Scope                            |
+| ---------------- | ------------------------ | -------------------------------- |
+| 1 — primitive    | `--manti-paprika-500`    | the raw palette / scales         |
+| 2 — semantic     | `--manti-radius-md`, `--tone-solid` | purpose-based roles   |
+| 3 — **component** | `--manti-button-radius`  | one component's structural knobs |
+
+Component tokens are a small, curated set of `--manti-{component}-{property}`
+custom properties, each defaulting to a Tier-2 semantic token.
+
+**Theme through Tier 2 first.** Semantic tokens are the front door: a change
+there cascades to every component consistently. Component tokens are a labelled
+**escape hatch** — public and semver-stable, so you _may_ override them, but
+reaching for them is the exception, not the everyday path. Use one only to make a
+single component **intentionally diverge** from the system (e.g. pill-shaped
+buttons while the rest of the UI keeps its radius):
+
+```css
+:root {
+  --manti-button-radius: 9999px; /* buttons differ from cards/inputs on purpose */
+}
+```
+
+If you find yourself overriding the _same_ property across many components, that
+is a signal to change the Tier-2 semantic token instead — both for consistency
+and to avoid the per-component sprawl this tier is deliberately kept small to
+prevent.
+
+Two rules keep this tier safe to depend on:
+
+- **Curated, not exhaustive.** Only _independent_ dimensions a designer would
+  reach for (radius, padding, sizing, gap, typography) are exposed. Color is
+  already covered by the tonal `--tone-*` vocabulary, so this tier stays mostly
+  structural and small.
+- **Derived values stay private.** Anything a component computes from its tokens
+  (`calc()` geometry like a switch thumb's size and travel) remains a private
+  `--_*` knob, so you cannot put a component into an inconsistent state. The
+  `--_*` variables are _not_ API — target the named component tokens instead.
+
+The full per-component list lives in the `componentTokens` registry of
+`@manti-ui/tokens` (and powers the `MantiComponentToken` autocomplete type).
 
 ### Register a custom tone
 
@@ -250,6 +299,7 @@ reference the custom properties from `tailwind.config` instead
 Stable under semver:
 
 - token custom properties (`--manti-*`) and the `--tone-*` vocabulary
+- component tokens (`--manti-{component}-*`, registered in `componentTokens`)
 - the layer names (`manti.*`) and the rule that all Manti CSS is layered
 - `data-scope` / `data-part` anatomy and documented state attributes
 - the `data-motion` tiers (`none` / `default` / `full`)

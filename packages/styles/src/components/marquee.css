@@ -6,19 +6,20 @@
  */
 @layer manti.components {
   [data-scope='marquee'][data-part='root'] {
-    --_gap: var(--manti-space-8);
-    --_duration: 20s;
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-marquee-gap: var(--manti-space-8);
+    --manti-marquee-duration: 20s;
 
     display: flex;
     max-width: 100%;
     overflow: hidden;
 
     &[data-gap='sm'] {
-      --_gap: var(--manti-space-4);
+      --manti-marquee-gap: var(--manti-space-4);
     }
 
     &[data-gap='lg'] {
-      --_gap: var(--manti-space-12);
+      --manti-marquee-gap: var(--manti-space-12);
     }
 
     &[data-orientation='vertical'] {
@@ -32,7 +33,7 @@
     display: flex;
     flex: none;
     width: max-content;
-    animation: manti-marquee-x var(--_duration) linear infinite;
+    animation: manti-marquee-x var(--manti-marquee-duration) linear infinite;
   }
 
   [data-scope='marquee'][data-orientation='vertical'] [data-part='content'] {
@@ -51,18 +52,18 @@
   [data-scope='marquee'][data-part='group'] {
     display: flex;
     flex: none;
-    gap: var(--_gap);
+    gap: var(--manti-marquee-gap);
     align-items: center;
   }
 
   /* A trailing gap equal to the inner gap keeps the -50% loop seamless. */
   [data-scope='marquee'][data-orientation='horizontal'] [data-part='group'] {
-    margin-inline-end: var(--_gap);
+    margin-inline-end: var(--manti-marquee-gap);
   }
 
   [data-scope='marquee'][data-orientation='vertical'] [data-part='group'] {
     flex-direction: column;
-    margin-block-end: var(--_gap);
+    margin-block-end: var(--manti-marquee-gap);
   }
 
   [data-scope='marquee'][data-part='root'][data-pause-on-hover]:hover

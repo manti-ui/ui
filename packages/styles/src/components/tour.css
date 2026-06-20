@@ -23,11 +23,14 @@
   }
 
   [data-scope='tour'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-tour-width: 20rem;
+
     position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-2);
-    width: 20rem;
+    width: var(--manti-tour-width);
     max-width: calc(100vw - var(--manti-space-8));
     padding: var(--manti-space-4);
     background: var(--manti-glass-tint-strong);

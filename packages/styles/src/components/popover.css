@@ -8,12 +8,15 @@
   }
 
   [data-scope='popover'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-popover-max-width: 20rem;
+
     position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-2);
     width: max-content;
-    max-width: 20rem;
+    max-width: var(--manti-popover-max-width);
     padding: var(--manti-space-4);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);

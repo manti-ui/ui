@@ -30,7 +30,14 @@ lives in `AGENTS.md` — keep the two copies byte-for-byte in sync.
    `pnpm gen:tokens`. Never hand-edit that region; after changing the contract,
    regenerate it — the styles build fails if it is stale. The theme-aware roles
    (`light-dark()` surfaces/text/elevation/glass) and the tonal `--tone-*`
-   vocabulary below the region stay hand-authored.
+   vocabulary below the region stay hand-authored. Tokens form three tiers:
+   primitive ramps → semantic roles/tones → **component tokens**
+   (`--manti-{component}-{property}`, public and semver-stable, each defaulting
+   to a semantic token). When a component needs an _independent_ structural value
+   (radius, padding, sizing, gap, typography), expose it as a component token
+   rather than a bare literal or a private knob; keep only _derived_ `calc()`
+   values as private `--_*`. Register every component token in the
+   `componentTokens` map of `@manti-ui/tokens`.
 3. **Match the user's language.** Always reply in the same language the user wrote
    their prompt in (e.g. Turkish prompt → Turkish answer). This applies to chat
    responses only; code, identifiers, comments, and docs stay in English.
@@ -113,7 +120,16 @@ colocated `*.stories.tsx`, and have keyboard support, visible focus, and SR sema
 - **Tones** are CSS-variable vocabularies (`--tone-solid`, `--tone-soft-bg`, …).
   Tonal props accept any string; built-in tones keep TS autocomplete via
   `MantiTone`/`MantiBuiltinTone` from `@manti-ui/tokens`.
-- Per-component knobs are private `--_*` variables; never expose them as API.
+- **Component tokens (Tier 3)** are a public-but-secondary per-component escape
+  hatch: `--manti-{component}-{property}` (e.g. `--manti-button-radius`), each
+  defaulting to a Tier-2 semantic token, registered in `componentTokens` of
+  `@manti-ui/tokens`. Semantic tokens (Tier 2) remain the primary theming lever;
+  component tokens are for making one component diverge on purpose, not the
+  everyday path. Only _independent_ dimensions are exposed; _derived_ `calc()`
+  values stay private `--_*` knobs and are never API. The styles build runs
+  `scripts/check-component-tokens.mjs`, which fails if the `--manti-{component}-*`
+  tokens defined in a component's CSS drift from the `componentTokens` registry —
+  add/rename a component token and you must update the registry too.
 - `data-motion` tiers (`none`/`default`/`full`) are pure CSS in
   `packages/styles/src/motion/`.
 

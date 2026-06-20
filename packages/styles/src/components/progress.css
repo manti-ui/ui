@@ -34,11 +34,12 @@
   }
 
   [data-scope='progress'][data-part='track'] {
-    --_h: 0.5rem;
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-progress-track-height: 0.5rem;
 
     position: relative;
     width: 100%;
-    height: var(--_h);
+    height: var(--manti-progress-track-height);
     overflow: hidden;
     background: var(--manti-border-strong);
     border-radius: var(--manti-radius-full);
@@ -46,12 +47,12 @@
 
   [data-scope='progress'][data-part='root'][data-size='sm']
     [data-part='track'] {
-    --_h: 0.375rem;
+    --manti-progress-track-height: 0.375rem;
   }
 
   [data-scope='progress'][data-part='root'][data-size='lg']
     [data-part='track'] {
-    --_h: 0.75rem;
+    --manti-progress-track-height: 0.75rem;
   }
 
   [data-scope='progress'][data-part='range'] {
@@ -83,21 +84,21 @@
   }
 
   [data-scope='progress'][data-part='circle'] {
-    --_diameter: 5rem;
+    --manti-progress-circle-size: 5rem;
 
-    width: var(--_diameter);
-    height: var(--_diameter);
+    width: var(--manti-progress-circle-size);
+    height: var(--manti-progress-circle-size);
     transform: rotate(-90deg);
   }
 
   [data-scope='progress'][data-part='root'][data-size='sm']
     [data-part='circle'] {
-    --_diameter: 3.5rem;
+    --manti-progress-circle-size: 3.5rem;
   }
 
   [data-scope='progress'][data-part='root'][data-size='lg']
     [data-part='circle'] {
-    --_diameter: 7rem;
+    --manti-progress-circle-size: 7rem;
   }
 
   [data-scope='progress'][data-part='circle-track'] {

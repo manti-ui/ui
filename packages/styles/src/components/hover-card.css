@@ -9,9 +9,12 @@
   }
 
   [data-scope='hover-card'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-hover-card-max-width: 20rem;
+
     position: relative;
     width: max-content;
-    max-width: 20rem;
+    max-width: var(--manti-hover-card-max-width);
     padding: var(--manti-space-4);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);

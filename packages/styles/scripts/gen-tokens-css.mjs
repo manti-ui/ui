@@ -46,6 +46,10 @@ for (const [ramp, stops] of Object.entries(t.colorPrimitives))
 head('Radius');
 for (const [k, v] of Object.entries(t.radius)) decl(`manti-radius-${k}`, v);
 
+head('Control height');
+for (const [k, v] of Object.entries(t.controlHeight))
+  decl(`manti-control-height-${k}`, v);
+
 head('Spacing');
 for (const [k, v] of Object.entries(t.space)) decl(`manti-space-${k}`, v);
 

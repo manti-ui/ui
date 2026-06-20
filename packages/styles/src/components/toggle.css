@@ -6,14 +6,15 @@
  */
 @layer manti.components {
   [data-scope='toggle'][data-part='root'] {
-    --_size: 2.5rem;
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-toggle-size: 2.5rem;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--manti-space-2);
-    min-width: var(--_size);
-    min-height: var(--_size);
+    min-width: var(--manti-toggle-size);
+    min-height: var(--manti-toggle-size);
     padding-inline: var(--manti-space-3);
     background: var(--manti-glass-tint);
     -webkit-backdrop-filter: var(--manti-glass-blur);

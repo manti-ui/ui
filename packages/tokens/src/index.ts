@@ -134,6 +134,19 @@ export const radius = {
   full: '9999px',
 } as const;
 
+/**
+ * Control heights — the shared vertical sizing of form controls (button, input,
+ * select, number-input, combobox). A Tier-2 semantic scale so a consumer can
+ * resize every control at once; components default their `--manti-*-height`
+ * component token to it. Compact outliers (e.g. toggle-group) keep their own
+ * values.
+ */
+export const controlHeight = {
+  sm: '2rem',
+  md: '2.5rem',
+  lg: '3rem',
+} as const;
+
 /** Spacing scale on a 4px grid. */
 export const space = {
   0: '0',
@@ -232,13 +245,91 @@ export const zIndex = {
   modal: '1300',
 } as const;
 
+/**
+ * Component tokens (Tier 3).
+ *
+ * Public, semver-stable CSS custom properties scoped to a single component, each
+ * defaulting to a Tier-2 semantic token. They are the sanctioned per-component
+ * override surface: redefine `--manti-button-radius` to restyle every button
+ * without forking the component or touching its internals.
+ *
+ * Curation rule — only *independent* dimensions are exposed. *Derived* values
+ * (computed via `calc()` from these) stay private `--_*` knobs inside the
+ * component CSS, so a consumer can never put a component into a geometrically
+ * inconsistent state. Color is already handled by the tonal `--tone-*` tier, so
+ * this tier stays mostly structural (radius, spacing, sizing, typography).
+ *
+ * Values live hand-authored in each component's CSS (like the semantic roles),
+ * because they are CSS expressions (`var(...)`, literals) a plain TS value cannot
+ * express. This contract is the typed *registry* of which tokens exist — the
+ * source of truth for docs, autocomplete, and the semver surface. The property
+ * name for an entry is `--manti-${component}-${property}`.
+ */
+export const componentTokens = {
+  button: ['radius', 'height', 'padding-x', 'font-size', 'gap'],
+  switch: ['track-width', 'track-height', 'track-padding'],
+  'angle-slider': ['size'],
+  avatar: ['size'],
+  badge: ['font-size', 'padding-x', 'padding-y'],
+  carousel: ['viewport-height'],
+  checkbox: ['size'],
+  clipboard: ['height'],
+  'color-picker': ['height', 'panel-width', 'area-height'],
+  combobox: ['height', 'content-max-height'],
+  'date-picker': ['height'],
+  dialog: ['max-width'],
+  editable: ['height'],
+  field: ['height', 'padding-x'],
+  'floating-panel': ['min-width', 'min-height'],
+  'hover-card': ['max-width'],
+  listbox: ['min-width', 'max-height'],
+  marquee: ['duration', 'gap'],
+  menu: ['min-width', 'max-width'],
+  'navigation-menu': ['content-min-width'],
+  'number-input': ['height', 'stepper-width'],
+  pagination: ['size'],
+  'pin-input': ['size'],
+  popover: ['max-width'],
+  progress: ['track-height', 'circle-size'],
+  'rating-group': ['size'],
+  select: ['height', 'content-max-height'],
+  'signature-pad': ['height'],
+  slider: ['thumb-size', 'track-size', 'length'],
+  spinner: ['size', 'thickness'],
+  steps: ['indicator-size'],
+  'tags-input': ['height'],
+  'time-picker': ['height', 'column-height', 'cell-min-width'],
+  toast: ['width'],
+  toggle: ['size'],
+  'toggle-group': ['height', 'padding-x'],
+  tooltip: ['max-width'],
+  tour: ['width'],
+  timer: ['item-min-width'],
+} as const;
+
+export type MantiComponentTokens = typeof componentTokens;
+
+/** The component a component token belongs to (`'button' | 'switch' | …`). */
+export type MantiComponentTokenScope = keyof MantiComponentTokens;
+
+/**
+ * Every public component-token custom-property name as a string-literal union,
+ * e.g. `--manti-button-radius` | `--manti-switch-track-width`. Keeps autocomplete
+ * for the override surface while still accepting any string elsewhere.
+ */
+export type MantiComponentToken = {
+  [C in MantiComponentTokenScope]: `--manti-${C & string}-${MantiComponentTokens[C][number] & string}`;
+}[MantiComponentTokenScope];
+
 /** The complete Manti UI token contract. */
 export const mantiTokens = {
   packageName: '@manti-ui/tokens',
   status: 'designed',
   color: { primitives: colorPrimitives },
   tones,
+  componentTokens,
   radius,
+  controlHeight,
   space,
   fontSize,
   lineHeight,

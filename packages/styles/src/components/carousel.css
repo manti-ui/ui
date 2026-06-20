@@ -15,8 +15,11 @@
     overflow: hidden;
 
     &[data-orientation='vertical'] {
+      /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+      --manti-carousel-viewport-height: 22rem;
+
       flex-direction: column;
-      max-height: 22rem;
+      max-height: var(--manti-carousel-viewport-height);
     }
 
     /* Mouse-drag swipe (Zag `allowMouseDrag`): hint grab, lock to grabbing while

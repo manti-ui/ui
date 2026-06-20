@@ -5,7 +5,8 @@
  */
 @layer manti.components {
   [data-scope='checkbox'][data-part='root'] {
-    --_size: 1.25rem;
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-checkbox-size: 1.25rem;
 
     display: inline-flex;
     align-items: center;
@@ -14,11 +15,11 @@
     user-select: none;
 
     &[data-size='sm'] {
-      --_size: 1rem;
+      --manti-checkbox-size: 1rem;
     }
 
     &[data-size='lg'] {
-      --_size: 1.5rem;
+      --manti-checkbox-size: 1.5rem;
     }
 
     &[data-disabled] {
@@ -32,8 +33,8 @@
     display: grid;
     place-items: center;
     flex: none;
-    width: var(--_size);
-    height: var(--_size);
+    width: var(--manti-checkbox-size);
+    height: var(--manti-checkbox-size);
     background: var(--manti-surface-raised);
     border: 1.5px solid var(--manti-border-strong);
     border-radius: var(--manti-radius-sm);

@@ -4,26 +4,27 @@
  */
 @layer manti.components {
   [data-scope='badge'][data-part='root'] {
-    --_font: var(--manti-text-xs);
-    --_py: 0.125rem;
-    --_px: var(--manti-space-2);
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-badge-font-size: var(--manti-text-xs);
+    --manti-badge-padding-y: 0.125rem;
+    --manti-badge-padding-x: var(--manti-space-2);
 
     display: inline-flex;
     align-items: center;
     gap: var(--manti-space-1);
-    padding: var(--_py) var(--_px);
+    padding: var(--manti-badge-padding-y) var(--manti-badge-padding-x);
     border: 1px solid transparent;
     border-radius: var(--manti-radius-full);
     font-family: var(--manti-font-sans);
-    font-size: var(--_font);
+    font-size: var(--manti-badge-font-size);
     font-weight: var(--manti-weight-semibold);
     line-height: var(--manti-leading-tight);
     white-space: nowrap;
 
     &[data-size='md'] {
-      --_font: var(--manti-text-sm);
-      --_py: 0.25rem;
-      --_px: var(--manti-space-3);
+      --manti-badge-font-size: var(--manti-text-sm);
+      --manti-badge-padding-y: 0.25rem;
+      --manti-badge-padding-x: var(--manti-space-3);
     }
 
     &[data-variant='solid'] {

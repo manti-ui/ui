@@ -30,12 +30,15 @@
   }
 
   [data-scope='dialog'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-dialog-max-width: 32rem;
+
     position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-3);
     width: 100%;
-    max-width: 32rem;
+    max-width: var(--manti-dialog-max-width);
     margin: auto;
     padding: var(--manti-space-6);
     background: var(--manti-glass-tint-strong);
@@ -49,11 +52,11 @@
     color: var(--manti-text);
 
     &[data-size='sm'] {
-      max-width: 24rem;
+      --manti-dialog-max-width: 24rem;
     }
 
     &[data-size='lg'] {
-      max-width: 44rem;
+      --manti-dialog-max-width: 44rem;
     }
 
     &[data-state='open'] {

@@ -18,10 +18,13 @@
   }
 
   [data-scope='color-picker'][data-part='trigger'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-color-picker-height: var(--manti-control-height-md);
+
     display: inline-flex;
     align-items: center;
     gap: var(--manti-space-2);
-    min-height: 2.5rem;
+    min-height: var(--manti-color-picker-height);
     padding-inline: var(--manti-space-2) var(--manti-space-3);
     background: var(--manti-glass-tint-strong);
     border: 1px solid var(--manti-glass-border);
@@ -53,10 +56,12 @@
   }
 
   [data-scope='color-picker'][data-part='content'] {
+    --manti-color-picker-panel-width: 16rem;
+
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-3);
-    width: 16rem;
+    width: var(--manti-color-picker-panel-width);
     padding: var(--manti-space-3);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);
@@ -81,8 +86,10 @@
   }
 
   [data-scope='color-picker'][data-part='area'] {
+    --manti-color-picker-area-height: 9rem;
+
     position: relative;
-    height: 9rem;
+    height: var(--manti-color-picker-area-height);
     border-radius: var(--manti-radius-sm);
     overflow: hidden;
   }

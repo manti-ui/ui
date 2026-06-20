@@ -18,14 +18,15 @@
   }
 
   [data-scope='select'][data-part='trigger'] {
-    --_min-height: 2.5rem;
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-select-height: var(--manti-control-height-md);
 
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--manti-space-2);
     width: 100%;
-    min-height: var(--_min-height);
+    min-height: var(--manti-select-height);
     padding-inline: var(--manti-space-3);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);
@@ -79,12 +80,12 @@
 
   [data-scope='select'][data-part='root'][data-size='sm']
     [data-part='trigger'] {
-    --_min-height: 2rem;
+    --manti-select-height: var(--manti-control-height-sm);
   }
 
   [data-scope='select'][data-part='root'][data-size='lg']
     [data-part='trigger'] {
-    --_min-height: 3rem;
+    --manti-select-height: var(--manti-control-height-lg);
   }
 
   [data-scope='select'][data-part='root'][data-invalid] [data-part='trigger'] {
@@ -112,10 +113,12 @@
   }
 
   [data-scope='select'][data-part='content'] {
+    --manti-select-content-max-height: 18rem;
+
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-1);
-    max-height: 18rem;
+    max-height: var(--manti-select-content-max-height);
     overflow-y: auto;
     padding: var(--manti-space-2);
     background: var(--manti-glass-tint-strong);
