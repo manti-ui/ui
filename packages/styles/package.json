@@ -39,7 +39,8 @@
     "gen:tokens": "node scripts/gen-tokens-css.mjs",
     "gen:tokens:check": "node scripts/gen-tokens-css.mjs --check",
     "check:component-tokens": "node scripts/check-component-tokens.mjs",
-    "build": "node scripts/gen-tokens-css.mjs --check && node scripts/check-component-tokens.mjs && vite build && tsc -p tsconfig.build.json",
+    "gen:component-tokens-doc": "node scripts/gen-component-tokens-doc.mjs",
+    "build": "node scripts/gen-tokens-css.mjs --check && node scripts/check-component-tokens.mjs && node scripts/gen-component-tokens-doc.mjs --check && vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

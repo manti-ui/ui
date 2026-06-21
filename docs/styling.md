@@ -157,7 +157,9 @@ Two rules keep this tier safe to depend on:
   `--_*` variables are _not_ API — target the named component tokens instead.
 
 The full per-component list lives in the `componentTokens` registry of
-`@manti-ui/tokens` (and powers the `MantiComponentToken` autocomplete type).
+`@manti-ui/tokens` (and powers the `MantiComponentToken` autocomplete type). See
+**[component-tokens.md](./component-tokens.md)** for the generated table of every
+component token and its default.
 
 ### Register a custom tone
 
