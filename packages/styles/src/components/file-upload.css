@@ -59,7 +59,8 @@
   [data-scope='file-upload'][data-part='trigger'] {
     display: inline-flex;
     align-items: center;
-    min-height: 2rem;
+    /* Browse action button — shares the Tier-2 control-height scale. */
+    min-height: var(--manti-control-height-sm);
     padding-inline: var(--manti-space-4);
     background: var(--tone-solid);
     border: 1px solid transparent;

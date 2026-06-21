@@ -105,7 +105,8 @@
     & button {
       display: inline-flex;
       align-items: center;
-      min-height: 2rem;
+      /* Secondary control button — shares the Tier-2 control-height scale. */
+      min-height: var(--manti-control-height-sm);
       padding-inline: var(--manti-space-3);
       border-radius: var(--manti-radius-sm);
       font-size: var(--manti-text-sm);
