@@ -65,6 +65,10 @@ data attributes.
 
 ## Customizing with plain CSS
 
+> Copy-paste starting points: [`examples/consumer-theme-plain-css.css`](./examples/consumer-theme-plain-css.css)
+> and [`examples/consumer-theme-tailwind.css`](./examples/consumer-theme-tailwind.css)
+> show a full rebrand at every altitude (primitive, semantic, component, tone).
+
 ### Override any component style
 
 Write normal (unlayered) CSS against the anatomy contract:
@@ -260,6 +264,7 @@ switches for free.
 | `bg-paprika-500`, `text-herb-700`     | primitive ramps              |
 | `bg-primary-600`, `border-danger-300` | semantic ramp aliases        |
 | `rounded-manti-lg`, `shadow-manti-md` | Manti radius/elevation       |
+| `h-control-md`, `min-h-control-sm`    | Manti control heights        |
 | `ease-smooth`, `ease-soft`            | Manti motion curves          |
 | `ease-spring`, `ease-bounce`          | Manti expressive curves      |
 | `font-sans`, `font-mono`              | Manti font stacks (override) |
@@ -267,7 +272,10 @@ switches for free.
 Spacing needs no bridge: Manti's 4px grid equals Tailwind's default
 `--spacing: 0.25rem`, so `p-4` and `var(--manti-space-4)` already agree.
 Radius and shadow scales are prefixed with `manti-` so Tailwind's own
-`rounded-md` / `shadow-sm` keep their stock meaning.
+`rounded-md` / `shadow-sm` keep their stock meaning. The shared control height is
+exposed as `control-{sm,md,lg}` in the spacing namespace, so `h-control-md` and
+friends resolve to the token and follow any override (while plain `h-10` keeps
+its fixed value).
 
 ### Headless: skip Manti's CSS entirely
 

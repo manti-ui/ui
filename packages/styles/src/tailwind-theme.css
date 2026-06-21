@@ -190,6 +190,13 @@
   --color-info-900: var(--manti-broth-900);
   --color-info-950: var(--manti-broth-950);
 
+  /* Control height — shared form-control sizing. Exposed through the spacing
+     namespace so `h-control-md` (and min-h-/etc.) resolve to the token and
+     follow any override, while plain numeric heights (`h-10`) keep working. */
+  --spacing-control-sm: var(--manti-control-height-sm);
+  --spacing-control-md: var(--manti-control-height-md);
+  --spacing-control-lg: var(--manti-control-height-lg);
+
   /* Radius (prefixed — Tailwind owns --radius-sm/md/lg/...) ----------------- */
   --radius-manti-xs: var(--manti-radius-xs);
   --radius-manti-sm: var(--manti-radius-sm);
