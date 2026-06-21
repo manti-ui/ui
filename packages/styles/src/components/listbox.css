@@ -17,11 +17,15 @@
   }
 
   [data-scope='listbox'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-listbox-min-width: 14rem;
+    --manti-listbox-max-height: 18rem;
+
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-1);
-    min-width: 14rem;
-    max-height: 18rem;
+    min-width: var(--manti-listbox-min-width);
+    max-height: var(--manti-listbox-max-height);
     overflow-y: auto;
     padding: var(--manti-space-2);
     background: var(--manti-glass-tint-strong);

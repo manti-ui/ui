@@ -17,11 +17,14 @@
   }
 
   [data-scope='timer'][data-part='item'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-timer-item-min-width: 3.5rem;
+
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     gap: var(--manti-space-1);
-    min-width: 3.5rem;
+    min-width: var(--manti-timer-item-min-width);
     padding: var(--manti-space-2);
     background: var(--manti-glass-tint);
     border: 1px solid var(--manti-glass-border);
@@ -56,7 +59,8 @@
     & button {
       display: inline-flex;
       align-items: center;
-      min-height: 2rem;
+      /* Secondary control button — shares the Tier-2 control-height scale. */
+      min-height: var(--manti-control-height-sm);
       padding-inline: var(--manti-space-3);
       background: var(--manti-glass-tint);
       border: 1px solid var(--manti-glass-border);

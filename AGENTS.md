@@ -20,7 +20,14 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    `pnpm gen:tokens`. Never hand-edit that region; after changing the contract,
    regenerate it — the styles build fails if it is stale. The theme-aware roles
    (`light-dark()` surfaces/text/elevation/glass) and the tonal `--tone-*`
-   vocabulary below the region stay hand-authored.
+   vocabulary below the region stay hand-authored. Tokens form three tiers:
+   primitive ramps → semantic roles/tones → **component tokens**
+   (`--manti-{component}-{property}`, public and semver-stable, each defaulting
+   to a semantic token). When a component needs an _independent_ structural value
+   (radius, padding, sizing, gap, typography), expose it as a component token
+   rather than a bare literal or a private knob; keep only _derived_ `calc()`
+   values as private `--_*`. Register every component token in the
+   `componentTokens` map of `@manti-ui/tokens`.
 3. **Match the user's language.** Always reply in the same language the user wrote
    their prompt in (e.g. Turkish prompt → Turkish answer). This applies to chat
    responses only; code, identifiers, comments, and docs stay in English.

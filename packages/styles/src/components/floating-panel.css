@@ -9,11 +9,15 @@
   }
 
   [data-scope='floating-panel'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-floating-panel-min-width: 16rem;
+    --manti-floating-panel-min-height: 8rem;
+
     position: relative;
     display: flex;
     flex-direction: column;
-    min-width: 16rem;
-    min-height: 8rem;
+    min-width: var(--manti-floating-panel-min-width);
+    min-height: var(--manti-floating-panel-min-height);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);
     backdrop-filter: var(--manti-glass-blur);

@@ -18,11 +18,12 @@
   }
 
   [data-scope='combobox'][data-part='control'] {
-    --_min-height: 2.5rem;
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-combobox-height: var(--manti-control-height-md);
 
     display: flex;
     align-items: center;
-    min-height: var(--_min-height);
+    min-height: var(--manti-combobox-height);
     padding-inline: var(--manti-space-3);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);
@@ -63,12 +64,12 @@
 
   [data-scope='combobox'][data-part='root'][data-size='sm']
     [data-part='control'] {
-    --_min-height: 2rem;
+    --manti-combobox-height: var(--manti-control-height-sm);
   }
 
   [data-scope='combobox'][data-part='root'][data-size='lg']
     [data-part='control'] {
-    --_min-height: 3rem;
+    --manti-combobox-height: var(--manti-control-height-lg);
   }
 
   [data-scope='combobox'][data-part='root'][data-invalid]
@@ -110,10 +111,12 @@
   }
 
   [data-scope='combobox'][data-part='content'] {
+    --manti-combobox-content-max-height: 18rem;
+
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-1);
-    max-height: 18rem;
+    max-height: var(--manti-combobox-content-max-height);
     overflow-y: auto;
     padding: var(--manti-space-2);
     background: var(--manti-glass-tint-strong);

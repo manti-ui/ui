@@ -18,8 +18,11 @@
   }
 
   [data-scope='signature-pad'][data-part='control'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-signature-pad-height: 12rem;
+
     position: relative;
-    height: 12rem;
+    height: var(--manti-signature-pad-height);
     background: var(--manti-surface-raised);
     border: 1px solid var(--manti-glass-border);
     border-radius: var(--manti-radius-md);

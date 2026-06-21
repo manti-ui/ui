@@ -17,10 +17,13 @@
   }
 
   [data-scope='clipboard'][data-part='control'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-clipboard-height: var(--manti-control-height-md);
+
     display: flex;
     align-items: center;
     gap: var(--manti-space-2);
-    min-height: 2.5rem;
+    min-height: var(--manti-clipboard-height);
     padding: 0 0 0 var(--manti-space-3);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);

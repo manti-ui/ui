@@ -8,11 +8,15 @@
   }
 
   [data-scope='menu'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-menu-min-width: 12rem;
+    --manti-menu-max-width: 20rem;
+
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-1);
-    min-width: 12rem;
-    max-width: 20rem;
+    min-width: var(--manti-menu-min-width);
+    max-width: var(--manti-menu-max-width);
     padding: var(--manti-space-2);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);

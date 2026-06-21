@@ -6,9 +6,14 @@
  */
 @layer manti.components {
   [data-scope='switch'][data-part='root'] {
-    --_track-w: 2.75rem;
-    --_track-h: 1.5rem;
-    --_pad: 0.1875rem;
+    /* Component tokens (Tier 3) — public, semver-stable per-switch override
+       surface. Only the independent track dimensions are exposed; the thumb
+       size and travel derive from them and stay private `--_*` so a switch
+       cannot be put into a geometrically inconsistent state. See
+       docs/styling.md. */
+    --manti-switch-track-width: 2.75rem;
+    --manti-switch-track-height: 1.5rem;
+    --manti-switch-track-padding: 0.1875rem;
 
     display: inline-flex;
     align-items: center;
@@ -17,9 +22,9 @@
     user-select: none;
 
     &[data-size='sm'] {
-      --_track-w: 2.25rem;
-      --_track-h: 1.25rem;
-      --_pad: 0.1563rem;
+      --manti-switch-track-width: 2.25rem;
+      --manti-switch-track-height: 1.25rem;
+      --manti-switch-track-padding: 0.1563rem;
     }
 
     &[data-disabled] {
@@ -31,9 +36,9 @@
   [data-scope='switch'][data-part='control'] {
     position: relative;
     flex: none;
-    width: var(--_track-w);
-    height: var(--_track-h);
-    padding: var(--_pad);
+    width: var(--manti-switch-track-width);
+    height: var(--manti-switch-track-height);
+    padding: var(--manti-switch-track-padding);
     background: var(--manti-border-strong);
     border-radius: var(--manti-radius-full);
     transition: background-color var(--manti-duration-base)
@@ -46,8 +51,13 @@
 
   [data-scope='switch'][data-part='thumb'] {
     display: block;
-    width: calc(var(--_track-h) - var(--_pad) * 2);
-    height: calc(var(--_track-h) - var(--_pad) * 2);
+    /* Derived from the public track tokens — stays private so the thumb can
+       never be sized inconsistently with its track. */
+    --_thumb-size: calc(
+      var(--manti-switch-track-height) - var(--manti-switch-track-padding) * 2
+    );
+    width: var(--_thumb-size);
+    height: var(--_thumb-size);
     background: var(--manti-surface-raised);
     border-radius: var(--manti-radius-full);
     box-shadow: var(--manti-shadow-sm);
@@ -56,7 +66,9 @@
 
   [data-scope='switch'][data-part='control'][data-state='checked']
     [data-part='thumb'] {
-    transform: translateX(calc(var(--_track-w) - var(--_track-h)));
+    transform: translateX(
+      calc(var(--manti-switch-track-width) - var(--manti-switch-track-height))
+    );
   }
 
   [data-scope='switch'][data-part='root']:has(input:focus-visible)

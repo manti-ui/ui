@@ -34,16 +34,17 @@
   }
 
   [data-scope='toggle-group'][data-part='item'] {
-    --_min-height: 2rem;
-    --_px: var(--manti-space-3);
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-toggle-group-height: 2rem;
+    --manti-toggle-group-padding-x: var(--manti-space-3);
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--manti-space-2);
-    min-width: var(--_min-height);
-    min-height: var(--_min-height);
-    padding-inline: var(--_px);
+    min-width: var(--manti-toggle-group-height);
+    min-height: var(--manti-toggle-group-height);
+    padding-inline: var(--manti-toggle-group-padding-x);
     border: 1px solid transparent;
     border-radius: var(--manti-radius-sm);
     color: var(--manti-text-muted);
@@ -88,15 +89,15 @@
 
   [data-scope='toggle-group'][data-part='root'][data-size='sm']
     [data-part='item'] {
-    --_min-height: 1.75rem;
-    --_px: var(--manti-space-2);
+    --manti-toggle-group-height: 1.75rem;
+    --manti-toggle-group-padding-x: var(--manti-space-2);
     font-size: var(--manti-text-xs);
   }
 
   [data-scope='toggle-group'][data-part='root'][data-size='lg']
     [data-part='item'] {
-    --_min-height: 2.5rem;
-    --_px: var(--manti-space-4);
+    --manti-toggle-group-height: 2.5rem;
+    --manti-toggle-group-padding-x: var(--manti-space-4);
     font-size: var(--manti-text-base);
   }
 }

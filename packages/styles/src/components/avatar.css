@@ -4,34 +4,35 @@
  */
 @layer manti.components {
   [data-scope='avatar'][data-part='root'] {
-    --_size: 2.5rem;
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-avatar-size: 2.5rem;
 
     position: relative;
     display: inline-flex;
     flex: none;
     align-items: center;
     justify-content: center;
-    width: var(--_size);
-    height: var(--_size);
+    width: var(--manti-avatar-size);
+    height: var(--manti-avatar-size);
     overflow: hidden;
     background: var(--manti-surface-sunken);
     border: 1px solid var(--manti-glass-border);
     border-radius: var(--manti-radius-full);
     color: var(--manti-text-muted);
-    font-size: calc(var(--_size) * 0.4);
+    font-size: calc(var(--manti-avatar-size) * 0.4);
     font-weight: var(--manti-weight-semibold);
     user-select: none;
 
     &[data-size='sm'] {
-      --_size: 2rem;
+      --manti-avatar-size: 2rem;
     }
 
     &[data-size='lg'] {
-      --_size: 3.5rem;
+      --manti-avatar-size: 3.5rem;
     }
 
     &[data-size='xl'] {
-      --_size: 4.5rem;
+      --manti-avatar-size: 4.5rem;
     }
 
     &[data-shape='square'] {

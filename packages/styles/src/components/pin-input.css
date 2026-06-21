@@ -21,10 +21,11 @@
   }
 
   [data-scope='pin-input'][data-part='input'] {
-    --_size: 2.75rem;
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-pin-input-size: 2.75rem;
 
-    width: var(--_size);
-    height: var(--_size);
+    width: var(--manti-pin-input-size);
+    height: var(--manti-pin-input-size);
     padding: 0;
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);
@@ -77,13 +78,13 @@
 
   [data-scope='pin-input'][data-part='root'][data-size='sm']
     [data-part='input'] {
-    --_size: 2.25rem;
+    --manti-pin-input-size: 2.25rem;
     font-size: var(--manti-text-base);
   }
 
   [data-scope='pin-input'][data-part='root'][data-size='lg']
     [data-part='input'] {
-    --_size: 3.25rem;
+    --manti-pin-input-size: 3.25rem;
     font-size: var(--manti-text-xl);
   }
 

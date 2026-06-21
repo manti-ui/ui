@@ -22,12 +22,13 @@
   }
 
   [data-scope='rating-group'][data-part='item'] {
-    --_size: 1.5rem;
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-rating-group-size: 1.5rem;
 
     position: relative;
     display: inline-flex;
-    width: var(--_size);
-    height: var(--_size);
+    width: var(--manti-rating-group-size);
+    height: var(--manti-rating-group-size);
     cursor: pointer;
 
     &[data-disabled] {
@@ -43,12 +44,12 @@
 
   [data-scope='rating-group'][data-part='root'][data-size='sm']
     [data-part='item'] {
-    --_size: 1.25rem;
+    --manti-rating-group-size: 1.25rem;
   }
 
   [data-scope='rating-group'][data-part='root'][data-size='lg']
     [data-part='item'] {
-    --_size: 2rem;
+    --manti-rating-group-size: 2rem;
   }
 
   [data-scope='rating-group'][data-part='item'] [data-part='star-bg'],

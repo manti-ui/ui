@@ -14,13 +14,14 @@
   [data-scope='pagination'][data-part='prev-trigger'],
   [data-scope='pagination'][data-part='next-trigger'],
   [data-scope='pagination'][data-part='ellipsis'] {
-    --_size: 2.25rem;
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-pagination-size: 2.25rem;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: var(--_size);
-    height: var(--_size);
+    min-width: var(--manti-pagination-size);
+    height: var(--manti-pagination-size);
     padding-inline: var(--manti-space-2);
     border: 1px solid transparent;
     border-radius: var(--manti-radius-sm);
@@ -38,7 +39,7 @@
       [data-part='next-trigger'],
       [data-part='ellipsis']
     ) {
-    --_size: 1.875rem;
+    --manti-pagination-size: 1.875rem;
     font-size: var(--manti-text-xs);
   }
 
@@ -49,7 +50,7 @@
       [data-part='next-trigger'],
       [data-part='ellipsis']
     ) {
-    --_size: 2.75rem;
+    --manti-pagination-size: 2.75rem;
     font-size: var(--manti-text-base);
   }
 

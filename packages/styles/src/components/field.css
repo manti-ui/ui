@@ -28,14 +28,15 @@
   }
 
   [data-scope='field'][data-part='control'] {
-    --_min-height: 2.5rem;
-    --_px: var(--manti-space-3);
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-field-height: var(--manti-control-height-md);
+    --manti-field-padding-x: var(--manti-space-3);
 
     display: flex;
     align-items: center;
     gap: var(--manti-space-2);
-    min-height: var(--_min-height);
-    padding-inline: var(--_px);
+    min-height: var(--manti-field-height);
+    padding-inline: var(--manti-field-padding-x);
     background: var(--manti-glass-tint-strong);
     -webkit-backdrop-filter: var(--manti-glass-blur);
     backdrop-filter: var(--manti-glass-blur);
@@ -50,12 +51,12 @@
       box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
 
     &[data-size='sm'] {
-      --_min-height: 2rem;
+      --manti-field-height: var(--manti-control-height-sm);
     }
 
     &[data-size='lg'] {
-      --_min-height: 3rem;
-      --_px: var(--manti-space-4);
+      --manti-field-height: var(--manti-control-height-lg);
+      --manti-field-padding-x: var(--manti-space-4);
     }
 
     &:hover {
