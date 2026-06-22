@@ -8,19 +8,29 @@ description: Install Manti UI, import the styles, and render your first componen
 
 # Getting Started
 
-Manti UI ships as a small set of packages. For a React app you need the renderer
-and the stylesheet — the tokens come along for the ride.
+Manti UI ships as a small set of packages, but for a React app you install just
+**one** — the renderer. Everything else comes along automatically.
 
 ## Install
 
 ```bash
-pnpm add @manti-ui/react @manti-ui/styles
+npm install @manti-ui/react
 ```
+
+That is the only package you install. `@manti-ui/styles`, `@manti-ui/tokens`, and
+the behavior machines (`@manti-ui/folds`) are declared as dependencies of
+`@manti-ui/react`, so your package manager pulls them in automatically — you never
+run a separate `install` for `@manti-ui/styles`.
+
+> Using pnpm or Yarn? `pnpm add @manti-ui/react` or `yarn add @manti-ui/react`.
 
 ## Import the styles once
 
-`@manti-ui/react` ships **no** CSS side effects, so import the stylesheet yourself
-at your app entry. This single import sets up the cascade layers, design tokens,
+`@manti-ui/styles` is already in your `node_modules` (it arrived with
+`@manti-ui/react`), but the React package ships **no** CSS side effects — so you
+import the stylesheet yourself, once, at your app entry. Keeping the import
+explicit leaves you in control of order (which matters when you also use
+Tailwind), and this single line sets up the cascade layers, design tokens,
 component styles, and motion tiers.
 
 ```ts
