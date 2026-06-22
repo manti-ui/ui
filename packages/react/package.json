@@ -1,7 +1,22 @@
 {
   "name": "@manti-ui/react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "React adapter for the Manti UI design system.",
+  "license": "MIT",
+  "homepage": "https://manti.design",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manti-ui/ui.git",
+    "directory": "packages/react"
+  },
+  "keywords": [
+    "react",
+    "design-system",
+    "components",
+    "ui",
+    "zag-js",
+    "headless"
+  ],
   "type": "module",
   "sideEffects": false,
   "files": [
@@ -17,17 +32,29 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
   "scripts": {
     "build": "vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@manti-ui/folds": "workspace:*",
-    "@manti-ui/styles": "workspace:*",
-    "@manti-ui/tokens": "workspace:*",
+    "@manti-ui/folds": "workspace:^",
+    "@manti-ui/tokens": "workspace:^",
     "@zag-js/react": "^1.41.2"
   },
   "peerDependencies": {
+    "@manti-ui/styles": "workspace:^",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
