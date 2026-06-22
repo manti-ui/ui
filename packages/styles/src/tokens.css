@@ -246,37 +246,37 @@
       0 28px 60px -18px oklch(0 0 0 / 0.7)
     );
 
-    /* Material — sleek panel glass --------------------------------------- *
+    /* Material — sleek translucent panel --------------------------------------- *
      * The Manti UI signature: floating surfaces are a translucent panel over
      * the ambient mesh — a light backdrop blur, a hairline border, a top-lit
      * rim, and a soft, deep shadow. Cards carry an accent gradient lit along
      * the top edge (see card.css). Retune the whole material from here.        */
-    --manti-glass-tint: light-dark(
+    --manti-panel-tint: light-dark(
       oklch(0.99 0.002 280 / 0.62),
       oklch(0.2 0.008 280 / 0.55)
     );
-    --manti-glass-tint-strong: light-dark(
+    --manti-panel-tint-strong: light-dark(
       oklch(0.995 0.0015 280 / 0.86),
       oklch(0.22 0.009 280 / 0.82)
     );
-    --manti-glass-blur: blur(12px) saturate(140%);
-    --manti-glass-border: light-dark(
+    --manti-panel-blur: blur(12px) saturate(140%);
+    --manti-panel-border: light-dark(
       oklch(0.2 0.02 280 / 0.1),
       oklch(1 0 0 / 0.09)
     );
-    --manti-glass-highlight: light-dark(
+    --manti-panel-highlight: light-dark(
       oklch(1 0 0 / 0.9),
       oklch(1 0 0 / 0.08)
     );
     /* One theme-aware shadow color, layered three deep into the full token. */
-    --manti-glass-shadow-color: light-dark(
+    --manti-panel-shadow-color: light-dark(
       oklch(0.2 0.04 280 / 0.14),
       oklch(0 0 0 / 0.6)
     );
-    --manti-glass-shadow:
-      0 1px 2px -1px var(--manti-glass-shadow-color),
-      0 16px 36px -16px var(--manti-glass-shadow-color),
-      0 36px 70px -28px var(--manti-glass-shadow-color);
+    --manti-panel-shadow:
+      0 1px 2px -1px var(--manti-panel-shadow-color),
+      0 16px 36px -16px var(--manti-panel-shadow-color),
+      0 36px 70px -28px var(--manti-panel-shadow-color);
 
     /* Ambient — the color the dark refracts ------------------------------ *
      * Three soft glows behind every `.manti-app`/`body`: a faint violet,

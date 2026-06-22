@@ -26,8 +26,8 @@
     gap: var(--manti-space-2);
     min-height: var(--manti-color-picker-height);
     padding-inline: var(--manti-space-2) var(--manti-space-3);
-    background: var(--manti-glass-tint-strong);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint-strong);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
@@ -47,7 +47,7 @@
   [data-scope='color-picker'][data-part='root'] [data-part='value-swatch'] {
     width: 1.5rem;
     height: 1.5rem;
-    border: 1px solid var(--manti-glass-border);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-sm);
   }
 
@@ -63,14 +63,14 @@
     gap: var(--manti-space-3);
     width: var(--manti-color-picker-panel-width);
     padding: var(--manti-space-3);
-    background: var(--manti-glass-tint-strong);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint-strong);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
     box-shadow:
-      inset 0 1px 0 0 var(--manti-glass-highlight),
-      var(--manti-glass-shadow);
+      inset 0 1px 0 0 var(--manti-panel-highlight),
+      var(--manti-panel-shadow);
 
     &:focus-visible {
       outline: none;
@@ -137,7 +137,7 @@
     min-width: 0;
     padding: var(--manti-space-2) var(--manti-space-3);
     background: var(--manti-surface-sunken);
-    border: 1px solid var(--manti-glass-border);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-sm);
     outline: none;
     color: var(--manti-text);

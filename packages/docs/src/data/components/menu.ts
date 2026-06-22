@@ -45,7 +45,7 @@ export const meta: ComponentMeta = {
   anatomy: [
     {
       part: 'content',
-      description: 'The frosted dropdown panel holding the items.',
+      description: 'The translucent dropdown panel holding the items.',
     },
     {
       part: 'item',

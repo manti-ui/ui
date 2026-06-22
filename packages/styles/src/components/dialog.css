@@ -1,6 +1,6 @@
 /**
  * Dialog — backed by the Zag.js dialog machine. A dimmed backdrop plus a
- * centered frosted panel (the Manti signature glass material). The panel lifts
+ * centered translucent panel (the Manti signature panel material). The panel lifts
  * and fades in on open (`data-state="open"`).
  */
 @layer manti.components {
@@ -41,14 +41,14 @@
     max-width: var(--manti-dialog-max-width);
     margin: auto;
     padding: var(--manti-space-6);
-    background: var(--manti-glass-tint-strong);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint-strong);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-lg);
     box-shadow:
-      inset 0 1px 0 0 var(--manti-glass-highlight),
-      var(--manti-glass-shadow);
+      inset 0 1px 0 0 var(--manti-panel-highlight),
+      var(--manti-panel-shadow);
     color: var(--manti-text);
 
     &[data-size='sm'] {

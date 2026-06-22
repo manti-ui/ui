@@ -16,7 +16,7 @@ import { searchIndexPlugin } from './src/search/vite-plugin-search';
 // Evergreen browsers that support `light-dark()`, CSS nesting and `color-mix()`
 // natively. Mirrors packages/styles/vite.config.ts and .storybook/main.ts so the
 // imported Manti CSS keeps `data-theme` theming and the `-webkit-backdrop-filter`
-// frosted-glass prefix instead of being lowered to a prefers-color-scheme polyfill.
+// translucent prefix instead of being lowered to a prefers-color-scheme polyfill.
 const evergreen = {
   chrome: 123 << 16,
   edge: 123 << 16,

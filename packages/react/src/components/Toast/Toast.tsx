@@ -237,7 +237,7 @@ function ToastItem({
 /**
  * Create an isolated toast store plus its `Toaster` host component, both backed
  * by the Zag.js toast machines. The store owns queueing, timers, and pausing;
- * the host renders the frosted, tone-colored toast anatomy through a portal.
+ * the host renders the translucent, tone-colored toast anatomy through a portal.
  *
  * ```tsx
  * const { toaster, Toaster } = createToaster();

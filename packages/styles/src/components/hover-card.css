@@ -1,6 +1,6 @@
 /**
  * Hover Card — backed by the Zag.js hover-card machine. A richer floating
- * preview than the tooltip, sharing the frosted panel material. Fades and lifts
+ * preview than the tooltip, sharing the translucent panel material. Fades and lifts
  * in on open.
  */
 @layer manti.components {
@@ -16,14 +16,14 @@
     width: max-content;
     max-width: var(--manti-hover-card-max-width);
     padding: var(--manti-space-4);
-    background: var(--manti-glass-tint-strong);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint-strong);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
     box-shadow:
-      inset 0 1px 0 0 var(--manti-glass-highlight),
-      var(--manti-glass-shadow);
+      inset 0 1px 0 0 var(--manti-panel-highlight),
+      var(--manti-panel-shadow);
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
     line-height: var(--manti-leading-normal);
@@ -50,7 +50,7 @@
 
   [data-scope='hover-card'][data-part='arrow'] {
     --arrow-size: 8px;
-    --arrow-background: var(--manti-glass-tint-strong);
+    --arrow-background: var(--manti-panel-tint-strong);
   }
 
   @keyframes manti-hover-card-in {

@@ -40,7 +40,7 @@ export interface PopoverProps {
 /**
  * A floating panel anchored to a trigger, backed by the Zag.js popover machine.
  * The machine owns positioning, focus, and dismissal; this adapter renders the
- * frosted panel through a portal.
+ * translucent panel through a portal.
  */
 export function Popover({
   trigger,

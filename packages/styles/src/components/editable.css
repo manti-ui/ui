@@ -1,7 +1,7 @@
 /**
  * Editable — an inline text field that toggles between a preview and an input,
  * backed by the Zag.js editable machine. Preview reads as plain text with a
- * hover affordance; edit mode shows the frosted field input plus triggers.
+ * hover affordance; edit mode shows the translucent field input plus triggers.
  */
 @layer manti.components {
   [data-scope='editable'][data-part='root'] {
@@ -52,15 +52,15 @@
   [data-scope='editable'][data-part='input'] {
     min-width: 0;
     padding: var(--manti-space-2) var(--manti-space-3);
-    background: var(--manti-glass-tint-strong);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint-strong);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
     outline: none;
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
-    box-shadow: inset 0 1px 0 0 var(--manti-glass-highlight);
+    box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
     transition:
       border-color var(--manti-duration-base) var(--manti-ease-smooth),
       box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
@@ -68,7 +68,7 @@
     &:focus {
       border-color: var(--tone-ring, var(--manti-focus-ring));
       box-shadow:
-        inset 0 1px 0 0 var(--manti-glass-highlight),
+        inset 0 1px 0 0 var(--manti-panel-highlight),
         0 0 0 3px
           color-mix(
             in oklab,

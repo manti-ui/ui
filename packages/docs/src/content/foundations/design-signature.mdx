@@ -3,7 +3,7 @@ title: Design signature
 slug: /foundations/design-signature
 group: Foundations
 order: 20
-description: The sleek monochrome cool-dark frosted-glass panel that gives Manti UI its recognizable character.
+description: The sleek monochrome cool-dark translucent panel that gives Manti UI its recognizable character.
 ---
 
 # Design signature
@@ -11,7 +11,7 @@ description: The sleek monochrome cool-dark frosted-glass panel that gives Manti
 Manti UI has one driving word: **smooth**. Surfaces feel soft and continuous,
 interaction feels calm and predictable, and the whole system stays quiet so your
 content can speak. The visual signature is a sleek, monochrome, cool-dark panel —
-a translucent piece of frosted glass lit from the top.
+a single translucent surface lit from the top.
 
 ## Monochrome by default
 
@@ -25,7 +25,7 @@ interface reads as one quiet material. Color enters only through the semantic
 [tones](/foundations/color-and-tones) — an orange primary, a green success, a
 red danger — applied to badges, alerts, and the like, never as decoration.
 
-## The frosted-glass panel
+## The translucent panel
 
 Floating surfaces — cards, tooltips, the field control, soft buttons, soft
 badges, soft alerts, toggles, accordions, collapsibles — share one **translucent
@@ -36,7 +36,7 @@ panel** material:
 - a top-lit rim that catches the light,
 - and a soft, deep shadow.
 
-This frosted glass is pervasive. Only **solid** fills (which gain nothing from a
+This translucent panel is pervasive. Only **solid** fills (which gain nothing from a
 blur) and the tiny form marks — checkbox, radio, switch — stay crisp.
 
 <Card style={{ maxWidth: 'var(--manti-space-16)', minWidth: '20rem' }}>
@@ -50,14 +50,14 @@ blur) and the tiny form marks — checkbox, radio, switch — stay crisp.
 </Card>
 
 You can give your own floating surfaces — menus, sheets, command palettes — the
-exact same material with the `.manti-glass` helper. Where `backdrop-filter` is
-unsupported, every glass surface falls back to an opaque token surface
+exact same material with the `.manti-panel` helper. Where `backdrop-filter` is
+unsupported, every panel surface falls back to an opaque token surface
 automatically.
 
 ## Top-lit rim and ambient mesh
 
 Two details create depth without a single gradient element. A **top-lit rim**
-(`--manti-glass-highlight`) runs along the upper edge of each panel, as if a soft
+(`--manti-panel-highlight`) runs along the upper edge of each panel, as if a soft
 light sat just above the screen. Behind every `.manti-app` or `body` sits an
 **ambient mesh**: three faint glows — violet, magenta, and warm ember at very low
 opacity (`--manti-ambient-1` … `--manti-ambient-3`) — as pure scene lighting. The
@@ -67,10 +67,10 @@ Retune the entire material from one place:
 
 ```css
 .manti-app {
-  --manti-glass-tint: oklch(0.2 0.008 280 / 0.55);
-  --manti-glass-blur: blur(16px) saturate(160%);
-  --manti-glass-border: oklch(1 0 0 / 0.09);
-  --manti-glass-highlight: oklch(1 0 0 / 0.08);
+  --manti-panel-tint: oklch(0.2 0.008 280 / 0.55);
+  --manti-panel-blur: blur(16px) saturate(160%);
+  --manti-panel-border: oklch(1 0 0 / 0.09);
+  --manti-panel-highlight: oklch(1 0 0 / 0.08);
 }
 ```
 

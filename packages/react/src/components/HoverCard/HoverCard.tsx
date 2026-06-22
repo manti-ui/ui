@@ -33,7 +33,7 @@ export interface HoverCardProps {
 /**
  * A rich floating preview revealed on hover or focus, backed by the Zag.js
  * hover-card machine. The machine owns the open/close delays and positioning;
- * this adapter renders the frosted panel through a portal.
+ * this adapter renders the translucent panel through a portal.
  */
 export function HoverCard({
   trigger,

@@ -12,12 +12,12 @@
     position: relative;
     display: inline-flex;
     padding: var(--manti-space-1);
-    background: var(--manti-glass-tint);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: inset 0 1px 0 0 var(--manti-glass-highlight);
+    box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
 
     &[data-orientation='vertical'] {
       flex-direction: column;

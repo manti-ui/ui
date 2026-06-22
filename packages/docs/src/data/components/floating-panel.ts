@@ -49,7 +49,7 @@ export const meta: ComponentMeta = {
   ],
   anatomy: [
     { part: 'positioner', description: 'Positions the floating panel.' },
-    { part: 'content', description: 'The frosted panel surface.' },
+    { part: 'content', description: 'The translucent panel surface.' },
     { part: 'header', description: 'The title bar, also the drag handle.' },
     {
       part: 'drag-trigger',

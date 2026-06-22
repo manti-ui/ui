@@ -58,7 +58,7 @@ const check = (
 
 /** A single/multi select backed by the Zag.js select machine. The machine owns
  * keyboard, typeahead, and dismissal; this adapter renders the trigger and the
- * portalled frosted listbox. */
+ * portalled translucent listbox. */
 export function Select({
   items,
   label,

@@ -91,7 +91,7 @@ export const meta: ComponentMeta = {
       part: 'positioner',
       description: 'The portalled wrapper positioning the listbox.',
     },
-    { part: 'content', description: 'The frosted listbox panel.' },
+    { part: 'content', description: 'The translucent listbox panel.' },
     { part: 'item', description: 'Each selectable option.' },
     {
       part: 'item-indicator',

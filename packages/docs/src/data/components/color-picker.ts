@@ -55,7 +55,7 @@ export const meta: ComponentMeta = {
       description: 'The current-color preview chip in the trigger.',
     },
     { part: 'positioner', description: 'Positions the floating panel.' },
-    { part: 'content', description: 'The frosted picker panel.' },
+    { part: 'content', description: 'The translucent picker panel.' },
     { part: 'area', description: 'The saturation/value selection area.' },
     {
       part: 'area-background',

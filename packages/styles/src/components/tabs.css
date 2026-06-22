@@ -6,9 +6,9 @@
  *
  * Three variants (set `data-variant` on the root):
  *   - `line` (default) — a rail under the active trigger.
- *   - `pill`           — a frosted-glass segmented control: a glass track with
- *                        a glass thumb covering the active trigger.
- *   - `soft`           — no track; just a frosted-glass pill on the active tab.
+ *   - `pill`           — a translucent segmented control: a translucent track with
+ *                        a translucent thumb covering the active trigger.
+ *   - `soft`           — no track; just a translucent pill on the active tab.
  *
  * Variant selectors anchor on `[data-part='root']` because every Zag part also
  * carries `data-scope='tabs'`; without the anchor, a default `:not([data-variant])`
@@ -44,8 +44,8 @@
     }
   }
 
-  /* pill: an enclosed, frosted-glass track that hugs its tabs. Theme-specific
-     fill: the original lighter glass in dark, and a very subtle groove in light
+  /* pill: an enclosed, translucent track that hugs its tabs. Theme-specific
+     fill: the original lighter panel fill in dark, and a very subtle groove in light
      (a near-white track is invisible, but a gray one reads too heavy) — the
      active thumb does the rest with its own edge and shadow. */
   [data-scope='tabs'][data-part='root'][data-variant='pill'] [data-part='list'] {
@@ -54,13 +54,13 @@
     padding: var(--manti-space-1);
     background: light-dark(
       oklch(0.2 0.02 280 / 0.05),
-      var(--manti-glass-tint)
+      var(--manti-panel-tint)
     );
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-full);
-    box-shadow: inset 0 1px 0 0 var(--manti-glass-highlight);
+    box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
 
     &[data-orientation='vertical'] {
       border-radius: var(--manti-radius-xl);
@@ -163,16 +163,16 @@
     left: calc(var(--left) + var(--width) - 2px);
   }
 
-  /* pill & soft: a frosted-glass thumb that lifts above the track. A light
-     frost (so it reads against the dark track), with blur, a hairline, and a
+  /* pill & soft: a translucent thumb that lifts above the track. A light
+     tint (so it reads against the dark track), with blur, a hairline, and a
      soft shadow — the active tab looks raised, like the reference. */
   [data-scope='tabs'][data-part='root'][data-variant='pill']
     [data-part='indicator'],
   [data-scope='tabs'][data-part='root'][data-variant='soft']
     [data-part='indicator'] {
     background: light-dark(oklch(1 0 0 / 0.96), oklch(1 0 0 / 0.12));
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid
       light-dark(oklch(0.2 0.02 280 / 0.12), oklch(1 0 0 / 0.18));
     box-shadow:

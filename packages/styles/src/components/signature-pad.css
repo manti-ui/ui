@@ -24,7 +24,7 @@
     position: relative;
     height: var(--manti-signature-pad-height);
     background: var(--manti-surface-raised);
-    border: 1px solid var(--manti-glass-border);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
     overflow: hidden;
     touch-action: none;
@@ -55,10 +55,10 @@
     align-items: center;
     min-height: 1.75rem;
     padding-inline: var(--manti-space-3);
-    background: var(--manti-glass-tint-strong);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint-strong);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-sm);
     color: var(--manti-text);
     font-size: var(--manti-text-xs);

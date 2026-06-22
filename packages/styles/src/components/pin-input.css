@@ -1,6 +1,6 @@
 /**
  * Pin Input — segmented code entry backed by the Zag.js pin-input machine. Each
- * cell is a frosted field box; the focused cell rings with the active tone.
+ * cell is a translucent field box; the focused cell rings with the active tone.
  */
 @layer manti.components {
   [data-scope='pin-input'][data-part='root'] {
@@ -27,14 +27,14 @@
     width: var(--manti-pin-input-size);
     height: var(--manti-pin-input-size);
     padding: 0;
-    background: var(--manti-glass-tint-strong);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint-strong);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
     box-shadow:
-      inset 0 1px 0 0 var(--manti-glass-highlight),
-      inset 0 2px 5px -3px var(--manti-glass-shadow-color);
+      inset 0 1px 0 0 var(--manti-panel-highlight),
+      inset 0 2px 5px -3px var(--manti-panel-shadow-color);
     outline: none;
     text-align: center;
     color: var(--manti-text);
@@ -52,7 +52,7 @@
     &:focus {
       border-color: var(--tone-ring, var(--manti-focus-ring));
       box-shadow:
-        inset 0 1px 0 0 var(--manti-glass-highlight),
+        inset 0 1px 0 0 var(--manti-panel-highlight),
         0 0 0 3px
           color-mix(
             in oklab,

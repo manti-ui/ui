@@ -29,7 +29,7 @@ lives in `AGENTS.md` — keep the two copies byte-for-byte in sync.
    `packages/styles/src/tokens.css` (the `@tokens:generated` region) by
    `pnpm gen:tokens`. Never hand-edit that region; after changing the contract,
    regenerate it — the styles build fails if it is stale. The theme-aware roles
-   (`light-dark()` surfaces/text/elevation/glass) and the tonal `--tone-*`
+   (`light-dark()` surfaces/text/elevation/panel) and the tonal `--tone-*`
    vocabulary below the region stay hand-authored. Tokens form three tiers:
    primitive ramps → semantic roles/tones → **component tokens**
    (`--manti-{component}-{property}`, public and semver-stable, each defaulting
@@ -143,7 +143,7 @@ Vite/Lightning CSS setup is tuned to preserve this — these are easy to silentl
   `prefers-color-scheme`-only polyfill that ignores `data-theme`.
 - **`build.cssTarget` in the styles package must be the evergreen ARRAY**, not a
   single `'chrome123'`. A single chrome target makes the minifier strip the
-  `-webkit-backdrop-filter` that Safari ≤17 needs for frosted-glass surfaces.
+  `-webkit-backdrop-filter` that Safari ≤17 needs for translucent surfaces.
   After a styles build, verify:
   `grep -c -- -webkit-backdrop-filter dist/index.css` > 0 and
   `grep -c prefers-color-scheme dist/index.css` == 0.

@@ -76,7 +76,7 @@ export const meta: ComponentMeta = {
       part: 'positioner',
       description: 'The portalled wrapper that positions the panel.',
     },
-    { part: 'content', description: 'The frosted floating panel.' },
+    { part: 'content', description: 'The translucent floating panel.' },
     { part: 'arrow', description: 'The arrow pointing at the trigger.' },
     { part: 'title', description: 'The optional heading.' },
     { part: 'description', description: 'The panel body content.' },

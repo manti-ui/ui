@@ -57,7 +57,7 @@ export interface MenuProps {
 /**
  * A dropdown command menu backed by the Zag.js menu machine. The machine owns
  * keyboard navigation, typeahead, and dismissal; this adapter renders the
- * frosted panel and its items through a portal.
+ * translucent panel and its items through a portal.
  */
 export function Menu({
   trigger,

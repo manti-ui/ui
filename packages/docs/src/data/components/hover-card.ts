@@ -60,7 +60,7 @@ export const meta: ComponentMeta = {
     },
     {
       part: 'content',
-      description: 'The frosted preview panel.',
+      description: 'The translucent preview panel.',
     },
     {
       part: 'arrow',

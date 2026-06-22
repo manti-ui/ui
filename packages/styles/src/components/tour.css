@@ -1,6 +1,6 @@
 /**
  * Tour — a guided product tour backed by the Zag.js tour machine. A dimmed
- * backdrop with a spotlight cut-out focuses the target; the frosted content card
+ * backdrop with a spotlight cut-out focuses the target; the translucent content card
  * carries the copy and actions.
  */
 @layer manti.components {
@@ -52,14 +52,14 @@
     width: var(--manti-tour-width);
     max-width: calc(100vw - var(--manti-space-8));
     padding: var(--manti-space-4);
-    background: var(--manti-glass-tint-strong);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint-strong);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
     box-shadow:
-      inset 0 1px 0 0 var(--manti-glass-highlight),
-      var(--manti-glass-shadow);
+      inset 0 1px 0 0 var(--manti-panel-highlight),
+      var(--manti-panel-shadow);
 
     &:focus-visible {
       outline: none;
