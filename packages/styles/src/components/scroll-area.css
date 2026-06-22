@@ -1,0 +1,142 @@
+/**
+ * Scroll Area — a scrollable viewport with a custom, always-grabbable scrollbar.
+ * Static (no Zag machine): the native scrollbar is hidden and the adapter renders
+ * its own track + thumb, sized from the viewport's scroll metrics. The thumb is
+ * draggable and (by default) stays visible while content overflows, so it never
+ * auto-hides out from under the pointer like a native overlay scrollbar.
+ */
+@layer manti.components {
+  [data-scope='scroll-area'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-scroll-area-size: var(--manti-space-2);
+
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--manti-radius-md);
+
+    &[data-dragging] {
+      user-select: none;
+    }
+  }
+
+  [data-scope='scroll-area'][data-part='viewport'] {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+
+    /* Hide the native scrollbar — the custom thumb replaces it. */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+  }
+
+  [data-scope='scroll-area'][data-orientation='vertical'] [data-part='viewport'] {
+    overflow: hidden auto;
+    overscroll-behavior-y: contain;
+  }
+
+  [data-scope='scroll-area'][data-orientation='horizontal']
+    [data-part='viewport'] {
+    overflow: auto hidden;
+    overscroll-behavior-x: contain;
+  }
+
+  [data-scope='scroll-area'][data-orientation='both'] [data-part='viewport'] {
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  [data-scope='scroll-area'][data-part='content'] {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  /* Horizontal/bidirectional content must take its intrinsic width so it can
+     overflow the viewport; a plain block child would shrink to fit and never
+     scroll. Vertical content keeps auto width so text still wraps. */
+  [data-scope='scroll-area'][data-orientation='horizontal'] [data-part='content'],
+  [data-scope='scroll-area'][data-orientation='both'] [data-part='content'] {
+    width: max-content;
+  }
+
+  /* Scrollbar track — laid out at the edge, opacity-toggled (never display:none,
+     so its thickness stays measurable for the gutter calc). */
+  [data-scope='scroll-area'][data-part='scrollbar'] {
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+    touch-action: none;
+    transition: opacity var(--manti-duration-base) var(--manti-ease-soft);
+  }
+
+  [data-scope='scroll-area'][data-part='scrollbar'][data-orientation='vertical'] {
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    width: var(--manti-scroll-area-size);
+  }
+
+  [data-scope='scroll-area'][data-part='scrollbar'][data-orientation='horizontal'] {
+    inset-inline-start: 0;
+    inset-block-end: 0;
+    height: var(--manti-scroll-area-size);
+  }
+
+  /* Visibility per type (all gated on the axis actually overflowing):
+     - `auto`   (default): while active — pointer moving / scrolling / dragging
+       (JS sets `data-active`), then faded out on idle or pointer leave.
+     - `hover`  : while hovering, focused within, or dragging.
+     - `always` : whenever the content overflows. */
+  [data-scope='scroll-area'][data-type='auto'][data-active]
+    [data-part='scrollbar'][data-state='visible'],
+  [data-scope='scroll-area'][data-type='auto'][data-dragging]
+    [data-part='scrollbar'][data-state='visible'],
+  [data-scope='scroll-area'][data-type='always']
+    [data-part='scrollbar'][data-state='visible'],
+  [data-scope='scroll-area'][data-type='hover']:hover
+    [data-part='scrollbar'][data-state='visible'],
+  [data-scope='scroll-area'][data-type='hover']:focus-within
+    [data-part='scrollbar'][data-state='visible'],
+  [data-scope='scroll-area'][data-type='hover'][data-dragging]
+    [data-part='scrollbar'][data-state='visible'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Thumb — a pill, inset from the track edges, draggable. */
+  [data-scope='scroll-area'][data-part='thumb'] {
+    border-radius: var(--manti-radius-full);
+    background: var(--manti-border-strong);
+    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &:hover {
+      background: var(--manti-text-subtle);
+    }
+  }
+
+  [data-scope='scroll-area'][data-part='scrollbar'][data-orientation='vertical']
+    [data-part='thumb'] {
+    width: calc(100% - 4px);
+    margin-inline: auto;
+  }
+
+  [data-scope='scroll-area'][data-part='scrollbar'][data-orientation='horizontal']
+    [data-part='thumb'] {
+    height: calc(100% - 4px);
+    margin-block: auto;
+  }
+
+  [data-scope='scroll-area'][data-dragging] [data-part='thumb'] {
+    background: var(--manti-text-subtle);
+  }
+}

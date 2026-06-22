@@ -64,8 +64,8 @@ export const Primitives: Story = {
       <div>
         <h1 style={{ fontSize: 32, letterSpacing: '-0.03em' }}>Color ramps</h1>
         <p style={{ color: 'var(--manti-text-muted)', maxWidth: '60ch' }}>
-          Six perceptually-smooth OKLCH scales drawn from the mantı kitchen:
-          dough, paprika, herb, sumac, chili, and broth.
+          Six warm-tinted, perceptually-smooth OKLCH scales under plain color
+          names: gray, orange, green, amber, red, and blue.
         </p>
       </div>
       <div style={{ display: 'grid', gap: '1.5rem' }}>

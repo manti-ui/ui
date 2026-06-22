@@ -1,0 +1,232 @@
+/**
+ * Drawer — a panel that slides in from a screen edge, backed by the same Zag.js
+ * dialog machine as Dialog (focus trap, scroll lock, dismissal). It reuses the
+ * dialog anatomy under a `drawer` scope: the positioner pins the frosted content
+ * to the chosen edge (`data-placement`) and the content slides in on open.
+ */
+@layer manti.components {
+  [data-scope='drawer'][data-part='backdrop'] {
+    position: fixed;
+    inset: 0;
+    z-index: var(--manti-z-overlay);
+    background: var(--manti-overlay);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+
+    &[data-state='open'] {
+      animation: manti-drawer-backdrop-in var(--manti-duration-base)
+        var(--manti-ease-smooth);
+    }
+  }
+
+  [data-scope='drawer'][data-part='positioner'] {
+    position: fixed;
+    inset: 0;
+    z-index: var(--manti-z-overlay);
+    display: flex;
+  }
+
+  [data-scope='drawer'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-drawer-size: 24rem;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    padding: var(--manti-space-6);
+    background: var(--manti-glass-tint-strong);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    color: var(--manti-text);
+    box-shadow: var(--manti-glass-shadow);
+
+    &[data-size='sm'] {
+      --manti-drawer-size: 18rem;
+    }
+
+    &[data-size='lg'] {
+      --manti-drawer-size: 32rem;
+    }
+  }
+
+  /* Edge placement — auto margins push the panel to the chosen edge, and the
+     cross-axis stretches to fill. One `--manti-drawer-size` token sizes the
+     panel along its scroll axis (width for left/right, height for top/bottom). */
+  [data-scope='drawer'][data-placement='right'] [data-part='content'],
+  [data-scope='drawer'][data-placement='left'] [data-part='content'] {
+    width: var(--manti-drawer-size);
+    max-width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  [data-scope='drawer'][data-placement='right'] [data-part='content'] {
+    margin-inline-start: auto;
+    border-block: 0;
+    border-inline-end: 0;
+  }
+
+  [data-scope='drawer'][data-placement='left'] [data-part='content'] {
+    margin-inline-end: auto;
+    border-block: 0;
+    border-inline-start: 0;
+  }
+
+  [data-scope='drawer'][data-placement='top'] [data-part='content'],
+  [data-scope='drawer'][data-placement='bottom'] [data-part='content'] {
+    width: 100%;
+    height: var(--manti-drawer-size);
+    max-height: 100%;
+    overflow-y: auto;
+  }
+
+  [data-scope='drawer'][data-placement='top'] [data-part='content'] {
+    margin-block-end: auto;
+    border-inline: 0;
+    border-block-start: 0;
+  }
+
+  [data-scope='drawer'][data-placement='bottom'] [data-part='content'] {
+    margin-block-start: auto;
+    border-inline: 0;
+    border-block-end: 0;
+  }
+
+  /* Slide-in per edge. Content mounts already open, so the entrance plays once. */
+  [data-scope='drawer'][data-placement='right'] [data-part='content'][data-state='open'] {
+    animation: manti-drawer-in-right var(--manti-duration-slow)
+      var(--manti-ease-smooth);
+  }
+
+  [data-scope='drawer'][data-placement='left'] [data-part='content'][data-state='open'] {
+    animation: manti-drawer-in-left var(--manti-duration-slow)
+      var(--manti-ease-smooth);
+  }
+
+  [data-scope='drawer'][data-placement='top'] [data-part='content'][data-state='open'] {
+    animation: manti-drawer-in-top var(--manti-duration-slow)
+      var(--manti-ease-smooth);
+  }
+
+  [data-scope='drawer'][data-placement='bottom'] [data-part='content'][data-state='open'] {
+    animation: manti-drawer-in-bottom var(--manti-duration-slow)
+      var(--manti-ease-smooth);
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='drawer'][data-part='content'] {
+      background: var(--manti-surface-raised);
+    }
+  }
+
+  [data-scope='drawer'][data-part='title'] {
+    margin: 0;
+    padding-inline-end: var(--manti-space-6);
+    font-size: var(--manti-text-lg);
+    font-weight: var(--manti-weight-semibold);
+    line-height: var(--manti-leading-snug);
+  }
+
+  [data-scope='drawer'][data-part='description'] {
+    margin: 0;
+    color: var(--manti-text-muted);
+    font-size: var(--manti-text-sm);
+    line-height: var(--manti-leading-normal);
+  }
+
+  /* Body grows to fill the panel and scrolls; the footer stays pinned below. */
+  [data-scope='drawer'][data-part='body'] {
+    flex: 1;
+    min-height: 0;
+    color: var(--manti-text-muted);
+    font-size: var(--manti-text-sm);
+    line-height: var(--manti-leading-normal);
+  }
+
+  [data-scope='drawer'][data-part='footer'] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--manti-space-2);
+    margin-top: var(--manti-space-2);
+  }
+
+  [data-scope='drawer'][data-part='close-trigger'] {
+    position: absolute;
+    top: var(--manti-space-4);
+    inset-inline-end: var(--manti-space-4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--manti-space-8);
+    height: var(--manti-space-8);
+    padding: 0;
+    color: var(--manti-text-muted);
+    background: transparent;
+    border: 0;
+    border-radius: var(--manti-radius-sm);
+    cursor: pointer;
+    transition:
+      background var(--manti-duration-fast) var(--manti-ease-soft),
+      color var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &:hover {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      color: var(--manti-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+  }
+
+  @keyframes manti-drawer-backdrop-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes manti-drawer-in-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes manti-drawer-in-left {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes manti-drawer-in-top {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes manti-drawer-in-bottom {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}

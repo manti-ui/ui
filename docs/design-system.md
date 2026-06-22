@@ -46,14 +46,14 @@ contract — tokens, nesting rules, the SSR-safe story — is in
 
 Six perceptually-uniform OKLCH ramps (`50`–`950`) from the mantı kitchen:
 
-| Ramp      | Role    | Reference      |
-| --------- | ------- | -------------- |
-| `dough`   | neutral | warm dough     |
-| `paprika` | primary | paprika sauce  |
-| `herb`    | success | parsley / mint |
-| `sumac`   | warning | golden sumac   |
-| `chili`   | danger  | hot chili      |
-| `broth`   | info    | calm broth     |
+| Ramp     | Role    | Reference    |
+| -------- | ------- | ------------ |
+| `gray`   | neutral | warm neutral |
+| `orange` | primary | warm orange  |
+| `green`  | success | fresh green  |
+| `amber`  | warning | golden amber |
+| `red`    | danger  | hot red      |
+| `blue`   | info    | calm blue    |
 
 ### Semantic & tonal roles
 
@@ -91,7 +91,7 @@ on light), exactly like the reference.
 A subtle **ambient mesh** — three faint glows (violet, magenta, warm ember) at
 very low opacity — sits behind every `.manti-app`/`body` as pure scene lighting
 (not a gradient element), so the deep background reads with depth rather than
-flat. The kitchen ramps (paprika, herb, sumac, chili, broth) remain as semantic
+flat. The color ramps (orange, green, amber, red, blue) remain as semantic
 tones for badges, alerts, and the like.
 
 Retune the whole material from one place:

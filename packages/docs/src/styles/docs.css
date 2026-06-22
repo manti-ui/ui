@@ -147,9 +147,15 @@
     position: sticky;
     top: var(--docs-nav-h);
     height: calc(100dvh - var(--docs-nav-h));
-    overflow-y: auto;
+  }
+  /* The nav scrolls inside a Manti ScrollArea (custom, auto-hiding scrollbar)
+     rather than the aside's native overflow. */
+  .docs-sidebar-scroll {
+    height: 100%;
+  }
+  .docs-sidebar-inner {
     padding-block: var(--manti-space-6);
-    padding-inline-end: var(--manti-space-2);
+    padding-inline-end: var(--manti-space-3);
   }
 
   .docs-content {
@@ -429,6 +435,21 @@
   }
   .docs-demo-canvas.is-center {
     justify-content: center;
+  }
+  /* Live demos render real component markup. Headings, paragraphs and lists in
+     that markup (e.g. an Accordion trigger's <h3>, which opened large top gaps)
+     must not inherit the prose typography defined above. `revert-layer` rolls
+     these back past the entire `docs` layer, so demo content falls through to
+     each component's own styles (manti.components) or the reset (manti.reset)
+     instead of the prose rules — without clobbering component typography. */
+  .docs-demo-canvas :is(h1, h2, h3, h4, h5, h6) {
+    margin: revert-layer;
+    font-size: revert-layer;
+    line-height: revert-layer;
+    letter-spacing: revert-layer;
+  }
+  .docs-demo-canvas :is(p, ul, ol, li) {
+    margin: revert-layer;
   }
   .docs-demo-bar {
     display: flex;

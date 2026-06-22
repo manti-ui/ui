@@ -1,0 +1,125 @@
+/**
+ * Segmented Control — a single-select control rendered as a row of segments with
+ * a pill that slides to the active one. Backed by the Zag.js radio-group machine
+ * (keyboard, roving focus, form semantics); the machine measures the selected
+ * segment and feeds the indicator its `--left/--top/--width/--height`.
+ *
+ * The sliding pill fills with the active tone (`--tone-solid`); the selected
+ * segment's label flips to `--tone-on-solid`. Tone defaults to primary.
+ */
+@layer manti.components {
+  [data-scope='segmented-control'][data-part='root'] {
+    position: relative;
+    display: inline-flex;
+    padding: var(--manti-space-1);
+    background: var(--manti-glass-tint);
+    -webkit-backdrop-filter: var(--manti-glass-blur);
+    backdrop-filter: var(--manti-glass-blur);
+    border: 1px solid var(--manti-glass-border);
+    border-radius: var(--manti-radius-md);
+    box-shadow: inset 0 1px 0 0 var(--manti-glass-highlight);
+
+    &[data-orientation='vertical'] {
+      flex-direction: column;
+    }
+
+    &[data-disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='segmented-control'][data-part='root'] {
+      background: var(--manti-surface);
+    }
+  }
+
+  /* The sliding pill. The machine positions it over the selected segment;
+     `--transition-property` lets the machine suppress the slide on first paint. */
+  [data-scope='segmented-control'][data-part='indicator'] {
+    position: absolute;
+    left: var(--left);
+    top: var(--top);
+    width: var(--width);
+    height: var(--height);
+    background: var(--tone-solid);
+    border-radius: var(--manti-radius-sm);
+    box-shadow: var(--manti-shadow-sm);
+    transition-property: var(--transition-property, left, top, width, height);
+    transition-duration: var(--manti-duration-base);
+    transition-timing-function: var(--manti-ease-smooth);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  [data-scope='segmented-control'][data-part='item'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-segmented-control-height: 2rem;
+    --manti-segmented-control-padding-x: var(--manti-space-3);
+
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--manti-segmented-control-height);
+    height: var(--manti-segmented-control-height);
+    padding-inline: var(--manti-segmented-control-padding-x);
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text-muted);
+    cursor: pointer;
+    user-select: none;
+    transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      color: var(--manti-text);
+    }
+
+    &[data-state='checked'] {
+      color: var(--tone-on-solid);
+    }
+
+    &[data-disabled] {
+      color: var(--manti-text-subtle);
+      cursor: not-allowed;
+    }
+  }
+
+  [data-scope='segmented-control'][data-part='root'][data-size='sm']
+    [data-part='item'] {
+    --manti-segmented-control-height: 1.75rem;
+    --manti-segmented-control-padding-x: var(--manti-space-2);
+  }
+
+  [data-scope='segmented-control'][data-part='root'][data-size='lg']
+    [data-part='item'] {
+    --manti-segmented-control-height: 2.5rem;
+    --manti-segmented-control-padding-x: var(--manti-space-4);
+  }
+
+  [data-scope='segmented-control'][data-part='item-text'] {
+    font-family: var(--manti-font-sans);
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    line-height: 1;
+  }
+
+  [data-scope='segmented-control'][data-part='root'][data-size='lg']
+    [data-part='item-text'] {
+    font-size: var(--manti-text-base);
+  }
+
+  [data-scope='segmented-control'][data-part='root'][data-size='sm']
+    [data-part='item-text'] {
+    font-size: var(--manti-text-xs);
+  }
+
+  /* Focus ring on the segment whose hidden radio input is focus-visible. */
+  [data-scope='segmented-control'][data-part='item']:has(input:focus-visible) {
+    outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+    outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+  }
+}

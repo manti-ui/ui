@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { ScrollArea } from '@manti-ui/react';
 
 import { navGroups } from '../data/navigation';
 
@@ -32,7 +33,11 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
 export function Sidebar() {
   return (
     <aside className="docs-sidebar">
-      <SidebarNav />
+      <ScrollArea className="docs-sidebar-scroll">
+        <div className="docs-sidebar-inner">
+          <SidebarNav />
+        </div>
+      </ScrollArea>
     </aside>
   );
 }

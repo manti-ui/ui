@@ -34,8 +34,9 @@ Manti UI tries to be exactly that kind of thing:
   one language across every component: calm motion, soft surfaces, gentle
   color, and an experience that never startles you.
 
-Even the color palette comes from the dinner table: **dough**, **paprika**,
-**herb**, **sumac**, **chili**, and **broth**.
+The palette is warm-tinted from the dinner table, exposed under plain,
+universally understood names: **gray**, **orange**, **green**, **amber**,
+**red**, and **blue**.
 
 ## One dumpling, many names
 

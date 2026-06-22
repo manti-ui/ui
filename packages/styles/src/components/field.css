@@ -24,7 +24,7 @@
   [data-scope='field'][data-part='required'] {
     margin-inline-start: 0.125rem;
     color: var(--manti-text);
-    color: light-dark(var(--manti-chili-600), var(--manti-chili-400));
+    color: light-dark(var(--manti-red-600), var(--manti-red-400));
   }
 
   [data-scope='field'][data-part='control'] {
@@ -86,12 +86,12 @@
 
   [data-scope='field'][data-part='root'][data-invalid='true']
     [data-part='control'] {
-    border-color: light-dark(var(--manti-chili-500), var(--manti-chili-400));
+    border-color: light-dark(var(--manti-red-500), var(--manti-red-400));
 
     &:focus-within {
       box-shadow:
         inset 0 1px 0 0 var(--manti-glass-highlight),
-        0 0 0 3px color-mix(in oklab, var(--manti-chili-500) 30%, transparent);
+        0 0 0 3px color-mix(in oklab, var(--manti-red-500) 30%, transparent);
     }
   }
 
@@ -129,6 +129,6 @@
 
   [data-scope='field'][data-part='error'] {
     font-size: var(--manti-text-xs);
-    color: light-dark(var(--manti-chili-700), var(--manti-chili-300));
+    color: light-dark(var(--manti-red-700), var(--manti-red-300));
   }
 }

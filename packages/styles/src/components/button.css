@@ -42,7 +42,7 @@
     &[data-size='sm'] {
       --manti-button-height: var(--manti-control-height-sm);
       --manti-button-padding-x: var(--manti-space-3);
-      --manti-button-radius: var(--manti-radius-sm);
+      --manti-button-radius: var(--manti-radius-md);
     }
 
     &[data-size='lg'] {

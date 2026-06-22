@@ -2,7 +2,7 @@
  * Manti UI tokens.
  *
  * Three layers of meaning:
- *   1. Primitive ramps — fixed OKLCH scales (`--manti-paprika-500`, ...).
+ *   1. Primitive ramps — fixed OKLCH scales (`--manti-orange-500`, ...).
  *   2. Semantic roles — surfaces, text, motion, radius, space. Color roles use
  *      `light-dark()` so the theme follows `color-scheme` automatically.
  *   3. Tonal roles — selected per component via `[data-tone]`, exposing a small,
@@ -21,72 +21,72 @@
      * ───────────────────────────────────────────────────────────────────── */
     /* @tokens:generated:start */
     /* Primitive ramps — fixed OKLCH scales, identical in light and dark. */
-    --manti-dough-50: oklch(0.985 0.004 80);
-    --manti-dough-100: oklch(0.968 0.006 80);
-    --manti-dough-200: oklch(0.934 0.008 78);
-    --manti-dough-300: oklch(0.888 0.01 76);
-    --manti-dough-400: oklch(0.79 0.012 74);
-    --manti-dough-500: oklch(0.672 0.013 72);
-    --manti-dough-600: oklch(0.556 0.013 70);
-    --manti-dough-700: oklch(0.452 0.012 68);
-    --manti-dough-800: oklch(0.352 0.011 66);
-    --manti-dough-900: oklch(0.268 0.01 64);
-    --manti-dough-950: oklch(0.196 0.008 62);
-    --manti-paprika-50: oklch(0.972 0.018 50);
-    --manti-paprika-100: oklch(0.94 0.04 48);
-    --manti-paprika-200: oklch(0.888 0.072 46);
-    --manti-paprika-300: oklch(0.82 0.11 44);
-    --manti-paprika-400: oklch(0.745 0.15 42);
-    --manti-paprika-500: oklch(0.678 0.17 40);
-    --manti-paprika-600: oklch(0.61 0.172 38);
-    --manti-paprika-700: oklch(0.52 0.15 36);
-    --manti-paprika-800: oklch(0.43 0.122 35);
-    --manti-paprika-900: oklch(0.35 0.092 34);
-    --manti-paprika-950: oklch(0.262 0.064 33);
-    --manti-herb-50: oklch(0.972 0.022 150);
-    --manti-herb-100: oklch(0.94 0.044 151);
-    --manti-herb-200: oklch(0.89 0.072 152);
-    --manti-herb-300: oklch(0.82 0.1 153);
-    --manti-herb-400: oklch(0.74 0.12 154);
-    --manti-herb-500: oklch(0.668 0.128 155);
-    --manti-herb-600: oklch(0.58 0.12 156);
-    --manti-herb-700: oklch(0.486 0.1 157);
-    --manti-herb-800: oklch(0.398 0.08 158);
-    --manti-herb-900: oklch(0.32 0.062 159);
-    --manti-herb-950: oklch(0.238 0.044 160);
-    --manti-sumac-50: oklch(0.978 0.022 85);
-    --manti-sumac-100: oklch(0.952 0.046 83);
-    --manti-sumac-200: oklch(0.908 0.082 80);
-    --manti-sumac-300: oklch(0.86 0.116 77);
-    --manti-sumac-400: oklch(0.812 0.14 74);
-    --manti-sumac-500: oklch(0.76 0.15 71);
-    --manti-sumac-600: oklch(0.68 0.146 68);
-    --manti-sumac-700: oklch(0.566 0.12 66);
-    --manti-sumac-800: oklch(0.462 0.096 64);
-    --manti-sumac-900: oklch(0.382 0.074 62);
-    --manti-sumac-950: oklch(0.286 0.054 60);
-    --manti-chili-50: oklch(0.971 0.018 25);
-    --manti-chili-100: oklch(0.936 0.04 24);
-    --manti-chili-200: oklch(0.882 0.074 23);
-    --manti-chili-300: oklch(0.81 0.116 23);
-    --manti-chili-400: oklch(0.726 0.17 24);
-    --manti-chili-500: oklch(0.652 0.205 26);
-    --manti-chili-600: oklch(0.586 0.21 27);
-    --manti-chili-700: oklch(0.502 0.186 27);
-    --manti-chili-800: oklch(0.42 0.15 27);
-    --manti-chili-900: oklch(0.352 0.115 27);
-    --manti-chili-950: oklch(0.262 0.078 26);
-    --manti-broth-50: oklch(0.974 0.014 235);
-    --manti-broth-100: oklch(0.94 0.03 236);
-    --manti-broth-200: oklch(0.89 0.054 237);
-    --manti-broth-300: oklch(0.82 0.08 238);
-    --manti-broth-400: oklch(0.73 0.108 240);
-    --manti-broth-500: oklch(0.65 0.13 242);
-    --manti-broth-600: oklch(0.566 0.14 244);
-    --manti-broth-700: oklch(0.482 0.128 246);
-    --manti-broth-800: oklch(0.402 0.104 247);
-    --manti-broth-900: oklch(0.336 0.08 248);
-    --manti-broth-950: oklch(0.252 0.056 249);
+    --manti-gray-50: oklch(0.985 0.004 80);
+    --manti-gray-100: oklch(0.968 0.006 80);
+    --manti-gray-200: oklch(0.934 0.008 78);
+    --manti-gray-300: oklch(0.888 0.01 76);
+    --manti-gray-400: oklch(0.79 0.012 74);
+    --manti-gray-500: oklch(0.672 0.013 72);
+    --manti-gray-600: oklch(0.556 0.013 70);
+    --manti-gray-700: oklch(0.452 0.012 68);
+    --manti-gray-800: oklch(0.352 0.011 66);
+    --manti-gray-900: oklch(0.268 0.01 64);
+    --manti-gray-950: oklch(0.196 0.008 62);
+    --manti-orange-50: oklch(0.972 0.018 50);
+    --manti-orange-100: oklch(0.94 0.04 48);
+    --manti-orange-200: oklch(0.888 0.072 46);
+    --manti-orange-300: oklch(0.82 0.11 44);
+    --manti-orange-400: oklch(0.745 0.15 42);
+    --manti-orange-500: oklch(0.678 0.17 40);
+    --manti-orange-600: oklch(0.61 0.172 38);
+    --manti-orange-700: oklch(0.52 0.15 36);
+    --manti-orange-800: oklch(0.43 0.122 35);
+    --manti-orange-900: oklch(0.35 0.092 34);
+    --manti-orange-950: oklch(0.262 0.064 33);
+    --manti-green-50: oklch(0.972 0.022 150);
+    --manti-green-100: oklch(0.94 0.044 151);
+    --manti-green-200: oklch(0.89 0.072 152);
+    --manti-green-300: oklch(0.82 0.1 153);
+    --manti-green-400: oklch(0.74 0.12 154);
+    --manti-green-500: oklch(0.668 0.128 155);
+    --manti-green-600: oklch(0.58 0.12 156);
+    --manti-green-700: oklch(0.486 0.1 157);
+    --manti-green-800: oklch(0.398 0.08 158);
+    --manti-green-900: oklch(0.32 0.062 159);
+    --manti-green-950: oklch(0.238 0.044 160);
+    --manti-amber-50: oklch(0.978 0.022 85);
+    --manti-amber-100: oklch(0.952 0.046 83);
+    --manti-amber-200: oklch(0.908 0.082 80);
+    --manti-amber-300: oklch(0.86 0.116 77);
+    --manti-amber-400: oklch(0.812 0.14 74);
+    --manti-amber-500: oklch(0.76 0.15 71);
+    --manti-amber-600: oklch(0.68 0.146 68);
+    --manti-amber-700: oklch(0.566 0.12 66);
+    --manti-amber-800: oklch(0.462 0.096 64);
+    --manti-amber-900: oklch(0.382 0.074 62);
+    --manti-amber-950: oklch(0.286 0.054 60);
+    --manti-red-50: oklch(0.971 0.018 25);
+    --manti-red-100: oklch(0.936 0.04 24);
+    --manti-red-200: oklch(0.882 0.074 23);
+    --manti-red-300: oklch(0.81 0.116 23);
+    --manti-red-400: oklch(0.726 0.17 24);
+    --manti-red-500: oklch(0.652 0.205 26);
+    --manti-red-600: oklch(0.586 0.21 27);
+    --manti-red-700: oklch(0.502 0.186 27);
+    --manti-red-800: oklch(0.42 0.15 27);
+    --manti-red-900: oklch(0.352 0.115 27);
+    --manti-red-950: oklch(0.262 0.078 26);
+    --manti-blue-50: oklch(0.974 0.014 235);
+    --manti-blue-100: oklch(0.94 0.03 236);
+    --manti-blue-200: oklch(0.89 0.054 237);
+    --manti-blue-300: oklch(0.82 0.08 238);
+    --manti-blue-400: oklch(0.73 0.108 240);
+    --manti-blue-500: oklch(0.65 0.13 242);
+    --manti-blue-600: oklch(0.566 0.14 244);
+    --manti-blue-700: oklch(0.482 0.128 246);
+    --manti-blue-800: oklch(0.402 0.104 247);
+    --manti-blue-900: oklch(0.336 0.08 248);
+    --manti-blue-950: oklch(0.252 0.056 249);
 
     /* Radius */
     --manti-radius-xs: 4px;
@@ -313,10 +313,7 @@
    * `light-dark()` to stay theme-aware, and `color-mix()` for soft surfaces.
    */
   [data-tone='primary'] {
-    --tone-solid: light-dark(
-      var(--manti-paprika-600),
-      var(--manti-paprika-500)
-    );
+    --tone-solid: light-dark(var(--manti-orange-600), var(--manti-orange-500));
     /* Hover/active lighten in light, darken in dark (consistent with neutral):
        mix toward white / black off the resolved solid. */
     --tone-solid-hover: light-dark(
@@ -329,23 +326,23 @@
     );
     --tone-on-solid: var(--manti-text-on-accent);
     --tone-soft-bg: light-dark(
-      var(--manti-paprika-100),
-      color-mix(in oklab, var(--manti-paprika-500) 20%, var(--manti-dough-950))
+      var(--manti-orange-100),
+      color-mix(in oklab, var(--manti-orange-500) 20%, var(--manti-gray-950))
     );
     --tone-soft-bg-hover: light-dark(
-      var(--manti-paprika-200),
-      color-mix(in oklab, var(--manti-paprika-500) 30%, var(--manti-dough-950))
+      var(--manti-orange-200),
+      color-mix(in oklab, var(--manti-orange-500) 30%, var(--manti-gray-950))
     );
     --tone-soft-text: light-dark(
-      var(--manti-paprika-700),
-      var(--manti-paprika-200)
+      var(--manti-orange-700),
+      var(--manti-orange-200)
     );
     --tone-border: light-dark(
-      var(--manti-paprika-300),
-      color-mix(in oklab, var(--manti-paprika-500) 38%, var(--manti-dough-900))
+      var(--manti-orange-300),
+      color-mix(in oklab, var(--manti-orange-500) 38%, var(--manti-gray-900))
     );
-    --tone-text: light-dark(var(--manti-paprika-700), var(--manti-paprika-300));
-    --tone-ring: var(--manti-paprika-500);
+    --tone-text: light-dark(var(--manti-orange-700), var(--manti-orange-300));
+    --tone-ring: var(--manti-orange-500);
   }
 
   [data-tone='neutral'] {
@@ -370,7 +367,7 @@
   }
 
   [data-tone='success'] {
-    --tone-solid: light-dark(var(--manti-herb-600), var(--manti-herb-500));
+    --tone-solid: light-dark(var(--manti-green-600), var(--manti-green-500));
     --tone-solid-hover: light-dark(
       color-mix(in oklab, var(--tone-solid) 88%, white),
       color-mix(in oklab, var(--tone-solid) 88%, black)
@@ -381,24 +378,27 @@
     );
     --tone-on-solid: var(--manti-text-on-accent);
     --tone-soft-bg: light-dark(
-      var(--manti-herb-100),
-      color-mix(in oklab, var(--manti-herb-500) 20%, var(--manti-dough-950))
+      var(--manti-green-100),
+      color-mix(in oklab, var(--manti-green-500) 20%, var(--manti-gray-950))
     );
     --tone-soft-bg-hover: light-dark(
-      var(--manti-herb-200),
-      color-mix(in oklab, var(--manti-herb-500) 30%, var(--manti-dough-950))
+      var(--manti-green-200),
+      color-mix(in oklab, var(--manti-green-500) 30%, var(--manti-gray-950))
     );
-    --tone-soft-text: light-dark(var(--manti-herb-700), var(--manti-herb-200));
+    --tone-soft-text: light-dark(
+      var(--manti-green-700),
+      var(--manti-green-200)
+    );
     --tone-border: light-dark(
-      var(--manti-herb-300),
-      color-mix(in oklab, var(--manti-herb-500) 38%, var(--manti-dough-900))
+      var(--manti-green-300),
+      color-mix(in oklab, var(--manti-green-500) 38%, var(--manti-gray-900))
     );
-    --tone-text: light-dark(var(--manti-herb-700), var(--manti-herb-300));
-    --tone-ring: var(--manti-herb-500);
+    --tone-text: light-dark(var(--manti-green-700), var(--manti-green-300));
+    --tone-ring: var(--manti-green-500);
   }
 
   [data-tone='warning'] {
-    --tone-solid: light-dark(var(--manti-sumac-400), var(--manti-sumac-400));
+    --tone-solid: light-dark(var(--manti-amber-400), var(--manti-amber-400));
     --tone-solid-hover: light-dark(
       color-mix(in oklab, var(--tone-solid) 88%, white),
       color-mix(in oklab, var(--tone-solid) 88%, black)
@@ -407,29 +407,29 @@
       color-mix(in oklab, var(--tone-solid) 78%, white),
       color-mix(in oklab, var(--tone-solid) 78%, black)
     );
-    --tone-on-solid: var(--manti-dough-950);
+    --tone-on-solid: var(--manti-gray-950);
     --tone-soft-bg: light-dark(
-      var(--manti-sumac-100),
-      color-mix(in oklab, var(--manti-sumac-500) 20%, var(--manti-dough-950))
+      var(--manti-amber-100),
+      color-mix(in oklab, var(--manti-amber-500) 20%, var(--manti-gray-950))
     );
     --tone-soft-bg-hover: light-dark(
-      var(--manti-sumac-200),
-      color-mix(in oklab, var(--manti-sumac-500) 30%, var(--manti-dough-950))
+      var(--manti-amber-200),
+      color-mix(in oklab, var(--manti-amber-500) 30%, var(--manti-gray-950))
     );
     --tone-soft-text: light-dark(
-      var(--manti-sumac-800),
-      var(--manti-sumac-200)
+      var(--manti-amber-800),
+      var(--manti-amber-200)
     );
     --tone-border: light-dark(
-      var(--manti-sumac-300),
-      color-mix(in oklab, var(--manti-sumac-500) 38%, var(--manti-dough-900))
+      var(--manti-amber-300),
+      color-mix(in oklab, var(--manti-amber-500) 38%, var(--manti-gray-900))
     );
-    --tone-text: light-dark(var(--manti-sumac-800), var(--manti-sumac-300));
-    --tone-ring: var(--manti-sumac-500);
+    --tone-text: light-dark(var(--manti-amber-800), var(--manti-amber-300));
+    --tone-ring: var(--manti-amber-500);
   }
 
   [data-tone='danger'] {
-    --tone-solid: light-dark(var(--manti-chili-600), var(--manti-chili-500));
+    --tone-solid: light-dark(var(--manti-red-600), var(--manti-red-500));
     --tone-solid-hover: light-dark(
       color-mix(in oklab, var(--tone-solid) 88%, white),
       color-mix(in oklab, var(--tone-solid) 88%, black)
@@ -440,27 +440,24 @@
     );
     --tone-on-solid: var(--manti-text-on-accent);
     --tone-soft-bg: light-dark(
-      var(--manti-chili-100),
-      color-mix(in oklab, var(--manti-chili-500) 20%, var(--manti-dough-950))
+      var(--manti-red-100),
+      color-mix(in oklab, var(--manti-red-500) 20%, var(--manti-gray-950))
     );
     --tone-soft-bg-hover: light-dark(
-      var(--manti-chili-200),
-      color-mix(in oklab, var(--manti-chili-500) 30%, var(--manti-dough-950))
+      var(--manti-red-200),
+      color-mix(in oklab, var(--manti-red-500) 30%, var(--manti-gray-950))
     );
-    --tone-soft-text: light-dark(
-      var(--manti-chili-700),
-      var(--manti-chili-200)
-    );
+    --tone-soft-text: light-dark(var(--manti-red-700), var(--manti-red-200));
     --tone-border: light-dark(
-      var(--manti-chili-300),
-      color-mix(in oklab, var(--manti-chili-500) 38%, var(--manti-dough-900))
+      var(--manti-red-300),
+      color-mix(in oklab, var(--manti-red-500) 38%, var(--manti-gray-900))
     );
-    --tone-text: light-dark(var(--manti-chili-700), var(--manti-chili-300));
-    --tone-ring: var(--manti-chili-500);
+    --tone-text: light-dark(var(--manti-red-700), var(--manti-red-300));
+    --tone-ring: var(--manti-red-500);
   }
 
   [data-tone='info'] {
-    --tone-solid: light-dark(var(--manti-broth-600), var(--manti-broth-500));
+    --tone-solid: light-dark(var(--manti-blue-600), var(--manti-blue-500));
     --tone-solid-hover: light-dark(
       color-mix(in oklab, var(--tone-solid) 88%, white),
       color-mix(in oklab, var(--tone-solid) 88%, black)
@@ -471,22 +468,19 @@
     );
     --tone-on-solid: var(--manti-text-on-accent);
     --tone-soft-bg: light-dark(
-      var(--manti-broth-100),
-      color-mix(in oklab, var(--manti-broth-500) 20%, var(--manti-dough-950))
+      var(--manti-blue-100),
+      color-mix(in oklab, var(--manti-blue-500) 20%, var(--manti-gray-950))
     );
     --tone-soft-bg-hover: light-dark(
-      var(--manti-broth-200),
-      color-mix(in oklab, var(--manti-broth-500) 30%, var(--manti-dough-950))
+      var(--manti-blue-200),
+      color-mix(in oklab, var(--manti-blue-500) 30%, var(--manti-gray-950))
     );
-    --tone-soft-text: light-dark(
-      var(--manti-broth-700),
-      var(--manti-broth-200)
-    );
+    --tone-soft-text: light-dark(var(--manti-blue-700), var(--manti-blue-200));
     --tone-border: light-dark(
-      var(--manti-broth-300),
-      color-mix(in oklab, var(--manti-broth-500) 38%, var(--manti-dough-900))
+      var(--manti-blue-300),
+      color-mix(in oklab, var(--manti-blue-500) 38%, var(--manti-gray-900))
     );
-    --tone-text: light-dark(var(--manti-broth-700), var(--manti-broth-300));
-    --tone-ring: var(--manti-broth-500);
+    --tone-text: light-dark(var(--manti-blue-700), var(--manti-blue-300));
+    --tone-ring: var(--manti-blue-500);
   }
 }

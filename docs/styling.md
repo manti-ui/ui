@@ -93,14 +93,14 @@ altitude:
 ```css
 /* 1. Primitive ramp — rebrand the palette everywhere. */
 :root {
-  --manti-paprika-500: oklch(0.65 0.2 280); /* paprika is now purple */
+  --manti-orange-500: oklch(0.65 0.2 280); /* the orange ramp is now purple */
 }
 
 /* 2. Semantic role — THE primary theming lever. Cascades to every component
       consistently (this radius change rounds buttons, cards, inputs alike). */
 :root {
   --manti-radius-md: 4px;
-  --manti-focus-ring: var(--manti-broth-500);
+  --manti-focus-ring: var(--manti-blue-500);
 }
 
 /* 3. Component token — escape hatch. Reach for it only to make ONE component
@@ -111,8 +111,8 @@ altitude:
 
 /* 4. Tone — remap what a tone means, globally or per subtree. */
 .marketing-section [data-tone='primary'] {
-  --tone-solid: var(--manti-broth-600);
-  --tone-solid-hover: var(--manti-broth-700);
+  --tone-solid: var(--manti-blue-600);
+  --tone-solid-hover: var(--manti-blue-700);
 }
 
 /* 5. One instance — className or style, as usual. */
@@ -124,7 +124,7 @@ Manti tokens form three tiers, each defaulting into the one above it:
 
 | Tier             | Example                  | Scope                            |
 | ---------------- | ------------------------ | -------------------------------- |
-| 1 — primitive    | `--manti-paprika-500`    | the raw palette / scales         |
+| 1 — primitive    | `--manti-orange-500`    | the raw palette / scales         |
 | 2 — semantic     | `--manti-radius-md`, `--tone-solid` | purpose-based roles   |
 | 3 — **component** | `--manti-button-radius`  | one component's structural knobs |
 
@@ -252,30 +252,34 @@ The packaged file pins the layer order to
 
 ### The theme bridge
 
-`tailwind-theme.css` maps Manti tokens to Tailwind theme variables with
-`@theme inline`, so generated utilities reference the underlying
+`tailwind-theme.css` binds the entire Manti token contract onto Tailwind theme
+variables with `@theme inline`, so generated utilities reference the underlying
 `var(--manti-*)` at runtime — they follow `light-dark()` and `data-theme`
-switches for free.
+switches for free. It is a **full takeover**: Manti's values override Tailwind's
+defaults of the same name, so standard utilities (`bg-red-500`, `text-lg`,
+`rounded-lg`, `shadow-md`) resolve to Manti tokens.
 
 | Utility example                       | Resolves to                  |
 | ------------------------------------- | ---------------------------- |
-| `bg-surface`, `text-text-muted`       | semantic surface/text tokens |
-| `border-border`, `ring-ring`          | semantic border/focus tokens |
-| `bg-paprika-500`, `text-herb-700`     | primitive ramps              |
-| `bg-primary-600`, `border-danger-300` | semantic ramp aliases        |
-| `rounded-manti-lg`, `shadow-manti-md` | Manti radius/elevation       |
-| `h-control-md`, `min-h-control-sm`    | Manti control heights        |
-| `ease-smooth`, `ease-soft`            | Manti motion curves          |
-| `ease-spring`, `ease-bounce`          | Manti expressive curves      |
+| `bg-surface`, `text-text-muted`              | semantic surface/text tokens |
+| `border-border`, `ring-ring`                 | semantic border/focus tokens |
+| `bg-orange-500`, `text-red-700`              | primitive ramps (plain names)|
+| `bg-primary-600`, `border-danger-300`        | semantic ramp aliases        |
+| `text-lg`, `font-semibold`, `leading-normal` | typography scale             |
+| `rounded-lg`, `shadow-md`                    | Manti radius/elevation       |
+| `h-control-md`, `min-h-control-sm`           | Manti control heights        |
+| `ease-smooth`, `ease-spring`                 | Manti motion curves          |
 | `font-sans`, `font-mono`              | Manti font stacks (override) |
 
-Spacing needs no bridge: Manti's 4px grid equals Tailwind's default
-`--spacing: 0.25rem`, so `p-4` and `var(--manti-space-4)` already agree.
-Radius and shadow scales are prefixed with `manti-` so Tailwind's own
-`rounded-md` / `shadow-sm` keep their stock meaning. The shared control height is
-exposed as `control-{sm,md,lg}` in the spacing namespace, so `h-control-md` and
-friends resolve to the token and follow any override (while plain `h-10` keeps
-its fixed value).
+Spacing is bound at its base unit — `--spacing` resolves to `--manti-space-1`
+(the 4px grid) — so every numeric utility (`p-4`, `gap-2`, `h-10`) derives from
+the token. Radius and shadow take over Tailwind's own scales directly, so
+`rounded-md` / `shadow-sm` resolve to Manti's values. The shared control height
+is exposed as `control-{sm,md,lg}` in the spacing namespace, so `h-control-md`
+and friends resolve to the token and follow any override. Named transition
+durations, z-index, and breakpoints have no Tailwind theme namespace to take
+over — reach durations/z-index through arbitrary values
+(`duration-[var(--manti-duration-base)]`), and breakpoints are bound as literals.
 
 ### Headless: skip Manti's CSS entirely
 

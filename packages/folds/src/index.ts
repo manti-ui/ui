@@ -36,7 +36,6 @@ export * as timer from '@zag-js/timer';
 export * as steps from '@zag-js/steps';
 export * as tour from '@zag-js/tour';
 export * as splitter from '@zag-js/splitter';
-export * as angleSlider from '@zag-js/angle-slider';
 export * as colorPicker from '@zag-js/color-picker';
 export * as navigationMenu from '@zag-js/navigation-menu';
 export * as floatingPanel from '@zag-js/floating-panel';
