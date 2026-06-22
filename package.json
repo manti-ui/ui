@@ -15,6 +15,7 @@
     "docs:dev": "vite packages/docs",
     "docs:build": "pnpm build:packages && vite build packages/docs",
     "docs:preview": "vite preview packages/docs",
+    "build:site": "pnpm docs:build && pnpm build:storybook && rm -rf packages/docs/dist/storybook && cp -r storybook-static packages/docs/dist/storybook",
     "gen:tokens": "pnpm --filter @manti-ui/styles gen:tokens",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
