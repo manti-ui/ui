@@ -1,22 +1,26 @@
-# Netlify config for the Manti UI docs site (manti.design).
+# Netlify config for the Manti UI site (manti.design).
 #
-# Two Netlify sites are served from this one repo, told apart by their "Base
-# directory" so each reads its own netlify.toml:
-#   - docs  → Base directory = `packages/docs` → this file → manti.design
-#   - storybook → Base directory = repo root → root netlify.toml → storybook.manti.design
+# ONE Netlify site serves everything from this repo:
+#   - docs at the root (/)      -> manti.design
+#   - Storybook at /storybook   -> manti.design/storybook
 #
-# `pnpm install` here still installs the entire pnpm workspace (pnpm walks up to
-# the root pnpm-workspace.yaml), so build:packages can build the libraries the
-# docs import, then the docs site itself is built.
+# The site's "Base directory" is `packages/docs`, so Netlify reads this file.
+# `pnpm install` here installs the whole pnpm workspace (pnpm walks up to the
+# root pnpm-workspace.yaml). The root `build:site` script then builds the
+# libraries, the docs site (-> packages/docs/dist), and Storybook
+# (-> storybook-static), and copies Storybook into packages/docs/dist/storybook
+# so both ship in a single deploy.
 [build]
-  command = "pnpm -w run build:packages && pnpm run build"
+  command = "pnpm -w run build:site"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
+  STORYBOOK_DISABLE_TELEMETRY = "1"
 
-# SPA fallback — client-side routes (e.g. /components/button) must resolve to
-# index.html on a direct load or refresh.
+# SPA fallback for the docs client-side routes (e.g. /components/button).
+# Netlify serves existing static files before applying redirects, so everything
+# under /storybook (real files) is unaffected by this catch-all.
 [[redirects]]
   from = "/*"
   to = "/index.html"

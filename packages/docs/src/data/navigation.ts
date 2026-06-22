@@ -46,4 +46,6 @@ export const primaryNav: NavItem[] = [
 ];
 
 export const GITHUB_URL = 'https://github.com/manti-ui/ui';
-export const STORYBOOK_URL = 'https://storybook.manti.design';
+// Storybook ships in the same Netlify deploy, served at the /storybook subpath.
+// Trailing slash is required so Storybook's relative asset URLs resolve under it.
+export const STORYBOOK_URL = '/storybook/';
