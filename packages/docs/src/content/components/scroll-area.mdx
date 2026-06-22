@@ -1,0 +1,50 @@
+---
+title: ScrollArea
+slug: /components/scroll-area
+group: Components
+order: 51
+description: A scrollable viewport with sleek, theme-aware scrollbars.
+---
+
+# ScrollArea
+
+A scrollable viewport with a custom, grabbable scrollbar. It is a static
+component — there is no Zag machine — that hides the native scrollbar and renders
+its own track and thumb, sized from the viewport's scroll metrics, so the thumb
+can be dragged. By default (`type="auto"`) the thumb appears while you move the
+pointer over the area or scroll, then fades out once the pointer goes idle or
+leaves.
+
+<Demo name="scroll-area/basic" />
+
+## Basic
+
+Give the root a bounded size — a `height` / `max-height` for vertical scrolling,
+a `width` / `max-width` for horizontal — and the viewport scrolls within it. The
+container is otherwise unstyled, so add a border or surface where you want one.
+Use `type` to change when the thumb shows: `auto` (default), `hover` (only on
+hover/focus/drag), or `always` (visible whenever the content overflows).
+
+<Demo name="scroll-area/basic" />
+
+## Horizontal
+
+`orientation` picks the scroll axis: `vertical` (default), `horizontal`, or
+`both`.
+
+<Demo name="scroll-area/horizontal" />
+
+## Props
+
+<PropsTable component="scroll-area" />
+
+## Anatomy
+
+Target these public selectors to customize the scroll area. Class names and the
+DOM between parts are private.
+
+<Anatomy component="scroll-area" />
+
+## Component tokens
+
+<TokenTable component="scroll-area" />

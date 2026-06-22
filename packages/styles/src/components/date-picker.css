@@ -240,4 +240,18 @@
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);
     }
   }
+
+  /* Month and year grids use 4 wide columns instead of 7 narrow day cells, so
+     the table spans the panel and each trigger fills its cell. */
+  [data-scope='date-picker'][data-part='table'][data-view='month'],
+  [data-scope='date-picker'][data-part='table'][data-view='year'] {
+    width: 100%;
+  }
+
+  [data-scope='date-picker'][data-part='table-cell-trigger'][data-view='month'],
+  [data-scope='date-picker'][data-part='table-cell-trigger'][data-view='year'] {
+    width: 100%;
+    min-width: 3.5rem;
+    height: 2.5rem;
+  }
 }

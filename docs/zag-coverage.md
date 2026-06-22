@@ -79,7 +79,7 @@ Legend: ✅ done · ⬜ todo
 | File Upload   | `@zag-js/file-upload`   |   ✅   |
 | Signature Pad | `@zag-js/signature-pad` |   ✅   |
 
-### Batch 6 — date, time & advanced ✅
+### Batch 6 — date, time & advanced
 
 | Component       | Package                   | Status |
 | --------------- | ------------------------- | :----: |
@@ -89,11 +89,33 @@ Legend: ✅ done · ⬜ todo
 | Steps           | `@zag-js/steps`           |   ✅   |
 | Tour            | `@zag-js/tour`            |   ✅   |
 | Splitter        | `@zag-js/splitter`        |   ✅   |
-| Angle Slider    | `@zag-js/angle-slider`    |   ✅   |
+| Angle Slider    | `@zag-js/angle-slider`    |   ⬜   |
 | Color Picker    | `@zag-js/color-picker`    |   ✅   |
 | Navigation Menu | `@zag-js/navigation-menu` |   ✅   |
 | Floating Panel  | `@zag-js/floating-panel`  |   ✅   |
 
-Variants that reuse a batch package: Context/Nested Menu (`menu`), Range Slider
-(`slider`), Segmented Control (`radio-group`), Drawer (`dialog`), Circular vs
-Linear Progress (`progress`), Date Input (`date-picker`).
+### Variants — one machine, a new guise
+
+A variant reuses an already-adapted batch machine, restyled and re-scoped for a
+different purpose (e.g. Drawer re-scopes the dialog parts to `drawer`).
+
+| Component         | Reuses        | Status |
+| ----------------- | ------------- | :----: |
+| Context Menu      | `menu`        |   ✅   |
+| Segmented Control | `radio-group` |   ✅   |
+| Drawer            | `dialog`      |   ✅   |
+| Nested Menu       | `menu`        |   ⬜   |
+| Range Slider      | `slider`      |   ⬜   |
+| Date Input        | `date-picker` |   ⬜   |
+
+### Manti-original primitives — no Zag machine
+
+Framework-agnostic behaviors Manti UI authors directly (a `@manti-ui/folds`
+primitive or pure CSS) to fill gaps in the Zag catalog.
+
+| Component      | Mechanism             | Status |
+| -------------- | --------------------- | :----: |
+| Marquee        | CSS animation         |   ✅   |
+| Swipe          | `folds/swipe`         |   ✅   |
+| Scroll Area    | CSS scrollbars        |   ✅   |
+| Password Input | `field` shell + state |   ✅   |

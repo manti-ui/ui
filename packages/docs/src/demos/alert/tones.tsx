@@ -1,6 +1,13 @@
 import { Alert } from '@manti-ui/react';
 
-const tones = ['info', 'success', 'warning', 'danger'] as const;
+const tones = [
+  'info',
+  'success',
+  'warning',
+  'danger',
+  'primary',
+  'neutral',
+] as const;
 
 export default function AlertTones() {
   return (

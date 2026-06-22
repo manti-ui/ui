@@ -4,9 +4,6 @@ export type { AccordionItem, AccordionProps } from './Accordion/Accordion';
 export { Alert } from './Alert/Alert';
 export type { AlertProps } from './Alert/Alert';
 
-export { AngleSlider } from './AngleSlider/AngleSlider';
-export type { AngleSliderProps } from './AngleSlider/AngleSlider';
-
 export { Avatar } from './Avatar/Avatar';
 export type { AvatarProps } from './Avatar/Avatar';
 
@@ -45,6 +42,14 @@ export type { DatePickerProps } from './DatePicker/DatePicker';
 
 export { Dialog } from './Dialog/Dialog';
 export type { DialogProps, DialogSize } from './Dialog/Dialog';
+
+export { Drawer } from './Drawer/Drawer';
+export type {
+  DrawerPlacement,
+  DrawerProps,
+  DrawerRenderProps,
+  DrawerSize,
+} from './Drawer/Drawer';
 
 export { Editable } from './Editable/Editable';
 export type { EditableProps } from './Editable/Editable';
@@ -86,6 +91,9 @@ export type { NumberInputProps } from './NumberInput/NumberInput';
 export { Pagination } from './Pagination/Pagination';
 export type { PaginationProps } from './Pagination/Pagination';
 
+export { PasswordInput } from './PasswordInput/PasswordInput';
+export type { PasswordInputProps } from './PasswordInput/PasswordInput';
+
 export { PinInput } from './PinInput/PinInput';
 export type { PinInputProps } from './PinInput/PinInput';
 
@@ -103,6 +111,15 @@ export type { RadioGroupItem, RadioGroupProps } from './RadioGroup/RadioGroup';
 
 export { RatingGroup } from './RatingGroup/RatingGroup';
 export type { RatingGroupProps } from './RatingGroup/RatingGroup';
+
+export { ScrollArea } from './ScrollArea/ScrollArea';
+export type { ScrollAreaProps } from './ScrollArea/ScrollArea';
+
+export { SegmentedControl } from './SegmentedControl/SegmentedControl';
+export type {
+  SegmentedControlItem,
+  SegmentedControlProps,
+} from './SegmentedControl/SegmentedControl';
 
 export { Select } from './Select/Select';
 export type { SelectItem, SelectProps } from './Select/Select';

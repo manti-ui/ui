@@ -15,7 +15,9 @@
 @import './components/switch.css';
 @import './components/checkbox.css';
 @import './components/radio-group.css';
+@import './components/segmented-control.css';
 @import './components/field.css';
+@import './components/password-input.css';
 @import './components/badge.css';
 @import './components/card.css';
 @import './components/alert.css';
@@ -25,6 +27,7 @@
 @import './components/tabs.css';
 @import './components/tooltip.css';
 @import './components/dialog.css';
+@import './components/drawer.css';
 @import './components/popover.css';
 @import './components/hover-card.css';
 @import './components/menu.css';
@@ -54,10 +57,10 @@
 @import './components/steps.css';
 @import './components/tour.css';
 @import './components/splitter.css';
-@import './components/angle-slider.css';
 @import './components/color-picker.css';
 @import './components/navigation-menu.css';
 @import './components/floating-panel.css';
+@import './components/scroll-area.css';
 @import './components/marquee.css';
 @import './components/swipe.css';
 

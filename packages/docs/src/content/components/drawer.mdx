@@ -1,0 +1,47 @@
+---
+title: Drawer
+slug: /components/drawer
+group: Components
+order: 26
+description: An edge-anchored panel that slides in, backed by the Zag.js dialog machine.
+---
+
+# Drawer
+
+An edge-anchored panel that slides in from a screen edge. It shares the Zag.js
+dialog machine with [Dialog](/components/dialog) — the same focus trapping,
+scroll locking, and dismissal — restyled to anchor to an edge and slide in.
+
+<Demo name="drawer/basic" center />
+
+## Basic
+
+`trigger` is the element that opens the drawer — it's cloned with the machine's
+trigger props. Pass `title`, `description`, and body content as `children`.
+`footer` accepts a render function receiving `{ close }`, so action buttons can
+dismiss the drawer.
+
+<Demo name="drawer/basic" center />
+
+## Placement
+
+`placement` sets the edge the drawer slides in from: `right` (default), `left`,
+`top`, or `bottom`. `size` controls the panel's extent along its axis — the
+width for `left`/`right`, the height for `top`/`bottom`.
+
+<Demo name="drawer/placements" center />
+
+## Props
+
+<PropsTable component="drawer" />
+
+## Anatomy
+
+Target these public selectors to customize the drawer. Class names and the DOM
+between parts are private.
+
+<Anatomy component="drawer" />
+
+## Component tokens
+
+<TokenTable component="drawer" />

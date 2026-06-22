@@ -138,9 +138,6 @@ importers:
       '@zag-js/accordion':
         specifier: ^1.41.2
         version: 1.41.2
-      '@zag-js/angle-slider':
-        specifier: ^1.41.2
-        version: 1.41.2
       '@zag-js/avatar':
         specifier: ^1.41.2
         version: 1.41.2
@@ -1456,9 +1453,6 @@ packages:
 
   '@zag-js/anatomy@1.41.2':
     resolution: {integrity: sha512-Fm9hqdrvaCzCsdcf19G8WZxYtHElKltkGHdhqMEt4XU+ULTr1DK7KbOtDDv9J27CuzqSLALUz5QfRjPftoKHwg==}
-
-  '@zag-js/angle-slider@1.41.2':
-    resolution: {integrity: sha512-+7bZHAZx0MEbjTMr2tD+meFJ0EJwFfUEcTqmdLzFGr/ySAMCWlcadDBz+ZmrSn03aKLps8FxliVLzsFJNgUqIQ==}
 
   '@zag-js/aria-hidden@1.41.2':
     resolution: {integrity: sha512-qEcYmwlQr3qjA0T/IZ5a/o7fRUxfQ14tXjAFhR3GXCtxBKaqS+wnq/LN09Xw4bin3QWTINU+Z0oXFs9spWtNwA==}
@@ -3968,15 +3962,6 @@ snapshots:
   '@zag-js/anatomy@1.22.1': {}
 
   '@zag-js/anatomy@1.41.2': {}
-
-  '@zag-js/angle-slider@1.41.2':
-    dependencies:
-      '@zag-js/anatomy': 1.41.2
-      '@zag-js/core': 1.41.2
-      '@zag-js/dom-query': 1.41.2
-      '@zag-js/rect-utils': 1.41.2
-      '@zag-js/types': 1.41.2
-      '@zag-js/utils': 1.41.2
 
   '@zag-js/aria-hidden@1.41.2':
     dependencies:

@@ -45,7 +45,13 @@ const navIcon = (d: string) => (
   </svg>
 );
 
-/** A calendar date picker backed by the Zag.js date-picker machine (day view). */
+/** Number of columns used by the month and year grids. */
+const GRID_COLUMNS = 4;
+
+/**
+ * A calendar date picker backed by the Zag.js date-picker machine. The header
+ * label cycles the view (day → month → year) so a year can be picked directly.
+ */
 export function DatePicker({
   label,
   tone = 'primary',
@@ -100,51 +106,174 @@ export function DatePicker({
       <Portal>
         <div {...api.getPositionerProps()} data-tone={tone}>
           <div {...api.getContentProps()}>
-            <div {...api.getViewControlProps()}>
-              <button
-                {...api.getPrevTriggerProps()}
-                aria-label="Previous month"
+            {/* Day view */}
+            <div hidden={api.view !== 'day'}>
+              <div {...api.getViewControlProps({ view: 'day' })}>
+                <button
+                  {...api.getPrevTriggerProps({ view: 'day' })}
+                  aria-label="Previous month"
+                >
+                  {navIcon('M10 3 5 8l5 5')}
+                </button>
+                <button {...api.getViewTriggerProps({ view: 'day' })}>
+                  {api.visibleRangeText.start}
+                </button>
+                <button
+                  {...api.getNextTriggerProps({ view: 'day' })}
+                  aria-label="Next month"
+                >
+                  {navIcon('M6 3l5 5-5 5')}
+                </button>
+              </div>
+              <table
+                {...api.getTableProps({
+                  view: 'day',
+                  columns: api.weekDays.length,
+                })}
               >
-                {navIcon('M10 3 5 8l5 5')}
-              </button>
-              <button {...api.getViewTriggerProps()}>
-                {api.visibleRangeText.start}
-              </button>
-              <button {...api.getNextTriggerProps()} aria-label="Next month">
-                {navIcon('M6 3l5 5-5 5')}
-              </button>
-            </div>
-            <table {...api.getTableProps()}>
-              <thead {...api.getTableHeaderProps()}>
-                <tr {...api.getTableRowProps()}>
-                  {api.weekDays.map((day) => (
-                    <th key={day.long} {...api.getTableHeadProps()} scope="col">
-                      {day.narrow}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody {...api.getTableBodyProps()}>
-                {api.weeks.map((week, weekIndex) => (
-                  <tr key={weekIndex} {...api.getTableRowProps()}>
-                    {week.map((cellValue, dayIndex) => (
-                      <td
-                        key={dayIndex}
-                        {...api.getDayTableCellProps({ value: cellValue })}
+                <thead {...api.getTableHeaderProps()}>
+                  <tr {...api.getTableRowProps()}>
+                    {api.weekDays.map((day) => (
+                      <th
+                        key={day.long}
+                        {...api.getTableHeadProps()}
+                        scope="col"
                       >
-                        <div
-                          {...api.getDayTableCellTriggerProps({
-                            value: cellValue,
-                          })}
-                        >
-                          {cellValue.day}
-                        </div>
-                      </td>
+                        {day.narrow}
+                      </th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody {...api.getTableBodyProps()}>
+                  {api.weeks.map((week, weekIndex) => (
+                    <tr key={weekIndex} {...api.getTableRowProps()}>
+                      {week.map((cellValue, dayIndex) => (
+                        <td
+                          key={dayIndex}
+                          {...api.getDayTableCellProps({ value: cellValue })}
+                        >
+                          <div
+                            {...api.getDayTableCellTriggerProps({
+                              value: cellValue,
+                            })}
+                          >
+                            {cellValue.day}
+                          </div>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Month view */}
+            <div hidden={api.view !== 'month'}>
+              <div {...api.getViewControlProps({ view: 'month' })}>
+                <button
+                  {...api.getPrevTriggerProps({ view: 'month' })}
+                  aria-label="Previous year"
+                >
+                  {navIcon('M10 3 5 8l5 5')}
+                </button>
+                <button {...api.getViewTriggerProps({ view: 'month' })}>
+                  {api.visibleRange.start.year}
+                </button>
+                <button
+                  {...api.getNextTriggerProps({ view: 'month' })}
+                  aria-label="Next year"
+                >
+                  {navIcon('M6 3l5 5-5 5')}
+                </button>
+              </div>
+              <table
+                {...api.getTableProps({ view: 'month', columns: GRID_COLUMNS })}
+              >
+                <tbody {...api.getTableBodyProps()}>
+                  {api
+                    .getMonthsGrid({ columns: GRID_COLUMNS, format: 'short' })
+                    .map((months, rowIndex) => (
+                      <tr
+                        key={rowIndex}
+                        {...api.getTableRowProps({ view: 'month' })}
+                      >
+                        {months.map((month) => (
+                          <td
+                            key={month.value}
+                            {...api.getMonthTableCellProps({
+                              ...month,
+                              columns: GRID_COLUMNS,
+                            })}
+                          >
+                            <div
+                              {...api.getMonthTableCellTriggerProps({
+                                ...month,
+                                columns: GRID_COLUMNS,
+                              })}
+                            >
+                              {month.label}
+                            </div>
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Year view */}
+            <div hidden={api.view !== 'year'}>
+              <div {...api.getViewControlProps({ view: 'year' })}>
+                <button
+                  {...api.getPrevTriggerProps({ view: 'year' })}
+                  aria-label="Previous decade"
+                >
+                  {navIcon('M10 3 5 8l5 5')}
+                </button>
+                <button {...api.getViewTriggerProps({ view: 'year' })}>
+                  {api.getDecade().start} – {api.getDecade().end}
+                </button>
+                <button
+                  {...api.getNextTriggerProps({ view: 'year' })}
+                  aria-label="Next decade"
+                >
+                  {navIcon('M6 3l5 5-5 5')}
+                </button>
+              </div>
+              <table
+                {...api.getTableProps({ view: 'year', columns: GRID_COLUMNS })}
+              >
+                <tbody {...api.getTableBodyProps()}>
+                  {api
+                    .getYearsGrid({ columns: GRID_COLUMNS })
+                    .map((years, rowIndex) => (
+                      <tr
+                        key={rowIndex}
+                        {...api.getTableRowProps({ view: 'year' })}
+                      >
+                        {years.map((year) => (
+                          <td
+                            key={year.value}
+                            {...api.getYearTableCellProps({
+                              ...year,
+                              columns: GRID_COLUMNS,
+                            })}
+                          >
+                            <div
+                              {...api.getYearTableCellTriggerProps({
+                                ...year,
+                                columns: GRID_COLUMNS,
+                              })}
+                            >
+                              {year.label}
+                            </div>
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </Portal>
