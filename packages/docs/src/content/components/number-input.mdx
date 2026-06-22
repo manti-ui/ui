@@ -1,0 +1,43 @@
+---
+title: NumberInput
+slug: /components/number-input
+group: Components
+order: 35
+description: A numeric stepper backed by the Zag.js number-input machine.
+---
+
+# NumberInput
+
+A numeric stepper backed by the Zag.js number-input machine. The machine owns
+clamping, keyboard stepping, and the increment/decrement triggers; you set the
+range and step.
+
+<Demo name="number-input/basic" center />
+
+## Basic
+
+`min`, `max`, and `step` bound and quantize the value. The value mirrors the
+input as a string, and `onValueChange` also receives it parsed as a number.
+
+<Demo name="number-input/basic" center />
+
+## Sizes
+
+`size` sets the control height: `sm`, `md` (default), or `lg`.
+
+<Demo name="number-input/sizes" center />
+
+## Props
+
+<PropsTable component="number-input" />
+
+## Anatomy
+
+Target these public selectors to customize the number input. Class names and the
+DOM between parts are private.
+
+<Anatomy component="number-input" />
+
+## Component tokens
+
+<TokenTable component="number-input" />

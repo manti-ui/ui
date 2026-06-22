@@ -1,0 +1,164 @@
+---
+title: Customizing with plain CSS
+slug: /guides/plain-css
+group: Guides
+order: 30
+description: Restyle any Manti component with ordinary CSS — no specificity battles, no forks, no !important.
+---
+
+# Customizing with plain CSS
+
+Manti UI is built to be restyled with plain CSS — without specificity battles or
+forked components. This guide is the practical version of that contract: how the
+cascade is organized, which selectors are public API, and the three altitudes you
+can override at.
+
+## The cascade-layer model
+
+All Manti CSS lives in cascade layers, declared once in the stylesheet:
+
+```css
+@layer manti.reset, manti.tokens, manti.base, manti.components, manti.motion;
+```
+
+This is the foundation of everything below, because of one CSS rule:
+**unlayered styles always beat layered styles**, regardless of specificity. Any
+ordinary CSS you write in your app is unlayered, so it wins over Manti UI
+automatically — no `!important`, no selector contests, no fighting Manti's own
+rules.
+
+Order matters when you import. Load Manti first, then your overrides:
+
+```ts
+import '@manti-ui/styles/index.css'; // 1) Manti, layered
+import './my-theme.css'; // 2) your overrides, unlayered → win
+```
+
+## The stable selector contract
+
+Every component renders stable data attributes. They are public API and follow
+semver — target them, not class names:
+
+```html
+<button
+  data-scope="button"
+  data-part="root"
+  data-variant="solid"
+  data-tone="primary"
+  data-size="md"
+>
+  <span data-scope="button" data-part="label">…</span>
+</button>
+```
+
+- `data-scope` — the component (`button`, `switch`, `tabs`, …)
+- `data-part` — the anatomy piece (`root`, `label`, `trigger`, `content`, …)
+- `data-variant`, `data-tone`, `data-size` — the chosen props
+- state attributes (`data-state`, `data-loading`, `disabled`, …) — live state
+
+Class names and the internal DOM between parts are _not_ part of the contract;
+they may change. Anchor your selectors to the data attributes above.
+
+## The three tiers of overriding
+
+Tokens form three tiers, each defaulting into the one above it. Pick the lowest
+altitude that does the job, and prefer redefining tokens over hand-writing rules.
+
+| Tier              | Example                             | Scope                            |
+| ----------------- | ----------------------------------- | -------------------------------- |
+| 1 — primitive     | `--manti-paprika-500`               | the raw palette / scales         |
+| 2 — semantic      | `--manti-radius-md`, `--tone-solid` | purpose-based roles              |
+| 3 — **component** | `--manti-button-radius`             | one component's structural knobs |
+
+### Recolor a primitive ramp
+
+The primitive ramps feed the tones, so redefining one rebrands the palette
+everywhere it surfaces. `paprika` is Manti's primary ramp:
+
+```css
+:root {
+  --manti-paprika-100: oklch(0.94 0.03 275);
+  --manti-paprika-500: oklch(0.62 0.19 275);
+  --manti-paprika-600: oklch(0.55 0.2 275);
+  --manti-paprika-700: oklch(0.46 0.17 275);
+}
+```
+
+### Override a semantic role
+
+Semantic roles are **the primary theming lever** — a change here cascades to every
+component consistently. Keep color roles in `light-dark(light, dark)` form so the
+`data-theme` switch keeps working:
+
+```css
+:root {
+  --manti-bg: light-dark(#fafafb, #0c0c10);
+  --manti-surface: light-dark(#ffffff, #15151b);
+  --manti-text: light-dark(#16161a, #f4f4f6);
+  --manti-border: light-dark(#e6e6ea, #2a2a33);
+
+  /* One radius scale rounds buttons, cards, and inputs alike. */
+  --manti-radius-md: 6px;
+  --manti-radius-lg: 10px;
+
+  --manti-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --manti-focus-ring: var(--manti-paprika-500);
+}
+```
+
+### Define a custom tone
+
+Color in Manti comes only from tones. A tone is a `--tone-*` vocabulary you can
+define for any string, then pass as a `tone` prop. Built-in tone names keep
+TypeScript autocomplete; custom strings are accepted too:
+
+```css
+[data-tone='brand'] {
+  --tone-solid: light-dark(#0d9488, #14b8a6);
+  --tone-solid-hover: light-dark(#0b8076, #2dd4bf);
+  --tone-solid-active: light-dark(#096a62, #5eead4);
+  --tone-on-solid: #ffffff;
+  --tone-soft-bg: light-dark(#d6f5f0, #0b2e2a);
+  --tone-soft-text: light-dark(#0b6a60, #99f6e4);
+  --tone-border: light-dark(#9fe5db, #155e54);
+  --tone-text: light-dark(#0b6a60, #5eead4);
+  --tone-ring: #14b8a6;
+}
+```
+
+```tsx
+<Button tone="brand">Ship it</Button>
+```
+
+You can also remap an existing tone for a subtree — scope the same block to a
+selector instead of `[data-tone='brand']`.
+
+### Target a component's anatomy
+
+When a visual decision can't be expressed through tokens, write a normal
+(unlayered) rule against the anatomy contract. These always win over Manti's
+layered styles:
+
+```css
+/* Buttons only: tighter tracking and a pill shape. */
+[data-scope='button'][data-part='root'] {
+  letter-spacing: 0.02em;
+  border-radius: var(--manti-radius-full);
+}
+
+/* Lift a solid button slightly on hover. */
+[data-scope='button'][data-part='root'][data-variant='solid']:hover {
+  translate: 0 -1px;
+}
+```
+
+> Never touch private `--_*` knobs (like a derived `--_radius`). They are not API
+> and a component computes them to stay internally consistent. Override the named
+> component tokens instead — see [Theming with tokens](/guides/theming-tokens).
+
+## Where to next
+
+- **[Theming with tokens](/guides/theming-tokens)** — the semantic roles and the
+  component-token escape hatch in depth.
+- **[Using with Tailwind v4](/guides/tailwind)** — the same overrides, plus the
+  utility and theme-bridge story.

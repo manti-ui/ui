@@ -1,0 +1,37 @@
+---
+title: TextField
+slug: /components/text-field
+group: Components
+order: 53
+description: A labeled text input with hint, error, and optional adornments.
+---
+
+# TextField
+
+A static text input with label, hint, error, and optional addons. It wires up
+label association and `aria-describedby` / `aria-invalid` automatically, and
+accepts any native input attribute.
+
+<Demo name="text-field/basic" />
+
+## Sizes and states
+
+`size` sets the control height, `error` flips the field to the invalid state and
+replaces the hint, and native flags like `disabled` work as expected.
+
+<Demo name="text-field/states" />
+
+## Props
+
+<PropsTable component="text-field" />
+
+## Anatomy
+
+Target these public selectors to customize the field. Class names and the DOM
+between parts are private.
+
+<Anatomy component="text-field" />
+
+## Component tokens
+
+<TokenTable component="text-field" />

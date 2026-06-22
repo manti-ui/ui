@@ -1,0 +1,38 @@
+---
+title: Tooltip
+slug: /components/tooltip
+group: Components
+order: 18
+description: A floating label backed by the Zag.js tooltip machine.
+---
+
+# Tooltip
+
+A floating label backed by the Zag.js tooltip machine. The machine handles
+positioning, hover and focus delays, and dismissal; the content fades and lifts
+in smoothly.
+
+<Demo name="tooltip/basic" center />
+
+## Basic
+
+Wrap any focusable element in a `Tooltip` and pass `content`. The trigger is an
+inline wrapper, so it works on hover and on keyboard focus. Set `interactive` to
+keep the tooltip open while the pointer is over the label.
+
+<Demo name="tooltip/basic" center />
+
+## Props
+
+<PropsTable component="tooltip" />
+
+## Anatomy
+
+Target these public selectors to customize the tooltip. Class names and the DOM
+between parts are private.
+
+<Anatomy component="tooltip" />
+
+## Component tokens
+
+<TokenTable component="tooltip" />

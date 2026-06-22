@@ -1,0 +1,43 @@
+---
+title: Listbox
+slug: /components/listbox
+group: Components
+order: 31
+description: A selectable list backed by the Zag.js listbox machine.
+---
+
+# Listbox
+
+A selectable list backed by the Zag.js listbox machine. Pass an `items` array and
+the machine owns roving focus, typeahead, and the selection state.
+
+<Demo name="listbox/basic" center />
+
+## Basic
+
+Each item is `{ value, label, disabled? }` — `value` keys the option, `label` is
+shown, and `disabled` skips it during keyboard navigation.
+
+<Demo name="listbox/basic" center />
+
+## Multiple selection
+
+Set `selectionMode="multiple"` to let several options be selected at once. Pass an
+array to `value` or `defaultValue`.
+
+<Demo name="listbox/multiple" center />
+
+## Props
+
+<PropsTable component="listbox" />
+
+## Anatomy
+
+Target these public selectors to customize the listbox. Class names and the DOM
+between parts are private.
+
+<Anatomy component="listbox" />
+
+## Component tokens
+
+<TokenTable component="listbox" />

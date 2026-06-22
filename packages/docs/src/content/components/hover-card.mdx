@@ -1,0 +1,38 @@
+---
+title: HoverCard
+slug: /components/hover-card
+group: Components
+order: 30
+description: A rich floating preview revealed on hover or focus.
+---
+
+# HoverCard
+
+A rich floating preview backed by the Zag.js hover-card machine. The machine owns
+the open and close delays and the positioning; you supply the trigger and the
+card content.
+
+<Demo name="hover-card/basic" center />
+
+## Basic
+
+`trigger` is the element that reveals the card — it's cloned with the machine's
+trigger props, so it works on hover and on keyboard focus. The card content is
+passed as `children`.
+
+<Demo name="hover-card/basic" center />
+
+## Props
+
+<PropsTable component="hover-card" />
+
+## Anatomy
+
+Target these public selectors to customize the hover card. Class names and the
+DOM between parts are private.
+
+<Anatomy component="hover-card" />
+
+## Component tokens
+
+<TokenTable component="hover-card" />

@@ -1,0 +1,161 @@
+---
+title: Using with Tailwind v4
+slug: /guides/tailwind
+group: Guides
+order: 32
+description: Wire Manti into a Tailwind v4 app — correct import order, the token theme bridge, and headless usage.
+---
+
+# Using with Tailwind v4
+
+Manti UI and Tailwind v4 are designed to coexist: Manti owns the component styles,
+Tailwind owns the utilities, and a token theme bridge keeps both reading the same
+`--manti-*` values. This guide covers the integration — import order, the bridge,
+and the fully headless setup.
+
+## One import wires everything
+
+The packaged `tailwind.css` entry brings Manti's styles, the correct layer order,
+and the token theme bridge. Import order is critical — **Manti must come before
+`tailwindcss`**:
+
+```css
+/* app.css — order matters: Manti BEFORE tailwindcss. */
+@import '@manti-ui/styles/tailwind.css';
+@import 'tailwindcss';
+```
+
+The packaged file pins the layer order to
+`theme, base, manti, components, utilities`, which means:
+
+- Tailwind's preflight (`base`) sits _below_ Manti styles — it can't bleach Manti
+  components.
+- Tailwind utilities sit _above_ Manti styles — a utility class on a Manti
+  component always wins:
+
+```tsx
+<Button className="rounded-none px-8 shadow-none">Sharp</Button>
+```
+
+> If `tailwindcss` is imported first, Tailwind declares its layer order before
+> Manti's, the `manti` layer lands _above_ `utilities`, and utility overrides
+> silently stop working. Keep the Manti import first.
+
+## Override tokens exactly as in plain CSS
+
+Token overrides work identically here. An unlayered `:root` block beats Manti's
+`manti.tokens` layer, and because the bridge resolves utilities to
+`var(--manti-*)` at runtime, utilities like `bg-surface` and `rounded-manti-lg`
+follow your overrides automatically:
+
+```css
+:root {
+  /* Primitive ramp (primary = paprika). */
+  --manti-paprika-500: oklch(0.62 0.19 275);
+  --manti-paprika-600: oklch(0.55 0.2 275);
+
+  /* Semantic roles — keep light-dark() form. */
+  --manti-bg: light-dark(#fafafb, #0c0c10);
+  --manti-surface: light-dark(#ffffff, #15151b);
+  --manti-text: light-dark(#16161a, #f4f4f6);
+  --manti-border: light-dark(#e6e6ea, #2a2a33);
+
+  --manti-radius-md: 6px;
+  --manti-radius-lg: 10px;
+  --manti-focus-ring: var(--manti-paprika-500);
+}
+
+/* A custom tone — <Button tone="brand">. */
+[data-tone='brand'] {
+  --tone-solid: light-dark(#0d9488, #14b8a6);
+  --tone-on-solid: #ffffff;
+  --tone-soft-bg: light-dark(#d6f5f0, #0b2e2a);
+  --tone-soft-text: light-dark(#0b6a60, #99f6e4);
+  --tone-border: light-dark(#9fe5db, #155e54);
+  --tone-text: light-dark(#0b6a60, #5eead4);
+  --tone-ring: #14b8a6;
+}
+```
+
+## The theme bridge
+
+`tailwind-theme.css` (included in `tailwind.css`) maps Manti tokens to Tailwind
+theme variables with `@theme inline`, so generated utilities reference the
+underlying `var(--manti-*)` at runtime — they follow `light-dark()` and
+`data-theme` switches for free.
+
+| Utility example                       | Resolves to                  |
+| ------------------------------------- | ---------------------------- |
+| `bg-surface`, `text-text-muted`       | semantic surface/text tokens |
+| `border-border`, `ring-ring`          | semantic border/focus tokens |
+| `bg-paprika-500`, `text-herb-700`     | primitive ramps              |
+| `bg-primary-600`                      | semantic ramp aliases        |
+| `rounded-manti-lg`, `shadow-manti-md` | Manti radius/elevation       |
+| `ease-spring`, `ease-bounce`          | Manti expressive curves      |
+
+Spacing needs no bridge: Manti's 4px grid equals Tailwind's default `--spacing`,
+so `p-4` and `var(--manti-space-4)` already agree. You can add your own `@theme`
+tokens that reference Manti's, keeping a single source of truth:
+
+```css
+@theme {
+  --color-brand: var(--manti-paprika-600); /* → bg-brand, text-brand */
+  --radius-pill: 100px; /* → rounded-pill */
+}
+```
+
+On the component side, bridge utilities and component-specific overrides mix
+freely, and state is read straight from the public data attributes — Tailwind
+targets them natively:
+
+```tsx
+// Token-aware utilities from the bridge.
+<Card className="bg-surface border-border text-text rounded-manti-lg" />
+<Button tone="brand">Save</Button>
+
+// Component-specific visual overrides win (utilities layer is above manti).
+<Button className="rounded-pill px-8 shadow-none">Sharp</Button>
+
+// Live state lives in data attributes.
+<Button className="data-[loading=true]:opacity-70" />
+```
+
+## Headless: skip Manti's component CSS
+
+To style the anatomy entirely with utilities, don't import the component styles at
+all. Bring only the tokens and theme bridge (both optional), then target the
+public `data-*` state attributes directly:
+
+```css
+/* app.css */
+@import '@manti-ui/styles/tokens.css'; /* optional: keeps the token vocabulary */
+@import '@manti-ui/styles/tailwind-theme.css'; /* optional: token-aware utilities */
+@import 'tailwindcss';
+```
+
+```tsx
+<Accordion.ItemTrigger className="flex w-full items-center justify-between p-4 data-[state=open]:font-semibold">
+  …
+  <ChevronIcon className="transition data-[state=open]:rotate-180" />
+</Accordion.ItemTrigger>
+```
+
+## Gotcha: don't mangle `@theme`
+
+Manti's CSS entry points must not be run through a tool that rewrites or mangles
+`@theme` / `@theme inline` (for example an over-eager CSS minifier or transform).
+The theme bridge depends on `@theme inline` staying verbatim so utilities resolve
+to `var(--manti-*)` at runtime. Import the packaged entries as-is and let Tailwind
+process them.
+
+> **Tailwind v3?** The override story still works — v3 utilities are unlayered, so
+> they beat Manti's layers automatically. The `@theme` bridge is v4-only; in v3,
+> reference the custom properties from `tailwind.config` instead, e.g.
+> `colors: { surface: 'var(--manti-surface)' }`.
+
+## Where to next
+
+- **[Customizing with plain CSS](/guides/plain-css)** — the cascade layers and
+  anatomy contract the override story rests on.
+- **[Theming with tokens](/guides/theming-tokens)** — the semantic roles and tones
+  the bridge exposes as utilities.

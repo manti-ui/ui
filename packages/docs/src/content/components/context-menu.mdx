@@ -1,0 +1,31 @@
+---
+title: ContextMenu
+slug: /components/context-menu
+group: Components
+order: 24
+description: A right-click context menu backed by the Zag.js menu machine, opened at the pointer.
+---
+
+# ContextMenu
+
+A right-click (or long-press) context menu backed by the same Zag.js menu machine
+as Menu, opened at the pointer. Wrap any region in `children` and pass `items` —
+commands, separators, and titled groups. It reuses the `menu` style scope, so its
+panel matches the dropdown menu.
+
+<Demo name="context-menu/basic" center />
+
+## Props
+
+<PropsTable component="context-menu" />
+
+## Anatomy
+
+ContextMenu reuses the `menu` scope. Target these public selectors to customize
+it. Class names and the DOM between parts are private.
+
+<Anatomy component="context-menu" />
+
+## Component tokens
+
+<TokenTable component="context-menu" />

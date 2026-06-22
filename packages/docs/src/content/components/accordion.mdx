@@ -1,0 +1,45 @@
+---
+title: Accordion
+slug: /components/accordion
+group: Components
+order: 11
+description: A stack of disclosures backed by the Zag.js accordion machine.
+---
+
+# Accordion
+
+A stack of disclosures backed by the Zag.js accordion machine. Pass an `items`
+array and the machine owns keyboard arrows, focus, and the open/closed state of
+each panel.
+
+<Demo name="accordion/basic" />
+
+## Basic
+
+Each item is `{ value, title, content }` — `value` keys the panel, `title` is the
+trigger, and `content` is the region revealed when it's open. In single mode the
+machine keeps one panel open at a time.
+
+<Demo name="accordion/basic" />
+
+## Multiple
+
+Set `multiple` to let more than one panel stay open at once. Use `defaultValue`
+to choose which panels start open.
+
+<Demo name="accordion/multiple" />
+
+## Props
+
+<PropsTable component="accordion" />
+
+## Anatomy
+
+Target these public selectors to customize the accordion. Class names and the DOM
+between parts are private.
+
+<Anatomy component="accordion" />
+
+## Component tokens
+
+<TokenTable component="accordion" />

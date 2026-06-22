@@ -1,0 +1,44 @@
+---
+title: Combobox
+slug: /components/combobox
+group: Components
+order: 23
+description: A typeahead select backed by the Zag.js combobox machine, filtered client-side.
+---
+
+# Combobox
+
+A typeahead select backed by the Zag.js combobox machine. Pass an `items` array
+of `{ value, label }`; filtering runs client-side as the user types, and the
+portalled listbox owns keyboard navigation and selection.
+
+<Demo name="combobox/basic" center />
+
+## Basic
+
+The input filters the `items` list by label. Selecting an option closes the
+listbox and fills the input.
+
+<Demo name="combobox/basic" center />
+
+## Multiple
+
+Set `multiple` to keep the listbox open and accumulate several selections.
+`defaultValue` seeds the initial selection in uncontrolled usage.
+
+<Demo name="combobox/multiple" center />
+
+## Props
+
+<PropsTable component="combobox" />
+
+## Anatomy
+
+Target these public selectors to customize the combobox. Class names and the DOM
+between parts are private.
+
+<Anatomy component="combobox" />
+
+## Component tokens
+
+<TokenTable component="combobox" />

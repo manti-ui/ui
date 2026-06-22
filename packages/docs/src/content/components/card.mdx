@@ -1,0 +1,46 @@
+---
+title: Card
+slug: /components/card
+group: Components
+order: 13
+description: The signature pillowy surface — composed from header, body, and footer parts.
+---
+
+# Card
+
+The signature pillowy surface — the most recognizable Manti UI shape. Compose
+it from `Card.Header`, `Card.Title`, `Card.Description`, `Card.Body`, and
+`Card.Footer`.
+
+<Demo name="card/basic" center />
+
+## Anatomy
+
+A Card is a slot container. Drop a `Card.Header` (with a `Card.Title` and
+`Card.Description`), a `Card.Body` for the main content, and a `Card.Footer` for
+actions.
+
+<Demo name="card/basic" />
+
+## Elevated & interactive
+
+`elevated` swaps the border for a soft shadow, and `interactive` adds a smooth
+hover-and-focus lift — pair it with real semantics like a link, button, or
+`onClick`.
+
+<Demo name="card/variants" />
+
+## Props
+
+<PropsTable component="card" />
+
+## Anatomy
+
+Target these public selectors to customize the card. Class names and the DOM
+between parts are private.
+
+<Anatomy component="card" />
+
+## Component tokens
+
+<TokenTable component="card" />

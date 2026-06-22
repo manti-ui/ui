@@ -1,0 +1,701 @@
+/*
+ * Manti UI docs — site chrome.
+ *
+ * The site's own layout (nav, sidebar, prose, hero, …) is plain app markup, so it
+ * is styled with regular CSS classes (`.docs-*`) — the way a real Manti consumer
+ * styles their own application. Manti's `data-scope` / `data-part` anatomy is the
+ * library's public *override* contract for Manti components, not a convention to
+ * borrow for your own elements; here it appears only where we render Manti
+ * components (or, in LinkButton, deliberately reuse the Button anatomy).
+ *
+ * Declared in its own cascade layer, after the Manti layers (this file is imported
+ * after `@manti-ui/styles/index.css` in main.tsx), so chrome rules win at equal
+ * specificity without `!important`. Per repo Rule 2 every visual value comes from
+ * `--manti-*` / `--tone-*` tokens; the only literals are structural layout track
+ * sizes, declared once below as named `--docs-*` knobs, and 1px hairline borders.
+ */
+@layer docs {
+  :root {
+    --docs-nav-h: 3.5rem;
+    --docs-sidebar-w: 16rem;
+    --docs-toc-w: 15rem;
+    --docs-max: 90rem;
+    --docs-prose-max: 48rem;
+    --docs-gutter: var(--manti-space-6);
+
+    /* A much more see-through frosted tint than --manti-glass-tint (which sits
+       at ~0.55 alpha), tuned for the sticky header so content reads through it.
+       Authored as light-dark like the Manti glass tokens themselves. */
+    --docs-nav-bg: light-dark(
+      oklch(0.99 0.002 280 / 0.42),
+      oklch(0.17 0.008 280 / 0.42)
+    );
+    --docs-nav-blur: blur(28px) saturate(180%);
+  }
+
+  body {
+    margin: 0;
+    background: var(--manti-bg);
+    color: var(--manti-text);
+    font-family: var(--manti-font-sans);
+  }
+
+  footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+  }
+
+  .docs-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+
+  /* ---- Top navigation (frosted glass, mirrors the Manti signature) ---- */
+  .docs-nav {
+    position: sticky;
+    top: 0;
+    z-index: var(--manti-z-overlay);
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-4);
+    height: var(--docs-nav-h);
+    padding-inline: var(--docs-gutter);
+    background: var(--docs-nav-bg);
+    /* -webkit first, then unprefixed — matches the Manti glass components.
+       The reverse order makes Lightning CSS drop the unprefixed property, and
+       Chrome/Firefox don't apply `-webkit-backdrop-filter` with a var() value,
+       so the blur silently disappears. */
+    -webkit-backdrop-filter: var(--docs-nav-blur);
+    backdrop-filter: var(--docs-nav-blur);
+    border-bottom: 1px solid var(--manti-glass-border);
+  }
+
+  .docs-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+    font-size: var(--manti-text-lg);
+    font-weight: var(--manti-weight-bold);
+    color: var(--manti-text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .docs-brand img {
+    display: block;
+    width: var(--manti-space-10);
+    height: var(--manti-space-10);
+  }
+
+  .docs-nav-primary {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-1);
+    margin-inline-start: var(--manti-space-2);
+  }
+
+  .docs-nav-spacer {
+    flex: 1;
+  }
+
+  .docs-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+  }
+
+  /* nav text links */
+  .docs-nav-link {
+    padding: var(--manti-space-1) var(--manti-space-3);
+    border-radius: var(--manti-radius-md);
+    color: var(--manti-text-muted);
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    text-decoration: none;
+    transition:
+      color var(--manti-duration-fast) var(--manti-ease-smooth),
+      background var(--manti-duration-fast) var(--manti-ease-smooth);
+  }
+  .docs-nav-link:hover {
+    color: var(--manti-text);
+    background: var(--manti-surface);
+  }
+  .docs-nav-link[aria-current='page'] {
+    color: var(--manti-text);
+    background: var(--manti-surface);
+  }
+
+  /* ---- 3-column layout ---- */
+  .docs-layout {
+    flex: 1;
+    width: 100%;
+    max-width: var(--docs-max);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: var(--docs-sidebar-w) minmax(0, 1fr) var(
+        --docs-toc-w
+      );
+    gap: var(--docs-gutter);
+    padding-inline: var(--docs-gutter);
+    align-items: start;
+  }
+
+  .docs-sidebar {
+    position: sticky;
+    top: var(--docs-nav-h);
+    height: calc(100dvh - var(--docs-nav-h));
+    overflow-y: auto;
+    padding-block: var(--manti-space-6);
+    padding-inline-end: var(--manti-space-2);
+  }
+
+  .docs-content {
+    min-width: 0;
+    padding-block: var(--manti-space-8);
+  }
+
+  .docs-toc {
+    position: sticky;
+    top: var(--docs-nav-h);
+    max-height: calc(100dvh - var(--docs-nav-h));
+    overflow-y: auto;
+    padding-block: var(--manti-space-8);
+  }
+
+  /* ---- Sidebar nav ---- */
+  .docs-nav-group + .docs-nav-group {
+    margin-top: var(--manti-space-6);
+  }
+  .docs-nav-group-label {
+    margin: 0 0 var(--manti-space-2);
+    padding-inline: var(--manti-space-3);
+    font-size: var(--manti-text-xs);
+    font-weight: var(--manti-weight-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--manti-text-subtle);
+  }
+  .docs-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .docs-side-link {
+    display: block;
+    padding: var(--manti-space-1) var(--manti-space-3);
+    border-radius: var(--manti-radius-md);
+    color: var(--manti-text-muted);
+    font-size: var(--manti-text-sm);
+    text-decoration: none;
+    transition:
+      color var(--manti-duration-fast) var(--manti-ease-smooth),
+      background var(--manti-duration-fast) var(--manti-ease-smooth);
+  }
+  .docs-side-link:hover {
+    color: var(--manti-text);
+    background: var(--manti-surface);
+  }
+  .docs-side-link[aria-current='page'] {
+    color: var(--manti-text);
+    background: var(--manti-surface);
+    font-weight: var(--manti-weight-medium);
+  }
+
+  /* ---- Table of contents ---- */
+  .docs-toc-label {
+    margin: 0 0 var(--manti-space-3);
+    font-size: var(--manti-text-xs);
+    font-weight: var(--manti-weight-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--manti-text-subtle);
+  }
+  .docs-toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-1);
+    border-inline-start: 1px solid var(--manti-border);
+  }
+  .docs-toc-link {
+    display: block;
+    padding: var(--manti-space-1) var(--manti-space-3);
+    margin-inline-start: -1px;
+    border-inline-start: 1px solid transparent;
+    color: var(--manti-text-subtle);
+    font-size: var(--manti-text-sm);
+    text-decoration: none;
+    transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
+  }
+  .docs-toc-link.is-depth-3 {
+    padding-inline-start: var(--manti-space-6);
+  }
+  .docs-toc-link:hover {
+    color: var(--manti-text);
+  }
+  .docs-toc-link.is-active {
+    color: var(--manti-text);
+    border-inline-start-color: var(--manti-text);
+  }
+
+  /* ---- Prose ---- */
+  .docs-prose {
+    max-width: var(--docs-prose-max);
+    color: var(--manti-text);
+    font-size: var(--manti-text-base);
+    line-height: var(--manti-leading-relaxed);
+  }
+  .docs-prose :is(h1, h2, h3, h4) {
+    color: var(--manti-text);
+    font-weight: var(--manti-weight-semibold);
+    line-height: var(--manti-leading-tight);
+    letter-spacing: -0.01em;
+    scroll-margin-top: calc(var(--docs-nav-h) + var(--manti-space-4));
+  }
+  .docs-prose h1 {
+    font-size: var(--manti-text-4xl);
+    font-weight: var(--manti-weight-bold);
+    margin: 0 0 var(--manti-space-4);
+  }
+  .docs-prose h2 {
+    font-size: var(--manti-text-2xl);
+    margin: var(--manti-space-10) 0 var(--manti-space-4);
+    padding-top: var(--manti-space-4);
+    border-top: 1px solid var(--manti-border);
+  }
+  .docs-prose h3 {
+    font-size: var(--manti-text-xl);
+    margin: var(--manti-space-8) 0 var(--manti-space-3);
+  }
+  .docs-prose h4 {
+    font-size: var(--manti-text-lg);
+    margin: var(--manti-space-6) 0 var(--manti-space-2);
+  }
+  .docs-prose :is(h1, h2, h3, h4) a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .docs-prose :is(h1, h2, h3, h4) a:hover::after {
+    content: ' #';
+    color: var(--manti-text-subtle);
+  }
+  .docs-prose p {
+    margin: 0 0 var(--manti-space-4);
+  }
+  .docs-prose :is(ul, ol) {
+    margin: 0 0 var(--manti-space-4);
+    padding-inline-start: var(--manti-space-6);
+  }
+  .docs-prose li {
+    margin-block: var(--manti-space-1);
+  }
+  .docs-prose li::marker {
+    color: var(--manti-text-subtle);
+  }
+  /* Inline prose links only — not wrapper links like the component cards
+     (`.docs-plain`), which must never pick up the underline or link color. */
+  .docs-prose a:not(.docs-plain) {
+    color: var(--manti-link);
+    text-decoration: none;
+    text-underline-offset: 0.2em;
+  }
+  .docs-prose a:not(.docs-plain):hover {
+    text-decoration: underline;
+  }
+  .docs-prose strong {
+    font-weight: var(--manti-weight-semibold);
+    color: var(--manti-text);
+  }
+  .docs-prose blockquote {
+    margin: 0 0 var(--manti-space-4);
+    padding: var(--manti-space-1) var(--manti-space-4);
+    border-inline-start: 2px solid var(--manti-border-strong);
+    color: var(--manti-text-muted);
+  }
+  .docs-prose hr {
+    margin: var(--manti-space-8) 0;
+    border: none;
+    border-top: 1px solid var(--manti-border);
+  }
+  .docs-prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--manti-radius-lg);
+  }
+
+  /* inline code — but reset for shiki blocks below */
+  .docs-prose code {
+    font-family: var(--manti-font-mono);
+    font-size: 0.875em;
+    padding: 0.1em 0.35em;
+    border-radius: var(--manti-radius-sm);
+    background: var(--manti-surface-sunken);
+    color: var(--manti-text);
+  }
+
+  /* ---- Tables (GFM + PropsTable/TokenTable) ---- */
+  .docs-prose table {
+    width: 100%;
+    margin: 0 0 var(--manti-space-6);
+    border-collapse: collapse;
+    font-size: var(--manti-text-sm);
+  }
+  .docs-prose :is(th, td) {
+    padding: var(--manti-space-2) var(--manti-space-3);
+    text-align: start;
+    vertical-align: top;
+    border-bottom: 1px solid var(--manti-border);
+  }
+  .docs-prose th {
+    color: var(--manti-text-muted);
+    font-weight: var(--manti-weight-semibold);
+    font-size: var(--manti-text-xs);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .docs-prose td code {
+    white-space: nowrap;
+  }
+
+  /* ---- Code blocks (Shiki dual theme, switched by data-theme) ---- */
+  .docs-codeblock {
+    position: relative;
+    margin: 0 0 var(--manti-space-6);
+  }
+  .docs-codeblock pre.shiki {
+    margin: 0;
+    padding: var(--manti-space-4);
+    overflow-x: auto;
+    border-radius: var(--manti-radius-lg);
+    border: 1px solid var(--manti-border);
+    font-size: var(--manti-text-sm);
+    line-height: var(--manti-leading-normal);
+    tab-size: 2;
+  }
+  .docs-codeblock pre.shiki code {
+    all: unset;
+    font-family: var(--manti-font-mono);
+  }
+  /* Shiki emits per-token `--shiki-light` / `--shiki-dark` custom props. */
+  pre.shiki,
+  pre.shiki span {
+    color: var(--shiki-light);
+    background-color: var(--shiki-light-bg);
+  }
+  [data-theme='dark'] pre.shiki,
+  [data-theme='dark'] pre.shiki span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
+  }
+  /* only the <pre> carries the surface fill, not every token span */
+  pre.shiki span {
+    background-color: transparent;
+  }
+  .docs-copy {
+    position: absolute;
+    top: var(--manti-space-2);
+    inset-inline-end: var(--manti-space-2);
+    opacity: 0;
+    transition: opacity var(--manti-duration-fast) var(--manti-ease-smooth);
+  }
+  .docs-codeblock:hover .docs-copy,
+  .docs-copy:focus-within {
+    opacity: 1;
+  }
+
+  /* ---- Live demo canvas ---- */
+  .docs-demo {
+    margin: 0 0 var(--manti-space-6);
+    border: 1px solid var(--manti-border);
+    border-radius: var(--manti-radius-lg);
+    overflow: clip;
+    background: var(--manti-surface);
+  }
+  .docs-demo-canvas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--manti-space-4);
+    align-items: center;
+    padding: var(--manti-space-8);
+    background: var(--manti-bg-subtle);
+  }
+  .docs-demo-canvas.is-center {
+    justify-content: center;
+  }
+  .docs-demo-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--manti-space-2);
+    border-top: 1px solid var(--manti-border);
+  }
+  .docs-demo-frameworks {
+    display: flex;
+    align-items: center;
+  }
+  /* The framework switcher is a Manti soft Tabs with its content panels hidden —
+     only the trigger row belongs in the toolbar. */
+  .docs-demo-frameworks [data-scope='tabs'][data-part='root'] {
+    gap: 0;
+  }
+  .docs-demo-frameworks [data-scope='tabs'][data-part='content'] {
+    display: none;
+  }
+  .docs-demo-frameworks [data-part='trigger'] {
+    padding: var(--manti-space-1) var(--manti-space-3);
+    gap: var(--manti-space-1);
+    font-size: var(--manti-text-xs);
+  }
+  .docs-demo-frameworks [data-part='trigger'] svg {
+    width: 1.15em;
+    height: 1.15em;
+  }
+  /* Active framework wears its own brand color (set inline via --fw-color);
+     wins over Manti's selected color by cascade-layer order (docs > components). */
+  .docs-demo-frameworks [data-part='trigger'][data-selected] {
+    color: var(--fw-color);
+  }
+  .docs-demo .docs-codeblock {
+    margin: 0;
+  }
+  .docs-demo pre.shiki {
+    border: none;
+    border-radius: 0;
+    /* Match the preview canvas background instead of Shiki's own theme bg, so
+       the demo reads as one surface. Wins over both the light and dark
+       `pre.shiki` background rules (equal specificity, declared later). */
+    background-color: var(--manti-bg-subtle);
+  }
+
+  /* ---- Component overview grid ---- */
+  .docs-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    grid-auto-rows: 1fr;
+    gap: var(--manti-space-4);
+    margin-bottom: var(--manti-space-6);
+  }
+  .docs-plain {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+  /* Every catalog card fills its equal-height grid cell, so cards line up
+     regardless of how long each summary is. */
+  .docs-card-grid .docs-plain,
+  .docs-card-grid .docs-plain > * {
+    height: 100%;
+  }
+
+  /* ---- Foundations galleries ---- */
+  .docs-swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 4rem), 1fr));
+    gap: var(--manti-space-2);
+    margin-bottom: var(--manti-space-6);
+  }
+  .docs-swatch {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-1);
+  }
+  .docs-swatch-chip {
+    height: var(--manti-space-12);
+    border-radius: var(--manti-radius-md);
+    border: 1px solid var(--manti-border);
+  }
+  .docs-swatch-label {
+    font-size: var(--manti-text-xs);
+    color: var(--manti-text-subtle);
+    font-family: var(--manti-font-mono);
+  }
+
+  .docs-tone-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+    gap: var(--manti-space-4);
+    margin-bottom: var(--manti-space-6);
+  }
+
+  .docs-type-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--manti-space-4);
+    padding-block: var(--manti-space-3);
+    border-bottom: 1px solid var(--manti-border);
+  }
+  .docs-type-meta {
+    flex: none;
+    width: 7rem;
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-text-xs);
+    color: var(--manti-text-subtle);
+  }
+
+  /* ---- Landing ---- */
+  .docs-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--manti-space-5);
+    max-width: var(--docs-max);
+    margin-inline: auto;
+    padding: var(--manti-space-16) var(--docs-gutter);
+  }
+  .docs-hero img {
+    width: calc(var(--manti-space-16) * 2);
+    height: calc(var(--manti-space-16) * 2);
+  }
+  .docs-hero-title {
+    margin: 0;
+    font-size: var(--manti-text-5xl);
+    font-weight: var(--manti-weight-bold);
+    line-height: var(--manti-leading-tight);
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+  }
+  .docs-hero-lede {
+    margin: 0;
+    max-width: 52ch;
+    font-size: var(--manti-text-lg);
+    color: var(--manti-text-muted);
+    line-height: var(--manti-leading-relaxed);
+  }
+  .docs-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--manti-space-3);
+    justify-content: center;
+  }
+  .docs-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--manti-space-4);
+    max-width: var(--docs-max);
+    margin-inline: auto;
+    padding: var(--manti-space-4) var(--docs-gutter) var(--manti-space-16);
+  }
+
+  /* ---- Footer ---- */
+  .docs-footer {
+    margin-top: var(--manti-space-12);
+    padding-block: var(--manti-space-8);
+    border-top: 1px solid var(--manti-border);
+    color: var(--manti-text-subtle);
+    font-size: var(--manti-text-sm);
+  }
+  .docs-footer a {
+    color: var(--manti-text-muted);
+    text-decoration: none;
+  }
+  .docs-footer a:hover {
+    color: var(--manti-text);
+  }
+
+  /* ---- Search results ---- */
+  .docs-search-results {
+    list-style: none;
+    margin: var(--manti-space-3) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    max-height: 24rem;
+    overflow-y: auto;
+  }
+  .docs-search-hit {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-1);
+    width: 100%;
+    text-align: start;
+    padding: var(--manti-space-3);
+    border-radius: var(--manti-radius-md);
+    color: var(--manti-text);
+    text-decoration: none;
+    border: 1px solid transparent;
+    background: none;
+    cursor: pointer;
+  }
+  .docs-search-hit:hover,
+  .docs-search-hit.is-active {
+    background: var(--manti-surface);
+    border-color: var(--manti-border);
+  }
+  .docs-search-hit small {
+    color: var(--manti-text-subtle);
+    font-size: var(--manti-text-xs);
+  }
+  .docs-search-empty {
+    padding: var(--manti-space-6);
+    text-align: center;
+    color: var(--manti-text-subtle);
+  }
+
+  /* The native search clear (X). Replace the default glyph with a recolorable
+     mask so it can be gray by default and white on hover, with a pointer. */
+  .docs-search-field input[type='search']::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0.9em;
+    height: 0.9em;
+    cursor: pointer;
+    background-color: var(--manti-text-subtle);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 4 12 12M12 4 4 12' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 4 12 12M12 4 4 12' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+  }
+  .docs-search-field input[type='search']::-webkit-search-cancel-button:hover {
+    background-color: var(--manti-text);
+  }
+
+  /* generic helpers */
+  .docs-lede {
+    font-size: var(--manti-text-lg);
+    color: var(--manti-text-muted);
+    line-height: var(--manti-leading-relaxed);
+    margin-bottom: var(--manti-space-6);
+  }
+  .docs-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--manti-space-3);
+    align-items: center;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 1100px) {
+    .docs-layout {
+      grid-template-columns: var(--docs-sidebar-w) minmax(0, 1fr);
+    }
+    .docs-toc {
+      display: none;
+    }
+  }
+  @media (max-width: 820px) {
+    .docs-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .docs-sidebar {
+      display: none;
+    }
+    .docs-nav-primary {
+      display: none;
+    }
+  }
+  @media (min-width: 821px) {
+    .docs-nav-menu-button {
+      display: none;
+    }
+  }
+}

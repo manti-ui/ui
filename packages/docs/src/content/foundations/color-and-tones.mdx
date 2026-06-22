@@ -1,0 +1,101 @@
+---
+title: Color & tones
+slug: /foundations/color-and-tones
+group: Foundations
+order: 21
+description: The OKLCH primitive ramps from the mantı kitchen and the six semantic tones every tonal component consumes.
+---
+
+# Color & tones
+
+Manti UI's palette comes from the mantı kitchen — warm, edible references turned
+into perceptually-smooth color. Color is split in two: fixed **primitive ramps**
+you rarely touch directly, and **semantic tones** that components actually read.
+
+## The OKLCH primitive ramps
+
+Six ramps run from `50` to `950`, each authored in **OKLCH** so steps are
+perceptually even — equal jumps in lightness look equal to the eye, and hues stay
+stable across the scale. These values are fixed and identical in light and dark.
+
+| Ramp      | Role    | Reference      |
+| --------- | ------- | -------------- |
+| `dough`   | neutral | warm dough     |
+| `paprika` | primary | paprika sauce  |
+| `herb`    | success | parsley / mint |
+| `sumac`   | warning | golden sumac   |
+| `chili`   | danger  | hot chili      |
+| `broth`   | info    | calm broth     |
+
+Each step is a `--manti-{ramp}-{step}` custom property — `--manti-paprika-500`,
+`--manti-dough-950`, and so on.
+
+<ColorRamps />
+
+Per the [design signature](/foundations/design-signature), these ramps never
+appear as gradients or a brand accent. They feed the semantic tones below, and
+the warm `dough` ramp also backs the cool monochrome surfaces and text.
+
+## The six semantic tones
+
+Tonal components — Button, Badge, Alert, Switch, and friends — never hard-code a
+hue. They set a `data-tone` and read a small, uniform vocabulary of `--tone-*`
+variables. Manti UI ships six built-in tones:
+
+- `primary` — paprika, the signature accent
+- `neutral` — the default; its solid inverts the theme
+- `success` — herb green
+- `warning` — sumac amber
+- `danger` — chili red
+- `info` — broth blue
+
+<ToneGallery />
+
+## How a tone maps to `--tone-*`
+
+Selecting `[data-tone='primary']` swaps in a complete set of role variables that
+every tonal component consumes the same way:
+
+```
+--tone-solid            --tone-soft-bg          --tone-border
+--tone-solid-hover      --tone-soft-bg-hover    --tone-text
+--tone-solid-active     --tone-soft-text        --tone-ring
+--tone-on-solid
+```
+
+Because a component only ever reads `--tone-*` — never a raw ramp step — the same
+markup restyles completely when you change its tone:
+
+```tsx
+<Button tone="primary">Save</Button>
+<Button tone="danger">Delete</Button>
+```
+
+The tone values themselves use `light-dark()` to stay theme-aware and
+`color-mix()` to derive soft surfaces and hover states from the resolved solid.
+
+## Custom tones
+
+Any string is a valid tone. To add your own, declare a `[data-tone]` block that
+defines the full `--tone-*` vocabulary, then pass it:
+
+```css
+[data-tone='brand'] {
+  --tone-solid: oklch(0.62 0.16 270);
+  --tone-on-solid: var(--manti-text-on-accent);
+  --tone-soft-bg: oklch(0.62 0.16 270 / 0.16);
+  --tone-soft-text: oklch(0.72 0.14 270);
+  --tone-border: oklch(0.62 0.16 270 / 0.4);
+  --tone-text: oklch(0.72 0.14 270);
+  --tone-ring: oklch(0.62 0.16 270);
+  /* …plus the hover/active/soft-bg-hover variants */
+}
+```
+
+```tsx
+<Badge tone="brand">New</Badge>
+```
+
+The built-in tones keep TypeScript autocomplete via `MantiTone`, while still
+accepting any custom string. Continue to [Design tokens](/foundations/tokens) for
+the full token contract.

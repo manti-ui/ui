@@ -1,0 +1,45 @@
+---
+title: Pagination
+slug: /components/pagination
+group: Components
+order: 36
+description: A page navigator backed by the Zag.js pagination machine.
+---
+
+# Pagination
+
+A page navigator backed by the Zag.js pagination machine. Give it the total
+`count` and `pageSize` and the machine computes the page list, the prev/next
+state, and where to collapse pages behind an ellipsis.
+
+<Demo name="pagination/basic" center />
+
+## Basic
+
+`count` is the total number of items and `pageSize` is how many fit on a page;
+together they decide the page count. `siblingCount` controls how many pages sit on
+each side of the current one.
+
+<Demo name="pagination/basic" center />
+
+## Many pages
+
+With a large `count` and a higher `siblingCount`, the machine keeps the active
+page centered and collapses the rest behind ellipses.
+
+<Demo name="pagination/many-pages" center />
+
+## Props
+
+<PropsTable component="pagination" />
+
+## Anatomy
+
+Target these public selectors to customize the pagination. Class names and the
+DOM between parts are private.
+
+<Anatomy component="pagination" />
+
+## Component tokens
+
+<TokenTable component="pagination" />

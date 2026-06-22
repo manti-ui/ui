@@ -1,0 +1,38 @@
+---
+title: NavigationMenu
+slug: /components/navigation-menu
+group: Components
+order: 34
+description: Site navigation with rich dropdowns backed by the Zag.js navigation-menu machine.
+---
+
+# NavigationMenu
+
+A site navigation bar with rich dropdowns backed by the Zag.js navigation-menu
+machine. The machine owns the open/close transitions, the sliding indicator, and
+keyboard navigation.
+
+<Demo name="navigation-menu/basic" center />
+
+## Basic
+
+Each top-level menu is `{ value, label, links }`, and every link is
+`{ href, label, description? }`. The machine reveals the matching `content` panel
+when its `trigger` opens.
+
+<Demo name="navigation-menu/basic" center />
+
+## Props
+
+<PropsTable component="navigation-menu" />
+
+## Anatomy
+
+Target these public selectors to customize the navigation menu. Class names and
+the DOM between parts are private.
+
+<Anatomy component="navigation-menu" />
+
+## Component tokens
+
+<TokenTable component="navigation-menu" />

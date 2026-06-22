@@ -1,0 +1,45 @@
+---
+title: Marquee
+slug: /components/marquee
+group: Components
+order: 32
+description: A continuously scrolling strip of content.
+---
+
+# Marquee
+
+A continuously scrolling strip of content. It is a static CSS-animation component
+— the content is duplicated for a seamless loop, the copy is hidden from
+assistive tech, and the strip holds still under reduced motion or
+`data-motion="none"`.
+
+<Demo name="marquee/basic" />
+
+## Basic
+
+Drop any content as `children`; it is repeated to fill the loop. `speed` is the
+number of seconds for one full pass, so a higher value scrolls slower.
+
+<Demo name="marquee/basic" />
+
+## Directions
+
+`direction` sets the scroll axis: `left` or `right` for horizontal, `up` or
+`down` for vertical (vertical needs the root to have a height).
+
+<Demo name="marquee/directions" />
+
+## Props
+
+<PropsTable component="marquee" />
+
+## Anatomy
+
+Target these public selectors to customize the marquee. Class names and the DOM
+between parts are private.
+
+<Anatomy component="marquee" />
+
+## Component tokens
+
+<TokenTable component="marquee" />

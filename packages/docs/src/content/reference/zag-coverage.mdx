@@ -1,0 +1,128 @@
+---
+title: Zag.js coverage
+slug: /reference/zag-coverage
+group: Reference
+order: 40
+description: The goal to adapt every Zag.js machine, the thin-adapter pattern, and the current status by batch.
+---
+
+# Zag.js coverage
+
+The driving goal of Manti UI is to adapt **every** Zag.js component machine. Zag
+ships framework-agnostic state machines that own the hard parts — keyboard
+handling, focus management, forms, and ARIA — and Manti wraps each one in a thin
+renderer with token-driven CSS. This page tracks the goal, the pattern, and where
+coverage stands today.
+
+## The goal
+
+Each adapter keeps the renderer thin, with a strict separation of concerns:
+
+- **`@manti-ui/folds`** — the Zag machine. Owns all behavior and re-exports
+  `@zag-js/*` so renderers never import Zag directly.
+- **`@manti-ui/styles`** — the CSS, keyed to `data-scope` / `data-part` /
+  `data-state`. Owns appearance.
+- **`@manti-ui/react`** — the React component. Only wires the two together, with a
+  colocated story.
+
+## The adapter pattern
+
+A behavioral component follows one shape — `useMachine` to start the service,
+`connect` to get the prop-getter API, then render the anatomy:
+
+```tsx
+const service = useMachine(component.machine, { id: useId(), ...props });
+const api = component.connect(service, normalizeProps);
+return <el {...api.getRootProps()}>{/* parts via api.getXxxProps() */}</el>;
+```
+
+The prop getters emit the public `data-scope` / `data-part` / `data-state`
+anatomy attributes, which the CSS targets. Collection components (Tabs, Accordion,
+RadioGroup, …) currently take a data-driven `items` prop; promoting these to
+compound (`Tabs.Trigger`, …) APIs is a planned refinement once breadth is complete.
+
+## Status
+
+All six batches are adapted. Legend: ✅ done · ⬜ todo.
+
+### Batch 1 — inline behavior ✅
+
+| Component   | Package               | Status |
+| ----------- | --------------------- | :----: |
+| Toggle      | `@zag-js/toggle`      |   ✅   |
+| Switch      | `@zag-js/switch`      |   ✅   |
+| Checkbox    | `@zag-js/checkbox`    |   ✅   |
+| Radio Group | `@zag-js/radio-group` |   ✅   |
+| Collapsible | `@zag-js/collapsible` |   ✅   |
+| Accordion   | `@zag-js/accordion`   |   ✅   |
+| Tabs        | `@zag-js/tabs`        |   ✅   |
+| Tooltip     | `@zag-js/tooltip`     |   ✅   |
+
+### Batch 2 — overlays & floating ✅
+
+| Component  | Package              | Status |
+| ---------- | -------------------- | :----: |
+| Dialog     | `@zag-js/dialog`     |   ✅   |
+| Popover    | `@zag-js/popover`    |   ✅   |
+| Hover Card | `@zag-js/hover-card` |   ✅   |
+| Menu       | `@zag-js/menu`       |   ✅   |
+| Toast      | `@zag-js/toast`      |   ✅   |
+
+### Batch 3 — form inputs ✅
+
+| Component    | Package                | Status |
+| ------------ | ---------------------- | :----: |
+| Number Input | `@zag-js/number-input` |   ✅   |
+| Pin Input    | `@zag-js/pin-input`    |   ✅   |
+| Slider       | `@zag-js/slider`       |   ✅   |
+| Tags Input   | `@zag-js/tags-input`   |   ✅   |
+| Editable     | `@zag-js/editable`     |   ✅   |
+| Toggle Group | `@zag-js/toggle-group` |   ✅   |
+
+### Batch 4 — selection & data ✅
+
+| Component  | Package              | Status |
+| ---------- | -------------------- | :----: |
+| Select     | `@zag-js/select`     |   ✅   |
+| Combobox   | `@zag-js/combobox`   |   ✅   |
+| Listbox    | `@zag-js/listbox`    |   ✅   |
+| Tree View  | `@zag-js/tree-view`  |   ✅   |
+| Pagination | `@zag-js/pagination` |   ✅   |
+
+### Batch 5 — display & media ✅
+
+| Component     | Package                 | Status |
+| ------------- | ----------------------- | :----: |
+| Avatar        | `@zag-js/avatar`        |   ✅   |
+| Progress      | `@zag-js/progress`      |   ✅   |
+| Rating Group  | `@zag-js/rating-group`  |   ✅   |
+| Carousel      | `@zag-js/carousel`      |   ✅   |
+| QR Code       | `@zag-js/qr-code`       |   ✅   |
+| Clipboard     | `@zag-js/clipboard`     |   ✅   |
+| File Upload   | `@zag-js/file-upload`   |   ✅   |
+| Signature Pad | `@zag-js/signature-pad` |   ✅   |
+
+### Batch 6 — date, time & advanced ✅
+
+| Component       | Package                   | Status |
+| --------------- | ------------------------- | :----: |
+| Date Picker     | `@zag-js/date-picker`     |   ✅   |
+| Time Picker     | `@zag-js/time-picker`     |   ✅   |
+| Timer           | `@zag-js/timer`           |   ✅   |
+| Steps           | `@zag-js/steps`           |   ✅   |
+| Tour            | `@zag-js/tour`            |   ✅   |
+| Splitter        | `@zag-js/splitter`        |   ✅   |
+| Angle Slider    | `@zag-js/angle-slider`    |   ✅   |
+| Color Picker    | `@zag-js/color-picker`    |   ✅   |
+| Navigation Menu | `@zag-js/navigation-menu` |   ✅   |
+| Floating Panel  | `@zag-js/floating-panel`  |   ✅   |
+
+## Variants that reuse a batch package
+
+Several components are variants built on a machine already listed above, rather
+than new adapters: Context/Nested Menu (`menu`), Range Slider (`slider`),
+Segmented Control (`radio-group`), Drawer (`dialog`), Circular vs Linear Progress
+(`progress`), and Date Input (`date-picker`).
+
+For the documentation status of each adapted component, see
+[Components](/components).

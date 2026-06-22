@@ -1,0 +1,44 @@
+---
+title: Select
+slug: /components/select
+group: Components
+order: 43
+description: A single or multi select backed by the Zag.js select machine.
+---
+
+# Select
+
+A single or multi select backed by the Zag.js select machine. The machine owns
+keyboard navigation, typeahead, and dismissal; you supply an `items` array and
+it renders the trigger plus a portalled frosted listbox.
+
+<Demo name="select/basic" center />
+
+## Basic
+
+Each item is `{ value, label, disabled? }`. The trigger shows the `placeholder`
+until something is selected.
+
+<Demo name="select/basic" center />
+
+## Multiple
+
+Set `multiple` to allow more than one selection; the trigger summarizes the
+chosen values.
+
+<Demo name="select/multiple" center />
+
+## Props
+
+<PropsTable component="select" />
+
+## Anatomy
+
+Target these public selectors to customize the select. Class names and the DOM
+between parts are private.
+
+<Anatomy component="select" />
+
+## Component tokens
+
+<TokenTable component="select" />
