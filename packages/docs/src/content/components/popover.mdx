@@ -1,0 +1,43 @@
+---
+title: Popover
+slug: /components/popover
+group: Components
+order: 38
+description: A floating frosted panel anchored to a trigger, backed by the Zag.js popover machine.
+---
+
+# Popover
+
+A floating panel anchored to a trigger, backed by the Zag.js popover machine.
+The machine owns positioning, focus, and dismissal; you supply the trigger and
+the content.
+
+<Demo name="popover/basic" center />
+
+## Basic
+
+`trigger` is the element that opens the popover — it's cloned with the machine's
+trigger props. Pass an optional `title` and the body as `children`.
+
+<Demo name="popover/basic" center />
+
+## Close button
+
+Set `showCloseButton` to render a corner dismiss button inside the panel.
+
+<Demo name="popover/close-button" center />
+
+## Props
+
+<PropsTable component="popover" />
+
+## Anatomy
+
+Target these public selectors to customize the popover. Class names and the DOM
+between parts are private.
+
+<Anatomy component="popover" />
+
+## Component tokens
+
+<TokenTable component="popover" />

@@ -1,0 +1,127 @@
+---
+title: Theming with tokens
+slug: /guides/theming-tokens
+group: Guides
+order: 31
+description: Theme Manti through its semantic roles and tones first, and reach for component tokens only to make one component diverge.
+---
+
+# Theming with tokens
+
+Tokens are the front door to theming Manti. They are CSS custom properties you can
+redefine at any scope — `:root`, a section, a single element — and they form three
+tiers, each defaulting into the one above it. This guide focuses on the two tiers
+you reach for most: the **semantic roles** (Tier 2) for system-wide theming, and
+**component tokens** (Tier 3) for deliberate per-component divergence.
+
+For how the cascade makes these overrides win without `!important`, see
+[Customizing with plain CSS](/guides/plain-css).
+
+## Theme through Tier 2 first
+
+Semantic roles are purpose-based: they say _what_ a value is for, not which
+component uses it. Because every component reads them, a single change cascades
+consistently across the whole library. This is the primary theming lever — start
+here before anything more specific.
+
+### Surface, text, and border roles
+
+The role vocabulary covers the structural neutrals. Keep color roles in
+`light-dark(light, dark)` form so the `data-theme` switch and the user's OS
+preference keep resolving the right value automatically:
+
+```css
+:root {
+  --manti-bg: light-dark(#fafafb, #0c0c10);
+  --manti-surface: light-dark(#ffffff, #15151b);
+  --manti-surface-raised: light-dark(#ffffff, #1b1b22);
+  --manti-text: light-dark(#16161a, #f4f4f6);
+  --manti-text-muted: light-dark(#5c5c66, #b6b6c0);
+  --manti-border: light-dark(#e6e6ea, #2a2a33);
+}
+```
+
+Scales sit at the same tier. Changing one radius step rounds buttons, cards, and
+inputs alike — one decision, applied everywhere:
+
+```css
+:root {
+  --manti-radius-xs: 2px;
+  --manti-radius-sm: 4px;
+  --manti-radius-md: 6px;
+  --manti-radius-lg: 10px;
+  --manti-radius-xl: 16px;
+
+  --manti-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --manti-focus-ring: var(--manti-paprika-500);
+  --manti-duration-base: 180ms;
+}
+```
+
+### The `--tone-*` vocabulary
+
+Color in Manti comes only from **tones**, never from a fixed accent. A tone is a
+small `--tone-*` vocabulary — solid, soft, border, text, ring — that components
+read when they are given that tone. Remap an existing tone, or define a brand-new
+one, then pass its name as a `tone` prop:
+
+```css
+/* Pin the built-in "primary" tone to your brand color. */
+[data-tone='primary'] {
+  --tone-solid: light-dark(#5b3df5, #6d52ff);
+  --tone-solid-hover: light-dark(#4f33e0, #7e66ff);
+  --tone-solid-active: light-dark(#4329c4, #8f7aff);
+  --tone-on-solid: #ffffff;
+  --tone-soft-bg: light-dark(#eeeafd, #211c46);
+  --tone-soft-text: light-dark(#4329c4, #c4b8f8);
+  --tone-border: light-dark(#c9bdf8, #3a2f73);
+  --tone-text: light-dark(#4329c4, #b3a3f6);
+  --tone-ring: #6d52ff;
+}
+```
+
+```tsx
+<Button tone="primary">Save</Button>
+```
+
+Because tones are plain CSS variables, you can scope a remap to a subtree — give
+a marketing section its own meaning for `primary` without touching the rest of
+the app.
+
+## Tier 3: component tokens for divergence
+
+Component tokens are a small, curated set of `--manti-{component}-{property}`
+custom properties, each defaulting to a Tier-2 semantic token. They are public and
+semver-stable, so you _may_ override them — but they are a labelled **escape
+hatch**, not the everyday path.
+
+Reach for one only to make a single component **intentionally diverge** from the
+system — for example, pill-shaped buttons while the rest of the UI keeps its
+radius:
+
+```css
+:root {
+  --manti-button-radius: 9999px; /* buttons differ from cards/inputs on purpose */
+}
+```
+
+Two rules keep this tier safe to depend on:
+
+- **Curated, not exhaustive.** Only _independent_ structural dimensions a designer
+  would reach for — radius, padding, sizing, gap, typography — are exposed. Color
+  is already covered by the `--tone-*` vocabulary, so this tier stays small and
+  mostly structural.
+- **Derived values stay private.** Anything a component computes from its tokens
+  (`calc()` geometry like a switch thumb's size and travel) remains a private
+  `--_*` knob — not API. Target the named component tokens instead.
+
+If you find yourself overriding the _same_ property across many components, that
+is a signal to change the Tier-2 semantic token instead — both for consistency
+and to avoid per-component sprawl.
+
+## Where to next
+
+- **[Customizing with plain CSS](/guides/plain-css)** — the cascade-layer model
+  and the anatomy selector contract.
+- **[Design tokens](/foundations/tokens)** — the full token reference and the
+  generated `--manti-*` contract.

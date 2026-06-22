@@ -1,0 +1,36 @@
+---
+title: Clipboard
+slug: /components/clipboard
+group: Components
+order: 20
+description: A copy-to-clipboard field backed by the Zag.js clipboard machine.
+---
+
+# Clipboard
+
+A copy-to-clipboard field backed by the Zag.js clipboard machine. Press the
+button to copy `value`; the icon flips to a check for a moment to confirm.
+
+<Demo name="clipboard/basic" center />
+
+## Basic
+
+Pass the text to copy as `value` and an optional `label`. The `tone` colors the
+copied confirmation, and `timeout` controls how long it lingers.
+
+<Demo name="clipboard/basic" center />
+
+## Props
+
+<PropsTable component="clipboard" />
+
+## Anatomy
+
+Target these public selectors to customize the clipboard. Class names and the DOM
+between parts are private.
+
+<Anatomy component="clipboard" />
+
+## Component tokens
+
+<TokenTable component="clipboard" />

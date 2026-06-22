@@ -1,0 +1,75 @@
+---
+title: Manti UI
+slug: /
+group: Overview
+order: 0
+description: A framework-agnostic design system built on Zag.js behavior machines.
+---
+
+<section className="docs-hero">
+  <img
+    src="/manti-animated.svg"
+    alt="The Manti mascot"
+    width="400"
+    height="400"
+  />
+  <h1 className="docs-hero-title">
+    A design system that adapts, like its namesake.
+  </h1>
+  <p className="docs-hero-lede">
+    Manti UI is a framework-agnostic design system built on{' '}
+    <a href="https://zagjs.com">Zag.js</a> behavior machines — sleek monochrome
+    panels, semantic tones, and a token-first customization contract. This
+    entire documentation site is built end-to-end with it.
+  </p>
+  <div className="docs-hero-actions">
+    <LinkButton to="/getting-started" size="lg">
+      Get started
+    </LinkButton>
+    <LinkButton to="/components" variant="soft" tone="neutral" size="lg">
+      Browse components
+    </LinkButton>
+  </div>
+</section>
+
+<div className="docs-feature-grid">
+  <Card>
+    <Card.Body>
+      <Card.Title>Framework-agnostic</Card.Title>
+      <Card.Description>
+        Behavior lives in Zag.js machines; tokens and CSS are framework-free. A
+        React renderer ships today, with Vue, Svelte and Solid able to reuse the
+        same foundations.
+      </Card.Description>
+    </Card.Body>
+  </Card>
+  <Card>
+    <Card.Body>
+      <Card.Title>Token-first theming</Card.Title>
+      <Card.Description>
+        Every visual value comes from design tokens across three tiers —
+        primitive ramps, semantic roles and tones, and per-component tokens.
+        Theme the whole system from CSS variables.
+      </Card.Description>
+    </Card.Body>
+  </Card>
+  <Card>
+    <Card.Body>
+      <Card.Title>Accessible by default</Card.Title>
+      <Card.Description>
+        Keyboard support, focus management and screen-reader semantics are owned
+        by the machines, not bolted on — so every component behaves correctly
+        out of the box.
+      </Card.Description>
+    </Card.Body>
+  </Card>
+  <Card>
+    <Card.Body>
+      <Card.Title>Smooth by design</Card.Title>
+      <Card.Description>
+        Frosted-glass panels, perceptual OKLCH color, and motion tiers you can
+        dial from none to full. The promise of mantı: smooth in every bite.
+      </Card.Description>
+    </Card.Body>
+  </Card>
+</div>

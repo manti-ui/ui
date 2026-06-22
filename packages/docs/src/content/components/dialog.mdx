@@ -1,0 +1,50 @@
+---
+title: Dialog
+slug: /components/dialog
+group: Components
+order: 17
+description: A modal frosted panel backed by the Zag.js dialog machine.
+---
+
+# Dialog
+
+A modal frosted panel backed by the Zag.js dialog machine. The machine owns
+focus trapping, scroll locking, and dismissal; you supply the trigger and the
+content.
+
+<Demo name="dialog/basic" center />
+
+## Basic
+
+`trigger` is the element that opens the dialog — it's cloned with the machine's
+trigger props. Pass `title`, `description`, and body content as `children`.
+
+<Demo name="dialog/basic" center />
+
+## Footer actions
+
+`footer` accepts a render function receiving `{ close }`, so action buttons can
+dismiss the dialog. Wire `onClick={close}` to any button that should close it.
+
+<Demo name="dialog/footer" center />
+
+## Sizes
+
+`size` sets the panel's width preset: `sm`, `md` (default), or `lg`.
+
+<Demo name="dialog/sizes" center />
+
+## Props
+
+<PropsTable component="dialog" />
+
+## Anatomy
+
+Target these public selectors to customize the dialog. Class names and the DOM
+between parts are private.
+
+<Anatomy component="dialog" />
+
+## Component tokens
+
+<TokenTable component="dialog" />

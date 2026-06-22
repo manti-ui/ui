@@ -1,0 +1,51 @@
+---
+title: Alert
+slug: /components/alert
+group: Components
+order: 15
+description: An inline, tonal message with a title, description, and optional dismiss action.
+---
+
+# Alert
+
+An inline, tonal message with an optional icon, title, description, and dismiss
+action. It defaults to `role="status"`, escalating to `role="alert"` for the
+danger and warning tones.
+
+<Demo name="alert/tones" />
+
+## Tones
+
+`tone` carries the semantic meaning. Pass a `title` for the bold leading line
+and children for the description.
+
+<Demo name="alert/tones" />
+
+## Variants
+
+`variant` switches between the default `soft` tint and a `solid` fill for a
+higher-emphasis message.
+
+<Demo name="alert/tones" />
+
+## Dismissible
+
+Provide `onDismiss` to render a dismiss button. Drive the Alert's visibility
+from state so it can be hidden — and brought back — on demand.
+
+<Demo name="alert/dismissible" center />
+
+## Props
+
+<PropsTable component="alert" />
+
+## Anatomy
+
+Target these public selectors to customize the alert. Class names and the DOM
+between parts are private.
+
+<Anatomy component="alert" />
+
+## Component tokens
+
+<TokenTable component="alert" />

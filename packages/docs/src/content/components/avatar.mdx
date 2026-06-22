@@ -1,0 +1,42 @@
+---
+title: Avatar
+slug: /components/avatar
+group: Components
+order: 14
+description: An avatar with graceful image-load fallback, backed by the Zag.js avatar machine.
+---
+
+# Avatar
+
+An avatar with graceful image-load fallback, backed by the Zag.js avatar machine.
+It shows the image when it loads and falls back to initials otherwise.
+
+<Demo name="avatar/basic" center />
+
+## Sizes
+
+`size` ranges from `sm` to `xl`. The image is clipped to the avatar's shape.
+
+<Demo name="avatar/basic" center />
+
+## Fallback and shape
+
+Omit `src` (or let it fail) and the `children` render as a fallback. Switch
+`shape` between `circle` and `square`.
+
+<Demo name="avatar/fallback" center />
+
+## Props
+
+<PropsTable component="avatar" />
+
+## Anatomy
+
+Target these public selectors to customize the avatar. Class names and the DOM
+between parts are private.
+
+<Anatomy component="avatar" />
+
+## Component tokens
+
+<TokenTable component="avatar" />

@@ -1,0 +1,39 @@
+---
+title: Swipe
+slug: /components/swipe
+group: Components
+order: 49
+description: A gesture surface that makes any content swipeable on either axis.
+---
+
+# Swipe
+
+Make any content swipeable, horizontally and/or vertically. Backed by the
+framework-agnostic swipe core in `@manti-ui/folds`. By default the content
+follows the pointer and springs back on release while `onSwipe` reports the
+recognized direction.
+
+<Demo name="swipe/basic" center />
+
+## Swipe to dismiss
+
+Constrain to one `axis` and remove the item in `onSwipe` to build a
+swipe-to-dismiss stack — the component handles the gesture, your code removes the
+card.
+
+<Demo name="swipe/dismiss" center />
+
+## Props
+
+<PropsTable component="swipe" />
+
+## Anatomy
+
+Target these public selectors to customize the swipe surface. Class names and the
+DOM between parts are private.
+
+<Anatomy component="swipe" />
+
+## Component tokens
+
+<TokenTable component="swipe" />

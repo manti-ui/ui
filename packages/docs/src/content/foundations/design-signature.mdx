@@ -1,0 +1,89 @@
+---
+title: Design signature
+slug: /foundations/design-signature
+group: Foundations
+order: 20
+description: The sleek monochrome cool-dark frosted-glass panel that gives Manti UI its recognizable character.
+---
+
+# Design signature
+
+Manti UI has one driving word: **smooth**. Surfaces feel soft and continuous,
+interaction feels calm and predictable, and the whole system stays quiet so your
+content can speak. The visual signature is a sleek, monochrome, cool-dark panel —
+a translucent piece of frosted glass lit from the top.
+
+## Monochrome by default
+
+Surfaces are **cool, near-neutral, and monochrome**. Dark is the hero: a deep
+near-black with a faint cool cast. Light is a soft daylight that never goes stark
+white. Emphasis is carried entirely by neutral light and dark — a top-lit rim, a
+neutral focus ring, near-white solids on dark and near-black solids on light.
+
+There are deliberately **no gradients** and **no colored brand accent**. The
+interface reads as one quiet material. Color enters only through the semantic
+[tones](/foundations/color-and-tones) — a paprika primary, a herb success, a
+chili danger — applied to badges, alerts, and the like, never as decoration.
+
+## The frosted-glass panel
+
+Floating surfaces — cards, tooltips, the field control, soft buttons, soft
+badges, soft alerts, toggles, accordions, collapsibles — share one **translucent
+panel** material:
+
+- a light `backdrop-filter: blur() saturate()`,
+- a hairline border,
+- a top-lit rim that catches the light,
+- and a soft, deep shadow.
+
+This frosted glass is pervasive. Only **solid** fills (which gain nothing from a
+blur) and the tiny form marks — checkbox, radio, switch — stay crisp.
+
+<Card style={{ maxWidth: 'var(--manti-space-16)', minWidth: '20rem' }}>
+  <Card.Body>
+    <Card.Title>The signature surface</Card.Title>
+    <Card.Description>
+      A pillowy radius, a hairline border, a top-lit rim, and a soft shadow over
+      the ambient mesh. This is the material every floating surface inherits.
+    </Card.Description>
+  </Card.Body>
+</Card>
+
+You can give your own floating surfaces — menus, sheets, command palettes — the
+exact same material with the `.manti-glass` helper. Where `backdrop-filter` is
+unsupported, every glass surface falls back to an opaque token surface
+automatically.
+
+## Top-lit rim and ambient mesh
+
+Two details create depth without a single gradient element. A **top-lit rim**
+(`--manti-glass-highlight`) runs along the upper edge of each panel, as if a soft
+light sat just above the screen. Behind every `.manti-app` or `body` sits an
+**ambient mesh**: three faint glows — violet, magenta, and warm ember at very low
+opacity (`--manti-ambient-1` … `--manti-ambient-3`) — as pure scene lighting. The
+deep background reads with depth rather than flat black.
+
+Retune the entire material from one place:
+
+```css
+.manti-app {
+  --manti-glass-tint: oklch(0.2 0.008 280 / 0.55);
+  --manti-glass-blur: blur(16px) saturate(160%);
+  --manti-glass-border: oklch(1 0 0 / 0.09);
+  --manti-glass-highlight: oklch(1 0 0 / 0.08);
+}
+```
+
+## The smooth promise
+
+Smooth is not only the look — it is the motion. Transitions ride a calm
+ease-out (`--manti-ease-smooth`) by default, and the system honors
+`prefers-reduced-motion` everywhere. See [Motion](/foundations/motion) for the
+tiers and curves.
+
+## Where to next
+
+- [Color & tones](/foundations/color-and-tones) — the OKLCH ramps and the six
+  semantic tones.
+- [Design tokens](/foundations/tokens) — the three-tier token contract.
+- [Motion](/foundations/motion) — the motion tiers and easing curves.

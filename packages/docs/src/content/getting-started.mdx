@@ -1,0 +1,70 @@
+---
+title: Getting Started
+slug: /getting-started
+group: Getting Started
+order: 1
+description: Install Manti UI, import the styles, and render your first component.
+---
+
+# Getting Started
+
+Manti UI ships as a small set of packages. For a React app you need the renderer
+and the stylesheet — the tokens come along for the ride.
+
+## Install
+
+```bash
+pnpm add @manti-ui/react @manti-ui/styles
+```
+
+## Import the styles once
+
+`@manti-ui/react` ships **no** CSS side effects, so import the stylesheet yourself
+at your app entry. This single import sets up the cascade layers, design tokens,
+component styles, and motion tiers.
+
+```ts
+// main.tsx / app entry
+import '@manti-ui/styles/index.css';
+```
+
+## Set the theme
+
+Theming is driven by a `data-theme` attribute on `<html>` (or any ancestor), with
+native `light-dark()` resolving the right values. Set it to `light` or `dark`:
+
+```html
+<html data-theme="dark">
+  …
+</html>
+```
+
+To avoid a flash, set it before paint with a tiny inline script that reads the
+user's stored choice or their system preference — exactly what this site does.
+
+## Render a component
+
+Import any component and render it. Props like `variant`, `tone` and `size` map to
+the public `data-*` anatomy that you can target with your own CSS.
+
+```tsx
+import { Button } from '@manti-ui/react';
+
+export function Example() {
+  return (
+    <Button variant="solid" tone="primary">
+      Knead dough
+    </Button>
+  );
+}
+```
+
+<Demo name="button/variants" center />
+
+## Where to next
+
+- **[Foundations](/foundations/design-signature)** — the design signature, color,
+  type, tokens and motion.
+- **[Components](/components)** — the full library.
+- **[Customizing with plain CSS](/guides/plain-css)** — the styling contract and
+  how your CSS always wins.

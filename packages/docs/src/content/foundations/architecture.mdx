@@ -1,0 +1,97 @@
+---
+title: Architecture
+slug: /foundations/architecture
+group: Foundations
+order: 25
+description: The four-package split and the behavioral-vs-static component contract behind every Manti UI component.
+---
+
+# Architecture
+
+Manti UI is a framework-agnostic design system built on Zag.js behavior machines.
+A component is assembled from three contract packages plus a renderer, so the
+tokens, CSS, and machines can later be reused by Vue, Svelte, or Solid adapters
+unchanged. Today only a React renderer exists.
+
+## The four-package split
+
+Each package owns exactly one concern, and they are never allowed to duplicate
+each other's responsibilities:
+
+- **`@manti-ui/tokens`** — the design-token contract: CSS custom properties and
+  TypeScript types. No styles, no behavior.
+- **`@manti-ui/styles`** — all CSS, keyed to the public `data-scope`,
+  `data-part`, and `data-state` anatomy. Depends on tokens.
+- **`@manti-ui/folds`** — Zag.js machines and the shared interaction behavior
+  (keyboard, focus, state). Re-exports the `@zag-js/*` machines Manti uses.
+- **`@manti-ui/react`** — thin renderers that wire folds and styles together.
+  Depends on folds, styles, and tokens.
+
+## Dependency direction
+
+The arrows are strict and point one way only:
+
+```text
+@manti-ui/tokens  ◀──  @manti-ui/styles
+@manti-ui/folds   ◀──  @manti-ui/react
+@manti-ui/styles  ◀──  @manti-ui/react
+```
+
+Framework packages must **not** define private token values or reimplement the
+keyboard, focus, and state logic that `folds` already owns. A future
+`@manti-ui/vue` or `@manti-ui/svelte` renders the same anatomy and reuses the
+same tokens, styles, and folds.
+
+## No CSS side effects in the renderer
+
+`@manti-ui/react` ships **no** CSS side effects. Apps import the stylesheet
+explicitly at their entry — `@manti-ui/styles/index.css` (or the Tailwind /
+tokens entry points) — which keeps headless usage possible and gives apps full
+control over the cascade.
+
+## The component contract
+
+Components come in two shapes.
+
+### Behavioral components
+
+Switch, Toggle, Checkbox, RadioGroup, Collapsible, Accordion, Tabs, Tooltip, and
+the like. The Zag machine owns state, keyboard, and form behavior; the React
+adapter only renders anatomy. Machines are imported from `@manti-ui/folds`, never
+from `@zag-js/*` directly:
+
+```tsx
+const service = useMachine(component.machine, { id: useId(), ...props });
+const api = component.connect(service, normalizeProps);
+return <el {...api.getRootProps()}>{/* parts via api.getXxxProps() */}</el>;
+```
+
+### Static components
+
+Button, Badge, Card, Alert, Spinner, TextField. No machine — the renderer emits
+the `data-*` anatomy attributes by hand. The same public attributes mean the CSS
+styles them identically to behavioral components.
+
+## Anatomy is the public API
+
+Every component renders stable attributes the CSS keys off: `data-scope` (the
+component), `data-part` (the anatomy piece), `data-variant` / `data-tone` /
+`data-size`, and state attributes like `data-state` and `disabled`. Class names
+and the DOM between parts are **private** — target the data attributes, and your
+styling survives across versions and future framework adapters.
+
+```html
+<button
+  data-scope="button"
+  data-part="root"
+  data-variant="solid"
+  data-tone="primary"
+  data-size="md"
+>
+  <span data-scope="button" data-part="label">…</span>
+</button>
+```
+
+Zag.js and its bindings are implementation details; Manti UI's props, events,
+anatomy, and naming stay under Manti's control. Continue to
+[Design tokens](/foundations/tokens) for the contract the styles package consumes.

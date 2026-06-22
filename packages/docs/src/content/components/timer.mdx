@@ -1,0 +1,37 @@
+---
+title: Timer
+slug: /components/timer
+group: Components
+order: 55
+description: A count-up / count-down timer backed by the Zag.js timer machine.
+---
+
+# Timer
+
+A count-up / count-down timer backed by the Zag.js timer machine. Choose which
+segments to show with `parts`, and opt into start / pause / reset buttons with
+`controls`.
+
+<Demo name="timer/basic" center />
+
+## Countdown
+
+Set `countdown` and a `startMs` offset to count toward zero. `onComplete` fires
+when it reaches it.
+
+<Demo name="timer/countdown" center />
+
+## Props
+
+<PropsTable component="timer" />
+
+## Anatomy
+
+Target these public selectors to customize the timer. Class names and the DOM
+between parts are private.
+
+<Anatomy component="timer" />
+
+## Component tokens
+
+<TokenTable component="timer" />

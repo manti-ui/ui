@@ -1,0 +1,80 @@
+---
+title: Motion
+slug: /foundations/motion
+group: Foundations
+order: 24
+description: The data-motion tiers, the duration and easing tokens, and how reduced motion is always respected.
+---
+
+# Motion
+
+Motion is the audible half of the **smooth** promise — calm, confident, and never
+in the way. Manti UI treats how much things animate as a choice you make per
+subtree, not a fixed behavior baked into each component.
+
+## Motion tiers
+
+Set `data-motion` on any container — exactly like `data-theme` — to pick the
+motion level for that subtree:
+
+```html
+<div class="manti-app" data-motion="full">…</div>
+```
+
+Three tiers are available:
+
+- **`default`** (or unset) — the shipped transitions and keyframes. The calm,
+  everyday Manti motion.
+- **`none`** — drops Manti's decorative motion and hands the motion story to the
+  host app. The Spinner keeps spinning (it is functional, not decorative), and
+  your own animations inside a component survive.
+- **`full`** — expressive, spring-driven motion built purely in CSS with the
+  `--manti-ease-spring` and `--manti-ease-bounce` curves and a touch more
+  duration to let springs settle.
+
+The tiers are pure CSS, live in `packages/styles/src/motion/`, and nest — an inner
+`data-motion` overrides an outer one, so you can dial up one region without
+touching the rest.
+
+## Duration and easing tokens
+
+Like every other value, motion comes from tokens.
+
+Durations:
+
+- `--manti-duration-fast` — `120ms`
+- `--manti-duration-base` — `200ms`
+- `--manti-duration-slow` — `320ms`
+- `--manti-duration-slower` — `440ms` (headroom for expressive springs)
+
+Easing curves:
+
+- `--manti-ease-smooth` — the default, a calm and confident ease-out
+- `--manti-ease-soft` — a symmetric ease for reversible state changes
+- `--manti-ease-spring` — gentle spring with a soft overshoot (full tier)
+- `--manti-ease-bounce` — snappy bounce with a pronounced overshoot (full tier)
+
+Use them by token in your own transitions:
+
+```css
+.panel {
+  transition:
+    transform var(--manti-duration-base) var(--manti-ease-smooth),
+    opacity var(--manti-duration-fast) var(--manti-ease-soft);
+}
+```
+
+## Reduced motion always wins
+
+`prefers-reduced-motion: reduce` overrides every tier — even `full`. When a user
+asks their system for less motion, Manti UI honors it unconditionally, so
+expressive defaults never become an accessibility problem. The tiers are also
+SSR-safe: nothing depends on client-side measurement, so there is no flash on
+first paint.
+
+## Where to next
+
+- [Design signature](/foundations/design-signature) — how motion fits the
+  smooth, monochrome character.
+- [Design tokens](/foundations/tokens) — the full token contract behind these
+  durations and curves.

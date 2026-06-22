@@ -1,0 +1,43 @@
+---
+title: RadioGroup
+slug: /components/radio-group
+group: Components
+order: 41
+description: A set of mutually exclusive options backed by the Zag.js radio-group machine.
+---
+
+# RadioGroup
+
+A set of mutually exclusive options, backed by the Zag.js radio-group machine.
+Pass an `items` array and the machine owns roving focus, keyboard arrows, and
+form wiring.
+
+<Demo name="radio-group/basic" />
+
+## Basic
+
+Each item is `{ value, label, disabled? }` — `value` keys the option, `label` is
+the text, and `disabled` greys it out.
+
+<Demo name="radio-group/basic" />
+
+## Horizontal
+
+Set `orientation="horizontal"` to lay the options out in a row.
+
+<Demo name="radio-group/horizontal" />
+
+## Props
+
+<PropsTable component="radio-group" />
+
+## Anatomy
+
+Target these public selectors to customize the group. Class names and the DOM
+between parts are private.
+
+<Anatomy component="radio-group" />
+
+## Component tokens
+
+<TokenTable component="radio-group" />

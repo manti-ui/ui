@@ -1,0 +1,98 @@
+---
+title: Design tokens
+slug: /foundations/tokens
+group: Foundations
+order: 23
+description: The three-tier token contract — primitive ramps, semantic roles and tones, and per-component tokens.
+---
+
+# Design tokens
+
+Every visual value in Manti UI comes from a token. Colors, spacing, radius,
+typography, motion, and elevation are all custom properties keyed to the
+`@manti-ui/tokens` contract, which is the single source of truth. Tokens form
+**three tiers**, each building on the one below.
+
+## Tier 1 — primitive ramps
+
+The foundation: fixed OKLCH color ramps (`--manti-paprika-500`,
+`--manti-dough-950`, …) plus the raw scale values for radius, spacing, type, and
+motion. These are stable and theme-independent, and you rarely consume them
+directly. The primitive ramps and scale values are **generated** into
+`packages/styles/src/tokens.css` by `pnpm gen:tokens` — never hand-edited.
+
+## Tier 2 — semantic roles and tones
+
+Meaning layered on top of the primitives. **Roles** describe surfaces and text —
+`--manti-bg`, `--manti-surface`, `--manti-surface-raised`, `--manti-border`,
+`--manti-text`, `--manti-text-muted`, and more. They resolve with the CSS
+`light-dark()` function, so the theme follows `color-scheme` (or a manual
+`data-theme`) automatically.
+
+**Tones** are the `--tone-*` vocabulary selected per component via `[data-tone]`
+— covered in [Color & tones](/foundations/color-and-tones).
+
+## Tier 3 — component tokens
+
+The public, semver-stable override surface for a single component:
+`--manti-{component}-{property}`. Each defaults to a Tier-2 semantic token, so you
+can restyle every instance without forking the component or touching its
+internals:
+
+```css
+.manti-app {
+  --manti-button-radius: var(--manti-radius-full);
+  --manti-switch-track-width: 3rem;
+}
+```
+
+Only **independent** dimensions are exposed (radius, sizing, spacing,
+typography). **Derived** values computed via `calc()` stay private `--_*` knobs
+inside the component CSS, so a consumer can never put a component into a
+geometrically inconsistent state. Every component token is declared in the
+`componentTokens` registry of `@manti-ui/tokens` — the typed source of truth for
+which tokens exist (Button and Switch are piloted today).
+
+## The scales at a glance
+
+Radius is generous and pillowy, echoing the folded mantı silhouette:
+
+| Token                 | Value    |
+| --------------------- | -------- |
+| `--manti-radius-xs`   | `4px`    |
+| `--manti-radius-sm`   | `6px`    |
+| `--manti-radius-md`   | `10px`   |
+| `--manti-radius-lg`   | `14px`   |
+| `--manti-radius-xl`   | `20px`   |
+| `--manti-radius-2xl`  | `28px`   |
+| `--manti-radius-full` | `9999px` |
+
+Spacing sits on a 4px grid:
+
+| Token              | Value     |
+| ------------------ | --------- |
+| `--manti-space-1`  | `0.25rem` |
+| `--manti-space-2`  | `0.5rem`  |
+| `--manti-space-3`  | `0.75rem` |
+| `--manti-space-4`  | `1rem`    |
+| `--manti-space-6`  | `1.5rem`  |
+| `--manti-space-8`  | `2rem`    |
+| `--manti-space-12` | `3rem`    |
+| `--manti-space-16` | `4rem`    |
+
+## Overriding a semantic token
+
+Because roles resolve down through the tiers, retuning one Tier-2 token cascades
+everywhere it is used. Override at any scope — the whole app or a single subtree:
+
+```css
+/* Soften the app border and bump the base surface. */
+.manti-app {
+  --manti-border: oklch(0.9 0.004 280);
+  --manti-surface: var(--manti-surface-raised);
+}
+```
+
+For the full override playbook — what is public API, how cascade layers keep your
+CSS winning, and Tailwind theming — see
+[Customizing with plain CSS](/guides/plain-css).

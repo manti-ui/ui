@@ -1,0 +1,74 @@
+---
+title: Typography
+slug: /foundations/typography
+group: Foundations
+order: 22
+description: The Manti UI type scale, weights, and the sans and mono font families.
+---
+
+# Typography
+
+Type in Manti UI is calm and content-first. A single sans family carries the
+interface, a compact scale keeps hierarchy clear, and four weights cover every
+need from body copy to headings — nothing more.
+
+## The type scale
+
+Sizes run from `xs` to `5xl` as `--manti-text-*` custom properties. The scale is
+tuned for UI density first and editorial display at the top end, with line
+heights (`--manti-leading-tight` … `--manti-leading-relaxed`) to match.
+
+<TypeScale />
+
+Reach for a size by token, never by a raw value:
+
+```css
+.card-title {
+  font-size: var(--manti-text-xl);
+  line-height: var(--manti-leading-snug);
+}
+```
+
+## Weights
+
+Four weights map to `--manti-weight-*`: `regular` (400), `medium` (500),
+`semibold` (600), and `bold` (700). Body text stays at `regular`; emphasis,
+labels, and headings climb from `medium` upward. Keeping the set small is part of
+the smooth, monochrome signature — weight, not color, carries emphasis.
+
+<WeightScale />
+
+```css
+.label {
+  font-weight: var(--manti-weight-medium);
+}
+```
+
+## Font families
+
+Two families are exposed as tokens:
+
+- `--manti-font-sans` — **Inter** with a robust system fallback stack
+  (`ui-sans-serif`, `system-ui`, `-apple-system`, `Segoe UI`, …). This is the
+  default for all interface text.
+- `--manti-font-mono` — a system monospace stack (`ui-monospace`,
+  `SFMono-Regular`, `Menlo`, `Consolas`, …) for code, tokens, and tabular data.
+
+```css
+code,
+.token-name {
+  font-family: var(--manti-font-mono);
+}
+```
+
+Inter is not bundled by Manti UI — load it yourself (self-hosted or from a font
+service) if you want the exact design face; otherwise the fallback stack keeps
+everything legible. Swapping `--manti-font-sans` at the `.manti-app` root
+re-skins the whole interface in one line.
+
+## Where to next
+
+- [Design tokens](/foundations/tokens) — how type sits in the three-tier token
+  contract.
+- [Color & tones](/foundations/color-and-tones) — the palette that pairs with the
+  type.

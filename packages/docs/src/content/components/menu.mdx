@@ -1,0 +1,45 @@
+---
+title: Menu
+slug: /components/menu
+group: Components
+order: 33
+description: A dropdown command menu backed by the Zag.js menu machine.
+---
+
+# Menu
+
+A dropdown command menu backed by the Zag.js menu machine. The machine owns
+keyboard navigation, typeahead, and dismissal; you supply the trigger and the
+`items`.
+
+<Demo name="menu/basic" center />
+
+## Basic
+
+`trigger` is cloned with the machine's trigger props, so it works with any
+interactive element. Each command is `{ value, label, icon?, shortcut?, disabled? }`,
+and `onSelect` fires with the selected command's `value`.
+
+<Demo name="menu/basic" center />
+
+## Groups and separators
+
+Mix `{ type: 'group', label, items }` and `{ type: 'separator' }` entries into the
+`items` array to cluster commands under headings.
+
+<Demo name="menu/grouped" center />
+
+## Props
+
+<PropsTable component="menu" />
+
+## Anatomy
+
+Target these public selectors to customize the menu. Class names and the DOM
+between parts are private.
+
+<Anatomy component="menu" />
+
+## Component tokens
+
+<TokenTable component="menu" />

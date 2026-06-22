@@ -1,0 +1,33 @@
+---
+title: Toast
+slug: /components/toast
+group: Components
+order: 56
+description: Frosted, tone-colored notifications backed by the Zag.js toast machine.
+---
+
+# Toast
+
+Toasts are created imperatively. `createToaster` returns a `toaster` store and a
+`Toaster` host element: render `<Toaster />` once near your app root, then call
+`toaster.create(...)`, `toaster.success(...)`, `toaster.error(...)`, and friends
+from anywhere. Each type maps to a semantic tone and icon.
+
+<Demo name="toast/basic" center />
+
+## Props
+
+The options below are passed to `createToaster(options)`.
+
+<PropsTable component="toast" />
+
+## Anatomy
+
+Target these public selectors to customize the toasts. Class names and the DOM
+between parts are private.
+
+<Anatomy component="toast" />
+
+## Component tokens
+
+<TokenTable component="toast" />
