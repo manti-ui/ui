@@ -1,7 +1,9 @@
-# Netlify deploy config for Manti UI.
-# The site is the Storybook static build — the single dev surface / visual
-# gallery for every component. `pnpm build` builds all packages first, then
-# emits Storybook into `storybook-static/`.
+# Netlify deploy config for the Storybook site (storybook.manti.design).
+# Used by the Netlify site whose "Base directory" is the repo root. The docs
+# site (manti.design) lives at packages/docs and uses packages/docs/netlify.toml.
+#
+# `pnpm build` builds all packages first, then emits Storybook into
+# `storybook-static/`.
 [build]
   command = "pnpm build"
   publish = "storybook-static"

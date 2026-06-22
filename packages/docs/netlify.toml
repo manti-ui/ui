@@ -1,0 +1,23 @@
+# Netlify config for the Manti UI docs site (manti.design).
+#
+# Two Netlify sites are served from this one repo, told apart by their "Base
+# directory" so each reads its own netlify.toml:
+#   - docs  → Base directory = `packages/docs` → this file → manti.design
+#   - storybook → Base directory = repo root → root netlify.toml → storybook.manti.design
+#
+# `pnpm install` here still installs the entire pnpm workspace (pnpm walks up to
+# the root pnpm-workspace.yaml), so build:packages can build the libraries the
+# docs import, then the docs site itself is built.
+[build]
+  command = "pnpm -w run build:packages && pnpm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# SPA fallback — client-side routes (e.g. /components/button) must resolve to
+# index.html on a direct load or refresh.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
