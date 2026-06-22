@@ -15,11 +15,30 @@
     position: absolute;
     border-radius: var(--manti-radius-md);
     box-shadow: 0 0 0 9999px var(--manti-overlay);
-    z-index: var(--manti-z-modal);
+    /* Layer order (Zag --tour-layer): backdrop 0 < spotlight 1 < positioner 2. */
+    z-index: calc(var(--manti-z-modal) + 1);
   }
 
+  /*
+   * The positioner must paint above the backdrop so its content card is
+   * interactive. Zag's popper writes an inline `z-index: var(--z-index)` on the
+   * positioner (with `--z-index: auto` on centered/dialog steps, where popper
+   * never runs to fill it). An inline declaration beats any layered rule, so
+   * `!important` is the only way to lift the card above the backdrop here.
+   */
   [data-scope='tour'][data-part='positioner'] {
-    z-index: var(--manti-z-modal);
+    z-index: calc(var(--manti-z-modal) + 2) !important;
+  }
+
+  /*
+   * A dialog (centered) step gets no inline position from popper, so it would
+   * fall back to `static`. Pin it to the viewport and center the card.
+   */
+  [data-scope='tour'][data-part='positioner'][data-type='dialog'] {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
   }
 
   [data-scope='tour'][data-part='content'] {
