@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Button, Dialog } from '@manti-ui/react';
 
-import { GITHUB_URL, primaryNav } from '../data/navigation';
+import { GITHUB_URL, STORYBOOK_URL, primaryNav } from '../data/navigation';
 import { useSearch } from '../search/SearchProvider';
 import { useTheme } from '../theme/useTheme';
 import { MenuIcon, MoonIcon, SearchIcon, SunIcon } from './icons';
@@ -40,6 +40,14 @@ export function TopNav() {
         >
           Search
         </Button>
+        <a
+          href={STORYBOOK_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="docs-nav-link"
+        >
+          Storybook
+        </a>
         <a
           href={GITHUB_URL}
           target="_blank"

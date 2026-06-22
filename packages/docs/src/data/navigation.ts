@@ -46,4 +46,4 @@ export const primaryNav: NavItem[] = [
 ];
 
 export const GITHUB_URL = 'https://github.com/manti-ui/ui';
-export const STORYBOOK_URL = 'https://manti.design';
+export const STORYBOOK_URL = 'https://storybook.manti.design';
