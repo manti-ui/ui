@@ -15,21 +15,21 @@
     justify-content: space-between;
     gap: var(--manti-space-2);
     padding: var(--manti-space-3) var(--manti-space-4);
-    background: var(--manti-glass-tint);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
     color: var(--manti-text);
     font: inherit;
     font-weight: var(--manti-weight-semibold);
     cursor: pointer;
-    box-shadow: inset 0 1px 0 0 var(--manti-glass-highlight);
+    box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
     transition: background-color var(--manti-duration-fast)
       var(--manti-ease-soft);
 
     &:hover {
-      background: var(--manti-glass-tint-strong);
+      background: var(--manti-panel-tint-strong);
     }
 
     &:focus-visible {

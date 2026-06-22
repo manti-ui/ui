@@ -43,7 +43,7 @@ export const meta: ComponentMeta = {
       part: 'positioner',
       description: 'Positions the floating panel at the pointer.',
     },
-    { part: 'content', description: 'The frosted menu panel.' },
+    { part: 'content', description: 'The translucent menu panel.' },
     { part: 'item', description: 'A selectable command.' },
     { part: 'item-icon', description: 'A leading icon on a command.' },
     { part: 'item-text', description: 'The command label.' },

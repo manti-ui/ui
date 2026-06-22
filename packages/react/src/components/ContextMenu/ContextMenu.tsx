@@ -27,7 +27,7 @@ export interface ContextMenuProps {
  * A right-click (or long-press) context menu backed by the same Zag.js menu
  * machine as {@link Menu}, opened at the pointer via its context trigger. The
  * machine owns keyboard navigation, typeahead, positioning, and dismissal; this
- * adapter wraps the target region and renders the frosted panel through a portal.
+ * adapter wraps the target region and renders the translucent panel through a portal.
  * It reuses the `menu` style scope, so its panel matches the dropdown menu.
  */
 export function ContextMenu({

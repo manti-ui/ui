@@ -54,10 +54,10 @@
     justify-content: center;
     width: 2.25rem;
     height: 2.25rem;
-    background: var(--manti-glass-tint);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-full);
     color: var(--manti-text);
     cursor: pointer;

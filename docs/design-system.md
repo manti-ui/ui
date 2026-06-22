@@ -81,8 +81,8 @@ accent: emphasis is carried by neutral light/dark (a top-lit rim, a neutral
 focus ring, near-white/near-black solids), and color appears only through the
 semantic tones. Floating surfaces — cards, tooltips, the field control — are a
 **translucent panel**: a light `backdrop-filter: blur() saturate()`, a hairline
-border, a top-lit rim catching the light, and a soft, deep shadow. This frosted
-glass is the **pervasive** material: it also carries soft buttons, soft badges,
+border, a top-lit rim catching the light, and a soft, deep shadow. This translucent
+panel is the **pervasive** material: it also carries soft buttons, soft badges,
 soft alerts, toggles, accordions, and collapsibles. Only **solid** fills (which
 gain nothing from a blur) and the tiny form marks (checkbox, radio, switch) stay
 crisp. Solid buttons invert the theme by default (near-white on dark, near-black
@@ -97,14 +97,14 @@ tones for badges, alerts, and the like.
 Retune the whole material from one place:
 
 ```
---manti-glass-tint          --manti-glass-border        --manti-glass-shadow
---manti-glass-tint-strong    --manti-glass-highlight      --manti-glass-shadow-color
---manti-glass-blur          --manti-ambient-1 … 3
+--manti-panel-tint          --manti-panel-border        --manti-panel-shadow
+--manti-panel-tint-strong    --manti-panel-highlight      --manti-panel-shadow-color
+--manti-panel-blur          --manti-ambient-1 … 3
 ```
 
-Use the `.manti-glass` helper to give your own floating surfaces (menus, sheets,
+Use the `.manti-panel` helper to give your own floating surfaces (menus, sheets,
 command palettes) the same material. Where `backdrop-filter` is unsupported,
-every glass surface falls back to an opaque token surface automatically.
+every panel surface falls back to an opaque token surface automatically.
 
 ## Scales
 
@@ -112,7 +112,7 @@ every glass surface falls back to an opaque token surface automatically.
 - **Spacing** — `--manti-space-0 … 16` on a 4px grid.
 - **Type** — `--manti-text-xs … 5xl`, weights `regular`–`bold`, Inter.
 - **Elevation** — `--manti-shadow-sm | md | lg`, soft and warm-tinted, plus the
-  layered `--manti-glass-shadow` for floating glass.
+  layered `--manti-panel-shadow` for floating panels.
 - **Motion** — `--manti-ease-smooth` (default), `--manti-ease-soft`, plus the
   expressive `--manti-ease-spring` / `--manti-ease-bounce` curves, with
   `--manti-duration-fast | base | slow | slower`. Honors

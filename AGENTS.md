@@ -19,7 +19,7 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    `packages/styles/src/tokens.css` (the `@tokens:generated` region) by
    `pnpm gen:tokens`. Never hand-edit that region; after changing the contract,
    regenerate it — the styles build fails if it is stale. The theme-aware roles
-   (`light-dark()` surfaces/text/elevation/glass) and the tonal `--tone-*`
+   (`light-dark()` surfaces/text/elevation/panel) and the tonal `--tone-*`
    vocabulary below the region stay hand-authored. Tokens form three tiers:
    primitive ramps → semantic roles/tones → **component tokens**
    (`--manti-{component}-{property}`, public and semver-stable, each defaulting

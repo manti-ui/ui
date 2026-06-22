@@ -1,5 +1,5 @@
 /**
- * Toast — backed by the Zag.js toast machines. A portalled stack of frosted
+ * Toast — backed by the Zag.js toast machines. A portalled stack of translucent
  * panels. The group machine sets the stacking transforms (`--x`, `--y`,
  * `--scale`, `--opacity`, `--z-index`, `--height`) inline; the component layer
  * only animates and skins them. The toast type maps to a `data-tone`, so the
@@ -41,16 +41,16 @@
     background: color-mix(
       in oklab,
       var(--tone-soft-bg) 26%,
-      var(--manti-glass-tint-strong)
+      var(--manti-panel-tint-strong)
     );
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid
-      color-mix(in oklab, var(--tone-border) 55%, var(--manti-glass-border));
+      color-mix(in oklab, var(--tone-border) 55%, var(--manti-panel-border));
     border-radius: var(--manti-radius-md);
     box-shadow:
-      inset 0 1px 0 0 var(--manti-glass-highlight),
-      var(--manti-glass-shadow);
+      inset 0 1px 0 0 var(--manti-panel-highlight),
+      var(--manti-panel-shadow);
     color: var(--manti-text);
 
     /* Semantic accent edge on the inline-start. */

@@ -64,8 +64,8 @@
     justify-content: center;
     width: var(--manti-steps-indicator-size);
     height: var(--manti-steps-indicator-size);
-    background: var(--manti-glass-tint);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-full);
     color: var(--manti-text-muted);
     font-size: var(--manti-text-sm);

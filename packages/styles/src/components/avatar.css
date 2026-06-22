@@ -16,7 +16,7 @@
     height: var(--manti-avatar-size);
     overflow: hidden;
     background: var(--manti-surface-sunken);
-    border: 1px solid var(--manti-glass-border);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-full);
     color: var(--manti-text-muted);
     font-size: calc(var(--manti-avatar-size) * 0.4);

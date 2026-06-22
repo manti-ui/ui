@@ -1,7 +1,7 @@
 /**
  * Drawer — a panel that slides in from a screen edge, backed by the same Zag.js
  * dialog machine as Dialog (focus trap, scroll lock, dismissal). It reuses the
- * dialog anatomy under a `drawer` scope: the positioner pins the frosted content
+ * dialog anatomy under a `drawer` scope: the positioner pins the translucent content
  * to the chosen edge (`data-placement`) and the content slides in on open.
  */
 @layer manti.components {
@@ -35,12 +35,12 @@
     flex-direction: column;
     gap: var(--manti-space-3);
     padding: var(--manti-space-6);
-    background: var(--manti-glass-tint-strong);
-    -webkit-backdrop-filter: var(--manti-glass-blur);
-    backdrop-filter: var(--manti-glass-blur);
-    border: 1px solid var(--manti-glass-border);
+    background: var(--manti-panel-tint-strong);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
     color: var(--manti-text);
-    box-shadow: var(--manti-glass-shadow);
+    box-shadow: var(--manti-panel-shadow);
 
     &[data-size='sm'] {
       --manti-drawer-size: 18rem;

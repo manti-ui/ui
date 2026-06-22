@@ -262,13 +262,13 @@ importers:
   packages/react:
     dependencies:
       '@manti-ui/folds':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../folds
       '@manti-ui/styles':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../styles
       '@manti-ui/tokens':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../tokens
       '@zag-js/react':
         specifier: ^1.41.2
@@ -284,7 +284,7 @@ importers:
   packages/styles:
     dependencies:
       '@manti-ui/tokens':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../tokens
 
   packages/tokens: {}

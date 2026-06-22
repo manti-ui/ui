@@ -92,7 +92,7 @@ export const meta: ComponentMeta = {
       description: 'The button that toggles the listbox open.',
     },
     { part: 'positioner', description: 'Positions the floating listbox.' },
-    { part: 'content', description: 'The frosted listbox panel.' },
+    { part: 'content', description: 'The translucent listbox panel.' },
     { part: 'item', description: 'A selectable option.' },
     {
       part: 'item-indicator',

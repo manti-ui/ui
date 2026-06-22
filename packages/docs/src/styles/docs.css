@@ -23,9 +23,9 @@
     --docs-prose-max: 48rem;
     --docs-gutter: var(--manti-space-6);
 
-    /* A much more see-through frosted tint than --manti-glass-tint (which sits
+    /* A much more see-through translucent tint than --manti-panel-tint (which sits
        at ~0.55 alpha), tuned for the sticky header so content reads through it.
-       Authored as light-dark like the Manti glass tokens themselves. */
+       Authored as light-dark like the Manti panel tokens themselves. */
     --docs-nav-bg: light-dark(
       oklch(0.99 0.002 280 / 0.42),
       oklch(0.17 0.008 280 / 0.42)
@@ -53,7 +53,7 @@
     min-height: 100dvh;
   }
 
-  /* ---- Top navigation (frosted glass, mirrors the Manti signature) ---- */
+  /* ---- Top navigation (translucent panel, mirrors the Manti signature) ---- */
   .docs-nav {
     position: sticky;
     top: 0;
@@ -64,13 +64,13 @@
     height: var(--docs-nav-h);
     padding-inline: var(--docs-gutter);
     background: var(--docs-nav-bg);
-    /* -webkit first, then unprefixed — matches the Manti glass components.
+    /* -webkit first, then unprefixed — matches the Manti panel components.
        The reverse order makes Lightning CSS drop the unprefixed property, and
        Chrome/Firefox don't apply `-webkit-backdrop-filter` with a var() value,
        so the blur silently disappears. */
     -webkit-backdrop-filter: var(--docs-nav-blur);
     backdrop-filter: var(--docs-nav-blur);
-    border-bottom: 1px solid var(--manti-glass-border);
+    border-bottom: 1px solid var(--manti-panel-border);
   }
 
   .docs-brand {

@@ -13,7 +13,7 @@ export default function DialogSizes() {
           title={`Size ${size}`}
           description="The width preset changes the panel's maximum width."
         >
-          Each preset keeps the same frosted panel anatomy, only wider or
+          Each preset keeps the same translucent panel anatomy, only wider or
           narrower.
         </Dialog>
       ))}

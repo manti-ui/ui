@@ -69,7 +69,7 @@ export const meta: ComponentMeta = {
     { part: 'input', description: 'The text input for typed dates.' },
     { part: 'trigger', description: 'The button that opens the calendar.' },
     { part: 'positioner', description: 'Positions the floating calendar.' },
-    { part: 'content', description: 'The frosted calendar panel.' },
+    { part: 'content', description: 'The translucent calendar panel.' },
     {
       part: 'view-control',
       description: 'The month header with prev/next navigation.',

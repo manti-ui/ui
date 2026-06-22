@@ -7,7 +7,7 @@
   [data-scope='splitter'][data-part='root'] {
     display: flex;
     width: 100%;
-    border: 1px solid var(--manti-glass-border);
+    border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
     overflow: hidden;
 
@@ -26,7 +26,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--manti-glass-border);
+    background: var(--manti-panel-border);
     transition: background var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &[data-orientation='horizontal'] {

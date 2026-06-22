@@ -54,12 +54,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
-/** Frosted-glass segmented control: a glass track with a sliding glass thumb. */
+/** Translucent segmented control: a translucent track with a sliding translucent thumb. */
 export const Pill: Story = {
   args: { variant: 'pill' },
 };
 
-/** A frosted-glass pill on the active tab, with no enclosing track. */
+/** A translucent pill on the active tab, with no enclosing track. */
 export const Soft: Story = {
   args: { variant: 'soft' },
 };

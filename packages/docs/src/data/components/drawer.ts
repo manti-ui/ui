@@ -73,7 +73,7 @@ export const meta: ComponentMeta = {
     { part: 'trigger', description: 'The cloned opener element.' },
     { part: 'backdrop', description: 'The dimmed scrim.' },
     { part: 'positioner', description: 'Anchors the content to the edge.' },
-    { part: 'content', description: 'The frosted sliding panel.' },
+    { part: 'content', description: 'The translucent sliding panel.' },
     { part: 'title', description: 'The heading.' },
     { part: 'description', description: 'Supporting copy.' },
     { part: 'body', description: 'The main content region.' },

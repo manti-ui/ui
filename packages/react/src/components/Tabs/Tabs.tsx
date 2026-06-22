@@ -23,8 +23,8 @@ export interface TabsProps {
   /**
    * Visual style.
    * - `line` (default): a rail under the active tab.
-   * - `pill`: a frosted-glass segmented control with a sliding glass thumb.
-   * - `soft`: a frosted-glass pill on the active tab, no enclosing track.
+   * - `pill`: a translucent segmented control with a sliding translucent thumb.
+   * - `soft`: a translucent pill on the active tab, no enclosing track.
    */
   variant?: TabsVariant;
   /** Active tone for the selected tab and indicator. */

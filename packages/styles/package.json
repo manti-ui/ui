@@ -1,7 +1,21 @@
 {
   "name": "@manti-ui/styles",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Framework-agnostic CSS for Manti UI.",
+  "license": "MIT",
+  "homepage": "https://manti.design",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manti-ui/ui.git",
+    "directory": "packages/styles"
+  },
+  "keywords": [
+    "design-system",
+    "css",
+    "design-tokens",
+    "tailwind",
+    "ui"
+  ],
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -35,6 +49,22 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      },
+      "./index.css": "./dist/index.css",
+      "./tokens.css": "./dist/tokens.css",
+      "./tailwind.css": "./dist/tailwind.css",
+      "./tailwind-theme.css": "./dist/tailwind-theme.css"
+    },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
   "scripts": {
     "gen:tokens": "node scripts/gen-tokens-css.mjs",
     "gen:tokens:check": "node scripts/gen-tokens-css.mjs --check",
@@ -44,6 +74,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@manti-ui/tokens": "workspace:*"
+    "@manti-ui/tokens": "workspace:^"
   }
 }

@@ -1,7 +1,21 @@
 {
   "name": "@manti-ui/folds",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Framework-agnostic Zag.js behavior contracts for Manti UI.",
+  "license": "MIT",
+  "homepage": "https://manti.design",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manti-ui/ui.git",
+    "directory": "packages/folds"
+  },
+  "keywords": [
+    "design-system",
+    "zag-js",
+    "state-machine",
+    "headless",
+    "ui"
+  ],
   "type": "module",
   "sideEffects": false,
   "files": [
@@ -17,6 +31,18 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
   "scripts": {
     "build": "vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit"

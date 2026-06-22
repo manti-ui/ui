@@ -56,7 +56,7 @@ export interface DialogProps {
 
 /**
  * A modal surface backed by the Zag.js dialog machine. The machine owns focus
- * trapping, scroll locking, and dismissal; this adapter renders the frosted
+ * trapping, scroll locking, and dismissal; this adapter renders the translucent
  * panel anatomy through a portal.
  */
 export function Dialog({
