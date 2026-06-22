@@ -18,13 +18,13 @@
  *    (tone'lar bu ramp'lardan beslendiği için renk her yere yayılır)
  * ═══════════════════════════════════════════════════════════════════════════ */
 :root {
-  /* "paprika" Manti'nin primary ramp'i. Kendi marka renginle ez. */
-  --manti-paprika-100: oklch(0.94 0.03 275);
-  --manti-paprika-200: oklch(0.89 0.06 275);
-  --manti-paprika-300: oklch(0.82 0.09 275);
-  --manti-paprika-500: oklch(0.62 0.19 275);
-  --manti-paprika-600: oklch(0.55 0.2 275);
-  --manti-paprika-700: oklch(0.46 0.17 275);
+  /* "orange" Manti'nin primary ramp'i. Kendi marka renginle ez. */
+  --manti-orange-100: oklch(0.94 0.03 275);
+  --manti-orange-200: oklch(0.89 0.06 275);
+  --manti-orange-300: oklch(0.82 0.09 275);
+  --manti-orange-500: oklch(0.62 0.19 275);
+  --manti-orange-600: oklch(0.55 0.2 275);
+  --manti-orange-700: oklch(0.46 0.17 275);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -50,7 +50,7 @@
 
   /* Tipografi & motion */
   --manti-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --manti-focus-ring: var(--manti-paprika-500);
+  --manti-focus-ring: var(--manti-orange-500);
   --manti-duration-base: 180ms;
 }
 
@@ -111,5 +111,5 @@
  *   <Button className="my-cta">…</Button>
  */
 .my-cta {
-  box-shadow: 0 8px 24px -8px var(--manti-paprika-600);
+  box-shadow: 0 8px 24px -8px var(--manti-orange-600);
 }

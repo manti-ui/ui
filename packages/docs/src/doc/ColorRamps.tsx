@@ -1,7 +1,7 @@
 import { Card } from '@manti-ui/react';
 import { colorPrimitives, tones } from '@manti-ui/tokens';
 
-/** Renders every primitive ramp (dough, paprika, herb, sumac, chili, broth). */
+/** Renders every primitive ramp (gray, orange, green, amber, red, blue). */
 export function ColorRamps() {
   return (
     <div>

@@ -36,14 +36,14 @@ export const OnTone: Story = {
         gap: '1.5rem',
         padding: '1.5rem',
         borderRadius: '14px',
-        color: 'var(--manti-paprika-500)',
+        color: 'var(--manti-orange-500)',
       }}
     >
       <Spinner />
-      <span style={{ color: 'var(--manti-herb-500)' }}>
+      <span style={{ color: 'var(--manti-green-500)' }}>
         <Spinner />
       </span>
-      <span style={{ color: 'var(--manti-broth-500)' }}>
+      <span style={{ color: 'var(--manti-blue-500)' }}>
         <Spinner />
       </span>
     </div>

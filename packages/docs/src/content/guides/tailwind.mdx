@@ -45,14 +45,14 @@ The packaged file pins the layer order to
 
 Token overrides work identically here. An unlayered `:root` block beats Manti's
 `manti.tokens` layer, and because the bridge resolves utilities to
-`var(--manti-*)` at runtime, utilities like `bg-surface` and `rounded-manti-lg`
+`var(--manti-*)` at runtime, utilities like `bg-surface` and `rounded-lg`
 follow your overrides automatically:
 
 ```css
 :root {
-  /* Primitive ramp (primary = paprika). */
-  --manti-paprika-500: oklch(0.62 0.19 275);
-  --manti-paprika-600: oklch(0.55 0.2 275);
+  /* Primitive ramp (primary = orange). */
+  --manti-orange-500: oklch(0.62 0.19 275);
+  --manti-orange-600: oklch(0.55 0.2 275);
 
   /* Semantic roles — keep light-dark() form. */
   --manti-bg: light-dark(#fafafb, #0c0c10);
@@ -62,7 +62,7 @@ follow your overrides automatically:
 
   --manti-radius-md: 6px;
   --manti-radius-lg: 10px;
-  --manti-focus-ring: var(--manti-paprika-500);
+  --manti-focus-ring: var(--manti-orange-500);
 }
 
 /* A custom tone — <Button tone="brand">. */
@@ -79,27 +79,38 @@ follow your overrides automatically:
 
 ## The theme bridge
 
-`tailwind-theme.css` (included in `tailwind.css`) maps Manti tokens to Tailwind
-theme variables with `@theme inline`, so generated utilities reference the
-underlying `var(--manti-*)` at runtime — they follow `light-dark()` and
-`data-theme` switches for free.
+`tailwind-theme.css` (included in `tailwind.css`) binds the **entire** Manti
+token contract onto Tailwind's own theme namespaces with `@theme inline`, so
+generated utilities reference the underlying `var(--manti-*)` at runtime — they
+follow `light-dark()` and `data-theme` switches for free. This is a **full
+takeover**: Manti's values override Tailwind's defaults of the same name, so the
+standard utilities you already know resolve to Manti tokens.
 
-| Utility example                       | Resolves to                  |
-| ------------------------------------- | ---------------------------- |
-| `bg-surface`, `text-text-muted`       | semantic surface/text tokens |
-| `border-border`, `ring-ring`          | semantic border/focus tokens |
-| `bg-paprika-500`, `text-herb-700`     | primitive ramps              |
-| `bg-primary-600`                      | semantic ramp aliases        |
-| `rounded-manti-lg`, `shadow-manti-md` | Manti radius/elevation       |
-| `ease-spring`, `ease-bounce`          | Manti expressive curves      |
+| Utility example                              | Resolves to                  |
+| -------------------------------------------- | ---------------------------- |
+| `bg-surface`, `text-text-muted`              | semantic surface/text tokens |
+| `border-border`, `ring-ring`                 | semantic border/focus tokens |
+| `bg-orange-500`, `text-red-700`              | primitive ramps (plain names)|
+| `bg-primary-600`, `border-danger-300`        | semantic ramp aliases        |
+| `text-lg`, `font-semibold`, `leading-normal` | typography scale             |
+| `rounded-lg`, `shadow-md`                    | Manti radius/elevation       |
+| `p-4`, `gap-2`, `h-control-md`               | spacing & control height     |
+| `ease-spring`, `ease-bounce`                 | Manti expressive curves      |
 
-Spacing needs no bridge: Manti's 4px grid equals Tailwind's default `--spacing`,
-so `p-4` and `var(--manti-space-4)` already agree. You can add your own `@theme`
-tokens that reference Manti's, keeping a single source of truth:
+A few token families have no Tailwind theme namespace to take over: named
+transition **durations** and **z-index** are reachable through arbitrary values
+(`duration-[var(--manti-duration-base)]`, `z-[var(--manti-z-modal)]`), and
+**breakpoints** are bound with literal values (CSS media queries can't read
+custom properties).
+
+Spacing is bound at its base unit — `--spacing` resolves to Manti's
+`--manti-space-1` (the 4px grid) — so every numeric utility (`p-4`, `gap-2`)
+derives from the token. You can also add your own `@theme` tokens that reference
+Manti's, keeping a single source of truth:
 
 ```css
 @theme {
-  --color-brand: var(--manti-paprika-600); /* → bg-brand, text-brand */
+  --color-brand: var(--manti-orange-600); /* → bg-brand, text-brand */
   --radius-pill: 100px; /* → rounded-pill */
 }
 ```
@@ -110,7 +121,7 @@ targets them natively:
 
 ```tsx
 // Token-aware utilities from the bridge.
-<Card className="bg-surface border-border text-text rounded-manti-lg" />
+<Card className="bg-surface border-border text-text rounded-lg" />
 <Button tone="brand">Save</Button>
 
 // Component-specific visual overrides win (utilities layer is above manti).

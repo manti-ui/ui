@@ -82,7 +82,7 @@
   }
 
   /* Card — interactive cards lift higher and cast a tonal glow. Cards carry no
-     tone, so the glow falls back to the signature paprika. */
+     tone, so the glow falls back to the signature orange. */
   [data-motion='full'] [data-scope='card'][data-part='root'] {
     transition:
       transform var(--manti-duration-base) var(--manti-ease-spring),
@@ -97,7 +97,7 @@
         0 18px 40px -16px
           color-mix(
             in oklab,
-            var(--tone-solid, var(--manti-paprika-500)) 35%,
+            var(--tone-solid, var(--manti-orange-500)) 35%,
             transparent
           );
     }

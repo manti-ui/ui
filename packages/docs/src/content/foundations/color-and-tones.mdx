@@ -18,23 +18,23 @@ Six ramps run from `50` to `950`, each authored in **OKLCH** so steps are
 perceptually even — equal jumps in lightness look equal to the eye, and hues stay
 stable across the scale. These values are fixed and identical in light and dark.
 
-| Ramp      | Role    | Reference      |
-| --------- | ------- | -------------- |
-| `dough`   | neutral | warm dough     |
-| `paprika` | primary | paprika sauce  |
-| `herb`    | success | parsley / mint |
-| `sumac`   | warning | golden sumac   |
-| `chili`   | danger  | hot chili      |
-| `broth`   | info    | calm broth     |
+| Ramp     | Role    | Reference    |
+| -------- | ------- | ------------ |
+| `gray`   | neutral | warm neutral |
+| `orange` | primary | warm orange  |
+| `green`  | success | fresh green  |
+| `amber`  | warning | golden amber |
+| `red`    | danger  | hot red      |
+| `blue`   | info    | calm blue    |
 
-Each step is a `--manti-{ramp}-{step}` custom property — `--manti-paprika-500`,
-`--manti-dough-950`, and so on.
+Each step is a `--manti-{ramp}-{step}` custom property — `--manti-orange-500`,
+`--manti-gray-950`, and so on.
 
 <ColorRamps />
 
 Per the [design signature](/foundations/design-signature), these ramps never
 appear as gradients or a brand accent. They feed the semantic tones below, and
-the warm `dough` ramp also backs the cool monochrome surfaces and text.
+the warm `gray` ramp also backs the cool monochrome surfaces and text.
 
 ## The six semantic tones
 
@@ -42,12 +42,12 @@ Tonal components — Button, Badge, Alert, Switch, and friends — never hard-co
 hue. They set a `data-tone` and read a small, uniform vocabulary of `--tone-*`
 variables. Manti UI ships six built-in tones:
 
-- `primary` — paprika, the signature accent
+- `primary` — orange, the signature accent
 - `neutral` — the default; its solid inverts the theme
-- `success` — herb green
-- `warning` — sumac amber
-- `danger` — chili red
-- `info` — broth blue
+- `success` — green
+- `warning` — amber
+- `danger` — red
+- `info` — blue
 
 <ToneGallery />
 

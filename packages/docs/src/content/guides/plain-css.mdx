@@ -66,21 +66,21 @@ altitude that does the job, and prefer redefining tokens over hand-writing rules
 
 | Tier              | Example                             | Scope                            |
 | ----------------- | ----------------------------------- | -------------------------------- |
-| 1 — primitive     | `--manti-paprika-500`               | the raw palette / scales         |
+| 1 — primitive     | `--manti-orange-500`               | the raw palette / scales         |
 | 2 — semantic      | `--manti-radius-md`, `--tone-solid` | purpose-based roles              |
 | 3 — **component** | `--manti-button-radius`             | one component's structural knobs |
 
 ### Recolor a primitive ramp
 
 The primitive ramps feed the tones, so redefining one rebrands the palette
-everywhere it surfaces. `paprika` is Manti's primary ramp:
+everywhere it surfaces. `orange` is Manti's primary ramp:
 
 ```css
 :root {
-  --manti-paprika-100: oklch(0.94 0.03 275);
-  --manti-paprika-500: oklch(0.62 0.19 275);
-  --manti-paprika-600: oklch(0.55 0.2 275);
-  --manti-paprika-700: oklch(0.46 0.17 275);
+  --manti-orange-100: oklch(0.94 0.03 275);
+  --manti-orange-500: oklch(0.62 0.19 275);
+  --manti-orange-600: oklch(0.55 0.2 275);
+  --manti-orange-700: oklch(0.46 0.17 275);
 }
 ```
 
@@ -102,7 +102,7 @@ component consistently. Keep color roles in `light-dark(light, dark)` form so th
   --manti-radius-lg: 10px;
 
   --manti-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --manti-focus-ring: var(--manti-paprika-500);
+  --manti-focus-ring: var(--manti-orange-500);
 }
 ```
 

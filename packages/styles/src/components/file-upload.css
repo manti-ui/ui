@@ -119,7 +119,7 @@
     transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
-      color: light-dark(var(--manti-chili-600), var(--manti-chili-400));
+      color: light-dark(var(--manti-red-600), var(--manti-red-400));
     }
   }
 }

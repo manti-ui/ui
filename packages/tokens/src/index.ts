@@ -4,8 +4,9 @@
  * Framework-agnostic design token contract for Manti UI.
  *
  * The metaphor is mantı: a dish that appears in many regions and forms. The
- * palette is built from warm, edible references — dough, paprika, herbs, sumac,
- * chili, and broth — expressed as perceptually-smooth OKLCH ramps.
+ * palette is warm-tinted — a neutral `gray` plus `orange`, `green`, `amber`,
+ * `red`, and `blue` — expressed as perceptually-smooth OKLCH ramps under plain,
+ * universally understood color names.
  *
  * This module is the typed source of truth. Its primitive ramps and scale
  * values are generated into the `--manti-*` custom properties of
@@ -16,8 +17,8 @@
 
 /** Primitive color ramps. Fixed values, identical in light and dark themes. */
 export const colorPrimitives = {
-  /** Warm neutral. The doughy backbone of every surface and text color. */
-  dough: {
+  /** Warm neutral. The backbone of every surface and text color. */
+  gray: {
     50: 'oklch(0.985 0.004 80)',
     100: 'oklch(0.968 0.006 80)',
     200: 'oklch(0.934 0.008 78)',
@@ -30,8 +31,8 @@ export const colorPrimitives = {
     900: 'oklch(0.268 0.01 64)',
     950: 'oklch(0.196 0.008 62)',
   },
-  /** Primary. Warm paprika red-orange — the signature Manti UI accent. */
-  paprika: {
+  /** Primary. Warm orange — the signature Manti UI accent. */
+  orange: {
     50: 'oklch(0.972 0.018 50)',
     100: 'oklch(0.94 0.04 48)',
     200: 'oklch(0.888 0.072 46)',
@@ -44,8 +45,8 @@ export const colorPrimitives = {
     900: 'oklch(0.35 0.092 34)',
     950: 'oklch(0.262 0.064 33)',
   },
-  /** Success. Fresh herb green — parsley and mint. */
-  herb: {
+  /** Success. Fresh green. */
+  green: {
     50: 'oklch(0.972 0.022 150)',
     100: 'oklch(0.94 0.044 151)',
     200: 'oklch(0.89 0.072 152)',
@@ -58,8 +59,8 @@ export const colorPrimitives = {
     900: 'oklch(0.32 0.062 159)',
     950: 'oklch(0.238 0.044 160)',
   },
-  /** Warning. Golden sumac amber. */
-  sumac: {
+  /** Warning. Golden amber. */
+  amber: {
     50: 'oklch(0.978 0.022 85)',
     100: 'oklch(0.952 0.046 83)',
     200: 'oklch(0.908 0.082 80)',
@@ -72,8 +73,8 @@ export const colorPrimitives = {
     900: 'oklch(0.382 0.074 62)',
     950: 'oklch(0.286 0.054 60)',
   },
-  /** Danger. Hot chili red. */
-  chili: {
+  /** Danger. Hot red. */
+  red: {
     50: 'oklch(0.971 0.018 25)',
     100: 'oklch(0.936 0.04 24)',
     200: 'oklch(0.882 0.074 23)',
@@ -86,8 +87,8 @@ export const colorPrimitives = {
     900: 'oklch(0.352 0.115 27)',
     950: 'oklch(0.262 0.078 26)',
   },
-  /** Info. Smooth, calm broth blue. */
-  broth: {
+  /** Info. Smooth, calm blue. */
+  blue: {
     50: 'oklch(0.974 0.014 235)',
     100: 'oklch(0.94 0.03 236)',
     200: 'oklch(0.89 0.054 237)',
@@ -268,7 +269,6 @@ export const zIndex = {
 export const componentTokens = {
   button: ['radius', 'height', 'padding-x', 'font-size', 'gap'],
   switch: ['track-width', 'track-height', 'track-padding'],
-  'angle-slider': ['size'],
   avatar: ['size'],
   badge: ['font-size', 'padding-x', 'padding-y'],
   carousel: ['viewport-height'],
@@ -278,6 +278,7 @@ export const componentTokens = {
   combobox: ['height', 'content-max-height'],
   'date-picker': ['height'],
   dialog: ['max-width'],
+  drawer: ['size'],
   editable: ['height'],
   field: ['height', 'padding-x'],
   'floating-panel': ['min-width', 'min-height'],
@@ -292,6 +293,8 @@ export const componentTokens = {
   popover: ['max-width'],
   progress: ['track-height', 'circle-size'],
   'rating-group': ['size'],
+  'scroll-area': ['size'],
+  'segmented-control': ['height', 'padding-x'],
   select: ['height', 'content-max-height'],
   'signature-pad': ['height'],
   slider: ['thumb-size', 'track-size', 'length'],
