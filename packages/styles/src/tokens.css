@@ -256,8 +256,8 @@
       oklch(0.2 0.008 280 / 0.55)
     );
     --manti-panel-tint-strong: light-dark(
-      oklch(0.995 0.0015 280 / 0.86),
-      oklch(0.22 0.009 280 / 0.82)
+      oklch(0.995 0.0015 280 / 0.94),
+      oklch(0.22 0.009 280 / 0.93)
     );
     --manti-panel-blur: blur(12px) saturate(140%);
     --manti-panel-border: light-dark(
