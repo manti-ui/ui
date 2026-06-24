@@ -271,7 +271,7 @@ export const componentTokens = {
   switch: ['track-width', 'track-height', 'track-padding'],
   avatar: ['size'],
   badge: ['font-size', 'padding-x', 'padding-y'],
-  carousel: ['viewport-height'],
+  carousel: ['viewport-height', 'slide-gap'],
   checkbox: ['size'],
   clipboard: ['height'],
   'color-picker': ['height', 'panel-width', 'area-height'],

@@ -4,14 +4,21 @@
  */
 @layer manti.components {
   [data-scope='carousel'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-carousel-slide-gap: var(--manti-space-3);
+
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-3);
   }
 
+  /* Gap between slides comes from Zag's `spacing` machine prop (wired to
+     --manti-carousel-slide-gap in the renderer): Zag inline-sets the flex `gap`
+     AND subtracts the same value from each slide's width, so a plain CSS `gap`
+     here would be overridden and break the width math. Override the gap only
+     through the component token. */
   [data-scope='carousel'][data-part='item-group'] {
     display: flex;
-    gap: var(--manti-space-3);
     overflow: hidden;
 
     &[data-orientation='vertical'] {
