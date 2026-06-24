@@ -107,18 +107,20 @@
   }
 
   [data-scope='combobox'][data-part='positioner'] {
-    z-index: var(--manti-z-popover);
+    z-index: var(--manti-z-popover) !important;
   }
 
-  [data-scope='combobox'][data-part='content'] {
+  /* The listbox scrolls inside a Manti ScrollArea (auto-hiding, grabbable
+     thumb). The frosted panel frame lives on the scroll-area root; the height
+     bound goes on the viewport (the actual scroll container — `height: 100%`
+     can't resolve against a max-height-only root, so the bound must sit on the
+     element that scrolls). The `ul` just lays out the items. Zag's keyboard
+     scroll-into-view is rewired via `scrollToIndexFn` in the React adapter. */
+  [data-scope='combobox'][data-part='positioner']
+    [data-scope='scroll-area'][data-part='root'] {
     --manti-combobox-content-max-height: 18rem;
 
-    display: flex;
-    flex-direction: column;
-    gap: var(--manti-space-1);
-    max-height: var(--manti-combobox-content-max-height);
-    overflow-y: auto;
-    padding: var(--manti-space-2);
+    width: 100%;
     background: var(--manti-panel-tint-strong);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
@@ -127,20 +129,37 @@
     box-shadow:
       inset 0 1px 0 0 var(--manti-panel-highlight),
       var(--manti-panel-shadow);
+  }
+
+  [data-scope='combobox'][data-part='positioner']
+    [data-scope='scroll-area'][data-part='viewport'] {
+    max-height: var(--manti-combobox-content-max-height);
+  }
+
+  /* No matches → the `ul` renders empty; hide the whole panel. */
+  [data-scope='combobox'][data-part='positioner']
+    [data-scope='scroll-area'][data-part='root']:has(
+      [data-part='content']:empty
+    ) {
+    display: none;
+  }
+
+  [data-scope='combobox'][data-part='content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-1);
+    padding: var(--manti-space-2);
 
     &:focus-visible {
       outline: none;
-    }
-
-    &:empty {
-      display: none;
     }
   }
 
   @supports not (
     (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
   ) {
-    [data-scope='combobox'][data-part='content'] {
+    [data-scope='combobox'][data-part='positioner']
+      [data-scope='scroll-area'][data-part='root'] {
       background: var(--manti-surface-raised);
     }
   }

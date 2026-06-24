@@ -6,6 +6,7 @@ import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
+import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 export interface ComboboxItem {
   value: string;
@@ -104,6 +105,11 @@ export function Combobox({
     required,
     name,
     positioning: { placement, sameWidth: true },
+    // The listbox scrolls inside a Manti ScrollArea (the `ul` no longer scrolls
+    // itself), so override Zag's default scroll-into-view: native scrollIntoView
+    // walks up to the ScrollArea viewport — the nearest scrollable ancestor.
+    scrollToIndexFn: (details) =>
+      details.getElement()?.scrollIntoView({ block: 'nearest' }),
     onInputValueChange: (details) => setQuery(details.inputValue),
     onValueChange: onValueChange
       ? (details) => onValueChange(details.value)
@@ -136,14 +142,16 @@ export function Combobox({
       </div>
       <Portal>
         <div {...api.getPositionerProps()}>
-          <ul {...api.getContentProps()}>
-            {filtered.map((item) => (
-              <li key={item.value} {...api.getItemProps({ item })}>
-                <span {...api.getItemTextProps({ item })}>{item.label}</span>
-                <span {...api.getItemIndicatorProps({ item })}>{check}</span>
-              </li>
-            ))}
-          </ul>
+          <ScrollArea focusable={false}>
+            <ul {...api.getContentProps()}>
+              {filtered.map((item) => (
+                <li key={item.value} {...api.getItemProps({ item })}>
+                  <span {...api.getItemTextProps({ item })}>{item.label}</span>
+                  <span {...api.getItemIndicatorProps({ item })}>{check}</span>
+                </li>
+              ))}
+            </ul>
+          </ScrollArea>
         </div>
       </Portal>
     </div>
