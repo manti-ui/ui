@@ -232,6 +232,12 @@
     --manti-focus-ring-width: 3px;
     --manti-focus-ring-offset: 2px;
 
+    /* Text selection — the one deliberate brand-coloured accent (consumed by
+       `::selection` in base.css). Hand-authored, not part of the generated
+       region above. */
+    --manti-selection-bg: var(--manti-orange-500);
+    --manti-selection-text: var(--manti-gray-950);
+
     /* Elevation ---------------------------------------------------------- */
     --manti-shadow-sm: light-dark(
       0 1px 2px -1px oklch(0.2 0.03 280 / 0.1),

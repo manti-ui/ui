@@ -4,7 +4,7 @@
  */
 @layer manti.components {
   [data-scope='menu'][data-part='positioner'] {
-    z-index: var(--manti-z-popover);
+    z-index: var(--manti-z-popover) !important;
   }
 
   [data-scope='menu'][data-part='content'] {

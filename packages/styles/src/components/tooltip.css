@@ -9,7 +9,7 @@
   }
 
   [data-scope='tooltip'][data-part='positioner'] {
-    z-index: var(--manti-z-popover);
+    z-index: var(--manti-z-popover) !important;
   }
 
   [data-scope='tooltip'][data-part='content'] {

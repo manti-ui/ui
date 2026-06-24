@@ -70,7 +70,7 @@
   }
 
   [data-scope='time-picker'][data-part='positioner'] {
-    z-index: var(--manti-z-popover);
+    z-index: var(--manti-z-popover) !important;
   }
 
   [data-scope='time-picker'][data-part='content'] {
