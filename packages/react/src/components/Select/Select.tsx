@@ -6,6 +6,7 @@ import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
+import { ScrollArea } from '../ScrollArea/ScrollArea';
 
 export interface SelectItem {
   value: string;
@@ -99,6 +100,11 @@ export function Select({
     required,
     name,
     positioning: { placement, sameWidth: true },
+    // The listbox scrolls inside a Manti ScrollArea, so override Zag's default
+    // scroll-into-view: native scrollIntoView walks up to the ScrollArea
+    // viewport — the nearest scrollable ancestor.
+    scrollToIndexFn: (details) =>
+      details.getElement()?.scrollIntoView({ block: 'nearest' }),
     onValueChange: onValueChange
       ? (details) => onValueChange(details.value)
       : undefined,
@@ -137,14 +143,16 @@ export function Select({
       </div>
       <Portal>
         <div {...api.getPositionerProps()}>
-          <ul {...api.getContentProps()}>
-            {items.map((item) => (
-              <li key={item.value} {...api.getItemProps({ item })}>
-                <span {...api.getItemTextProps({ item })}>{item.label}</span>
-                <span {...api.getItemIndicatorProps({ item })}>{check}</span>
-              </li>
-            ))}
-          </ul>
+          <ScrollArea focusable={false}>
+            <ul {...api.getContentProps()}>
+              {items.map((item) => (
+                <li key={item.value} {...api.getItemProps({ item })}>
+                  <span {...api.getItemTextProps({ item })}>{item.label}</span>
+                  <span {...api.getItemIndicatorProps({ item })}>{check}</span>
+                </li>
+              ))}
+            </ul>
+          </ScrollArea>
         </div>
       </Portal>
       <select {...api.getHiddenSelectProps()}>

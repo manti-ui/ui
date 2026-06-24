@@ -52,7 +52,7 @@
   }
 
   [data-scope='color-picker'][data-part='positioner'] {
-    z-index: var(--manti-z-popover);
+    z-index: var(--manti-z-popover) !important;
   }
 
   [data-scope='color-picker'][data-part='content'] {
