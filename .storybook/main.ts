@@ -25,6 +25,16 @@ const config: StorybookConfig = {
   async viteFinal(viteConfig) {
     const { mergeConfig } = await import('vite');
     return mergeConfig(viteConfig, {
+      server: {
+        watch: {
+          // Manti packages are symlinked into node_modules, so their source is
+          // reached via `node_modules/@manti-ui/*` — which Vite's watcher
+          // ignores by default. Un-ignore it so edits to packages/*/src HMR live
+          // here without a restart. (The `development` export condition already
+          // serves src, not dist, so no rebuild step is needed.)
+          ignored: ['!**/node_modules/@manti-ui/**'],
+        },
+      },
       css: {
         transformer: 'lightningcss',
         lightningcss: { targets: evergreen },
