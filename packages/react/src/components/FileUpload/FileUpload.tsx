@@ -75,7 +75,9 @@ export function FileUpload({
               {...api.getItemProps({ file })}
             >
               <span {...api.getItemNameProps({ file })}>{file.name}</span>
-              <span {...api.getItemSizeTextProps({ file })} />
+              <span {...api.getItemSizeTextProps({ file })}>
+                {api.getFileSize(file)}
+              </span>
               <button
                 {...api.getItemDeleteTriggerProps({ file })}
                 aria-label={`Remove ${file.name}`}
