@@ -1,0 +1,10 @@
+# Manti UI docs — https://manti.design
+# Public open-source documentation: everything is crawlable.
+User-agent: *
+Allow: /
+
+# Storybook's raw iframe host pages carry no standalone SEO value — keep them
+# out of the index to avoid duplicate, content-less URLs.
+Disallow: /storybook/iframe.html
+
+Sitemap: https://manti.design/sitemap.xml

@@ -12,6 +12,7 @@ import { defineConfig } from 'vite';
 
 import { highlightPlugin } from './src/highlight/vite-plugin-highlight';
 import { searchIndexPlugin } from './src/search/vite-plugin-search';
+import { seoPlugin } from './src/seo/vite-plugin-seo';
 
 // Evergreen browsers that support `light-dark()`, CSS nesting and `color-mix()`
 // natively. Mirrors packages/styles/vite.config.ts and .storybook/main.ts so the
@@ -57,7 +58,19 @@ export default defineConfig({
     react(),
     searchIndexPlugin(),
     highlightPlugin(),
+    seoPlugin(),
   ],
+  server: {
+    watch: {
+      // The Manti packages are symlinked into node_modules, so their source is
+      // reached via a `node_modules/@manti-ui/*` path — which Vite's watcher
+      // ignores by default (`**/node_modules/**`). Un-ignore them so editing
+      // `packages/{styles,react,…}/src` HMRs live here without a restart. The
+      // `development` export condition already serves their src (not dist), so
+      // no rebuild step is needed — only the watcher needs to see the files.
+      ignored: ['!**/node_modules/@manti-ui/**'],
+    },
+  },
   css: {
     transformer: 'lightningcss',
     lightningcss: { targets: evergreen },

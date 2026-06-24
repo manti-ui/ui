@@ -4,11 +4,49 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/manti-favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Search Console ownership (URL-prefix property). Kept OUTSIDE the
+         seo:start/end markers so vite-plugin-seo preserves it on every route. -->
+    <meta
+      name="google-site-verification"
+      content="ArcCKPjRExRfvKesBpEaHuXr9fy3wbbL5NjPDjUaaR8"
+    />
+    <!-- seo:start -->
+    <!-- Managed block: vite-plugin-seo regenerates this per route at build time
+         (see src/seo/vite-plugin-seo.ts). The values below are the home-route
+         baseline used in dev and as the SPA fallback. -->
     <title>Manti UI — a framework-agnostic design system on Zag.js</title>
     <meta
       name="description"
       content="Manti UI is a framework-agnostic design system built on Zag.js behavior machines: sleek monochrome panels, semantic tones, and a token-first customization contract."
     />
+    <link rel="canonical" href="https://manti.design" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Manti UI" />
+    <meta
+      property="og:title"
+      content="Manti UI — a framework-agnostic design system on Zag.js"
+    />
+    <meta
+      property="og:description"
+      content="Manti UI is a framework-agnostic design system built on Zag.js behavior machines: sleek monochrome panels, semantic tones, and a token-first customization contract."
+    />
+    <meta property="og:url" content="https://manti.design" />
+    <meta property="og:image" content="https://manti.design/og-cover.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Manti UI — a framework-agnostic design system on Zag.js"
+    />
+    <meta
+      name="twitter:description"
+      content="Manti UI is a framework-agnostic design system built on Zag.js behavior machines: sleek monochrome panels, semantic tones, and a token-first customization contract."
+    />
+    <meta name="twitter:image" content="https://manti.design/og-cover.png" />
+    <!-- seo:end -->
     <script>
       // No-flash theme init — must run before first paint. Mirrors the Manti
       // theme mechanism used in .storybook/preview.tsx (data-theme on <html>).

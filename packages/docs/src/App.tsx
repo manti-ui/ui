@@ -4,6 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { mdxComponents } from './mdx/MDXComponents';
 import { pageBySlug, slugFromPath } from './pages';
 import { SearchProvider } from './search/SearchProvider';
+import { useDocumentHead } from './seo/useDocumentHead';
 import { Footer } from './shell/Footer';
 import { SearchDialog } from './shell/SearchDialog';
 import { Sidebar } from './shell/Sidebar';
@@ -15,6 +16,9 @@ export function App() {
   const slug = slugFromPath(pathname);
   const page = pageBySlug.get(slug);
   const isLanding = slug === '/';
+
+  // Sync per-route <title>/description/canonical/OG tags on client navigation.
+  useDocumentHead(page);
 
   return (
     <MDXProvider components={mdxComponents}>
