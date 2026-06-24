@@ -64,6 +64,10 @@ export function Carousel({
     id: id ?? autoId,
     slideCount: slides.length,
     slidesPerPage,
+    // Gap between slides. Zag wires this into both the flex `gap` and each
+    // slide's width math, so it must come through the machine (a CSS `gap`
+    // would be overridden). Defaults to the --manti-carousel-slide-gap token.
+    spacing: 'var(--manti-carousel-slide-gap)',
     orientation,
     allowMouseDrag: mouseDrag,
     loop,

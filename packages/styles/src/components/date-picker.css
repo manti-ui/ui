@@ -70,7 +70,7 @@
   }
 
   [data-scope='date-picker'][data-part='positioner'] {
-    z-index: var(--manti-z-popover);
+    z-index: var(--manti-z-popover) !important;
   }
 
   [data-scope='date-picker'][data-part='content'] {

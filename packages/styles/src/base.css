@@ -63,8 +63,25 @@
     }
   }
 
+  /* Floating panels (dropdowns, menus, popovers, tooltips, date/color pickers)
+     render inside a `positioner` that the positioning engine transforms with an
+     inline `translate(...)`. A transformed ancestor severs `backdrop-filter`
+     from the page backdrop, so the frosted blur can't reach the content behind
+     the panel — a translucent surface then bleeds that content through sharply
+     instead of frosting it. Inside any positioner, swap the panel material for
+     an opaque surface so floating panels stay legible over scrolling content.
+     Non-floating panels (cards, inline controls) are untouched and keep the
+     translucent glass, where the blur genuinely works. */
+  [data-part='positioner'] {
+    --manti-panel-tint-strong: var(--manti-surface-raised);
+  }
+
+  /* Text selection picks up the primary accent — the one deliberate spot of
+     brand colour outside the semantic tones. Mirrors how the primary tone
+     resolves its solid (orange-600 in light, orange-500 in dark). */
   ::selection {
-    background: color-mix(in oklab, var(--manti-text) 18%, transparent);
+    background: var(--manti-selection-bg);
+    color: var(--manti-selection-text);
   }
 
   :where(.manti-app) a {

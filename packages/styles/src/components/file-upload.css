@@ -78,6 +78,10 @@
   }
 
   [data-scope='file-upload'][data-part='item-group'] {
+    /* This part is a <ul>; the reset only zeroes margin, so clear the browser's
+       default list padding-inline-start and marker to avoid a stray left gap. */
+    list-style: none;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-2);
@@ -109,17 +113,34 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* Matches the canonical close-trigger anatomy (dialog/drawer/popover/toast):
+     a square, radius-sm icon button that tints its background on hover. Keeps
+     the dismiss affordance consistent across the system. */
   [data-scope='file-upload'][data-part='item-delete-trigger'] {
     display: inline-flex;
     flex: none;
     align-items: center;
     justify-content: center;
+    width: var(--manti-space-6);
+    height: var(--manti-space-6);
+    padding: 0;
     color: var(--manti-text-muted);
+    background: transparent;
+    border: 0;
+    border-radius: var(--manti-radius-sm);
     cursor: pointer;
-    transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
+    transition:
+      background var(--manti-duration-fast) var(--manti-ease-soft),
+      color var(--manti-duration-fast) var(--manti-ease-soft);
 
     &:hover {
-      color: light-dark(var(--manti-red-600), var(--manti-red-400));
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      color: var(--manti-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
     }
   }
 }

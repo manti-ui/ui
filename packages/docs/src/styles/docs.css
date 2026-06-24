@@ -23,9 +23,6 @@
     --docs-prose-max: 48rem;
     --docs-gutter: var(--manti-space-6);
 
-    /* A much more see-through translucent tint than --manti-panel-tint (which sits
-       at ~0.55 alpha), tuned for the sticky header so content reads through it.
-       Authored as light-dark like the Manti panel tokens themselves. */
     --docs-nav-bg: light-dark(
       oklch(0.99 0.002 280 / 0.42),
       oklch(0.17 0.008 280 / 0.42)
@@ -64,10 +61,6 @@
     height: var(--docs-nav-h);
     padding-inline: var(--docs-gutter);
     background: var(--docs-nav-bg);
-    /* -webkit first, then unprefixed — matches the Manti panel components.
-       The reverse order makes Lightning CSS drop the unprefixed property, and
-       Chrome/Firefox don't apply `-webkit-backdrop-filter` with a var() value,
-       so the blur silently disappears. */
     -webkit-backdrop-filter: var(--docs-nav-blur);
     backdrop-filter: var(--docs-nav-blur);
     border-bottom: 1px solid var(--manti-panel-border);
@@ -148,8 +141,7 @@
     top: var(--docs-nav-h);
     height: calc(100dvh - var(--docs-nav-h));
   }
-  /* The nav scrolls inside a Manti ScrollArea (custom, auto-hiding scrollbar)
-     rather than the aside's native overflow. */
+
   .docs-sidebar-scroll {
     height: 100%;
   }
@@ -306,8 +298,7 @@
   .docs-prose li::marker {
     color: var(--manti-text-subtle);
   }
-  /* Inline prose links only — not wrapper links like the component cards
-     (`.docs-plain`), which must never pick up the underline or link color. */
+
   .docs-prose a:not(.docs-plain) {
     color: var(--manti-link);
     text-decoration: none;
@@ -436,12 +427,7 @@
   .docs-demo-canvas.is-center {
     justify-content: center;
   }
-  /* Live demos render real component markup. Headings, paragraphs and lists in
-     that markup (e.g. an Accordion trigger's <h3>, which opened large top gaps)
-     must not inherit the prose typography defined above. `revert-layer` rolls
-     these back past the entire `docs` layer, so demo content falls through to
-     each component's own styles (manti.components) or the reset (manti.reset)
-     instead of the prose rules — without clobbering component typography. */
+
   .docs-demo-canvas :is(h1, h2, h3, h4, h5, h6) {
     margin: revert-layer;
     font-size: revert-layer;
@@ -450,6 +436,7 @@
   }
   .docs-demo-canvas :is(p, ul, ol, li) {
     margin: revert-layer;
+    padding: revert-layer;
   }
   .docs-demo-bar {
     display: flex;
@@ -462,8 +449,7 @@
     display: flex;
     align-items: center;
   }
-  /* The framework switcher is a Manti soft Tabs with its content panels hidden —
-     only the trigger row belongs in the toolbar. */
+
   .docs-demo-frameworks [data-scope='tabs'][data-part='root'] {
     gap: 0;
   }
@@ -479,8 +465,6 @@
     width: 1.15em;
     height: 1.15em;
   }
-  /* Active framework wears its own brand color (set inline via --fw-color);
-     wins over Manti's selected color by cascade-layer order (docs > components). */
   .docs-demo-frameworks [data-part='trigger'][data-selected] {
     color: var(--fw-color);
   }
@@ -490,9 +474,6 @@
   .docs-demo pre.shiki {
     border: none;
     border-radius: 0;
-    /* Match the preview canvas background instead of Shiki's own theme bg, so
-       the demo reads as one surface. Wins over both the light and dark
-       `pre.shiki` background rules (equal specificity, declared later). */
     background-color: var(--manti-bg-subtle);
   }
 
@@ -509,8 +490,7 @@
     color: inherit;
     text-decoration: none;
   }
-  /* Every catalog card fills its equal-height grid cell, so cards line up
-     regardless of how long each summary is. */
+  
   .docs-card-grid .docs-plain,
   .docs-card-grid .docs-plain > * {
     height: 100%;
@@ -662,8 +642,6 @@
     color: var(--manti-text-subtle);
   }
 
-  /* The native search clear (X). Replace the default glyph with a recolorable
-     mask so it can be gray by default and white on hover, with a pointer. */
   .docs-search-field input[type='search']::-webkit-search-cancel-button {
     -webkit-appearance: none;
     appearance: none;
