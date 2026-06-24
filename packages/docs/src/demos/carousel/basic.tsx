@@ -7,7 +7,7 @@ const slide = (label: string) => (
       placeItems: 'center',
       height: 'calc(var(--manti-space-16) * 3)',
       borderRadius: 'var(--manti-radius-lg)',
-      background: 'var(--manti-surface)',
+      background: 'var(--manti-surface-raised)',
       color: 'var(--manti-text)',
       fontSize: 'var(--manti-text-xl)',
       fontWeight: 'var(--manti-weight-semibold)',

@@ -25,6 +25,7 @@ component token only to make one component diverge on purpose — see
 | `button`            | `--manti-button-font-size`                  | `var(--manti-text-sm)`           |
 | `button`            | `--manti-button-gap`                        | `var(--manti-space-2)`           |
 | `carousel`          | `--manti-carousel-viewport-height`          | `22rem`                          |
+| `carousel`          | `--manti-carousel-slide-gap`                | `var(--manti-space-3)`           |
 | `checkbox`          | `--manti-checkbox-size`                     | `1.25rem`                        |
 | `clipboard`         | `--manti-clipboard-height`                  | `var(--manti-control-height-md)` |
 | `color-picker`      | `--manti-color-picker-height`               | `var(--manti-control-height-md)` |
