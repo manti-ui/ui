@@ -1,0 +1,63 @@
+name: Release
+
+# Publishes the public @manti-ui/* packages to npm and opens a GitHub Release
+# whenever a version tag (v*) is pushed.
+#
+# Cutting a release:
+#   1. Bump the package versions (e.g. all packages 0.1.1 -> 0.1.2) and commit.
+#   2. git tag v0.1.2 && git push origin v0.1.2
+#
+# Prerequisite: an `NPM_TOKEN` repository secret holding an npm automation token
+# with publish rights to the @manti-ui scope. Without it the publish step fails.
+# (Settings -> Secrets and variables -> Actions -> New repository secret.)
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+# Never run two releases for the same tag at once; don't cancel an in-flight one.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write # create the GitHub Release + read history for notes
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so release notes can diff against the last tag
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4 # version comes from package.json "packageManager"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build:packages
+
+      # Publishes every non-private workspace package (tokens, styles, folds,
+      # react) in dependency order; `workspace:*` ranges are rewritten to the
+      # real version by pnpm. Private packages (docs, the root) are skipped.
+      - name: Publish to npm
+        run: pnpm -r publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" --verify-tag --generate-notes
