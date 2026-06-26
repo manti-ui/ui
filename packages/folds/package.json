@@ -48,6 +48,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tanstack/table-core": "^8.21.3",
     "@zag-js/accordion": "^1.41.2",
     "@zag-js/avatar": "^1.41.2",
     "@zag-js/carousel": "^1.41.2",

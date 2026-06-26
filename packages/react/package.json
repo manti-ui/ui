@@ -51,6 +51,7 @@
   "dependencies": {
     "@manti-ui/folds": "workspace:^",
     "@manti-ui/tokens": "workspace:^",
+    "@tanstack/react-table": "^8.21.3",
     "@zag-js/react": "^1.41.2"
   },
   "peerDependencies": {

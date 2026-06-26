@@ -13,6 +13,7 @@ export default defineConfig({
         /^react-dom(?:\/.*)?$/,
         /^@manti-ui\//,
         /^@zag-js\//,
+        /^@tanstack\//,
       ],
     },
   },

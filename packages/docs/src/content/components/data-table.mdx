@@ -1,0 +1,57 @@
+---
+title: DataTable
+slug: /components/data-table
+group: Data Display
+order: 62
+badge: New
+description: A data grid backed by the framework-agnostic TanStack table-core machine.
+---
+
+# DataTable
+
+A data grid backed by the framework-agnostic TanStack `table-core` machine. The
+machine owns sorting and the row models; the Manti adapter renders the semantic
+`<table>` anatomy and styling. Pass `columns` and `data`, then opt into sorting,
+sticky headers, zebra striping, hover, and density.
+
+<Demo name="data-table/basic" />
+
+## Columns
+
+Columns are TanStack [`ColumnDef`](https://tanstack.com/table/latest/docs/guide/column-defs)
+objects, re-exported as `DataTableColumn<TData>` so you never import from
+`@tanstack/*` directly. Use `accessorKey` for plain values, `cell` to render
+custom content, and `meta.align` (`'start' | 'center' | 'end'`) to align a
+column's header and cells together.
+
+## Sorting
+
+Set `sortable` to make headers toggle sort order. The header becomes a button
+with an `aria-sort` state and a direction arrow; sorting runs through
+`table-core`'s sorted row model.
+
+<Demo name="data-table/sortable" />
+
+## Filtering, pagination & selection
+
+Opt into more of `table-core`'s machine with `filterable` (a global search box),
+`paginated` + `pageSize` (client pagination), and `selectable` (a leading
+checkbox column). These compose Manti's own TextField, Pagination, and Checkbox,
+and `onSelectionChange` reports the selected rows. They combine freely:
+
+<Demo name="data-table/full" />
+
+## Props
+
+<PropsTable component="data-table" />
+
+## Anatomy
+
+Target these public selectors to customize the data table. Class names and the
+DOM between parts are private.
+
+<Anatomy component="data-table" />
+
+## Component tokens
+
+<TokenTable component="data-table" />
