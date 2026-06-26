@@ -141,20 +141,24 @@ export function Select({
           </span>
         </button>
       </div>
-      <Portal>
-        <div {...api.getPositionerProps()}>
-          <ScrollArea focusable={false}>
-            <ul {...api.getContentProps()}>
-              {items.map((item) => (
-                <li key={item.value} {...api.getItemProps({ item })}>
-                  <span {...api.getItemTextProps({ item })}>{item.label}</span>
-                  <span {...api.getItemIndicatorProps({ item })}>{check}</span>
-                </li>
-              ))}
-            </ul>
-          </ScrollArea>
-        </div>
-      </Portal>
+      {api.open && (
+        <Portal>
+          <div {...api.getPositionerProps()}>
+            <ScrollArea focusable={false}>
+              <ul {...api.getContentProps()}>
+                {items.map((item) => (
+                  <li key={item.value} {...api.getItemProps({ item })}>
+                    <span {...api.getItemTextProps({ item })}>{item.label}</span>
+                    <span {...api.getItemIndicatorProps({ item })}>
+                      {check}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </ScrollArea>
+          </div>
+        </Portal>
+      )}
       <select {...api.getHiddenSelectProps()}>
         {items.map((item) => (
           <option key={item.value} value={item.value}>
