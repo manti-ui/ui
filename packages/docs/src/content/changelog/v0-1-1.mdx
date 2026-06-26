@@ -3,13 +3,13 @@ title: v0.1.1
 slug: /changelog/v0.1.1
 group: Changelog
 order: 1
-date: '2026-06-25'
-description: Panel token rename, scrollable Combobox & Select listboxes, a Carousel slide-gap token, overlay fixes, and full docs SEO.
+date: '2026-06-26'
+description: A TanStack-backed DataTable, a categorized and collapsible docs sidebar, the panel token rename, scrollable Combobox and Select listboxes, a Carousel slide-gap token, and overlay fixes.
 ---
 
 # v0.1.1
 
-_Released 2026-06-25._
+_Released 2026-06-26._
 
 ## Breaking changes
 
@@ -19,6 +19,20 @@ _Released 2026-06-25._
 
 ## Added
 
+- **DataTable** — a new data grid, and Manti's first component built on
+  **TanStack** rather than Zag.js. The framework-agnostic `@tanstack/table-core`
+  contract is re-exported through `@manti-ui/folds`, with the
+  `@tanstack/react-table` runtime in the React adapter. It supports:
+  - **Sorting** — click-to-sort headers (`sortable`) with `aria-sort` and a
+    direction arrow.
+  - **Filtering** — a global search box (`filterable`), composing `TextField`.
+  - **Pagination** — client-side (`paginated` / `pageSize`), composing
+    `Pagination`.
+  - **Selection** — a leading checkbox column (`selectable` /
+    `onSelectionChange`), composing `Checkbox`.
+  - Density sizes, sticky header, zebra striping, row hover, per-column alignment
+    via `meta.align`, and an optional toolbar `title`.
+- **Checkbox** gains an `aria-label` prop for controls without a visible label.
 - **Carousel** exposes a `slide-gap` component token
   (`--manti-carousel-slide-gap`) for the space between slides.
 
@@ -29,12 +43,19 @@ _Released 2026-06-25._
 
 ## Fixed
 
+- **Combobox** and **Select** only mount their portal listbox while it is open.
 - **Overlay panels** — floating panels, popovers and other portaled surfaces are
   now opaque enough to keep the UI beneath them hidden and legible.
 - **FileUpload** squares its delete trigger and renders each file's size.
 
 ## Docs
 
+- The **component sidebar is now categorized** into Inputs, Buttons & Actions,
+  Navigation, Overlays, Feedback, Data Display, and Layout — and each category is
+  **collapsible**.
+- A **"New" badge** marks freshly added components in the sidebar.
+- A dedicated **Changelog** section (this page), newest release first.
+- The **NavigationMenu** demo flyout no longer gets clipped inside the playground.
 - Per-route **SEO**: titles, descriptions, canonical URLs, Open Graph / Twitter
   cards, a sitemap, and robots.txt.
 - Docs and **Storybook now ship from a single Netlify deploy** — Storybook lives
