@@ -20,3 +20,6 @@ declare module 'virtual:manti-search' {
   }[];
   export default docs;
 }
+
+/** Published Manti UI version, injected at build time (see vite.config.ts). */
+declare const __MANTI_VERSION__: string;
