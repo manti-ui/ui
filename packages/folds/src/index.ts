@@ -46,6 +46,14 @@ export * as floatingPanel from '@zag-js/floating-panel';
  */
 export * as swipe from './swipe';
 
+/**
+ * Headless data behaviors. Not from Zag.js — Zag has no table machine, so the
+ * Data Table is built on TanStack `table-core`, the same headless/agnostic shape
+ * (logic-only brain + per-framework adapter). The shared column/types contract
+ * lives here; renderers add their framework adapter (`@tanstack/react-table`, …).
+ */
+export * as table from './table';
+
 export const mantiBehaviorContract = {
   packageName: '@manti-ui/folds',
   engine: 'Zag.js',

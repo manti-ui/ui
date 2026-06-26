@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+
 import mdx from '@mdx-js/rollup';
 import rehypeShiki from '@shikijs/rehype';
 import withTocExport from '@stefanprobst/rehype-extract-toc/mdx';
@@ -25,7 +27,18 @@ const evergreen = {
   safari: (17 << 16) | (5 << 8),
 };
 
+// Stamp the published Manti version (from @manti-ui/react) into the bundle so the
+// docs header can render a version badge that tracks the release automatically.
+const mantiVersion = (
+  JSON.parse(
+    readFileSync(new URL('../react/package.json', import.meta.url), 'utf8'),
+  ) as { version: string }
+).version;
+
 export default defineConfig({
+  define: {
+    __MANTI_VERSION__: JSON.stringify(mantiVersion),
+  },
   plugins: [
     // MDX must run before the React plugin so `.mdx` is compiled to JSX first.
     {

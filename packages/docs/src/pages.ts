@@ -20,6 +20,9 @@ export interface DocPage {
   group: string;
   order: number;
   description?: string;
+  date?: string;
+  /** Small sidebar tag, e.g. `New`. */
+  badge?: string;
   Component: ComponentType;
   toc: TocEntry[];
 }
@@ -31,6 +34,8 @@ export const pages: DocPage[] = Object.values(modules)
     group: mod.frontmatter.group ?? '',
     order: mod.frontmatter.order ?? 0,
     description: mod.frontmatter.description,
+    date: mod.frontmatter.date,
+    badge: mod.frontmatter.badge,
     Component: mod.default,
     toc: mod.tableOfContents ?? [],
   }))

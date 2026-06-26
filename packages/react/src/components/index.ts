@@ -37,6 +37,13 @@ export type { ComboboxItem, ComboboxProps } from './Combobox/Combobox';
 export { ContextMenu } from './ContextMenu/ContextMenu';
 export type { ContextMenuProps } from './ContextMenu/ContextMenu';
 
+export { DataTable } from './DataTable/DataTable';
+export type {
+  DataTableColumn,
+  DataTableProps,
+  DataTableSize,
+} from './DataTable/DataTable';
+
 export { DatePicker } from './DatePicker/DatePicker';
 export type { DatePickerProps } from './DatePicker/DatePicker';
 

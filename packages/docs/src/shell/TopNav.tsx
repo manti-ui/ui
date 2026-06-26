@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Button, Dialog } from '@manti-ui/react';
+import { Badge, Button, Dialog } from '@manti-ui/react';
 
-import { GITHUB_URL, STORYBOOK_URL, primaryNav } from '../data/navigation';
+import {
+  GITHUB_URL,
+  LATEST_CHANGELOG_SLUG,
+  MANTI_VERSION,
+  STORYBOOK_URL,
+  primaryNav,
+} from '../data/navigation';
 import { useSearch } from '../search/SearchProvider';
 import { useTheme } from '../theme/useTheme';
 import { MenuIcon, MoonIcon, SearchIcon, SunIcon } from './icons';
@@ -18,6 +24,16 @@ export function TopNav() {
       <Link to="/" className="docs-brand" aria-label="Manti UI home">
         <img src="/manti-white.svg" alt="" />
         <span>Manti UI</span>
+      </Link>
+
+      <Link
+        to={LATEST_CHANGELOG_SLUG}
+        className="docs-version"
+        aria-label={`Version ${MANTI_VERSION} — what's new`}
+      >
+        <Badge tone="primary" variant="soft" size="sm">
+          v{MANTI_VERSION}
+        </Badge>
       </Link>
 
       <nav className="docs-nav-primary" aria-label="Primary">

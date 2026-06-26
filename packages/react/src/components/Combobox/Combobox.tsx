@@ -140,20 +140,24 @@ export function Combobox({
           </svg>
         </button>
       </div>
-      <Portal>
-        <div {...api.getPositionerProps()}>
-          <ScrollArea focusable={false}>
-            <ul {...api.getContentProps()}>
-              {filtered.map((item) => (
-                <li key={item.value} {...api.getItemProps({ item })}>
-                  <span {...api.getItemTextProps({ item })}>{item.label}</span>
-                  <span {...api.getItemIndicatorProps({ item })}>{check}</span>
-                </li>
-              ))}
-            </ul>
-          </ScrollArea>
-        </div>
-      </Portal>
+      {api.open && (
+        <Portal>
+          <div {...api.getPositionerProps()}>
+            <ScrollArea focusable={false}>
+              <ul {...api.getContentProps()}>
+                {filtered.map((item) => (
+                  <li key={item.value} {...api.getItemProps({ item })}>
+                    <span {...api.getItemTextProps({ item })}>{item.label}</span>
+                    <span {...api.getItemIndicatorProps({ item })}>
+                      {check}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </ScrollArea>
+          </div>
+        </Portal>
+      )}
     </div>
   );
 }

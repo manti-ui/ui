@@ -308,6 +308,13 @@ export const componentTokens = {
   tooltip: ['max-width'],
   tour: ['width'],
   timer: ['item-min-width'],
+  'data-table': [
+    'radius',
+    'cell-padding-x',
+    'cell-padding-y',
+    'font-size',
+    'header-font-size',
+  ],
 } as const;
 
 export type MantiComponentTokens = typeof componentTokens;

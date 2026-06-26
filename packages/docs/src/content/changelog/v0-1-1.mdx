@@ -1,0 +1,41 @@
+---
+title: v0.1.1
+slug: /changelog/v0.1.1
+group: Changelog
+order: 1
+date: '2026-06-25'
+description: Panel token rename, scrollable Combobox & Select listboxes, a Carousel slide-gap token, overlay fixes, and full docs SEO.
+---
+
+# v0.1.1
+
+_Released 2026-06-25._
+
+## Breaking changes
+
+- **Frosted-panel tokens renamed** from `--manti-glass-*` to `--manti-panel-*`
+  (e.g. `--manti-glass-tint` → `--manti-panel-tint`, `--manti-glass-border` →
+  `--manti-panel-border`). Update any custom CSS that referenced the old names.
+
+## Added
+
+- **Carousel** exposes a `slide-gap` component token
+  (`--manti-carousel-slide-gap`) for the space between slides.
+
+## Changed
+
+- **Combobox** and **Select** now scroll their listbox inside a Manti
+  `ScrollArea`, so long option lists stay tidy.
+
+## Fixed
+
+- **Overlay panels** — floating panels, popovers and other portaled surfaces are
+  now opaque enough to keep the UI beneath them hidden and legible.
+- **FileUpload** squares its delete trigger and renders each file's size.
+
+## Docs
+
+- Per-route **SEO**: titles, descriptions, canonical URLs, Open Graph / Twitter
+  cards, a sitemap, and robots.txt.
+- Docs and **Storybook now ship from a single Netlify deploy** — Storybook lives
+  at [`/storybook`](/storybook/).

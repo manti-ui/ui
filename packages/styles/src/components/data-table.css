@@ -1,0 +1,231 @@
+/**
+ * Data Table — a TanStack-backed data grid. The table-core machine owns sorting,
+ * filtering, pagination, and selection; this layer dresses the anatomy in the
+ * Manti signature: a translucent panel that frames an optional toolbar, a
+ * scrollable grid viewport, and an optional footer. The body is hairline-
+ * separated, the header can stick, rows can stripe, and selected rows tint.
+ *
+ * `border-collapse: separate` (not collapse) is deliberate — collapsed borders
+ * detach from sticky headers on scroll in several engines, so separators live on
+ * the cells instead. The panel chrome (border/radius/clip) sits on `root`; the
+ * horizontal/vertical scroll sits on `viewport` so the toolbar and footer stay
+ * pinned outside it.
+ */
+@layer manti.components {
+  [data-scope='data-table'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-data-table-radius: var(--manti-radius-lg);
+    --manti-data-table-cell-padding-x: var(--manti-space-4);
+    --manti-data-table-cell-padding-y: var(--manti-space-3);
+    --manti-data-table-font-size: var(--manti-text-sm);
+    --manti-data-table-header-font-size: var(--manti-text-xs);
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: clip;
+    background: var(--manti-panel-tint);
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
+    border: 1px solid var(--manti-panel-border);
+    border-radius: var(--manti-data-table-radius);
+    box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='data-table'][data-part='root'] {
+      background: var(--manti-surface);
+    }
+  }
+
+  [data-scope='data-table'][data-part='toolbar'] {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-3);
+    padding: var(--manti-space-3) var(--manti-data-table-cell-padding-x);
+    border-bottom: 1px solid var(--manti-border);
+  }
+
+  [data-scope='data-table'][data-part='title'] {
+    margin: 0;
+    color: var(--manti-text);
+    font-size: var(--manti-text-base);
+    font-weight: var(--manti-weight-semibold);
+    line-height: var(--manti-leading-snug);
+  }
+
+  /* Search sits at the trailing edge; with a title present it pairs left↔right. */
+  [data-scope='data-table'][data-part='search'] {
+    margin-inline-start: auto;
+    inline-size: min(100%, 18rem);
+  }
+
+  [data-scope='data-table'][data-part='viewport'] {
+    overflow: auto;
+  }
+
+  [data-scope='data-table'][data-part='table'] {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: var(--manti-text);
+    font-size: var(--manti-data-table-font-size);
+    line-height: var(--manti-leading-snug);
+    text-align: start;
+  }
+
+  [data-scope='data-table'][data-part='caption'] {
+    caption-side: top;
+    padding: var(--manti-data-table-cell-padding-y)
+      var(--manti-data-table-cell-padding-x);
+    color: var(--manti-text-muted);
+    font-size: var(--manti-data-table-header-font-size);
+    font-weight: var(--manti-weight-medium);
+    text-align: start;
+  }
+
+  [data-scope='data-table'][data-part='header-cell'] {
+    padding: var(--manti-data-table-cell-padding-y)
+      var(--manti-data-table-cell-padding-x);
+    background: var(--manti-bg-subtle);
+    border-bottom: 1px solid var(--manti-border-strong);
+    color: var(--manti-text-subtle);
+    font-size: var(--manti-data-table-header-font-size);
+    font-weight: var(--manti-weight-semibold);
+    letter-spacing: 0.02em;
+    text-align: start;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  /* Sticky header: cells pin to the top of the scrolling viewport. */
+  [data-scope='data-table'][data-part='root'][data-sticky='true']
+    [data-part='header-cell'] {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  [data-scope='data-table'][data-part='sort-trigger'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-1);
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: inherit;
+    cursor: pointer;
+    transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      color: var(--manti-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+      border-radius: var(--manti-radius-xs);
+    }
+  }
+
+  [data-scope='data-table'][data-part='sort-indicator'] {
+    flex: none;
+    width: 0.85em;
+    height: 0.85em;
+    opacity: 0.35;
+    transition:
+      transform var(--manti-duration-base) var(--manti-ease-smooth),
+      opacity var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &[data-state='asc'] {
+      opacity: 1;
+    }
+
+    &[data-state='desc'] {
+      opacity: 1;
+      transform: rotate(180deg);
+    }
+  }
+
+  [data-scope='data-table'][data-part='cell'] {
+    padding: var(--manti-data-table-cell-padding-y)
+      var(--manti-data-table-cell-padding-x);
+    border-bottom: 1px solid var(--manti-border);
+    vertical-align: middle;
+    text-align: start;
+  }
+
+  [data-scope='data-table'][data-part='row']:last-child [data-part='cell'] {
+    border-bottom: none;
+  }
+
+  /* Alignment — driven by each column's `meta.align`. */
+  [data-scope='data-table'][data-part='header-cell'][data-align='center'],
+  [data-scope='data-table'][data-part='cell'][data-align='center'] {
+    text-align: center;
+  }
+  [data-scope='data-table'][data-part='header-cell'][data-align='end'],
+  [data-scope='data-table'][data-part='cell'][data-align='end'] {
+    text-align: end;
+  }
+
+  /* Zebra striping (opt-in). Selected rows opt out so their tint always shows. */
+  [data-scope='data-table'][data-part='root'][data-zebra='true']
+    [data-part='row']:nth-child(even):not([data-selected='true'])
+    [data-part='cell'] {
+    background: color-mix(in oklab, var(--manti-text) 3%, transparent);
+  }
+
+  /* Interactive rows highlight on hover (selected rows keep their own tint). */
+  [data-scope='data-table'][data-part='root'][data-interactive='true']
+    [data-part='row']:hover:not([data-selected='true'])
+    [data-part='cell'] {
+    background: color-mix(in oklab, var(--manti-text) 5%, transparent);
+  }
+
+  /* Selected rows — a stronger, exclusive tint (see :not() guards above). */
+  [data-scope='data-table'][data-part='row'][data-selected='true']
+    [data-part='cell'] {
+    background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+  }
+
+  [data-scope='data-table'][data-part='empty'] {
+    padding: var(--manti-space-8) var(--manti-data-table-cell-padding-x);
+    color: var(--manti-text-subtle);
+    text-align: center;
+  }
+
+  [data-scope='data-table'][data-part='footer'] {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--manti-space-3);
+    padding: var(--manti-space-3) var(--manti-data-table-cell-padding-x);
+    border-top: 1px solid var(--manti-border);
+  }
+
+  /* Pushes the pagination to the trailing edge; alone, it sits at the start. */
+  [data-scope='data-table'][data-part='selection-summary'] {
+    margin-inline-end: auto;
+    color: var(--manti-text-muted);
+    font-size: var(--manti-data-table-header-font-size);
+  }
+
+  /* Density presets re-target the public cell tokens. */
+  [data-scope='data-table'][data-part='root'][data-size='sm'] {
+    --manti-data-table-cell-padding-x: var(--manti-space-3);
+    --manti-data-table-cell-padding-y: var(--manti-space-2);
+    --manti-data-table-font-size: var(--manti-text-xs);
+  }
+  [data-scope='data-table'][data-part='root'][data-size='lg'] {
+    --manti-data-table-cell-padding-x: var(--manti-space-5);
+    --manti-data-table-cell-padding-y: var(--manti-space-4);
+    --manti-data-table-font-size: var(--manti-text-base);
+  }
+}

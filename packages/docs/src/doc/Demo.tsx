@@ -57,11 +57,23 @@ export interface DemoProps {
   name: string;
   /** Center the preview instead of left-aligning it. */
   center?: boolean;
+  /** Reserve vertical room and top-align the preview — for demos whose inline
+   * dropdown opens downward (e.g. NavigationMenu) and would otherwise be
+   * clipped by the canvas overflow. */
+  roomy?: boolean;
 }
 
-export function Demo({ name, center }: DemoProps) {
+export function Demo({ name, center, roomy }: DemoProps) {
   const { Component, source, html } = resolve(name);
   const [showCode, setShowCode] = useState(false);
+
+  const canvasClass = [
+    'docs-demo-canvas',
+    center && 'is-center',
+    roomy && 'is-roomy',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   if (!Component) {
     return (
@@ -73,9 +85,7 @@ export function Demo({ name, center }: DemoProps) {
 
   return (
     <div className="docs-demo">
-      <div
-        className={center ? 'docs-demo-canvas is-center' : 'docs-demo-canvas'}
-      >
+      <div className={canvasClass}>
         <Component />
       </div>
       {source && html && (
