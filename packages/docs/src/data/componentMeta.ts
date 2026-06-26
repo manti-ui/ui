@@ -440,6 +440,7 @@ export const componentCatalog: CatalogEntry[] = [
   entry('ColorPicker', 'color-picker', 'Area + channel color selection.'),
   entry('Combobox', 'combobox', 'Autocomplete text + listbox.'),
   entry('ContextMenu', 'context-menu', 'Right-click menu surface.'),
+  entry('DataTable', 'data-table', 'Sortable data grid via TanStack table.'),
   entry('DatePicker', 'date-picker', 'Calendar date selection.'),
   entry('Dialog', 'dialog', 'Modal translucent panel.'),
   entry('Drawer', 'drawer', 'Edge-anchored sliding panel.'),

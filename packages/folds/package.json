@@ -1,6 +1,6 @@
 {
   "name": "@manti-ui/folds",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Framework-agnostic Zag.js behavior contracts for Manti UI.",
   "license": "MIT",
   "homepage": "https://manti.design",
@@ -48,6 +48,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tanstack/table-core": "^8.21.3",
     "@zag-js/accordion": "^1.41.2",
     "@zag-js/avatar": "^1.41.2",
     "@zag-js/carousel": "^1.41.2",

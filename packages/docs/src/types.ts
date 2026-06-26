@@ -7,7 +7,11 @@ export interface DocFrontmatter {
   group?: string;
   /** Sort order within the group. */
   order?: number;
+  /** Small sidebar tag for the page, e.g. `New` or `Beta`. */
+  badge?: string;
   description?: string;
+  /** Release date (ISO, quoted in frontmatter), used by update pages. */
+  date?: string;
 }
 
 /** A heading entry from `@stefanprobst/rehype-extract-toc`. */

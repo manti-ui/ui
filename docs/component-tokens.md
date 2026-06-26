@@ -33,6 +33,11 @@ component token only to make one component diverge on purpose — see
 | `color-picker`      | `--manti-color-picker-area-height`          | `9rem`                           |
 | `combobox`          | `--manti-combobox-height`                   | `var(--manti-control-height-md)` |
 | `combobox`          | `--manti-combobox-content-max-height`       | `18rem`                          |
+| `data-table`        | `--manti-data-table-radius`                 | `var(--manti-radius-lg)`         |
+| `data-table`        | `--manti-data-table-cell-padding-x`         | `var(--manti-space-4)`           |
+| `data-table`        | `--manti-data-table-cell-padding-y`         | `var(--manti-space-3)`           |
+| `data-table`        | `--manti-data-table-font-size`              | `var(--manti-text-sm)`           |
+| `data-table`        | `--manti-data-table-header-font-size`       | `var(--manti-text-xs)`           |
 | `date-picker`       | `--manti-date-picker-height`                | `var(--manti-control-height-md)` |
 | `dialog`            | `--manti-dialog-max-width`                  | `32rem`                          |
 | `drawer`            | `--manti-drawer-size`                       | `24rem`                          |

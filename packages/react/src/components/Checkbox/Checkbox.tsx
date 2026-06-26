@@ -27,6 +27,8 @@ export interface CheckboxProps {
   readOnly?: boolean;
   name?: string;
   value?: string;
+  /** Accessible name for the control when there is no visible label. */
+  'aria-label'?: string;
   id?: string;
   className?: string;
 }
@@ -51,6 +53,7 @@ export function Checkbox({
   readOnly,
   name,
   value,
+  'aria-label': ariaLabel,
 }: CheckboxProps) {
   const autoId = useId();
   const service = useMachine(checkbox.machine, {
@@ -76,7 +79,11 @@ export function Checkbox({
       data-tone={tone}
       className={cx(className)}
     >
-      <input {...api.getHiddenInputProps()} data-part="hidden-input" />
+      <input
+        {...api.getHiddenInputProps()}
+        data-part="hidden-input"
+        aria-label={ariaLabel}
+      />
       <span {...api.getControlProps()}>
         <span {...api.getIndicatorProps()}>
           <svg viewBox="0 0 24 24" aria-hidden>

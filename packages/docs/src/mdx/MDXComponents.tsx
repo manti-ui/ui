@@ -8,6 +8,7 @@ import { ComponentStatusGrid } from '../doc/ComponentStatusGrid';
 import { Demo } from '../doc/Demo';
 import { LinkButton } from '../doc/LinkButton';
 import { PropsTable } from '../doc/PropsTable';
+import { ReleasesList } from '../doc/ReleasesList';
 import { TokenTable } from '../doc/TokenTable';
 import { TypeScale, WeightScale } from '../doc/TypeScale';
 import { CodeBlock } from './CodeBlock';
@@ -60,4 +61,5 @@ export const mdxComponents = {
   TypeScale,
   WeightScale,
   ComponentStatusGrid,
+  ReleasesList,
 };

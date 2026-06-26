@@ -8,7 +8,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: [/^@zag-js\//],
+      external: [/^@zag-js\//, /^@tanstack\//],
     },
   },
 });

@@ -83,6 +83,52 @@
     height: var(--manti-space-10);
   }
 
+  /* Version badge link next to the wordmark. */
+  .docs-version {
+    display: inline-flex;
+    text-decoration: none;
+    transition: opacity var(--manti-duration-fast) var(--manti-ease-smooth);
+  }
+  .docs-version:hover {
+    opacity: 0.78;
+  }
+
+  /* ---- Releases list (Changelog overview) — plain stacked rows, not cards ---- */
+  .docs-releases {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--manti-space-6);
+    border-top: 1px solid var(--manti-border);
+  }
+  .docs-release {
+    display: block;
+    padding: var(--manti-space-4) var(--manti-space-3);
+    border-bottom: 1px solid var(--manti-border);
+    text-decoration: none;
+    color: inherit;
+    transition: background var(--manti-duration-fast) var(--manti-ease-smooth);
+  }
+  .docs-release:hover {
+    background: var(--manti-surface);
+  }
+  .docs-release-title {
+    display: block;
+    font-size: var(--manti-text-lg);
+    font-weight: var(--manti-weight-semibold);
+    color: var(--manti-text);
+  }
+  .docs-release-date {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-regular);
+    color: var(--manti-text-subtle);
+  }
+  .docs-release-summary {
+    display: block;
+    margin-top: var(--manti-space-1);
+    color: var(--manti-text-muted);
+    font-size: var(--manti-text-sm);
+  }
+
   .docs-nav-primary {
     display: flex;
     align-items: center;
@@ -163,18 +209,43 @@
     padding-block: var(--manti-space-8);
   }
 
-  /* ---- Sidebar nav ---- */
+  /* ---- Sidebar nav (collapsible category groups) ---- */
   .docs-nav-group + .docs-nav-group {
-    margin-top: var(--manti-space-6);
+    margin-top: var(--manti-space-3);
   }
-  .docs-nav-group-label {
-    margin: 0 0 var(--manti-space-2);
-    padding-inline: var(--manti-space-3);
+  /* Restyle the Manti Collapsible trigger as a minimal, full-width category
+     header (the panel-button default is replaced via the public anatomy). */
+  .docs-sidebar-nav [data-scope='collapsible'][data-part='trigger'] {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: var(--manti-space-1);
+    padding: var(--manti-space-1) var(--manti-space-3);
+    background: none;
+    border: none;
+    border-radius: var(--manti-radius-md);
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    color: var(--manti-text-subtle);
     font-size: var(--manti-text-xs);
     font-weight: var(--manti-weight-semibold);
     letter-spacing: 0.06em;
     text-transform: uppercase;
+  }
+  .docs-sidebar-nav [data-scope='collapsible'][data-part='trigger']:hover {
+    background: none;
+    color: var(--manti-text-muted);
+  }
+  .docs-nav-group-chevron {
+    flex: none;
     color: var(--manti-text-subtle);
+    transition: transform var(--manti-duration-base) var(--manti-ease-smooth);
+  }
+  .docs-sidebar-nav
+    [data-scope='collapsible'][data-part='trigger'][data-state='open']
+    .docs-nav-group-chevron {
+    transform: rotate(180deg);
   }
   .docs-nav-list {
     list-style: none;
@@ -185,7 +256,9 @@
     gap: 1px;
   }
   .docs-side-link {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-2);
     padding: var(--manti-space-1) var(--manti-space-3);
     border-radius: var(--manti-radius-md);
     color: var(--manti-text-muted);
@@ -203,6 +276,18 @@
     color: var(--manti-text);
     background: var(--manti-surface);
     font-weight: var(--manti-weight-medium);
+  }
+  /* Small "New"/"Beta" tag, pushed to the trailing edge of the link. */
+  .docs-side-badge {
+    margin-inline-start: auto;
+    padding: 0 var(--manti-space-2);
+    border-radius: var(--manti-radius-full);
+    background: var(--tone-soft-bg);
+    color: var(--tone-soft-text);
+    font-size: var(--manti-text-xs);
+    font-weight: var(--manti-weight-semibold);
+    letter-spacing: 0.02em;
+    line-height: var(--manti-leading-relaxed);
   }
 
   /* ---- Table of contents ---- */
@@ -299,12 +384,14 @@
     color: var(--manti-text-subtle);
   }
 
-  .docs-prose a:not(.docs-plain) {
+  /* Inline prose links only — wrapper links (.docs-plain cards, .docs-release
+     rows) keep their own styling and must not pick up the underline/link color. */
+  .docs-prose a:not(.docs-plain):not(.docs-release) {
     color: var(--manti-link);
     text-decoration: none;
     text-underline-offset: 0.2em;
   }
-  .docs-prose a:not(.docs-plain):hover {
+  .docs-prose a:not(.docs-plain):not(.docs-release):hover {
     text-decoration: underline;
   }
   .docs-prose strong {
@@ -427,6 +514,13 @@
   .docs-demo-canvas.is-center {
     justify-content: center;
   }
+  /* Demos whose inline dropdown opens downward (e.g. NavigationMenu) top-align
+     the preview and reserve room below, so the open panel stays fully visible
+     instead of being clipped by the demo's rounded overflow. */
+  .docs-demo-canvas.is-roomy {
+    align-items: flex-start;
+    min-block-size: 16rem;
+  }
 
   .docs-demo-canvas :is(h1, h2, h3, h4, h5, h6) {
     margin: revert-layer;
@@ -490,7 +584,7 @@
     color: inherit;
     text-decoration: none;
   }
-  
+
   .docs-card-grid .docs-plain,
   .docs-card-grid .docs-plain > * {
     height: 100%;

@@ -1,6 +1,6 @@
 {
   "name": "@manti-ui/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React adapter for the Manti UI design system.",
   "license": "MIT",
   "homepage": "https://manti.design",
@@ -51,6 +51,7 @@
   "dependencies": {
     "@manti-ui/folds": "workspace:^",
     "@manti-ui/tokens": "workspace:^",
+    "@tanstack/react-table": "^8.21.3",
     "@zag-js/react": "^1.41.2"
   },
   "peerDependencies": {

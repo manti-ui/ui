@@ -61,6 +61,7 @@
 @import './components/navigation-menu.css';
 @import './components/floating-panel.css';
 @import './components/scroll-area.css';
+@import './components/data-table.css';
 @import './components/marquee.css';
 @import './components/swipe.css';
 
