@@ -12,6 +12,10 @@ A nested, keyboard-navigable tree backed by the Zag.js tree-view machine. Pass a
 nested `items` array — branches carry a `children` array, leaves do not. The
 machine owns expansion, selection, and arrow-key navigation.
 
+Pass an `icon` render prop to put a leading icon on each row. It receives the
+node and its live state (`isBranch`, `expanded`, `selected`), so the demo below
+swaps an open/closed folder for branches and a file icon for leaves.
+
 <Demo name="tree-view/basic" />
 
 ## Props

@@ -171,7 +171,11 @@ export { Timer } from './Timer/Timer';
 export type { TimerProps } from './Timer/Timer';
 
 export { TreeView } from './TreeView/TreeView';
-export type { TreeNode, TreeViewProps } from './TreeView/TreeView';
+export type {
+  TreeNode,
+  TreeNodeState,
+  TreeViewProps,
+} from './TreeView/TreeView';
 
 export { createToaster } from './Toast/Toast';
 export type {

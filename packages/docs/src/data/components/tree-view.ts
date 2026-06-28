@@ -20,6 +20,12 @@ export const meta: ComponentMeta = {
       description: 'Selected-node tone.',
     },
     {
+      name: 'icon',
+      type: '(node: TreeNode, state: TreeNodeState) => ReactNode',
+      description:
+        'Render an icon before each node label, e.g. folder/file icons. Receives the node and its live state (`isBranch`, `expanded`, `selected`).',
+    },
+    {
       name: 'selectionMode',
       type: `'single' | 'multiple'`,
       default: `'single'`,
@@ -48,6 +54,10 @@ export const meta: ComponentMeta = {
     { part: 'branch', description: 'A node that has children.' },
     { part: 'branch-control', description: 'The clickable row of a branch.' },
     { part: 'branch-indicator', description: 'The expand/collapse chevron.' },
+    {
+      part: 'node-icon',
+      description: 'The optional leading icon rendered by the `icon` prop.',
+    },
     { part: 'branch-text', description: 'A branch label.' },
     { part: 'branch-content', description: 'The nested children of a branch.' },
     { part: 'item', description: 'A leaf node.' },

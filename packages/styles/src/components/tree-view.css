@@ -33,7 +33,7 @@
     display: flex;
     align-items: center;
     gap: var(--manti-space-2);
-    padding: var(--manti-space-2) var(--manti-space-3);
+    padding: var(--manti-space-1) var(--manti-space-3);
     border-radius: var(--manti-radius-sm);
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
@@ -51,8 +51,8 @@
     }
 
     &[data-focus] {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
-      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+      /* outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1); */
     }
 
     &[data-disabled] {
@@ -70,6 +70,22 @@
     &[data-state='open'] {
       transform: rotate(90deg);
     }
+  }
+
+  /* Optional leading icon (e.g. folder/file). Muted by default; inherits the
+     row's tone when the node is selected. */
+  [data-scope='tree-view'][data-part='node-icon'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    color: var(--manti-text-muted);
+  }
+
+  [data-scope='tree-view'][data-part='branch-control'][data-selected]
+    [data-part='node-icon'],
+  [data-scope='tree-view'][data-part='item'][data-selected]
+    [data-part='node-icon'] {
+    color: inherit;
   }
 
   [data-scope='tree-view'][data-part='branch-text'],

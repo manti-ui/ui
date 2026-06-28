@@ -12,6 +12,20 @@ export interface TreeNode {
   children?: TreeNode[];
 }
 
+/** State passed to the `icon` render prop so it can vary per node. */
+export interface TreeNodeState {
+  /** Whether the node has children. */
+  isBranch: boolean;
+  /** Whether a branch is currently expanded. */
+  expanded: boolean;
+  /** Whether the node is selected. */
+  selected: boolean;
+  /** Whether the node currently holds roving focus. */
+  focused: boolean;
+  /** Zero-based nesting depth. */
+  depth: number;
+}
+
 export interface TreeViewProps {
   /** Top-level nodes. Branches carry a `children` array. */
   items: TreeNode[];
@@ -19,6 +33,11 @@ export interface TreeViewProps {
   label?: ReactNode;
   /** Selected-node tone. */
   tone?: MantiTone;
+  /**
+   * Render an icon before each node's label, e.g. folder/file icons. Receives
+   * the node and its live state so the icon can react to expansion/selection.
+   */
+  icon?: (node: TreeNode, state: TreeNodeState) => ReactNode;
   /** Single or multiple selection. */
   selectionMode?: 'single' | 'multiple';
   /** Values of branches expanded by default. */
@@ -49,6 +68,7 @@ export function TreeView({
   items,
   label,
   tone = 'primary',
+  icon,
   selectionMode = 'single',
   defaultExpandedValue,
   defaultSelectedValue,
@@ -79,6 +99,24 @@ export function TreeView({
   });
   const api = treeView.connect(service, normalizeProps);
 
+  const renderIcon = (node: TreeNode, nodeProps: { node: TreeNode; indexPath: number[] }): ReactNode => {
+    if (!icon) return null;
+    const state = api.getNodeState(nodeProps);
+    const rendered = icon(node, {
+      isBranch: state.isBranch,
+      expanded: state.expanded,
+      selected: state.selected,
+      focused: state.focused,
+      depth: state.depth,
+    });
+    if (rendered == null) return null;
+    return (
+      <span data-scope="tree-view" data-part="node-icon" aria-hidden="true">
+        {rendered}
+      </span>
+    );
+  };
+
   const renderNode = (node: TreeNode, indexPath: number[]): ReactNode => {
     const nodeProps = { node, indexPath };
     const children = node.children;
@@ -87,6 +125,7 @@ export function TreeView({
         <div key={node.value} {...api.getBranchProps(nodeProps)}>
           <div {...api.getBranchControlProps(nodeProps)}>
             <span {...api.getBranchIndicatorProps(nodeProps)}>{chevron}</span>
+            {renderIcon(node, nodeProps)}
             <span {...api.getBranchTextProps(nodeProps)}>{node.label}</span>
           </div>
           <div {...api.getBranchContentProps(nodeProps)}>
@@ -99,6 +138,7 @@ export function TreeView({
     }
     return (
       <div key={node.value} {...api.getItemProps(nodeProps)}>
+        {renderIcon(node, nodeProps)}
         <span {...api.getItemTextProps(nodeProps)}>{node.label}</span>
       </div>
     );
