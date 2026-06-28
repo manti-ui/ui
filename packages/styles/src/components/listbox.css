@@ -66,8 +66,14 @@
     }
 
     &[data-state='checked'] {
-      color: var(--tone-text);
+      background: var(--tone-soft-bg);
+      color: var(--tone-soft-text);
       font-weight: var(--manti-weight-medium);
+    }
+
+    /* A selected row that's also under roving focus keeps reading as focused. */
+    &[data-state='checked'][data-highlighted] {
+      background: var(--tone-soft-bg-hover);
     }
 
     &[data-disabled] {
@@ -79,6 +85,6 @@
   [data-scope='listbox'][data-part='item-indicator'] {
     display: inline-flex;
     flex: none;
-    color: var(--tone-text);
+    color: var(--tone-soft-text);
   }
 }
