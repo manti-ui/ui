@@ -75,7 +75,7 @@
   [data-scope='tags-input'][data-part='item-preview'] {
     display: inline-flex;
     align-items: center;
-    gap: var(--manti-space-1);
+    gap: var(--manti-space-2);
     height: 1.625rem;
     padding-inline: var(--manti-space-2);
     background: color-mix(in oklab, var(--tone-soft-bg) 80%, transparent);
@@ -97,8 +97,8 @@
     color: currentcolor;
     opacity: 0.7;
     cursor: pointer;
+    padding: 0;
     transition: opacity var(--manti-duration-fast) var(--manti-ease-smooth);
-
     &:hover {
       opacity: 1;
     }
