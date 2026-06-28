@@ -1,0 +1,38 @@
+---
+title: Textarea
+slug: /components/textarea
+group: Inputs
+order: 54
+description: A labeled multiline text input with helper text, error state, and optional auto-resize.
+---
+
+# Textarea
+
+A static multiline text input with label, helper text, error state, and optional
+auto-resize. It wires up label association and `aria-describedby` /
+`aria-invalid` automatically, and accepts native textarea attributes.
+
+<Demo name="textarea/basic" />
+
+## Sizes and states
+
+`size` sets the control rhythm, `rows` sets the initial height, `error` flips the
+field to the invalid state and replaces helper text, and native flags like
+`disabled` work as expected.
+
+<Demo name="textarea/states" />
+
+## Props
+
+<PropsTable component="textarea" />
+
+## Anatomy
+
+Textarea uses the same public `field` anatomy as TextField so shared field
+selectors and component tokens theme both controls.
+
+<Anatomy component="textarea" />
+
+## Component tokens
+
+<TokenTable component="textarea" />

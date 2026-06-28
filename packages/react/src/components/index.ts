@@ -185,6 +185,9 @@ export type {
 export { TextField } from './TextField/TextField';
 export type { TextFieldProps } from './TextField/TextField';
 
+export { Textarea } from './Textarea/Textarea';
+export type { TextareaProps } from './Textarea/Textarea';
+
 export { Toggle } from './Toggle/Toggle';
 export type { ToggleProps } from './Toggle/Toggle';
 
