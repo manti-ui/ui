@@ -31,6 +31,7 @@
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-field-height: var(--manti-control-height-md);
     --manti-field-padding-x: var(--manti-space-3);
+    --manti-field-padding-y: var(--manti-space-2);
 
     display: flex;
     align-items: center;
@@ -57,6 +58,11 @@
     &[data-size='lg'] {
       --manti-field-height: var(--manti-control-height-lg);
       --manti-field-padding-x: var(--manti-space-4);
+      --manti-field-padding-y: var(--manti-space-3);
+    }
+
+    &[data-multiline='true'] {
+      align-items: stretch;
     }
 
     &:hover {
@@ -95,7 +101,7 @@
     }
   }
 
-  [data-scope='field'][data-part='root']:has(input:disabled)
+  [data-scope='field'][data-part='root']:has(:is(input, textarea):disabled)
     [data-part='control'] {
     background: var(--manti-surface-sunken);
     opacity: 0.6;
@@ -113,6 +119,23 @@
 
     &::placeholder {
       color: var(--manti-text-subtle);
+    }
+  }
+
+  [data-scope='field'][data-part='input']:is(textarea) {
+    width: 100%;
+    min-height: var(--manti-field-height);
+    padding-block: var(--manti-field-padding-y);
+    line-height: var(--manti-leading-normal);
+    font-family: inherit;
+    resize: vertical;
+
+    &[data-resize='none'] {
+      resize: none;
+    }
+
+    &[data-auto-resize='true'] {
+      overflow-y: hidden;
     }
   }
 

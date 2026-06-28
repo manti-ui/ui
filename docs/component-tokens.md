@@ -44,6 +44,7 @@ component token only to make one component diverge on purpose — see
 | `editable`          | `--manti-editable-height`                   | `var(--manti-control-height-md)` |
 | `field`             | `--manti-field-height`                      | `var(--manti-control-height-md)` |
 | `field`             | `--manti-field-padding-x`                   | `var(--manti-space-3)`           |
+| `field`             | `--manti-field-padding-y`                   | `var(--manti-space-2)`           |
 | `floating-panel`    | `--manti-floating-panel-min-width`          | `16rem`                          |
 | `floating-panel`    | `--manti-floating-panel-min-height`         | `8rem`                           |
 | `hover-card`        | `--manti-hover-card-max-width`              | `20rem`                          |
