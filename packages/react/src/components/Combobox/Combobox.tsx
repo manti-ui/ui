@@ -1,4 +1,4 @@
-import { useId, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { combobox } from '@manti-ui/folds';
 import type { MantiTone } from '@manti-ui/tokens';
@@ -116,6 +116,29 @@ export function Combobox({
       : undefined,
   });
   const api = combobox.connect(service, normalizeProps);
+
+  // Keep the selection (and its check indicator) in sync with the typed text:
+  // the checked item is always the one whose label exactly matches the input.
+  // Editing the text moves the check to a newly matching item, or removes it
+  // when nothing matches — Zag otherwise keeps the old selection until the next
+  // pick, leaving a stale check. Multi-select empties the input after every pick
+  // by design, so it's skipped.
+  useEffect(() => {
+    if (multiple) return;
+    const typed = api.inputValue.trim().toLowerCase();
+    const match = typed
+      ? items.find((item) => item.label.trim().toLowerCase() === typed)
+      : undefined;
+    if (match) {
+      if (api.value[0] !== match.value) api.setValue([match.value]);
+    } else if (api.value.length > 0) {
+      // Drop the stale selection but keep the text being edited: setValue rewrites
+      // the input under the default `replace` behavior, so restore it afterwards.
+      const text = api.inputValue;
+      api.setValue([]);
+      api.setInputValue(text);
+    }
+  }, [api, items, multiple]);
 
   return (
     <div
