@@ -6,10 +6,14 @@
   [data-scope='carousel'][data-part='root'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-carousel-slide-gap: var(--manti-space-3);
+    --manti-carousel-gap: var(--manti-space-3);
+    --manti-carousel-radius: var(--manti-radius-lg);
+    --manti-carousel-trigger-size: 2.25rem;
+    --manti-carousel-indicator-size: 0.5rem;
 
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-3);
+    gap: var(--manti-carousel-gap);
   }
 
   /* Gap between slides comes from Zag's `spacing` machine prop (wired to
@@ -43,7 +47,7 @@
   }
 
   [data-scope='carousel'][data-part='item'] {
-    border-radius: var(--manti-radius-lg);
+    border-radius: var(--manti-carousel-radius);
     overflow: hidden;
   }
 
@@ -59,8 +63,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: var(--manti-carousel-trigger-size);
+    height: var(--manti-carousel-trigger-size);
     background: var(--manti-panel-tint);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
@@ -93,8 +97,8 @@
   }
 
   [data-scope='carousel'][data-part='indicator'] {
-    width: 0.5rem;
-    height: 0.5rem;
+    width: var(--manti-carousel-indicator-size);
+    height: var(--manti-carousel-indicator-size);
     background: var(--manti-border-strong);
     border-radius: var(--manti-radius-full);
     cursor: pointer;

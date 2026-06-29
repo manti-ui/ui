@@ -1,0 +1,34 @@
+---
+title: v0.1.2
+slug: /changelog/v0.1.2
+group: Changelog
+order: 1
+date: '2026-06-29'
+description: A new Textarea multiline field, per-node TreeView icons, scrollable TimePicker columns, a tonal Listbox selection, and Combobox and TagsInput refinements.
+---
+
+# v0.1.2
+
+_Released 2026-06-29._
+
+## Added
+
+- **Textarea** — a new multiline text field. It renders the shared `field` shell,
+  so label, hint/description, error/invalid state, sizes (`sm`/`md`/`lg`), and
+  focus-ring `tone` all match `TextField`. Adds `autoResize` to grow with its
+  content (bounded by `maxHeight`), `fullWidth`, and a `resize` affordance.
+- **TreeView** — an `icon` render prop for per-node leading icons. It receives
+  the node and its live state, so the icon can react to expansion/selection
+  (e.g. folder/file icons).
+
+## Changed
+
+- **TimePicker** — its columns now scroll inside a Manti `ScrollArea`, and the
+  panel is wider so the hour/minute/second columns stay comfortable.
+- **Listbox** — the selected item now gets a tonal background, making the current
+  selection easier to spot.
+
+## Fixed
+
+- **Combobox** — the selection now stays in sync with the typed text.
+- **TagsInput** — refined the spacing of the item preview.

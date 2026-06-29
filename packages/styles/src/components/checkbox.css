@@ -7,10 +7,13 @@
   [data-scope='checkbox'][data-part='root'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-checkbox-size: 1.25rem;
+    --manti-checkbox-radius: var(--manti-radius-sm);
+    --manti-checkbox-gap: var(--manti-space-3);
+    --manti-checkbox-font-size: var(--manti-text-sm);
 
     display: inline-flex;
     align-items: center;
-    gap: var(--manti-space-3);
+    gap: var(--manti-checkbox-gap);
     cursor: pointer;
     user-select: none;
 
@@ -37,7 +40,7 @@
     height: var(--manti-checkbox-size);
     background: var(--manti-surface-raised);
     border: 1.5px solid var(--manti-border-strong);
-    border-radius: var(--manti-radius-sm);
+    border-radius: var(--manti-checkbox-radius);
     color: var(--tone-on-solid);
     transition:
       background-color var(--manti-duration-base) var(--manti-ease-smooth),
@@ -83,7 +86,7 @@
   }
 
   [data-scope='checkbox'][data-part='label'] {
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-checkbox-font-size);
     font-weight: var(--manti-weight-medium);
     color: var(--manti-text);
   }

@@ -10,16 +10,22 @@
   }
 
   [data-scope='collapsible'][data-part='trigger'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-collapsible-radius: var(--manti-radius-md);
+    --manti-collapsible-padding-x: var(--manti-space-4);
+    --manti-collapsible-padding-y: var(--manti-space-3);
+    --manti-collapsible-gap: var(--manti-space-2);
+
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--manti-space-2);
-    padding: var(--manti-space-3) var(--manti-space-4);
+    gap: var(--manti-collapsible-gap);
+    padding: var(--manti-collapsible-padding-y) var(--manti-collapsible-padding-x);
     background: var(--manti-panel-tint);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-collapsible-radius);
     color: var(--manti-text);
     font: inherit;
     font-weight: var(--manti-weight-semibold);

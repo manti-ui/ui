@@ -4,15 +4,24 @@
  */
 @layer manti.components {
   [data-scope='alert'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-alert-radius: var(--manti-radius-lg);
+    --manti-alert-padding-x: var(--manti-space-4);
+    --manti-alert-padding-y: var(--manti-space-4);
+    --manti-alert-gap: var(--manti-space-3);
+    --manti-alert-icon-size: 1.25rem;
+    --manti-alert-dismiss-size: 1.5rem;
+    --manti-alert-font-size: var(--manti-text-sm);
+
     display: flex;
     align-items: flex-start;
-    gap: var(--manti-space-3);
-    padding: var(--manti-space-4);
+    gap: var(--manti-alert-gap);
+    padding: var(--manti-alert-padding-y) var(--manti-alert-padding-x);
     background: color-mix(in oklab, var(--tone-soft-bg) 78%, transparent);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--tone-border);
-    border-radius: var(--manti-radius-lg);
+    border-radius: var(--manti-alert-radius);
     color: var(--tone-soft-text);
     box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
 
@@ -42,8 +51,8 @@
     flex: none;
     display: grid;
     place-items: center;
-    width: 1.25rem;
-    height: 1.25rem;
+    width: var(--manti-alert-icon-size);
+    height: var(--manti-alert-icon-size);
     margin-top: 0.125rem;
     color: var(--tone-text);
   }
@@ -62,13 +71,13 @@
   }
 
   [data-scope='alert'][data-part='title'] {
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-alert-font-size);
     font-weight: var(--manti-weight-semibold);
     line-height: var(--manti-leading-snug);
   }
 
   [data-scope='alert'][data-part='description'] {
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-alert-font-size);
     line-height: var(--manti-leading-normal);
     opacity: 0.9;
   }
@@ -77,8 +86,8 @@
     flex: none;
     display: grid;
     place-items: center;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: var(--manti-alert-dismiss-size);
+    height: var(--manti-alert-dismiss-size);
     margin: -0.125rem -0.125rem 0 0;
     border-radius: var(--manti-radius-sm);
     color: inherit;
