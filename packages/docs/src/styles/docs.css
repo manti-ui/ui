@@ -213,8 +213,7 @@
   .docs-nav-group + .docs-nav-group {
     margin-top: var(--manti-space-3);
   }
-  /* Restyle the Manti Collapsible trigger as a minimal, full-width category
-     header (the panel-button default is replaced via the public anatomy). */
+
   .docs-sidebar-nav [data-scope='collapsible'][data-part='trigger'] {
     display: flex;
     width: 100%;
@@ -384,8 +383,6 @@
     color: var(--manti-text-subtle);
   }
 
-  /* Inline prose links only — wrapper links (.docs-plain cards, .docs-release
-     rows) keep their own styling and must not pick up the underline/link color. */
   .docs-prose a:not(.docs-plain):not(.docs-release) {
     color: var(--manti-link);
     text-decoration: none;
@@ -468,18 +465,19 @@
     all: unset;
     font-family: var(--manti-font-mono);
   }
-  /* Shiki emits per-token `--shiki-light` / `--shiki-dark` custom props. */
+
   pre.shiki,
   pre.shiki span {
     color: var(--shiki-light);
-    background-color: var(--shiki-light-bg);
   }
   [data-theme='dark'] pre.shiki,
   [data-theme='dark'] pre.shiki span {
     color: var(--shiki-dark);
-    background-color: var(--shiki-dark-bg);
   }
-  /* only the <pre> carries the surface fill, not every token span */
+
+  pre.shiki {
+    background-color: var(--manti-surface);
+  }
   pre.shiki span {
     background-color: transparent;
   }
@@ -790,5 +788,77 @@
     .docs-nav-menu-button {
       display: none;
     }
+  }
+
+  .install-card {
+    margin: 0 0 var(--manti-space-6);
+    border: 1px solid var(--manti-border);
+    border-radius: var(--manti-radius-lg);
+    overflow: clip;
+    background: var(--manti-surface);
+  }
+  .install-card-bar {
+    display: flex;
+    align-items: center;
+    padding: var(--manti-space-2);
+    border-bottom: 1px solid var(--manti-border);
+  }
+  /* The manager Tabs are a switcher only — hide their (empty) content panel. */
+  .install-card-bar [data-scope='tabs'][data-part='root'] {
+    gap: 0;
+  }
+  .install-card-bar [data-scope='tabs'][data-part='content'] {
+    display: none;
+  }
+  .install-card-bar [data-part='trigger'] {
+    padding: var(--manti-space-1) var(--manti-space-3);
+    font-size: var(--manti-text-sm);
+  }
+  .install-card-body {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+    padding: var(--manti-space-3) var(--manti-space-4);
+    background: transparent;
+  }
+
+  .install-card-body .install-cmd {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    color: var(--manti-text);
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-text-sm);
+  }
+  .install-card-body .install-cmd-pm {
+    color: light-dark(#8250df, #d2a8ff);
+  }
+  .install-card-body .install-cmd-sub {
+    color: light-dark(#0550ae, #79c0ff);
+  }
+
+  .install-card-body [data-scope='clipboard'][data-part='root'] {
+    flex: none;
+  }
+  .install-card-body [data-scope='clipboard'][data-part='input'] {
+    display: none;
+  }
+  .install-card-body [data-scope='clipboard'][data-part='control'] {
+    min-height: 0;
+    padding: 0;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+  }
+  .install-card-body [data-scope='clipboard'][data-part='trigger'] {
+    width: auto;
+    padding-inline: var(--manti-space-1);
+    border-inline-start: none;
   }
 }

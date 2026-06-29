@@ -6,6 +6,7 @@ import { Anatomy } from '../doc/Anatomy';
 import { ColorRamps, ToneGallery } from '../doc/ColorRamps';
 import { ComponentStatusGrid } from '../doc/ComponentStatusGrid';
 import { Demo } from '../doc/Demo';
+import { InstallTabs } from '../doc/InstallTabs';
 import { LinkButton } from '../doc/LinkButton';
 import { PropsTable } from '../doc/PropsTable';
 import { ReleasesList } from '../doc/ReleasesList';
@@ -52,6 +53,7 @@ export const mdxComponents = {
   a: Anchor,
   pre: CodeBlock,
   Demo,
+  InstallTabs,
   LinkButton,
   PropsTable,
   Anatomy,
