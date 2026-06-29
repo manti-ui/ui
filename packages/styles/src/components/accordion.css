@@ -4,13 +4,18 @@
  */
 @layer manti.components {
   [data-scope='accordion'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-accordion-radius: var(--manti-radius-lg);
+    --manti-accordion-padding-x: var(--manti-space-5);
+    --manti-accordion-padding-y: var(--manti-space-4);
+    --manti-accordion-gap: var(--manti-space-3);
     display: flex;
     flex-direction: column;
     background: var(--manti-panel-tint);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-lg);
+    border-radius: var(--manti-accordion-radius);
     box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
     overflow: clip;
   }
@@ -31,9 +36,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--manti-space-3);
+    gap: var(--manti-accordion-gap);
     width: 100%;
-    padding: var(--manti-space-4) var(--manti-space-5);
+    padding: var(--manti-accordion-padding-y) var(--manti-accordion-padding-x);
     background: none;
     border: none;
     color: var(--manti-text);
@@ -72,7 +77,7 @@
   }
 
   [data-scope='accordion'][data-part='item-content'] {
-    padding: 0 var(--manti-space-5) var(--manti-space-4);
+    padding: 0 var(--manti-accordion-padding-x) var(--manti-accordion-padding-y);
     color: var(--manti-text-muted);
     line-height: var(--manti-leading-relaxed);
 

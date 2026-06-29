@@ -5,16 +5,19 @@
 @layer manti.components {
   [data-scope='badge'][data-part='root'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-badge-radius: var(--manti-radius-full);
     --manti-badge-font-size: var(--manti-text-xs);
     --manti-badge-padding-y: 0.125rem;
     --manti-badge-padding-x: var(--manti-space-2);
+    --manti-badge-gap: var(--manti-space-1);
+    --manti-badge-dot-size: 0.5em;
 
     display: inline-flex;
     align-items: center;
-    gap: var(--manti-space-1);
+    gap: var(--manti-badge-gap);
     padding: var(--manti-badge-padding-y) var(--manti-badge-padding-x);
     border: 1px solid transparent;
-    border-radius: var(--manti-radius-full);
+    border-radius: var(--manti-badge-radius);
     font-family: var(--manti-font-sans);
     font-size: var(--manti-badge-font-size);
     font-weight: var(--manti-weight-semibold);
@@ -56,8 +59,8 @@
   }
 
   [data-scope='badge'][data-part='dot'] {
-    width: 0.5em;
-    height: 0.5em;
+    width: var(--manti-badge-dot-size);
+    height: var(--manti-badge-dot-size);
     border-radius: var(--manti-radius-full);
     background: currentColor;
   }

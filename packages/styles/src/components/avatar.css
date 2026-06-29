@@ -6,6 +6,7 @@
   [data-scope='avatar'][data-part='root'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-avatar-size: 2.5rem;
+    --manti-avatar-radius: var(--manti-radius-full);
 
     position: relative;
     display: inline-flex;
@@ -17,7 +18,7 @@
     overflow: hidden;
     background: var(--manti-surface-sunken);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-full);
+    border-radius: var(--manti-avatar-radius);
     color: var(--manti-text-muted);
     font-size: calc(var(--manti-avatar-size) * 0.4);
     font-weight: var(--manti-weight-semibold);
@@ -36,7 +37,7 @@
     }
 
     &[data-shape='square'] {
-      border-radius: var(--manti-radius-md);
+      --manti-avatar-radius: var(--manti-radius-md);
     }
   }
 

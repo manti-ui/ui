@@ -32,20 +32,24 @@
   [data-scope='dialog'][data-part='content'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-dialog-max-width: 32rem;
+    --manti-dialog-radius: var(--manti-radius-lg);
+    --manti-dialog-padding-x: var(--manti-space-6);
+    --manti-dialog-padding-y: var(--manti-space-6);
+    --manti-dialog-gap: var(--manti-space-3);
 
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-3);
+    gap: var(--manti-dialog-gap);
     width: 100%;
     max-width: var(--manti-dialog-max-width);
     margin: auto;
-    padding: var(--manti-space-6);
+    padding: var(--manti-dialog-padding-y) var(--manti-dialog-padding-x);
     background: var(--manti-panel-tint-strong);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-lg);
+    border-radius: var(--manti-dialog-radius);
     box-shadow:
       inset 0 1px 0 0 var(--manti-panel-highlight),
       var(--manti-panel-shadow);
