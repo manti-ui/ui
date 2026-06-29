@@ -1,28 +1,37 @@
 name: Release
 
-# Publishes the public @manti-ui/* packages to npm and opens a GitHub Release
-# whenever a version tag (v*) is pushed.
+# Changesets-driven release on every push to `main`.
 #
-# Cutting a release:
-#   1. Bump the package versions (e.g. all packages 0.1.1 -> 0.1.2) and commit.
-#   2. git tag v0.1.2 && git push origin v0.1.2
+# Flow:
+#   1. While developing, run `pnpm changeset` and commit the generated
+#      `.changeset/*.md` file describing the bump (patch/minor/major) + summary.
+#   2. Merge that work to `main`. This workflow opens/updates a
+#      "chore(release): version packages" PR that bumps versions + writes
+#      CHANGELOGs (the 4 public @manti-ui/* packages move together — see
+#      `fixed` in .changeset/config.json).
+#   3. Merge that PR. This workflow then builds, publishes to npm, and cuts a
+#      single `vX.Y.Z` GitHub Release.
 #
-# Prerequisite: an `NPM_TOKEN` repository secret holding an npm automation token
-# with publish rights to the @manti-ui scope. Without it the publish step fails.
-# (Settings -> Secrets and variables -> Actions -> New repository secret.)
+# Prerequisites:
+#   - `NPM_TOKEN` repo secret: an npm *Automation* token with publish rights to
+#     the @manti-ui scope (Automation bypasses the account's 2FA OTP).
+#   - Settings -> Actions -> General -> "Allow GitHub Actions to create and
+#     approve pull requests" must be ON, so the action can open the version PR.
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
 
-# Never run two releases for the same tag at once; don't cancel an in-flight one.
+# Never run two releases at once; don't cancel an in-flight one.
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 
 permissions:
-  contents: write # create the GitHub Release + read history for notes
+  contents: write # version commit, tags, GitHub Release
+  pull-requests: write # open/update the "version packages" PR
+  id-token: write # npm provenance, if enabled later
 
 jobs:
   release:
@@ -46,18 +55,33 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build packages
-        run: pnpm build:packages
-
-      # Publishes every non-private workspace package (tokens, styles, folds,
-      # react) in dependency order; `workspace:*` ranges are rewritten to the
-      # real version by pnpm. Private packages (docs, the root) are skipped.
-      - name: Publish to npm
-        run: pnpm -r publish --access public --no-git-checks
+      # When changesets exist -> opens/updates the version PR (runs `version`).
+      # When none exist but versions are ahead of npm -> publishes (runs `publish`).
+      - name: Create version PR or publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: pnpm run version-packages
+          publish: pnpm run release
+          commit: 'chore(release): version packages'
+          title: 'chore(release): version packages'
+          createGithubReleases: false # we cut one combined vX.Y.Z release below
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create GitHub Release
+      # Packages version in lockstep (fixed), so one tag/release covers them all.
+      - name: Tag and create GitHub Release
+        if: steps.changesets.outputs.published == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "${GITHUB_REF_NAME}" --verify-tag --generate-notes
+        run: |
+          VERSION="v$(node -p "require('./packages/react/package.json').version")"
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            echo "Release $VERSION already exists, skipping."
+            exit 0
+          fi
+          git tag -a "$VERSION" -m "$VERSION"
+          git push origin "$VERSION"
+          gh release create "$VERSION" --verify-tag --generate-notes
