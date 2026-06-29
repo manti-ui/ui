@@ -474,6 +474,7 @@ export const componentCatalog: CatalogEntry[] = [
   entry('Tabs', 'tabs', 'Tabbed navigation.'),
   entry('TagsInput', 'tags-input', 'Token / chip text entry.'),
   entry('TextField', 'text-field', 'Labeled text input.'),
+  entry('Textarea', 'textarea', 'Multiline text input.'),
   entry('TimePicker', 'time-picker', 'Time selection control.'),
   entry('Timer', 'timer', 'Countdown / count-up timer.'),
   entry('Toast', 'toast', 'Transient notifications.'),

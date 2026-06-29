@@ -1,4 +1,4 @@
-import { useId, useMemo } from 'react';
+import { useEffect, useId, useMemo, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { timePicker } from '@manti-ui/folds';
 import type { MantiTone } from '@manti-ui/tokens';
@@ -6,6 +6,9 @@ import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
+import { ScrollArea } from '../ScrollArea/ScrollArea';
+
+type TimeUnit = 'hour' | 'minute' | 'period';
 
 const periods = ['am', 'pm'] as const;
 
@@ -70,6 +73,51 @@ export function TimePicker({
   );
   const api = timePicker.connect(service as never, normalizeProps as never);
 
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // Zag auto-scrolls each column to its active cell on open by writing the
+  // column's own `scrollTop`. The columns now scroll inside a Manti ScrollArea,
+  // so that write lands on a non-scrolling element — re-center the active cell
+  // in each ScrollArea viewport instead.
+  useEffect(() => {
+    if (!api.open) return;
+    const raf = requestAnimationFrame(() => {
+      const root = contentRef.current;
+      if (!root) return;
+      root
+        .querySelectorAll<HTMLElement>(
+          '[data-scope="scroll-area"][data-part="viewport"]',
+        )
+        .forEach((viewport) => {
+          const cell =
+            viewport.querySelector<HTMLElement>(
+              '[data-part="cell"][data-selected]',
+            ) ??
+            viewport.querySelector<HTMLElement>('[data-part="cell"][data-now]');
+          if (!cell) return;
+          const cellRect = cell.getBoundingClientRect();
+          const viewportRect = viewport.getBoundingClientRect();
+          viewport.scrollTop +=
+            cellRect.top -
+            viewportRect.top -
+            (viewport.clientHeight - cell.clientHeight) / 2;
+        });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [api.open]);
+
+  // Each scrollable column lives inside a Manti ScrollArea. Forward the column's
+  // `hidden` state (Zag hides the period column in 24-hour locales) to the
+  // wrapper so no empty column/divider lingers.
+  const renderColumn = (unit: TimeUnit, cells: ReactNode) => {
+    const columnProps = api.getColumnProps({ unit });
+    return (
+      <ScrollArea key={unit} focusable={false} hidden={columnProps.hidden}>
+        <div {...columnProps}>{cells}</div>
+      </ScrollArea>
+    );
+  };
+
   return (
     <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
@@ -97,37 +145,40 @@ export function TimePicker({
       </div>
       <Portal>
         <div {...api.getPositionerProps()} data-tone={tone}>
-          <div {...api.getContentProps()}>
-            <div {...api.getColumnProps({ unit: 'hour' })}>
-              {api.getHours().map((cell) => (
+          <div {...api.getContentProps()} ref={contentRef}>
+            {renderColumn(
+              'hour',
+              api.getHours().map((cell) => (
                 <button
                   key={cell.value}
                   {...api.getHourCellProps({ value: cell.value })}
                 >
                   {cell.label}
                 </button>
-              ))}
-            </div>
-            <div {...api.getColumnProps({ unit: 'minute' })}>
-              {api.getMinutes().map((cell) => (
+              )),
+            )}
+            {renderColumn(
+              'minute',
+              api.getMinutes().map((cell) => (
                 <button
                   key={cell.value}
                   {...api.getMinuteCellProps({ value: cell.value })}
                 >
                   {cell.label}
                 </button>
-              ))}
-            </div>
-            <div {...api.getColumnProps({ unit: 'period' })}>
-              {periods.map((period) => (
+              )),
+            )}
+            {renderColumn(
+              'period',
+              periods.map((period) => (
                 <button
                   key={period}
                   {...api.getPeriodCellProps({ value: period })}
                 >
                   {period.toUpperCase()}
                 </button>
-              ))}
-            </div>
+              )),
+            )}
           </div>
         </div>
       </Portal>

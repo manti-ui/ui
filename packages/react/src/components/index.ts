@@ -171,7 +171,11 @@ export { Timer } from './Timer/Timer';
 export type { TimerProps } from './Timer/Timer';
 
 export { TreeView } from './TreeView/TreeView';
-export type { TreeNode, TreeViewProps } from './TreeView/TreeView';
+export type {
+  TreeNode,
+  TreeNodeState,
+  TreeViewProps,
+} from './TreeView/TreeView';
 
 export { createToaster } from './Toast/Toast';
 export type {
@@ -184,6 +188,9 @@ export type {
 
 export { TextField } from './TextField/TextField';
 export type { TextFieldProps } from './TextField/TextField';
+
+export { Textarea } from './Textarea/Textarea';
+export type { TextareaProps } from './Textarea/Textarea';
 
 export { Toggle } from './Toggle/Toggle';
 export type { ToggleProps } from './Toggle/Toggle';

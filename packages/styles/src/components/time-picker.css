@@ -74,6 +74,9 @@
   }
 
   [data-scope='time-picker'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-time-picker-column-height: 15rem;
+
     display: flex;
     gap: var(--manti-space-2);
     padding: var(--manti-space-3);
@@ -99,30 +102,39 @@
     }
   }
 
+  /* The column is a plain flex stack now; the surrounding Manti ScrollArea owns
+     scrolling, the bounded height, and the scrollbar. */
   [data-scope='time-picker'][data-part='column'] {
-    --manti-time-picker-column-height: 15rem;
-
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
-    max-height: var(--manti-time-picker-column-height);
-    padding-inline: var(--manti-space-1);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scroll-snap-type: y proximity;
-    scrollbar-width: thin;
-    scrollbar-color: var(--manti-border-strong) transparent;
+    /* A little inset so the ScrollArea's overlay thumb clears the cell text. */
+    padding-inline: var(--manti-space-2);
   }
 
-  /* Hairline divider between the hour / minute / period columns. */
-  [data-scope='time-picker'][data-part='column']:not(:last-child) {
+  /* Each column scrolls inside a Manti ScrollArea. Bound its height and carry the
+     hairline divider between the hour / minute / period columns. */
+  [data-scope='time-picker'][data-part='content']
+    > [data-scope='scroll-area'][data-part='root'] {
+    max-height: var(--manti-time-picker-column-height);
+    border-radius: 0;
+  }
+
+  [data-scope='time-picker'][data-part='content']
+    > [data-scope='scroll-area'][data-part='root']:not(:last-child) {
     border-inline-end: 1px solid var(--manti-panel-border);
+  }
+
+  /* Keep the wheel-picker snap on the actual scroller (the ScrollArea viewport). */
+  [data-scope='time-picker'][data-part='content']
+    [data-scope='scroll-area'][data-part='viewport'] {
+    scroll-snap-type: y proximity;
   }
 
   /* Zag emits a single `cell` part for every column; `data-unit` distinguishes
      hour / minute / period. Style them uniformly. */
   [data-scope='time-picker'][data-part='cell'] {
-    --manti-time-picker-cell-min-width: 2.75rem;
+    --manti-time-picker-cell-min-width: 3.5rem;
 
     display: flex;
     align-items: center;

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.4/schema.json",
+  "changelog": ["@changesets/changelog-github", { "repo": "manti-ui/ui" }],
+  "commit": false,
+  "fixed": [
+    [
+      "@manti-ui/tokens",
+      "@manti-ui/styles",
+      "@manti-ui/folds",
+      "@manti-ui/react"
+    ]
+  ],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

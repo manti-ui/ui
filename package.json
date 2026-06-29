@@ -17,6 +17,9 @@
     "docs:preview": "vite preview packages/docs",
     "build:site": "pnpm docs:build && pnpm build:storybook && rm -rf packages/docs/dist/storybook && cp -r storybook-static packages/docs/dist/storybook",
     "gen:tokens": "pnpm --filter @manti-ui/styles gen:tokens",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build:packages && changeset publish",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
@@ -25,8 +28,10 @@
     "verify": "pnpm lint && pnpm typecheck && pnpm build"
   },
   "devDependencies": {
-    "@manti-ui/styles": "workspace:*",
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0",
     "@eslint/js": "^10.0.0",
+    "@manti-ui/styles": "workspace:*",
     "@storybook/addon-a11y": "^10.4.3",
     "@storybook/addon-docs": "^10.4.3",
     "@storybook/react-vite": "^10.4.3",

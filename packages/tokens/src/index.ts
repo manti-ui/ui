@@ -280,7 +280,7 @@ export const componentTokens = {
   dialog: ['max-width'],
   drawer: ['size'],
   editable: ['height'],
-  field: ['height', 'padding-x'],
+  field: ['height', 'padding-x', 'padding-y'],
   'floating-panel': ['min-width', 'min-height'],
   'hover-card': ['max-width'],
   listbox: ['min-width', 'max-height'],
