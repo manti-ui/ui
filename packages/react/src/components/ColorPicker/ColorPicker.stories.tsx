@@ -17,3 +17,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
+
+/** Trigger shows only the color swatch, hiding the formatted value text. */
+export const SwatchOnly: Story = {
+  args: { showValueText: false },
+};

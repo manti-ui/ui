@@ -15,6 +15,12 @@ export interface ColorPickerProps {
   defaultValue?: string;
   /** Called whenever the value changes; emits a CSS color string. */
   onValueChange?: (value: string) => void;
+  /**
+   * Show the formatted value text (e.g. `rgba(124, 58, 237, 1)`) next to the
+   * swatch in the trigger. Set to `false` to show only the color swatch.
+   * Defaults to `true`.
+   */
+  showValueText?: boolean;
   /** Placement of the panel relative to the control. */
   placement?: Placement;
   disabled?: boolean;
@@ -30,6 +36,7 @@ export function ColorPicker({
   value,
   defaultValue = '#7c3aed',
   onValueChange,
+  showValueText = true,
   placement = 'bottom-start',
   disabled,
   name,
@@ -62,12 +69,14 @@ export function ColorPicker({
     <div {...api.getRootProps()} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
-        <button {...api.getTriggerProps()}>
+        <button {...api.getTriggerProps()} data-value-text={showValueText}>
           <span
             data-part="value-swatch"
             style={{ background: api.valueAsString }}
           />
-          <span {...api.getValueTextProps()}>{api.valueAsString}</span>
+          {showValueText && (
+            <span {...api.getValueTextProps()}>{api.valueAsString}</span>
+          )}
         </button>
       </div>
       <Portal>
