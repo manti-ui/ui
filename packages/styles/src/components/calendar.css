@@ -173,6 +173,9 @@
     height: 100%;
     min-height: var(--manti-calendar-day-min-height);
     padding: var(--manti-calendar-day-padding);
+    /* Reset the DatePicker pill's rounding so hover/selected/focus fill the whole
+       cell, flush to the hairlines, rather than an inset rounded box. */
+    border-radius: 0;
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
     font-variant-numeric: tabular-nums;
