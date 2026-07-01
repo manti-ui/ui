@@ -280,6 +280,7 @@ export const componentTokens = {
   avatar: ['size', 'radius'],
   badge: ['radius', 'font-size', 'padding-y', 'padding-x', 'gap', 'dot-size'],
   button: ['radius', 'height', 'padding-x', 'font-size', 'gap'],
+  calendar: ['day-min-height', 'gap', 'radius'],
   card: ['radius', 'padding-x', 'padding-y'],
   carousel: [
     'slide-gap',
