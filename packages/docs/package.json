@@ -1,6 +1,6 @@
 {
   "name": "@manti-ui/docs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Manti UI documentation website — built end-to-end with Manti UI.",
   "private": true,
   "type": "module",
