@@ -29,7 +29,7 @@ export interface CalendarProps {
   startOfWeek?: number;
   /**
    * Always render six week rows so the grid height stays constant across months.
-   * Defaults to `true`.
+   * Defaults to `false` (each month shows only the weeks it spans).
    */
   fixedWeeks?: boolean;
   /** Earliest selectable date (ISO YYYY-MM-DD); earlier days render disabled. */
@@ -47,6 +47,8 @@ export interface CalendarProps {
    * day number. Receives the day value.
    */
   renderDay?: (day: CalendarDayValue) => ReactNode;
+  /** Content rendered at the trailing edge of the toolbar (e.g. a view switcher). */
+  actions?: ReactNode;
   id?: string;
   className?: string;
 }
@@ -82,13 +84,14 @@ export function Calendar({
   onValueChange,
   locale,
   startOfWeek,
-  fixedWeeks = true,
+  fixedWeeks = false,
   min,
   max,
   disabled,
   readOnly,
   name,
   renderDay,
+  actions,
   id,
   className,
 }: CalendarProps) {
@@ -132,66 +135,83 @@ export function Calendar({
       className={cx(className)}
     >
       <div {...api.getContentProps()}>
-        <div {...api.getViewControlProps({ view: 'day' })}>
+        <div data-scope="calendar" data-part="toolbar">
+          <button
+            data-scope="calendar"
+            data-part="today-trigger"
+            type="button"
+            onClick={() => api.setFocusedValue(datePicker.parse(new Date()))}
+          >
+            Today
+          </button>
           <button
             {...api.getPrevTriggerProps({ view: 'day' })}
             aria-label="Previous month"
           >
             {navIcon('M10 3 5 8l5 5')}
           </button>
-          <span data-scope="calendar" data-part="heading" aria-live="polite">
-            {api.visibleRangeText.start}
-          </span>
           <button
             {...api.getNextTriggerProps({ view: 'day' })}
             aria-label="Next month"
           >
             {navIcon('M6 3l5 5-5 5')}
           </button>
+          <span data-scope="calendar" data-part="heading" aria-live="polite">
+            {api.visibleRangeText.start}
+          </span>
+          {actions != null && (
+            <span data-scope="calendar" data-part="actions">
+              {actions}
+            </span>
+          )}
         </div>
-        <table
-          {...api.getTableProps({ view: 'day', columns: api.weekDays.length })}
-        >
-          <thead {...api.getTableHeaderProps()}>
-            <tr {...api.getTableRowProps()}>
-              {api.weekDays.map((day) => (
-                <th
-                  key={day.long}
-                  {...api.getTableHeadProps()}
-                  scope="col"
-                  aria-label={day.long}
-                >
-                  {day.short}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody {...api.getTableBodyProps()}>
-            {api.weeks.map((week, weekIndex) => (
-              <tr key={weekIndex} {...api.getTableRowProps()}>
-                {week.map((cellValue, dayIndex) => (
-                  <td
-                    key={dayIndex}
-                    {...api.getDayTableCellProps({ value: cellValue })}
+        <div data-scope="calendar" data-part="grid">
+          <table
+            {...api.getTableProps({ view: 'day', columns: api.weekDays.length })}
+          >
+            <thead {...api.getTableHeaderProps()}>
+              <tr {...api.getTableRowProps()}>
+                {api.weekDays.map((day) => (
+                  <th
+                    key={day.long}
+                    {...api.getTableHeadProps()}
+                    scope="col"
+                    aria-label={day.long}
                   >
-                    <div
-                      {...api.getDayTableCellTriggerProps({ value: cellValue })}
-                    >
-                      <span data-scope="calendar" data-part="day-label">
-                        {cellValue.day}
-                      </span>
-                      {renderDay && (
-                        <span data-scope="calendar" data-part="day-content">
-                          {renderDay(cellValue)}
-                        </span>
-                      )}
-                    </div>
-                  </td>
+                    {day.short}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody {...api.getTableBodyProps()}>
+              {api.weeks.map((week, weekIndex) => (
+                <tr key={weekIndex} {...api.getTableRowProps()}>
+                  {week.map((cellValue, dayIndex) => (
+                    <td
+                      key={dayIndex}
+                      {...api.getDayTableCellProps({ value: cellValue })}
+                    >
+                      <div
+                        {...api.getDayTableCellTriggerProps({
+                          value: cellValue,
+                        })}
+                      >
+                        <span data-scope="calendar" data-part="day-label">
+                          {cellValue.day}
+                        </span>
+                        {renderDay && (
+                          <span data-scope="calendar" data-part="day-content">
+                            {renderDay(cellValue)}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

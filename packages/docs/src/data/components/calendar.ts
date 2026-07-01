@@ -43,7 +43,7 @@ export const meta: ComponentMeta = {
     {
       name: 'fixedWeeks',
       type: 'boolean',
-      default: 'true',
+      default: 'false',
       description: 'Always render six week rows so the grid height stays constant.',
     },
     {
@@ -76,13 +76,29 @@ export const meta: ComponentMeta = {
       type: '(day: CalendarDayValue) => ReactNode',
       description: 'Render custom content (e.g. events) below the day number.',
     },
+    {
+      name: 'actions',
+      type: 'ReactNode',
+      description:
+        'Content rendered at the trailing edge of the toolbar (e.g. a view switcher).',
+    },
   ],
   anatomy: [
     { part: 'root', description: 'The calendar wrapper; carries data-tone.' },
     {
-      part: 'heading',
-      description: 'The month/year label between the prev/next buttons.',
+      part: 'toolbar',
+      description: 'The Today / prev / next / month-label row above the grid.',
     },
+    { part: 'today-trigger', description: 'The button that jumps to today.' },
+    {
+      part: 'heading',
+      description: 'The month/year label in the toolbar.',
+    },
+    {
+      part: 'actions',
+      description: 'The trailing toolbar slot (renders the actions prop).',
+    },
+    { part: 'grid', description: 'The bordered frame around the month grid.' },
     {
       part: 'day-label',
       description: 'The day number in each cell; the today chip when data-today.',
