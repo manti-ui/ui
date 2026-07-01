@@ -112,6 +112,9 @@ component token only to make one component diverge on purpose — see
 | `slider`            | `--manti-slider-length`                     | `12rem`                          |
 | `spinner`           | `--manti-spinner-size`                      | `1.25rem`                        |
 | `spinner`           | `--manti-spinner-thickness`                 | `2px`                            |
+| `splitter`          | `--manti-splitter-handle-size`              | `0.375rem`                       |
+| `splitter`          | `--manti-splitter-line-size`                | `0.125rem`                       |
+| `splitter`          | `--manti-splitter-line-size-active`         | `0.625rem`                       |
 | `steps`             | `--manti-steps-indicator-size`              | `2rem`                           |
 | `switch`            | `--manti-switch-track-width`                | `2.75rem`                        |
 | `switch`            | `--manti-switch-track-height`               | `1.5rem`                         |
