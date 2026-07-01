@@ -19,8 +19,8 @@
     --docs-nav-h: 3.5rem;
     --docs-sidebar-w: 16rem;
     --docs-toc-w: 15rem;
-    --docs-max: 90rem;
-    --docs-prose-max: 48rem;
+    --docs-max: 100rem;
+    --docs-prose-max: 64rem;
     --docs-gutter: var(--manti-space-6);
 
     --docs-nav-bg: light-dark(
