@@ -1,0 +1,27 @@
+---
+title: v0.1.4
+slug: /changelog/v0.1.4
+group: Changelog
+order: 1
+date: '2026-07-01'
+description: A reworked Splitter resize handle that widens without reflowing panels, plus three Splitter component tokens.
+---
+
+# v0.1.4
+
+_Released 2026-07-01._
+
+## Changed
+
+- **Splitter** — the resize handle no longer reflows the panels when it grows.
+  The trigger is now a fixed-width grab track holding a thin line that tones and
+  widens via an outline on hover/drag, rather than animating the track's own
+  width. The active state is keyed on hover/drag instead of focus, so the handle
+  no longer stays stuck in the active tone after a mouse drag ends.
+
+## Added
+
+- **Splitter** — three component tokens for the handle:
+  `--manti-splitter-handle-size` (the grab-track thickness),
+  `--manti-splitter-line-size` (the resting line), and
+  `--manti-splitter-line-size-active` (the widened band on hover/drag).

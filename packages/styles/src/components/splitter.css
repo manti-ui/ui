@@ -1,7 +1,9 @@
 /**
  * Splitter — a resizable split layout backed by the Zag.js splitter machine.
- * Panels are framed surfaces; the resize trigger is a slim handle that thickens
- * and tones on hover/drag.
+ * Panels are framed surfaces; the resize trigger is a fixed-width track holding
+ * a slim line that tones and widens on hover/drag. The widening is drawn with an
+ * outline on the line (not extra width) so the handle grows visually without
+ * reflowing the panels.
  */
 @layer manti.components {
   [data-scope='splitter'][data-part='root'] {
@@ -22,31 +24,77 @@
   }
 
   [data-scope='splitter'][data-part='resize-trigger'] {
+    /* Component tokens (Tier 3) — public, semver-stable per-splitter override
+       surface. `handle-size` is the fixed grab-track thickness (the default
+       footprint, never animated → no reflow); `line-size` is the resting visible
+       line; `line-size-active` is the widened band on hover/drag. See
+       docs/styling.md. */
+    --manti-splitter-handle-size: 0.375rem;
+    --manti-splitter-line-size: 0.125rem;
+    --manti-splitter-line-size-active: 0.625rem;
+    /* Half the extra thickness, applied as an outline on each side of the line
+       so it grows outward without taking layout space. Derived → stays private. */
+    --_line-grow: calc(
+      (
+          var(--manti-splitter-line-size-active) -
+            var(--manti-splitter-line-size)
+        ) / 2
+    );
+
     flex: none;
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--manti-panel-border);
-    transition: background var(--manti-duration-fast) var(--manti-ease-smooth);
+    background: transparent;
+
+    /* The visible divider line. Thin at rest; widens via an outline of the same
+       tone on hover/drag, so the band can exceed the track and overlap the
+       panels without pushing them. */
+    &::before {
+      content: '';
+      display: block;
+      background: var(--manti-panel-border);
+      outline: 0 solid var(--tone-solid);
+      transition:
+        background-color var(--manti-duration-fast) var(--manti-ease-smooth),
+        outline-width var(--manti-duration-fast) var(--manti-ease-smooth);
+    }
 
     &[data-orientation='horizontal'] {
-      width: 0.375rem;
+      width: var(--manti-splitter-handle-size);
       cursor: col-resize;
+
+      &::before {
+        width: var(--manti-splitter-line-size);
+        height: 100%;
+      }
     }
 
     &[data-orientation='vertical'] {
-      height: 0.375rem;
+      height: var(--manti-splitter-handle-size);
       cursor: row-resize;
+
+      &::before {
+        width: 100%;
+        height: var(--manti-splitter-line-size);
+      }
     }
 
-    &:hover,
-    &[data-focus] {
+    /* Tone + widen on hover and during an active drag. Deliberately NOT keyed on
+       [data-focus]: after a mouse drag ends the machine keeps the trigger focused
+       (POINTER_UP → focused state), so a focus-based rule would leave the handle
+       stuck in the active tone. Keyboard focus is signalled by the ring below. */
+    &:hover::before,
+    &[data-dragging]::before {
       background: var(--tone-solid);
+      outline-width: var(--_line-grow);
     }
 
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--tone-ring);
-      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+      outline-offset: var(--manti-focus-ring-offset);
     }
   }
 }
