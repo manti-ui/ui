@@ -39,6 +39,9 @@ component token only to make one component diverge on purpose — see
 | `button`            | `--manti-button-padding-x`                  | `var(--manti-space-4)`           |
 | `button`            | `--manti-button-font-size`                  | `var(--manti-text-sm)`           |
 | `button`            | `--manti-button-gap`                        | `var(--manti-space-2)`           |
+| `calendar`          | `--manti-calendar-day-min-height`           | `4rem`                           |
+| `calendar`          | `--manti-calendar-gap`                      | `var(--manti-space-1)`           |
+| `calendar`          | `--manti-calendar-radius`                   | `var(--manti-radius-md)`         |
 | `card`              | `--manti-card-radius`                       | `var(--manti-radius-xl)`         |
 | `card`              | `--manti-card-padding-x`                    | `var(--manti-space-6)`           |
 | `card`              | `--manti-card-padding-y`                    | `var(--manti-space-6)`           |
