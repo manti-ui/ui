@@ -331,6 +331,7 @@ export const componentTokens = {
   'signature-pad': ['height'],
   slider: ['thumb-size', 'track-size', 'length'],
   spinner: ['size', 'thickness'],
+  splitter: ['handle-size', 'line-size', 'line-size-active'],
   steps: ['indicator-size'],
   switch: ['track-width', 'track-height', 'track-padding'],
   'tags-input': ['height'],
