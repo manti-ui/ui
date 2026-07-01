@@ -1,0 +1,69 @@
+---
+title: Calendar
+slug: /components/calendar
+group: Inputs
+order: 18
+description: A standalone month-grid calendar built on the Zag.js date-picker machine.
+---
+
+# Calendar
+
+A standalone **month-grid** calendar: a weekday header plus a six-row day grid
+that shows an entire month at once. Distinct from [DatePicker](/components/date-picker),
+which renders a compact calendar inside a popover for picking a value — Calendar
+is a full month surface for displaying and navigating a month (and hosting
+per-day content such as events).
+
+It is backed by the Zag.js date-picker machine in `inline` mode, so date math,
+month navigation, locale-aware weekday labels and week start, keyboard
+navigation, and grid a11y come from the machine. Values are ISO date strings
+(`YYYY-MM-DD`).
+
+<Demo name="calendar/basic" center />
+
+## Basic
+
+`selectionMode="single"` selects one day; the current day shows a tone chip. Seed
+it with `defaultValue` as an array of ISO date strings, or leave it out for a
+plain month view.
+
+<Demo name="calendar/basic" center />
+
+## Range
+
+`selectionMode="range"` selects a start and end day, shading the days between.
+
+<Demo name="calendar/range" center />
+
+## Per-day content
+
+`renderDay(day)` renders custom content below each day number — the extension
+point for events. Pair it with `readOnly` for a display-only month. The callback
+receives the day value (`day.day`, `day.month`, `day.year`).
+
+<Demo name="calendar/events" center />
+
+## Props
+
+<PropsTable component="calendar" />
+
+## Anatomy
+
+Calendar owns these public selectors. Class names and the DOM between parts are
+private.
+
+<Anatomy component="calendar" />
+
+### Grid parts
+
+Calendar reuses the date-picker machine for the grid, so the header and day cells
+are the machine's own parts and keep `data-scope="date-picker"`: `content`,
+`view-control`, `prev-trigger`, `next-trigger`, `table`, `table-head`,
+`table-cell`, and `table-cell-trigger` (with day state `data-today`,
+`data-selected`, `data-in-range`, `data-outside-range`, `data-disabled`). Target
+them scoped under the calendar root so your rules stay isolated from DatePicker,
+e.g. `[data-scope="calendar"] [data-scope="date-picker"][data-part="table-cell-trigger"]`.
+
+## Component tokens
+
+<TokenTable component="calendar" />
