@@ -26,6 +26,13 @@ export const meta: ComponentMeta = {
         'Called whenever the value changes; emits a CSS color string.',
     },
     {
+      name: 'showValueText',
+      type: 'boolean',
+      default: 'true',
+      description:
+        'Show the formatted value text (e.g. rgba(...)) next to the swatch in the trigger. Set to false to show only the color swatch.',
+    },
+    {
       name: 'placement',
       type: 'Placement',
       default: `'bottom-start'`,
