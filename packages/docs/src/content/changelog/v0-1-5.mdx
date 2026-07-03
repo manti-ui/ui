@@ -1,0 +1,26 @@
+---
+title: v0.1.5
+slug: /changelog/v0.1.5
+group: Changelog
+order: 1
+date: '2026-07-03'
+description: Two fixes — Tabs no longer leak their trigger/indicator chrome onto components embedded in tab content, and the Clipboard control keeps a neutral focus border, tinting only once copied.
+---
+
+# v0.1.5
+
+_Released 2026-07-03._
+
+## Fixed
+
+- **Tabs** — variant rules for the `trigger` and `indicator` parts matched any
+  descendant under the root, so components rendered inside tab content (for
+  example a Clipboard's copy/check icon wrappers, which are `indicator` parts)
+  picked up the sliding-thumb chrome and rendered as a stray box. Both parts are
+  now anchored through `> [data-part='list'] >`, so only the tabs' own anatomy is
+  styled and embedded components are left alone. No visual change to the tabs.
+- **Clipboard** — `:focus-within` used the tone ring for its border, so with the
+  default `tone="success"` simply clicking into the field turned it green,
+  indistinguishable from the copied confirmation. Focus now uses the neutral
+  `--manti-focus-ring`, and the tone tint applies only while `data-copied` is set
+  (during the copied timeout).
