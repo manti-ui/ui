@@ -279,7 +279,7 @@ export const componentTokens = {
   ],
   avatar: ['size', 'radius'],
   badge: ['radius', 'font-size', 'padding-y', 'padding-x', 'gap', 'dot-size'],
-  button: ['radius', 'height', 'padding-x', 'font-size', 'gap'],
+  button: ['radius', 'height', 'padding-x', 'font-size', 'gap', 'cursor'],
   calendar: ['day-min-height', 'day-padding', 'radius'],
   card: ['radius', 'padding-x', 'padding-y'],
   carousel: [
@@ -290,7 +290,7 @@ export const componentTokens = {
     'indicator-size',
     'viewport-height',
   ],
-  checkbox: ['size', 'radius', 'gap', 'font-size'],
+  checkbox: ['size', 'radius', 'gap', 'font-size', 'indicator-size'],
   clipboard: [
     'height',
     'radius',
