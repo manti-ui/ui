@@ -1,7 +1,10 @@
 /**
  * Color Picker — backed by the Zag.js color-picker machine. The trigger shows a
- * live swatch; the portalled panel holds the saturation area, hue/alpha sliders,
- * and a hex input. The swatch background is user data, not a token.
+ * live swatch; the portalled panel holds the saturation area, hue/alpha
+ * sliders, and a copy area: a row of small Manti Tabs (hex/rgba/hsla) with the
+ * eyedropper Button beside them, over a full-width Manti Clipboard showing the
+ * color in the selected format. The swatch background is user data, not a
+ * token.
  */
 @layer manti.components {
   [data-scope='color-picker'][data-part='root'] {
@@ -113,6 +116,15 @@
     box-shadow: var(--manti-shadow-md);
   }
 
+  /* Custom wrapper: the hue/alpha channel sliders stacked as a column. */
+  [data-scope='color-picker'][data-part='content'] [data-part='sliders'] {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    min-width: 0;
+  }
+
   [data-scope='color-picker'][data-part='channel-slider'] {
     position: relative;
     height: 0.75rem;
@@ -144,20 +156,29 @@
     border-radius: var(--manti-radius-full);
   }
 
-  [data-scope='color-picker'][data-part='channel-input'] {
-    min-width: 0;
-    padding: var(--manti-space-2) var(--manti-space-3);
-    background: var(--manti-surface-sunken);
-    border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-sm);
-    outline: none;
-    color: var(--manti-text);
-    font-size: var(--manti-text-sm);
-    font-family: var(--manti-font-mono);
-    text-transform: uppercase;
+  /* Custom row: the format tabs on the left, the eyedropper Button on the
+     right. The tabs only drive the selection — their panels stay empty and
+     hidden; the full-width Clipboard below the row shows the value. */
+  [data-scope='color-picker'][data-part='content'] [data-part='copy-row'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-2);
 
-    &:focus {
-      border-color: var(--tone-ring, var(--manti-focus-ring));
+    & [data-scope='tabs'][data-part='content'] {
+      display: none;
     }
+  }
+
+  /* The copy area embeds a Clipboard showing the color in the selected format.
+     The panel is narrow and the rgba/hsla strings are long, so compact the
+     field via the Clipboard's component tokens (its public Tier-3 override
+     surface). */
+  [data-scope='color-picker'][data-part='content']
+    [data-scope='clipboard'][data-part='control'] {
+    --manti-clipboard-height: var(--manti-control-height-sm);
+    --manti-clipboard-font-size: var(--manti-text-xs);
+    --manti-clipboard-padding-x: var(--manti-space-2);
+    --manti-clipboard-trigger-width: var(--manti-control-height-sm);
   }
 }
