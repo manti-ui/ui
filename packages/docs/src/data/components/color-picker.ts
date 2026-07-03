@@ -85,6 +85,10 @@ export const meta: ComponentMeta = {
       part: 'transparency-grid',
       description: 'The checkerboard behind the alpha slider.',
     },
-    { part: 'channel-input', description: 'The hex text input.' },
+    {
+      part: 'copy-row',
+      description:
+        'Row holding the format tabs (a nested Manti Tabs) and the eyedropper Button; a Manti Clipboard below it shows the color in the selected format.',
+    },
   ],
 };
