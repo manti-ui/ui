@@ -106,6 +106,7 @@ different purpose (e.g. Drawer re-scopes the dialog parts to `drawer`).
 | Drawer            | `dialog`      |   ✅   |
 | Nested Menu       | `menu`        |   ⬜   |
 | Range Slider      | `slider`      |   ⬜   |
+| Calendar          | `date-picker` |   ✅   |
 | Date Input        | `date-picker` |   ⬜   |
 
 ### Manti-original primitives — no Zag machine
