@@ -432,6 +432,7 @@ export const componentCatalog: CatalogEntry[] = [
   entry('Avatar', 'avatar', 'User image with initials fallback.'),
   entry('Badge', 'badge', 'Compact status chip.'),
   entry('Button', 'button', 'The workhorse action, four variants.'),
+  entry('Calendar', 'calendar', 'Full month-grid surface with per-day content.'),
   entry('Card', 'card', 'The signature pillowy surface.'),
   entry('Carousel', 'carousel', 'Swipeable slide track.'),
   entry('Checkbox', 'checkbox', 'Boolean choice with indeterminate.'),
