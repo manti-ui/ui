@@ -290,7 +290,7 @@ export const componentTokens = {
     'indicator-size',
     'viewport-height',
   ],
-  checkbox: ['size', 'radius', 'gap', 'font-size'],
+  checkbox: ['size', 'radius', 'gap', 'font-size', 'indicator-size'],
   clipboard: [
     'height',
     'radius',
