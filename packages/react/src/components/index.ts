@@ -13,6 +13,9 @@ export type { BadgeProps, BadgeVariant } from './Badge/Badge';
 export { Button } from './Button/Button';
 export type { ButtonProps, ButtonSize, ButtonVariant } from './Button/Button';
 
+export { Calendar } from './Calendar/Calendar';
+export type { CalendarDayValue, CalendarProps } from './Calendar/Calendar';
+
 export { Card } from './Card/Card';
 export type { CardProps } from './Card/Card';
 
