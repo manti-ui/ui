@@ -1,10 +1,13 @@
-import { useId, useMemo } from 'react';
+import { useId, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { colorPicker } from '@manti-ui/folds';
 import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
+import { Button } from '../Button/Button';
+import { Clipboard } from '../Clipboard/Clipboard';
+import { Tabs } from '../Tabs/Tabs';
 
 export interface ColorPickerProps {
   /** Optional field label. */
@@ -29,6 +32,35 @@ export interface ColorPickerProps {
   id?: string;
   className?: string;
 }
+
+/** String formats the copy tabs expose. */
+const COPY_FORMATS = ['hex', 'rgba', 'hsla'] as const;
+
+type CopyFormat = (typeof COPY_FORMATS)[number];
+
+/** The tabs only drive the format selection — the full-width Clipboard below
+ * the row shows the value, so the tab panels stay empty (hidden via CSS). */
+const COPY_FORMAT_TABS = COPY_FORMATS.map((format) => ({
+  value: format,
+  label: format.toUpperCase(),
+  content: null,
+}));
+
+const eyeDropperIcon = (
+  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+    <g
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m2 22 1-1h3l9-9" />
+      <path d="M3 21v-3l9-9" />
+      <path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z" />
+    </g>
+  </svg>
+);
 
 /** A color picker backed by the Zag.js color-picker machine. */
 export function ColorPicker({
@@ -65,6 +97,8 @@ export function ColorPicker({
   });
   const api = colorPicker.connect(service, normalizeProps);
 
+  const [copyFormat, setCopyFormat] = useState<CopyFormat>('hex');
+
   return (
     <div {...api.getRootProps()} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
@@ -86,16 +120,39 @@ export function ColorPicker({
               <div {...api.getAreaBackgroundProps()} />
               <div {...api.getAreaThumbProps()} />
             </div>
-            <div {...api.getChannelSliderProps({ channel: 'hue' })}>
-              <div {...api.getChannelSliderTrackProps({ channel: 'hue' })} />
-              <div {...api.getChannelSliderThumbProps({ channel: 'hue' })} />
+            <div data-part="sliders">
+              <div {...api.getChannelSliderProps({ channel: 'hue' })}>
+                <div {...api.getChannelSliderTrackProps({ channel: 'hue' })} />
+                <div {...api.getChannelSliderThumbProps({ channel: 'hue' })} />
+              </div>
+              <div {...api.getChannelSliderProps({ channel: 'alpha' })}>
+                <div {...api.getTransparencyGridProps()} />
+                <div
+                  {...api.getChannelSliderTrackProps({ channel: 'alpha' })}
+                />
+                <div
+                  {...api.getChannelSliderThumbProps({ channel: 'alpha' })}
+                />
+              </div>
             </div>
-            <div {...api.getChannelSliderProps({ channel: 'alpha' })}>
-              <div {...api.getTransparencyGridProps()} />
-              <div {...api.getChannelSliderTrackProps({ channel: 'alpha' })} />
-              <div {...api.getChannelSliderThumbProps({ channel: 'alpha' })} />
+            <div data-part="copy-row">
+              <Tabs
+                variant="soft"
+                size="sm"
+                items={COPY_FORMAT_TABS}
+                value={copyFormat}
+                onValueChange={(next) => setCopyFormat(next as CopyFormat)}
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                iconOnly
+                {...api.getEyeDropperTriggerProps()}
+              >
+                {eyeDropperIcon}
+              </Button>
             </div>
-            <input {...api.getChannelInputProps({ channel: 'hex' })} />
+            <Clipboard value={api.value.toString(copyFormat)} />
           </div>
         </div>
       </Portal>
