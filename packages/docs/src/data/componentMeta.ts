@@ -264,6 +264,13 @@ const inlineMeta: Record<string, ComponentMeta> = {
         description: 'Active tone for the selected tab and indicator.',
       },
       {
+        name: 'size',
+        type: `'sm' | 'md'`,
+        default: `'md'`,
+        description:
+          'Control size. `sm` tightens the triggers for compact, embedded usage.',
+      },
+      {
         name: 'value',
         type: 'string',
         description: 'Controlled selected value.',

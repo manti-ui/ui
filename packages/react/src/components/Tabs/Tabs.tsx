@@ -29,6 +29,8 @@ export interface TabsProps {
   variant?: TabsVariant;
   /** Active tone for the selected tab and indicator. */
   tone?: MantiTone;
+  /** Control size. `sm` tightens the triggers for compact, embedded usage. */
+  size?: 'sm' | 'md';
   /** Controlled selected value. */
   value?: string;
   /** Initial selected value. Defaults to the first item. */
@@ -46,6 +48,7 @@ export function Tabs({
   items,
   variant = 'line',
   tone = 'primary',
+  size = 'md',
   value,
   defaultValue,
   onValueChange,
@@ -70,6 +73,7 @@ export function Tabs({
       {...api.getRootProps()}
       data-variant={variant}
       data-tone={tone}
+      data-size={size}
       className={cx(className)}
     >
       <div {...api.getListProps()}>

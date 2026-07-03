@@ -17,6 +17,9 @@
  * (both are direct list children) — tab *content* can embed other components
  * (e.g. a Clipboard) whose own `trigger`/`indicator` parts a bare descendant
  * selector would restyle.
+ *
+ * Sizes (set `data-size` on the root): `md` (default) and `sm`, which tightens
+ * the root gap and the triggers for compact, embedded usage.
  */
 @layer manti.components {
   [data-scope='tabs'][data-part='root'] {
@@ -119,6 +122,19 @@
     &[data-disabled] {
       cursor: not-allowed;
       opacity: 0.5;
+    }
+  }
+
+  /* Size variants ------------------------------------------------------- */
+  [data-scope='tabs'][data-part='root'][data-size='sm'] {
+    gap: var(--manti-space-2);
+
+    /* Direct list > trigger only — tab *content* may embed other components
+       (e.g. a Clipboard) whose own `trigger` part must not inherit this. */
+    & > [data-part='list'] > [data-part='trigger'] {
+      gap: var(--manti-space-1);
+      padding: var(--manti-space-1) var(--manti-space-3);
+      font-size: var(--manti-text-sm);
     }
   }
 
