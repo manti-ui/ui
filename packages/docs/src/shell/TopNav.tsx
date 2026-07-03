@@ -77,6 +77,7 @@ export function TopNav() {
           variant="ghost"
           tone="primary"
           aria-label="Toggle dark theme"
+          size='sm'
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
         >
           {theme === 'dark' ? MoonIcon : SunIcon}

@@ -14,6 +14,7 @@
     --manti-button-padding-x: var(--manti-space-4);
     --manti-button-font-size: var(--manti-text-sm);
     --manti-button-gap: var(--manti-space-2);
+    --manti-button-cursor: default;
 
     position: relative;
     display: inline-flex;
@@ -27,10 +28,10 @@
     font-family: var(--manti-font-sans);
     font-size: var(--manti-button-font-size);
     font-weight: var(--manti-weight-semibold);
-    line-height: var(--manti-leading-tight);
+    /* line-height: var(--manti-leading-tight); */
     white-space: nowrap;
     text-decoration: none;
-    cursor: pointer;
+    cursor: var(--manti-button-cursor);
     user-select: none;
     transition:
       background-color var(--manti-duration-base) var(--manti-ease-smooth),
@@ -124,7 +125,7 @@
     }
 
     &:active {
-      transform: translateY(0.5px) scale(0.99);
+      transform: translateY(1px);
     }
 
     &:focus-visible {

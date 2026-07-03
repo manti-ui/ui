@@ -77,11 +77,7 @@ export function TagsInput({
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
         {api.value.map((tag, index) => (
-          <span
-            key={`${tag}-${index}`}
-            {...api.getItemProps({ index, value: tag })}
-          >
-            <span {...api.getItemPreviewProps({ index, value: tag })}>
+            <span key={`${tag}-${index}`} {...api.getItemPreviewProps({ index, value: tag })}>
               <span {...api.getItemTextProps({ index, value: tag })}>
                 {tag}
               </span>
@@ -103,9 +99,8 @@ export function TagsInput({
                   />
                 </svg>
               </button>
+              <input {...api.getItemInputProps({ index, value: tag })} />
             </span>
-            <input {...api.getItemInputProps({ index, value: tag })} />
-          </span>
         ))}
         <input {...api.getInputProps()} placeholder={placeholder} />
       </div>
