@@ -35,6 +35,10 @@ const meta = {
       control: 'select',
       options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
     },
+    size: {
+      control: 'inline-radio',
+      options: ['sm', 'md'],
+    },
     orientation: {
       control: 'inline-radio',
       options: ['horizontal', 'vertical'],
@@ -66,4 +70,9 @@ export const Soft: Story = {
 
 export const Vertical: Story = {
   args: { orientation: 'vertical' },
+};
+
+/** Compact triggers for embedded, secondary UI. */
+export const Small: Story = {
+  args: { size: 'sm', variant: 'soft' },
 };
