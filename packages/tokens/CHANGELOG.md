@@ -1,5 +1,11 @@
 # @manti-ui/tokens
 
+## 0.2.0
+
+### Minor Changes
+
+- Register new component tokens: `--manti-calendar-day-min-height`, `--manti-calendar-day-padding`, and `--manti-calendar-radius` for the new Calendar ([#48](https://github.com/manti-ui/ui/pull/48)); `--manti-button-cursor` ([#54](https://github.com/manti-ui/ui/pull/54)); and `--manti-checkbox-indicator-size` ([#55](https://github.com/manti-ui/ui/pull/55)).
+
 ## 0.1.5
 
 ## 0.1.4

@@ -1,5 +1,21 @@
 # @manti-ui/react
 
+## 0.2.0
+
+### Minor Changes
+
+- **Calendar** — a new standalone month-grid component (weekday header + six-row day grid) built on the Zag.js `date-picker` machine in inline mode, with `selectionMode` (single/multiple/range), a `tone` highlight, `readOnly`, `fixedWeeks`, and a `renderDay(day)` slot ([#48](https://github.com/manti-ui/ui/pull/48)).
+- **ColorPicker** — a copy area with HEX/RGBA/HSLA format tabs over a one-click Clipboard field, plus an eyedropper button. **Breaking:** the editable hex `channel-input` part is removed in favor of the read-only Clipboard field ([#52](https://github.com/manti-ui/ui/pull/52)).
+- **Tabs** — a `size` prop (`'sm' | 'md'`, default `md`) whose `sm` variant tightens the gap, trigger padding, and font for compact usage ([#51](https://github.com/manti-ui/ui/pull/51)).
+- **TagsInput** — flatten the tag item anatomy so each tag renders as a single `item-preview` span, and tighten the control padding. **Breaking:** the outer `data-part='item'` wrapper is no longer rendered ([#57](https://github.com/manti-ui/ui/pull/57)).
+
+### Patch Changes
+
+- Updated dependencies:
+  - @manti-ui/styles@0.2.0
+  - @manti-ui/tokens@0.2.0
+  - @manti-ui/folds@0.2.0
+
 ## 0.1.5
 
 ### Patch Changes
