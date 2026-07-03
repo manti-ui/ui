@@ -1,0 +1,57 @@
+---
+title: v0.2.0
+slug: /changelog/v0.2.0
+group: Changelog
+order: 1
+date: '2026-07-04'
+description: A new month-grid Calendar, a ColorPicker copy area with eyedropper and format tabs, a compact Tabs size, and new Button/Checkbox component tokens — plus two anatomy changes in ColorPicker and TagsInput.
+---
+
+# v0.2.0
+
+_Released 2026-07-04._
+
+## Breaking changes
+
+- **ColorPicker** — the editable hex `channel-input` part has been removed. The
+  panel now shows the selected color in a read-only Clipboard field (see Added
+  below), so any custom CSS targeting `[data-scope='color-picker']
+  [data-part='channel-input']` no longer matches.
+- **TagsInput** — each tag now renders as a single `item-preview` span; the outer
+  `data-part='item'` wrapper is no longer rendered. Custom CSS targeting
+  `[data-scope='tags-input'] [data-part='item']` no longer matches — target
+  `[data-part='item-preview']` instead.
+
+## Added
+
+- **Calendar** — a new standalone **month-grid** component: a weekday header plus
+  a six-row day grid that shows an entire month at once, distinct from the
+  popover DatePicker. It reuses the Zag.js `date-picker` machine in inline mode
+  for date math, month navigation, locale/week-start, and grid a11y. Supports
+  `selectionMode` (`single` / `multiple` / `range`) with a `tone` highlight,
+  `readOnly` for a display-only month, `fixedWeeks` for constant height, and a
+  `renderDay(day)` slot for per-day content such as event badges. Ships the
+  component tokens `--manti-calendar-day-min-height`,
+  `--manti-calendar-day-padding`, and `--manti-calendar-radius`.
+- **ColorPicker** — a new copy area in the panel: small `soft` Tabs switch the
+  format (**HEX / RGBA / HSLA**) over a full-width Clipboard field showing the
+  selected value, with one-click copy, alongside an **eyedropper** button wired
+  to the machine's `getEyeDropperTriggerProps` (Chromium-only; a no-op where the
+  EyeDropper API is unsupported).
+- **Tabs** — a `size` prop (`'sm' | 'md'`, default `'md'`, emitted as
+  `data-size`). `sm` tightens the gap, trigger padding, and font for compact,
+  embedded usage such as panels and toolbars.
+- **Button** — a `--manti-button-cursor` component token (default `default`), so
+  an app can opt every button into `cursor: pointer` (or any other cursor) with
+  one variable instead of overriding the rule.
+- **Checkbox** — a `--manti-checkbox-indicator-size` component token controlling
+  the check indicator's size within the control, with per-size defaults.
+
+## Changed
+
+- **Switch** — the thumb squishes (shrinks in height) while the control is
+  pressed, for a more tactile press, staying vertically centered in the track.
+- **Button** — the pressed state is a crisper `translateY(1px)` nudge, dropping
+  the previous subpixel scale.
+- **TagsInput** — the control padding tightens so the tag chips sit closer to the
+  field edge.
