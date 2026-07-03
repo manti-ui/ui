@@ -26,7 +26,7 @@
     align-items: center;
     gap: var(--manti-space-2);
     min-height: var(--manti-tags-input-height);
-    padding: var(--manti-space-2) var(--manti-space-3);
+    padding: var(--manti-space-1) var(--manti-space-1);
     background: var(--manti-panel-tint-strong);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
