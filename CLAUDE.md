@@ -48,8 +48,8 @@ Node `>=22.12.0`, pnpm 10. Run from the repo root.
 
 ```bash
 pnpm install          # install workspace deps
-pnpm dev              # Storybook at localhost:6006 (alias of pnpm storybook)
-pnpm storybook        # Storybook at localhost:6006
+pnpm dev              # build packages, then Storybook at localhost:6006
+pnpm storybook        # Storybook only, no rebuild (use after a pnpm dev build)
 pnpm lint             # eslint
 pnpm typecheck        # per-package tsc + stories
 pnpm build            # build all packages, then Storybook (storybook-static/)
