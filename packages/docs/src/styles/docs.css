@@ -19,8 +19,8 @@
     --docs-nav-h: 3.5rem;
     --docs-sidebar-w: 16rem;
     --docs-toc-w: 15rem;
-    --docs-max: 90rem;
-    --docs-prose-max: 48rem;
+    --docs-max: 100rem;
+    --docs-prose-max: 64rem;
     --docs-gutter: var(--manti-space-6);
 
     --docs-nav-bg: light-dark(
@@ -422,20 +422,25 @@
     color: var(--manti-text);
   }
 
-  /* ---- Tables (GFM + PropsTable/TokenTable) ---- */
-  .docs-prose table {
+  /* ---- Tables (GFM + PropsTable/TokenTable) ----
+     Scoped to plain prose tables only. Component demos (Calendar, DataTable, …)
+     render their own tables whose parts carry `data-scope`; this unlayered docs
+     CSS would otherwise beat their layered component styles (e.g. add cell
+     padding that insets the Calendar day cells), so exclude anything inside a
+     Manti component. */
+  .docs-prose table:not([data-scope]) {
     width: 100%;
     margin: 0 0 var(--manti-space-6);
     border-collapse: collapse;
     font-size: var(--manti-text-sm);
   }
-  .docs-prose :is(th, td) {
+  .docs-prose :is(th, td):not(:where([data-scope], [data-scope] *)) {
     padding: var(--manti-space-2) var(--manti-space-3);
     text-align: start;
     vertical-align: top;
     border-bottom: 1px solid var(--manti-border);
   }
-  .docs-prose th {
+  .docs-prose th:not(:where([data-scope], [data-scope] *)) {
     color: var(--manti-text-muted);
     font-weight: var(--manti-weight-semibold);
     font-size: var(--manti-text-xs);
