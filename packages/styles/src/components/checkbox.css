@@ -10,7 +10,7 @@
     --manti-checkbox-radius: var(--manti-radius-sm);
     --manti-checkbox-gap: var(--manti-space-3);
     --manti-checkbox-font-size: var(--manti-text-sm);
-
+    --manti-checkbox-indicator-size: 80%;
     display: inline-flex;
     align-items: center;
     gap: var(--manti-checkbox-gap);
@@ -19,10 +19,12 @@
 
     &[data-size='sm'] {
       --manti-checkbox-size: 1rem;
+      --manti-checkbox-indicator-size: 95%;
     }
 
     &[data-size='lg'] {
       --manti-checkbox-size: 1.5rem;
+      --manti-checkbox-indicator-size: 100%;
     }
 
     &[data-disabled] {
@@ -56,13 +58,11 @@
   [data-scope='checkbox'][data-part='indicator'] {
     display: grid;
     place-items: center;
-    width: 70%;
-    height: 70%;
+    width: var(--manti-checkbox-indicator-size);
+    height: var(--manti-checkbox-indicator-size);
   }
 
   [data-scope='checkbox'][data-part='indicator'] svg {
-    width: 100%;
-    height: 100%;
     stroke: currentColor;
     stroke-width: 3;
     stroke-linecap: round;

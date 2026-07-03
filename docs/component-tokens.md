@@ -40,6 +40,9 @@ component token only to make one component diverge on purpose — see
 | `button`            | `--manti-button-font-size`                  | `var(--manti-text-sm)`           |
 | `button`            | `--manti-button-gap`                        | `var(--manti-space-2)`           |
 | `button`            | `--manti-button-cursor`                     | `default`                        |
+| `calendar`          | `--manti-calendar-day-min-height`           | `5.5rem`                         |
+| `calendar`          | `--manti-calendar-day-padding`              | `var(--manti-space-2)`           |
+| `calendar`          | `--manti-calendar-radius`                   | `var(--manti-radius-md)`         |
 | `card`              | `--manti-card-radius`                       | `var(--manti-radius-xl)`         |
 | `card`              | `--manti-card-padding-x`                    | `var(--manti-space-6)`           |
 | `card`              | `--manti-card-padding-y`                    | `var(--manti-space-6)`           |
@@ -53,6 +56,7 @@ component token only to make one component diverge on purpose — see
 | `checkbox`          | `--manti-checkbox-radius`                   | `var(--manti-radius-sm)`         |
 | `checkbox`          | `--manti-checkbox-gap`                      | `var(--manti-space-3)`           |
 | `checkbox`          | `--manti-checkbox-font-size`                | `var(--manti-text-sm)`           |
+| `checkbox`          | `--manti-checkbox-indicator-size`           | `80%`                            |
 | `clipboard`         | `--manti-clipboard-height`                  | `var(--manti-control-height-md)` |
 | `clipboard`         | `--manti-clipboard-radius`                  | `var(--manti-radius-md)`         |
 | `clipboard`         | `--manti-clipboard-padding-x`               | `var(--manti-space-3)`           |

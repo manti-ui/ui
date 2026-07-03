@@ -1,0 +1,268 @@
+/**
+ * Calendar — a full month-grid surface backed by the Zag.js date-picker machine
+ * in `inline` mode. It reads as a calendar-app month view: a Today/prev/next
+ * toolbar above a continuous, edge-to-edge grid of tall day cells divided by
+ * hairlines (not gapped pills). Because the machine owns the grid behavior, its
+ * functional parts keep `data-scope='date-picker'` (Zag queries the DOM by those
+ * attributes); Calendar wraps them in a `data-scope='calendar'` root and styles
+ * them under that scope, so the rules win over the DatePicker defaults without
+ * touching them. Day cells carry machine state (`data-today`, `data-selected`,
+ * `data-in-range`, `data-outside-range`, `data-disabled`). Color comes only from
+ * the active tone.
+ */
+@layer manti.components {
+  [data-scope='calendar'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-calendar-day-min-height: 5.5rem;
+    --manti-calendar-day-padding: var(--manti-space-2);
+    --manti-calendar-radius: var(--manti-radius-md);
+
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* Inline content is the month surface itself, not a floating panel — strip the
+     date-picker popover chrome and let it fill the available width. */
+  [data-scope='calendar'] [data-scope='date-picker'][data-part='content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    width: 100%;
+    padding: 0;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  /* Toolbar: Today / prev / next / month-year label ........ actions */
+  [data-scope='calendar'][data-part='toolbar'] {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+  }
+
+  [data-scope='calendar'][data-part='today-trigger'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    height: var(--manti-control-height-sm);
+    padding-inline: var(--manti-space-3);
+    background: var(--manti-panel-tint-strong);
+    border: 1px solid var(--manti-panel-border);
+    border-radius: var(--manti-radius-md);
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    cursor: pointer;
+    transition:
+      background var(--manti-duration-fast) var(--manti-ease-smooth),
+      border-color var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      border-color: var(--manti-text-subtle);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+  }
+
+  [data-scope='calendar'] [data-scope='date-picker'][data-part='prev-trigger'],
+  [data-scope='calendar'] [data-scope='date-picker'][data-part='next-trigger'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--manti-radius-sm);
+    color: var(--manti-text-muted);
+    cursor: pointer;
+    transition:
+      color var(--manti-duration-fast) var(--manti-ease-smooth),
+      background var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      color: var(--manti-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+  }
+
+  [data-scope='calendar'][data-part='heading'] {
+    margin-inline-start: var(--manti-space-2);
+    color: var(--manti-text);
+    font-size: var(--manti-text-md);
+    font-weight: var(--manti-weight-semibold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-scope='calendar'][data-part='actions'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+    margin-inline-start: auto;
+  }
+
+  /* Grid frame: a single bordered, rounded box; the cells draw the inner
+     hairlines via collapsed borders so the month reads as one continuous grid. */
+  [data-scope='calendar'][data-part='grid'] {
+    overflow: hidden;
+    border: 1px solid var(--manti-panel-border);
+    border-radius: var(--manti-calendar-radius);
+  }
+
+  [data-scope='calendar'] [data-scope='date-picker'][data-part='table'] {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  /* Weekday header: left-aligned labels with only a bottom rule (no vertical
+     dividers), sitting above the grid body. */
+  [data-scope='calendar'] [data-scope='date-picker'][data-part='table-head'] {
+    width: auto;
+    height: auto;
+    padding: var(--manti-space-2);
+    border-bottom: 1px solid var(--manti-panel-border);
+    color: var(--manti-text-subtle);
+    font-size: var(--manti-text-xs);
+    font-weight: var(--manti-weight-medium);
+    text-align: start;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  [data-scope='calendar'] [data-scope='date-picker'][data-part='table-cell'] {
+    height: var(--manti-calendar-day-min-height);
+    padding: 0;
+    vertical-align: top;
+    /* Inner hairlines; the frame supplies the outer edges, so the first column
+       drops its left rule below. */
+    border-top: 1px solid var(--manti-panel-border);
+    border-inline-start: 1px solid var(--manti-panel-border);
+
+    &:first-child {
+      border-inline-start: none;
+    }
+  }
+
+  /* Day cell: a full box with the number pinned top-left and room for content
+     below (events via renderDay). */
+  [data-scope='calendar']
+    [data-scope='date-picker'][data-part='table-cell-trigger'] {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--manti-space-1);
+    width: 100%;
+    height: 100%;
+    min-height: var(--manti-calendar-day-min-height);
+    padding: var(--manti-calendar-day-padding);
+    /* Reset the DatePicker pill's rounding so hover/selected/focus fill the whole
+       cell, flush to the hairlines, rather than an inset rounded box. */
+    border-radius: 0;
+    color: var(--manti-text);
+    font-size: var(--manti-text-sm);
+    font-variant-numeric: tabular-nums;
+    text-align: start;
+    cursor: pointer;
+    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &:hover {
+      background: color-mix(in oklab, var(--manti-text) 5%, transparent);
+    }
+
+    /* Reset the DatePicker today ring that leaks through the shared date-picker
+       scope — Calendar marks today with the tone chip on the number instead. */
+    &[data-today] {
+      box-shadow: none;
+    }
+
+    &[data-selected] {
+      background: var(--tone-soft-bg);
+      /* Override the leaked DatePicker `color: var(--tone-on-solid)`, which is
+         meant for a solid fill, not this soft cell tint. */
+      color: var(--manti-text);
+    }
+
+    &[data-in-range] {
+      background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
+    }
+
+    /* Keep range ends square so they don't round inside the continuous grid. */
+    &[data-range-start],
+    &[data-range-end] {
+      border-radius: 0;
+    }
+
+    /* Adjacent-month days: dim number. The machine disables them for being
+       off-month, so they read as secondary rather than blocked. */
+    &[data-outside-range] {
+      color: var(--manti-text-subtle);
+    }
+
+    &[data-unavailable] {
+      color: var(--manti-text-subtle);
+      text-decoration: line-through;
+      cursor: not-allowed;
+    }
+
+    &[data-disabled] {
+      color: var(--manti-text-subtle);
+      cursor: not-allowed;
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    }
+  }
+
+  [data-scope='calendar'][data-part='day-label'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    align-self: flex-start;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    padding-inline: var(--manti-space-1);
+    border-radius: var(--manti-radius-full);
+    font-weight: var(--manti-weight-medium);
+    line-height: 1;
+  }
+
+  /* Today: a filled tone chip on the number — the monochrome, tone-driven
+     equivalent of a colored "today" badge. */
+  [data-scope='calendar']
+    [data-scope='date-picker'][data-part='table-cell-trigger'][data-today]
+    [data-part='day-label'] {
+    background: var(--tone-solid);
+    color: var(--tone-on-solid);
+  }
+
+  [data-scope='calendar'][data-part='day-content'] {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--manti-space-1);
+    min-height: 0;
+    color: var(--manti-text-muted);
+    font-size: var(--manti-text-xs);
+  }
+}
