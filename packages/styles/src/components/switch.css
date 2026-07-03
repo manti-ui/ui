@@ -34,6 +34,8 @@
   }
 
   [data-scope='switch'][data-part='control'] {
+    display: flex;
+    align-items: center;
     position: relative;
     flex: none;
     width: var(--manti-switch-track-width);
@@ -46,6 +48,10 @@
 
     &[data-state='checked'] {
       background: var(--tone-solid);
+    }
+    &:active [data-part='thumb'] {
+      transition: var(--manti-duration-base);
+      height: calc(var(--_thumb-size) - 0.25rem);
     }
   }
 
