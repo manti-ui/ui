@@ -13,6 +13,10 @@
  * Variant selectors anchor on `[data-part='root']` because every Zag part also
  * carries `data-scope='tabs'`; without the anchor, a default `:not([data-variant])`
  * rule would also match via the list and leak the line rail onto other variants.
+ * Trigger/indicator rules additionally go through `> [data-part='list'] >`
+ * (both are direct list children) — tab *content* can embed other components
+ * (e.g. a Clipboard) whose own `trigger`/`indicator` parts a bare descendant
+ * selector would restyle.
  */
 @layer manti.components {
   [data-scope='tabs'][data-part='root'] {
@@ -121,12 +125,14 @@
   /* Round the pill/soft triggers so their focus ring and hit area match the
      thumb that slides behind them. */
   [data-scope='tabs'][data-part='root'][data-variant='pill']
-    [data-part='trigger'] {
+    > [data-part='list']
+    > [data-part='trigger'] {
     border-radius: var(--manti-radius-full);
   }
 
   [data-scope='tabs'][data-part='root'][data-variant='soft']
-    [data-part='trigger'] {
+    > [data-part='list']
+    > [data-part='trigger'] {
     border-radius: var(--manti-radius-md);
   }
 
@@ -145,9 +151,11 @@
 
   /* line: a 2px rail pinned to the active trigger's trailing edge. */
   [data-scope='tabs'][data-part='root'][data-variant='line']
-    [data-part='indicator'],
+    > [data-part='list']
+    > [data-part='indicator'],
   [data-scope='tabs'][data-part='root']:not([data-variant])
-    [data-part='indicator'] {
+    > [data-part='list']
+    > [data-part='indicator'] {
     height: 2px;
     top: calc(var(--top) + var(--height) - 2px);
     background: var(--manti-text);
@@ -155,8 +163,8 @@
   }
 
   [data-scope='tabs'][data-part='root'][data-variant='line']
-    [data-part='list'][data-orientation='vertical']
-    [data-part='indicator'] {
+    > [data-part='list'][data-orientation='vertical']
+    > [data-part='indicator'] {
     width: 2px;
     height: var(--height);
     top: var(--top);
@@ -167,9 +175,11 @@
      tint (so it reads against the dark track), with blur, a hairline, and a
      soft shadow — the active tab looks raised, like the reference. */
   [data-scope='tabs'][data-part='root'][data-variant='pill']
-    [data-part='indicator'],
+    > [data-part='list']
+    > [data-part='indicator'],
   [data-scope='tabs'][data-part='root'][data-variant='soft']
-    [data-part='indicator'] {
+    > [data-part='list']
+    > [data-part='indicator'] {
     background: light-dark(oklch(1 0 0 / 0.96), oklch(1 0 0 / 0.12));
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
@@ -181,12 +191,14 @@
   }
 
   [data-scope='tabs'][data-part='root'][data-variant='pill']
-    [data-part='indicator'] {
+    > [data-part='list']
+    > [data-part='indicator'] {
     border-radius: var(--manti-radius-full);
   }
 
   [data-scope='tabs'][data-part='root'][data-variant='soft']
-    [data-part='indicator'] {
+    > [data-part='list']
+    > [data-part='indicator'] {
     border-radius: var(--manti-radius-md);
   }
 
@@ -194,9 +206,11 @@
     (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
   ) {
     [data-scope='tabs'][data-part='root'][data-variant='pill']
-      [data-part='indicator'],
+      > [data-part='list']
+      > [data-part='indicator'],
     [data-scope='tabs'][data-part='root'][data-variant='soft']
-      [data-part='indicator'] {
+      > [data-part='list']
+      > [data-part='indicator'] {
       background: light-dark(oklch(1 0 0), oklch(0.3 0.01 280));
     }
   }

@@ -54,8 +54,8 @@ Use Node `>=22.12.0` and `pnpm 10`.
 
 ```bash
 pnpm install          # Install all workspace dependencies
-pnpm dev              # Run Storybook at localhost:6006 (alias of pnpm storybook)
-pnpm storybook        # Run Storybook at localhost:6006
+pnpm dev              # build packages, then run Storybook at localhost:6006
+pnpm storybook        # Run Storybook only, no rebuild (use after a pnpm dev build)
 pnpm build            # Build the packages and Storybook (storybook-static/)
 pnpm build:storybook  # Generate storybook-static/
 pnpm lint             # Run ESLint
