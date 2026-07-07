@@ -18,6 +18,14 @@
   NODE_VERSION = "22"
   STORYBOOK_DISABLE_TELEMETRY = "1"
 
+# Canonical host: collapse www onto the apex so the two never serve duplicate
+# content. Domain-level rules run before path rules.
+[[redirects]]
+  from = "https://www.manti.design/*"
+  to = "https://manti.design/:splat"
+  status = 301
+  force = true
+
 # SPA fallback for the docs client-side routes (e.g. /components/button).
 # Netlify serves existing static files before applying redirects, so everything
 # under /storybook (real files) is unaffected by this catch-all.
@@ -25,3 +33,23 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Security headers for every response (docs + Storybook).
+#
+# The CSP is deliberately pragmatic for a fully static site:
+#   - 'unsafe-inline' script-src: the no-flash theme init in index.html and
+#     Storybook's manager bootstrap are inline scripts.
+#   - 'unsafe-eval': Storybook's runtime needs it for some addon panels.
+#   - style-src 'unsafe-inline': React inline styles + Shiki token colors.
+#   - img-src allows https://i.pravatar.cc (Avatar demo portraits) and data:/blob:
+#     (QrCode data URIs, SignaturePad exports, FileUpload previews).
+# Everything else is same-origin. If a demo gains a new external resource, add
+# its origin here or the browser will silently block it.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://i.pravatar.cc; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
