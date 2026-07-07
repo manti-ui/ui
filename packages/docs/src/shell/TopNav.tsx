@@ -22,7 +22,12 @@ export function TopNav() {
   return (
     <header className="docs-nav">
       <Link to="/" className="docs-brand" aria-label="Manti UI home">
-        <img src="/manti-white.svg" alt="" />
+        <img
+          src="/manti-white.svg"
+          alt="Manti UI logo"
+          width="40"
+          height="40"
+        />
         <span>Manti UI</span>
       </Link>
 
@@ -77,7 +82,7 @@ export function TopNav() {
           variant="ghost"
           tone="primary"
           aria-label="Toggle dark theme"
-          size='sm'
+          size="sm"
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
         >
           {theme === 'dark' ? MoonIcon : SunIcon}

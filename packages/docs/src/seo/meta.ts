@@ -22,6 +22,15 @@ export const DEFAULT_DESCRIPTION =
  */
 export const OG_IMAGE = `${SITE_URL}/og-cover.png`;
 
+/**
+ * Public profiles for the JSON-LD Organization `sameAs` — the E-E-A-T trust
+ * signal AI crawlers and search engines use to connect the site to its source.
+ */
+export const ORG_PROFILES = [
+  'https://github.com/manti-ui/ui',
+  'https://www.npmjs.com/package/@manti-ui/react',
+];
+
 /** The minimal page shape both the renderer and the build plugin can supply. */
 export interface PageMeta {
   slug: string;

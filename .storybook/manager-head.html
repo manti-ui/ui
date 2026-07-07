@@ -1,1 +1,57 @@
 <link rel="icon" type="image/svg+xml" href="manti-favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<!-- The manager is a single HTML page for every ?path=… story URL. The
+     canonical collapses all of them onto /storybook/ so crawlers don't index
+     the same document once per story (duplicate-content). Deployed at
+     manti.design/storybook/ — see packages/docs/netlify.toml. -->
+<link rel="canonical" href="https://manti.design/storybook/" />
+<meta name="robots" content="index, follow" />
+<meta
+  name="description"
+  content="The live Storybook for Manti UI — browse every component, variant, tone, size and motion tier, with controls and a11y checks on each story."
+/>
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Manti UI" />
+<meta
+  property="og:title"
+  content="Manti UI Storybook — every component, live"
+/>
+<meta
+  property="og:description"
+  content="The live Storybook for Manti UI — browse every component, variant, tone, size and motion tier, with controls and a11y checks on each story."
+/>
+<meta property="og:url" content="https://manti.design/storybook/" />
+<meta property="og:image" content="https://manti.design/og-cover.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+  name="twitter:title"
+  content="Manti UI Storybook — every component, live"
+/>
+<meta
+  name="twitter:description"
+  content="The live Storybook for Manti UI — browse every component, variant, tone, size and motion tier, with controls and a11y checks on each story."
+/>
+<meta name="twitter:image" content="https://manti.design/og-cover.png" />
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://manti.design/#website",
+        "name": "Manti UI",
+        "url": "https://manti.design"
+      },
+      {
+        "@type": "WebPage",
+        "name": "Manti UI Storybook",
+        "url": "https://manti.design/storybook/",
+        "description": "The live Storybook for Manti UI — browse every component, variant, tone, size and motion tier, with controls and a11y checks on each story.",
+        "isPartOf": { "@id": "https://manti.design/#website" }
+      }
+    ]
+  }
+</script>
