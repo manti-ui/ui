@@ -35,11 +35,14 @@ function Anchor({ href = '', children, ...rest }: ComponentProps<'a'>) {
   );
 }
 
-// `@manti-ui/react` also exports a metadata object and a toaster factory; neither
-// is a renderable component, so drop them before spreading into the MDX map.
+// `@manti-ui/react` also exports a metadata object, a toaster factory and the
+// shortcut hooks; none is a renderable component, so drop them before spreading
+// into the MDX map.
 const {
   mantiUi: _mantiUi,
   createToaster: _createToaster,
+  useShortcut: _useShortcut,
+  useShortcuts: _useShortcuts,
   ...mantiComponents
 } = Manti;
 
