@@ -29,6 +29,10 @@ const GROUP_ORDER = [
   'Getting Started',
   'Foundations',
   'Guides',
+  // Framework-agnostic primitives that aren't visual components (hooks like
+  // useShortcut), each its own page ordered by `order`. Sits above the component
+  // sections.
+  'Utilities',
   // The `/components` overview sits alone in its "Components" group, above the
   // categorized component sections.
   'Components',
