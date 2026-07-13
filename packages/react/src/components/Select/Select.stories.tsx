@@ -47,7 +47,7 @@ export const Multiple: Story = {
 
 export const States: Story = {
   render: (args) => (
-    <div style={{ display: 'grid', gap: '1rem', width: 260 }}>
+    <div style={{ display: 'grid', gap: '1rem', width: 460 }}>
       <Select {...args} label="Default" />
       <Select {...args} label="Invalid" invalid />
       <Select {...args} label="Disabled" disabled />
