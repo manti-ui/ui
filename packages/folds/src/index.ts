@@ -47,6 +47,13 @@ export * as floatingPanel from '@zag-js/floating-panel';
 export * as swipe from './swipe';
 
 /**
+ * Keyboard-shortcut engine. Also a Manti-original (Zag has no shortcut machine):
+ * a pure-DOM controller that binds key combos/sequences to handlers, reusable by
+ * any renderer or plain JS consumer. The React layer wraps it in `useShortcut`.
+ */
+export * as shortcut from './shortcut';
+
+/**
  * Headless data behaviors. Not from Zag.js — Zag has no table machine, so the
  * Data Table is built on TanStack `table-core`, the same headless/agnostic shape
  * (logic-only brain + per-framework adapter). The shared column/types contract
