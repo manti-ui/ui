@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
+import { useShortcut } from '@manti-ui/react/shortcut';
 import MiniSearch from 'minisearch';
 
 import searchDocs from 'virtual:manti-search';
@@ -40,16 +41,9 @@ export function searchDocsByQuery(query: string, limit = 8): SearchHit[] {
 export function SearchProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    function onKey(event: KeyboardEvent) {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-        event.preventDefault();
-        setOpen((value) => !value);
-      }
-    }
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  // ⌘K / Ctrl+K toggles search from anywhere (preventDefault is on by default,
+  // so the browser's own ⌘K doesn't also fire). See @manti-ui/react/shortcut.
+  useShortcut('mod+k', () => setOpen((value) => !value));
 
   const value = useMemo(() => ({ open, setOpen }), [open]);
   return (
