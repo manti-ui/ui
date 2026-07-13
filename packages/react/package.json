@@ -1,6 +1,6 @@
 {
   "name": "@manti-ui/react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "React adapter for the Manti UI design system.",
   "license": "MIT",
   "homepage": "https://manti.design",
@@ -27,6 +27,11 @@
       "development": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./shortcut": {
+      "development": "./src/shortcut/index.ts",
+      "types": "./dist/shortcut/index.d.ts",
+      "import": "./dist/shortcut.js"
     }
   },
   "main": "./dist/index.js",
@@ -38,6 +43,10 @@
       ".": {
         "types": "./dist/index.d.ts",
         "import": "./dist/index.js"
+      },
+      "./shortcut": {
+        "types": "./dist/shortcut/index.d.ts",
+        "import": "./dist/shortcut.js"
       }
     },
     "main": "./dist/index.js",

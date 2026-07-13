@@ -1,0 +1,32 @@
+---
+title: v0.3.0
+slug: /changelog/v0.3.0
+group: Changelog
+order: 1
+date: '2026-07-13'
+description: A framework-agnostic keyboard-shortcut primitive — useShortcut / useShortcuts — bindable to any component, plus a softer Button soft-variant highlight.
+---
+
+# v0.3.0
+
+_Released 2026-07-13._
+
+## Added
+
+- **useShortcut** — a new framework-agnostic keyboard-shortcut primitive.
+  `useShortcut(combo, handler, options)` and `useShortcuts(map, options)` bind
+  key combinations to actions on **any** component — Manti UI or your own. It
+  supports modifier combos (`mod+k`, `ctrl+shift+p`, where `mod` resolves to ⌘
+  on macOS and Ctrl elsewhere) and key **sequences** (`g d`). Global by default
+  (listens on `window`, so it fires regardless of focus with zero wiring) or
+  scoped to a `ref`. Includes a form-element guard (won't fire while you type in
+  an input/textarea/contenteditable unless `enableOnFormElements` is set),
+  `preventDefault` on by default, plus `stopPropagation` and `enabled`. It is
+  SSR-safe and backed by a pure-DOM engine in `@manti-ui/folds`, and is exposed
+  standalone at `@manti-ui/react/shortcut` so it can be imported without pulling
+  in any Manti UI component.
+
+## Changed
+
+- **Button** — the `soft` variant's panel highlight is now a subtle inset glow
+  rather than a top highlight line, for a softer raised feel.
