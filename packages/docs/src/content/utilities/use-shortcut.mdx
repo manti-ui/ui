@@ -1,0 +1,108 @@
+---
+title: useShortcut
+slug: /utilities/use-shortcut
+group: Utilities
+order: 60
+badge: New
+description: A framework-agnostic keyboard-shortcut hook — bind combos and sequences to any component, globally or scoped to a region.
+---
+
+# useShortcut
+
+Bind keyboard combinations to actions on **any** component — Manti UI or your
+own. `useShortcut` is a standalone primitive: a single call is enough to wire a
+global shortcut, with an opt-in scoped mode for shortcuts that should only fire
+inside a region.
+
+It is backed by the framework-agnostic shortcut engine in `@manti-ui/folds`
+(like [Swipe](/components/swipe), it is not a Zag.js machine), so the same core
+can power future Vue/Svelte/Solid renderers and any plain-JS consumer.
+
+<Demo name="shortcut/global" center />
+
+> The search field in this site's header is powered by exactly this hook —
+> `useShortcut('mod+k', () => setOpen(true))`.
+
+## Import
+
+`useShortcut` and `useShortcuts` ship from a dedicated subpath, so you can pull
+in just the hook without loading any Manti UI component:
+
+```tsx
+import { useShortcut, useShortcuts } from '@manti-ui/react/shortcut';
+```
+
+They are also re-exported from the package root (`@manti-ui/react`) for
+convenience.
+
+## Scoped to a region
+
+Pass a `ref` as the `scope` and the combo only fires while focus is inside that
+element — no Manti component required, any element that forwards a ref works.
+Elsewhere on the page the same combo falls through to the browser.
+
+<Demo name="shortcut/scoped" center />
+
+## Multiple shortcuts
+
+`useShortcuts` binds a whole map at once. Combos can be single presses
+(`mod+b`) or **sequences** — press `g` then `d` for `g d`.
+
+<Demo name="shortcut/multiple" center />
+
+## Typing in inputs
+
+By default a combo does **not** fire while focus is in an `input`, `textarea`,
+`select`, or `contenteditable` region, so shortcuts never hijack what someone is
+typing. Opt a binding back in with `enableOnFormElements`.
+
+<Demo name="shortcut/form-guard" center />
+
+## Combo syntax
+
+| Kind          | Example         | Notes                                                     |
+| ------------- | --------------- | --------------------------------------------------------- |
+| Modifier      | `mod+k`         | `mod` resolves to ⌘ on macOS and Ctrl everywhere else.    |
+| Modifiers     | `ctrl+shift+p`  | Combine `ctrl`, `shift`, `alt`/`option`, `meta`/`cmd`.    |
+| Single key    | `escape`, `/`   | Named keys (`enter`, `escape`, `space`, arrows) or a char.|
+| Sequence      | `g d`           | Space-separated steps, pressed in order within a second.  |
+
+Modifier matching is exact — `mod+k` fires on ⌘K but not on ⌘⇧K.
+
+## API
+
+```ts
+useShortcut(
+  combo: string,
+  handler: (event: KeyboardEvent) => void,
+  options?: ShortcutOptions,
+): void
+
+useShortcuts(
+  map: Record<string, (event: KeyboardEvent) => void>,
+  options?: ShortcutOptions,
+): void
+```
+
+### Options
+
+| Option                 | Type                     | Default    | Description                                                                 |
+| ---------------------- | ------------------------ | ---------- | --------------------------------------------------------------------------- |
+| `scope`                | `'global' \| RefObject`  | `'global'` | `'global'` listens on `window`; a ref scopes firing to that element's subtree. |
+| `preventDefault`       | `boolean`                | `true`     | Calls `event.preventDefault()` so combos like ⌘R/⌘S/⌘P/⌘F skip their native action. |
+| `enabled`              | `boolean`                | `true`     | Toggle the binding without unmounting.                                      |
+| `enableOnFormElements` | `boolean`                | `false`    | Allow firing while focus is in an input/textarea/contenteditable.           |
+| `stopPropagation`      | `boolean`                | `false`    | Also call `event.stopPropagation()` on match.                               |
+| `sequenceTimeout`      | `number`                 | `1000`     | How long (ms) a sequence like `g d` may pause between steps before it resets. |
+
+## Why it works on any component
+
+The hook never wraps or modifies the target — it only registers a handler:
+
+- **Global (default):** the listener is on `window`, so it fires regardless of
+  focus and needs zero wiring on the target. Works for any custom component.
+- **Scoped:** pass a `ref` to your component's root; it fires only when focus is
+  inside it. Works on any element that forwards a ref.
+
+It is also **SSR-safe**: nothing touches `window` at module load — the listener
+is attached inside an effect, on the client only.
