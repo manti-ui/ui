@@ -1,27 +1,39 @@
 {
-  "name": "cli",
-  "version": "1.0.0",
-  "description": "A CLI interface for manti-ui",
-  "main": "index.ts",
+  "name": "@manti-ui/cli",
+  "version": "0.3.0",
+  "description": "A CLI to scaffold Manti UI into your project.",
+  "license": "MIT",
+  "homepage": "https://manti.design",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manti-ui/ui.git",
+    "directory": "packages/cli"
+  },
+  "author": "Tutku Ucan <tutku.dev@gmail.com>",
+  "keywords": [
+    "manti-ui",
+    "cli",
+    "design-system",
+    "ui"
+  ],
   "type": "module",
+  "main": "index.ts",
   "bin": {
     "manti": "./index.ts"
   },
+  "files": [
+    "index.ts"
+  ],
   "engines": {
     "node": ">=22.18.0"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.ts",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": [
-    "manti-ui",
-    "manti-ui cli"
-  ],
-  "author": "Tutku Ucan <tutku.dev@gmail.com>",
-  "license": "ISC",
-  "packageManager": "pnpm@10.32.1",
   "dependencies": {
     "commander": "^15.0.0"
   }

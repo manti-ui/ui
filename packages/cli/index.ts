@@ -11,7 +11,9 @@ async function create() {
   const pkgPath = join(dir, 'package.json');
 
   if (!existsSync(pkgPath)) {
-    console.error('✖ package.json not found. Please run the command in a project folder');
+    console.error(
+      '✖ package.json not found. Please run the command in a project folder',
+    );
     process.exit(1);
   }
 
@@ -20,7 +22,9 @@ async function create() {
   const deps = { ...pkg.dependencies, ...pkg.devDependencies };
 
   if (!deps.react) {
-    console.error('✖ This is not a React project. Manti UI currently supports React only');
+    console.error(
+      '✖ This is not a React project. Manti UI currently supports React only',
+    );
     process.exit(1);
   }
 
@@ -34,16 +38,19 @@ async function create() {
   } else if (existsSync(join(dir, 'bun.lockb'))) {
     pm = 'bun';
   }
-  console.log(`✔ Paket yoneticisi: ${pm}`);
+  console.log(`✔ Package manager: ${pm}`);
 
   const addCommand = pm === 'npm' ? 'install' : 'add';
   console.log(`› ${pm} ${addCommand} ${PACKAGES.join(' ')}\n`);
 
-  const child = spawn(pm, [addCommand, ...PACKAGES], { stdio: 'inherit', cwd: dir });
+  const child = spawn(pm, [addCommand, ...PACKAGES], {
+    stdio: 'inherit',
+    cwd: dir,
+  });
 
   child.on('close', (code) => {
     if (code === 0) {
-      implementTokens()
+      implementTokens();
       console.log('\n✔ Manti UI added!');
     }
     process.exit(code ?? 0);
@@ -51,25 +58,27 @@ async function create() {
 }
 
 function implementTokens() {
-  const dir = process.cwd()
+  const dir = process.cwd();
   const candidates = [
     'src/index.css',
     'src/main.css',
     'src/styles/globals.css',
     'src/app/globals.css',
-    'app/globals.css',       // Next.js app router
-    'styles/globals.css',    // Next.js pages router
-    'src/app.css',           // SvelteKit
+    'app/globals.css', // Next.js app router
+    'styles/globals.css', // Next.js pages router
+    'src/app.css', // SvelteKit
     'src/App.css',
     'index.css',
   ];
 
-  const result = candidates.map(path => join(dir, path)).find(existsSync)
-  const tokens = readFileSync(join(dir, 'node_modules/@manti-ui/styles/dist/tokens.css'))
+  const result = candidates.map((path) => join(dir, path)).find(existsSync);
+  const tokens = readFileSync(
+    join(dir, 'node_modules/@manti-ui/styles/dist/tokens.css'),
+  );
   if (result) {
-    appendFileSync(result, tokens)
+    appendFileSync(result, tokens);
   } else {
-    appendFileSync(join(dir, 'src/index.css'), tokens)
+    appendFileSync(join(dir, 'src/index.css'), tokens);
   }
 }
 
@@ -79,8 +88,10 @@ program.name('manti').description('Manti UI cli.');
 
 program
   .command('create')
-  .description('Detects the framework and install Manti UI packages into your project.')
+  .description(
+    'Detects the framework and install Manti UI packages into your project.',
+  )
   .option('--tailwind', 'Initialize Manti UI with tailwind')
   .action(create);
 
-  program.parse();
+program.parse();
