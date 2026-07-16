@@ -15,8 +15,8 @@ global shortcut, with an opt-in scoped mode for shortcuts that should only fire
 inside a region.
 
 It is backed by the framework-agnostic shortcut engine in `@manti-ui/folds`
-(like [Swipe](/components/swipe), it is not a Zag.js machine), so the same core
-can power future Vue/Svelte/Solid renderers and any plain-JS consumer.
+(a Manti-original primitive, not a Zag.js machine), so the same core can power
+future Vue/Svelte/Solid renderers and any plain-JS consumer.
 
 <Demo name="shortcut/global" center />
 
@@ -60,12 +60,12 @@ typing. Opt a binding back in with `enableOnFormElements`.
 
 ## Combo syntax
 
-| Kind          | Example         | Notes                                                     |
-| ------------- | --------------- | --------------------------------------------------------- |
-| Modifier      | `mod+k`         | `mod` resolves to ⌘ on macOS and Ctrl everywhere else.    |
-| Modifiers     | `ctrl+shift+p`  | Combine `ctrl`, `shift`, `alt`/`option`, `meta`/`cmd`.    |
-| Single key    | `escape`, `/`   | Named keys (`enter`, `escape`, `space`, arrows) or a char.|
-| Sequence      | `g d`           | Space-separated steps, pressed in order within a second.  |
+| Kind       | Example        | Notes                                                      |
+| ---------- | -------------- | ---------------------------------------------------------- |
+| Modifier   | `mod+k`        | `mod` resolves to ⌘ on macOS and Ctrl everywhere else.     |
+| Modifiers  | `ctrl+shift+p` | Combine `ctrl`, `shift`, `alt`/`option`, `meta`/`cmd`.     |
+| Single key | `escape`, `/`  | Named keys (`enter`, `escape`, `space`, arrows) or a char. |
+| Sequence   | `g d`          | Space-separated steps, pressed in order within a second.   |
 
 Modifier matching is exact — `mod+k` fires on ⌘K but not on ⌘⇧K.
 
@@ -86,14 +86,14 @@ useShortcuts(
 
 ### Options
 
-| Option                 | Type                     | Default    | Description                                                                 |
-| ---------------------- | ------------------------ | ---------- | --------------------------------------------------------------------------- |
-| `scope`                | `'global' \| RefObject`  | `'global'` | `'global'` listens on `window`; a ref scopes firing to that element's subtree. |
-| `preventDefault`       | `boolean`                | `true`     | Calls `event.preventDefault()` so combos like ⌘R/⌘S/⌘P/⌘F skip their native action. |
-| `enabled`              | `boolean`                | `true`     | Toggle the binding without unmounting.                                      |
-| `enableOnFormElements` | `boolean`                | `false`    | Allow firing while focus is in an input/textarea/contenteditable.           |
-| `stopPropagation`      | `boolean`                | `false`    | Also call `event.stopPropagation()` on match.                               |
-| `sequenceTimeout`      | `number`                 | `1000`     | How long (ms) a sequence like `g d` may pause between steps before it resets. |
+| Option                 | Type                    | Default    | Description                                                                         |
+| ---------------------- | ----------------------- | ---------- | ----------------------------------------------------------------------------------- |
+| `scope`                | `'global' \| RefObject` | `'global'` | `'global'` listens on `window`; a ref scopes firing to that element's subtree.      |
+| `preventDefault`       | `boolean`               | `true`     | Calls `event.preventDefault()` so combos like ⌘R/⌘S/⌘P/⌘F skip their native action. |
+| `enabled`              | `boolean`               | `true`     | Toggle the binding without unmounting.                                              |
+| `enableOnFormElements` | `boolean`               | `false`    | Allow firing while focus is in an input/textarea/contenteditable.                   |
+| `stopPropagation`      | `boolean`               | `false`    | Also call `event.stopPropagation()` on match.                                       |
+| `sequenceTimeout`      | `number`                | `1000`     | How long (ms) a sequence like `g d` may pause between steps before it resets.       |
 
 ## Why it works on any component
 

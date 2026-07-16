@@ -87,6 +87,21 @@ No unit-test framework or coverage threshold is configured yet. Every public com
 
 When automated tests are introduced, colocate them as `ComponentName.test.tsx`.
 
+## The backlog
+
+`backlog/` holds frozen source for components that were built, then shelved
+(QrCode, Timer, Swipe). Each entry mirrors the component's original repo paths
+and carries a `README.md` with the reason plus a re-registration checklist. It is
+outside every build, tsconfig, ESLint, Prettier, and Storybook glob — nothing
+there is checked by `pnpm verify`, and it is expected to drift. `docs/zag-coverage.md`
+marks these 📦 (done, then shelved), never ⬜ (todo). Read `backlog/README.md`
+before re-adapting any of them, and shelve rather than delete a component.
+
+A shelved component does **not** mean its behavior is unused: `folds/swipe` still
+ships because Toast's swipe-to-dismiss is built on the core directly. Do not
+remove a `folds` primitive on the grounds that no component renders it — check
+consumers first.
+
 ## Commit & Pull Request Guidelines
 
 This workspace currently has no readable Git history. Until a project convention is established, use concise Conventional Commit messages, for example `feat(button): add loading state` or `docs: clarify token naming`.

@@ -20,7 +20,11 @@ refinement once breadth is complete.
 
 ## Status
 
-Legend: ✅ done · ⬜ todo
+Legend: ✅ done · ⬜ todo · 📦 backlog
+
+📦 marks an adapter that was built and then shelved: its source is frozen under
+`backlog/<name>/`, mirroring its original repo paths, and it ships in no package.
+It is **not** open work — see `backlog/README.md` before re-adapting one.
 
 ### Batch 1 — inline behavior ✅
 
@@ -74,7 +78,7 @@ Legend: ✅ done · ⬜ todo
 | Progress      | `@zag-js/progress`      |   ✅   |
 | Rating Group  | `@zag-js/rating-group`  |   ✅   |
 | Carousel      | `@zag-js/carousel`      |   ✅   |
-| QR Code       | `@zag-js/qr-code`       |   ✅   |
+| QR Code       | `@zag-js/qr-code`       |   📦   |
 | Clipboard     | `@zag-js/clipboard`     |   ✅   |
 | File Upload   | `@zag-js/file-upload`   |   ✅   |
 | Signature Pad | `@zag-js/signature-pad` |   ✅   |
@@ -85,7 +89,7 @@ Legend: ✅ done · ⬜ todo
 | --------------- | ------------------------- | :----: |
 | Date Picker     | `@zag-js/date-picker`     |   ✅   |
 | Time Picker     | `@zag-js/time-picker`     |   ✅   |
-| Timer           | `@zag-js/timer`           |   ✅   |
+| Timer           | `@zag-js/timer`           |   📦   |
 | Steps           | `@zag-js/steps`           |   ✅   |
 | Tour            | `@zag-js/tour`            |   ✅   |
 | Splitter        | `@zag-js/splitter`        |   ✅   |
@@ -117,6 +121,6 @@ primitive or pure CSS) to fill gaps in the Zag catalog.
 | Component      | Mechanism             | Status |
 | -------------- | --------------------- | :----: |
 | Marquee        | CSS animation         |   ✅   |
-| Swipe          | `folds/swipe`         |   ✅   |
+| Swipe          | `folds/swipe`         |   📦   |
 | Scroll Area    | CSS scrollbars        |   ✅   |
 | Password Input | `field` shell + state |   ✅   |
