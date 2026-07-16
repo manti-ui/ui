@@ -196,17 +196,29 @@
     }
   }
 
-  /* Caps Lock notice — a quiet warning-toned chip inside the control. Hidden
+  /* Caps Lock notice — a quiet warning-toned icon inside the control. Absent
      from layout until Caps Lock is active (the adapter renders it conditionally). */
   [data-scope='field'][data-part='caps-lock'] {
     display: inline-flex;
     flex: none;
     align-items: center;
-    gap: var(--manti-space-1);
-    padding-inline: var(--manti-space-2);
+    padding-inline: var(--manti-space-1);
     color: light-dark(var(--manti-amber-800), var(--manti-amber-300));
-    font-size: var(--manti-text-xs);
-    font-weight: var(--manti-weight-medium);
+  }
+
+  /* The notice reads as an icon, but the wording has to survive for assistive
+     tech: it is what the `role="status"` live region announces and what the
+     input's `aria-describedby` resolves to. So hide it visually, not from the
+     accessibility tree. */
+  [data-scope='field'][data-part='caps-lock-label'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
     white-space: nowrap;
+    border: 0;
   }
 }
