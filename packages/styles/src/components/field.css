@@ -1,7 +1,11 @@
 /**
- * Field — text input with label, hint, error, and optional leading/trailing
- * adornments. The control wrapper carries the smooth focus ring so adornments
- * sit inside it.
+ * Field — the shared input shell: label, hint, error, and optional
+ * leading/trailing adornments. The control wrapper carries the smooth focus ring
+ * so adornments sit inside it.
+ *
+ * Rendered by Input and Textarea. `visibility-trigger` and `caps-lock` below are
+ * the password affordances Input adds for `type="password"`; they live on this
+ * scope because Input owns them, and inherit every field token and theme.
  */
 @layer manti.components {
   [data-scope='field'][data-part='root'] {
@@ -153,5 +157,56 @@
   [data-scope='field'][data-part='error'] {
     font-size: var(--manti-text-xs);
     color: light-dark(var(--manti-red-700), var(--manti-red-300));
+  }
+
+  /* Password affordances — rendered only for `type="password"`. ------------- */
+
+  [data-scope='field'][data-part='visibility-trigger'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--manti-space-6);
+    height: var(--manti-space-6);
+    margin-inline-end: calc(var(--manti-space-1) * -1);
+    padding: 0;
+    color: var(--manti-text-subtle);
+    background: transparent;
+    border: 0;
+    border-radius: var(--manti-radius-sm);
+    cursor: pointer;
+    transition:
+      background var(--manti-duration-fast) var(--manti-ease-soft),
+      color var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &:hover {
+      color: var(--manti-text);
+      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid
+        var(--tone-ring, var(--manti-focus-ring));
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  /* Caps Lock notice — a quiet warning-toned chip inside the control. Hidden
+     from layout until Caps Lock is active (the adapter renders it conditionally). */
+  [data-scope='field'][data-part='caps-lock'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--manti-space-1);
+    padding-inline: var(--manti-space-2);
+    color: light-dark(var(--manti-amber-800), var(--manti-amber-300));
+    font-size: var(--manti-text-xs);
+    font-weight: var(--manti-weight-medium);
+    white-space: nowrap;
   }
 }
