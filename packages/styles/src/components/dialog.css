@@ -50,9 +50,7 @@
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-dialog-radius);
-    box-shadow:
-      inset 0 1px 0 0 var(--manti-panel-highlight),
-      var(--manti-panel-shadow);
+    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     color: var(--manti-text);
 
     &[data-size='sm'] {
