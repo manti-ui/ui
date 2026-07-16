@@ -88,7 +88,8 @@ export const meta: ComponentMeta = {
       name: 'capsLockLabel',
       type: 'ReactNode',
       default: `'Caps Lock is on'`,
-      description: 'type="password" only — Caps Lock warning copy.',
+      description:
+        'type="password" only — Caps Lock wording. Shown to assistive tech only; the warning reads as an icon on screen.',
     },
     {
       name: 'showPasswordLabel',
@@ -122,7 +123,12 @@ export const meta: ComponentMeta = {
     {
       part: 'caps-lock',
       description:
-        'The Caps Lock notice (type="password", while Caps Lock is on).',
+        'The Caps Lock icon (type="password", while Caps Lock is on).',
+    },
+    {
+      part: 'caps-lock-label',
+      description:
+        'The Caps Lock wording. Visually hidden — kept for assistive tech.',
     },
     { part: 'hint', description: 'Helper text below the control.' },
     {

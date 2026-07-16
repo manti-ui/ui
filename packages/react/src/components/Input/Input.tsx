@@ -45,7 +45,10 @@ export interface InputProps extends Omit<
   onPasswordVisibilityChange?: (visible: boolean) => void;
   /** Warn the user while Caps Lock is on. @default true */
   showCapsLockWarning?: boolean;
-  /** Caps Lock warning copy. @default 'Caps Lock is on' */
+  /**
+   * Caps Lock wording. The warning reads as an icon on screen, so this is only
+   * ever surfaced to assistive tech. @default 'Caps Lock is on'
+   */
   capsLockLabel?: ReactNode;
   /** Accessible label for the toggle while the password is hidden. @default 'Show password' */
   showPasswordLabel?: string;
@@ -190,7 +193,12 @@ export function Input({
             role="status"
           >
             <CapsLockIcon />
-            {capsLockLabel}
+            {/* The icon carries the message visually; the text stays in the DOM
+                unstyled-hidden so the live region has something to announce and
+                `aria-describedby` has a description to resolve. */}
+            <span data-scope="field" data-part="caps-lock-label">
+              {capsLockLabel}
+            </span>
           </span>
         )}
         {trailingAddon != null && (
