@@ -683,10 +683,13 @@
     padding: var(--manti-space-4) var(--docs-gutter) var(--manti-space-16);
   }
 
-  /* Pre-hydration / no-JS fallback baked into each prerendered route by
-     vite-plugin-seo: the page heading + a grouped nav of every route. React
-     replaces it on mount; it is only ever visible before JS runs (or without
-     JS), so keep it plain and quiet. */
+  /* No-JS fallback baked into each prerendered route by vite-plugin-seo: the
+     page heading + a grouped nav of every route. React replaces it on mount, so
+     it only ever renders without JS — keep it plain and quiet.
+
+     The `[data-js]` gate below is what stops it from flashing: the inline script
+     in index.html sets the attribute before first paint, so a JS-capable browser
+     never paints the fallback while the bundle loads. */
   .docs-seo-fallback {
     max-width: var(--docs-max);
     margin-inline: auto;
@@ -715,6 +718,9 @@
   }
   .docs-seo-fallback a {
     color: inherit;
+  }
+  [data-js] .docs-seo-fallback {
+    display: none;
   }
 
   /* Standard screen-reader-only pattern: keeps landmark/heading structure in
