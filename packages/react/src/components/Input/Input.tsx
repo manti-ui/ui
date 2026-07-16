@@ -10,8 +10,10 @@ import type { MantiTone } from '@manti-ui/tokens';
 import { cx, dataBool } from '../../internal/props';
 import { CapsLockIcon, EyeIcon, EyeOffIcon } from '../../internal/icons';
 
-export interface PasswordInputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
+export interface InputProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'size'
+> {
   /** Field label. */
   label?: ReactNode;
   /** Helper text shown below the control when there is no error. */
@@ -26,31 +28,41 @@ export interface PasswordInputProps
   fullWidth?: boolean;
   /** Content rendered inside the control, before the input. */
   leadingAddon?: ReactNode;
+  /** Content rendered inside the control, after the input. */
+  trailingAddon?: ReactNode;
+
+  /* Password affordances. Like the inherited `min`/`max` (number) or `accept`
+     (file), these apply to one type only — they are inert unless
+     `type="password"`. */
+
   /** Render the show/hide toggle button. @default true */
-  showVisibilityToggle?: boolean;
+  showPasswordToggle?: boolean;
   /** Controlled visibility of the password text. */
-  visible?: boolean;
+  passwordVisible?: boolean;
   /** Initial visibility for uncontrolled usage. @default false */
-  defaultVisible?: boolean;
-  /** Called whenever the visibility is toggled. */
-  onVisibilityChange?: (visible: boolean) => void;
+  defaultPasswordVisible?: boolean;
+  /** Called whenever the password visibility is toggled. */
+  onPasswordVisibilityChange?: (visible: boolean) => void;
   /** Warn the user while Caps Lock is on. @default true */
   showCapsLockWarning?: boolean;
   /** Caps Lock warning copy. @default 'Caps Lock is on' */
   capsLockLabel?: ReactNode;
-  /** Accessible label for the toggle when the password is hidden. @default 'Show password' */
-  showLabel?: string;
-  /** Accessible label for the toggle when the password is shown. @default 'Hide password' */
-  hideLabel?: string;
+  /** Accessible label for the toggle while the password is hidden. @default 'Show password' */
+  showPasswordLabel?: string;
+  /** Accessible label for the toggle while the password is shown. @default 'Hide password' */
+  hidePasswordLabel?: string;
 }
 
 /**
- * A password field with a show/hide toggle and a live Caps Lock warning. Manti
- * UI has no Zag machine for this — it renders the shared `field` shell (so label
- * association, `aria-describedby`/`aria-invalid`, sizing, and the focus ring all
- * behave exactly like {@link TextField}) and layers the password affordances on top.
+ * A text input with label, hint, error, and optional adornments. Wires up label
+ * association and `aria-describedby`/`aria-invalid` automatically.
+ *
+ * `type="password"` additionally renders a show/hide toggle and a live Caps Lock
+ * warning. Manti UI has no Zag machine for either — they are layered onto the
+ * shared `field` shell, so sizing, the focus ring, and the invalid state behave
+ * identically across every type.
  */
-export function PasswordInput({
+export function Input({
   label,
   hint,
   error,
@@ -58,14 +70,16 @@ export function PasswordInput({
   tone = 'primary',
   fullWidth,
   leadingAddon,
-  showVisibilityToggle = true,
-  visible,
-  defaultVisible,
-  onVisibilityChange,
+  trailingAddon,
+  showPasswordToggle = true,
+  passwordVisible,
+  defaultPasswordVisible,
+  onPasswordVisibilityChange,
   showCapsLockWarning = true,
   capsLockLabel = 'Caps Lock is on',
-  showLabel = 'Show password',
-  hideLabel = 'Hide password',
+  showPasswordLabel = 'Show password',
+  hidePasswordLabel = 'Hide password',
+  type = 'text',
   id,
   required,
   disabled,
@@ -75,21 +89,24 @@ export function PasswordInput({
   onBlur,
   'aria-describedby': ariaDescribedby,
   ...rest
-}: PasswordInputProps) {
+}: InputProps) {
   const autoId = useId();
   const inputId = id ?? autoId;
   const invalid = error != null;
   const hintId = hint != null ? `${inputId}-hint` : undefined;
   const errorId = invalid ? `${inputId}-error` : undefined;
 
-  const controlled = visible !== undefined;
+  const isPassword = type === 'password';
+
+  const controlled = passwordVisible !== undefined;
   const [internalVisible, setInternalVisible] = useState(
-    defaultVisible ?? false,
+    defaultPasswordVisible ?? false,
   );
-  const isVisible = controlled ? visible : internalVisible;
+  const revealed =
+    isPassword && (controlled ? passwordVisible : internalVisible);
 
   const [capsLock, setCapsLock] = useState(false);
-  const showCaps = showCapsLockWarning && capsLock;
+  const showCaps = isPassword && showCapsLockWarning && capsLock;
   const capsId = showCaps ? `${inputId}-caps` : undefined;
 
   const describedBy =
@@ -97,11 +114,13 @@ export function PasswordInput({
     undefined;
 
   const toggleVisibility = () => {
-    const next = !isVisible;
+    const next = !revealed;
     if (!controlled) setInternalVisible(next);
-    onVisibilityChange?.(next);
+    onPasswordVisibilityChange?.(next);
   };
 
+  // Caps Lock state is only readable from a keyboard event, so it is sampled off
+  // the key handlers rather than tracked globally, and cleared when focus leaves.
   const syncCapsLock = (event: KeyboardEvent<HTMLInputElement>) => {
     if (typeof event.getModifierState === 'function') {
       setCapsLock(event.getModifierState('CapsLock'));
@@ -109,17 +128,17 @@ export function PasswordInput({
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    syncCapsLock(event);
+    if (isPassword) syncCapsLock(event);
     onKeyDown?.(event);
   };
 
   const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
-    syncCapsLock(event);
+    if (isPassword) syncCapsLock(event);
     onKeyUp?.(event);
   };
 
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    setCapsLock(false);
+    if (isPassword) setCapsLock(false);
     onBlur?.(event);
   };
 
@@ -154,7 +173,7 @@ export function PasswordInput({
           data-part="input"
           {...rest}
           id={inputId}
-          type={isVisible ? 'text' : 'password'}
+          type={revealed ? 'text' : type}
           required={required}
           disabled={disabled}
           aria-invalid={invalid || undefined}
@@ -165,7 +184,7 @@ export function PasswordInput({
         />
         {showCaps && (
           <span
-            data-scope="password-input"
+            data-scope="field"
             data-part="caps-lock"
             id={capsId}
             role="status"
@@ -174,19 +193,24 @@ export function PasswordInput({
             {capsLockLabel}
           </span>
         )}
-        {showVisibilityToggle && (
+        {trailingAddon != null && (
+          <span data-scope="field" data-part="addon">
+            {trailingAddon}
+          </span>
+        )}
+        {isPassword && showPasswordToggle && (
           <button
-            data-scope="password-input"
+            data-scope="field"
             data-part="visibility-trigger"
             type="button"
             disabled={disabled}
-            aria-label={isVisible ? hideLabel : showLabel}
-            aria-pressed={isVisible}
+            aria-label={revealed ? hidePasswordLabel : showPasswordLabel}
+            aria-pressed={revealed}
             aria-controls={inputId}
             onMouseDown={(event) => event.preventDefault()}
             onClick={toggleVisibility}
           >
-            {isVisible ? <EyeOffIcon /> : <EyeIcon />}
+            {revealed ? <EyeOffIcon /> : <EyeIcon />}
           </button>
         )}
       </div>

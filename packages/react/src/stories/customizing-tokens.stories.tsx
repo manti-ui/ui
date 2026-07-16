@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Badge } from '../components/Badge/Badge';
 import { Button } from '../components/Button/Button';
 import { Switch } from '../components/Switch/Switch';
-import { TextField } from '../components/TextField/TextField';
+import { Input } from '../components/Input/Input';
 
 /**
  * Token override demo. Manti tokens form three tiers, each defaulting into the
@@ -68,7 +68,7 @@ function Controls() {
       <Button tone="primary" variant="outline">
         Cancel
       </Button>
-      <TextField placeholder="Type a recipe…" />
+      <Input placeholder="Type a recipe…" />
       <Switch defaultChecked>Notify</Switch>
       <Badge tone="success">Fresh</Badge>
     </div>
@@ -77,7 +77,8 @@ function Controls() {
 
 // Setting CSS custom properties via inline style needs a cast — the keys are
 // valid CSS but not in the typed CSSProperties surface.
-const vars = (obj: Record<string, string>): CSSProperties => obj as CSSProperties;
+const vars = (obj: Record<string, string>): CSSProperties =>
+  obj as CSSProperties;
 
 export const Overview: Story = {
   render: () => (
@@ -87,9 +88,9 @@ export const Overview: Story = {
           Customizing with tokens
         </h1>
         <p style={{ ...caption, marginTop: '0.5rem', maxWidth: '46ch' }}>
-          Redefine token custom properties at any scope. Pick the right altitude:
-          semantic tokens are the front door, component tokens are an escape
-          hatch.
+          Redefine token custom properties at any scope. Pick the right
+          altitude: semantic tokens are the front door, component tokens are an
+          escape hatch.
         </p>
       </div>
 
@@ -153,12 +154,17 @@ export const SemanticFrontDoor: Story = {
         <span style={label}>md → 2.5rem (default)</span>
         <Controls />
       </div>
-      <div style={{ ...panel, ...vars({ '--manti-control-height-md': '2rem' }) }}>
+      <div
+        style={{ ...panel, ...vars({ '--manti-control-height-md': '2rem' }) }}
+      >
         <span style={label}>md → 2rem (compact)</span>
         <Controls />
       </div>
       <div
-        style={{ ...panel, ...vars({ '--manti-control-height-md': '3.25rem' }) }}
+        style={{
+          ...panel,
+          ...vars({ '--manti-control-height-md': '3.25rem' }),
+        }}
       >
         <span style={label}>md → 3.25rem (roomy)</span>
         <Controls />

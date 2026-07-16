@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, TextField } from '@manti-ui/react';
+import { Dialog, Input } from '@manti-ui/react';
 
 import { navGroups } from '../data/navigation';
 import type { SearchHit } from '../search/SearchProvider';
@@ -17,7 +17,7 @@ const allDocs: SearchHit[] = navGroups.flatMap((group) =>
   })),
 );
 
-/** ⌘K / Ctrl-K command palette, built from a Manti Dialog + TextField. */
+/** ⌘K / Ctrl-K command palette, built from a Manti Dialog + Input. */
 export function SearchDialog() {
   const { open, setOpen } = useSearch();
   const [query, setQuery] = useState('');
@@ -57,7 +57,7 @@ export function SearchDialog() {
       size="md"
     >
       <div onKeyDown={onKeyDown}>
-        <TextField
+        <Input
           className="docs-search-field"
           autoFocus
           fullWidth
