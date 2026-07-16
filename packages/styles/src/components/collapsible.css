@@ -20,7 +20,8 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--manti-collapsible-gap);
-    padding: var(--manti-collapsible-padding-y) var(--manti-collapsible-padding-x);
+    padding: var(--manti-collapsible-padding-y)
+      var(--manti-collapsible-padding-x);
     background: var(--manti-panel-tint);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
@@ -30,7 +31,7 @@
     font: inherit;
     font-weight: var(--manti-weight-semibold);
     cursor: pointer;
-    box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
+    box-shadow: var(--manti-panel-rim);
     transition: background-color var(--manti-duration-fast)
       var(--manti-ease-soft);
 
