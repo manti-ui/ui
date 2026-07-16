@@ -2,3 +2,6 @@ node_modules
 dist
 storybook-static
 pnpm-lock.yaml
+
+# Frozen source for shelved components — kept byte-for-byte as it shipped.
+backlog

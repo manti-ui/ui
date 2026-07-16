@@ -63,6 +63,12 @@ importers:
         specifier: ^8.0.16
         version: 8.0.16(@types/node@24.13.1)(esbuild@0.27.7)(yaml@2.9.0)
 
+  packages/cli:
+    dependencies:
+      commander:
+        specifier: ^15.0.0
+        version: 15.0.0
+
   packages/docs:
     dependencies:
       '@manti-ui/react':
@@ -210,9 +216,6 @@ importers:
       '@zag-js/progress':
         specifier: ^1.41.2
         version: 1.41.2
-      '@zag-js/qr-code':
-        specifier: ^1.41.2
-        version: 1.41.2
       '@zag-js/radio-group':
         specifier: ^1.41.2
         version: 1.41.2
@@ -246,9 +249,6 @@ importers:
       '@zag-js/time-picker':
         specifier: ^1.22.1
         version: 1.22.1(@internationalized/date@3.12.2)
-      '@zag-js/timer':
-        specifier: ^1.41.2
-        version: 1.41.2
       '@zag-js/toast':
         specifier: ^1.41.2
         version: 1.41.2
@@ -1695,9 +1695,6 @@ packages:
   '@zag-js/progress@1.41.2':
     resolution: {integrity: sha512-SnzrqN+Z568NoO4rrgjrIc/S4EXMEne5CDgWwt2kQ8yq9VysdH8TtHAjyciFRIio7cdgEZNHKw9jSccpMWgRwA==}
 
-  '@zag-js/qr-code@1.41.2':
-    resolution: {integrity: sha512-+JLswCNnzf58aQTaX0SMUA9wRC8Hb/a/ZveJIXTz6853Siemay2HqOqB2WQIeF33HNldUFD/a4+4Q8ugg93ubA==}
-
   '@zag-js/radio-group@1.41.2':
     resolution: {integrity: sha512-EZjos61jKHZlNw8ez80vG2T9gUwpooxcVpYOKS2hyhuEXn3wEoefS5v1WFbmpoA/8TUpUQnYxisAeNuQfEQCuQ==}
 
@@ -1750,9 +1747,6 @@ packages:
     resolution: {integrity: sha512-7fqCtyDbuaelffLZ8q9infns+HQKqFMjL4k2V5zALAWdYu2NzvlMYHgj2Ue9AI4VI5QaE1nnwV6hxwS4Zpglvg==}
     peerDependencies:
       '@internationalized/date': '>=3.0.0'
-
-  '@zag-js/timer@1.41.2':
-    resolution: {integrity: sha512-PRYLWaip0+1FeVGEMNk5wMGAAIYgBIWwulZ4U5I+2Ayjohzp2NUAfwJ3sqoYvRrfjNYUNAPdU4eGu1zetC+oVQ==}
 
   '@zag-js/toast@1.41.2':
     resolution: {integrity: sha512-+F3PsAo6EIz4rh73IOMCb/+FOUp7e3VjUY2q5sdU4IbfOzJBIbVSJxn0PQmHkuxkzWdCom0Lv0qSPFg/UTplnQ==}
@@ -1909,6 +1903,10 @@ packages:
 
   comma-separated-tokens@2.0.3:
     resolution: {integrity: sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==}
+
+  commander@15.0.0:
+    resolution: {integrity: sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==}
+    engines: {node: '>=22.12.0'}
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
@@ -2820,9 +2818,6 @@ packages:
   proxy-compare@3.0.1:
     resolution: {integrity: sha512-V9plBAt3qjMlS1+nC8771KNf6oJ12gExvaxnNzN/9yVRLdTv/lc+oJlnSzrdYDAvBfTStPCoiaCOTmTs0adv7Q==}
 
-  proxy-memoize@3.0.1:
-    resolution: {integrity: sha512-VDdG/VYtOgdGkWJx7y0o7p+zArSf2383Isci8C+BP3YXgMYDoPd3cCBjw0JdWb6YBb9sFiOPbAADDVTPJnh+9g==}
-
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
@@ -3177,9 +3172,6 @@ packages:
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
-
-  uqr@0.1.3:
-    resolution: {integrity: sha512-0rjE8iEJe4YmT9TOhwsZtqCMRLc5DXZUI2UEYUUg63ikBkqqE5EYWaI0etFe/5KUcmcYwLih2RND1kq+hrUJXA==}
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
@@ -4824,16 +4816,6 @@ snapshots:
       '@zag-js/types': 1.41.2
       '@zag-js/utils': 1.41.2
 
-  '@zag-js/qr-code@1.41.2':
-    dependencies:
-      '@zag-js/anatomy': 1.41.2
-      '@zag-js/core': 1.41.2
-      '@zag-js/dom-query': 1.41.2
-      '@zag-js/types': 1.41.2
-      '@zag-js/utils': 1.41.2
-      proxy-memoize: 3.0.1
-      uqr: 0.1.3
-
   '@zag-js/radio-group@1.41.2':
     dependencies:
       '@zag-js/anatomy': 1.41.2
@@ -4957,14 +4939,6 @@ snapshots:
       '@zag-js/popper': 1.22.1
       '@zag-js/types': 1.22.1
       '@zag-js/utils': 1.22.1
-
-  '@zag-js/timer@1.41.2':
-    dependencies:
-      '@zag-js/anatomy': 1.41.2
-      '@zag-js/core': 1.41.2
-      '@zag-js/dom-query': 1.41.2
-      '@zag-js/types': 1.41.2
-      '@zag-js/utils': 1.41.2
 
   '@zag-js/toast@1.41.2':
     dependencies:
@@ -5134,6 +5108,8 @@ snapshots:
   collapse-white-space@2.1.0: {}
 
   comma-separated-tokens@2.0.3: {}
+
+  commander@15.0.0: {}
 
   convert-source-map@2.0.0: {}
 
@@ -6353,10 +6329,6 @@ snapshots:
 
   proxy-compare@3.0.1: {}
 
-  proxy-memoize@3.0.1:
-    dependencies:
-      proxy-compare: 3.0.1
-
   punycode@2.3.1: {}
 
   quansync@0.2.11: {}
@@ -6836,8 +6808,6 @@ snapshots:
       browserslist: 4.28.2
       escalade: 3.2.0
       picocolors: 1.1.1
-
-  uqr@0.1.3: {}
 
   uri-js@4.4.1:
     dependencies:

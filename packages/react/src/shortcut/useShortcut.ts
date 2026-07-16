@@ -52,11 +52,17 @@ function resolveTarget(scope: ShortcutScope): shortcut.ShortcutTarget | null {
  * SSR-safe: the listener is only attached inside an effect, never at module
  * load. Prefer {@link useShortcut}/{@link useShortcuts}; this is the shared core.
  */
-function useShortcutEngine(bindings: shortcut.ShortcutBinding[], options: ShortcutOptions) {
+function useShortcutEngine(
+  bindings: shortcut.ShortcutBinding[],
+  options: ShortcutOptions,
+) {
   const { scope = 'global', sequenceTimeout } = options;
   // Created once; live config flows through `setBindings`/`attach` below,
-  // matching the Swipe adapter's pattern. `sequenceTimeout` is read at creation.
-  const control = useMemo(() => shortcut.createShortcuts({ sequenceTimeout }), [sequenceTimeout]);
+  // matching the Toast adapter's pattern. `sequenceTimeout` is read at creation.
+  const control = useMemo(
+    () => shortcut.createShortcuts({ sequenceTimeout }),
+    [sequenceTimeout],
+  );
 
   // Refresh bindings + target every render so the listener reads the latest
   // handlers and scope. `setBindings` never re-binds the listener, and `attach`
@@ -84,9 +90,19 @@ export function useShortcut(
   handler: (event: KeyboardEvent) => void,
   options: ShortcutOptions = {},
 ): void {
-  const { preventDefault, enabled, enableOnFormElements, stopPropagation } = options;
+  const { preventDefault, enabled, enableOnFormElements, stopPropagation } =
+    options;
   useShortcutEngine(
-    [{ combo, handler, preventDefault, enabled, enableOnFormElements, stopPropagation }],
+    [
+      {
+        combo,
+        handler,
+        preventDefault,
+        enabled,
+        enableOnFormElements,
+        stopPropagation,
+      },
+    ],
     options,
   );
 }
@@ -97,8 +113,12 @@ export function useShortcut(
  * @example
  * useShortcuts({ 'mod+k': openSearch, 'mod+/': toggleHelp, 'g d': goDashboard });
  */
-export function useShortcuts(map: ShortcutMap, options: ShortcutOptions = {}): void {
-  const { preventDefault, enabled, enableOnFormElements, stopPropagation } = options;
+export function useShortcuts(
+  map: ShortcutMap,
+  options: ShortcutOptions = {},
+): void {
+  const { preventDefault, enabled, enableOnFormElements, stopPropagation } =
+    options;
   const bindings = Object.entries(map).map(([combo, handler]) => ({
     combo,
     handler,
