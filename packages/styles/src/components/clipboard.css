@@ -35,7 +35,7 @@
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-clipboard-radius);
-    box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
+    box-shadow: var(--manti-panel-rim);
 
     &:focus-within {
       border-color: var(--manti-focus-ring);
