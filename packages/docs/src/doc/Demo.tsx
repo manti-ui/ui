@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import type { ComponentType, CSSProperties } from 'react';
 import { Button, Tabs } from '@manti-ui/react';
 
 import { ReactIcon, SolidIcon, SvelteIcon, VueIcon } from './framework-icons';
 
-// Each demo file is loaded three ways: as a live component, as its raw source
-// (for the copy button), and as Shiki-highlighted HTML (for display) — all from
-// the same file, so preview, copy and code can never drift.
+// react-live carries a transpiler (sucrase) and a highlighter (Prism). Most readers
+// never open the code, so it is split out and fetched on the first "Show code".
+const DemoLive = lazy(() => import('./DemoLive'));
+
+// Each demo file is loaded two ways: as a component for the closed preview, and as its
+// raw source for the editor — from the same file, so the two can never drift.
 const demoModules = import.meta.glob<{ default: ComponentType }>(
   '../demos/**/*.tsx',
   { eager: true },
@@ -14,11 +17,6 @@ const demoModules = import.meta.glob<{ default: ComponentType }>(
 const demoSources = import.meta.glob<string>('../demos/**/*.tsx', {
   eager: true,
   query: '?raw',
-  import: 'default',
-});
-const demoHtml = import.meta.glob<string>('../demos/**/*.tsx', {
-  eager: true,
-  query: '?highlight',
   import: 'default',
 });
 
@@ -48,7 +46,6 @@ function resolve(name: string) {
   return {
     Component: demoModules[key]?.default,
     source: demoSources[key],
-    html: demoHtml[key],
   };
 }
 
@@ -64,7 +61,7 @@ export interface DemoProps {
 }
 
 export function Demo({ name, center, roomy }: DemoProps) {
-  const { Component, source, html } = resolve(name);
+  const { Component, source } = resolve(name);
   const [showCode, setShowCode] = useState(false);
 
   const canvasClass = [
@@ -83,71 +80,61 @@ export function Demo({ name, center, roomy }: DemoProps) {
     );
   }
 
-  return (
-    <div className="docs-demo">
+  const bar = (
+    <div className="docs-demo-bar">
+      {/* Framework switcher (Manti Tabs). Only React is enabled today; the
+          active tab wears its framework's brand color via --fw-color. */}
+      <div
+        className="docs-demo-frameworks"
+        style={{ '--fw-color': activeColor } as CSSProperties}
+      >
+        <Tabs
+          items={frameworkItems}
+          variant="soft"
+          defaultValue={ACTIVE_FRAMEWORK}
+        />
+      </div>
+      <Button
+        variant="ghost"
+        tone="neutral"
+        size="sm"
+        onClick={() => setShowCode((value) => !value)}
+        aria-expanded={showCode}
+      >
+        {showCode ? 'Hide code' : 'Show code'}
+      </Button>
+    </div>
+  );
+
+  // Closed, the preview is the imported component — no transpiler, no editor. Opened,
+  // DemoLive owns the preview too, because the whole point is that editing the code
+  // re-renders it. Toggling therefore remounts the demo and resets its state.
+  const staticPreview = (
+    <>
       <div className={canvasClass}>
         <Component />
       </div>
-      {source && html && (
-        <>
-          <div className="docs-demo-bar">
-            {/* Framework switcher (Manti Tabs). Only React is enabled today; the
-                active tab wears its framework's brand color via --fw-color. */}
-            <div
-              className="docs-demo-frameworks"
-              style={{ '--fw-color': activeColor } as CSSProperties}
-            >
-              <Tabs
-                items={frameworkItems}
-                variant="soft"
-                defaultValue={ACTIVE_FRAMEWORK}
-              />
-            </div>
-            <Button
-              variant="ghost"
-              tone="neutral"
-              size="sm"
-              onClick={() => setShowCode((value) => !value)}
-              aria-expanded={showCode}
-            >
-              {showCode ? 'Hide code' : 'Show code'}
-            </Button>
-          </div>
-          {showCode && <DemoSource html={html} source={source} />}
-        </>
-      )}
-    </div>
+      {bar}
+    </>
   );
-}
 
-function DemoSource({ html, source }: { html: string; source: string }) {
-  const [copied, setCopied] = useState(false);
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(source);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* clipboard unavailable */
-    }
+  if (!source) {
+    return <div className="docs-demo">{staticPreview}</div>;
   }
 
   return (
-    <div className="docs-codeblock">
-      <div className="docs-copy">
-        <Button
-          variant="soft"
-          tone="neutral"
-          size="sm"
-          onClick={copy}
-          aria-label="Copy demo source"
-        >
-          {copied ? 'Copied' : 'Copy'}
-        </Button>
-      </div>
-      {/* Shiki HTML produced at build time by the ?highlight Vite plugin. */}
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+    <div className="docs-demo">
+      {showCode ? (
+        <Suspense fallback={staticPreview}>
+          <DemoLive
+            source={source.trim()}
+            canvasClass={canvasClass}
+            bar={bar}
+          />
+        </Suspense>
+      ) : (
+        staticPreview
+      )}
     </div>
   );
 }
