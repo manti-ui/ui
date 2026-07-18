@@ -21,6 +21,6 @@ regions and cultures.
 
 The first design-system release is implemented: color, typography, spacing,
 radius, motion, and elevation tokens, plus a foundational React component set
-(Button, Toggle, Switch, Checkbox, TextField, Badge, Card, Alert, Spinner).
+(Button, Toggle, Switch, Checkbox, Input, Badge, Card, Alert, Spinner).
 Iconography and additional framework adapters remain open. See
 [`design-system.md`](./design-system.md) for the reference.

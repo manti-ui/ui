@@ -94,7 +94,7 @@ There are two component shapes:
   ```
   Machines are imported from `@manti-ui/folds` (e.g. `switchMachine`), never from
   `@zag-js/*` directly in the renderer.
-- **Static** (Button, Badge, Card, Alert, Spinner, TextField): no machine; the
+- **Static** (Button, Badge, Card, Alert, Spinner, Input): no machine; the
   renderer emits the `data-*` anatomy attributes by hand (see `Button.tsx`).
 
 Collection components currently take a data-driven `items` prop; promoting them to
@@ -165,3 +165,18 @@ Vite/Lightning CSS setup is tuned to preserve this — these are easy to silentl
   accent**; color comes only from semantic tones.
 - Conventional Commit messages (e.g. `feat(button): add loading state`). Do not
   commit `dist/`, `storybook-static/`, or cache dirs.
+
+## The backlog
+
+`backlog/` holds frozen source for components that were built, then shelved
+(QrCode, Timer, Swipe). Each entry mirrors the component's original repo paths
+and carries a `README.md` with the reason plus a re-registration checklist. It is
+outside every build, tsconfig, ESLint, Prettier, and Storybook glob — nothing
+there is checked by `pnpm verify`, and it is expected to drift. `docs/zag-coverage.md`
+marks these 📦 (done, then shelved), never ⬜ (todo). Read `backlog/README.md`
+before re-adapting any of them, and shelve rather than delete a component.
+
+A shelved component does **not** mean its behavior is unused: `folds/swipe` still
+ships because Toast's swipe-to-dismiss is built on the core directly. Do not
+remove a `folds` primitive on the grounds that no component renders it — check
+consumers first.

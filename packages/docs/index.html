@@ -54,6 +54,12 @@
       // No-flash theme init — must run before first paint. Mirrors the Manti
       // theme mechanism used in .storybook/preview.tsx (data-theme on <html>).
       (function () {
+        // Marks JS as available before first paint, which hides the prerendered
+        // SEO fallback (see .docs-seo-fallback in src/styles/docs.css). Without
+        // it the fallback nav paints and stays until React mounts — a flash of
+        // unstyled links. Raw-HTML crawlers run neither JS nor CSS, so they
+        // still read the fallback; no-JS browsers still render it.
+        document.documentElement.dataset.js = 'true';
         try {
           var stored = localStorage.getItem('manti-theme');
           var prefersDark =

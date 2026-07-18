@@ -32,9 +32,7 @@
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
-    box-shadow:
-      inset 0 1px 0 0 var(--manti-panel-highlight),
-      inset 0 2px 5px -3px var(--manti-panel-shadow-color);
+    box-shadow: var(--manti-panel-rim), var(--manti-panel-inset);
     transition:
       border-color var(--manti-duration-base) var(--manti-ease-smooth),
       box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
@@ -42,7 +40,7 @@
     &:focus-within {
       border-color: var(--tone-ring, var(--manti-focus-ring));
       box-shadow:
-        inset 0 1px 0 0 var(--manti-panel-highlight),
+        var(--manti-panel-rim),
         0 0 0 3px
           color-mix(
             in oklab,

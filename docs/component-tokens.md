@@ -128,7 +128,6 @@ component token only to make one component diverge on purpose — see
 | `time-picker`       | `--manti-time-picker-height`                | `var(--manti-control-height-md)` |
 | `time-picker`       | `--manti-time-picker-column-height`         | `15rem`                          |
 | `time-picker`       | `--manti-time-picker-cell-min-width`        | `3.5rem`                         |
-| `timer`             | `--manti-timer-item-min-width`              | `3.5rem`                         |
 | `toast`             | `--manti-toast-width`                       | `20rem`                          |
 | `toggle`            | `--manti-toggle-size`                       | `2.5rem`                         |
 | `toggle-group`      | `--manti-toggle-group-height`               | `2rem`                           |

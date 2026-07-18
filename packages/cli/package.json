@@ -1,0 +1,40 @@
+{
+  "name": "@manti-ui/cli",
+  "version": "0.3.0",
+  "description": "A CLI to scaffold Manti UI into your project.",
+  "license": "MIT",
+  "homepage": "https://manti.design",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manti-ui/ui.git",
+    "directory": "packages/cli"
+  },
+  "author": "Tutku Ucan <tutku.dev@gmail.com>",
+  "keywords": [
+    "manti-ui",
+    "cli",
+    "design-system",
+    "ui"
+  ],
+  "type": "module",
+  "main": "index.ts",
+  "bin": {
+    "manti": "./index.ts"
+  },
+  "files": [
+    "index.ts"
+  ],
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "node index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "commander": "^15.0.0"
+  }
+}

@@ -337,7 +337,6 @@ export const componentTokens = {
   switch: ['track-width', 'track-height', 'track-padding'],
   'tags-input': ['height'],
   'time-picker': ['height', 'column-height', 'cell-min-width'],
-  timer: ['item-min-width'],
   toast: ['width'],
   toggle: ['size'],
   'toggle-group': ['height', 'padding-x'],
