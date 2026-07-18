@@ -19,9 +19,7 @@
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-card-radius);
     color: var(--manti-text);
-    box-shadow:
-      inset 0 1px 0 0 var(--manti-panel-highlight),
-      var(--manti-shadow-md);
+    box-shadow: var(--manti-panel-rim), var(--manti-shadow-md);
     overflow: clip;
     transition:
       transform var(--manti-duration-base) var(--manti-ease-smooth),
@@ -30,9 +28,7 @@
 
     &[data-elevated='true'] {
       background: var(--manti-panel-tint-strong);
-      box-shadow:
-        inset 0 1px 0 0 var(--manti-panel-highlight),
-        var(--manti-panel-shadow);
+      box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     }
 
     &[data-interactive='true'] {
@@ -41,16 +37,12 @@
       &:hover {
         transform: translateY(-2px);
         background: var(--manti-panel-tint-strong);
-        box-shadow:
-          inset 0 1px 0 0 var(--manti-panel-highlight),
-          var(--manti-panel-shadow);
+        box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
       }
 
       &:active {
         transform: translateY(0);
-        box-shadow:
-          inset 0 1px 0 0 var(--manti-panel-highlight),
-          var(--manti-shadow-sm);
+        box-shadow: var(--manti-panel-rim), var(--manti-shadow-sm);
       }
 
       &:focus-visible {

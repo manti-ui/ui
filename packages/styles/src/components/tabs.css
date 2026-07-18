@@ -41,8 +41,7 @@
 
   /* line: a hairline rail the indicator sits on. */
   [data-scope='tabs'][data-part='root'][data-variant='line'] [data-part='list'],
-  [data-scope='tabs'][data-part='root']:not([data-variant])
-    [data-part='list'] {
+  [data-scope='tabs'][data-part='root']:not([data-variant]) [data-part='list'] {
     border-bottom: 1px solid var(--manti-border);
 
     &[data-orientation='vertical'] {
@@ -55,19 +54,17 @@
      fill: the original lighter panel fill in dark, and a very subtle groove in light
      (a near-white track is invisible, but a gray one reads too heavy) — the
      active thumb does the rest with its own edge and shadow. */
-  [data-scope='tabs'][data-part='root'][data-variant='pill'] [data-part='list'] {
+  [data-scope='tabs'][data-part='root'][data-variant='pill']
+    [data-part='list'] {
     align-self: flex-start;
     max-width: 100%;
     padding: var(--manti-space-1);
-    background: light-dark(
-      oklch(0.2 0.02 280 / 0.05),
-      var(--manti-panel-tint)
-    );
+    background: light-dark(oklch(0.2 0.02 280 / 0.05), var(--manti-panel-tint));
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-full);
-    box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
+    box-shadow: var(--manti-panel-rim);
 
     &[data-orientation='vertical'] {
       border-radius: var(--manti-radius-xl);
@@ -75,7 +72,8 @@
   }
 
   /* soft: no track; the list just shrinks to its tabs. */
-  [data-scope='tabs'][data-part='root'][data-variant='soft'] [data-part='list'] {
+  [data-scope='tabs'][data-part='root'][data-variant='soft']
+    [data-part='list'] {
     align-self: flex-start;
     max-width: 100%;
   }

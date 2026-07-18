@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
 
 export type Theme = 'light' | 'dark';
 
@@ -9,31 +9,41 @@ function currentTheme(): Theme {
 }
 
 /**
+ * Watch `data-theme` itself rather than mirroring it into React state. The attribute is
+ * the source of truth — the inline script in index.html sets it before first paint and
+ * Manti's CSS reads it — so a component holding its own copy only ever learns about its
+ * *own* writes. With more than one consumer, that means toggling in the header leaves
+ * every other reader stale.
+ */
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
+  });
+  return () => observer.disconnect();
+}
+
+/**
  * Drives the Manti theme the same way `.storybook/preview.tsx` does — by setting
- * `data-theme` on `<html>`. The initial value is applied before paint by the
- * inline script in index.html; this hook keeps React state in sync and persists.
+ * `data-theme` on `<html>`. Every consumer sees the same value, whoever set it.
  */
 export function useTheme() {
-  const [theme, setThemeState] = useState<Theme>(currentTheme);
+  const theme = useSyncExternalStore(subscribe, currentTheme);
 
   const setTheme = useCallback((next: Theme) => {
+    // Nothing to set in React: the attribute write is what notifies every subscriber.
     document.documentElement.dataset.theme = next;
     try {
       localStorage.setItem(STORAGE_KEY, next);
     } catch {
       /* storage may be unavailable; the DOM attribute is the source of truth */
     }
-    setThemeState(next);
   }, []);
 
   const toggle = useCallback(() => {
     setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
   }, [setTheme]);
-
-  // Reconcile once on mount in case the pre-paint script and React disagree.
-  useEffect(() => {
-    setThemeState(currentTheme());
-  }, []);
 
   return { theme, setTheme, toggle };
 }

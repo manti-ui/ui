@@ -498,6 +498,67 @@
     opacity: 1;
   }
 
+  /* ---- Live editor (react-live) ---- *
+     Deliberately mirrors `pre.shiki` above: same surface, border, radius, metrics. The
+     colors come from a Prism theme carrying GitHub's palette (see live-theme.ts), so an
+     editable block reads like a static one even though a different highlighter drew it. */
+  .docs-live-editor {
+    border-radius: var(--manti-radius-lg);
+    border: 1px solid var(--manti-border);
+    background: var(--manti-surface);
+    font-size: var(--manti-text-sm);
+    line-height: var(--manti-leading-normal);
+    tab-size: 2;
+    overflow-x: auto;
+  }
+  /* react-live renders a <pre> and a <textarea> stacked; both must use identical metrics
+     or the caret drifts away from the glyphs it is supposed to sit between. */
+  .docs-live-editor > pre,
+  .docs-live-editor > textarea {
+    font-family: var(--manti-font-mono) !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    tab-size: inherit;
+  }
+  .docs-live-editor > textarea:focus-visible {
+    outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
+    outline-offset: calc(var(--manti-focus-ring-offset) * -1);
+    border-radius: var(--manti-radius-lg);
+  }
+
+  /* Copy sits alongside Reset here, so the shared `.docs-copy` absolute slot is replaced
+     by a row. It stays hover-revealed like the static block's button. */
+  .docs-live-actions {
+    position: absolute;
+    z-index: 1;
+    top: var(--manti-space-2);
+    inset-inline-end: var(--manti-space-2);
+    display: flex;
+    gap: var(--manti-space-2);
+    opacity: 0;
+    transition: opacity var(--manti-duration-fast) var(--manti-ease-smooth);
+  }
+  .docs-live:hover .docs-live-actions,
+  .docs-live-actions:focus-within,
+  .docs-live:focus-within .docs-live-actions {
+    opacity: 1;
+  }
+
+  .docs-live-error {
+    padding: var(--manti-space-4);
+    border-block-start: 1px solid var(--manti-border);
+  }
+  /* The message is a compiler/runtime error: keep its line breaks, but let a long one
+     wrap rather than push the demo into a horizontal scroll. */
+  .docs-live-error-text {
+    margin: 0;
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-text-xs);
+    line-height: var(--manti-leading-normal);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
   /* ---- Live demo canvas ---- */
   .docs-demo {
     margin: 0 0 var(--manti-space-6);
@@ -683,10 +744,13 @@
     padding: var(--manti-space-4) var(--docs-gutter) var(--manti-space-16);
   }
 
-  /* Pre-hydration / no-JS fallback baked into each prerendered route by
-     vite-plugin-seo: the page heading + a grouped nav of every route. React
-     replaces it on mount; it is only ever visible before JS runs (or without
-     JS), so keep it plain and quiet. */
+  /* No-JS fallback baked into each prerendered route by vite-plugin-seo: the
+     page heading + a grouped nav of every route. React replaces it on mount, so
+     it only ever renders without JS — keep it plain and quiet.
+
+     The `[data-js]` gate below is what stops it from flashing: the inline script
+     in index.html sets the attribute before first paint, so a JS-capable browser
+     never paints the fallback while the bundle loads. */
   .docs-seo-fallback {
     max-width: var(--docs-max);
     margin-inline: auto;
@@ -715,6 +779,9 @@
   }
   .docs-seo-fallback a {
     color: inherit;
+  }
+  [data-js] .docs-seo-fallback {
+    display: none;
   }
 
   /* Standard screen-reader-only pattern: keeps landmark/heading structure in

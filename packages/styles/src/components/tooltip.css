@@ -24,9 +24,7 @@
     border: 1px solid var(--manti-panel-border);
     color: var(--manti-text);
     border-radius: var(--manti-radius-md);
-    box-shadow:
-      inset 0 1px 0 0 var(--manti-panel-highlight),
-      var(--manti-panel-shadow);
+    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     font-size: var(--manti-text-sm);
     line-height: var(--manti-leading-snug);
     transform-origin: var(--transform-origin);
