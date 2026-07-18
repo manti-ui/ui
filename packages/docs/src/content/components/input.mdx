@@ -1,0 +1,55 @@
+---
+title: Input
+slug: /components/input
+group: Inputs
+order: 30
+description: A labeled text input with hint, error, and optional adornments; type="password" adds a reveal toggle and a Caps Lock warning.
+---
+
+# Input
+
+A static text input with label, hint, error, and optional addons. It wires up
+label association and `aria-describedby` / `aria-invalid` automatically, and
+accepts any native input attribute.
+
+<Demo name="input/basic" />
+
+## Sizes and states
+
+`size` sets the control height, `error` flips the field to the invalid state and
+replaces the hint, and native flags like `disabled` work as expected.
+
+<Demo name="input/states" />
+
+## Passwords
+
+`type="password"` layers two extra affordances onto the same shell: a show/hide
+toggle and a live Caps Lock warning that appears while typing with Caps Lock on.
+Everything else — sizing, the focus ring, the invalid state — behaves exactly as
+it does for any other type.
+
+<Demo name="input/password" />
+
+Set `showPasswordToggle={false}` for a secret that should never be revealable on
+screen, `defaultPasswordVisible` to start revealed, or drive the reveal yourself
+with `passwordVisible` / `onPasswordVisibilityChange`.
+
+The password props follow the same rule as the native attributes Input inherits:
+they apply to one type only, the way `min` / `max` apply to `type="number"` and
+`accept` applies to `type="file"`. They are inert for every other type.
+
+## Props
+
+<PropsTable component="input" />
+
+## Anatomy
+
+Target these public selectors to customize the field. Class names and the DOM
+between parts are private. Input and [Textarea](/components/textarea) share the
+`field` scope.
+
+<Anatomy component="input" />
+
+## Component tokens
+
+<TokenTable component="input" />

@@ -1,4 +1,4 @@
-import { Button, Drawer, TextField } from '@manti-ui/react';
+import { Button, Drawer, Input } from '@manti-ui/react';
 
 export default function DrawerBasic() {
   return (
@@ -18,9 +18,9 @@ export default function DrawerBasic() {
       )}
     >
       <div style={{ display: 'grid', gap: 'var(--manti-space-4)' }}>
-        <TextField label="Name" defaultValue="Kayseri mantı" fullWidth />
-        <TextField label="Filling" defaultValue="Spiced lamb" fullWidth />
-        <TextField
+        <Input label="Name" defaultValue="Kayseri mantı" fullWidth />
+        <Input label="Filling" defaultValue="Spiced lamb" fullWidth />
+        <Input
           label="Finish"
           defaultValue="Garlic yogurt, mint butter"
           fullWidth

@@ -73,6 +73,9 @@ export type { FloatingPanelProps } from './FloatingPanel/FloatingPanel';
 export { HoverCard } from './HoverCard/HoverCard';
 export type { HoverCardProps } from './HoverCard/HoverCard';
 
+export { Input } from './Input/Input';
+export type { InputProps } from './Input/Input';
+
 export { Listbox } from './Listbox/Listbox';
 export type { ListboxItem, ListboxProps } from './Listbox/Listbox';
 
@@ -100,9 +103,6 @@ export type { NumberInputProps } from './NumberInput/NumberInput';
 
 export { Pagination } from './Pagination/Pagination';
 export type { PaginationProps } from './Pagination/Pagination';
-
-export { PasswordInput } from './PasswordInput/PasswordInput';
-export type { PasswordInputProps } from './PasswordInput/PasswordInput';
 
 export { PinInput } from './PinInput/PinInput';
 export type { PinInputProps } from './PinInput/PinInput';
@@ -173,9 +173,6 @@ export type {
   ToasterInstance,
   ToasterProps,
 } from './Toast/Toast';
-
-export { TextField } from './TextField/TextField';
-export type { TextFieldProps } from './TextField/TextField';
 
 export { Textarea } from './Textarea/Textarea';
 export type { TextareaProps } from './Textarea/Textarea';

@@ -7,6 +7,6 @@ contract, and interaction behavior comes from `@manti-ui/folds` where a Zag.js
 machine applies.
 
 Current set: `Alert`, `Badge`, `Button`, `Card`, `Checkbox`, `Spinner`,
-`Switch`, `TextField`, `Toggle`.
+`Switch`, `Input`, `Toggle`.
 
 Export every public component through `../index.ts`.
