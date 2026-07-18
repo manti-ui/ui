@@ -13,7 +13,7 @@ import {
 import { cx, dataBool } from '../../internal/props';
 import { Checkbox } from '../Checkbox/Checkbox';
 import { Pagination } from '../Pagination/Pagination';
-import { TextField } from '../TextField/TextField';
+import { Input } from '../Input/Input';
 
 /**
  * A column definition — TanStack's `ColumnDef`, re-exported so consumers type
@@ -107,8 +107,7 @@ function selectionColumn<TData>(): DataTableColumn<TData> {
         aria-label="Select all rows"
         checked={table.getIsAllPageRowsSelected()}
         indeterminate={
-          table.getIsSomePageRowsSelected() &&
-          !table.getIsAllPageRowsSelected()
+          table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected()
         }
         onCheckedChange={(checked) => table.toggleAllPageRowsSelected(checked)}
       />
@@ -129,7 +128,7 @@ function selectionColumn<TData>(): DataTableColumn<TData> {
  * A data grid backed by the framework-agnostic TanStack `table-core` machine
  * (via the React adapter). The machine owns sorting, filtering, pagination, and
  * selection; this adapter renders the semantic `<table>` anatomy and Manti
- * styling, and composes Manti's own TextField, Pagination, and Checkbox for the
+ * styling, and composes Manti's own Input, Pagination, and Checkbox for the
  * search, pager, and selection controls.
  */
 export function DataTable<TData>({
@@ -229,7 +228,7 @@ export function DataTable<TData>({
           )}
           {filterable && (
             <div data-scope={SCOPE} data-part="search">
-              <TextField
+              <Input
                 size="sm"
                 fullWidth
                 type="search"
@@ -245,11 +244,7 @@ export function DataTable<TData>({
       )}
 
       <div data-scope={SCOPE} data-part="viewport">
-        <table
-          data-scope={SCOPE}
-          data-part="table"
-          aria-labelledby={titleId}
-        >
+        <table data-scope={SCOPE} data-part="table" aria-labelledby={titleId}>
           {caption != null && (
             <caption data-scope={SCOPE} data-part="caption">
               {caption}
@@ -257,7 +252,11 @@ export function DataTable<TData>({
           )}
           <thead data-scope={SCOPE} data-part="header">
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} data-scope={SCOPE} data-part="header-row">
+              <tr
+                key={headerGroup.id}
+                data-scope={SCOPE}
+                data-part="header-row"
+              >
                 {headerGroup.headers.map((header) => {
                   const align = header.column.columnDef.meta?.align;
                   const canSort = sortable && header.column.getCanSort();
@@ -331,7 +330,10 @@ export function DataTable<TData>({
                       data-part="cell"
                       data-align={cell.column.columnDef.meta?.align}
                     >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </td>
                   ))}
                 </tr>

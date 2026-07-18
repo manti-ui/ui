@@ -121,17 +121,17 @@ every panel surface falls back to an opaque token surface automatically.
 
 ## Components
 
-| Component   | Tones | Notes                                                  |
-| ----------- | :---: | ------------------------------------------------------ |
-| `Button`    |  all  | `solid` / `soft` / `outline` / `ghost`, sizes, loading |
-| `Toggle`    |  all  | Zag.js toggle machine; controlled or uncontrolled      |
-| `Switch`    |  all  | real checkbox + `role="switch"`, smooth thumb          |
-| `Checkbox`  |  all  | checked + indeterminate, drawn check                   |
-| `TextField` |  all  | label, hint, error, adornments, wired ARIA             |
-| `Badge`     |  all  | `solid` / `soft` / `outline`, optional dot             |
-| `Card`      |   —   | pillowy surface; `Header`/`Title`/`Body`/`Footer`      |
-| `Alert`     |  all  | soft/solid, dismiss, role escalates for danger/warning |
-| `Spinner`   |   —   | inherits `currentColor`                                |
+| Component  | Tones | Notes                                                  |
+| ---------- | :---: | ------------------------------------------------------ |
+| `Button`   |  all  | `solid` / `soft` / `outline` / `ghost`, sizes, loading |
+| `Toggle`   |  all  | Zag.js toggle machine; controlled or uncontrolled      |
+| `Switch`   |  all  | real checkbox + `role="switch"`, smooth thumb          |
+| `Checkbox` |  all  | checked + indeterminate, drawn check                   |
+| `Input`    |  all  | label, hint, error, adornments, wired ARIA             |
+| `Badge`    |  all  | `solid` / `soft` / `outline`, optional dot             |
+| `Card`     |   —   | pillowy surface; `Header`/`Title`/`Body`/`Footer`      |
+| `Alert`    |  all  | soft/solid, dismiss, role escalates for danger/warning |
+| `Spinner`  |   —   | inherits `currentColor`                                |
 
 ## Anatomy contract
 

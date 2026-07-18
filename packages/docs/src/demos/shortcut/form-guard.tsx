@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Badge, TextField } from '@manti-ui/react';
+import { Badge, Input } from '@manti-ui/react';
 import { useShortcut } from '@manti-ui/react/shortcut';
 
 export default function ShortcutFormGuard() {
@@ -19,7 +19,7 @@ export default function ShortcutFormGuard() {
         width: 'calc(var(--manti-space-16) * 4)',
       }}
     >
-      <TextField
+      <Input
         label="Comment"
         placeholder="Type, then press ⌘/Ctrl+Enter to submit"
       />

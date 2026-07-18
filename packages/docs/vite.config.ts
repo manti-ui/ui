@@ -12,7 +12,6 @@ import remarkGfm from 'remark-gfm';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { defineConfig } from 'vite';
 
-import { highlightPlugin } from './src/highlight/vite-plugin-highlight';
 import { searchIndexPlugin } from './src/search/vite-plugin-search';
 import { seoPlugin } from './src/seo/vite-plugin-seo';
 
@@ -70,7 +69,6 @@ export default defineConfig({
     },
     react(),
     searchIndexPlugin(),
-    highlightPlugin(),
     seoPlugin(),
   ],
   server: {

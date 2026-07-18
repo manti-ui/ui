@@ -73,6 +73,9 @@ export type { FloatingPanelProps } from './FloatingPanel/FloatingPanel';
 export { HoverCard } from './HoverCard/HoverCard';
 export type { HoverCardProps } from './HoverCard/HoverCard';
 
+export { Input } from './Input/Input';
+export type { InputProps } from './Input/Input';
+
 export { Listbox } from './Listbox/Listbox';
 export type { ListboxItem, ListboxProps } from './Listbox/Listbox';
 
@@ -101,9 +104,6 @@ export type { NumberInputProps } from './NumberInput/NumberInput';
 export { Pagination } from './Pagination/Pagination';
 export type { PaginationProps } from './Pagination/Pagination';
 
-export { PasswordInput } from './PasswordInput/PasswordInput';
-export type { PasswordInputProps } from './PasswordInput/PasswordInput';
-
 export { PinInput } from './PinInput/PinInput';
 export type { PinInputProps } from './PinInput/PinInput';
 
@@ -112,9 +112,6 @@ export type { PopoverProps } from './Popover/Popover';
 
 export { Progress } from './Progress/Progress';
 export type { ProgressProps } from './Progress/Progress';
-
-export { QrCode } from './QrCode/QrCode';
-export type { QrCodeProps } from './QrCode/QrCode';
 
 export { RadioGroup } from './RadioGroup/RadioGroup';
 export type { RadioGroupItem, RadioGroupProps } from './RadioGroup/RadioGroup';
@@ -149,15 +146,6 @@ export type { SplitterPanel, SplitterProps } from './Splitter/Splitter';
 export { Steps } from './Steps/Steps';
 export type { StepItem, StepsProps } from './Steps/Steps';
 
-export { Swipe } from './Swipe/Swipe';
-export type {
-  SwipeAxis,
-  SwipeDetails,
-  SwipeDirection,
-  SwipeProps,
-  SwipeVector,
-} from './Swipe/Swipe';
-
 export { Switch } from './Switch/Switch';
 export type { SwitchProps } from './Switch/Switch';
 
@@ -169,9 +157,6 @@ export type { TagsInputProps } from './TagsInput/TagsInput';
 
 export { TimePicker } from './TimePicker/TimePicker';
 export type { TimePickerProps } from './TimePicker/TimePicker';
-
-export { Timer } from './Timer/Timer';
-export type { TimerProps } from './Timer/Timer';
 
 export { TreeView } from './TreeView/TreeView';
 export type {
@@ -188,9 +173,6 @@ export type {
   ToasterInstance,
   ToasterProps,
 } from './Toast/Toast';
-
-export { TextField } from './TextField/TextField';
-export type { TextFieldProps } from './TextField/TextField';
 
 export { Textarea } from './Textarea/Textarea';
 export type { TextareaProps } from './Textarea/Textarea';

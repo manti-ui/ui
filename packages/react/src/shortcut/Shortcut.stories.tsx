@@ -7,7 +7,7 @@ import { Badge } from '../components/Badge/Badge';
 import { Button } from '../components/Button/Button';
 import { Card } from '../components/Card/Card';
 import { Dialog } from '../components/Dialog/Dialog';
-import { TextField } from '../components/TextField/TextField';
+import { Input } from '../components/Input/Input';
 
 const meta = {
   title: 'Primitives/useShortcut',
@@ -71,7 +71,7 @@ export const Global: Story = {
           title="Search"
           description="Opened by click or by the global ⌘K shortcut."
         >
-          <TextField label="Query" placeholder="Type to search…" />
+          <Input label="Query" placeholder="Type to search…" />
         </Dialog>
       </div>
     );
@@ -136,7 +136,13 @@ export const Multiple: Story = {
           Try each combo. For the sequence, press <Combo>g</Combo> then{' '}
           <Combo>d</Combo> within a second.
         </p>
-        <Card style={{ padding: 'var(--manti-space-4)', ...stack, gap: 'var(--manti-space-1)' }}>
+        <Card
+          style={{
+            padding: 'var(--manti-space-4)',
+            ...stack,
+            gap: 'var(--manti-space-1)',
+          }}
+        >
           {log.length === 0 ? (
             <span style={muted}>No shortcut fired yet.</span>
           ) : (
@@ -172,7 +178,7 @@ export const FormGuard: Story = {
     });
     return (
       <div style={stack}>
-        <TextField
+        <Input
           label="Comment"
           placeholder="Type, then press ⌘/Ctrl+Enter to submit"
         />
