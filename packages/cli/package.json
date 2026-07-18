@@ -1,6 +1,7 @@
 {
   "name": "@manti-ui/cli",
   "version": "0.3.0",
+  "private": true,
   "description": "A CLI to scaffold Manti UI into your project.",
   "license": "MIT",
   "homepage": "https://manti.design",
