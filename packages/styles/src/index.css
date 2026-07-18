@@ -46,14 +46,12 @@
 @import './components/progress.css';
 @import './components/rating-group.css';
 @import './components/carousel.css';
-@import './components/qr-code.css';
 @import './components/clipboard.css';
 @import './components/file-upload.css';
 @import './components/signature-pad.css';
 @import './components/date-picker.css';
 @import './components/calendar.css';
 @import './components/time-picker.css';
-@import './components/timer.css';
 @import './components/steps.css';
 @import './components/tour.css';
 @import './components/splitter.css';
@@ -63,7 +61,6 @@
 @import './components/scroll-area.css';
 @import './components/data-table.css';
 @import './components/marquee.css';
-@import './components/swipe.css';
 
 /* Motion tiers — declared last so [data-motion] overrides win by layer order.
    Import `none` after `full` so an inner [data-motion="none"] subtree reliably

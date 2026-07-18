@@ -17,7 +17,7 @@
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
+    box-shadow: var(--manti-panel-rim);
 
     &[data-orientation='vertical'] {
       flex-direction: column;

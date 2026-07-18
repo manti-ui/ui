@@ -4,7 +4,14 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/**', '**/node_modules/**', 'storybook-static/**'],
+    // `backlog/` holds frozen source for shelved components (see backlog/README.md).
+    // It ships nowhere and is deliberately not held to the live packages' rules.
+    ignores: [
+      '**/dist/**',
+      '**/node_modules/**',
+      'storybook-static/**',
+      'backlog/**',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

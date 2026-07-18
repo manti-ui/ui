@@ -16,7 +16,7 @@
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-accordion-radius);
-    box-shadow: inset 0 1px 0 0 var(--manti-panel-highlight);
+    box-shadow: var(--manti-panel-rim);
     overflow: clip;
   }
 
