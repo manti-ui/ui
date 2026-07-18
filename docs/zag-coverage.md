@@ -118,9 +118,9 @@ different purpose (e.g. Drawer re-scopes the dialog parts to `drawer`).
 Framework-agnostic behaviors Manti UI authors directly (a `@manti-ui/folds`
 primitive or pure CSS) to fill gaps in the Zag catalog.
 
-| Component      | Mechanism             | Status |
-| -------------- | --------------------- | :----: |
-| Marquee        | CSS animation         |   ✅   |
-| Swipe          | `folds/swipe`         |   📦   |
-| Scroll Area    | CSS scrollbars        |   ✅   |
-| Password Input | `field` shell + state |   ✅   |
+| Component               | Mechanism             | Status |
+| ----------------------- | --------------------- | :----: |
+| Marquee                 | CSS animation         |   ✅   |
+| Swipe                   | `folds/swipe`         |   ✅   |
+| Scroll Area             | CSS scrollbars        |   ✅   |
+| Input `type="password"` | `field` shell + state |   ✅   |

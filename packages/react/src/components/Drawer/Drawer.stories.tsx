@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Drawer } from './Drawer';
 import { Button } from '../Button/Button';
-import { TextField } from '../TextField/TextField';
+import { Input } from '../Input/Input';
 
 const meta = {
   title: 'Components/Drawer',
@@ -33,9 +33,13 @@ export const Playground: Story = {
   args: {
     children: (
       <div style={{ display: 'grid', gap: '1rem' }}>
-        <TextField label="Name" defaultValue="Kayseri mantı" fullWidth />
-        <TextField label="Filling" defaultValue="Spiced lamb" fullWidth />
-        <TextField label="Finish" defaultValue="Garlic yogurt, mint butter" fullWidth />
+        <Input label="Name" defaultValue="Kayseri mantı" fullWidth />
+        <Input label="Filling" defaultValue="Spiced lamb" fullWidth />
+        <Input
+          label="Finish"
+          defaultValue="Garlic yogurt, mint butter"
+          fullWidth
+        />
       </div>
     ),
     footer: ({ close }) => (

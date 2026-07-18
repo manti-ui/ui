@@ -45,7 +45,7 @@ export interface TextareaProps extends Omit<
 /**
  * A multiline text input with label, hint/description, error, and optional
  * auto-resizing. It renders the shared `field` shell so sizing, focus rings,
- * invalid state, and helper text match TextField.
+ * invalid state, and helper text match Input.
  */
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   function Textarea(

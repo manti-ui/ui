@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Badge, Button, Dialog, TextField } from '@manti-ui/react';
+import { Badge, Button, Dialog, Input } from '@manti-ui/react';
 import { useShortcut } from '@manti-ui/react/shortcut';
 
 export default function ShortcutGlobal() {
@@ -28,7 +28,7 @@ export default function ShortcutGlobal() {
         title="Quick open"
         description="Opened by click or by the global ⌘I / Ctrl+I shortcut."
       >
-        <TextField label="Search" placeholder="Type to search…" />
+        <Input label="Search" placeholder="Type to search…" />
       </Dialog>
     </div>
   );
