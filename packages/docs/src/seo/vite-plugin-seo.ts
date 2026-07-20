@@ -56,22 +56,12 @@ const ROOT_MARKER = '<div id="root"></div>';
  * `import.meta.glob` modules that only exist inside the Vite pipeline).
  * Keep the two lists in sync when adding a group.
  */
-const COMPONENT_CATEGORIES = [
-  'Inputs',
-  'Buttons & Actions',
-  'Navigation',
-  'Overlays',
-  'Feedback',
-  'Data Display',
-  'Layout',
-];
 const GROUP_ORDER = [
   'Overview',
   'Getting Started',
   'Foundations',
   'Guides',
   'Components',
-  ...COMPONENT_CATEGORIES,
   'Reference',
   'Changelog',
 ];
@@ -290,10 +280,18 @@ function renderHead(page: BuildPage): string {
  */
 function renderFallback(page: BuildPage, pages: BuildPage[]): string {
   const groups = GROUP_ORDER.map((label) => {
-    let items = pages.filter((p) => p.group === label);
-    items = COMPONENT_CATEGORIES.includes(label)
-      ? items.sort((a, b) => a.title.localeCompare(b.title))
-      : items.sort((a, b) => a.order - b.order);
+    // Every component page (slug under `/components/`) collapses into the single
+    // "Components" section, alphabetical — mirroring the React sidebar.
+    if (label === 'Components') {
+      const overview = pages.filter((p) => p.slug === '/components');
+      const components = pages
+        .filter((p) => p.slug.startsWith('/components/'))
+        .sort((a, b) => a.title.localeCompare(b.title));
+      return { label, items: [...overview, ...components] };
+    }
+    const items = pages
+      .filter((p) => p.group === label)
+      .sort((a, b) => a.order - b.order);
     return { label, items };
   }).filter((group) => group.items.length > 0);
 

@@ -1,7 +1,7 @@
 /**
  * Toggle — a pressable two-state button backed by the shared `@manti-ui/folds`
  * Zag.js toggle machine. Off reads as a quiet outline; on fills with the active
- * tone. State attributes (`data-state`, `data-pressed`, `data-disabled`) come
+ * variant. State attributes (`data-state`, `data-pressed`, `data-disabled`) come
  * straight from the machine.
  */
 @layer manti.components {
@@ -39,20 +39,20 @@
     }
 
     &:hover {
-      background: color-mix(in oklab, var(--tone-soft-bg) 72%, transparent);
-      color: var(--tone-soft-text);
+      background: var(--variant-fill);
+      color: var(--variant-soft-text);
     }
 
     &[data-state='on'] {
-      background: var(--tone-solid);
+      background: var(--variant-solid);
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
       border-color: transparent;
-      color: var(--tone-on-solid);
+      color: var(--variant-on-solid);
       box-shadow: var(--manti-shadow-sm);
 
       &:hover {
-        background: var(--tone-solid-hover);
+        background: var(--variant-solid-hover);
       }
     }
 
@@ -61,7 +61,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
 
@@ -78,7 +78,7 @@
       background: var(--manti-surface);
 
       &[data-state='on'] {
-        background: var(--tone-solid);
+        background: var(--variant-solid);
       }
     }
   }

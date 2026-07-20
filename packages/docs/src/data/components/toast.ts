@@ -45,7 +45,7 @@ export const meta: ComponentMeta = {
     },
     {
       part: 'root',
-      description: 'A single toast surface; carries the type tone.',
+      description: 'A single toast surface; carries the type variant.',
     },
     { part: 'indicator', description: 'The leading type icon.' },
     { part: 'title', description: 'The toast title.' },

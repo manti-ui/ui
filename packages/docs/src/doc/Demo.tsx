@@ -95,8 +95,7 @@ export function Demo({ name, center, roomy }: DemoProps) {
         />
       </div>
       <Button
-        variant="ghost"
-        tone="neutral"
+        variant="tertiary"
         size="sm"
         onClick={() => setShowCode((value) => !value)}
         aria-expanded={showCode}

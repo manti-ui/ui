@@ -22,7 +22,7 @@ import { Button } from '@manti-ui/react';
 
 export function App() {
   return (
-    <Button variant="solid" tone="primary">
+    <Button variant="primary">
       Save
     </Button>
   );

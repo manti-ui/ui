@@ -3,28 +3,22 @@ title: Alert
 slug: /components/alert
 group: Feedback
 order: 15
-description: An inline, tonal message with a title, description, and optional dismiss action.
+description: An inline, colored message with a title, description, and optional dismiss action.
 ---
 
 # Alert
 
-An inline, tonal message with an optional icon, title, description, and dismiss
+An inline, colored message with an optional icon, title, description, and dismiss
 action. It defaults to `role="status"`, escalating to `role="alert"` for the
-danger and warning tones.
+danger variant.
 
-<Demo name="alert/tones" />
-
-## Tones
-
-`tone` carries the semantic meaning. Pass a `title` for the bold leading line
-and children for the description.
-
-<Demo name="alert/tones" />
+<Demo name="alert/variants" />
 
 ## Variants
 
-`variant` switches between the default `soft` tint and a `solid` fill for a
-higher-emphasis message.
+`variant` carries the color and semantic meaning. It defaults to `secondary`; pass any
+built-in variant (`primary`, `secondary`, `tertiary`, `danger`, `outline`) or a custom one.
+Pass a `title` for the bold leading line and children for the description.
 
 <Demo name="alert/variants" />
 

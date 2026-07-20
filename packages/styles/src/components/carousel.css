@@ -80,7 +80,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
 
@@ -108,13 +108,13 @@
 
     &[data-current] {
       width: 1.25rem;
-      /* Fallback keeps the active dot visible even if no tone is in scope —
-         without it, an undefined --tone-solid computes to transparent. */
-      background: var(--tone-solid, var(--manti-text));
+      /* Fallback keeps the active dot visible even if no variant is in scope —
+         without it, an undefined --variant-solid computes to transparent. */
+      background: var(--variant-solid, var(--manti-text));
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
   }

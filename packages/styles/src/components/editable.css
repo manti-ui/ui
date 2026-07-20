@@ -66,15 +66,7 @@
       box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:focus {
-      border-color: var(--tone-ring, var(--manti-focus-ring));
-      box-shadow:
-        var(--manti-panel-rim),
-        0 0 0 3px
-          color-mix(
-            in oklab,
-            var(--tone-ring, var(--manti-focus-ring)) 30%,
-            transparent
-          );
+      border-color: var(--variant-ring, var(--manti-focus-ring));
     }
   }
 
@@ -98,9 +90,9 @@
     align-items: center;
     min-height: 2rem;
     padding-inline: var(--manti-space-3);
-    border: 1px solid var(--tone-border);
+    border: 1px solid var(--variant-border);
     border-radius: var(--manti-radius-sm);
-    color: var(--tone-text);
+    color: var(--variant-text);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-medium);
     cursor: pointer;
@@ -109,23 +101,23 @@
       border-color var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
-      background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
-      border-color: var(--tone-soft-text);
+      background: var(--variant-fill);
+      border-color: var(--variant-soft-text);
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
   }
 
   [data-scope='editable'][data-part='submit-trigger'] {
-    background: var(--tone-solid);
+    background: var(--variant-solid);
     border-color: transparent;
-    color: var(--tone-on-solid);
+    color: var(--variant-on-solid);
 
     &:hover {
-      background: var(--tone-solid-hover);
+      background: var(--variant-solid-hover);
       border-color: transparent;
     }
   }

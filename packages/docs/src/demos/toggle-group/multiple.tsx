@@ -10,7 +10,7 @@ export default function ToggleGroupMultiple() {
   return (
     <ToggleGroup
       items={items}
-      tone="primary"
+      variant="primary"
       multiple
       defaultValue={['bold', 'underline']}
     />

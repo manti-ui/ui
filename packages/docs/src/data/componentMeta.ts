@@ -23,15 +23,10 @@ const inlineMeta: Record<string, ComponentMeta> = {
     props: [
       {
         name: 'variant',
-        type: `'solid' | 'soft' | 'outline' | 'ghost'`,
-        default: `'solid'`,
-        description: 'Visual emphasis level.',
-      },
-      {
-        name: 'tone',
-        type: 'MantiTone',
-        default: `'neutral'`,
-        description: 'Semantic color. Built-ins plus any custom tone.',
+        type: 'MantiVariant',
+        default: `'primary'`,
+        description:
+          'Color and emphasis. primary (solid), secondary (soft) and tertiary (ghost) form the emphasis ladder; danger is the semantic hue; outline is a neutral bordered treatment; link renders as inline text; any custom variant is accepted.',
       },
       {
         name: 'size',
@@ -85,10 +80,10 @@ const inlineMeta: Record<string, ComponentMeta> = {
         description: 'Control size.',
       },
       {
-        name: 'tone',
-        type: 'MantiTone',
+        name: 'variant',
+        type: 'MantiVariant',
         default: `'primary'`,
-        description: 'Active tone when checked.',
+        description: 'Active variant when checked.',
       },
       {
         name: 'checked',
@@ -167,15 +162,10 @@ const inlineMeta: Record<string, ComponentMeta> = {
     props: [
       {
         name: 'variant',
-        type: `'solid' | 'soft' | 'outline'`,
-        default: `'soft'`,
-        description: 'Visual emphasis level.',
-      },
-      {
-        name: 'tone',
-        type: 'MantiTone',
-        default: `'neutral'`,
-        description: 'Semantic color.',
+        type: 'MantiVariant',
+        default: `'secondary'`,
+        description:
+          'Color and emphasis. Built-ins plus any custom variant.',
       },
       {
         name: 'size',
@@ -200,16 +190,11 @@ const inlineMeta: Record<string, ComponentMeta> = {
     scope: 'alert',
     props: [
       {
-        name: 'tone',
-        type: 'MantiTone',
-        default: `'info'`,
-        description: 'Semantic color.',
-      },
-      {
         name: 'variant',
-        type: `'soft' | 'solid'`,
-        default: `'soft'`,
-        description: 'Fill style.',
+        type: 'MantiVariant',
+        default: `'secondary'`,
+        description:
+          'Color and emphasis. Built-ins plus any custom variant.',
       },
       {
         name: 'title',
@@ -229,7 +214,7 @@ const inlineMeta: Record<string, ComponentMeta> = {
       {
         name: 'role',
         type: `'status' | 'alert'`,
-        description: 'Auto-escalates to alert for danger / warning tones.',
+        description: 'Auto-escalates to alert for the danger variant.',
       },
     ],
     anatomy: [
@@ -256,12 +241,6 @@ const inlineMeta: Record<string, ComponentMeta> = {
         type: `'line' | 'pill' | 'soft'`,
         default: `'line'`,
         description: 'Visual style.',
-      },
-      {
-        name: 'tone',
-        type: 'MantiTone',
-        default: `'primary'`,
-        description: 'Active tone for the selected tab and indicator.',
       },
       {
         name: 'size',
@@ -435,10 +414,10 @@ function entry(name: string, key: string, summary: string): CatalogEntry {
 /** The whole library, for the Components overview grid. */
 export const componentCatalog: CatalogEntry[] = [
   entry('Accordion', 'accordion', 'Stacked, collapsible disclosure sections.'),
-  entry('Alert', 'alert', 'Inline status message with tone and dismiss.'),
+  entry('Alert', 'alert', 'Inline status message with variant and dismiss.'),
   entry('Avatar', 'avatar', 'User image with initials fallback.'),
   entry('Badge', 'badge', 'Compact status chip.'),
-  entry('Button', 'button', 'The workhorse action, four variants.'),
+  entry('Button', 'button', 'The workhorse action, five variants.'),
   entry(
     'Calendar',
     'calendar',

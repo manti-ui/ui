@@ -1,10 +1,17 @@
 /**
  * Progress — determinate/indeterminate indicator backed by the Zag.js progress
  * machine. Zag sets the range width (linear) and the circle dash (circular); we
- * own colour and shape. Linear and circular share one scope via `data-variant`.
+ * own colour and shape. Linear and circular share one scope via the structural
+ * `data-variant` (linear/circular) — so it carries no color palette and we pin
+ * the primary accent for the fill/stroke here.
  */
 @layer manti.components {
   [data-scope='progress'][data-part='root'] {
+    --variant-solid: light-dark(
+      var(--manti-orange-600),
+      var(--manti-orange-500)
+    );
+
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-2);
@@ -57,7 +64,7 @@
 
   [data-scope='progress'][data-part='range'] {
     height: 100%;
-    background: var(--tone-solid);
+    background: var(--variant-solid);
     border-radius: var(--manti-radius-full);
     transition: width var(--manti-duration-base) var(--manti-ease-smooth);
 
@@ -108,7 +115,7 @@
   }
 
   [data-scope='progress'][data-part='circle-range'] {
-    stroke: var(--tone-solid);
+    stroke: var(--variant-solid);
     stroke-width: 8px;
     stroke-linecap: round;
     fill: none;

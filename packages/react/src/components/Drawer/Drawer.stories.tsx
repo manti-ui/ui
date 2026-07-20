@@ -15,7 +15,7 @@ const meta = {
     placement: 'right',
     size: 'md',
     showCloseButton: true,
-    trigger: <Button tone="primary">Open drawer</Button>,
+    trigger: <Button variant="$1">Open drawer</Button>,
   },
   argTypes: {
     placement: {
@@ -44,10 +44,10 @@ export const Playground: Story = {
     ),
     footer: ({ close }) => (
       <>
-        <Button variant="ghost" onClick={close}>
+        <Button variant="tertiary" onClick={close}>
           Cancel
         </Button>
-        <Button tone="primary" onClick={close}>
+        <Button variant="$1" onClick={close}>
           Save
         </Button>
       </>
@@ -64,7 +64,7 @@ export const Placements: Story = {
           placement={placement}
           title={`From the ${placement}`}
           description={`This drawer slides in from the ${placement} edge.`}
-          trigger={<Button variant="outline">{placement}</Button>}
+          trigger={<Button variant="tertiary">{placement}</Button>}
         >
           A panel anchored to the {placement} edge of the viewport.
         </Drawer>

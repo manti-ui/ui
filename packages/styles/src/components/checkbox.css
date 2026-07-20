@@ -43,15 +43,15 @@
     background: var(--manti-surface-raised);
     border: 1.5px solid var(--manti-border-strong);
     border-radius: var(--manti-checkbox-radius);
-    color: var(--tone-on-solid);
+    color: var(--variant-on-solid);
     transition:
       background-color var(--manti-duration-base) var(--manti-ease-smooth),
       border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &[data-state='checked'],
     &[data-state='indeterminate'] {
-      background: var(--tone-solid);
-      border-color: var(--tone-solid);
+      background: var(--variant-solid);
+      border-color: var(--variant-solid);
     }
   }
 
@@ -81,7 +81,7 @@
 
   [data-scope='checkbox'][data-part='root']:has(input:focus-visible)
     [data-part='control'] {
-    outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+    outline: var(--manti-focus-ring-width) solid var(--variant-ring);
     outline-offset: var(--manti-focus-ring-offset);
   }
 

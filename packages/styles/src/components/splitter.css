@@ -1,7 +1,7 @@
 /**
  * Splitter — a resizable split layout backed by the Zag.js splitter machine.
  * Panels are framed surfaces; the resize trigger is a fixed-width track holding
- * a slim line that tones and widens on hover/drag. The widening is drawn with an
+ * a slim line that variants and widens on hover/drag. The widening is drawn with an
  * outline on the line (not extra width) so the handle grows visually without
  * reflowing the panels.
  */
@@ -50,13 +50,13 @@
     background: transparent;
 
     /* The visible divider line. Thin at rest; widens via an outline of the same
-       tone on hover/drag, so the band can exceed the track and overlap the
+       variant on hover/drag, so the band can exceed the track and overlap the
        panels without pushing them. */
     &::before {
       content: '';
       display: block;
       background: var(--manti-panel-border);
-      outline: 0 solid var(--tone-solid);
+      outline: 0 solid var(--variant-solid);
       transition:
         background-color var(--manti-duration-fast) var(--manti-ease-smooth),
         outline-width var(--manti-duration-fast) var(--manti-ease-smooth);
@@ -82,18 +82,18 @@
       }
     }
 
-    /* Tone + widen on hover and during an active drag. Deliberately NOT keyed on
+    /* Variant + widen on hover and during an active drag. Deliberately NOT keyed on
        [data-focus]: after a mouse drag ends the machine keeps the trigger focused
        (POINTER_UP → focused state), so a focus-based rule would leave the handle
-       stuck in the active tone. Keyboard focus is signalled by the ring below. */
+       stuck in the active variant. Keyboard focus is signalled by the ring below. */
     &:hover::before,
     &[data-dragging]::before {
-      background: var(--tone-solid);
+      background: var(--variant-solid);
       outline-width: var(--_line-grow);
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
   }

@@ -10,7 +10,7 @@ const meta = {
   parameters: { layout: 'centered' },
   args: {
     placement: 'bottom-start',
-    trigger: <Button variant="outline">Serve as…</Button>,
+    trigger: <Button variant="tertiary">Serve as…</Button>,
     items: [
       { value: 'yogurt', label: 'Garlic yogurt', shortcut: '⌘1' },
       { value: 'butter', label: 'Chili butter', shortcut: '⌘2' },

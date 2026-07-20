@@ -1,7 +1,7 @@
 /**
  * Pagination — a page navigator backed by the Zag.js pagination machine. Items
  * are quiet ghost buttons; the current page (`data-selected`) fills with the
- * active tone.
+ * active variant.
  */
 @layer manti.components {
   [data-scope='pagination'][data-part='root'] {
@@ -64,12 +64,12 @@
       border-color var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
-      background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
-      color: var(--tone-soft-text);
+      background: var(--variant-fill);
+      color: var(--variant-soft-text);
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
 
@@ -81,13 +81,13 @@
   }
 
   [data-scope='pagination'][data-part='item'][data-selected] {
-    background: var(--tone-solid);
-    color: var(--tone-on-solid);
+    background: var(--variant-solid);
+    color: var(--variant-on-solid);
     box-shadow: var(--manti-shadow-sm);
 
     &:hover {
-      background: var(--tone-solid-hover);
-      color: var(--tone-on-solid);
+      background: var(--variant-solid-hover);
+      color: var(--variant-on-solid);
     }
   }
 

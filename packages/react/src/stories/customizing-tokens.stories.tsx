@@ -64,13 +64,11 @@ const label: CSSProperties = {
 function Controls() {
   return (
     <div style={cluster}>
-      <Button tone="primary">Save</Button>
-      <Button tone="primary" variant="outline">
-        Cancel
-      </Button>
+      <Button variant="primary">Save</Button>
+      <Button variant="tertiary">Cancel</Button>
       <Input placeholder="Type a recipe…" />
       <Switch defaultChecked>Notify</Switch>
-      <Badge tone="success">Fresh</Badge>
+      <Badge variant="primary">Fresh</Badge>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { Button, Dialog } from '@manti-ui/react';
 export default function DialogBasic() {
   return (
     <Dialog
-      trigger={<Button tone="primary">Open dialog</Button>}
+      trigger={<Button variant="primary">Open dialog</Button>}
       title="Freeze a batch?"
       description="Raw mantı freeze beautifully. Lay them on a floured tray, freeze solid, then bag them."
     >

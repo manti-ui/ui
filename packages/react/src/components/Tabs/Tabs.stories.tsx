@@ -25,15 +25,11 @@ const meta = {
   component: Tabs,
   tags: ['autodocs'],
   parameters: { layout: 'padded' },
-  args: { items, tone: 'primary' },
+  args: { items },
   argTypes: {
     variant: {
       control: 'inline-radio',
       options: ['line', 'pill', 'soft'],
-    },
-    tone: {
-      control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
     },
     size: {
       control: 'inline-radio',

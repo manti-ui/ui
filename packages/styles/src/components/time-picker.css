@@ -33,7 +33,7 @@
     box-shadow: var(--manti-panel-rim);
 
     &:focus-within {
-      border-color: var(--tone-ring, var(--manti-focus-ring));
+      border-color: var(--variant-ring, var(--manti-focus-ring));
     }
   }
 
@@ -151,12 +151,12 @@
       color var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
-      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      background: var(--manti-fill);
     }
 
     &[data-selected] {
-      background: var(--tone-solid);
-      color: var(--tone-on-solid);
+      background: var(--variant-solid);
+      color: var(--variant-on-solid);
       font-weight: var(--manti-weight-semibold);
     }
 
@@ -166,7 +166,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);
     }
   }

@@ -35,7 +35,6 @@ export function InstallTabs({ packages = DEFAULT_PACKAGES }: InstallTabsProps) {
       <div className="install-card-bar">
         <Tabs
           variant="soft"
-          tone="primary"
           value={manager}
           onValueChange={setManager}
           items={MANAGERS.map((m) => ({

@@ -1,7 +1,7 @@
 import { useId, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { datePicker } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -10,8 +10,8 @@ import type { Placement } from '../../internal/floating';
 export interface DatePickerProps {
   /** Optional field label. */
   label?: ReactNode;
-  /** Selection-highlight tone. */
-  tone?: MantiTone;
+  /** Selection-highlight variant. */
+  variant?: MantiVariant;
   /** single, multiple, or range selection. */
   selectionMode?: 'single' | 'multiple' | 'range';
   /** Controlled value as ISO date strings (YYYY-MM-DD). */
@@ -54,7 +54,7 @@ const GRID_COLUMNS = 4;
  */
 export function DatePicker({
   label,
-  tone = 'primary',
+  variant = 'primary',
   selectionMode = 'single',
   value,
   defaultValue,
@@ -93,7 +93,7 @@ export function DatePicker({
   const api = datePicker.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
         <input {...api.getInputProps()} />
@@ -104,7 +104,7 @@ export function DatePicker({
         </button>
       </div>
       <Portal>
-        <div {...api.getPositionerProps()} data-tone={tone}>
+        <div {...api.getPositionerProps()} data-variant={variant}>
           <div {...api.getContentProps()}>
             {/* Day view */}
             <div hidden={api.view !== 'day'}>

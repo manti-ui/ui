@@ -9,10 +9,10 @@ export const meta: ComponentMeta = {
       description: 'Optional field label.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Focus-ring tone.',
+      description: 'Focus-ring variant.',
     },
     {
       name: 'value',
@@ -76,7 +76,7 @@ export const meta: ComponentMeta = {
     },
   ],
   anatomy: [
-    { part: 'root', description: 'The field wrapper; carries data-tone.' },
+    { part: 'root', description: 'The field wrapper; carries data-variant.' },
     { part: 'label', description: 'The field label.' },
     { part: 'area', description: 'Wraps the preview and the input.' },
     { part: 'preview', description: 'The static text shown when not editing.' },

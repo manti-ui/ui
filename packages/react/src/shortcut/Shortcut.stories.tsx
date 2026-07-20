@@ -40,7 +40,7 @@ const muted: CSSProperties = {
 /** A small key-combo hint, rendered with the monospace token — no colored accent. */
 function Combo({ children }: { children: ReactNode }) {
   return (
-    <Badge variant="outline" style={{ fontFamily: 'var(--manti-font-mono)' }}>
+    <Badge variant="tertiary" style={{ fontFamily: 'var(--manti-font-mono)' }}>
       {children}
     </Badge>
   );
@@ -100,7 +100,7 @@ export const Scoped: Story = {
               <Combo>Ctrl+S</Combo> to save.
             </p>
             <div style={row}>
-              <Badge tone={saves > 0 ? 'success' : 'neutral'}>
+              <Badge variant={saves > 0 ? 'primary' : 'secondary'}>
                 {saves > 0 ? `Saved ×${saves}` : 'Not saved'}
               </Badge>
             </div>
@@ -183,7 +183,7 @@ export const FormGuard: Story = {
           placeholder="Type, then press ⌘/Ctrl+Enter to submit"
         />
         <div style={row}>
-          <Badge tone={count > 0 ? 'success' : 'neutral'}>
+          <Badge variant={count > 0 ? 'primary' : 'secondary'}>
             Submitted ×{count}
           </Badge>
         </div>

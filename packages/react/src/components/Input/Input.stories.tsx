@@ -11,13 +11,13 @@ const meta = {
     label: 'Recipe name',
     placeholder: 'Kayseri mantısı',
     size: 'md',
-    tone: 'primary',
+    variant: 'primary',
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
   decorators: [

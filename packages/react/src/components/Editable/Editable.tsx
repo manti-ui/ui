@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { editable } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -9,8 +9,8 @@ import { cx } from '../../internal/props';
 export interface EditableProps {
   /** Optional field label. */
   label?: ReactNode;
-  /** Focus-ring tone. */
-  tone?: MantiTone;
+  /** Focus-ring variant. */
+  variant?: MantiVariant;
   /** Controlled value. */
   value?: string;
   /** Initial value for uncontrolled usage. */
@@ -38,7 +38,7 @@ export interface EditableProps {
  * Zag.js editable machine. */
 export function Editable({
   label,
-  tone = 'primary',
+  variant = 'primary',
   value,
   defaultValue,
   onValueChange,
@@ -77,7 +77,7 @@ export function Editable({
   const api = editable.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getAreaProps()}>
         <input {...api.getInputProps()} />

@@ -9,10 +9,10 @@ export const meta: ComponentMeta = {
       description: 'Optional field label rendered above the control.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Selection-highlight tone for the active cells.',
+      description: 'Selection-highlight variant for the active cells.',
     },
     {
       name: 'defaultValue',
@@ -48,7 +48,7 @@ export const meta: ComponentMeta = {
     },
   ],
   anatomy: [
-    { part: 'root', description: 'The outer wrapper that owns the tone.' },
+    { part: 'root', description: 'The outer wrapper that owns the variant.' },
     { part: 'label', description: 'The optional field label.' },
     { part: 'control', description: 'The input plus trigger row.' },
     {

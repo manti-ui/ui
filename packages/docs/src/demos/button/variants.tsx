@@ -1,12 +1,19 @@
 import { Button } from '@manti-ui/react';
 
-const variants = ['solid', 'soft', 'outline', 'ghost'] as const;
+const variants = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'danger',
+  'outline',
+  'link',
+] as const;
 
 export default function ButtonVariants() {
   return (
     <>
       {variants.map((variant) => (
-        <Button key={variant} variant={variant} tone="primary">
+        <Button key={variant} variant={variant}>
           {variant}
         </Button>
       ))}

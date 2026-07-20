@@ -3,7 +3,7 @@ title: Theming with tokens
 slug: /guides/theming-tokens
 group: Guides
 order: 31
-description: Theme Manti through its semantic roles and tones first, and reach for component tokens only to make one component diverge.
+description: Theme Manti through its semantic roles and variants first, and reach for component tokens only to make one component diverge.
 ---
 
 # Theming with tokens
@@ -58,33 +58,33 @@ inputs alike — one decision, applied everywhere:
 }
 ```
 
-### The `--tone-*` vocabulary
+### The `--variant-*` vocabulary
 
-Color in Manti comes only from **tones**, never from a fixed accent. A tone is a
-small `--tone-*` vocabulary — solid, soft, border, text, ring — that components
-read when they are given that tone. Remap an existing tone, or define a brand-new
-one, then pass its name as a `tone` prop:
+Color in Manti comes only from **variants**, never from a fixed accent. A variant is a
+small `--variant-*` vocabulary — solid, soft, border, text, ring — that components
+read when they are given that variant. Remap an existing variant, or define a brand-new
+one, then pass its name as a `variant` prop:
 
 ```css
-/* Pin the built-in "primary" tone to your brand color. */
-[data-tone='primary'] {
-  --tone-solid: light-dark(#5b3df5, #6d52ff);
-  --tone-solid-hover: light-dark(#4f33e0, #7e66ff);
-  --tone-solid-active: light-dark(#4329c4, #8f7aff);
-  --tone-on-solid: #ffffff;
-  --tone-soft-bg: light-dark(#eeeafd, #211c46);
-  --tone-soft-text: light-dark(#4329c4, #c4b8f8);
-  --tone-border: light-dark(#c9bdf8, #3a2f73);
-  --tone-text: light-dark(#4329c4, #b3a3f6);
-  --tone-ring: #6d52ff;
+/* Pin the built-in "primary" variant to your brand color. */
+[data-variant='primary'] {
+  --variant-solid: light-dark(#5b3df5, #6d52ff);
+  --variant-solid-hover: light-dark(#4f33e0, #7e66ff);
+  --variant-solid-active: light-dark(#4329c4, #8f7aff);
+  --variant-on-solid: #ffffff;
+  --variant-soft-bg: light-dark(#eeeafd, #211c46);
+  --variant-soft-text: light-dark(#4329c4, #c4b8f8);
+  --variant-border: light-dark(#c9bdf8, #3a2f73);
+  --variant-text: light-dark(#4329c4, #b3a3f6);
+  --variant-ring: #6d52ff;
 }
 ```
 
 ```tsx
-<Button tone="primary">Save</Button>
+<Button variant="primary">Save</Button>
 ```
 
-Because tones are plain CSS variables, you can scope a remap to a subtree — give
+Because variants are plain CSS variables, you can scope a remap to a subtree — give
 a marketing section its own meaning for `primary` without touching the rest of
 the app.
 
@@ -109,7 +109,7 @@ Two rules keep this tier safe to depend on:
 
 - **Curated, not exhaustive.** Only _independent_ structural dimensions a designer
   would reach for — radius, padding, sizing, gap, typography — are exposed. Color
-  is already covered by the `--tone-*` vocabulary, so this tier stays small and
+  is already covered by the `--variant-*` vocabulary, so this tier stays small and
   mostly structural.
 - **Derived values stay private.** Anything a component computes from its tokens
   (`calc()` geometry like a switch thumb's size and travel) remains a private

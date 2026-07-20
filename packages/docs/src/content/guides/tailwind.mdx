@@ -65,15 +65,15 @@ follow your overrides automatically:
   --manti-focus-ring: var(--manti-orange-500);
 }
 
-/* A custom tone — <Button tone="brand">. */
-[data-tone='brand'] {
-  --tone-solid: light-dark(#0d9488, #14b8a6);
-  --tone-on-solid: #ffffff;
-  --tone-soft-bg: light-dark(#d6f5f0, #0b2e2a);
-  --tone-soft-text: light-dark(#0b6a60, #99f6e4);
-  --tone-border: light-dark(#9fe5db, #155e54);
-  --tone-text: light-dark(#0b6a60, #5eead4);
-  --tone-ring: #14b8a6;
+/* A custom variant — <Button variant="brand">. */
+[data-variant='brand'] {
+  --variant-solid: light-dark(#0d9488, #14b8a6);
+  --variant-on-solid: #ffffff;
+  --variant-soft-bg: light-dark(#d6f5f0, #0b2e2a);
+  --variant-soft-text: light-dark(#0b6a60, #99f6e4);
+  --variant-border: light-dark(#9fe5db, #155e54);
+  --variant-text: light-dark(#0b6a60, #5eead4);
+  --variant-ring: #14b8a6;
 }
 ```
 
@@ -122,7 +122,7 @@ targets them natively:
 ```tsx
 // Token-aware utilities from the bridge.
 <Card className="bg-surface border-border text-text rounded-lg" />
-<Button tone="brand">Save</Button>
+<Button variant="brand">Save</Button>
 
 // Component-specific visual overrides win (utilities layer is above manti).
 <Button className="rounded-pill px-8 shadow-none">Sharp</Button>
@@ -168,5 +168,5 @@ process them.
 
 - **[Customizing with plain CSS](/guides/plain-css)** — the cascade layers and
   anatomy contract the override story rests on.
-- **[Theming with tokens](/guides/theming-tokens)** — the semantic roles and tones
+- **[Theming with tokens](/guides/theming-tokens)** — the semantic roles and variants
   the bridge exposes as utilities.
