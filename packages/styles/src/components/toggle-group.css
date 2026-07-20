@@ -1,7 +1,7 @@
 /**
  * Toggle Group — a segmented set of toggle buttons backed by the Zag.js
  * toggle-group machine. Items sit in a shared translucent container; the pressed
- * item (`data-state='on'`) fills with the active tone.
+ * item (`data-state='on'`) fills with the active variant.
  */
 @layer manti.components {
   [data-scope='toggle-group'][data-part='root'] {
@@ -58,17 +58,17 @@
       transform var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
-      background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
-      color: var(--tone-soft-text);
+      background: var(--variant-fill);
+      color: var(--variant-soft-text);
     }
 
     &[data-state='on'] {
-      background: var(--tone-solid);
-      color: var(--tone-on-solid);
+      background: var(--variant-solid);
+      color: var(--variant-on-solid);
       box-shadow: var(--manti-shadow-sm);
 
       &:hover {
-        background: var(--tone-solid-hover);
+        background: var(--variant-solid-hover);
       }
     }
 
@@ -77,7 +77,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
 

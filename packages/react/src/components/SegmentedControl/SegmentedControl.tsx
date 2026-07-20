@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { radioGroup } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -17,8 +17,8 @@ export interface SegmentedControlProps {
   items: SegmentedControlItem[];
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
-  /** Tone used for the focus ring. */
-  tone?: MantiTone;
+  /** Variant used for the focus ring. */
+  variant?: MantiVariant;
   /** Controlled selected value. */
   value?: string;
   /** Initial selected value for uncontrolled usage. */
@@ -43,7 +43,7 @@ export interface SegmentedControlProps {
 export function SegmentedControl({
   items,
   size = 'md',
-  tone = 'primary',
+  variant = 'primary',
   value,
   defaultValue,
   onValueChange,
@@ -72,7 +72,7 @@ export function SegmentedControl({
       {...api.getRootProps()}
       data-scope="segmented-control"
       data-size={size}
-      data-tone={tone}
+      data-variant={variant}
       className={cx(className)}
     >
       <span {...api.getIndicatorProps()} data-scope="segmented-control" />

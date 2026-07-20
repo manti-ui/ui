@@ -129,18 +129,18 @@
       font-size: var(--manti-text-sm);
       font-weight: var(--manti-weight-semibold);
       cursor: pointer;
-      border: 1px solid var(--tone-border);
-      color: var(--tone-text);
+      border: 1px solid var(--variant-border);
+      color: var(--variant-text);
       background: none;
 
       &:last-child {
-        background: var(--tone-solid);
+        background: var(--variant-solid);
         border-color: transparent;
-        color: var(--tone-on-solid);
+        color: var(--variant-on-solid);
       }
 
       &:focus-visible {
-        outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+        outline: var(--manti-focus-ring-width) solid var(--variant-ring);
         outline-offset: var(--manti-focus-ring-offset);
       }
     }

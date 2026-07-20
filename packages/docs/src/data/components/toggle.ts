@@ -4,10 +4,10 @@ export const meta: ComponentMeta = {
   scope: 'toggle',
   props: [
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Active tone when the toggle is pressed.',
+      description: 'Active variant when the toggle is pressed.',
     },
     {
       name: 'pressed',
@@ -46,7 +46,7 @@ export const meta: ComponentMeta = {
     {
       part: 'root',
       description:
-        'The pressable button. Off reads as a quiet outline; on fills with the tone.',
+        'The pressable button. Off reads as a quiet outline; on fills with the variant.',
     },
   ],
 };

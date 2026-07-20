@@ -23,7 +23,7 @@ export default function ShortcutFormGuard() {
         label="Comment"
         placeholder="Type, then press ⌘/Ctrl+Enter to submit"
       />
-      <Badge tone={count > 0 ? 'success' : 'neutral'}>Submitted ×{count}</Badge>
+      <Badge variant={count > 0 ? 'primary' : 'secondary'}>Submitted ×{count}</Badge>
     </div>
   );
 }

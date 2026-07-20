@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import type { TocEntry } from '../types';
+import { ThemePlayground } from './ThemePlayground';
 
 interface FlatTocItem {
   id: string;
@@ -45,29 +46,32 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
     return () => observer.disconnect();
   }, [items]);
 
-  if (items.length === 0) return <div className="docs-toc" aria-hidden />;
-
   return (
     <aside className="docs-toc">
-      <p className="docs-toc-label">On this page</p>
-      <ul className="docs-toc-list">
-        {items.map((item) => {
-          const className = [
-            'docs-toc-link',
-            item.depth === 3 && 'is-depth-3',
-            item.id === activeId && 'is-active',
-          ]
-            .filter(Boolean)
-            .join(' ');
-          return (
-            <li key={item.id}>
-              <a href={`#${item.id}`} className={className}>
-                {item.value}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      {items.length > 0 && (
+        <nav className="docs-toc-nav" aria-label="On this page">
+          <p className="docs-toc-label">On this page</p>
+          <ul className="docs-toc-list">
+            {items.map((item) => {
+              const className = [
+                'docs-toc-link',
+                item.depth === 3 && 'is-depth-3',
+                item.id === activeId && 'is-active',
+              ]
+                .filter(Boolean)
+                .join(' ');
+              return (
+                <li key={item.id}>
+                  <a href={`#${item.id}`} className={className}>
+                    {item.value}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )}
+      <ThemePlayground />
     </aside>
   );
 }

@@ -15,7 +15,7 @@ export default function SelectBasic() {
         items={regions}
         label="Region"
         placeholder="Pick a region…"
-        tone="primary"
+        variant="primary"
       />
     </div>
   );

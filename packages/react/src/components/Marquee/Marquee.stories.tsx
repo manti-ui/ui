@@ -15,7 +15,7 @@ const tags = [
 const Tags = () => (
   <>
     {tags.map((t) => (
-      <Badge key={t} tone="neutral" variant="soft">
+      <Badge key={t} variant="secondary">
         {t}
       </Badge>
     ))}
@@ -84,7 +84,7 @@ export const Vertical: Story = {
       <Marquee direction="up" speed={12}>
         <div style={{ display: 'grid', gap: '0.5rem' }}>
           {tags.map((t) => (
-            <Badge key={t} tone="neutral" variant="soft">
+            <Badge key={t} variant="secondary">
               {t}
             </Badge>
           ))}

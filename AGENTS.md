@@ -11,7 +11,7 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
 2. **Design tokens are mandatory.** When adapting any Zag.js component into Manti
    UI or authoring a new Manti UI component, every visual value — color, spacing,
    radius, typography, motion, elevation, z-index — must come from the design
-   tokens (`@manti-ui/tokens` / token-backed `--manti-*` and `--tone-*` CSS
+   tokens (`@manti-ui/tokens` / token-backed `--manti-*` and `--variant-*` CSS
    variables). Never hard-code raw values (hex colors, px sizes, magic numbers);
    if a token is missing, add it to `@manti-ui/tokens` first, then consume it.
    `@manti-ui/tokens` is the single source of truth: its primitive ramps and
@@ -19,9 +19,9 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    `packages/styles/src/tokens.css` (the `@tokens:generated` region) by
    `pnpm gen:tokens`. Never hand-edit that region; after changing the contract,
    regenerate it — the styles build fails if it is stale. The theme-aware roles
-   (`light-dark()` surfaces/text/elevation/panel) and the tonal `--tone-*`
+   (`light-dark()` surfaces/text/elevation/panel) and the `--variant-*`
    vocabulary below the region stay hand-authored. Tokens form three tiers:
-   primitive ramps → semantic roles/tones → **component tokens**
+   primitive ramps → semantic roles/variants → **component tokens**
    (`--manti-{component}-{property}`, public and semver-stable, each defaulting
    to a semantic token). When a component needs an _independent_ structural value
    (radius, padding, sizing, gap, typography), expose it as a component token

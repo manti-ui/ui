@@ -40,16 +40,16 @@ export const meta: ComponentMeta = {
       description: 'Control size.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Tone applied to the active page.',
+      description: 'Variant applied to the active page.',
     },
   ],
   anatomy: [
     {
       part: 'root',
-      description: 'The `<nav>` wrapper carrying scope, size, and tone.',
+      description: 'The `<nav>` wrapper carrying scope, size, and variant.',
     },
     {
       part: 'prev-trigger',

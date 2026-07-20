@@ -12,51 +12,54 @@ export interface NavGroup {
   items: NavItem[];
 }
 
-// Components are split into these categories, each its own sidebar section. The
-// names mirror the `group` frontmatter of every component page under content/.
-const COMPONENT_CATEGORIES = [
-  'Inputs',
-  'Buttons & Actions',
-  'Navigation',
-  'Overlays',
-  'Feedback',
-  'Data Display',
-  'Layout',
-] as const;
-
-/** Sidebar group order. Pages with a group outside this list are not listed. */
+/**
+ * Sidebar group order. Every component page (slug under `/components/`) is
+ * collected into a single "Components" section, listed alphabetically — there
+ * are no per-category sub-sections. Pages with a group outside this list are
+ * not shown in the sidebar.
+ */
 const GROUP_ORDER = [
   'Getting Started',
   'Foundations',
   'Guides',
   // Framework-agnostic primitives that aren't visual components (hooks like
-  // useShortcut), each its own page ordered by `order`. Sits above the component
-  // sections.
+  // useShortcut), each its own page ordered by `order`.
   'Utilities',
-  // The `/components` overview sits alone in its "Components" group, above the
-  // categorized component sections.
   'Components',
-  ...COMPONENT_CATEGORIES,
   'Reference',
   'Changelog',
 ] as const;
 
-const COMPONENT_CATEGORY_SET = new Set<string>(COMPONENT_CATEGORIES);
-
 export const navGroups: NavGroup[] = GROUP_ORDER.map((label) => {
-  let items: NavItem[] = pages
+  if (label === 'Components') {
+    // The `/components` overview first, then every component page A→Z.
+    const overview: NavItem[] = pages
+      .filter((page) => page.slug === '/components')
+      .map((page) => ({
+        slug: page.slug,
+        // The overview page is titled "Components"; label its link "Overview"
+        // so it doesn't echo the section heading above it.
+        title: 'Overview',
+        badge: page.badge,
+      }));
+    const components: NavItem[] = pages
+      .filter((page) => page.slug.startsWith('/components/'))
+      .map((page) => ({
+        slug: page.slug,
+        title: page.title,
+        badge: page.badge,
+      }))
+      .sort((a, b) => a.title.localeCompare(b.title));
+    return { label, items: [...overview, ...components] };
+  }
+
+  const items: NavItem[] = pages
     .filter((page) => page.group === label)
     .map((page) => ({
       slug: page.slug,
-      // The overview page is titled "Components"; label its lone sidebar link
-      // "Overview" so it doesn't echo the section heading above it.
-      title: page.slug === '/components' ? 'Overview' : page.title,
+      title: page.title,
       badge: page.badge,
     }));
-  // Component categories list their items alphabetically rather than by `order`.
-  if (COMPONENT_CATEGORY_SET.has(label)) {
-    items = [...items].sort((a, b) => a.title.localeCompare(b.title));
-  }
   return { label, items };
 }).filter((group) => group.items.length > 0);
 

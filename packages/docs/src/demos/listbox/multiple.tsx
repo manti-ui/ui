@@ -12,7 +12,7 @@ export default function ListboxMultiple() {
     <Listbox
       items={fillings}
       label="Fillings"
-      tone="primary"
+      variant="primary"
       selectionMode="multiple"
       defaultValue={['lamb', 'pumpkin']}
     />

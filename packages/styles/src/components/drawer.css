@@ -175,7 +175,7 @@
       color var(--manti-duration-fast) var(--manti-ease-soft);
 
     &:hover {
-      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      background: var(--manti-fill);
       color: var(--manti-text);
     }
 

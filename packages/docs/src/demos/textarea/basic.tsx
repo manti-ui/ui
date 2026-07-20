@@ -7,7 +7,7 @@ export default function TextareaBasic() {
         label="Recipe notes"
         placeholder="Add preparation notes"
         description="Shown below the field while there is no error."
-        tone="primary"
+        variant="primary"
       />
     </div>
   );

@@ -1,7 +1,6 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { tabs } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -27,8 +26,6 @@ export interface TabsProps {
    * - `soft`: a translucent pill on the active tab, no enclosing track.
    */
   variant?: TabsVariant;
-  /** Active tone for the selected tab and indicator. */
-  tone?: MantiTone;
   /** Control size. `sm` tightens the triggers for compact, embedded usage. */
   size?: 'sm' | 'md';
   /** Controlled selected value. */
@@ -47,7 +44,6 @@ export interface TabsProps {
 export function Tabs({
   items,
   variant = 'line',
-  tone = 'primary',
   size = 'md',
   value,
   defaultValue,
@@ -72,7 +68,6 @@ export function Tabs({
     <div
       {...api.getRootProps()}
       data-variant={variant}
-      data-tone={tone}
       data-size={size}
       className={cx(className)}
     >

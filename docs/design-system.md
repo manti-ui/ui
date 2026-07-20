@@ -17,7 +17,7 @@ font. Import the stylesheet once at your app root —
 `import '@manti-ui/styles/index.css'` — or use the Tailwind entry point;
 `@manti-ui/react` deliberately ships no CSS side effects so headless usage
 stays possible. See [styling.md](./styling.md) for the full customization
-contract (plain CSS overrides, token theming, custom tones, Tailwind v4).
+contract (plain CSS overrides, token theming, custom variants, Tailwind v4).
 
 > Build note: bundlers must keep modern CSS (`light-dark()`, nesting) intact.
 > The workspace Vite configs target `chrome123` for exactly this reason; a
@@ -50,27 +50,29 @@ Six perceptually-uniform OKLCH ramps (`50`–`950`) from the mantı kitchen:
 | -------- | ------- | ------------ |
 | `gray`   | neutral | warm neutral |
 | `orange` | primary | warm orange  |
-| `green`  | success | fresh green  |
-| `amber`  | warning | golden amber |
 | `red`    | danger  | hot red      |
-| `blue`   | info    | calm blue    |
+| `green`  | —       | fresh green  |
+| `amber`  | —       | golden amber |
+| `blue`   | —       | calm blue    |
 
-### Semantic & tonal roles
+### Semantic & variant roles
 
 `:root` exposes surfaces and text — `--manti-bg`, `--manti-surface`,
 `--manti-surface-raised`, `--manti-border`, `--manti-text`, `--manti-text-muted`,
 and more.
 
-Every tonal component reads a uniform vocabulary selected by `[data-tone]`:
+Every variant-driven component reads a uniform vocabulary selected by
+`[data-variant]`:
 
 ```
---tone-solid            --tone-soft-bg          --tone-border
---tone-solid-hover      --tone-soft-bg-hover    --tone-text
---tone-solid-active     --tone-soft-text        --tone-ring
---tone-on-solid
+--variant-solid            --variant-soft-bg          --variant-border
+--variant-solid-hover      --variant-soft-bg-hover    --variant-text
+--variant-solid-active     --variant-soft-text        --variant-ring
+--variant-on-solid
 ```
 
-A component never hard-codes a hue; it sets `data-tone` and consumes `--tone-*`.
+A component never hard-codes a hue; it sets `data-variant` and consumes
+`--variant-*`.
 
 ## Material — sleek monochrome panel
 
@@ -79,7 +81,7 @@ dark is the hero (a deep near-black with a faint cool cast), light a soft
 daylight that never goes stark white. **No gradients** and no colored brand
 accent: emphasis is carried by neutral light/dark (a top-lit rim, a neutral
 focus ring, near-white/near-black solids), and color appears only through the
-semantic tones. Floating surfaces — cards, tooltips, the field control — are a
+semantic variants. Floating surfaces — cards, tooltips, the field control — are a
 **translucent panel**: a light `backdrop-filter: blur() saturate()`, a hairline
 border, a top-lit rim catching the light, and a soft, deep shadow. This translucent
 panel is the **pervasive** material: it also carries soft buttons, soft badges,
@@ -92,7 +94,7 @@ A subtle **ambient mesh** — three faint glows (violet, magenta, warm ember) at
 very low opacity — sits behind every `.manti-app`/`body` as pure scene lighting
 (not a gradient element), so the deep background reads with depth rather than
 flat. The color ramps (orange, green, amber, red, blue) remain as semantic
-tones for badges, alerts, and the like.
+variants for badges, alerts, and the like.
 
 Retune the whole material from one place:
 
@@ -121,17 +123,17 @@ every panel surface falls back to an opaque token surface automatically.
 
 ## Components
 
-| Component  | Tones | Notes                                                  |
-| ---------- | :---: | ------------------------------------------------------ |
-| `Button`   |  all  | `solid` / `soft` / `outline` / `ghost`, sizes, loading |
-| `Toggle`   |  all  | Zag.js toggle machine; controlled or uncontrolled      |
-| `Switch`   |  all  | real checkbox + `role="switch"`, smooth thumb          |
-| `Checkbox` |  all  | checked + indeterminate, drawn check                   |
-| `Input`    |  all  | label, hint, error, adornments, wired ARIA             |
-| `Badge`    |  all  | `solid` / `soft` / `outline`, optional dot             |
-| `Card`     |   —   | pillowy surface; `Header`/`Title`/`Body`/`Footer`      |
-| `Alert`    |  all  | soft/solid, dismiss, role escalates for danger/warning |
-| `Spinner`  |   —   | inherits `currentColor`                                |
+| Component  | Variants | Notes                                                    |
+| ---------- | :------: | -------------------------------------------------------- |
+| `Button`   |   all    | primary … outline across an emphasis ladder, sizes, loading |
+| `Toggle`   |   all    | Zag.js toggle machine; controlled or uncontrolled        |
+| `Switch`   |   all    | real checkbox + `role="switch"`, smooth thumb            |
+| `Checkbox` |   all    | checked + indeterminate, drawn check                     |
+| `Input`    |   all    | label, hint, error, adornments, wired ARIA               |
+| `Badge`    |   all    | any variant, optional dot                                |
+| `Card`     |    —     | pillowy surface; `Header`/`Title`/`Body`/`Footer`        |
+| `Alert`    |   all    | dismiss, role escalates for the danger variant |
+| `Spinner`  |    —     | inherits `currentColor`                                  |
 
 ## Anatomy contract
 
@@ -141,8 +143,7 @@ Every component renders stable attributes so the CSS is framework-agnostic:
 <button
   data-scope="button"
   data-part="root"
-  data-variant="solid"
-  data-tone="primary"
+  data-variant="primary"
   data-size="md"
 >
   <span data-scope="button" data-part="label">…</span>

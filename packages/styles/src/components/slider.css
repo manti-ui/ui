@@ -66,7 +66,7 @@
   }
 
   [data-scope='slider'][data-part='range'] {
-    background: var(--tone-solid);
+    background: var(--variant-solid);
     border-radius: var(--manti-radius-full);
 
     [data-orientation='horizontal'] & {
@@ -100,7 +100,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
   }

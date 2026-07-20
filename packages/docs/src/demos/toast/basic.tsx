@@ -24,7 +24,7 @@ export default function ToastBasic() {
         Default
       </Button>
       <Button
-        tone="success"
+        variant="primary"
         onClick={() =>
           toaster.success({
             title: 'Saved',
@@ -35,7 +35,7 @@ export default function ToastBasic() {
         Success
       </Button>
       <Button
-        tone="danger"
+        variant="danger"
         onClick={() =>
           toaster.error({
             title: 'Dough too dry',
@@ -46,7 +46,7 @@ export default function ToastBasic() {
         Error
       </Button>
       <Button
-        tone="info"
+        variant="secondary"
         onClick={() =>
           toaster.info({ title: 'Tip', description: 'Rest the dough first.' })
         }

@@ -8,7 +8,7 @@
  * `@tokens:generated` markers, so the two can never drift by hand.
  *
  * The theme-aware roles (semantic surfaces/text, elevation, glass, ambient) and
- * the tonal `--tone-*` vocabulary stay hand-authored below the region — they use
+ * the `--variant-*` vocabulary stay hand-authored below the region — they use
  * `light-dark()`/`color-mix()` which a plain TS value cannot express.
  *
  *   node scripts/gen-tokens-css.mjs           # rewrite the region
@@ -36,12 +36,37 @@ const head = (title) => {
   lines.push(`    /* ${title} */`);
 };
 
+/**
+ * A linear scale anchored on one base custom property: the base stop is emitted
+ * literally, every other stop as `calc(var(--<baseVar>) * <ratio>)` where the
+ * ratio is derived here from the contract's own resolved values (so the two can
+ * never drift). Overriding the single base var live-rescales the whole family.
+ */
+const numeric = (v) => parseFloat(v);
+const ratio = (value, base) => {
+  const r = numeric(value) / numeric(base);
+  return Number.isInteger(r) ? String(r) : String(Number(r.toFixed(4)));
+};
+
+/**
+ * The neutral ramp is the panel-signature cool hue: its per-stop lightness and
+ * chroma stay authored in the contract, but the hue is centralized on the
+ * hand-authored `--manti-cool-hue` token so the whole neutral (ramp + chrome)
+ * can be re-tinted from one place.
+ */
+const coolHued = (value) => {
+  const m = value.match(/^oklch\(([^)]+)\)$/);
+  if (!m) return value;
+  const [l, c] = m[1].trim().split(/\s+/);
+  return `oklch(${l} ${c} var(--manti-cool-hue))`;
+};
+
 lines.push(
   '    /* Primitive ramps — fixed OKLCH scales, identical in light and dark. */',
 );
 for (const [ramp, stops] of Object.entries(t.colorPrimitives))
   for (const [stop, value] of Object.entries(stops))
-    decl(`manti-${ramp}-${stop}`, value);
+    decl(`manti-${ramp}-${stop}`, ramp === 'gray' ? coolHued(value) : value);
 
 head('Radius');
 for (const [k, v] of Object.entries(t.radius)) decl(`manti-radius-${k}`, v);
@@ -51,11 +76,23 @@ for (const [k, v] of Object.entries(t.controlHeight))
   decl(`manti-control-height-${k}`, v);
 
 head('Spacing');
-for (const [k, v] of Object.entries(t.space)) decl(`manti-space-${k}`, v);
+/* Anchored on `--manti-space-1` (the 0.25rem grid unit, also Tailwind's
+   `--spacing` base): override it once to rescale the whole spacing scale. */
+const spaceUnit = t.space[1];
+for (const [k, v] of Object.entries(t.space)) {
+  if (numeric(v) === 0 || k === '1') decl(`manti-space-${k}`, v);
+  else decl(`manti-space-${k}`, `calc(var(--manti-space-1) * ${ratio(v, spaceUnit)})`);
+}
 
 head('Typography');
 for (const [k, v] of Object.entries(t.fontFamily)) decl(`manti-font-${k}`, v);
-for (const [k, v] of Object.entries(t.fontSize)) decl(`manti-text-${k}`, v);
+/* Anchored on `--manti-text-base` (the body size): override it once and the
+   whole type scale rescales proportionally. */
+const textBase = t.fontSize.base;
+for (const [k, v] of Object.entries(t.fontSize)) {
+  if (k === 'base') decl(`manti-text-${k}`, v);
+  else decl(`manti-text-${k}`, `calc(var(--manti-text-base) * ${ratio(v, textBase)})`);
+}
 for (const [k, v] of Object.entries(t.lineHeight)) decl(`manti-leading-${k}`, v);
 for (const [k, v] of Object.entries(t.fontWeight)) decl(`manti-weight-${k}`, v);
 

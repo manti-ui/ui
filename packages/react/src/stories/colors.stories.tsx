@@ -1,4 +1,4 @@
-import { colorPrimitives, tones } from '@manti-ui/tokens';
+import { colorPrimitives, variants } from '@manti-ui/tokens';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta = {
@@ -81,16 +81,16 @@ export const Primitives: Story = {
   ),
 };
 
-export const Tones: Story = {
+export const Variants: Story = {
   render: () => (
     <div style={page}>
       <div>
         <h1 style={{ fontSize: 32, letterSpacing: '-0.03em' }}>
-          Semantic tones
+          Semantic variants
         </h1>
         <p style={{ color: 'var(--manti-text-muted)', maxWidth: '60ch' }}>
-          Every tonal component reads the same <code>--tone-*</code> roles.
-          Toggle the Storybook theme to see them adapt via{' '}
+          Every variant-driven component reads the same <code>--variant-*</code>{' '}
+          roles. Toggle the Storybook theme to see them adapt via{' '}
           <code>light-dark()</code>.
         </p>
       </div>
@@ -101,10 +101,10 @@ export const Tones: Story = {
           gap: '1rem',
         }}
       >
-        {tones.map((tone) => (
+        {variants.map((variant) => (
           <div
-            key={tone}
-            data-tone={tone}
+            key={variant}
+            data-variant={variant}
             style={{
               border: '1px solid var(--manti-border)',
               borderRadius: 14,
@@ -115,21 +115,21 @@ export const Tones: Story = {
             <div
               style={{
                 height: 64,
-                background: 'var(--tone-solid)',
-                color: 'var(--tone-on-solid)',
+                background: 'var(--variant-solid)',
+                color: 'var(--variant-on-solid)',
                 display: 'grid',
                 placeItems: 'center',
                 fontWeight: 600,
                 textTransform: 'capitalize',
               }}
             >
-              {tone}
+              {variant}
             </div>
             <div
               style={{
                 height: 40,
-                background: 'var(--tone-soft-bg)',
-                color: 'var(--tone-soft-text)',
+                background: 'var(--variant-soft-bg)',
+                color: 'var(--variant-soft-text)',
                 display: 'grid',
                 placeItems: 'center',
                 fontSize: 13,

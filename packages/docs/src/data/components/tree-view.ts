@@ -14,10 +14,10 @@ export const meta: ComponentMeta = {
       description: 'Optional label above the tree.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Selected-node tone.',
+      description: 'Selected-node variant.',
     },
     {
       name: 'icon',
@@ -48,7 +48,7 @@ export const meta: ComponentMeta = {
     },
   ],
   anatomy: [
-    { part: 'root', description: 'The outer wrapper that owns the tone.' },
+    { part: 'root', description: 'The outer wrapper that owns the variant.' },
     { part: 'label', description: 'The optional heading above the tree.' },
     { part: 'tree', description: 'The tree container.' },
     { part: 'branch', description: 'A node that has children.' },

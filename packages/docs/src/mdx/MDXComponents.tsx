@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as Manti from '@manti-ui/react';
 
 import { Anatomy } from '../doc/Anatomy';
-import { ColorRamps, ToneGallery } from '../doc/ColorRamps';
+import { ColorRamps, VariantGallery } from '../doc/ColorRamps';
 import { ComponentStatusGrid } from '../doc/ComponentStatusGrid';
 import { Demo } from '../doc/Demo';
 import { InstallTabs } from '../doc/InstallTabs';
@@ -62,7 +62,7 @@ export const mdxComponents = {
   Anatomy,
   TokenTable,
   ColorRamps,
-  ToneGallery,
+  VariantGallery,
   TypeScale,
   WeightScale,
   ComponentStatusGrid,

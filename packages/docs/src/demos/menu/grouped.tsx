@@ -25,7 +25,7 @@ const items: MenuItem[] = [
 export default function MenuGrouped() {
   return (
     <Menu
-      trigger={<Button variant="outline">Customize…</Button>}
+      trigger={<Button variant="tertiary">Customize…</Button>}
       items={items}
     />
   );

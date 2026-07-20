@@ -18,15 +18,15 @@ const meta = {
   args: {
     items: fillings,
     label: 'Filling',
-    tone: 'primary',
+    variant: 'primary',
     selectionMode: 'single',
     defaultValue: ['beef'],
   },
   argTypes: {
     selectionMode: { control: 'inline-radio', options: ['single', 'multiple'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Listbox>;

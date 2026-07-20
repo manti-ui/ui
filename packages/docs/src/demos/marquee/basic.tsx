@@ -13,7 +13,7 @@ export default function MarqueeBasic() {
   return (
     <Marquee>
       {tags.map((t) => (
-        <Badge key={t} tone="neutral" variant="soft">
+        <Badge key={t} variant="secondary">
           {t}
         </Badge>
       ))}

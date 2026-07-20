@@ -38,12 +38,12 @@
       background-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &[data-dragging] {
-      border-color: var(--tone-solid);
-      background: color-mix(in oklab, var(--tone-soft-bg) 50%, transparent);
+      border-color: var(--variant-solid);
+      background: var(--variant-fill);
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
   }
@@ -62,10 +62,10 @@
     /* Browse action button — shares the Tier-2 control-height scale. */
     min-height: var(--manti-control-height-sm);
     padding-inline: var(--manti-space-4);
-    background: var(--tone-solid);
+    background: var(--variant-solid);
     border: 1px solid transparent;
     border-radius: var(--manti-radius-sm);
-    color: var(--tone-on-solid);
+    color: var(--variant-on-solid);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-semibold);
     cursor: pointer;
@@ -73,7 +73,7 @@
       var(--manti-ease-smooth);
 
     &:hover {
-      background: var(--tone-solid-hover);
+      background: var(--variant-solid-hover);
     }
   }
 
@@ -134,12 +134,12 @@
       color var(--manti-duration-fast) var(--manti-ease-soft);
 
     &:hover {
-      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      background: var(--manti-fill);
       color: var(--manti-text);
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);
     }
   }

@@ -21,7 +21,7 @@ lives in `AGENTS.md` — keep the two copies byte-for-byte in sync.
 2. **Design tokens are mandatory.** When adapting any Zag.js component into Manti
    UI or authoring a new Manti UI component, every visual value — color, spacing,
    radius, typography, motion, elevation, z-index — must come from the design
-   tokens (`@manti-ui/tokens` / token-backed `--manti-*` and `--tone-*` CSS
+   tokens (`@manti-ui/tokens` / token-backed `--manti-*` and `--variant-*` CSS
    variables). Never hard-code raw values (hex colors, px sizes, magic numbers);
    if a token is missing, add it to `@manti-ui/tokens` first, then consume it.
    `@manti-ui/tokens` is the single source of truth: its primitive ramps and
@@ -29,9 +29,9 @@ lives in `AGENTS.md` — keep the two copies byte-for-byte in sync.
    `packages/styles/src/tokens.css` (the `@tokens:generated` region) by
    `pnpm gen:tokens`. Never hand-edit that region; after changing the contract,
    regenerate it — the styles build fails if it is stale. The theme-aware roles
-   (`light-dark()` surfaces/text/elevation/panel) and the tonal `--tone-*`
+   (`light-dark()` surfaces/text/elevation/panel) and the `--variant-*`
    vocabulary below the region stay hand-authored. Tokens form three tiers:
-   primitive ramps → semantic roles/tones → **component tokens**
+   primitive ramps → semantic roles/variants → **component tokens**
    (`--manti-{component}-{property}`, public and semver-stable, each defaulting
    to a semantic token). When a component needs an _independent_ structural value
    (radius, padding, sizing, gap, typography), expose it as a component token
@@ -109,7 +109,7 @@ colocated `*.stories.tsx`, and have keyboard support, visible focus, and SR sema
 `docs/styling.md` is the authoritative spec. Key invariants when touching CSS:
 
 - **Anatomy attributes are public API:** `data-scope` (component), `data-part`
-  (anatomy piece), `data-variant`/`data-tone`/`data-size`, and state attrs
+  (anatomy piece), `data-variant`/`data-size`, and state attrs
   (`data-state`, `data-loading`, `disabled`). Class names and DOM between parts
   are private — target the data attributes.
 - **All Manti CSS lives in cascade layers** declared once in
@@ -117,9 +117,14 @@ colocated `*.stories.tsx`, and have keyboard support, visible focus, and SR sema
   `@layer manti.reset, manti.tokens, manti.base, manti.components, manti.motion;`
   This is deliberate — unlayered app CSS always beats layered Manti CSS without
   `!important`.
-- **Tones** are CSS-variable vocabularies (`--tone-solid`, `--tone-soft-bg`, …).
-  Tonal props accept any string; built-in tones keep TS autocomplete via
-  `MantiTone`/`MantiBuiltinTone` from `@manti-ui/tokens`.
+- **Variants** are CSS-variable vocabularies (`--variant-solid`,
+  `--variant-soft-bg`, …) selected per component via `[data-variant]`. The
+  five built-ins: `primary` (branded orange solid), `secondary` (neutral soft),
+  `tertiary` (neutral ghost / text-only), `danger` (the one semantic hue, red
+  solid), `outline` (neutral bordered). The `variant` prop accepts any string;
+  built-in variants keep TS autocomplete via `MantiVariant`/`MantiBuiltinVariant`
+  from `@manti-ui/tokens`. The treatment (solid/soft/ghost/bordered) is chosen by
+  the consuming component, not a separate prop.
 - **Component tokens (Tier 3)** are a public-but-secondary per-component escape
   hatch: `--manti-{component}-{property}` (e.g. `--manti-button-radius`), each
   defaulting to a Tier-2 semantic token, registered in `componentTokens` of
@@ -162,7 +167,7 @@ Vite/Lightning CSS setup is tuned to preserve this — these are easy to silentl
 - `PascalCase.tsx` components, `camelCase` functions/vars, `*.stories.tsx` stories.
 - Use semantic CSS names/tokens, not raw product-specific colors. The design
   signature is sleek monochrome cool-dark panels — **no gradients, no colored
-  accent**; color comes only from semantic tones.
+  accent**; color comes only from semantic variants.
 - Conventional Commit messages (e.g. `feat(button): add loading state`). Do not
   commit `dist/`, `storybook-static/`, or cache dirs.
 

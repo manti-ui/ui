@@ -9,10 +9,10 @@ export const meta: ComponentMeta = {
       description: 'Optional label rendered above the track.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Tone of the filled track and thumb.',
+      description: 'Variant of the filled track and thumb.',
     },
     {
       name: 'value',

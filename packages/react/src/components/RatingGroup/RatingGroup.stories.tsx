@@ -10,7 +10,7 @@ const meta = {
   args: {
     label: 'Rate this recipe',
     count: 5,
-    tone: 'warning',
+    variant: 'primary',
     size: 'md',
     allowHalf: false,
     defaultValue: 3,
@@ -19,9 +19,9 @@ const meta = {
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof RatingGroup>;

@@ -6,7 +6,7 @@ export default function ClipboardBasic() {
       <Clipboard
         value="npm install @manti-ui/react"
         label="Install command"
-        tone="success"
+        variant="primary"
       />
     </div>
   );

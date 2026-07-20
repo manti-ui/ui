@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { timePicker } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -22,8 +22,8 @@ const parseTime = (input?: string) => {
 export interface TimePickerProps {
   /** Optional field label. */
   label?: ReactNode;
-  /** Selection-highlight tone. */
-  tone?: MantiTone;
+  /** Selection-highlight variant. */
+  variant?: MantiVariant;
   /** Initial value as "HH:mm" (24-hour). */
   defaultValue?: string;
   /** Called whenever the value changes; emits the formatted time string. */
@@ -41,7 +41,7 @@ export interface TimePickerProps {
 /** A time picker backed by the Zag.js time-picker machine. */
 export function TimePicker({
   label,
-  tone = 'primary',
+  variant = 'primary',
   defaultValue,
   onValueChange,
   placement = 'bottom-start',
@@ -119,7 +119,7 @@ export function TimePicker({
   };
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
         <input {...api.getInputProps()} />
@@ -144,7 +144,7 @@ export function TimePicker({
         </button>
       </div>
       <Portal>
-        <div {...api.getPositionerProps()} data-tone={tone}>
+        <div {...api.getPositionerProps()} data-variant={variant}>
           <div {...api.getContentProps()} ref={contentRef}>
             {renderColumn(
               'hour',

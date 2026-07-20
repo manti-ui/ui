@@ -10,7 +10,7 @@ export function NotFound() {
         to the introduction.
       </p>
       <Link to="/">
-        <Button variant="solid" tone="primary">
+        <Button variant="primary">
           Back to home
         </Button>
       </Link>

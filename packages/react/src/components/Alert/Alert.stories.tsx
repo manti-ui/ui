@@ -2,6 +2,14 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert } from './Alert';
 
+const variants = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'danger',
+  'outline',
+] as const;
+
 const InfoIcon = (
   <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden>
     <circle
@@ -28,18 +36,13 @@ const meta = {
   tags: ['autodocs'],
   parameters: { layout: 'padded' },
   args: {
-    tone: 'info',
-    variant: 'soft',
+    variant: 'secondary',
     title: 'Dough is resting',
     children: 'Give it 30 minutes before you start rolling.',
     icon: InfoIcon,
   },
   argTypes: {
-    tone: {
-      control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
-    },
-    variant: { control: 'inline-radio', options: ['soft', 'solid'] },
+    variant: { control: 'select', options: variants },
   },
 } satisfies Meta<typeof Alert>;
 
@@ -48,21 +51,21 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
-export const Tones: Story = {
+export const Variants: Story = {
   render: (args) => (
     <div style={{ display: 'grid', gap: '0.75rem', maxWidth: 520 }}>
-      {(['success', 'warning', 'danger', 'info'] as const).map((tone) => (
-        <Alert {...args} key={tone} tone={tone} title={`${tone} message`}>
-          A smooth, tonal status message with a calm icon.
+      {(['primary', 'secondary', 'tertiary', 'danger', 'outline'] as const).map((variant) => (
+        <Alert
+          {...args}
+          key={variant}
+          variant={variant}
+          title={`${variant} message`}
+        >
+          A smooth status message with a calm icon.
         </Alert>
       ))}
     </div>
   ),
-};
-
-export const Solid: Story = {
-  args: { variant: 'solid', tone: 'success' },
-  render: (args) => <div style={{ maxWidth: 520 }}>{<Alert {...args} />}</div>,
 };
 
 export const Dismissible: Story = {

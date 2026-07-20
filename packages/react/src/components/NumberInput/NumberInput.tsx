@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { numberInput } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -11,8 +11,8 @@ export interface NumberInputProps {
   label?: ReactNode;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
-  /** Focus-ring tone. */
-  tone?: MantiTone;
+  /** Focus-ring variant. */
+  variant?: MantiVariant;
   /** Controlled value (string, mirroring the input). */
   value?: string;
   /** Initial value for uncontrolled usage. */
@@ -42,7 +42,7 @@ export interface NumberInputProps {
 export function NumberInput({
   label,
   size = 'md',
-  tone = 'primary',
+  variant = 'primary',
   value,
   defaultValue,
   onValueChange,
@@ -83,7 +83,7 @@ export function NumberInput({
     <div
       {...api.getRootProps()}
       data-size={size}
-      data-tone={tone}
+      data-variant={variant}
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}

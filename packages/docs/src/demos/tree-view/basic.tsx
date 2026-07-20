@@ -87,7 +87,7 @@ export default function TreeViewBasic() {
     <TreeView
       items={tree}
       label="Cookbook"
-      tone="primary"
+      variant="primary"
       selectionMode="single"
       defaultExpandedValue={['recipes', 'steamed']}
       icon={(_node, { isBranch, expanded }) =>

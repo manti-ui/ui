@@ -14,10 +14,10 @@ export const meta: ComponentMeta = {
       description: 'Optional label rendered above the field.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
-      default: `'success'`,
-      description: 'Tone of the copied indicator.',
+      name: 'variant',
+      type: 'MantiVariant',
+      default: `'primary'`,
+      description: 'Variant of the copied indicator.',
     },
     {
       name: 'timeout',

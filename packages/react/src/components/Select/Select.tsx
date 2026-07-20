@@ -1,7 +1,7 @@
 import { useId, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { select } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -21,8 +21,8 @@ export interface SelectProps {
   label?: ReactNode;
   /** Text shown when nothing is selected. */
   placeholder?: string;
-  /** Selected-item tone. */
-  tone?: MantiTone;
+  /** Selected-item variant. */
+  variant?: MantiVariant;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
   /** Allow selecting more than one option. */
@@ -64,7 +64,7 @@ export function Select({
   items,
   label,
   placeholder = 'Select…',
-  tone = 'primary',
+  variant = 'primary',
   size = 'md',
   multiple,
   value,
@@ -115,7 +115,7 @@ export function Select({
     <div
       {...api.getRootProps()}
       data-size={size}
-      data-tone={tone}
+      data-variant={variant}
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
@@ -143,7 +143,7 @@ export function Select({
       </div>
       {api.open && (
         <Portal>
-          <div {...api.getPositionerProps()}>
+          <div {...api.getPositionerProps()} data-variant={variant}>
             <ScrollArea focusable={false}>
               <ul {...api.getContentProps()}>
                 {items.map((item) => (

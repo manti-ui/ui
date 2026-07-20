@@ -12,7 +12,7 @@ export default function RadioGroupBasic() {
       label="Cooking method"
       items={items}
       defaultValue="boiled"
-      tone="primary"
+      variant="primary"
     />
   );
 }

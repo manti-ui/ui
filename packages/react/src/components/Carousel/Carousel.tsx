@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { carousel } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -9,8 +9,8 @@ import { cx } from '../../internal/props';
 export interface CarouselProps {
   /** Slides to render. */
   slides: ReactNode[];
-  /** Active-indicator tone. */
-  tone?: MantiTone;
+  /** Active-indicator variant. */
+  variant?: MantiVariant;
   /** Slides visible per page. */
   slidesPerPage?: number;
   /** Layout direction. */
@@ -48,7 +48,7 @@ const arrow = (d: string) => (
 /** A slide carousel backed by the Zag.js carousel machine. */
 export function Carousel({
   slides,
-  tone = 'primary',
+  variant = 'primary',
   slidesPerPage = 1,
   orientation = 'horizontal',
   mouseDrag = true,
@@ -80,7 +80,7 @@ export function Carousel({
   const api = carousel.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       <div {...api.getItemGroupProps()} data-draggable={mouseDrag || undefined}>
         {slides.map((slide, index) => (
           <div key={index} {...api.getItemProps({ index })}>

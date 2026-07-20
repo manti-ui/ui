@@ -1,6 +1,6 @@
 /**
- * Alert — an inline, tonal message with an icon, title, description, and an
- * optional dismiss action. Defaults to the soft surface of its tone.
+ * Alert — an inline message with an icon, title, description, and an optional
+ * dismiss action. Always a soft panel; the color variant sets the hue.
  */
 @layer manti.components {
   [data-scope='alert'][data-part='root'] {
@@ -17,33 +17,20 @@
     align-items: flex-start;
     gap: var(--manti-alert-gap);
     padding: var(--manti-alert-padding-y) var(--manti-alert-padding-x);
-    background: color-mix(in oklab, var(--tone-soft-bg) 78%, transparent);
+    background: color-mix(in oklab, var(--variant-soft-bg) 78%, transparent);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--tone-border);
+    border: 1px solid var(--variant-border);
     border-radius: var(--manti-alert-radius);
-    color: var(--tone-soft-text);
+    color: var(--variant-soft-text);
     box-shadow: var(--manti-panel-rim);
-
-    &[data-variant='solid'] {
-      background: var(--tone-solid);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      border-color: transparent;
-      color: var(--tone-on-solid);
-      box-shadow: none;
-    }
   }
 
   @supports not (
     (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
   ) {
     [data-scope='alert'][data-part='root'] {
-      background: var(--tone-soft-bg);
-    }
-
-    [data-scope='alert'][data-part='root'][data-variant='solid'] {
-      background: var(--tone-solid);
+      background: var(--variant-soft-bg);
     }
   }
 
@@ -54,12 +41,7 @@
     width: var(--manti-alert-icon-size);
     height: var(--manti-alert-icon-size);
     margin-top: 0.125rem;
-    color: var(--tone-text);
-  }
-
-  [data-scope='alert'][data-part='root'][data-variant='solid']
-    [data-part='icon'] {
-    color: inherit;
+    color: var(--variant-text);
   }
 
   [data-scope='alert'][data-part='content'] {
@@ -103,7 +85,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: 1px;
     }
   }

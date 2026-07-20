@@ -54,14 +54,14 @@
       width: 0.5rem;
       height: 0.5rem;
       border-radius: var(--manti-radius-full);
-      background: var(--tone-on-solid);
+      background: var(--variant-on-solid);
       transform: scale(0);
       transition: transform var(--manti-duration-base) var(--manti-ease-smooth);
     }
 
     &[data-state='checked'] {
-      background: var(--tone-solid);
-      border-color: var(--tone-solid);
+      background: var(--variant-solid);
+      border-color: var(--variant-solid);
 
       &::after {
         transform: scale(1);
@@ -71,7 +71,7 @@
 
   [data-scope='radio-group'][data-part='item']:has(input:focus-visible)
     [data-part='item-control'] {
-    outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+    outline: var(--manti-focus-ring-width) solid var(--variant-ring);
     outline-offset: var(--manti-focus-ring-offset);
   }
 

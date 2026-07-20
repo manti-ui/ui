@@ -7,7 +7,7 @@ export default function PaginationManyPages() {
       pageSize={20}
       defaultPage={12}
       siblingCount={2}
-      tone="primary"
+      variant="primary"
     />
   );
 }

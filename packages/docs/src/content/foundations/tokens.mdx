@@ -3,7 +3,7 @@ title: Design tokens
 slug: /foundations/tokens
 group: Foundations
 order: 23
-description: The three-tier token contract — primitive ramps, semantic roles and tones, and per-component tokens.
+description: The three-tier token contract — primitive ramps, semantic roles and variants, and per-component tokens.
 ---
 
 # Design tokens
@@ -21,7 +21,7 @@ motion. These are stable and theme-independent, and you rarely consume them
 directly. The primitive ramps and scale values are **generated** into
 `packages/styles/src/tokens.css` by `pnpm gen:tokens` — never hand-edited.
 
-## Tier 2 — semantic roles and tones
+## Tier 2 — semantic roles and variants
 
 Meaning layered on top of the primitives. **Roles** describe surfaces and text —
 `--manti-bg`, `--manti-surface`, `--manti-surface-raised`, `--manti-border`,
@@ -29,8 +29,8 @@ Meaning layered on top of the primitives. **Roles** describe surfaces and text �
 `light-dark()` function, so the theme follows `color-scheme` (or a manual
 `data-theme`) automatically.
 
-**Tones** are the `--tone-*` vocabulary selected per component via `[data-tone]`
-— covered in [Color & tones](/foundations/color-and-tones).
+**Variants** are the `--variant-*` vocabulary selected per component via
+`[data-variant]` — covered in [Color & variants](/foundations/color-and-tones).
 
 ## Tier 3 — component tokens
 
