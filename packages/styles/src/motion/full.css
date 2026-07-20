@@ -22,8 +22,9 @@
       box-shadow var(--manti-duration-base) var(--manti-ease-smooth),
       transform var(--manti-duration-base) var(--manti-ease-spring);
 
-    &[data-variant='solid']:hover,
-    &[data-variant='soft']:hover {
+    /* Lift the higher-emphasis rungs (solid + secondary soft); the tertiary
+       ghost stays flat. */
+    &:not([data-variant='tertiary']):hover {
       transform: translateY(-1px);
     }
 
@@ -84,8 +85,8 @@
       box-shadow var(--manti-duration-base) var(--manti-ease-spring);
   }
 
-  /* Card — interactive cards lift higher and cast a tonal glow. Cards carry no
-     tone, so the glow falls back to the signature orange. */
+  /* Card — interactive cards lift higher and cast a variant glow. Cards carry no
+     variant, so the glow falls back to the signature orange. */
   [data-motion='full'] [data-scope='card'][data-part='root'] {
     transition:
       transform var(--manti-duration-base) var(--manti-ease-spring),
@@ -100,7 +101,7 @@
         0 18px 40px -16px
           color-mix(
             in oklab,
-            var(--tone-solid, var(--manti-orange-500)) 35%,
+            var(--variant-solid, var(--manti-orange-500)) 35%,
             transparent
           );
     }

@@ -9,7 +9,7 @@ const meta = {
   parameters: { layout: 'centered' },
   args: {
     label: 'Reservation date',
-    tone: 'primary',
+    variant: 'primary',
     selectionMode: 'single',
     defaultValue: ['2026-06-15'],
   },
@@ -18,9 +18,9 @@ const meta = {
       control: 'inline-radio',
       options: ['single', 'multiple', 'range'],
     },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof DatePicker>;

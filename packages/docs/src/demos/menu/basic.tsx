@@ -12,7 +12,7 @@ const items: MenuItem[] = [
 export default function MenuBasic() {
   return (
     <Menu
-      trigger={<Button variant="outline">Serve as…</Button>}
+      trigger={<Button variant="tertiary">Serve as…</Button>}
       items={items}
     />
   );

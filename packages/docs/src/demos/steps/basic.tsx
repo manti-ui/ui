@@ -9,7 +9,7 @@ const items = [
 export default function StepsBasic() {
   return (
     <div style={{ width: '100%' }}>
-      <Steps items={items} tone="primary" orientation="horizontal" />
+      <Steps items={items} variant="primary" orientation="horizontal" />
     </div>
   );
 }

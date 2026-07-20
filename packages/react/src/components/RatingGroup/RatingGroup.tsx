@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { ratingGroup } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -11,8 +11,8 @@ export interface RatingGroupProps {
   count?: number;
   /** Optional label. */
   label?: ReactNode;
-  /** Filled-icon tone. */
-  tone?: MantiTone;
+  /** Filled-icon variant. */
+  variant?: MantiVariant;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
   /** Allow half-star precision. */
@@ -41,7 +41,7 @@ const star = (
 export function RatingGroup({
   count = 5,
   label,
-  tone = 'warning',
+  variant = 'primary',
   size = 'md',
   allowHalf,
   value,
@@ -73,7 +73,7 @@ export function RatingGroup({
     <div
       {...api.getRootProps()}
       data-size={size}
-      data-tone={tone}
+      data-variant={variant}
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}

@@ -15,7 +15,7 @@
 
 /* ═══════════════════════════════════════════════════════════════════════════
  * 1) PRIMITIVE RAMP — markanın ham paletini değiştir
- *    (tone'lar bu ramp'lardan beslendiği için renk her yere yayılır)
+ *    (variant'lar bu ramp'lardan beslendiği için renk her yere yayılır)
  * ═══════════════════════════════════════════════════════════════════════════ */
 :root {
   /* "orange" Manti'nin primary ramp'i. Kendi marka renginle ez. */
@@ -55,43 +55,43 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * 3) TONE — bir tone'un anlamını yeniden tanımla veya YENİ tone ekle
- *    Renk Manti'de yalnızca tone'dan gelir; markanı burada da görmek istersin.
+ * 3) VARIANT — bir variant'un anlamını yeniden tanımla veya YENİ variant ekle
+ *    Renk Manti'de yalnızca variant'dan gelir; markanı burada da görmek istersin.
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-/* (a) Mevcut "primary" tone'unu doğrudan kendi marka rengine sabitle.
+/* (a) Mevcut "primary" variant'unu doğrudan kendi marka rengine sabitle.
  *     (Primitive ramp'i 1. adımda ezdiysen bu çoğu zaman gereksiz; ince ayar
  *     veya ramp'tan bağımsız özel bir renk istiyorsan kullan.) */
-[data-tone='primary'] {
-  --tone-solid: light-dark(#5b3df5, #6d52ff);
-  --tone-solid-hover: light-dark(#4f33e0, #7e66ff);
-  --tone-solid-active: light-dark(#4329c4, #8f7aff);
-  --tone-on-solid: #ffffff;
-  --tone-soft-bg: light-dark(#eeeafd, #211c46);
-  --tone-soft-text: light-dark(#4329c4, #c4b8f8);
-  --tone-border: light-dark(#c9bdf8, #3a2f73);
-  --tone-text: light-dark(#4329c4, #b3a3f6);
-  --tone-ring: #6d52ff;
+[data-variant='primary'] {
+  --variant-solid: light-dark(#5b3df5, #6d52ff);
+  --variant-solid-hover: light-dark(#4f33e0, #7e66ff);
+  --variant-solid-active: light-dark(#4329c4, #8f7aff);
+  --variant-on-solid: #ffffff;
+  --variant-soft-bg: light-dark(#eeeafd, #211c46);
+  --variant-soft-text: light-dark(#4329c4, #c4b8f8);
+  --variant-border: light-dark(#c9bdf8, #3a2f73);
+  --variant-text: light-dark(#4329c4, #b3a3f6);
+  --variant-ring: #6d52ff;
 }
 
-/* (b) Tamamen yeni bir tone: <Button tone="brand"> ile kullanılır.
+/* (b) Tamamen yeni bir variant: <Button variant="brand"> ile kullanılır.
  *     Tonal prop'lar herhangi bir string kabul eder. */
-[data-tone='brand'] {
-  --tone-solid: light-dark(#0d9488, #14b8a6);
-  --tone-solid-hover: light-dark(#0b8076, #2dd4bf);
-  --tone-solid-active: light-dark(#096a62, #5eead4);
-  --tone-on-solid: #ffffff;
-  --tone-soft-bg: light-dark(#d6f5f0, #0b2e2a);
-  --tone-soft-text: light-dark(#0b6a60, #99f6e4);
-  --tone-border: light-dark(#9fe5db, #155e54);
-  --tone-text: light-dark(#0b6a60, #5eead4);
-  --tone-ring: #14b8a6;
+[data-variant='brand'] {
+  --variant-solid: light-dark(#0d9488, #14b8a6);
+  --variant-solid-hover: light-dark(#0b8076, #2dd4bf);
+  --variant-solid-active: light-dark(#096a62, #5eead4);
+  --variant-on-solid: #ffffff;
+  --variant-soft-bg: light-dark(#d6f5f0, #0b2e2a);
+  --variant-soft-text: light-dark(#0b6a60, #99f6e4);
+  --variant-border: light-dark(#9fe5db, #155e54);
+  --variant-text: light-dark(#0b6a60, #5eead4);
+  --variant-ring: #14b8a6;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
  * 4) NOKTA ATIŞI override'lar — anatomy selector'a layer'sız yaz
  *    Token'la ifade edemediğin tek bileşene özel görsel kararlar burada.
- *    Public kontrat: data-scope / data-part / data-variant / data-tone / data-size
+ *    Public kontrat: data-scope / data-part / data-variant / data-variant / data-size
  *    + durum attribute'leri (data-state, data-loading, disabled...).
  *    Asla --_radius gibi private knob'lara dokunma — onlar semver garantisi dışı.
  * ═══════════════════════════════════════════════════════════════════════════ */

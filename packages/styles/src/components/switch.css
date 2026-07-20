@@ -1,6 +1,6 @@
 /**
  * Switch — a smooth on/off control backed by the `@manti-ui/folds` Zag.js
- * switch machine. The thumb glides; the track fills with the active tone. State
+ * switch machine. The thumb glides; the track fills with the active variant. State
  * comes from the machine (`data-state` on the control); focus is detected on the
  * real hidden input so keyboard focus always rings.
  */
@@ -47,7 +47,7 @@
       var(--manti-ease-smooth);
 
     &[data-state='checked'] {
-      background: var(--tone-solid);
+      background: var(--variant-solid);
     }
     &:active [data-part='thumb'] {
       transition: var(--manti-duration-base);
@@ -79,7 +79,7 @@
 
   [data-scope='switch'][data-part='root']:has(input:focus-visible)
     [data-part='control'] {
-    outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+    outline: var(--manti-focus-ring-width) solid var(--variant-ring);
     outline-offset: var(--manti-focus-ring-offset);
   }
 

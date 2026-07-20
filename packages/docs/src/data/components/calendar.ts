@@ -4,10 +4,10 @@ export const meta: ComponentMeta = {
   scope: 'calendar',
   props: [
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Tone for the today chip and the selection highlight.',
+      description: 'Variant for the today chip and the selection highlight.',
     },
     {
       name: 'selectionMode',
@@ -84,7 +84,7 @@ export const meta: ComponentMeta = {
     },
   ],
   anatomy: [
-    { part: 'root', description: 'The calendar wrapper; carries data-tone.' },
+    { part: 'root', description: 'The calendar wrapper; carries data-variant.' },
     {
       part: 'toolbar',
       description: 'The Today / prev / next / month-label row above the grid.',

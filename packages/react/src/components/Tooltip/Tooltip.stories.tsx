@@ -10,7 +10,7 @@ const meta = {
   parameters: { layout: 'centered' },
   args: {
     content: 'Backed by a Zag.js machine',
-    children: <Button variant="soft">Hover or focus me</Button>,
+    children: <Button variant="secondary">Hover or focus me</Button>,
   },
 } satisfies Meta<typeof Tooltip>;
 

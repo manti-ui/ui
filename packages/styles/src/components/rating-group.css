@@ -1,7 +1,7 @@
 /**
  * Rating Group — a star rating backed by the Zag.js rating-group machine. Items
  * read as muted outlines until highlighted/checked, when they take the active
- * tone. Half state clips the icon to 50% width.
+ * variant. Half state clips the icon to 50% width.
  */
 @layer manti.components {
   [data-scope='rating-group'][data-part='root'] {
@@ -36,7 +36,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
       border-radius: var(--manti-radius-xs);
     }
@@ -69,9 +69,9 @@
   }
 
   /* Filled overlay: hidden until the item is highlighted, then revealed in the
-     active tone. The last highlighted item may be half-filled. */
+     active variant. The last highlighted item may be half-filled. */
   [data-scope='rating-group'][data-part='item'] [data-part='star-fill'] {
-    color: var(--tone-solid);
+    color: var(--variant-solid);
     clip-path: inset(0 100% 0 0);
     transition: clip-path var(--manti-duration-fast) var(--manti-ease-smooth);
   }

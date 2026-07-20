@@ -41,15 +41,7 @@
     }
 
     &:focus-within {
-      border-color: var(--tone-ring, var(--manti-focus-ring));
-      box-shadow:
-        var(--manti-panel-rim),
-        0 0 0 3px
-          color-mix(
-            in oklab,
-            var(--tone-ring, var(--manti-focus-ring)) 30%,
-            transparent
-          );
+      border-color: var(--variant-ring, var(--manti-focus-ring));
     }
   }
 
@@ -113,8 +105,8 @@
       color var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
-      background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
-      color: var(--tone-soft-text);
+      background: var(--variant-fill);
+      color: var(--variant-soft-text);
     }
 
     &[data-disabled] {

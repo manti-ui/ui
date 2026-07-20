@@ -37,9 +37,9 @@ const meta = {
       control: 'inline-radio',
       options: ['horizontal', 'vertical'],
     },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Carousel>;

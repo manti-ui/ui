@@ -50,7 +50,7 @@
       var(--manti-ease-soft);
 
     &:hover {
-      background: color-mix(in oklab, var(--manti-text) 7%, transparent);
+      background: var(--manti-fill);
     }
 
     &:focus-visible {

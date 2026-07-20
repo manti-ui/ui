@@ -9,13 +9,13 @@ const meta = {
   parameters: { layout: 'centered' },
   args: {
     label: 'Pickup time',
-    tone: 'primary',
+    variant: 'primary',
     defaultValue: '12:30',
   },
   argTypes: {
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof TimePicker>;

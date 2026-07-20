@@ -21,10 +21,10 @@ export const meta: ComponentMeta = {
       description: 'Input placeholder text.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Selected-item tone.',
+      description: 'Selected-item variant.',
     },
     {
       name: 'size',
@@ -82,7 +82,7 @@ export const meta: ComponentMeta = {
   anatomy: [
     {
       part: 'root',
-      description: 'The field wrapper; carries data-size and data-tone.',
+      description: 'The field wrapper; carries data-size and data-variant.',
     },
     { part: 'label', description: 'The field label.' },
     { part: 'control', description: 'Wraps the input and toggle button.' },

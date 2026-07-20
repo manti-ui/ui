@@ -25,8 +25,7 @@ export function CodeBlock(props: ComponentPropsWithoutRef<'pre'>) {
     <div className="docs-codeblock">
       <div className="docs-copy">
         <Button
-          variant="soft"
-          tone="neutral"
+          variant="secondary"
           size="sm"
           onClick={copy}
           aria-label="Copy code"

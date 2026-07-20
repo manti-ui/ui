@@ -14,7 +14,7 @@ export const DEFAULT_TITLE =
   'Manti UI — a framework-agnostic design system on Zag.js';
 
 export const DEFAULT_DESCRIPTION =
-  'Manti UI is a framework-agnostic design system built on Zag.js behavior machines: sleek monochrome panels, semantic tones, and a token-first customization contract.';
+  'Manti UI is a framework-agnostic design system built on Zag.js behavior machines: sleek monochrome panels, semantic variants, and a token-first customization contract.';
 
 /**
  * Social share image (absolute URL, 1200×630). PNG, not SVG — Twitter/Facebook

@@ -14,7 +14,7 @@ export default function CardBasic() {
           }}
         >
           <Card.Title>Kayseri Mantısı</Card.Title>
-          <Badge tone="success" dot>
+          <Badge variant="primary" dot>
             Fresh
           </Badge>
         </div>
@@ -28,7 +28,7 @@ export default function CardBasic() {
       </Card.Body>
       <Card.Footer>
         <Button size="sm">Cook now</Button>
-        <Button size="sm" variant="ghost" tone="neutral">
+        <Button size="sm" variant="tertiary">
           Save
         </Button>
       </Card.Footer>

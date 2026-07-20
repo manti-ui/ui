@@ -77,7 +77,7 @@
   }
 
   /* Text selection picks up the primary accent — the one deliberate spot of
-     brand colour outside the semantic tones. Mirrors how the primary tone
+     brand colour outside the semantic variants. Mirrors how the primary variant
      resolves its solid (orange-600 in light, orange-500 in dark). */
   ::selection {
     background: var(--manti-selection-bg);

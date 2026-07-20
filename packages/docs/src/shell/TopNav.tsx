@@ -36,7 +36,7 @@ export function TopNav() {
         className="docs-version"
         aria-label={`Version ${MANTI_VERSION} — what's new`}
       >
-        <Badge tone="primary" variant="soft" size="sm">
+        <Badge variant="primary" size="sm">
           v{MANTI_VERSION}
         </Badge>
       </Link>
@@ -53,8 +53,7 @@ export function TopNav() {
 
       <div className="docs-nav-actions">
         <Button
-          variant="soft"
-          tone="neutral"
+          variant="secondary"
           size="sm"
           leadingIcon={SearchIcon}
           onClick={() => setOpen(true)}
@@ -79,8 +78,7 @@ export function TopNav() {
         </a>
         <Button
           iconOnly
-          variant="ghost"
-          tone="primary"
+          variant="tertiary"
           aria-label="Toggle dark theme"
           size="sm"
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -89,8 +87,7 @@ export function TopNav() {
         </Button>
         <Button
           className="docs-nav-menu-button"
-          variant="ghost"
-          tone="neutral"
+          variant="tertiary"
           size="sm"
           iconOnly
           aria-label="Open menu"

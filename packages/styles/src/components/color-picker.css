@@ -42,7 +42,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
 
@@ -156,7 +156,7 @@
 
   /* Custom row: the format tabs on the left, the eyedropper Button on the
      right. The tabs only drive the selection — their panels stay empty and
-     hidden; the full-width Clipboard below the row shows the value. */
+     hidden; the editable value field below the row shows and sets the value. */
   [data-scope='color-picker'][data-part='content'] [data-part='copy-row'] {
     display: flex;
     align-items: center;
@@ -168,15 +168,25 @@
     }
   }
 
-  /* The copy area embeds a Clipboard showing the color in the selected format.
-     The panel is narrow and the rgba/hsla strings are long, so compact the
-     field via the Clipboard's component tokens (its public Tier-3 override
-     surface). */
+  /* Editable value field: a Manti Input (type or paste any CSS color — hex,
+     rgb(a), hsl(a)) alongside a copy button. The Input carries the shared field
+     shell, so its border/focus ring match every other control. */
+  [data-scope='color-picker'][data-part='content'] [data-part='value-field'] {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+  }
+  /* The Input grows to fill the row; color codes read in monospace. */
   [data-scope='color-picker'][data-part='content']
-    [data-scope='clipboard'][data-part='control'] {
-    --manti-clipboard-height: var(--manti-control-height-sm);
-    --manti-clipboard-font-size: var(--manti-text-xs);
-    --manti-clipboard-padding-x: var(--manti-space-2);
-    --manti-clipboard-trigger-width: var(--manti-control-height-sm);
+    [data-part='value-field']
+    [data-scope='field'][data-part='root'] {
+    flex: 1;
+    min-width: 0;
+  }
+  [data-scope='color-picker'][data-part='content']
+    [data-part='value-field']
+    [data-scope='field'][data-part='input'] {
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-text-xs);
   }
 }

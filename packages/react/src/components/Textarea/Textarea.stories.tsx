@@ -11,14 +11,14 @@ const meta = {
     label: 'Notes',
     placeholder: 'Add preparation notes',
     size: 'md',
-    tone: 'primary',
+    variant: 'primary',
     rows: 4,
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
     resize: { control: 'inline-radio', options: ['none', 'vertical'] },
   },

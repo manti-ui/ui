@@ -4,7 +4,7 @@ export default function NumberInputBasic() {
   return (
     <NumberInput
       label="Servings"
-      tone="primary"
+      variant="primary"
       defaultValue="12"
       min={0}
       max={99}

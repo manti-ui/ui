@@ -9,7 +9,7 @@ export default function InputPassword() {
         placeholder="••••••••"
         hint="Use at least 8 characters. Toggle Caps Lock to see the warning."
         autoComplete="new-password"
-        tone="primary"
+        variant="primary"
       />
     </div>
   );

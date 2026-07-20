@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { slider } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -12,8 +12,8 @@ const toArray = (value: number | number[] | undefined): number[] | undefined =>
 export interface SliderProps {
   /** Optional label. */
   label?: ReactNode;
-  /** Filled-track tone. */
-  tone?: MantiTone;
+  /** Filled-track variant. */
+  variant?: MantiVariant;
   /** Controlled value. Pass an array for a range slider. */
   value?: number | number[];
   /** Initial value for uncontrolled usage. */
@@ -42,7 +42,7 @@ export interface SliderProps {
 /** A draggable value selector backed by the Zag.js slider machine. */
 export function Slider({
   label,
-  tone = 'primary',
+  variant = 'primary',
   value,
   defaultValue,
   onValueChange,
@@ -83,7 +83,7 @@ export function Slider({
   const api = slider.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {(label != null || showValue) && (
         <div data-part="header">
           {label != null && <label {...api.getLabelProps()}>{label}</label>}

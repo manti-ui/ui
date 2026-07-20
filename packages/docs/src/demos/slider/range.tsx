@@ -12,13 +12,13 @@ export default function SliderRange() {
     >
       <Slider
         label="Price range"
-        tone="primary"
+        variant="primary"
         defaultValue={[25, 75]}
         showValue
       />
       <Slider
         label="Portion"
-        tone="primary"
+        variant="primary"
         defaultValue={50}
         marks={[0, 25, 50, 75, 100]}
         showValue

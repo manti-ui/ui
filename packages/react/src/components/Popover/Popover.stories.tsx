@@ -12,7 +12,7 @@ const meta = {
     title: 'Dough resting',
     placement: 'bottom',
     showArrow: true,
-    trigger: <Button variant="soft">Tips</Button>,
+    trigger: <Button variant="secondary">Tips</Button>,
     children:
       'Let the dough rest, covered, for 30 minutes. It relaxes the gluten so you can roll it paper-thin without it springing back.',
   },

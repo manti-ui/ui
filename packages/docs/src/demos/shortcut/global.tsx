@@ -19,7 +19,7 @@ export default function ShortcutGlobal() {
       }}
     >
       <Button onClick={() => setOpen(true)}>Open dialog</Button>
-      <Badge variant="outline" style={{ fontFamily: 'var(--manti-font-mono)' }}>
+      <Badge variant="tertiary" style={{ fontFamily: 'var(--manti-font-mono)' }}>
         mod+i
       </Badge>
       <Dialog

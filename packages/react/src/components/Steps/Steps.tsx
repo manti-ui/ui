@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { steps } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -15,8 +15,8 @@ export interface StepItem {
 export interface StepsProps {
   /** The steps. */
   items: StepItem[];
-  /** Active-step tone. */
-  tone?: MantiTone;
+  /** Active-step variant. */
+  variant?: MantiVariant;
   /** Layout direction. */
   orientation?: 'horizontal' | 'vertical';
   /** Require steps to be completed in order. */
@@ -36,7 +36,7 @@ export interface StepsProps {
 /** A step-by-step flow backed by the Zag.js steps machine. */
 export function Steps({
   items,
-  tone = 'primary',
+  variant = 'primary',
   orientation = 'horizontal',
   linear,
   step,
@@ -61,7 +61,7 @@ export function Steps({
   const api = steps.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       <div {...api.getListProps()}>
         {items.map((item, index) => (
           <div key={index} {...api.getItemProps({ index })}>

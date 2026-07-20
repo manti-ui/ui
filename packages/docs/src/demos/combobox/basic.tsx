@@ -17,7 +17,7 @@ export default function ComboboxBasic() {
         items={spices}
         label="Spice"
         placeholder="Search spices…"
-        tone="primary"
+        variant="primary"
       />
     </div>
   );

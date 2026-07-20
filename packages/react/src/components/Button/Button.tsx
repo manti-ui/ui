@@ -1,17 +1,18 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 
 import { cx, dataBool } from '../../internal/props';
 import { Spinner } from '../Spinner/Spinner';
 
-export type ButtonVariant = 'solid' | 'soft' | 'outline' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Visual emphasis. */
-  variant?: ButtonVariant;
-  /** Semantic tone. */
-  tone?: MantiTone;
+  /**
+   * Color variant — drives hue and emphasis (primary solid → secondary soft →
+   * tertiary ghost, plus danger and outline). The Button-only `link` value
+   * renders as an inline text link.
+   */
+  variant?: MantiVariant | 'link';
   /** Control size. */
   size?: ButtonSize;
   /** Show a spinner and block interaction while preserving layout width. */
@@ -27,12 +28,12 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 /**
- * The workhorse action. Four variants across every tone, three sizes, a smooth
+ * The workhorse action. Seven color variants forming an emphasis ladder
+ * (primary solid → secondary soft → tertiary ghost), three sizes, a smooth
  * press, and a loading state that keeps the button from collapsing.
  */
 export function Button({
-  variant = 'solid',
-  tone = 'neutral',
+  variant = 'primary',
   size = 'md',
   loading = false,
   fullWidth,
@@ -49,7 +50,6 @@ export function Button({
     <button
       type={type}
       data-variant={variant}
-      data-tone={tone}
       data-size={size}
       data-loading={dataBool(loading)}
       data-full-width={dataBool(fullWidth)}

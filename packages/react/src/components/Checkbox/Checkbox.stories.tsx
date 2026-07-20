@@ -10,16 +10,16 @@ const meta = {
   args: {
     children: 'Extra sumac',
     size: 'md',
-    tone: 'primary',
+    variant: 'primary',
     defaultChecked: true,
     indeterminate: false,
     disabled: false,
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Checkbox>;

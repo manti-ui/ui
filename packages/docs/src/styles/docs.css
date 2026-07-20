@@ -11,7 +11,7 @@
  * Declared in its own cascade layer, after the Manti layers (this file is imported
  * after `@manti-ui/styles/index.css` in main.tsx), so chrome rules win at equal
  * specificity without `!important`. Per repo Rule 2 every visual value comes from
- * `--manti-*` / `--tone-*` tokens; the only literals are structural layout track
+ * `--manti-*` / `--variant-*` tokens; the only literals are structural layout track
  * sizes, declared once below as named `--docs-*` knobs, and 1px hairline borders.
  */
 @layer docs {
@@ -281,8 +281,8 @@
     margin-inline-start: auto;
     padding: 0 var(--manti-space-2);
     border-radius: var(--manti-radius-full);
-    background: var(--tone-soft-bg);
-    color: var(--tone-soft-text);
+    background: var(--variant-soft-bg);
+    color: var(--variant-soft-text);
     font-size: var(--manti-text-xs);
     font-weight: var(--manti-weight-semibold);
     letter-spacing: 0.02em;
@@ -328,6 +328,68 @@
     border-inline-start-color: var(--manti-text);
   }
 
+  /* ---- Palette playground (right rail) ---- */
+  .docs-theme-playground {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    margin-top: var(--manti-space-6);
+    padding-top: var(--manti-space-5);
+    border-top: 1px solid var(--manti-border);
+  }
+  /* First rail block on TOC-less pages — drop the divider/offset. */
+  .docs-toc > .docs-theme-playground:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .docs-theme-playground-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-2);
+    min-height: var(--manti-control-height-sm);
+  }
+  .docs-theme-playground .docs-toc-label {
+    margin: 0;
+  }
+  .docs-theme-playground-hint {
+    margin: 0;
+    font-size: var(--manti-text-xs);
+    line-height: var(--manti-leading-normal);
+    color: var(--manti-text-muted);
+  }
+  .docs-theme-swatches {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+  }
+  .docs-theme-swatch [data-scope='color-picker'][data-part='root'] {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-2);
+  }
+  .docs-theme-swatch [data-scope='color-picker'][data-part='label'] {
+    margin: 0;
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+  /* Compact the swatch-only trigger for the narrow rail — hug the swatch instead
+     of the full control height. */
+  .docs-theme-swatch [data-scope='color-picker'][data-part='trigger'] {
+    min-height: 0;
+    padding: var(--manti-space-1);
+  }
+  .docs-theme-swatch [data-scope='color-picker'] [data-part='value-swatch'] {
+    width: var(--manti-space-5);
+    height: var(--manti-space-5);
+  }
   /* ---- Prose ---- */
   .docs-prose {
     max-width: var(--docs-prose-max);
@@ -572,11 +634,21 @@
     flex-wrap: wrap;
     gap: var(--manti-space-4);
     align-items: center;
+    /* Every demo preview is horizontally centered by default so the gallery
+       reads consistently. The `center` prop / `.is-center` is now redundant but
+       kept for backward compatibility. */
+    justify-content: center;
     padding: var(--manti-space-8);
     background: var(--manti-bg-subtle);
   }
   .docs-demo-canvas.is-center {
     justify-content: center;
+  }
+  /* react-live's <LivePreview> wraps the demo output in a div; `display: contents`
+     dissolves that wrapper so the demo's elements are direct flex children of the
+     canvas — the open (code-shown) preview then matches the closed one exactly. */
+  .docs-live-preview {
+    display: contents;
   }
   /* Demos whose inline dropdown opens downward (e.g. NavigationMenu) top-align
      the preview and reserve room below, so the open panel stays fully visible
@@ -677,7 +749,7 @@
     font-family: var(--manti-font-mono);
   }
 
-  .docs-tone-grid {
+  .docs-variant-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
     gap: var(--manti-space-4);

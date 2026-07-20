@@ -8,11 +8,11 @@ const meta = {
   component: Toggle,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
-  args: { tone: 'primary', defaultPressed: false, disabled: false },
+  args: { variant: 'primary', defaultPressed: false, disabled: false },
   argTypes: {
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Toggle>;

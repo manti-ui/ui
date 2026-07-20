@@ -5,7 +5,7 @@ export default function TagsInputBasic() {
     <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 7)' }}>
       <TagsInput
         label="Fillings"
-        tone="primary"
+        variant="primary"
         defaultValue={['lamb', 'onion', 'pepper']}
         placeholder="Add a filling…"
       />

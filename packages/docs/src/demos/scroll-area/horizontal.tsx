@@ -20,7 +20,7 @@ export default function ScrollAreaHorizontal() {
         }}
       >
         {Array.from({ length: 16 }, (_, i) => (
-          <Badge key={i} tone="neutral" variant="soft">
+          <Badge key={i} variant="secondary">
             Tag {i + 1}
           </Badge>
         ))}

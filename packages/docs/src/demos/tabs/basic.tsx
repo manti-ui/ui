@@ -26,7 +26,7 @@ export default function TabsBasic() {
         maxWidth: 'calc(var(--manti-space-16) * 8)',
       }}
     >
-      <Tabs items={items} tone="primary" />
+      <Tabs items={items} />
     </div>
   );
 }

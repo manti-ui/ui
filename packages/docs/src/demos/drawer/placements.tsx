@@ -17,7 +17,7 @@ export default function DrawerPlacements() {
           placement={placement}
           title={`From the ${placement}`}
           description={`This drawer slides in from the ${placement} edge.`}
-          trigger={<Button variant="outline">{placement}</Button>}
+          trigger={<Button variant="tertiary">{placement}</Button>}
         >
           A panel anchored to the {placement} edge of the viewport.
         </Drawer>

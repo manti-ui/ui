@@ -7,7 +7,7 @@ export default function PinInputBasic() {
       length={4}
       type="numeric"
       otp
-      tone="primary"
+      variant="primary"
     />
   );
 }

@@ -15,12 +15,6 @@ export const meta: ComponentMeta = {
       description: 'Optional label.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
-      default: `'primary'`,
-      description: 'Fill tone.',
-    },
-    {
       name: 'size',
       type: `'sm' | 'md' | 'lg'`,
       default: `'md'`,

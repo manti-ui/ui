@@ -6,7 +6,7 @@ export default function AlertDismissible() {
 
   if (!open) {
     return (
-      <Button size="sm" variant="soft" onClick={() => setOpen(true)}>
+      <Button size="sm" variant="secondary" onClick={() => setOpen(true)}>
         Show alert
       </Button>
     );
@@ -14,7 +14,7 @@ export default function AlertDismissible() {
 
   return (
     <Alert
-      tone="info"
+      variant="secondary"
       title="Dough is resting"
       onDismiss={() => setOpen(false)}
     >

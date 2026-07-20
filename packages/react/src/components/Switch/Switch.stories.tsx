@@ -10,15 +10,15 @@ const meta = {
   args: {
     children: 'Garlic yogurt',
     size: 'md',
-    tone: 'primary',
+    variant: 'primary',
     defaultChecked: true,
     disabled: false,
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Switch>;
@@ -47,13 +47,13 @@ export const States: Story = {
   ),
 };
 
-export const Tones: Story = {
+export const Variants: Story = {
   render: (args) => (
     <div style={{ display: 'grid', gap: '0.75rem' }}>
-      {(['primary', 'success', 'warning', 'danger', 'info'] as const).map(
-        (tone) => (
-          <Switch {...args} key={tone} tone={tone}>
-            {tone}
+      {(['primary', 'secondary', 'tertiary', 'danger', 'outline'] as const).map(
+        (variant) => (
+          <Switch {...args} key={variant} variant={variant}>
+            {variant}
           </Switch>
         ),
       )}
