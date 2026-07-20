@@ -1,13 +1,12 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import type { ButtonSize, ButtonVariant } from '@manti-ui/react';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { ButtonSize } from '@manti-ui/react';
+import type { MantiVariant } from '@manti-ui/tokens';
 
 export interface LinkButtonProps {
   to: string;
   children: ReactNode;
-  variant?: ButtonVariant;
-  tone?: MantiTone;
+  variant?: MantiVariant;
   size?: ButtonSize;
   external?: boolean;
 }
@@ -20,8 +19,7 @@ export interface LinkButtonProps {
 export function LinkButton({
   to,
   children,
-  variant = 'solid',
-  tone = 'primary',
+  variant = 'primary',
   size = 'md',
   external,
 }: LinkButtonProps) {
@@ -29,7 +27,6 @@ export function LinkButton({
     'data-scope': 'button',
     'data-part': 'root',
     'data-variant': variant,
-    'data-tone': tone,
     'data-size': size,
   } as const;
 

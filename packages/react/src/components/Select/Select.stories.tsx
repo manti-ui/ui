@@ -19,15 +19,15 @@ const meta = {
     items: regions,
     label: 'Region',
     placeholder: 'Pick a region…',
-    tone: 'primary',
+    variant: 'primary',
     size: 'md',
     multiple: false,
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Select>;

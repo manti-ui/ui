@@ -43,8 +43,7 @@ semver — target them, not class names:
 <button
   data-scope="button"
   data-part="root"
-  data-variant="solid"
-  data-tone="primary"
+  data-variant="primary"
   data-size="md"
 >
   <span data-scope="button" data-part="label">…</span>
@@ -53,7 +52,7 @@ semver — target them, not class names:
 
 - `data-scope` — the component (`button`, `switch`, `tabs`, …)
 - `data-part` — the anatomy piece (`root`, `label`, `trigger`, `content`, …)
-- `data-variant`, `data-tone`, `data-size` — the chosen props
+- `data-variant`, `data-size` — the chosen props
 - state attributes (`data-state`, `data-loading`, `disabled`, …) — live state
 
 Class names and the internal DOM between parts are _not_ part of the contract;
@@ -67,12 +66,12 @@ altitude that does the job, and prefer redefining tokens over hand-writing rules
 | Tier              | Example                             | Scope                            |
 | ----------------- | ----------------------------------- | -------------------------------- |
 | 1 — primitive     | `--manti-orange-500`               | the raw palette / scales         |
-| 2 — semantic      | `--manti-radius-md`, `--tone-solid` | purpose-based roles              |
+| 2 — semantic      | `--manti-radius-md`, `--variant-solid` | purpose-based roles              |
 | 3 — **component** | `--manti-button-radius`             | one component's structural knobs |
 
 ### Recolor a primitive ramp
 
-The primitive ramps feed the tones, so redefining one rebrands the palette
+The primitive ramps feed the variants, so redefining one rebrands the palette
 everywhere it surfaces. `orange` is Manti's primary ramp:
 
 ```css
@@ -106,32 +105,32 @@ component consistently. Keep color roles in `light-dark(light, dark)` form so th
 }
 ```
 
-### Define a custom tone
+### Define a custom variant
 
-Color in Manti comes only from tones. A tone is a `--tone-*` vocabulary you can
-define for any string, then pass as a `tone` prop. Built-in tone names keep
+Color in Manti comes only from variants. A variant is a `--variant-*` vocabulary you can
+define for any string, then pass as a `variant` prop. Built-in variant names keep
 TypeScript autocomplete; custom strings are accepted too:
 
 ```css
-[data-tone='brand'] {
-  --tone-solid: light-dark(#0d9488, #14b8a6);
-  --tone-solid-hover: light-dark(#0b8076, #2dd4bf);
-  --tone-solid-active: light-dark(#096a62, #5eead4);
-  --tone-on-solid: #ffffff;
-  --tone-soft-bg: light-dark(#d6f5f0, #0b2e2a);
-  --tone-soft-text: light-dark(#0b6a60, #99f6e4);
-  --tone-border: light-dark(#9fe5db, #155e54);
-  --tone-text: light-dark(#0b6a60, #5eead4);
-  --tone-ring: #14b8a6;
+[data-variant='brand'] {
+  --variant-solid: light-dark(#0d9488, #14b8a6);
+  --variant-solid-hover: light-dark(#0b8076, #2dd4bf);
+  --variant-solid-active: light-dark(#096a62, #5eead4);
+  --variant-on-solid: #ffffff;
+  --variant-soft-bg: light-dark(#d6f5f0, #0b2e2a);
+  --variant-soft-text: light-dark(#0b6a60, #99f6e4);
+  --variant-border: light-dark(#9fe5db, #155e54);
+  --variant-text: light-dark(#0b6a60, #5eead4);
+  --variant-ring: #14b8a6;
 }
 ```
 
 ```tsx
-<Button tone="brand">Ship it</Button>
+<Button variant="brand">Ship it</Button>
 ```
 
-You can also remap an existing tone for a subtree — scope the same block to a
-selector instead of `[data-tone='brand']`.
+You can also remap an existing variant for a subtree — scope the same block to a
+selector instead of `[data-variant='brand']`.
 
 ### Target a component's anatomy
 

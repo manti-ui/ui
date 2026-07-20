@@ -37,7 +37,6 @@
     font-family: var(--manti-font-sans);
     font-size: var(--manti-text-sm);
     text-align: start;
-    cursor: pointer;
     box-shadow: var(--manti-panel-rim), var(--manti-panel-inset);
     transition:
       border-color var(--manti-duration-base) var(--manti-ease-smooth),
@@ -50,15 +49,27 @@
     &[data-state='open'],
     &:focus-visible {
       outline: none;
-      border-color: var(--tone-ring, var(--manti-focus-ring));
-      box-shadow:
+      border-color: var(--variant-ring, var(--manti-focus-ring));
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      /* box-shadow:
         var(--manti-panel-rim),
         0 0 0 3px
           color-mix(
             in oklab,
-            var(--tone-ring, var(--manti-focus-ring)) 30%,
+            var(--variant-ring, var(--manti-focus-ring)) 30%,
             transparent
-          );
+          ); */
+    }
+
+    /* Only when actually open: drop the divider between trigger and list so the
+       two read as one shape. (Not on focus-visible, or a focused-but-closed
+       trigger would show a bottomless box.) */
+    &[data-state='open'] {
+      border-bottom-color: transparent;
+      /* Drop the all-around inset rim (its bottom edge is the faint seam line);
+         keep only the top inset well. */
+      box-shadow: var(--manti-panel-inset);
     }
 
     &[data-disabled] {
@@ -104,6 +115,7 @@
   [data-scope='select'][data-part='trigger'][data-state='open']
     [data-part='indicator'] {
     transform: rotate(180deg);
+
   }
 
   [data-scope='select'][data-part='positioner'] {
@@ -119,19 +131,26 @@
   [data-scope='select'][data-part='positioner']
     [data-scope='scroll-area'][data-part='root'] {
     --manti-select-content-max-height: 18rem;
-
+    margin-top: -8px;
     width: 100%;
     background: var(--manti-panel-tint-strong);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
+    /* Follow the active variant (falls back to the neutral focus ring). The
+       portalled positioner now carries data-variant so this resolves. */
+    border-color: var(--variant-ring, var(--manti-focus-ring));
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
+    /* box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow); */
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: transparent;
   }
 
   [data-scope='select'][data-part='positioner']
     [data-scope='scroll-area'][data-part='viewport'] {
     max-height: var(--manti-select-content-max-height);
+
   }
 
   [data-scope='select'][data-part='content'] {
@@ -163,16 +182,15 @@
     border-radius: var(--manti-radius-sm);
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
-    cursor: pointer;
     user-select: none;
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
 
     &[data-highlighted] {
-      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      background: var(--manti-fill);
     }
 
     &[data-state='checked'] {
-      color: var(--tone-text);
+      color: var(--variant-text);
       font-weight: var(--manti-weight-medium);
     }
 
@@ -185,6 +203,6 @@
   [data-scope='select'][data-part='item-indicator'] {
     display: inline-flex;
     flex: none;
-    color: var(--tone-text);
+    color: var(--variant-text);
   }
 }

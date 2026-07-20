@@ -15,10 +15,10 @@ export const meta: ComponentMeta = {
       description: 'Optional label.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
-      default: `'warning'`,
-      description: 'Filled-icon tone.',
+      name: 'variant',
+      type: 'MantiVariant',
+      default: `'primary'`,
+      description: 'Filled-icon variant.',
     },
     {
       name: 'size',

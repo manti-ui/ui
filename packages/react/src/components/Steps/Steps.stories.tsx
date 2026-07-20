@@ -15,7 +15,7 @@ const meta = {
   parameters: { layout: 'padded' },
   args: {
     items,
-    tone: 'primary',
+    variant: 'primary',
     orientation: 'horizontal',
     defaultStep: 0,
     controls: true,
@@ -25,9 +25,9 @@ const meta = {
       control: 'inline-radio',
       options: ['horizontal', 'vertical'],
     },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Steps>;

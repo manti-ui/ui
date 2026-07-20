@@ -9,14 +9,14 @@ const meta = {
   parameters: { layout: 'padded' },
   args: {
     label: 'Sign here',
-    tone: 'primary',
+    variant: 'primary',
     disabled: false,
     readOnly: false,
   },
   argTypes: {
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof SignaturePad>;

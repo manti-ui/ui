@@ -14,10 +14,10 @@ export const meta: ComponentMeta = {
       description: 'Optional group label.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Active tone when an option is selected.',
+      description: 'Active variant when an option is selected.',
     },
     {
       name: 'value',

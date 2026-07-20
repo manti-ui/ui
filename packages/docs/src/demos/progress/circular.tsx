@@ -7,7 +7,6 @@ export default function ProgressCircular() {
       label="Steaming"
       defaultValue={65}
       showValue
-      tone="primary"
     />
   );
 }

@@ -9,7 +9,7 @@ const meta = {
   parameters: { layout: 'centered' },
   args: {
     label: 'Recipe name',
-    tone: 'primary',
+    variant: 'primary',
     defaultValue: 'Kayseri mantısı',
     placeholder: 'Enter a name…',
     activationMode: 'focus',
@@ -25,9 +25,9 @@ const meta = {
       control: 'inline-radio',
       options: ['enter', 'blur', 'both', 'none'],
     },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Editable>;

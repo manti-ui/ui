@@ -29,7 +29,7 @@ const slides = [
 export default function CarouselMultiple() {
   return (
     <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 9)' }}>
-      <Carousel slides={slides} tone="primary" slidesPerPage={2} loop />
+      <Carousel slides={slides} variant="primary" slidesPerPage={2} loop />
     </div>
   );
 }

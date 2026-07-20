@@ -16,7 +16,7 @@ export function TokenTable({ component }: { component: string }) {
     return (
       <p>
         This component has no dedicated component tokens yet. Theme it through
-        the semantic tokens and the <code>--tone-*</code> vocabulary, or
+        the semantic tokens and the <code>--variant-*</code> vocabulary, or
         override its anatomy selectors directly.
       </p>
     );

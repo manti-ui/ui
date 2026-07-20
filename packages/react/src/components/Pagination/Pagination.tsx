@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import { pagination } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -20,8 +20,8 @@ export interface PaginationProps {
   siblingCount?: number;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
-  /** Active-page tone. */
-  tone?: MantiTone;
+  /** Active-page variant. */
+  variant?: MantiVariant;
   id?: string;
   className?: string;
 }
@@ -48,7 +48,7 @@ export function Pagination({
   onPageChange,
   siblingCount,
   size = 'md',
-  tone = 'primary',
+  variant = 'primary',
   id,
   className,
 }: PaginationProps) {
@@ -70,7 +70,7 @@ export function Pagination({
     <nav
       {...api.getRootProps()}
       data-size={size}
-      data-tone={tone}
+      data-variant={variant}
       className={cx(className)}
     >
       <button {...api.getPrevTriggerProps()} aria-label="Previous page">

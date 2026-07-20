@@ -15,10 +15,10 @@ export const meta: ComponentMeta = {
       description: 'Control size.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Tone used for the focus ring.',
+      description: 'Variant used for the focus ring.',
     },
     {
       name: 'value',

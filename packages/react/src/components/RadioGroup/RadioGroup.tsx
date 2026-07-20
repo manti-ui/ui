@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { radioGroup } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -17,8 +17,8 @@ export interface RadioGroupProps {
   items: RadioGroupItem[];
   /** Optional group label. */
   label?: ReactNode;
-  /** Active tone when an option is selected. */
-  tone?: MantiTone;
+  /** Active variant when an option is selected. */
+  variant?: MantiVariant;
   /** Controlled selected value. */
   value?: string;
   /** Initial selected value for uncontrolled usage. */
@@ -38,7 +38,7 @@ export interface RadioGroupProps {
 export function RadioGroup({
   items,
   label,
-  tone = 'primary',
+  variant = 'primary',
   value,
   defaultValue,
   onValueChange,
@@ -63,7 +63,7 @@ export function RadioGroup({
   const api = radioGroup.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <span {...api.getLabelProps()}>{label}</span>}
       {items.map((item) => {
         const itemProps = { value: item.value, disabled: item.disabled };

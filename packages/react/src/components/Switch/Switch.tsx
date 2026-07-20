@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { switchMachine } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -9,8 +9,8 @@ import { cx } from '../../internal/props';
 export interface SwitchProps {
   /** Control size. */
   size?: 'sm' | 'md';
-  /** Active tone when on. */
-  tone?: MantiTone;
+  /** Active variant when on. */
+  variant?: MantiVariant;
   /** Optional trailing label. */
   children?: ReactNode;
   /** Controlled checked state. */
@@ -38,7 +38,7 @@ export interface SwitchProps {
  */
 export function Switch({
   size = 'md',
-  tone = 'primary',
+  variant = 'primary',
   children,
   className,
   id,
@@ -73,7 +73,7 @@ export function Switch({
     <label
       {...api.getRootProps()}
       data-size={size}
-      data-tone={tone}
+      data-variant={variant}
       className={cx(className)}
     >
       <input {...api.getHiddenInputProps()} data-part="hidden-input" />

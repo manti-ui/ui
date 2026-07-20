@@ -1,6 +1,6 @@
 {
   "name": "@manti-ui/styles",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Framework-agnostic CSS for Manti UI.",
   "license": "MIT",
   "homepage": "https://manti.design",
@@ -70,8 +70,9 @@
     "gen:tokens:check": "node scripts/gen-tokens-css.mjs --check",
     "check:component-tokens": "node scripts/check-component-tokens.mjs",
     "gen:component-tokens-doc": "node scripts/gen-component-tokens-doc.mjs",
-    "build": "node scripts/gen-tokens-css.mjs --check && node scripts/check-component-tokens.mjs && node scripts/gen-component-tokens-doc.mjs --check && vite build && tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit"
+    "build": "node scripts/gen-tokens-css.mjs --check && node scripts/check-component-tokens.mjs && node scripts/check-contrast.mjs --gate && node scripts/gen-component-tokens-doc.mjs --check && vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
     "@manti-ui/tokens": "workspace:^"

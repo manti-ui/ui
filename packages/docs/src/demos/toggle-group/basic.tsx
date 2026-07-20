@@ -7,5 +7,5 @@ const items = [
 ];
 
 export default function ToggleGroupBasic() {
-  return <ToggleGroup items={items} tone="primary" defaultValue={['center']} />;
+  return <ToggleGroup items={items} variant="primary" defaultValue={['center']} />;
 }

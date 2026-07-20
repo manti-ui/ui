@@ -47,8 +47,7 @@ semver:
 <button
   data-scope="button"
   data-part="root"
-  data-variant="solid"
-  data-tone="primary"
+  data-variant="primary"
   data-size="md"
 >
   <span data-scope="button" data-part="label">…</span>
@@ -57,7 +56,8 @@ semver:
 
 - `data-scope` — the component (`button`, `switch`, `tabs`, …)
 - `data-part` — the anatomy piece (`root`, `label`, `trigger`, `content`, …)
-- `data-variant`, `data-tone`, `data-size` — the chosen props
+- `data-variant`, `data-size` — the chosen props (`data-variant` carries both hue
+  and emphasis)
 - state attributes (`data-state`, `data-loading`, `disabled`, …) — live state
 
 Class names and internal DOM details are _not_ part of the contract; target the
@@ -67,7 +67,7 @@ data attributes.
 
 > Copy-paste starting points: [`examples/consumer-theme-plain-css.css`](./examples/consumer-theme-plain-css.css)
 > and [`examples/consumer-theme-tailwind.css`](./examples/consumer-theme-tailwind.css)
-> show a full rebrand at every altitude (primitive, semantic, component, tone).
+> show a full rebrand at every altitude (primitive, semantic, component, variant).
 
 ### Override any component style
 
@@ -80,7 +80,7 @@ Write normal (unlayered) CSS against the anatomy contract:
   text-transform: uppercase;
 }
 
-[data-scope='button'][data-part='root'][data-variant='solid']:hover {
+[data-scope='button'][data-part='root'][data-variant='primary']:hover {
   translate: 0 -1px;
 }
 ```
@@ -109,14 +109,37 @@ altitude:
   --manti-button-radius: 9999px; /* buttons specifically become pills */
 }
 
-/* 4. Tone — remap what a tone means, globally or per subtree. */
-.marketing-section [data-tone='primary'] {
-  --tone-solid: var(--manti-blue-600);
-  --tone-solid-hover: var(--manti-blue-700);
+/* 4. Variant — remap what a variant means, globally or per subtree. */
+.marketing-section [data-variant='primary'] {
+  --variant-solid: var(--manti-blue-600);
+  --variant-solid-hover: var(--manti-blue-700);
 }
 
 /* 5. One instance — className or style, as usual. */
 ```
+
+### Neutral interactive fills
+
+Rest / hover / pressed washes for neutral surfaces (menu items, rows, date
+cells, …) come from a three-rung alpha ladder, so the whole system's hover
+strength is tuned in one place instead of per component:
+
+| Token                  | Role                    |
+| ---------------------- | ----------------------- |
+| `--manti-fill-subtle` | decorative / rest       |
+| `--manti-fill`        | hover / keyboard highlight |
+| `--manti-fill-strong` | selected / pressed      |
+
+They are alpha (built on `--manti-text`), so they stay theme-aware — a dark wash
+in light mode, a light wash in dark — and composite correctly over any surface.
+Reach for these instead of hand-mixing `color-mix(… var(--manti-text) N%,
+transparent)`. With the Tailwind bridge they are also utilities: `bg-fill`,
+`bg-fill-subtle`, `bg-fill-strong`.
+
+The **variant-colored** analog is `--variant-fill` (hover) and
+`--variant-fill-strong` (selected/pressed), derived from `--variant-soft-bg`, so
+a `[data-variant]` element gets an accent-tinted wash for the same states — and
+any custom variant that defines `--variant-soft-bg` gets them for free.
 
 ### Component tokens (Tier 3)
 
@@ -125,7 +148,7 @@ Manti tokens form three tiers, each defaulting into the one above it:
 | Tier             | Example                  | Scope                            |
 | ---------------- | ------------------------ | -------------------------------- |
 | 1 — primitive    | `--manti-orange-500`    | the raw palette / scales         |
-| 2 — semantic     | `--manti-radius-md`, `--tone-solid` | purpose-based roles   |
+| 2 — semantic     | `--manti-radius-md`, `--variant-solid` | purpose-based roles |
 | 3 — **component** | `--manti-button-radius`  | one component's structural knobs |
 
 Component tokens are a small, curated set of `--manti-{component}-{property}`
@@ -153,7 +176,7 @@ Two rules keep this tier safe to depend on:
 
 - **Curated, not exhaustive.** Only _independent_ dimensions a designer would
   reach for (radius, padding, sizing, gap, typography) are exposed. Color is
-  already covered by the tonal `--tone-*` vocabulary, so this tier stays mostly
+  already covered by the `--variant-*` vocabulary, so this tier stays mostly
   structural and small.
 - **Derived values stay private.** Anything a component computes from its tokens
   (`calc()` geometry like a switch thumb's size and travel) remains a private
@@ -165,31 +188,31 @@ The full per-component list lives in the `componentTokens` registry of
 **[component-tokens.md](./component-tokens.md)** for the generated table of every
 component token and its default.
 
-### Register a custom tone
+### Register a custom variant
 
-Tonal components accept any string as `tone`. Define the `--tone-*` vocabulary
-for your own tone in plain CSS and pass its name:
+Variant-driven components accept any string as `variant`. Define the
+`--variant-*` vocabulary for your own variant in plain CSS and pass its name:
 
 ```css
-[data-tone='brand'] {
-  --tone-solid: light-dark(#5536da, #7c63f0);
-  --tone-solid-hover: light-dark(#4628c4, #8d77f2);
-  --tone-solid-active: light-dark(#3a1fae, #9e8bf5);
-  --tone-on-solid: white;
-  --tone-soft-bg: light-dark(#eeeafd, #2a2350);
-  --tone-soft-bg-hover: light-dark(#e0d9fb, #352b66);
-  --tone-soft-text: light-dark(#4628c4, #c4b8f8);
-  --tone-border: light-dark(#c4b8f8, #4a3d85);
-  --tone-text: light-dark(#4628c4, #b3a3f6);
-  --tone-ring: #7c63f0;
+[data-variant='brand'] {
+  --variant-solid: light-dark(#5536da, #7c63f0);
+  --variant-solid-hover: light-dark(#4628c4, #8d77f2);
+  --variant-solid-active: light-dark(#3a1fae, #9e8bf5);
+  --variant-on-solid: white;
+  --variant-soft-bg: light-dark(#eeeafd, #2a2350);
+  --variant-soft-bg-hover: light-dark(#e0d9fb, #352b66);
+  --variant-soft-text: light-dark(#4628c4, #c4b8f8);
+  --variant-border: light-dark(#c4b8f8, #4a3d85);
+  --variant-text: light-dark(#4628c4, #b3a3f6);
+  --variant-ring: #7c63f0;
 }
 ```
 
 ```tsx
-<Button tone="brand">Ship it</Button>
+<Button variant="brand">Ship it</Button>
 ```
 
-Built-in tone names keep TypeScript autocomplete; custom strings are accepted.
+Built-in variant names keep TypeScript autocomplete; custom strings are accepted.
 
 ## Motion tiers
 
@@ -312,7 +335,7 @@ reference the custom properties from `tailwind.config` instead
 
 Stable under semver:
 
-- token custom properties (`--manti-*`) and the `--tone-*` vocabulary
+- token custom properties (`--manti-*`) and the `--variant-*` vocabulary
 - component tokens (`--manti-{component}-*`, registered in `componentTokens`)
 - the layer names (`manti.*`) and the rule that all Manti CSS is layered
 - `data-scope` / `data-part` anatomy and documented state attributes

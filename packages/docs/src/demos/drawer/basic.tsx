@@ -3,15 +3,15 @@ import { Button, Drawer, Input } from '@manti-ui/react';
 export default function DrawerBasic() {
   return (
     <Drawer
-      trigger={<Button tone="primary">Edit recipe</Button>}
+      trigger={<Button variant="primary">Edit recipe</Button>}
       title="Edit recipe"
       description="Adjust the filling and the finish, then save."
       footer={({ close }) => (
         <>
-          <Button variant="ghost" onClick={close}>
+          <Button variant="tertiary" onClick={close}>
             Cancel
           </Button>
-          <Button tone="primary" onClick={close}>
+          <Button variant="primary" onClick={close}>
             Save
           </Button>
         </>

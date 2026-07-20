@@ -8,10 +8,10 @@ export { Avatar } from './Avatar/Avatar';
 export type { AvatarProps } from './Avatar/Avatar';
 
 export { Badge } from './Badge/Badge';
-export type { BadgeProps, BadgeVariant } from './Badge/Badge';
+export type { BadgeProps } from './Badge/Badge';
 
 export { Button } from './Button/Button';
-export type { ButtonProps, ButtonSize, ButtonVariant } from './Button/Button';
+export type { ButtonProps, ButtonSize } from './Button/Button';
 
 export { Calendar } from './Calendar/Calendar';
 export type { CalendarDayValue, CalendarProps } from './Calendar/Calendar';

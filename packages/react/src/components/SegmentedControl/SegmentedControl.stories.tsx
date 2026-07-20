@@ -15,7 +15,7 @@ const meta = {
     ],
     defaultValue: 'boiled',
     size: 'md',
-    tone: 'primary',
+    variant: 'primary',
     orientation: 'horizontal',
   },
   argTypes: {
@@ -24,9 +24,9 @@ const meta = {
       control: 'inline-radio',
       options: ['horizontal', 'vertical'],
     },
-    tone: {
+    variant: {
       control: 'inline-radio',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof SegmentedControl>;

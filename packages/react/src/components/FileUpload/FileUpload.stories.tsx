@@ -9,14 +9,14 @@ const meta = {
   parameters: { layout: 'padded' },
   args: {
     label: 'Attachments',
-    tone: 'primary',
+    variant: 'primary',
     maxFiles: 5,
     disabled: false,
   },
   argTypes: {
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof FileUpload>;

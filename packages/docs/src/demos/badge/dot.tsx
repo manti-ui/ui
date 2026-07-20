@@ -3,13 +3,13 @@ import { Badge } from '@manti-ui/react';
 export default function BadgeDot() {
   return (
     <>
-      <Badge tone="success" dot>
+      <Badge variant="primary" dot>
         Online
       </Badge>
-      <Badge tone="warning" dot>
+      <Badge variant="primary" dot>
         Away
       </Badge>
-      <Badge tone="danger" dot>
+      <Badge variant="danger" dot>
         Offline
       </Badge>
     </>

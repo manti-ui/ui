@@ -15,10 +15,10 @@ export const meta: ComponentMeta = {
       description: 'Label for the clear button.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Accent tone of the surface and stroke.',
+      description: 'Accent variant of the surface and stroke.',
     },
     {
       name: 'paths',

@@ -21,15 +21,15 @@ const meta = {
     items: spices,
     label: 'Spice',
     placeholder: 'Search spices…',
-    tone: 'primary',
+    variant: 'primary',
     size: 'md',
     multiple: false,
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Combobox>;

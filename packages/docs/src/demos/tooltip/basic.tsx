@@ -4,10 +4,10 @@ export default function TooltipBasic() {
   return (
     <>
       <Tooltip content="Backed by a Zag.js machine">
-        <Button variant="soft">Hover or focus me</Button>
+        <Button variant="secondary">Hover or focus me</Button>
       </Tooltip>
       <Tooltip content="Stays open while you hover the label" interactive>
-        <Button variant="outline">Interactive</Button>
+        <Button variant="tertiary">Interactive</Button>
       </Tooltip>
     </>
   );

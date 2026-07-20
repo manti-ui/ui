@@ -40,15 +40,20 @@
     }
 
     &:focus-within {
-      border-color: var(--tone-ring, var(--manti-focus-ring));
-      box-shadow:
-        var(--manti-panel-rim),
-        0 0 0 3px
-          color-mix(
-            in oklab,
-            var(--tone-ring, var(--manti-focus-ring)) 30%,
-            transparent
-          );
+      border-color: var(--variant-ring, var(--manti-focus-ring));
+    }
+
+    /* Open — seam into the panel: a variant-colored border, squared bottom
+       corners with no divider, and no focus glow so the control and the list
+       read as one connected shape. */
+    &[data-open] {
+      border-color: var(--variant-ring, var(--manti-focus-ring));
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      border-bottom-color: transparent;
+      /* Drop the all-around inset rim (its bottom edge is the faint seam line);
+         keep only the top inset well. */
+      box-shadow: var(--manti-panel-inset);
     }
   }
 
@@ -77,7 +82,8 @@
 
   [data-scope='combobox'][data-part='input'] {
     flex: 1;
-    min-width: 0;
+    /* A floor so the input wraps to a new row once chips fill the line. */
+    min-width: 6ch;
     background: none;
     border: none;
     outline: none;
@@ -86,6 +92,47 @@
 
     &::placeholder {
       color: var(--manti-text-subtle);
+    }
+  }
+
+  /* Multi-select: selected values render as chips inside the control, which then
+     wraps. Only kicks in when chips are present, so the single-select control is
+     unchanged. */
+  [data-scope='combobox'][data-part='control']:has([data-part='chip']) {
+    flex-wrap: wrap;
+    gap: var(--manti-space-2);
+    padding: var(--manti-space-1) var(--manti-space-2);
+  }
+
+  [data-scope='combobox'][data-part='chip'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-1);
+    height: 1.625rem;
+    padding-inline: var(--manti-space-2);
+    background: color-mix(in oklab, var(--variant-soft-bg) 80%, transparent);
+    border: 1px solid var(--manti-panel-border);
+    border-radius: var(--manti-radius-sm);
+    color: var(--variant-soft-text);
+    font-size: var(--manti-text-xs);
+    font-weight: var(--manti-weight-medium);
+    white-space: nowrap;
+  }
+
+  [data-scope='combobox'][data-part='chip-remove'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: none;
+    color: currentcolor;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity var(--manti-duration-fast) var(--manti-ease-smooth);
+
+    &:hover {
+      opacity: 1;
     }
   }
 
@@ -118,13 +165,21 @@
     [data-scope='scroll-area'][data-part='root'] {
     --manti-combobox-content-max-height: 18rem;
 
+    /* Seam onto the control above: pull up over the positioner gutter, drop the
+       top border and square the top corners so the two share one outline. Border
+       follows the active variant (data-variant rides on the portalled
+       positioner). */
+    margin-top: -8px;
     width: 100%;
     background: var(--manti-panel-tint-strong);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
+    border-color: var(--variant-ring, var(--manti-focus-ring));
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: transparent;
   }
 
   [data-scope='combobox'][data-part='positioner']
@@ -174,11 +229,11 @@
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
 
     &[data-highlighted] {
-      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      background: var(--manti-fill);
     }
 
     &[data-state='checked'] {
-      color: var(--tone-text);
+      color: var(--variant-text);
       font-weight: var(--manti-weight-medium);
     }
 
@@ -191,6 +246,6 @@
   [data-scope='combobox'][data-part='item-indicator'] {
     display: inline-flex;
     flex: none;
-    color: var(--tone-text);
+    color: var(--variant-text);
   }
 }

@@ -15,10 +15,10 @@ export const meta: ComponentMeta = {
       description: 'Control size.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Focus-ring tone.',
+      description: 'Focus-ring variant.',
     },
     {
       name: 'value',
@@ -74,7 +74,7 @@ export const meta: ComponentMeta = {
   anatomy: [
     {
       part: 'root',
-      description: 'The field wrapper carrying scope, size, tone, and state.',
+      description: 'The field wrapper carrying scope, size, variant, and state.',
     },
     {
       part: 'label',

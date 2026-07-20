@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { toggleGroup } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -17,8 +17,8 @@ export interface ToggleGroupProps {
   items: ToggleGroupItem[];
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
-  /** Active tone for pressed items. */
-  tone?: MantiTone;
+  /** Active variant for pressed items. */
+  variant?: MantiVariant;
   /** Allow more than one item to be pressed at once. */
   multiple?: boolean;
   /** Controlled pressed values. */
@@ -37,7 +37,7 @@ export interface ToggleGroupProps {
 export function ToggleGroup({
   items,
   size = 'md',
-  tone = 'primary',
+  variant = 'primary',
   multiple,
   value,
   defaultValue,
@@ -65,7 +65,7 @@ export function ToggleGroup({
     <div
       {...api.getRootProps()}
       data-size={size}
-      data-tone={tone}
+      data-variant={variant}
       className={cx(className)}
     >
       {items.map((item) => (

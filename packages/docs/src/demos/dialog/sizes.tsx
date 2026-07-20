@@ -9,7 +9,7 @@ export default function DialogSizes() {
         <Dialog
           key={size}
           size={size}
-          trigger={<Button variant="soft">Size {size}</Button>}
+          trigger={<Button variant="secondary">Size {size}</Button>}
           title={`Size ${size}`}
           description="The width preset changes the panel's maximum width."
         >

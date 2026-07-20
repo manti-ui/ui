@@ -75,8 +75,8 @@ styles them identically to behavioral components.
 ## Anatomy is the public API
 
 Every component renders stable attributes the CSS keys off: `data-scope` (the
-component), `data-part` (the anatomy piece), `data-variant` / `data-tone` /
-`data-size`, and state attributes like `data-state` and `disabled`. Class names
+component), `data-part` (the anatomy piece), `data-variant` / `data-size`, and
+state attributes like `data-state` and `disabled`. Class names
 and the DOM between parts are **private** — target the data attributes, and your
 styling survives across versions and future framework adapters.
 
@@ -84,8 +84,7 @@ styling survives across versions and future framework adapters.
 <button
   data-scope="button"
   data-part="root"
-  data-variant="solid"
-  data-tone="primary"
+  data-variant="primary"
   data-size="md"
 >
   <span data-scope="button" data-part="label">…</span>

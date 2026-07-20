@@ -1,7 +1,7 @@
 import { useId, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { listbox } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -17,8 +17,8 @@ export interface ListboxProps {
   items: ListboxItem[];
   /** Optional label above the list. */
   label?: ReactNode;
-  /** Selected-item tone. */
-  tone?: MantiTone;
+  /** Selected-item variant. */
+  variant?: MantiVariant;
   /** Single or multiple selection. */
   selectionMode?: 'single' | 'multiple';
   /** Controlled selected values. */
@@ -49,7 +49,7 @@ const check = (
 export function Listbox({
   items,
   label,
-  tone = 'primary',
+  variant = 'primary',
   selectionMode = 'single',
   value,
   defaultValue,
@@ -83,7 +83,7 @@ export function Listbox({
   const api = listbox.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <ul {...api.getContentProps()}>
         {items.map((item) => (

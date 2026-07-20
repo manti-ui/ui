@@ -1,0 +1,76 @@
+---
+title: v0.4.0
+slug: /changelog/v0.4.0
+group: Changelog
+order: 1
+date: '2026-07-19'
+description: TextField is renamed to Input and PasswordInput folds into <Input type="password">, plus panel rim/inset box-shadows become semantic tokens.
+---
+
+# v0.4.0
+
+_Released 2026-07-19._
+
+## Breaking changes
+
+- **TextField → Input.** `TextField` is renamed to `Input`, and `PasswordInput`
+  is folded into it as `<Input type="password">`. The two always rendered the
+  same `field` shell; the password affordances (show/hide toggle, Caps Lock
+  warning) now belong to Input and apply to `type="password"` only — the same
+  rule the inherited native attributes already follow (`min`/`max` for
+  `type="number"`, `accept` for `type="file"`).
+
+  ```diff
+  -import { TextField, PasswordInput } from '@manti-ui/react';
+  +import { Input } from '@manti-ui/react';
+
+  -<TextField label="Email" />
+  +<Input label="Email" />
+
+  -<PasswordInput label="Password" />
+  +<Input type="password" label="Password" />
+  ```
+
+  The password props are renamed to say which type they belong to, since names
+  like `visible` and `showLabel` are ambiguous next to Input's own `label`:
+
+  | `PasswordInput`        | `Input`                      |
+  | ---------------------- | ---------------------------- |
+  | `showVisibilityToggle` | `showPasswordToggle`         |
+  | `visible`              | `passwordVisible`            |
+  | `defaultVisible`       | `defaultPasswordVisible`     |
+  | `onVisibilityChange`   | `onPasswordVisibilityChange` |
+  | `showLabel`            | `showPasswordLabel`          |
+  | `hideLabel`            | `hidePasswordLabel`          |
+
+  `showCapsLockWarning` is unchanged. `capsLockLabel` keeps its name but changes
+  meaning: it is now an assistive-tech-only string (see below).
+
+- **CSS: the `password-input` scope is gone.** Its two parts moved onto the
+  `field` scope that Input already renders. Any custom CSS targeting them must be
+  retargeted:
+
+  ```diff
+  -[data-scope='password-input'][data-part='visibility-trigger']
+  +[data-scope='field'][data-part='visibility-trigger']
+
+  -[data-scope='password-input'][data-part='caps-lock']
+  +[data-scope='field'][data-part='caps-lock']
+  ```
+
+  The rest of the `field` anatomy, its component tokens (`--manti-field-*`), and
+  Textarea are unaffected.
+
+## Changed
+
+- **Input** — the Caps Lock warning is reduced to its icon so the amber "Caps
+  Lock is on" text no longer competes with the value being typed. The wording
+  moves into a visually-hidden `caps-lock-label` part — it still backs the
+  `role="status"` live region and the input's `aria-describedby`, so it is hidden
+  from the screen, not from the accessibility tree. `capsLockLabel` is therefore
+  now an assistive-tech-only string.
+- **Panels** — the top-lit hairline rim and the recessed control-well shadow are
+  now two semantic tokens, `--manti-panel-rim` and `--manti-panel-inset`, instead
+  of literal `inset` box-shadow values repeated across ~34 component stylesheets.
+  Tuning the rim is now a single edit, and the rim itself softens from a 1px top
+  edge to a 5px ambient spread.

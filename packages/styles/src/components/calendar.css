@@ -8,7 +8,7 @@
  * them under that scope, so the rules win over the DatePicker defaults without
  * touching them. Day cells carry machine state (`data-today`, `data-selected`,
  * `data-in-range`, `data-outside-range`, `data-disabled`). Color comes only from
- * the active tone.
+ * the active variant.
  */
 @layer manti.components {
   [data-scope='calendar'][data-part='root'] {
@@ -72,7 +72,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
   }
@@ -93,12 +93,12 @@
       background var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
-      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      background: var(--manti-fill);
       color: var(--manti-text);
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);
     }
   }
@@ -184,24 +184,24 @@
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
 
     &:hover {
-      background: color-mix(in oklab, var(--manti-text) 5%, transparent);
+      background: var(--manti-fill);
     }
 
     /* Reset the DatePicker today ring that leaks through the shared date-picker
-       scope — Calendar marks today with the tone chip on the number instead. */
+       scope — Calendar marks today with the variant chip on the number instead. */
     &[data-today] {
       box-shadow: none;
     }
 
     &[data-selected] {
-      background: var(--tone-soft-bg);
-      /* Override the leaked DatePicker `color: var(--tone-on-solid)`, which is
+      background: var(--variant-soft-bg);
+      /* Override the leaked DatePicker `color: var(--variant-on-solid)`, which is
          meant for a solid fill, not this soft cell tint. */
       color: var(--manti-text);
     }
 
     &[data-in-range] {
-      background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
+      background: var(--variant-fill);
     }
 
     /* Keep range ends square so they don't round inside the continuous grid. */
@@ -228,7 +228,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);
     }
   }
@@ -247,13 +247,13 @@
     line-height: 1;
   }
 
-  /* Today: a filled tone chip on the number — the monochrome, tone-driven
+  /* Today: a filled variant chip on the number — the monochrome, variant-driven
      equivalent of a colored "today" badge. */
   [data-scope='calendar']
     [data-scope='date-picker'][data-part='table-cell-trigger'][data-today]
     [data-part='day-label'] {
-    background: var(--tone-solid);
-    color: var(--tone-on-solid);
+    background: var(--variant-solid);
+    color: var(--variant-on-solid);
   }
 
   [data-scope='calendar'][data-part='day-content'] {
