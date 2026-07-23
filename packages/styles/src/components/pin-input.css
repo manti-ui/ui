@@ -1,6 +1,6 @@
 /**
  * Pin Input — segmented code entry backed by the Zag.js pin-input machine. Each
- * cell is a translucent field box; the focused cell rings with the active tone.
+ * cell is a translucent field box; the focused cell rings with the active variant.
  */
 @layer manti.components {
   [data-scope='pin-input'][data-part='root'] {
@@ -48,15 +48,7 @@
     }
 
     &:focus {
-      border-color: var(--tone-ring, var(--manti-focus-ring));
-      box-shadow:
-        var(--manti-panel-rim),
-        0 0 0 3px
-          color-mix(
-            in oklab,
-            var(--tone-ring, var(--manti-focus-ring)) 30%,
-            transparent
-          );
+      border-color: var(--variant-ring, var(--manti-focus-ring));
     }
 
     &:disabled {

@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { clipboard } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -11,8 +11,8 @@ export interface ClipboardProps {
   value: string;
   /** Optional label. */
   label?: ReactNode;
-  /** Copied-indicator tone. */
-  tone?: MantiTone;
+  /** Copied-indicator variant. */
+  variant?: MantiVariant;
   /** How long the copied state lasts (ms). */
   timeout?: number;
   id?: string;
@@ -57,7 +57,7 @@ const checkIcon = (
 export function Clipboard({
   value,
   label,
-  tone = 'success',
+  variant = 'primary',
   timeout,
   id,
   className,
@@ -71,7 +71,7 @@ export function Clipboard({
   const api = clipboard.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
         <input {...api.getInputProps()} />

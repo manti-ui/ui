@@ -4,8 +4,8 @@
  * (keyboard, roving focus, form semantics); the machine measures the selected
  * segment and feeds the indicator its `--left/--top/--width/--height`.
  *
- * The sliding pill fills with the active tone (`--tone-solid`); the selected
- * segment's label flips to `--tone-on-solid`. Tone defaults to primary.
+ * The sliding pill fills with the active variant (`--variant-solid`); the selected
+ * segment's label flips to `--variant-on-solid`. Variant defaults to primary.
  */
 @layer manti.components {
   [data-scope='segmented-control'][data-part='root'] {
@@ -45,7 +45,7 @@
     top: var(--top);
     width: var(--width);
     height: var(--height);
-    background: var(--tone-solid);
+    background: var(--variant-solid);
     border-radius: var(--manti-radius-sm);
     box-shadow: var(--manti-shadow-sm);
     transition-property: var(--transition-property, left, top, width, height);
@@ -79,7 +79,7 @@
     }
 
     &[data-state='checked'] {
-      color: var(--tone-on-solid);
+      color: var(--variant-on-solid);
     }
 
     &[data-disabled] {
@@ -119,7 +119,7 @@
 
   /* Focus ring on the segment whose hidden radio input is focus-visible. */
   [data-scope='segmented-control'][data-part='item']:has(input:focus-visible) {
-    outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+    outline: var(--manti-focus-ring-width) solid var(--variant-ring);
     outline-offset: calc(var(--manti-focus-ring-offset) * -1);
   }
 }

@@ -2,8 +2,8 @@
  * Toast — backed by the Zag.js toast machines. A portalled stack of translucent
  * panels. The group machine sets the stacking transforms (`--x`, `--y`,
  * `--scale`, `--opacity`, `--z-index`, `--height`) inline; the component layer
- * only animates and skins them. The toast type maps to a `data-tone`, so the
- * accent edge, tint, border, and status icon all read from the `--tone-*`
+ * only animates and skins them. The toast type maps to a `data-variant`, so the
+ * accent edge, tint, border, and status icon all read from the `--variant-*`
  * vocabulary. The renderer adds an extra `transform` (composed on top of the
  * `translate` stacking offset) while swiping a toast toward its dismiss edge.
  */
@@ -40,13 +40,13 @@
     overflow: hidden;
     background: color-mix(
       in oklab,
-      var(--tone-soft-bg) 26%,
+      var(--variant-soft-bg) 26%,
       var(--manti-panel-tint-strong)
     );
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid
-      color-mix(in oklab, var(--tone-border) 55%, var(--manti-panel-border));
+      color-mix(in oklab, var(--variant-border) 55%, var(--manti-panel-border));
     border-radius: var(--manti-radius-md);
     box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     color: var(--manti-text);
@@ -58,7 +58,7 @@
       inset-block: 0;
       inset-inline-start: 0;
       width: 3px;
-      background: var(--tone-solid);
+      background: var(--variant-solid);
     }
 
     /* Swipe-to-dismiss affordance (renderer drives the transform). */
@@ -79,7 +79,7 @@
     [data-scope='toast'][data-part='root'] {
       background: color-mix(
         in oklab,
-        var(--tone-soft-bg) 26%,
+        var(--variant-soft-bg) 26%,
         var(--manti-surface-raised)
       );
     }
@@ -91,7 +91,7 @@
     display: inline-flex;
     align-items: center;
     align-self: center;
-    color: var(--tone-solid);
+    color: var(--variant-solid);
   }
 
   [data-scope='toast'][data-part='title'] {
@@ -113,9 +113,9 @@
     justify-self: start;
     margin-top: var(--manti-space-1);
     padding: var(--manti-space-1) var(--manti-space-3);
-    color: var(--tone-text);
-    background: var(--tone-soft-bg);
-    border: 1px solid var(--tone-border);
+    color: var(--variant-text);
+    background: var(--variant-soft-bg);
+    border: 1px solid var(--variant-border);
     border-radius: var(--manti-radius-sm);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-medium);
@@ -123,11 +123,11 @@
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
 
     &:hover {
-      background: var(--tone-soft-bg-hover);
+      background: var(--variant-soft-bg-hover);
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
   }
@@ -151,12 +151,12 @@
       color var(--manti-duration-fast) var(--manti-ease-soft);
 
     &:hover {
-      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      background: var(--manti-fill);
       color: var(--manti-text);
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);
     }
   }

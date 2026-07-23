@@ -71,6 +71,12 @@
   --color-link: var(--manti-link);
   --color-ring: var(--manti-focus-ring);
 
+  /* Neutral interactive fills — alpha washes for rest/hover/pressed states.
+     Exposes `bg-fill`, `bg-fill-subtle`, `bg-fill-strong` (and `text-*`, …). */
+  --color-fill-subtle: var(--manti-fill-subtle);
+  --color-fill: var(--manti-fill);
+  --color-fill-strong: var(--manti-fill-strong);
+
   /* Primitive ramps — plain color names ------------------------------------ */
   --color-gray-50: var(--manti-gray-50);
   --color-gray-100: var(--manti-gray-100);

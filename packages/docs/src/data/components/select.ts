@@ -20,10 +20,10 @@ export const meta: ComponentMeta = {
       description: 'Text shown when nothing is selected.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Selected-item tone.',
+      description: 'Selected-item variant.',
     },
     {
       name: 'size',

@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 
 import { cx } from '../../internal/props';
 
@@ -7,10 +7,8 @@ export interface AlertProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'title'
 > {
-  /** Semantic tone. */
-  tone?: MantiTone;
-  /** Soft (default) or solid fill. */
-  variant?: 'soft' | 'solid';
+  /** Color variant — sets the hue of the soft message panel. */
+  variant?: MantiVariant;
   /** Bold leading line. */
   title?: ReactNode;
   /** Leading status icon. */
@@ -22,13 +20,12 @@ export interface AlertProps extends Omit<
 }
 
 /**
- * An inline, tonal message with an icon, title, description, and an optional
- * dismiss action. Defaults to `role="status"`, escalating to `role="alert"` for
- * the danger and warning tones.
+ * An inline message with an icon, title, description, and an optional dismiss
+ * action. Defaults to `role="status"`, escalating to `role="alert"` for the
+ * danger variant.
  */
 export function Alert({
-  tone = 'info',
-  variant = 'soft',
+  variant = 'secondary',
   title,
   icon,
   onDismiss,
@@ -39,13 +36,12 @@ export function Alert({
   ...rest
 }: AlertProps) {
   const resolvedRole =
-    role ?? (tone === 'danger' || tone === 'warning' ? 'alert' : 'status');
+    role ?? (variant === 'danger' ? 'alert' : 'status');
 
   return (
     <div
       data-scope="alert"
       data-part="root"
-      data-tone={tone}
       data-variant={variant}
       role={resolvedRole}
       className={cx(className)}

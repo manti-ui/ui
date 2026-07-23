@@ -1,6 +1,6 @@
 /**
  * Steps — a step-by-step flow backed by the Zag.js steps machine. The indicator
- * fills with the active tone on the current/completed steps; the separator and
+ * fills with the active variant on the current/completed steps; the separator and
  * progress track the journey.
  */
 @layer manti.components {
@@ -48,7 +48,7 @@
     cursor: pointer;
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
       border-radius: var(--manti-radius-sm);
     }
@@ -82,9 +82,9 @@
     [data-part='indicator'],
   [data-scope='steps'][data-part='trigger'][data-complete]
     [data-part='indicator'] {
-    background: var(--tone-solid);
+    background: var(--variant-solid);
     border-color: transparent;
-    color: var(--tone-on-solid);
+    color: var(--variant-on-solid);
   }
 
   [data-scope='steps'][data-part='trigger'][data-current] {
@@ -127,7 +127,7 @@
   }
 
   [data-scope='steps'][data-part='separator'][data-complete] {
-    background: var(--tone-solid);
+    background: var(--variant-solid);
   }
 
   [data-scope='steps'][data-part='content'] {
@@ -152,14 +152,14 @@
       font-size: var(--manti-text-sm);
       font-weight: var(--manti-weight-semibold);
       cursor: pointer;
-      border: 1px solid var(--tone-border);
-      color: var(--tone-text);
+      border: 1px solid var(--variant-border);
+      color: var(--variant-text);
       background: none;
 
       &:last-child {
-        background: var(--tone-solid);
+        background: var(--variant-solid);
         border-color: transparent;
-        color: var(--tone-on-solid);
+        color: var(--variant-on-solid);
       }
 
       &:disabled {
@@ -168,7 +168,7 @@
       }
 
       &:focus-visible {
-        outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+        outline: var(--manti-focus-ring-width) solid var(--variant-ring);
         outline-offset: var(--manti-focus-ring-offset);
       }
     }

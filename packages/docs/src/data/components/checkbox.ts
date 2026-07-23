@@ -10,10 +10,10 @@ export const meta: ComponentMeta = {
       description: 'Control size.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Active tone when checked.',
+      description: 'Active variant when checked.',
     },
     {
       name: 'indeterminate',

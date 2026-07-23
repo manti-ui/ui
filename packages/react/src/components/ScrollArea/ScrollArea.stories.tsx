@@ -91,7 +91,7 @@ export const Horizontal: Story = {
     <ScrollArea orientation="horizontal" style={{ width: '22rem' }}>
       <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem' }}>
         {Array.from({ length: 16 }, (_, i) => (
-          <Badge key={i} tone="neutral" variant="soft">
+          <Badge key={i} variant="secondary">
             Tag {i + 1}
           </Badge>
         ))}

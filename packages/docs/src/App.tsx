@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Outlet, useLocation } from 'react-router-dom';
 
@@ -12,13 +13,21 @@ import { TableOfContents } from './shell/TableOfContents';
 import { TopNav } from './shell/TopNav';
 
 export function App() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const slug = slugFromPath(pathname);
   const page = pageBySlug.get(slug);
   const isLanding = slug === '/';
 
   // Sync per-route <title>/description/canonical/OG tags on client navigation.
   useDocumentHead(page);
+
+  // The page scrolls on the window (sidebar/TOC are sticky), and react-router
+  // keeps the old scroll offset across client navigations. Reset to the top on
+  // every route change so a sidebar click starts the new page from its heading —
+  // but leave in-page anchor jumps (TOC links carry a hash) alone.
+  useEffect(() => {
+    if (!hash) window.scrollTo({ top: 0, left: 0 });
+  }, [pathname, hash]);
 
   return (
     <MDXProvider components={mdxComponents}>

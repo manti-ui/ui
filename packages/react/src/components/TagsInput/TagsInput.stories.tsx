@@ -9,15 +9,15 @@ const meta = {
   parameters: { layout: 'padded' },
   args: {
     label: 'Fillings',
-    tone: 'primary',
+    variant: 'primary',
     defaultValue: ['lamb', 'onion', 'pepper'],
     placeholder: 'Add a filling…',
     disabled: false,
   },
   argTypes: {
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof TagsInput>;

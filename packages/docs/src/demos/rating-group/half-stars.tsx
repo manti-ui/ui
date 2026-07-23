@@ -7,7 +7,7 @@ export default function RatingGroupHalfStars() {
       count={5}
       defaultValue={3.5}
       allowHalf
-      tone="warning"
+      variant="primary"
     />
   );
 }

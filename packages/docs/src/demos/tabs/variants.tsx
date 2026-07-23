@@ -32,7 +32,7 @@ export default function TabsVariants() {
       }}
     >
       {variants.map((variant) => (
-        <Tabs key={variant} items={items} variant={variant} tone="primary" />
+        <Tabs key={variant} items={items} variant={variant} />
       ))}
     </div>
   );

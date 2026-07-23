@@ -2,7 +2,7 @@ import './index.css';
 
 export { mantiTokens, mantiTokenContract } from '@manti-ui/tokens';
 export type {
-  MantiBuiltinTone,
+  MantiBuiltinVariant,
   MantiTokens,
-  MantiTone,
+  MantiVariant,
 } from '@manti-ui/tokens';

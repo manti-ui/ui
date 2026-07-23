@@ -6,7 +6,7 @@ import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
 import { Button } from '../Button/Button';
-import { Clipboard } from '../Clipboard/Clipboard';
+import { Input } from '../Input/Input';
 import { Tabs } from '../Tabs/Tabs';
 
 export interface ColorPickerProps {
@@ -62,6 +62,31 @@ const eyeDropperIcon = (
   </svg>
 );
 
+const svgIconProps = {
+  width: 15,
+  height: 15,
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: 2,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+  'aria-hidden': true,
+} as const;
+
+const copyIcon = (
+  <svg {...svgIconProps}>
+    <rect x="9" y="9" width="12" height="12" rx="2" />
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+  </svg>
+);
+
+const checkIcon = (
+  <svg {...svgIconProps}>
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+);
+
 /** A color picker backed by the Zag.js color-picker machine. */
 export function ColorPicker({
   label,
@@ -98,6 +123,36 @@ export function ColorPicker({
   const api = colorPicker.connect(service, normalizeProps);
 
   const [copyFormat, setCopyFormat] = useState<CopyFormat>('hex');
+
+  // Editable value field. `draft` is null unless the input is being edited, so
+  // the field otherwise mirrors the live color (drag the area, move a slider).
+  const [draft, setDraft] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const formatted = api.value.toString(copyFormat);
+
+  // Apply a typed/pasted CSS color of any format (hex, rgb(a), hsl(a), …). Zag's
+  // parser throws on an incomplete string mid-typing, so invalid input is a no-op.
+  const commitValue = (raw: string) => {
+    const text = raw.trim();
+    if (!text) return;
+    try {
+      api.setValue(colorPicker.parse(text));
+    } catch {
+      /* not a valid color yet — keep the draft, don't touch the color */
+    }
+  };
+
+  const copyValue = () => {
+    void navigator.clipboard?.writeText(formatted).then(
+      () => {
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 1200);
+      },
+      () => {
+        /* clipboard unavailable */
+      },
+    );
+  };
 
   return (
     <div {...api.getRootProps()} className={cx(className)}>
@@ -152,7 +207,36 @@ export function ColorPicker({
                 {eyeDropperIcon}
               </Button>
             </div>
-            <Clipboard value={api.value.toString(copyFormat)} />
+            <div data-part="value-field">
+              <Input
+                size="sm"
+                aria-label="Color value"
+                placeholder="#hex · rgb() · hsl()"
+                autoComplete="off"
+                autoCapitalize="off"
+                spellCheck={false}
+                value={draft ?? formatted}
+                onChange={(event) => {
+                  setDraft(event.target.value);
+                  commitValue(event.target.value);
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') event.currentTarget.blur();
+                }}
+                onBlur={() => setDraft(null)}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                iconOnly
+                aria-label="Copy color value"
+                title={copied ? 'Copied' : 'Copy'}
+                onClick={copyValue}
+              >
+                {copied ? checkIcon : copyIcon}
+              </Button>
+            </div>
           </div>
         </div>
       </Portal>

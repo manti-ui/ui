@@ -11,7 +11,7 @@ const tags = [
 const Tags = () => (
   <>
     {tags.map((t) => (
-      <Badge key={t} tone="neutral" variant="soft">
+      <Badge key={t} variant="secondary">
         {t}
       </Badge>
     ))}

@@ -1,6 +1,6 @@
 /**
  * Clipboard — copy-to-clipboard field backed by the Zag.js clipboard machine.
- * The trigger swaps a copy/check indicator; the copied state tints the tone.
+ * The trigger swaps a copy/check indicator; the copied state tints the variant.
  */
 @layer manti.components {
   [data-scope='clipboard'][data-part='root'] {
@@ -41,11 +41,11 @@
       border-color: var(--manti-focus-ring);
     }
 
-    /* The copied confirmation tints the whole field with the tone — focus
+    /* The copied confirmation tints the whole field with the variant — focus
        above stays neutral so plain clicks into the input don't read as
        "copied". */
     &[data-copied] {
-      border-color: var(--tone-ring, var(--manti-focus-ring));
+      border-color: var(--variant-ring, var(--manti-focus-ring));
     }
   }
 
@@ -85,11 +85,11 @@
     }
 
     &[data-copied] {
-      color: var(--tone-text);
+      color: var(--variant-text);
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);
     }
   }

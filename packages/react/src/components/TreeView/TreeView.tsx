@@ -1,7 +1,7 @@
 import { useId, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { treeView } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -31,8 +31,8 @@ export interface TreeViewProps {
   items: TreeNode[];
   /** Optional label above the tree. */
   label?: ReactNode;
-  /** Selected-node tone. */
-  tone?: MantiTone;
+  /** Selected-node variant. */
+  variant?: MantiVariant;
   /**
    * Render an icon before each node's label, e.g. folder/file icons. Receives
    * the node and its live state so the icon can react to expansion/selection.
@@ -67,7 +67,7 @@ const chevron = (
 export function TreeView({
   items,
   label,
-  tone = 'primary',
+  variant = 'primary',
   icon,
   selectionMode = 'single',
   defaultExpandedValue,
@@ -145,7 +145,7 @@ export function TreeView({
   };
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <h3 {...api.getLabelProps()}>{label}</h3>}
       <div {...api.getTreeProps()}>
         {items.map((node, index) => renderNode(node, [index]))}

@@ -9,10 +9,10 @@ export const meta: ComponentMeta = {
       description: 'The steps. Each item: { title, description?, content? }.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Tone of the active and completed steps.',
+      description: 'Variant of the active and completed steps.',
     },
     {
       name: 'orientation',

@@ -9,10 +9,10 @@ export const meta: ComponentMeta = {
       description: 'The slides to render, one entry per slide.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Tone of the active page indicator.',
+      description: 'Variant of the active page indicator.',
     },
     {
       name: 'slidesPerPage',

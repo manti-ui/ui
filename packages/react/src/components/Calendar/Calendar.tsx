@@ -1,7 +1,7 @@
 import { useId, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { datePicker } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -13,8 +13,8 @@ import { cx } from '../../internal/props';
 export type CalendarDayValue = datePicker.DateValue;
 
 export interface CalendarProps {
-  /** Tone used for the "today" chip and the selection highlight. */
-  tone?: MantiTone;
+  /** Variant used for the "today" chip and the selection highlight. */
+  variant?: MantiVariant;
   /** single, multiple, or range selection. */
   selectionMode?: 'single' | 'multiple' | 'range';
   /** Controlled value as ISO date strings (YYYY-MM-DD). */
@@ -77,7 +77,7 @@ const navIcon = (d: string) => (
  * wraps them in a `data-scope="calendar"` root and styles them under that scope.
  */
 export function Calendar({
-  tone = 'primary',
+  variant = 'primary',
   selectionMode = 'single',
   value,
   defaultValue,
@@ -131,7 +131,7 @@ export function Calendar({
     <div
       data-scope="calendar"
       data-part="root"
-      data-tone={tone}
+      data-variant={variant}
       className={cx(className)}
     >
       <div {...api.getContentProps()}>

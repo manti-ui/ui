@@ -11,7 +11,7 @@ const meta = {
     label: 'One-time code',
     length: 4,
     size: 'md',
-    tone: 'primary',
+    variant: 'primary',
     type: 'numeric',
     otp: true,
     mask: false,
@@ -23,9 +23,9 @@ const meta = {
       control: 'inline-radio',
       options: ['numeric', 'alphanumeric', 'alphabetic'],
     },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof PinInput>;

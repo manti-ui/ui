@@ -23,7 +23,7 @@ export default function CalendarBoard() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <SegmentedControl
             size="sm"
-            tone="primary"
+            variant="primary"
             defaultValue="month"
             items={[
               { value: 'month', label: 'Month' },
@@ -31,7 +31,7 @@ export default function CalendarBoard() {
               { value: 'day', label: 'Day' },
             ]}
           />
-          <Button tone="primary" size="sm">
+          <Button variant="primary" size="sm">
             + New event
           </Button>
         </div>
@@ -40,7 +40,7 @@ export default function CalendarBoard() {
         defaultValue={['2026-07-02']}
         renderDay={(day) =>
           day.day === 3 || day.day === 9 || day.day === 18 ? (
-            <Badge tone={day.day === 18 ? 'warning' : 'primary'} size="sm">
+            <Badge variant={day.day === 18 ? 'danger' : 'primary'} size="sm">
               {day.day === 18 ? 'Review' : 'Standup'}
             </Badge>
           ) : null

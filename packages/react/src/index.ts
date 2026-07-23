@@ -11,4 +11,4 @@ export type {
   ShortcutScope,
 } from './shortcut';
 
-export type { MantiBuiltinTone, MantiTone } from '@manti-ui/tokens';
+export type { MantiBuiltinVariant, MantiVariant } from '@manti-ui/tokens';

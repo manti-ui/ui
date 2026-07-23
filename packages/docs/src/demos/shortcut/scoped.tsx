@@ -26,7 +26,7 @@ export default function ShortcutScoped() {
         <span style={{ color: 'var(--manti-text-muted)' }}>
           Click to focus, then press ⌘S / Ctrl+S to save.
         </span>
-        <Badge tone={saves > 0 ? 'success' : 'neutral'}>
+        <Badge variant={saves > 0 ? 'primary' : 'secondary'}>
           {saves > 0 ? `Saved ×${saves}` : 'Not saved'}
         </Badge>
       </Card>

@@ -10,7 +10,6 @@ const meta = {
   args: {
     variant: 'linear',
     label: 'Steaming',
-    tone: 'primary',
     size: 'md',
     defaultValue: 65,
     showValue: true,
@@ -18,10 +17,6 @@ const meta = {
   argTypes: {
     variant: { control: 'inline-radio', options: ['linear', 'circular'] },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    tone: {
-      control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
-    },
   },
 } satisfies Meta<typeof Progress>;
 

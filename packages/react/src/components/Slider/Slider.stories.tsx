@@ -9,7 +9,7 @@ const meta = {
   parameters: { layout: 'padded' },
   args: {
     label: 'Spice level',
-    tone: 'primary',
+    variant: 'primary',
     defaultValue: 40,
     min: 0,
     max: 100,
@@ -18,9 +18,9 @@ const meta = {
     disabled: false,
   },
   argTypes: {
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Slider>;
@@ -38,12 +38,12 @@ export const WithMarks: Story = {
   args: { label: 'Portion', marks: [0, 25, 50, 75, 100] },
 };
 
-export const Tones: Story = {
+export const Variants: Story = {
   render: (args) => (
     <div style={{ display: 'grid', gap: '1.5rem', maxWidth: 360 }}>
-      {(['primary', 'success', 'warning', 'danger', 'info'] as const).map(
-        (tone) => (
-          <Slider {...args} key={tone} tone={tone} label={tone} />
+      {(['primary', 'secondary', 'tertiary', 'danger', 'outline'] as const).map(
+        (variant) => (
+          <Slider {...args} key={variant} variant={variant} label={variant} />
         ),
       )}
     </div>

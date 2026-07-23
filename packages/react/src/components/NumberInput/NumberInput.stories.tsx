@@ -10,7 +10,7 @@ const meta = {
   args: {
     label: 'Servings',
     size: 'md',
-    tone: 'primary',
+    variant: 'primary',
     defaultValue: '12',
     min: 0,
     max: 99,
@@ -19,9 +19,9 @@ const meta = {
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof NumberInput>;

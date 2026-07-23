@@ -24,7 +24,7 @@ const slides = ['Dough', 'Filling', 'Folding', 'Boiling', 'Serving'].map(
 export default function CarouselBasic() {
   return (
     <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 9)' }}>
-      <Carousel slides={slides} tone="primary" />
+      <Carousel slides={slides} variant="primary" />
     </div>
   );
 }

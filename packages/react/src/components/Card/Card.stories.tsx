@@ -34,7 +34,7 @@ export const Basic: Story = {
           }}
         >
           <Card.Title>Kayseri Mantısı</Card.Title>
-          <Badge tone="success" dot>
+          <Badge variant="primary" dot>
             Fresh
           </Badge>
         </div>
@@ -48,7 +48,7 @@ export const Basic: Story = {
       </Card.Body>
       <Card.Footer>
         <Button size="sm">Cook now</Button>
-        <Button size="sm" variant="ghost" tone="neutral">
+        <Button size="sm" variant="tertiary">
           Save
         </Button>
       </Card.Footer>

@@ -1,7 +1,7 @@
 /**
  * Tree View — a nested, keyboard-navigable tree backed by the Zag.js tree-view
  * machine. Rows are quiet until hovered/focused; the selected row
- * (`data-selected`) takes the soft tone. Branch content indents one step per
+ * (`data-selected`) takes the soft variant. Branch content indents one step per
  * depth and the chevron rotates on expand (`data-state='open'`).
  */
 @layer manti.components {
@@ -42,16 +42,16 @@
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
 
     &:hover {
-      background: color-mix(in oklab, var(--manti-text) 6%, transparent);
+      background: var(--manti-fill);
     }
 
     &[data-selected] {
-      background: color-mix(in oklab, var(--tone-soft-bg) 70%, transparent);
-      color: var(--tone-soft-text);
+      background: var(--variant-fill-strong);
+      color: var(--variant-soft-text);
     }
 
     &[data-focus] {
-      /* outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      /* outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1); */
     }
 
@@ -73,7 +73,7 @@
   }
 
   /* Optional leading icon (e.g. folder/file). Muted by default; inherits the
-     row's tone when the node is selected. */
+     row's variant when the node is selected. */
   [data-scope='tree-view'][data-part='node-icon'] {
     display: inline-flex;
     flex: none;

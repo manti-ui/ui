@@ -1,6 +1,6 @@
 /**
  * Tags Input — a multi-value entry field backed by the Zag.js tags-input
- * machine. Tags are tonal soft pills inside the shared translucent field surface;
+ * machine. Tags are variant soft pills inside the shared translucent field surface;
  * the entry input flows after the last tag and wraps as needed.
  */
 @layer manti.components {
@@ -38,15 +38,7 @@
       box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:focus-within {
-      border-color: var(--tone-ring, var(--manti-focus-ring));
-      box-shadow:
-        var(--manti-panel-rim),
-        0 0 0 3px
-          color-mix(
-            in oklab,
-            var(--tone-ring, var(--manti-focus-ring)) 30%,
-            transparent
-          );
+      border-color: var(--variant-ring, var(--manti-focus-ring));
     }
   }
 
@@ -76,15 +68,15 @@
     gap: var(--manti-space-2);
     height: 1.625rem;
     padding-inline: var(--manti-space-2);
-    background: color-mix(in oklab, var(--tone-soft-bg) 80%, transparent);
+    background: color-mix(in oklab, var(--variant-soft-bg) 80%, transparent);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-sm);
-    color: var(--tone-soft-text);
+    color: var(--variant-soft-text);
     font-size: var(--manti-text-xs);
     font-weight: var(--manti-weight-medium);
 
     &[data-highlighted] {
-      background: var(--tone-soft-bg-hover);
+      background: var(--variant-soft-bg-hover);
     }
   }
 

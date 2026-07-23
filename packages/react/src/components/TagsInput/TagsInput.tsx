@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { tagsInput } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -9,8 +9,8 @@ import { cx } from '../../internal/props';
 export interface TagsInputProps {
   /** Optional field label. */
   label?: ReactNode;
-  /** Focus-ring tone. */
-  tone?: MantiTone;
+  /** Focus-ring variant. */
+  variant?: MantiVariant;
   /** Controlled tag values. */
   value?: string[];
   /** Initial tag values for uncontrolled usage. */
@@ -37,7 +37,7 @@ export interface TagsInputProps {
 /** A multi-value entry field backed by the Zag.js tags-input machine. */
 export function TagsInput({
   label,
-  tone = 'primary',
+  variant = 'primary',
   value,
   defaultValue,
   onValueChange,
@@ -73,7 +73,7 @@ export function TagsInput({
   const api = tagsInput.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
         {api.value.map((tag, index) => (

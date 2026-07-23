@@ -44,17 +44,17 @@
   --manti-focus-ring: var(--manti-orange-500);
 }
 
-/* Yeni tone — <Button tone="brand"> */
-[data-tone='brand'] {
-  --tone-solid: light-dark(#0d9488, #14b8a6);
-  --tone-solid-hover: light-dark(#0b8076, #2dd4bf);
-  --tone-solid-active: light-dark(#096a62, #5eead4);
-  --tone-on-solid: #ffffff;
-  --tone-soft-bg: light-dark(#d6f5f0, #0b2e2a);
-  --tone-soft-text: light-dark(#0b6a60, #99f6e4);
-  --tone-border: light-dark(#9fe5db, #155e54);
-  --tone-text: light-dark(#0b6a60, #5eead4);
-  --tone-ring: #14b8a6;
+/* Yeni variant — <Button variant="brand"> */
+[data-variant='brand'] {
+  --variant-solid: light-dark(#0d9488, #14b8a6);
+  --variant-solid-hover: light-dark(#0b8076, #2dd4bf);
+  --variant-solid-active: light-dark(#096a62, #5eead4);
+  --variant-on-solid: #ffffff;
+  --variant-soft-bg: light-dark(#d6f5f0, #0b2e2a);
+  --variant-soft-text: light-dark(#0b6a60, #99f6e4);
+  --variant-border: light-dark(#9fe5db, #155e54);
+  --variant-text: light-dark(#0b6a60, #5eead4);
+  --variant-ring: #14b8a6;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -73,7 +73,7 @@
  *
  *   // Tema köprüsünden gelen, token-farkında utility'ler:
  *   <Card className="bg-surface border-border text-text rounded-lg" />
- *   <Button tone="brand">Kaydet</Button>
+ *   <Button variant="brand">Kaydet</Button>
  *
  *   // Bileşene özel görsel ezme (radius/padding/shadow):
  *   <Button className="rounded-pill px-8 shadow-none">Sharp</Button>

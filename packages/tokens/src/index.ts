@@ -4,9 +4,10 @@
  * Framework-agnostic design token contract for Manti UI.
  *
  * The metaphor is mantı: a dish that appears in many regions and forms. The
- * palette is warm-tinted — a neutral `gray` plus `orange`, `green`, `amber`,
- * `red`, and `blue` — expressed as perceptually-smooth OKLCH ramps under plain,
- * universally understood color names.
+ * palette pairs a cool neutral `gray` (the panel-signature hue, 280) with warm
+ * `orange`, `green`, `amber`, `red`, and `blue` accents — all expressed as
+ * perceptually-smooth OKLCH ramps under plain, universally understood color
+ * names.
  *
  * This module is the typed source of truth. Its primitive ramps and scale
  * values are generated into the `--manti-*` custom properties of
@@ -15,114 +16,185 @@
  * top with the CSS `light-dark()` function.
  */
 
-/** Primitive color ramps. Fixed values, identical in light and dark themes. */
+/**
+ * Ramp generation.
+ *
+ * Each primitive ramp is produced from a compact spec instead of 33 hand-tuned
+ * numbers. The per-stop *lightness* is the perceptual backbone and stays
+ * explicit; *hue* drifts linearly across the ramp; *chroma* follows a smooth
+ * "bell" — edges plus a mid peak shaped by a rise/fall bias. The specs below are
+ * fit to the previous hand-tuned ramps within ΔChroma ≤ 0.012 and ΔHue ≤ 2.3°
+ * (lightness unchanged), so the switch is visually lossless while making the
+ * ramps principled and cheap to extend or recolor.
+ */
+const RAMP_STOPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+
+type RampSpec = {
+  /** Per-stop lightness, lightest → darkest (the backbone). */
+  lightness: number[];
+  /** Hue at the lightest / darkest stop; drifts linearly between. */
+  hueStart: number;
+  hueEnd: number;
+  /** Chroma bell: value at the edges, the peak, and which stop carries it. */
+  chromaStart: number;
+  chromaPeak: number;
+  chromaEnd: number;
+  peakIndex: number;
+  /** Shape of the bell's climb / descent (0 = S-curve, 1 = ease-out). */
+  chromaRiseBias: number;
+  chromaFallBias: number;
+};
+
+const cosEase = (t: number) => (1 - Math.cos(Math.PI * t)) / 2;
+const outEase = (t: number) => Math.sin((t * Math.PI) / 2);
+const easeBias = (t: number, b: number) => (1 - b) * cosEase(t) + b * outEase(t);
+const round = (n: number, p: number) => Number(n.toFixed(p));
+
+/** Expand a {@link RampSpec} into `{ 50: 'oklch(…)', …, 950: 'oklch(…)' }`. */
+function rampFrom(spec: RampSpec): Record<number, string> {
+  const n = spec.lightness.length;
+  const out: Record<number, string> = {};
+  spec.lightness.forEach((l, i) => {
+    const h = round(
+      spec.hueStart + (spec.hueEnd - spec.hueStart) * (i / (n - 1)),
+      1,
+    );
+    const c =
+      i <= spec.peakIndex
+        ? spec.chromaStart +
+          (spec.chromaPeak - spec.chromaStart) *
+            easeBias(i / spec.peakIndex, spec.chromaRiseBias)
+        : spec.chromaPeak +
+          (spec.chromaEnd - spec.chromaPeak) *
+            easeBias(
+              (i - spec.peakIndex) / (n - 1 - spec.peakIndex),
+              spec.chromaFallBias,
+            );
+    out[RAMP_STOPS[i]] = `oklch(${round(l, 3)} ${round(c, 3)} ${h})`;
+  });
+  return out;
+}
+
+/** Primitive color ramps, generated from specs (see {@link rampFrom}). */
 export const colorPrimitives = {
-  /** Warm neutral. The backbone of every surface and text color. */
-  gray: {
-    50: 'oklch(0.985 0.004 80)',
-    100: 'oklch(0.968 0.006 80)',
-    200: 'oklch(0.934 0.008 78)',
-    300: 'oklch(0.888 0.01 76)',
-    400: 'oklch(0.79 0.012 74)',
-    500: 'oklch(0.672 0.013 72)',
-    600: 'oklch(0.556 0.013 70)',
-    700: 'oklch(0.452 0.012 68)',
-    800: 'oklch(0.352 0.011 66)',
-    900: 'oklch(0.268 0.01 64)',
-    950: 'oklch(0.196 0.008 62)',
-  },
+  /**
+   * Cool neutral — the panel-signature hue (280), the single backbone of every
+   * surface, text, and border color. The hue is centralized on `--manti-cool-hue`
+   * in the CSS (the token generator rewrites these stops to
+   * `oklch(l c var(--manti-cool-hue))`), so the whole neutral re-tints from one
+   * custom property. Chroma stays near-zero (a faint cool cast, no color).
+   */
+  gray: rampFrom({
+    lightness: [
+      0.985, 0.968, 0.934, 0.888, 0.79, 0.672, 0.556, 0.452, 0.352, 0.268,
+      0.196,
+    ],
+    hueStart: 280,
+    hueEnd: 280,
+    chromaStart: 0.004,
+    chromaPeak: 0.013,
+    chromaEnd: 0.008,
+    peakIndex: 5,
+    chromaRiseBias: 0.5,
+    chromaFallBias: 0.4,
+  }),
   /** Primary. Warm orange — the signature Manti UI accent. */
-  orange: {
-    50: 'oklch(0.972 0.018 50)',
-    100: 'oklch(0.94 0.04 48)',
-    200: 'oklch(0.888 0.072 46)',
-    300: 'oklch(0.82 0.11 44)',
-    400: 'oklch(0.745 0.15 42)',
-    500: 'oklch(0.678 0.17 40)',
-    600: 'oklch(0.61 0.172 38)',
-    700: 'oklch(0.52 0.15 36)',
-    800: 'oklch(0.43 0.122 35)',
-    900: 'oklch(0.35 0.092 34)',
-    950: 'oklch(0.262 0.064 33)',
-  },
+  orange: rampFrom({
+    lightness: [
+      0.972, 0.94, 0.888, 0.82, 0.745, 0.678, 0.61, 0.52, 0.43, 0.35, 0.262,
+    ],
+    hueStart: 50,
+    hueEnd: 33,
+    chromaStart: 0.018,
+    chromaPeak: 0.172,
+    chromaEnd: 0.064,
+    peakIndex: 6,
+    chromaRiseBias: 0.5,
+    chromaFallBias: 0,
+  }),
   /** Success. Fresh green. */
-  green: {
-    50: 'oklch(0.972 0.022 150)',
-    100: 'oklch(0.94 0.044 151)',
-    200: 'oklch(0.89 0.072 152)',
-    300: 'oklch(0.82 0.1 153)',
-    400: 'oklch(0.74 0.12 154)',
-    500: 'oklch(0.668 0.128 155)',
-    600: 'oklch(0.58 0.12 156)',
-    700: 'oklch(0.486 0.1 157)',
-    800: 'oklch(0.398 0.08 158)',
-    900: 'oklch(0.32 0.062 159)',
-    950: 'oklch(0.238 0.044 160)',
-  },
+  green: rampFrom({
+    lightness: [
+      0.972, 0.94, 0.89, 0.82, 0.74, 0.668, 0.58, 0.486, 0.398, 0.32, 0.238,
+    ],
+    hueStart: 150,
+    hueEnd: 160,
+    chromaStart: 0.022,
+    chromaPeak: 0.128,
+    chromaEnd: 0.044,
+    peakIndex: 5,
+    chromaRiseBias: 0.5,
+    chromaFallBias: 0.2,
+  }),
   /** Warning. Golden amber. */
-  amber: {
-    50: 'oklch(0.978 0.022 85)',
-    100: 'oklch(0.952 0.046 83)',
-    200: 'oklch(0.908 0.082 80)',
-    300: 'oklch(0.86 0.116 77)',
-    400: 'oklch(0.812 0.14 74)',
-    500: 'oklch(0.76 0.15 71)',
-    600: 'oklch(0.68 0.146 68)',
-    700: 'oklch(0.566 0.12 66)',
-    800: 'oklch(0.462 0.096 64)',
-    900: 'oklch(0.382 0.074 62)',
-    950: 'oklch(0.286 0.054 60)',
-  },
+  amber: rampFrom({
+    lightness: [
+      0.978, 0.952, 0.908, 0.86, 0.812, 0.76, 0.68, 0.566, 0.462, 0.382, 0.286,
+    ],
+    hueStart: 85,
+    hueEnd: 60,
+    chromaStart: 0.022,
+    chromaPeak: 0.15,
+    chromaEnd: 0.054,
+    peakIndex: 5,
+    chromaRiseBias: 0.5,
+    chromaFallBias: 0.2,
+  }),
   /** Danger. Hot red. */
-  red: {
-    50: 'oklch(0.971 0.018 25)',
-    100: 'oklch(0.936 0.04 24)',
-    200: 'oklch(0.882 0.074 23)',
-    300: 'oklch(0.81 0.116 23)',
-    400: 'oklch(0.726 0.17 24)',
-    500: 'oklch(0.652 0.205 26)',
-    600: 'oklch(0.586 0.21 27)',
-    700: 'oklch(0.502 0.186 27)',
-    800: 'oklch(0.42 0.15 27)',
-    900: 'oklch(0.352 0.115 27)',
-    950: 'oklch(0.262 0.078 26)',
-  },
+  red: rampFrom({
+    lightness: [
+      0.971, 0.936, 0.882, 0.81, 0.726, 0.652, 0.586, 0.502, 0.42, 0.352, 0.262,
+    ],
+    hueStart: 25,
+    hueEnd: 26,
+    chromaStart: 0.018,
+    chromaPeak: 0.21,
+    chromaEnd: 0.085,
+    peakIndex: 6,
+    chromaRiseBias: 0.3,
+    chromaFallBias: -0.15,
+  }),
   /** Info. Smooth, calm blue. */
-  blue: {
-    50: 'oklch(0.974 0.014 235)',
-    100: 'oklch(0.94 0.03 236)',
-    200: 'oklch(0.89 0.054 237)',
-    300: 'oklch(0.82 0.08 238)',
-    400: 'oklch(0.73 0.108 240)',
-    500: 'oklch(0.65 0.13 242)',
-    600: 'oklch(0.566 0.14 244)',
-    700: 'oklch(0.482 0.128 246)',
-    800: 'oklch(0.402 0.104 247)',
-    900: 'oklch(0.336 0.08 248)',
-    950: 'oklch(0.252 0.056 249)',
-  },
-} as const;
-
-/** Semantic tones available to tonal components (button, badge, alert, ...). */
-export const tones = [
-  'primary',
-  'neutral',
-  'success',
-  'warning',
-  'danger',
-  'info',
-] as const;
-
-/** The tones Manti UI ships `--tone-*` values for out of the box. */
-export type MantiBuiltinTone = (typeof tones)[number];
+  blue: rampFrom({
+    lightness: [
+      0.974, 0.94, 0.89, 0.82, 0.73, 0.65, 0.566, 0.482, 0.402, 0.336, 0.252,
+    ],
+    hueStart: 235,
+    hueEnd: 249,
+    chromaStart: 0.014,
+    chromaPeak: 0.14,
+    chromaEnd: 0.056,
+    peakIndex: 6,
+    chromaRiseBias: 0.5,
+    chromaFallBias: 0.1,
+  }),
+};
 
 /**
- * Tone accepted by tonal components. Beyond the built-ins, any string is
- * allowed so applications can register custom tones in plain CSS — declare a
- * `[data-tone='brand']` block that defines the full `--tone-*` vocabulary,
- * then pass `tone="brand"`. The intersection keeps built-in autocomplete.
+ * Color variants available to variant-driven components (button, badge,
+ * alert, ...). `primary/secondary/tertiary` are an emphasis ladder (branded
+ * solid → neutral soft → neutral ghost), `danger` is the one semantic hue, and
+ * `outline` is a neutral bordered treatment.
  */
-export type MantiTone = MantiBuiltinTone | (string & {});
+export const variants = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'danger',
+  'outline',
+] as const;
+
+/** The variants Manti UI ships `--variant-*` values for out of the box. */
+export type MantiBuiltinVariant = (typeof variants)[number];
+
+/**
+ * Variant accepted by variant-driven components. Beyond the built-ins, any
+ * string is allowed so applications can register custom variants in plain
+ * CSS — declare a `[data-variant='brand']` block that defines the full
+ * `--variant-*` vocabulary, then pass `variant="brand"`. The intersection
+ * keeps built-in autocomplete.
+ */
+export type MantiVariant = MantiBuiltinVariant | (string & {});
 
 /** Corner radii. Generous and pillowy, echoing the folded mantı silhouette. */
 export const radius = {
@@ -148,7 +220,15 @@ export const controlHeight = {
   lg: '3rem',
 } as const;
 
-/** Spacing scale on a 4px grid. */
+/**
+ * Spacing scale on a 4px grid.
+ *
+ * These are the *resolved* values (source of truth for types, docs, and the
+ * Tailwind bridge). In the generated CSS the scale is anchored on
+ * `--manti-space-1` (the 0.25rem grid unit): every other stop is emitted as
+ * `calc(var(--manti-space-1) * n)`, so overriding that one custom property
+ * rescales the entire scale. See `packages/styles/scripts/gen-tokens-css.mjs`.
+ */
 export const space = {
   0: '0',
   1: '0.25rem',
@@ -163,7 +243,16 @@ export const space = {
   16: '4rem',
 } as const;
 
-/** Type scale. */
+/**
+ * Type scale.
+ *
+ * These are the *resolved* values (source of truth for types, docs, and the
+ * Tailwind bridge). In the generated CSS the scale is anchored on
+ * `--manti-text-base` (the body size): every other stop is emitted as
+ * `calc(var(--manti-text-base) * ratio)`, so overriding that one custom
+ * property rescales the whole type scale proportionally. The ratios are derived
+ * from these values at generation time, so the two can never drift.
+ */
 export const fontSize = {
   xs: '0.75rem',
   sm: '0.875rem',
@@ -257,7 +346,7 @@ export const zIndex = {
  * Curation rule — only *independent* dimensions are exposed. *Derived* values
  * (computed via `calc()` from these) stay private `--_*` knobs inside the
  * component CSS, so a consumer can never put a component into a geometrically
- * inconsistent state. Color is already handled by the tonal `--tone-*` tier, so
+ * inconsistent state. Color is already handled by the `--variant-*` tier, so
  * this tier stays mostly structural (radius, spacing, sizing, typography).
  *
  * Values live hand-authored in each component's CSS (like the semantic roles),
@@ -363,7 +452,7 @@ export const mantiTokens = {
   packageName: '@manti-ui/tokens',
   status: 'designed',
   color: { primitives: colorPrimitives },
-  tones,
+  variants,
   componentTokens,
   radius,
   controlHeight,

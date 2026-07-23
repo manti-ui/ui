@@ -14,10 +14,10 @@ export const meta: ComponentMeta = {
       description: 'Optional label rendered above the list.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Tone applied to the selected item.',
+      description: 'Variant applied to the selected item.',
     },
     {
       name: 'selectionMode',
@@ -49,7 +49,7 @@ export const meta: ComponentMeta = {
   anatomy: [
     {
       part: 'root',
-      description: 'The list wrapper carrying scope, tone, and state.',
+      description: 'The list wrapper carrying scope, variant, and state.',
     },
     {
       part: 'label',

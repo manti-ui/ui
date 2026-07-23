@@ -1,15 +1,11 @@
 import type { HTMLAttributes } from 'react';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 
 import { cx } from '../../internal/props';
 
-export type BadgeVariant = 'solid' | 'soft' | 'outline';
-
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  /** Visual emphasis. */
-  variant?: BadgeVariant;
-  /** Semantic tone. */
-  tone?: MantiTone;
+  /** Color variant — drives hue and emphasis (solid → secondary soft → tertiary outline). */
+  variant?: MantiVariant;
   /** Chip size. */
   size?: 'sm' | 'md';
   /** Show a leading status dot. */
@@ -18,8 +14,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 /** A compact status or label chip. */
 export function Badge({
-  variant = 'soft',
-  tone = 'neutral',
+  variant = 'secondary',
   size = 'sm',
   dot = false,
   className,
@@ -31,7 +26,6 @@ export function Badge({
       data-scope="badge"
       data-part="root"
       data-variant={variant}
-      data-tone={tone}
       data-size={size}
       className={cx(className)}
       {...rest}

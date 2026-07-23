@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { checkbox } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -9,8 +9,8 @@ import { cx } from '../../internal/props';
 export interface CheckboxProps {
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
-  /** Active tone when checked. */
-  tone?: MantiTone;
+  /** Active variant when checked. */
+  variant?: MantiVariant;
   /** Render the mixed/indeterminate state (uncontrolled). */
   indeterminate?: boolean;
   /** Optional trailing label. */
@@ -39,7 +39,7 @@ export interface CheckboxProps {
  */
 export function Checkbox({
   size = 'md',
-  tone = 'primary',
+  variant = 'primary',
   indeterminate = false,
   children,
   className,
@@ -76,7 +76,7 @@ export function Checkbox({
     <label
       {...api.getRootProps()}
       data-size={size}
-      data-tone={tone}
+      data-variant={variant}
       className={cx(className)}
     >
       <input

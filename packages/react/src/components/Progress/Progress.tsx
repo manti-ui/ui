@@ -1,7 +1,6 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { progress } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -11,8 +10,6 @@ export interface ProgressProps {
   variant?: 'linear' | 'circular';
   /** Optional label. */
   label?: ReactNode;
-  /** Fill tone. */
-  tone?: MantiTone;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
   /** Controlled value; pass `null` for an indeterminate state. */
@@ -32,7 +29,6 @@ export interface ProgressProps {
 export function Progress({
   variant = 'linear',
   label,
-  tone = 'primary',
   size = 'md',
   value,
   defaultValue,
@@ -57,7 +53,6 @@ export function Progress({
       {...api.getRootProps()}
       data-variant={variant}
       data-size={size}
-      data-tone={tone}
       className={cx(className)}
     >
       {(label != null || showValue) && (
