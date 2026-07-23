@@ -10,12 +10,12 @@ const meta = {
   args: {
     value: 'npm install @manti-ui/react',
     label: 'Install command',
-    tone: 'success',
+    variant: 'primary',
   },
   argTypes: {
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Clipboard>;

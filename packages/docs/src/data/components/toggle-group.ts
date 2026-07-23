@@ -15,10 +15,10 @@ export const meta: ComponentMeta = {
       description: 'Control size.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Active tone for pressed items.',
+      description: 'Active variant for pressed items.',
     },
     {
       name: 'multiple',
@@ -55,7 +55,7 @@ export const meta: ComponentMeta = {
   anatomy: [
     {
       part: 'root',
-      description: 'The wrapper that owns size, tone, and orientation.',
+      description: 'The wrapper that owns size, variant, and orientation.',
     },
     { part: 'item', description: 'A single toggle button.' },
   ],

@@ -4,7 +4,7 @@ export default function EditableBasic() {
   return (
     <Editable
       label="Recipe name"
-      tone="primary"
+      variant="primary"
       defaultValue="Kayseri mantısı"
       placeholder="Enter a name…"
       activationMode="focus"

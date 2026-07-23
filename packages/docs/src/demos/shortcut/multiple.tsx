@@ -30,7 +30,7 @@ export default function ShortcutMultiple() {
         {COMBOS.map((combo) => (
           <Badge
             key={combo}
-            variant="outline"
+            variant="tertiary"
             style={{ fontFamily: 'var(--manti-font-mono)' }}
           >
             {combo}

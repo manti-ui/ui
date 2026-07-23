@@ -17,10 +17,7 @@ export function ComponentStatusGrid() {
                 style={{ justifyContent: 'space-between' }}
               >
                 <strong>{item.name}</strong>
-                <Badge
-                  tone={item.documented ? 'success' : 'neutral'}
-                  variant="soft"
-                >
+                <Badge variant={item.documented ? 'primary' : 'secondary'}>
                   {item.documented ? 'Docs' : 'Storybook'}
                 </Badge>
               </div>

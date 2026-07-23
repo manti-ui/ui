@@ -54,7 +54,7 @@ export default function TourBasic() {
   return (
     <Tour
       steps={steps}
-      trigger={<Button tone="primary">Take a tour of the docs</Button>}
+      trigger={<Button variant="primary">Take a tour of the docs</Button>}
     />
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { combobox } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -20,8 +20,8 @@ export interface ComboboxProps {
   /** Optional field label. */
   label?: ReactNode;
   placeholder?: string;
-  /** Selected-item tone. */
-  tone?: MantiTone;
+  /** Selected-item variant. */
+  variant?: MantiVariant;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
   /** Allow selecting more than one option. */
@@ -56,13 +56,25 @@ const check = (
   </svg>
 );
 
+const clearIcon = (
+  <svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true">
+    <path
+      d="M4 4l8 8M12 4l-8 8"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 /** A typeahead select backed by the Zag.js combobox machine. Filtering is
  * client-side over the `items` prop; the listbox is portalled. */
 export function Combobox({
   items,
   label,
   placeholder = 'Search…',
-  tone = 'primary',
+  variant = 'primary',
   size = 'md',
   multiple,
   value,
@@ -144,12 +156,37 @@ export function Combobox({
     <div
       {...api.getRootProps()}
       data-size={size}
-      data-tone={tone}
+      data-variant={variant}
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
-      <div {...api.getControlProps()}>
-        <input {...api.getInputProps()} placeholder={placeholder} />
+      <div {...api.getControlProps()} data-open={api.open || undefined}>
+        {multiple &&
+          api.value.map((val) => {
+            const item = items.find((i) => i.value === val);
+            const text = item?.label ?? val;
+            return (
+              <span key={val} data-scope="combobox" data-part="chip">
+                {text}
+                <button
+                  type="button"
+                  data-scope="combobox"
+                  data-part="chip-remove"
+                  aria-label={`Remove ${text}`}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onClick={() =>
+                    api.setValue(api.value.filter((v) => v !== val))
+                  }
+                >
+                  {clearIcon}
+                </button>
+              </span>
+            );
+          })}
+        <input
+          {...api.getInputProps()}
+          placeholder={multiple && api.value.length > 0 ? '' : placeholder}
+        />
         <button {...api.getTriggerProps()} aria-label="Toggle options">
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
             <path
@@ -165,7 +202,7 @@ export function Combobox({
       </div>
       {api.open && (
         <Portal>
-          <div {...api.getPositionerProps()}>
+          <div {...api.getPositionerProps()} data-variant={variant}>
             <ScrollArea focusable={false}>
               <ul {...api.getContentProps()}>
                 {filtered.map((item) => (

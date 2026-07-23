@@ -6,7 +6,7 @@ export default function CalendarEvents() {
       readOnly
       renderDay={(day) =>
         day.day === 2 || day.day === 9 || day.day === 18 ? (
-          <Badge tone={day.day === 18 ? 'warning' : 'primary'} size="sm">
+          <Badge variant={day.day === 18 ? 'danger' : 'primary'} size="sm">
             {day.day === 18 ? 'Review' : 'Standup'}
           </Badge>
         ) : null

@@ -37,7 +37,7 @@ function ToastDemo({ swipe, placement }: ToastDemoProps) {
           Default
         </Button>
         <Button
-          tone="success"
+          variant="primary"
           onClick={() =>
             toaster.success({
               title: 'Saved',
@@ -48,7 +48,7 @@ function ToastDemo({ swipe, placement }: ToastDemoProps) {
           Success
         </Button>
         <Button
-          tone="danger"
+          variant="danger"
           onClick={() =>
             toaster.error({
               title: 'Dough too dry',
@@ -59,7 +59,7 @@ function ToastDemo({ swipe, placement }: ToastDemoProps) {
           Error
         </Button>
         <Button
-          tone="warning"
+          variant="primary"
           onClick={() =>
             toaster.warning({
               title: 'Low on dough',
@@ -70,7 +70,7 @@ function ToastDemo({ swipe, placement }: ToastDemoProps) {
           Warning
         </Button>
         <Button
-          tone="info"
+          variant="secondary"
           onClick={() =>
             toaster.info({ title: 'Tip', description: 'Rest the dough first.' })
           }

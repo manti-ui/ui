@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { signaturePad } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -11,8 +11,8 @@ export interface SignaturePadProps {
   label?: ReactNode;
   /** Clear-button label. */
   clearLabel?: ReactNode;
-  /** Accent tone. */
-  tone?: MantiTone;
+  /** Accent variant. */
+  variant?: MantiVariant;
   /** Controlled stroke paths. */
   paths?: string[];
   /** Initial stroke paths for uncontrolled usage. */
@@ -31,7 +31,7 @@ export interface SignaturePadProps {
 export function SignaturePad({
   label,
   clearLabel = 'Clear',
-  tone = 'primary',
+  variant = 'primary',
   paths,
   defaultPaths,
   onDrawEnd,
@@ -54,7 +54,7 @@ export function SignaturePad({
   const api = signaturePad.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
         <svg {...api.getSegmentProps()}>

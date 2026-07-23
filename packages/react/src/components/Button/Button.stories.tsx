@@ -3,15 +3,14 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Button } from './Button';
 
-const tones = [
+const variants = [
   'primary',
-  'neutral',
-  'success',
-  'warning',
+  'secondary',
+  'tertiary',
   'danger',
-  'info',
+  'outline',
+  'link',
 ] as const;
-const variants = ['solid', 'soft', 'outline', 'ghost'] as const;
 
 const row: CSSProperties = {
   display: 'flex',
@@ -27,16 +26,14 @@ const meta = {
   parameters: { layout: 'centered' },
   args: {
     children: 'Knead dough',
-    variant: 'solid',
-    tone: 'primary',
+    variant: 'primary',
     size: 'md',
     loading: false,
     fullWidth: false,
     disabled: false,
   },
   argTypes: {
-    variant: { control: 'inline-radio', options: variants },
-    tone: { control: 'select', options: tones },
+    variant: { control: 'select', options: variants },
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
   },
 } satisfies Meta<typeof Button>;
@@ -53,22 +50,6 @@ export const Variants: Story = {
         <Button {...args} key={variant} variant={variant}>
           {variant}
         </Button>
-      ))}
-    </div>
-  ),
-};
-
-export const Tones: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '0.75rem' }}>
-      {variants.map((variant) => (
-        <div style={row} key={variant}>
-          {tones.map((tone) => (
-            <Button {...args} key={tone} variant={variant} tone={tone}>
-              {tone}
-            </Button>
-          ))}
-        </div>
       ))}
     </div>
   ),
@@ -98,7 +79,7 @@ export const WithIcons: Story = {
       </Button>
       <Button
         {...args}
-        variant="soft"
+        variant="secondary"
         trailingIcon={<span aria-hidden>→</span>}
       >
         Continue

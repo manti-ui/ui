@@ -21,10 +21,10 @@ export const meta: ComponentMeta = {
       description: 'Browse-button label.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Accent tone.',
+      description: 'Accent variant.',
     },
     {
       name: 'accept',
@@ -58,7 +58,7 @@ export const meta: ComponentMeta = {
     },
   ],
   anatomy: [
-    { part: 'root', description: 'The wrapper; carries data-tone.' },
+    { part: 'root', description: 'The wrapper; carries data-variant.' },
     { part: 'label', description: 'The label.' },
     { part: 'dropzone', description: 'The drag-and-drop target.' },
     {

@@ -1,5 +1,5 @@
 import { Card } from '@manti-ui/react';
-import { colorPrimitives, tones } from '@manti-ui/tokens';
+import { colorPrimitives, variants } from '@manti-ui/tokens';
 
 /** Renders every primitive ramp (gray, orange, green, amber, red, blue). */
 export function ColorRamps() {
@@ -40,20 +40,22 @@ const swatch = (token: string) => ({
 });
 
 /**
- * Renders the semantic tones. Each card sets `data-tone`, so the `--tone-*`
- * variables resolve theme-aware via `light-dark()`.
+ * Renders the semantic variants. Each card sets `data-variant`, so the
+ * `--variant-*` variables resolve theme-aware via `light-dark()`.
  */
-export function ToneGallery() {
+export function VariantGallery() {
   return (
-    <div className="docs-tone-grid">
-      {tones.map((tone) => (
-        <div key={tone} data-tone={tone}>
+    <div className="docs-variant-grid">
+      {variants.map((variant) => (
+        <div key={variant} data-variant={variant}>
           <Card>
             <Card.Body>
               <div className="docs-cluster">
-                <span style={swatch('--tone-solid')} aria-hidden />
-                <span style={swatch('--tone-soft-bg')} aria-hidden />
-                <strong style={{ textTransform: 'capitalize' }}>{tone}</strong>
+                <span style={swatch('--variant-solid')} aria-hidden />
+                <span style={swatch('--variant-soft-bg')} aria-hidden />
+                <strong style={{ textTransform: 'capitalize' }}>
+                  {variant}
+                </strong>
               </div>
             </Card.Body>
           </Card>

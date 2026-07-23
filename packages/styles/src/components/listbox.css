@@ -1,7 +1,7 @@
 /**
  * Listbox — a selectable list backed by the Zag.js listbox machine. The list is
  * a translucent panel; the highlighted row (`data-highlighted`) lifts and the
- * selected row (`data-state='checked'`) shows the active-tone check.
+ * selected row (`data-state='checked'`) shows the active-variant check.
  */
 @layer manti.components {
   [data-scope='listbox'][data-part='root'] {
@@ -62,18 +62,18 @@
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
 
     &[data-highlighted] {
-      background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+      background: var(--manti-fill);
     }
 
     &[data-state='checked'] {
-      background: var(--tone-soft-bg);
-      color: var(--tone-soft-text);
+      background: var(--variant-soft-bg);
+      color: var(--variant-soft-text);
       font-weight: var(--manti-weight-medium);
     }
 
     /* A selected row that's also under roving focus keeps reading as focused. */
     &[data-state='checked'][data-highlighted] {
-      background: var(--tone-soft-bg-hover);
+      background: var(--variant-soft-bg-hover);
     }
 
     &[data-disabled] {
@@ -85,6 +85,6 @@
   [data-scope='listbox'][data-part='item-indicator'] {
     display: inline-flex;
     flex: none;
-    color: var(--tone-soft-text);
+    color: var(--variant-soft-text);
   }
 }

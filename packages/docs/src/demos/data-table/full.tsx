@@ -23,9 +23,9 @@ const data: Invoice[] = [
   { id: 'INV-012', customer: 'Tyrell Corp', status: 'paid', amount: 240 },
 ];
 
-const statusTone = {
-  paid: 'success',
-  pending: 'warning',
+const statusVariant = {
+  paid: 'primary',
+  pending: 'outline',
   overdue: 'danger',
 } as const;
 
@@ -43,7 +43,7 @@ const columns: DataTableColumn<Invoice>[] = [
     cell: ({ getValue }) => {
       const status = getValue<Invoice['status']>();
       return (
-        <Badge tone={statusTone[status]} variant="soft">
+        <Badge variant={statusVariant[status]}>
           {status}
         </Badge>
       );

@@ -11,7 +11,7 @@ const meta = {
   tags: ['autodocs'],
   parameters: { layout: 'padded' },
   args: {
-    tone: 'primary',
+    variant: 'primary',
     selectionMode: 'single',
     defaultValue: ['2026-07-02'],
   },
@@ -20,9 +20,9 @@ const meta = {
       control: 'inline-radio',
       options: ['single', 'multiple', 'range'],
     },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
     startOfWeek: {
       control: 'inline-radio',
@@ -70,7 +70,7 @@ export const MonthView: Story = {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <SegmentedControl
             size="sm"
-            tone="primary"
+            variant="primary"
             defaultValue="month"
             items={[
               { value: 'month', label: 'Month' },
@@ -78,7 +78,7 @@ export const MonthView: Story = {
               { value: 'day', label: 'Day' },
             ]}
           />
-          <Button tone="primary" size="sm">
+          <Button variant="primary" size="sm">
             + New event
           </Button>
         </div>
@@ -87,7 +87,7 @@ export const MonthView: Story = {
         {...args}
         renderDay={(day) =>
           day.day === 3 || day.day === 9 || day.day === 18 ? (
-            <Badge tone={day.day === 18 ? 'warning' : 'primary'} size="sm">
+            <Badge variant={day.day === 18 ? 'danger' : 'primary'} size="sm">
               {day.day === 18 ? 'Review' : 'Standup'}
             </Badge>
           ) : null
@@ -110,7 +110,7 @@ export const WithEvents: Story = {
     readOnly: true,
     renderDay: (day) =>
       day.day === 2 || day.day === 9 || day.day === 18 ? (
-        <Badge tone={day.day === 18 ? 'warning' : 'primary'} size="sm">
+        <Badge variant={day.day === 18 ? 'danger' : 'primary'} size="sm">
           {day.day === 18 ? 'Review' : 'Standup'}
         </Badge>
       ) : null,

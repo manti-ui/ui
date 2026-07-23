@@ -6,7 +6,7 @@ export default function RatingGroupBasic() {
       label="Rate this recipe"
       count={5}
       defaultValue={3}
-      tone="warning"
+      variant="primary"
     />
   );
 }

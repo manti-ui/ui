@@ -5,7 +5,7 @@ import type {
   ReactNode,
 } from 'react';
 import { swipe as swipeBehavior, toast } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -54,16 +54,22 @@ export interface ToasterInstance {
   Toaster: (props?: ToasterProps) => ReactElement;
 }
 
-/** Map a toast type to the semantic tone that colors it. */
-const TONE_BY_TYPE: Record<string, MantiTone> = {
-  success: 'success',
+/**
+ * Map a toast type to the color variant that skins it. The palette only carries
+ * `danger` (red) and `primary` (orange) as semantic accents, so success/warning
+ * share the orange attention accent, errors are red, and info/loading stay
+ * neutral.
+ */
+const VARIANT_BY_TYPE: Record<string, MantiVariant> = {
+  success: 'primary',
   error: 'danger',
-  warning: 'warning',
-  info: 'info',
-  loading: 'neutral',
+  warning: 'primary',
+  info: 'secondary',
+  loading: 'secondary',
 };
 
-const toneForType = (type: string): MantiTone => TONE_BY_TYPE[type] ?? 'neutral';
+const variantForType = (type: string): MantiVariant =>
+  VARIANT_BY_TYPE[type] ?? 'secondary';
 
 const iconBase = {
   width: 18,
@@ -201,7 +207,7 @@ function ToastItem({
   return (
     <div
       {...rootProps}
-      data-tone={toneForType(type)}
+      data-variant={variantForType(type)}
       data-swipe={swipeEnabled ? '' : undefined}
       onPointerDown={(event: ReactPointerEvent<HTMLDivElement>) => {
         rootProps.onPointerDown?.(event);
@@ -237,7 +243,7 @@ function ToastItem({
 /**
  * Create an isolated toast store plus its `Toaster` host component, both backed
  * by the Zag.js toast machines. The store owns queueing, timers, and pausing;
- * the host renders the translucent, tone-colored toast anatomy through a portal.
+ * the host renders the translucent, variant-colored toast anatomy through a portal.
  *
  * ```tsx
  * const { toaster, Toaster } = createToaster();

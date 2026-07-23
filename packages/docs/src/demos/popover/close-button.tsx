@@ -3,7 +3,7 @@ import { Button, Popover } from '@manti-ui/react';
 export default function PopoverCloseButton() {
   return (
     <Popover
-      trigger={<Button variant="soft">Tips</Button>}
+      trigger={<Button variant="secondary">Tips</Button>}
       title="Dough resting"
       showCloseButton
     >

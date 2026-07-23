@@ -5,7 +5,7 @@ export default function ButtonLoading() {
   const [loading, setLoading] = useState(false);
   return (
     <Button
-      tone="primary"
+      variant="primary"
       loading={loading}
       onClick={() => {
         setLoading(true);

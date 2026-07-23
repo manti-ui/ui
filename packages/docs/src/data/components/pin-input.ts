@@ -21,10 +21,10 @@ export const meta: ComponentMeta = {
       description: 'Cell size.',
     },
     {
-      name: 'tone',
-      type: 'MantiTone',
+      name: 'variant',
+      type: 'MantiVariant',
       default: `'primary'`,
-      description: 'Focus-ring tone.',
+      description: 'Focus-ring variant.',
     },
     {
       name: 'type',

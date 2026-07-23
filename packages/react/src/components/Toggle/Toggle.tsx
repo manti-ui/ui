@@ -1,13 +1,13 @@
 import { toggle } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 import type { ReactNode } from 'react';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 
 import { cx, dataBool } from '../../internal/props';
 
 export interface ToggleProps {
-  /** Active tone when pressed. */
-  tone?: MantiTone;
+  /** Active variant when pressed. */
+  variant?: MantiVariant;
   /** Controlled pressed state. */
   pressed?: boolean;
   /** Initial pressed state for uncontrolled usage. */
@@ -27,10 +27,10 @@ export interface ToggleProps {
 /**
  * A pressable two-state button backed by the shared `@manti-ui/folds` Zag.js
  * toggle machine. The machine owns keyboard, focus, and state behavior; this
- * adapter only renders. Off reads as a quiet outline; on fills with the tone.
+ * adapter only renders. Off reads as a quiet outline; on fills with the variant.
  */
 export function Toggle({
-  tone = 'primary',
+  variant = 'primary',
   pressed,
   defaultPressed,
   onPressedChange,
@@ -54,7 +54,7 @@ export function Toggle({
   return (
     <button
       {...api.getRootProps()}
-      data-tone={tone}
+      data-variant={variant}
       data-icon-only={dataBool(iconOnly)}
       className={cx(className)}
       {...rest}

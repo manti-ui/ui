@@ -12,7 +12,7 @@ import type {
   ReactNode,
   TextareaHTMLAttributes,
 } from 'react';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 
 import { cx, dataBool } from '../../internal/props';
 
@@ -30,8 +30,8 @@ export interface TextareaProps extends Omit<
   error?: ReactNode;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
-  /** Tone used for the focus ring. */
-  tone?: MantiTone;
+  /** Variant used for the focus ring. */
+  variant?: MantiVariant;
   /** Stretch to fill the available inline space. */
   fullWidth?: boolean;
   /** Grow the textarea to fit its content. */
@@ -55,7 +55,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       description,
       error,
       size = 'md',
-      tone = 'primary',
+      variant = 'primary',
       fullWidth,
       autoResize,
       maxHeight,
@@ -117,7 +117,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         data-scope="field"
         data-part="root"
         data-size={size}
-        data-tone={tone}
+        data-variant={variant}
         data-invalid={dataBool(invalid)}
         data-disabled={dataBool(disabled)}
         data-full-width={dataBool(fullWidth)}

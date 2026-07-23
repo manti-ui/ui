@@ -71,7 +71,12 @@ export default function DemoLive({ source, canvasClass, bar }: DemoLiveProps) {
       language="tsx"
     >
       <div className={canvasClass}>
-        <LivePreview />
+        {/* `display: contents` on the preview wrapper (see docs.css) hoists the
+            demo's own elements up to be direct flex children of the canvas, so
+            the open (editable) preview lays out identically to the closed one —
+            same gap, wrapping, and centering. Without it, react-live's wrapper
+            div becomes the single flex child and the demo loses the canvas grid. */}
+        <LivePreview className="docs-live-preview" />
       </div>
       <LiveErrorPanel />
       {bar}
@@ -79,8 +84,7 @@ export default function DemoLive({ source, canvasClass, bar }: DemoLiveProps) {
         <div className="docs-live-actions">
           {edited && (
             <Button
-              variant="ghost"
-              tone="neutral"
+              variant="tertiary"
               size="sm"
               onClick={() => setCode(source)}
             >
@@ -111,7 +115,7 @@ function LiveErrorPanel() {
 
   return (
     <div className="docs-live-error">
-      <Alert tone="danger" title="This code doesn’t run" role="alert">
+      <Alert variant="danger" title="This code doesn’t run" role="alert">
         <pre className="docs-live-error-text">{error}</pre>
       </Alert>
     </div>
@@ -133,8 +137,7 @@ function CopyButton({ code }: { code: string }) {
 
   return (
     <Button
-      variant="soft"
-      tone="neutral"
+      variant="secondary"
       size="sm"
       onClick={copy}
       aria-label="Copy demo source"

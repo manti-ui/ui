@@ -13,7 +13,7 @@ export default function ListboxBasic() {
     <Listbox
       items={fillings}
       label="Filling"
-      tone="primary"
+      variant="primary"
       defaultValue={['beef']}
     />
   );

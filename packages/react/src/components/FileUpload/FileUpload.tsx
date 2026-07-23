@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 import { fileUpload } from '@manti-ui/folds';
-import type { MantiTone } from '@manti-ui/tokens';
+import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -13,8 +13,8 @@ export interface FileUploadProps {
   hint?: ReactNode;
   /** Browse-button label. */
   triggerLabel?: ReactNode;
-  /** Accent tone. */
-  tone?: MantiTone;
+  /** Accent variant. */
+  variant?: MantiVariant;
   /** Accepted MIME types / extensions. */
   accept?: string | string[];
   /** Maximum number of files. */
@@ -35,7 +35,7 @@ export function FileUpload({
   label,
   hint = 'Drag files here or browse',
   triggerLabel = 'Browse files',
-  tone = 'primary',
+  variant = 'primary',
   accept,
   maxFiles,
   maxFileSize,
@@ -60,7 +60,7 @@ export function FileUpload({
   const api = fileUpload.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-tone={tone} className={cx(className)}>
+    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getDropzoneProps()}>
         <span data-part="hint">{hint}</span>

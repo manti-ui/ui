@@ -1,7 +1,8 @@
 /**
- * Button — the workhorse action. Four variants (solid, soft, outline, ghost)
- * across every tone, three sizes, with a smooth press and a loading state that
- * preserves layout width.
+ * Button — the workhorse action. Color variants (primary solid, secondary soft,
+ * tertiary ghost, danger, outline) on an emphasis ladder, plus a `link` style
+ * that reads as inline text; three sizes, with a smooth press and a loading
+ * state that preserves layout width.
  */
 @layer manti.components {
   [data-scope='button'][data-part='root'] {
@@ -62,65 +63,95 @@
       aspect-ratio: 1;
     }
 
-    /* Solid — a crisp, confident fill. Neutral by default (near-white on dark,
-       near-black on light, like the reference); colored when toned. A whisper
-       of a top highlight gives it body without looking glossy. */
-    &[data-variant='solid'] {
-      background-color: var(--tone-solid);
-      color: var(--tone-on-solid);
+    /* Solid — the default treatment: a crisp, confident fill. Applies to
+       `primary` (branded orange), `danger`, and any custom variant.
+       `secondary`/`tertiary`/`outline`/`link` opt out to the treatments below. A
+       whisper of a top highlight gives it body without looking glossy. */
+    &:not([data-variant='secondary']):not([data-variant='tertiary']):not(
+        [data-variant='outline']
+      ):not([data-variant='link']) {
+      background-color: var(--variant-solid);
+      color: var(--variant-on-solid);
       box-shadow:
         var(--manti-shadow-sm),
         inset 0 1px 0 0 oklch(1 0 0 / 0.12);
 
       &:hover {
-        background-color: var(--tone-solid-hover);
+        background-color: var(--variant-solid-hover);
       }
 
       &:active {
-        background-color: var(--tone-solid-active);
+        background-color: var(--variant-solid-active);
       }
     }
 
-    /* Soft — the translucent signature: a translucent tonal pill with a light
-       backdrop blur, a luminous hairline, and a top-lit inner highlight. */
-    &[data-variant='soft'] {
-      background: color-mix(in oklab, var(--tone-soft-bg) 72%, transparent);
+    /* Secondary (soft) — the translucent signature: a translucent neutral pill
+       with a light backdrop blur, a luminous hairline, and a top-lit inner
+       highlight. The medium rung of the emphasis ladder. */
+    &[data-variant='secondary'] {
+      background: color-mix(in oklab, var(--variant-soft-bg) 72%, transparent);
       -webkit-backdrop-filter: var(--manti-panel-blur);
       backdrop-filter: var(--manti-panel-blur);
       border-color: var(--manti-panel-border);
-      color: var(--tone-soft-text);
+      color: var(--variant-soft-text);
       box-shadow: inset 0 0 5px 0 var(--manti-panel-highlight);
 
       &:hover {
         background: color-mix(
           in oklab,
-          var(--tone-soft-bg-hover) 80%,
+          var(--variant-soft-bg-hover) 80%,
           transparent
         );
       }
     }
 
-    /* Outline & ghost intentionally skip a hover `backdrop-filter`: a blur that
-       toggles only on hover snaps in (it isn't transition-able) and, when the
-       button sits inside an already-translucent surface like a Dialog, the nested
-       backdrop-filter flickers in Chromium. The translucent tonal fill alone
-       carries the hover. */
-    &[data-variant='outline'] {
-      border-color: var(--tone-border);
-      color: var(--tone-text);
+    /* Tertiary (ghost) — the lowest rung: text only, a subtle variant wash on
+       hover. Intentionally skips a hover `backdrop-filter`: a blur that toggles
+       only on hover snaps in (it isn't transition-able) and, when the button
+       sits inside an already-translucent surface like a Dialog, the nested
+       backdrop-filter flickers in Chromium. */
+    &[data-variant='tertiary'] {
+      color: var(--variant-text);
 
       &:hover {
-        background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
-        border-color: var(--tone-soft-text);
+        background: var(--variant-fill);
+      }
+    }
+
+    /* Outline — a hairline-bordered pill on a transparent surface; a light
+       tonal wash and a rim on hover. Shares the ghost's no-hover-blur rationale. */
+    &[data-variant='outline'] {
+      border-color: var(--variant-border);
+      color: var(--variant-text);
+
+      &:hover {
+        background: var(--variant-fill);
+        border-color: var(--variant-soft-text);
         box-shadow: var(--manti-panel-rim);
       }
     }
 
-    &[data-variant='ghost'] {
-      color: var(--tone-text);
+    /* Link — reads as an inline text link: no fill, no border, no box, just the
+       link color. The underline appears only on hover. Its box collapses so it
+       sits inline with surrounding text, and it uses a pointer cursor. */
+    &[data-variant='link'] {
+      --variant-ring: var(--manti-focus-ring);
+      --manti-button-cursor: pointer;
+      min-height: 0;
+      padding-inline: 0;
+      border-color: transparent;
+      color: var(--manti-link);
+      text-decoration: none;
+      text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+      text-underline-offset: 0.2em;
+      box-shadow: none;
 
       &:hover {
-        background: color-mix(in oklab, var(--tone-soft-bg) 60%, transparent);
+        text-decoration: underline;
+      }
+
+      &:active {
+        transform: none;
       }
     }
 
@@ -129,7 +160,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--tone-ring);
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
 
@@ -148,11 +179,11 @@
   @supports not (
     (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
   ) {
-    [data-scope='button'][data-part='root'][data-variant='soft'] {
-      background: var(--tone-soft-bg);
+    [data-scope='button'][data-part='root'][data-variant='secondary'] {
+      background: var(--variant-soft-bg);
 
       &:hover {
-        background: var(--tone-soft-bg-hover);
+        background: var(--variant-soft-bg-hover);
       }
     }
   }

@@ -9,7 +9,7 @@ const meta = {
   parameters: { layout: 'padded' },
   args: {
     label: 'Cooking method',
-    tone: 'primary',
+    variant: 'primary',
     defaultValue: 'boiled',
     items: [
       { value: 'boiled', label: 'Boiled' },
@@ -18,9 +18,9 @@ const meta = {
     ],
   },
   argTypes: {
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
     orientation: {
       control: 'inline-radio',

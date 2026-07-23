@@ -1,7 +1,7 @@
 # Tokens
 
 The typed Manti UI token contract: six OKLCH color ramps (`gray`, `orange`,
-`green`, `amber`, `red`, `blue`), plus `tones`, `radius`, `space`, `fontSize`,
+`green`, `amber`, `red`, `blue`), plus `variants`, `radius`, `space`, `fontSize`,
 `lineHeight`, `fontWeight`, `fontFamily`, `shadow`, `duration`, `easing`,
 `breakpoint`, and `zIndex`.
 

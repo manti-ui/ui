@@ -56,7 +56,7 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
                 >
                   {item.title}
                   {item.badge && (
-                    <span className="docs-side-badge" data-tone="primary">
+                    <span className="docs-side-badge" data-variant="primary">
                       {item.badge}
                     </span>
                   )}

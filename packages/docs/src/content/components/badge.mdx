@@ -3,28 +3,23 @@ title: Badge
 slug: /components/badge
 group: Data Display
 order: 14
-description: A compact status or label chip across three variants and every tone.
+description: A compact status or label chip across five variants and two sizes.
 ---
 
 # Badge
 
-A compact status or label chip. It comes in three variants across every tone,
-two sizes, and an optional leading status dot.
+A compact status or label chip. It comes in five variants, two sizes, and an
+optional leading status dot.
 
-<Demo name="badge/tones" center />
+<Demo name="badge/variants" center />
 
 ## Variants
 
-`variant` sets the visual emphasis: `solid`, `soft`, or `outline`.
+`variant` is the single color-and-emphasis dimension. `primary`, `secondary`,
+and `tertiary` form an emphasis ladder; `danger` is the semantic hue and
+`outline` is a neutral bordered treatment. Any custom variant string works too.
 
 <Demo name="badge/variants" />
-
-## Tones
-
-`tone` carries semantic meaning. Built-in tones are `primary`, `neutral`,
-`success`, `warning`, `danger`, and `info` — and any custom tone works too.
-
-<Demo name="badge/tones" />
 
 ## Dot
 

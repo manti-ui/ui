@@ -179,20 +179,20 @@
   [data-scope='data-table'][data-part='root'][data-zebra='true']
     [data-part='row']:nth-child(even):not([data-selected='true'])
     [data-part='cell'] {
-    background: color-mix(in oklab, var(--manti-text) 3%, transparent);
+    background: var(--manti-fill-subtle);
   }
 
   /* Interactive rows highlight on hover (selected rows keep their own tint). */
   [data-scope='data-table'][data-part='root'][data-interactive='true']
     [data-part='row']:hover:not([data-selected='true'])
     [data-part='cell'] {
-    background: color-mix(in oklab, var(--manti-text) 5%, transparent);
+    background: var(--manti-fill);
   }
 
   /* Selected rows — a stronger, exclusive tint (see :not() guards above). */
   [data-scope='data-table'][data-part='row'][data-selected='true']
     [data-part='cell'] {
-    background: color-mix(in oklab, var(--manti-text) 8%, transparent);
+    background: var(--manti-fill-strong);
   }
 
   [data-scope='data-table'][data-part='empty'] {

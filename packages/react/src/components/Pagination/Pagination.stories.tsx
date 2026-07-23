@@ -13,13 +13,13 @@ const meta = {
     defaultPage: 3,
     siblingCount: 1,
     size: 'md',
-    tone: 'primary',
+    variant: 'primary',
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof Pagination>;

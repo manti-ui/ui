@@ -73,15 +73,15 @@ const meta = {
   args: {
     items: tree,
     label: 'Cookbook',
-    tone: 'primary',
+    variant: 'primary',
     selectionMode: 'single',
     defaultExpandedValue: ['recipes', 'steamed'],
   },
   argTypes: {
     selectionMode: { control: 'inline-radio', options: ['single', 'multiple'] },
-    tone: {
+    variant: {
       control: 'select',
-      options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
 } satisfies Meta<typeof TreeView>;

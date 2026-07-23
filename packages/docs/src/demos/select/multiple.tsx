@@ -16,7 +16,7 @@ export default function SelectMultiple() {
         label="Regions"
         multiple
         defaultValue={['kayseri', 'kashgar']}
-        tone="primary"
+        variant="primary"
       />
     </div>
   );

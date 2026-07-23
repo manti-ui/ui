@@ -1,6 +1,7 @@
 /**
- * Badge — a compact status or label chip. Solid, soft, and outline variants with
- * an optional leading status dot.
+ * Badge — a compact status or label chip. The color variant drives the look:
+ * primary/danger solid, secondary soft, tertiary text-only, outline bordered —
+ * with an optional leading status dot.
  */
 @layer manti.components {
   [data-scope='badge'][data-part='root'] {
@@ -30,31 +31,41 @@
       --manti-badge-padding-x: var(--manti-space-3);
     }
 
-    &[data-variant='solid'] {
-      background: var(--tone-solid);
-      color: var(--tone-on-solid);
+    /* Solid — the default treatment (primary, danger, and custom variants). */
+    &:not([data-variant='secondary']):not([data-variant='tertiary']):not(
+        [data-variant='outline']
+      ) {
+      background: var(--variant-solid);
+      color: var(--variant-on-solid);
     }
 
-    &[data-variant='soft'] {
-      background: color-mix(in oklab, var(--tone-soft-bg) 72%, transparent);
+    /* Secondary — the translucent neutral chip. */
+    &[data-variant='secondary'] {
+      background: color-mix(in oklab, var(--variant-soft-bg) 72%, transparent);
       -webkit-backdrop-filter: var(--manti-panel-blur);
       backdrop-filter: var(--manti-panel-blur);
       border-color: var(--manti-panel-border);
-      color: var(--tone-soft-text);
+      color: var(--variant-soft-text);
       box-shadow: var(--manti-panel-rim);
     }
 
+    /* Tertiary — the lowest rung: label text only, no container. */
+    &[data-variant='tertiary'] {
+      color: var(--variant-text);
+    }
+
+    /* Outline — a hairline-bordered chip on a transparent surface. */
     &[data-variant='outline'] {
-      border-color: var(--tone-border);
-      color: var(--tone-text);
+      border-color: var(--variant-border);
+      color: var(--variant-text);
     }
   }
 
   @supports not (
     (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
   ) {
-    [data-scope='badge'][data-part='root'][data-variant='soft'] {
-      background: var(--tone-soft-bg);
+    [data-scope='badge'][data-part='root'][data-variant='secondary'] {
+      background: var(--variant-soft-bg);
     }
   }
 
