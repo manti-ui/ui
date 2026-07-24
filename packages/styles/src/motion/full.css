@@ -101,7 +101,7 @@
         0 18px 40px -16px
           color-mix(
             in oklab,
-            var(--variant-solid, var(--manti-orange-500)) 35%,
+            var(--variant-solid, var(--manti-orange-7)) 35%,
             transparent
           );
     }

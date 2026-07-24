@@ -1,4 +1,4 @@
-import { Card } from '@manti-ui/react';
+import { Button, Card } from '@manti-ui/react';
 import { colorPrimitives, variants } from '@manti-ui/tokens';
 
 /** Renders every primitive ramp (gray, orange, green, amber, red, blue). */
@@ -30,36 +30,25 @@ export function ColorRamps() {
   );
 }
 
-const swatch = (token: string) => ({
-  display: 'inline-block',
-  width: 'var(--manti-space-10)',
-  height: 'var(--manti-space-10)',
-  borderRadius: 'var(--manti-radius-md)',
-  background: `var(${token})`,
-  border: '1px solid var(--manti-border)',
-});
-
 /**
- * Renders the semantic variants. Each card sets `data-variant`, so the
- * `--variant-*` variables resolve theme-aware via `light-dark()`.
+ * Renders the semantic variants as real Buttons. tertiary/outline share the same
+ * neutral palette — what sets them apart is the *treatment* (ghost / bordered)
+ * the component applies, not the color tokens. A live Button per variant shows
+ * that difference; raw color swatches cannot.
  */
 export function VariantGallery() {
   return (
     <div className="docs-variant-grid">
       {variants.map((variant) => (
-        <div key={variant} data-variant={variant}>
-          <Card>
-            <Card.Body>
-              <div className="docs-cluster">
-                <span style={swatch('--variant-solid')} aria-hidden />
-                <span style={swatch('--variant-soft-bg')} aria-hidden />
-                <strong style={{ textTransform: 'capitalize' }}>
-                  {variant}
-                </strong>
-              </div>
-            </Card.Body>
-          </Card>
-        </div>
+        <Card key={variant}>
+          <Card.Body>
+            <div className="docs-cluster">
+              <Button variant={variant} style={{ textTransform: 'capitalize' }}>
+                {variant}
+              </Button>
+            </div>
+          </Card.Body>
+        </Card>
       ))}
     </div>
   );

@@ -36,10 +36,11 @@ component token only to make one component diverge on purpose — see
 | `badge`             | `--manti-badge-dot-size`                    | `0.5em`                          |
 | `button`            | `--manti-button-radius`                     | `var(--manti-radius-md)`         |
 | `button`            | `--manti-button-height`                     | `var(--manti-control-height-md)` |
-| `button`            | `--manti-button-padding-x`                  | `var(--manti-space-4)`           |
+| `button`            | `--manti-button-padding-x`                  | `var(--manti-space-3)`           |
 | `button`            | `--manti-button-font-size`                  | `var(--manti-text-sm)`           |
 | `button`            | `--manti-button-gap`                        | `var(--manti-space-2)`           |
 | `button`            | `--manti-button-cursor`                     | `default`                        |
+| `button`            | `--manti-button-bg-hover`                   | `var(--variant-fill)`            |
 | `calendar`          | `--manti-calendar-day-min-height`           | `5.5rem`                         |
 | `calendar`          | `--manti-calendar-day-padding`              | `var(--manti-space-2)`           |
 | `calendar`          | `--manti-calendar-radius`                   | `var(--manti-radius-md)`         |
@@ -53,7 +54,7 @@ component token only to make one component diverge on purpose — see
 | `carousel`          | `--manti-carousel-indicator-size`           | `0.5rem`                         |
 | `carousel`          | `--manti-carousel-viewport-height`          | `22rem`                          |
 | `checkbox`          | `--manti-checkbox-size`                     | `1.25rem`                        |
-| `checkbox`          | `--manti-checkbox-radius`                   | `var(--manti-radius-sm)`         |
+| `checkbox`          | `--manti-checkbox-radius`                   | `var(--manti-radius-xs)`         |
 | `checkbox`          | `--manti-checkbox-gap`                      | `var(--manti-space-3)`           |
 | `checkbox`          | `--manti-checkbox-font-size`                | `var(--manti-text-sm)`           |
 | `checkbox`          | `--manti-checkbox-indicator-size`           | `80%`                            |

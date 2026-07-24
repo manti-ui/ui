@@ -10,17 +10,21 @@ import { Button, ColorPicker } from '@manti-ui/react';
  * real consumer uses. Choices persist in localStorage.
  */
 
-type VariantKey = 'primary' | 'secondary' | 'danger';
+type VariantKey = 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger';
 
 const SWATCHES: { key: VariantKey; label: string; fallback: string }[] = [
   { key: 'primary', label: 'Primary', fallback: '#e2681c' },
   { key: 'secondary', label: 'Secondary', fallback: '#6b7280' },
+  { key: 'tertiary', label: 'Tertiary', fallback: '#9ca3af' },
+  { key: 'success', label: 'Success', fallback: '#16a34a' },
   { key: 'danger', label: 'Danger', fallback: '#dc2626' },
 ];
 
 const DEFAULTS: Record<VariantKey, string> = {
   primary: '#e2681c',
   secondary: '#6b7280',
+  tertiary: '#9ca3af',
+  success: '#16a34a',
   danger: '#dc2626',
 };
 
@@ -70,10 +74,10 @@ function ramp(base: string): string {
     `--variant-solid-hover:${ld(mix(88, 'white'), mix(88, 'black'))}`,
     `--variant-solid-active:${ld(mix(78, 'white'), mix(78, 'black'))}`,
     `--variant-on-solid:${readableOn(base)}`,
-    `--variant-soft-bg:${ld(mix(14, 'white'), mix(22, 'var(--manti-gray-950)'))}`,
-    `--variant-soft-bg-hover:${ld(mix(22, 'white'), mix(32, 'var(--manti-gray-950)'))}`,
+    `--variant-soft-bg:${ld(mix(14, 'white'), mix(22, 'var(--manti-gray-12)'))}`,
+    `--variant-soft-bg-hover:${ld(mix(22, 'white'), mix(32, 'var(--manti-gray-12)'))}`,
     `--variant-soft-text:${ld(mix(75, 'black'), mix(42, 'white'))}`,
-    `--variant-border:${ld(mix(32, 'white'), mix(42, 'var(--manti-gray-900)'))}`,
+    `--variant-border:${ld(mix(32, 'white'), mix(42, 'var(--manti-gray-11)'))}`,
     `--variant-text:${ld(mix(78, 'black'), mix(45, 'white'))}`,
     `--variant-ring:${base}`,
   ].join(';');
@@ -107,7 +111,13 @@ type State = {
 
 const INITIAL: State = {
   colors: { ...DEFAULTS },
-  active: { primary: false, secondary: false, danger: false },
+  active: {
+    primary: false,
+    secondary: false,
+    tertiary: false,
+    success: false,
+    danger: false,
+  },
 };
 
 function load(): State {
