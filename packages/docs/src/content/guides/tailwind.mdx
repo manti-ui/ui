@@ -51,8 +51,8 @@ follow your overrides automatically:
 ```css
 :root {
   /* Primitive ramp (primary = orange). */
-  --manti-orange-500: oklch(0.62 0.19 275);
-  --manti-orange-600: oklch(0.55 0.2 275);
+  --manti-orange-7: oklch(0.62 0.19 275);
+  --manti-orange-8: oklch(0.55 0.2 275);
 
   /* Semantic roles — keep light-dark() form. */
   --manti-bg: light-dark(#fafafb, #0c0c10);
@@ -62,7 +62,7 @@ follow your overrides automatically:
 
   --manti-radius-md: 6px;
   --manti-radius-lg: 10px;
-  --manti-focus-ring: var(--manti-orange-500);
+  --manti-focus-ring: var(--manti-orange-7);
 }
 
 /* A custom variant — <Button variant="brand">. */
@@ -110,7 +110,7 @@ Manti's, keeping a single source of truth:
 
 ```css
 @theme {
-  --color-brand: var(--manti-orange-600); /* → bg-brand, text-brand */
+  --color-brand: var(--manti-orange-8); /* → bg-brand, text-brand */
   --radius-pill: 100px; /* → rounded-pill */
 }
 ```

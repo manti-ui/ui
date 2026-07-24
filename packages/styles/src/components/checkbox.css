@@ -7,7 +7,7 @@
   [data-scope='checkbox'][data-part='root'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-checkbox-size: 1.25rem;
-    --manti-checkbox-radius: var(--manti-radius-sm);
+    --manti-checkbox-radius: var(--manti-radius-xs);
     --manti-checkbox-gap: var(--manti-space-3);
     --manti-checkbox-font-size: var(--manti-text-sm);
     --manti-checkbox-indicator-size: 80%;
@@ -23,6 +23,7 @@
     }
 
     &[data-size='lg'] {
+      --manti-checkbox-radius: 10px;
       --manti-checkbox-size: 1.5rem;
       --manti-checkbox-indicator-size: 100%;
     }

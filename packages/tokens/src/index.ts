@@ -19,15 +19,31 @@
 /**
  * Ramp generation.
  *
- * Each primitive ramp is produced from a compact spec instead of 33 hand-tuned
+ * Each primitive ramp is produced from a compact spec instead of 36 hand-tuned
  * numbers. The per-stop *lightness* is the perceptual backbone and stays
  * explicit; *hue* drifts linearly across the ramp; *chroma* follows a smooth
- * "bell" — edges plus a mid peak shaped by a rise/fall bias. The specs below are
- * fit to the previous hand-tuned ramps within ΔChroma ≤ 0.012 and ΔHue ≤ 2.3°
- * (lightness unchanged), so the switch is visually lossless while making the
- * ramps principled and cheap to extend or recolor.
+ * "bell" — edges plus a mid peak shaped by a rise/fall bias.
+ *
+ * The backbones started as a fit to the original hand-tuned 11-stop ramps, then
+ * were resampled to 12 stops with monotone cubic (PCHIP) interpolation: the
+ * endpoints and the shape of each curve are preserved, the steps are re-spaced,
+ * and monotonicity is guaranteed so no stop can come out lighter than the one
+ * before it. Hue and chroma need no re-fit — they are expressed as endpoints
+ * plus a peak *position*, so they re-space themselves with the backbone.
  */
-const RAMP_STOPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+/**
+ * Ramp stop names, lightest → darkest. A plain 1…12 index rather than the
+ * Tailwind-style 50…950 weights: the stops are perceptual positions on an OKLCH
+ * lightness backbone, not font-weight-like magnitudes, and an unbroken sequence
+ * makes "one stop darker" arithmetic instead of a lookup. The Tailwind bridge
+ * (`packages/styles/src/tailwind-theme.css`) keeps the 50…950 utility names and
+ * maps them onto these, so `bg-orange-500` is unaffected.
+ *
+ * Twelve stops, which is what the semantic roles want: 1–2 page/panel
+ * backgrounds, 3–5 component backgrounds, 6–8 borders and separators, 9–10 the
+ * solid fills, 11–12 text. Eleven forced borders and solids to share a stop.
+ */
+const RAMP_STOPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 type RampSpec = {
   /** Per-stop lightness, lightest → darkest (the backbone). */
@@ -47,10 +63,11 @@ type RampSpec = {
 
 const cosEase = (t: number) => (1 - Math.cos(Math.PI * t)) / 2;
 const outEase = (t: number) => Math.sin((t * Math.PI) / 2);
-const easeBias = (t: number, b: number) => (1 - b) * cosEase(t) + b * outEase(t);
+const easeBias = (t: number, b: number) =>
+  (1 - b) * cosEase(t) + b * outEase(t);
 const round = (n: number, p: number) => Number(n.toFixed(p));
 
-/** Expand a {@link RampSpec} into `{ 50: 'oklch(…)', …, 950: 'oklch(…)' }`. */
+/** Expand a {@link RampSpec} into `{ 1: 'oklch(…)', …, 12: 'oklch(…)' }`. */
 function rampFrom(spec: RampSpec): Record<number, string> {
   const n = spec.lightness.length;
   const out: Record<number, string> = {};
@@ -86,7 +103,7 @@ export const colorPrimitives = {
    */
   gray: rampFrom({
     lightness: [
-      0.985, 0.968, 0.934, 0.888, 0.79, 0.672, 0.556, 0.452, 0.352, 0.268,
+      0.985, 0.97, 0.941, 0.903, 0.83, 0.727, 0.618, 0.517, 0.424, 0.336, 0.261,
       0.196,
     ],
     hueStart: 280,
@@ -94,77 +111,82 @@ export const colorPrimitives = {
     chromaStart: 0.004,
     chromaPeak: 0.013,
     chromaEnd: 0.008,
-    peakIndex: 5,
+    peakIndex: 6,
     chromaRiseBias: 0.5,
     chromaFallBias: 0.4,
   }),
   /** Primary. Warm orange — the signature Manti UI accent. */
   orange: rampFrom({
     lightness: [
-      0.972, 0.94, 0.888, 0.82, 0.745, 0.678, 0.61, 0.52, 0.43, 0.35, 0.262,
+      0.972, 0.943, 0.899, 0.84, 0.772, 0.708, 0.648, 0.579, 0.495, 0.415,
+      0.342, 0.262,
     ],
     hueStart: 50,
     hueEnd: 33,
     chromaStart: 0.018,
     chromaPeak: 0.172,
     chromaEnd: 0.064,
-    peakIndex: 6,
+    peakIndex: 7,
     chromaRiseBias: 0.5,
     chromaFallBias: 0,
   }),
   /** Success. Fresh green. */
   green: rampFrom({
     lightness: [
-      0.972, 0.94, 0.89, 0.82, 0.74, 0.668, 0.58, 0.486, 0.398, 0.32, 0.238,
+      0.972, 0.943, 0.9, 0.84, 0.769, 0.701, 0.63, 0.546, 0.461, 0.383, 0.313,
+      0.238,
     ],
     hueStart: 150,
     hueEnd: 160,
     chromaStart: 0.022,
     chromaPeak: 0.128,
     chromaEnd: 0.044,
-    peakIndex: 5,
+    peakIndex: 6,
     chromaRiseBias: 0.5,
     chromaFallBias: 0.2,
   }),
-  /** Warning. Golden amber. */
+  /** Secondary. Golden amber — the same ramp warning semantics draw on. */
   amber: rampFrom({
     lightness: [
-      0.978, 0.952, 0.908, 0.86, 0.812, 0.76, 0.68, 0.566, 0.462, 0.382, 0.286,
+      0.978, 0.955, 0.917, 0.873, 0.83, 0.785, 0.728, 0.641, 0.536, 0.446,
+      0.374, 0.286,
     ],
     hueStart: 85,
     hueEnd: 60,
     chromaStart: 0.022,
     chromaPeak: 0.15,
     chromaEnd: 0.054,
-    peakIndex: 5,
+    peakIndex: 6,
     chromaRiseBias: 0.5,
     chromaFallBias: 0.2,
   }),
   /** Danger. Hot red. */
   red: rampFrom({
     lightness: [
-      0.971, 0.936, 0.882, 0.81, 0.726, 0.652, 0.586, 0.502, 0.42, 0.352, 0.262,
+      0.971, 0.94, 0.893, 0.831, 0.756, 0.685, 0.622, 0.557, 0.479, 0.407,
+      0.345, 0.262,
     ],
     hueStart: 25,
     hueEnd: 26,
     chromaStart: 0.018,
     chromaPeak: 0.21,
     chromaEnd: 0.085,
-    peakIndex: 6,
+    peakIndex: 7,
     chromaRiseBias: 0.3,
     chromaFallBias: -0.15,
   }),
   /** Info. Smooth, calm blue. */
   blue: rampFrom({
     lightness: [
-      0.974, 0.94, 0.89, 0.82, 0.73, 0.65, 0.566, 0.482, 0.402, 0.336, 0.252,
+      0.974, 0.944, 0.9, 0.841, 0.763, 0.686, 0.612, 0.535, 0.459, 0.389, 0.329,
+      0.252,
     ],
     hueStart: 235,
     hueEnd: 249,
     chromaStart: 0.014,
     chromaPeak: 0.14,
     chromaEnd: 0.056,
-    peakIndex: 6,
+    peakIndex: 7,
     chromaRiseBias: 0.5,
     chromaFallBias: 0.1,
   }),
@@ -172,9 +194,13 @@ export const colorPrimitives = {
 
 /**
  * Color variants available to variant-driven components (button, badge,
- * alert, ...). `primary/secondary/tertiary` are an emphasis ladder (branded
- * solid → neutral soft → neutral ghost), `danger` is the one semantic hue, and
+ * alert, ...). `primary/secondary/tertiary` are an emphasis ladder (orange
+ * solid → amber soft → neutral ghost), `danger` is the one semantic hue, and
  * `outline` is a neutral bordered treatment.
+ *
+ * The ladder descends in emphasis but is no longer monochrome: `secondary`
+ * carries amber, so the top two rungs are both chromatic. `tertiary` and
+ * `outline` are the neutral, genuinely quiet treatments.
  */
 export const variants = [
   'primary',
@@ -199,11 +225,11 @@ export type MantiVariant = MantiBuiltinVariant | (string & {});
 /** Corner radii. Generous and pillowy, echoing the folded mantı silhouette. */
 export const radius = {
   xs: '4px',
-  sm: '6px',
-  md: '10px',
-  lg: '14px',
+  sm: '8px',
+  md: '14px',
+  lg: '18px',
   xl: '20px',
-  '2xl': '28px',
+  '2xl': '26px',
   full: '9999px',
 } as const;
 
@@ -215,9 +241,9 @@ export const radius = {
  * values.
  */
 export const controlHeight = {
-  sm: '2rem',
-  md: '2.5rem',
-  lg: '3rem',
+  sm: '1.8rem',
+  md: '2.2rem',
+  lg: '2.7rem',
 } as const;
 
 /**
@@ -368,7 +394,15 @@ export const componentTokens = {
   ],
   avatar: ['size', 'radius'],
   badge: ['radius', 'font-size', 'padding-y', 'padding-x', 'gap', 'dot-size'],
-  button: ['radius', 'height', 'padding-x', 'font-size', 'gap', 'cursor'],
+  button: [
+    'radius',
+    'height',
+    'padding-x',
+    'font-size',
+    'gap',
+    'cursor',
+    'bg-hover',
+  ],
   calendar: ['day-min-height', 'day-padding', 'radius'],
   card: ['radius', 'padding-x', 'padding-y'],
   carousel: [

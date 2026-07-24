@@ -39,7 +39,7 @@
       color: var(--variant-on-solid);
     }
 
-    /* Secondary — the translucent neutral chip. */
+    /* Secondary — the translucent amber chip. */
     &[data-variant='secondary'] {
       background: color-mix(in oklab, var(--variant-soft-bg) 72%, transparent);
       -webkit-backdrop-filter: var(--manti-panel-blur);

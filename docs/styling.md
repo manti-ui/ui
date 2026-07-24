@@ -93,14 +93,14 @@ altitude:
 ```css
 /* 1. Primitive ramp — rebrand the palette everywhere. */
 :root {
-  --manti-orange-500: oklch(0.65 0.2 280); /* the orange ramp is now purple */
+  --manti-orange-7: oklch(0.65 0.2 280); /* the orange ramp is now purple */
 }
 
 /* 2. Semantic role — THE primary theming lever. Cascades to every component
       consistently (this radius change rounds buttons, cards, inputs alike). */
 :root {
   --manti-radius-md: 4px;
-  --manti-focus-ring: var(--manti-blue-500);
+  --manti-focus-ring: var(--manti-blue-7);
 }
 
 /* 3. Component token — escape hatch. Reach for it only to make ONE component
@@ -111,8 +111,8 @@ altitude:
 
 /* 4. Variant — remap what a variant means, globally or per subtree. */
 .marketing-section [data-variant='primary'] {
-  --variant-solid: var(--manti-blue-600);
-  --variant-solid-hover: var(--manti-blue-700);
+  --variant-solid: var(--manti-blue-8);
+  --variant-solid-hover: var(--manti-blue-9);
 }
 
 /* 5. One instance — className or style, as usual. */
@@ -147,7 +147,7 @@ Manti tokens form three tiers, each defaulting into the one above it:
 
 | Tier             | Example                  | Scope                            |
 | ---------------- | ------------------------ | -------------------------------- |
-| 1 — primitive    | `--manti-orange-500`    | the raw palette / scales         |
+| 1 — primitive    | `--manti-orange-7`    | the raw palette / scales         |
 | 2 — semantic     | `--manti-radius-md`, `--variant-solid` | purpose-based roles |
 | 3 — **component** | `--manti-button-radius`  | one component's structural knobs |
 

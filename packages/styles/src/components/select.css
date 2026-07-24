@@ -98,7 +98,7 @@
   }
 
   [data-scope='select'][data-part='root'][data-invalid] [data-part='trigger'] {
-    border-color: light-dark(var(--manti-red-500), var(--manti-red-400));
+    border-color: light-dark(var(--manti-red-7), var(--manti-red-5));
   }
 
   [data-scope='select'][data-part='value-text'][data-placeholder] {

@@ -15,21 +15,28 @@ dimension that components actually read.
 
 ## The OKLCH primitive ramps
 
-Six ramps run from `50` to `950`, each authored in **OKLCH** so steps are
-perceptually even — equal jumps in lightness look equal to the eye, and hues stay
-stable across the scale. These values are fixed and identical in light and dark.
+Six ramps run from `1` (lightest) to `12` (darkest), each authored in **OKLCH**
+so steps are perceptually even — equal jumps in lightness look equal to the eye,
+and hues stay stable across the scale. These values are fixed and identical in
+light and dark. The stops are a plain index rather than Tailwind-style `50…950`
+weights; if you use the Tailwind bridge, the familiar `bg-orange-500` utility
+names still work and map onto these stops.
 
-| Ramp     | Role    | Reference    |
-| -------- | ------- | ------------ |
-| `gray`   | neutral | warm neutral |
-| `orange` | primary | warm orange  |
-| `red`    | danger  | hot red      |
-| `green`  | —       | fresh green  |
-| `amber`  | —       | golden amber |
-| `blue`   | —       | calm blue    |
+Twelve steps because that is what the roles need: `1`–`2` page and panel
+backgrounds, `3`–`5` component backgrounds, `6`–`8` borders and separators,
+`9`–`10` the solid fills, `11`–`12` text.
 
-Each step is a `--manti-{ramp}-{step}` custom property — `--manti-orange-500`,
-`--manti-gray-950`, and so on.
+| Ramp     | Role      | Reference    |
+| -------- | --------- | ------------ |
+| `gray`   | neutral   | warm neutral |
+| `orange` | primary   | warm orange  |
+| `red`    | danger    | hot red      |
+| `green`  | —         | fresh green  |
+| `amber`  | secondary | golden amber |
+| `blue`   | —         | calm blue    |
+
+Each step is a `--manti-{ramp}-{step}` custom property — `--manti-orange-7`,
+`--manti-gray-12`, and so on.
 
 <ColorRamps />
 
@@ -45,7 +52,7 @@ of `--variant-*` variables. A single `variant` prop carries **both** the hue and
 the emphasis. Manti UI ships five built-in variants:
 
 - `primary` — orange solid, the highest-emphasis signature accent
-- `secondary` — neutral soft, the quiet default
+- `secondary` — amber soft, the default for Badge and Alert
 - `tertiary` — neutral ghost (text only), the lowest emphasis
 - `danger` — red solid, the semantic hue
 - `outline` — neutral bordered: a transparent background with a visible border
@@ -53,6 +60,13 @@ the emphasis. Manti UI ships five built-in variants:
 The first three form an **emphasis ladder** (`primary` → `secondary` →
 `tertiary`); `danger` is the one semantic hue and `outline` is a neutral bordered
 treatment.
+
+Two things worth knowing about `secondary`. It is chromatic, so the top two rungs
+of the ladder both carry color — when you want a genuinely quiet control, reach
+for `tertiary` or `outline`, not `secondary`. And it draws on the same `amber`
+ramp that reads as caution elsewhere, so an amber badge is not automatically a
+warning; use `danger`, or a custom variant, when the meaning has to be
+unambiguous.
 
 <VariantGallery />
 
@@ -65,8 +79,12 @@ that every variant-driven component consumes the same way:
 --variant-solid            --variant-soft-bg          --variant-border
 --variant-solid-hover      --variant-soft-bg-hover    --variant-text
 --variant-solid-active     --variant-soft-text        --variant-ring
---variant-on-solid
+--variant-on-solid         --variant-fill             --variant-fill-strong
 ```
+
+`--variant-fill` (hover) and `--variant-fill-strong` (selected/pressed) are the
+variant-colored interactive fills; they derive from `--variant-soft-bg`, so a
+custom variant that defines the soft role gets them for free.
 
 Because a component only ever reads `--variant-*` — never a raw ramp step — the
 same markup restyles completely when you change its variant:

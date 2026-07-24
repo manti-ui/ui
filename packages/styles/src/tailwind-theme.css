@@ -21,6 +21,17 @@
  *   utilities — that is the intent.
  * - Colors are exposed twice: by plain color name (`bg-orange-500`) and by
  *   semantic role (`bg-primary-500`). Both point at the same ramp.
+ * - Stop naming is deliberately asymmetric. Manti's own ramps are indexed
+ *   `1…12`; Tailwind's utility names stay on the conventional `50…950` and are
+ *   mapped onto them here (`--color-orange-500: var(--manti-orange-7)`). If the
+ *   utility keys were renamed to match, `bg-orange-500` would silently fall
+ *   back to Tailwind's built-in orange instead of Manti's — a wrong color with
+ *   no error. Keep this mapping in step when a ramp gains or loses a stop.
+ * - Tailwind has eleven stop names against Manti's twelve, so the mapping is
+ *   positional and stop 6 ends up without a utility alias. Nothing is lost — the
+ *   stop is a real custom property in every setup that loads this file, so
+ *   `bg-[var(--manti-orange-6)]` works. Do not "fix" the gap by shifting the
+ *   mapping; positional is what keeps each utility on its old color.
  * - Control height keeps a Manti-only key (`h-control-md`) — there is no
  *   Tailwind equivalent to override.
  * - Not bound: Tailwind v4 has no theme namespace for named transition
@@ -78,150 +89,150 @@
   --color-fill-strong: var(--manti-fill-strong);
 
   /* Primitive ramps — plain color names ------------------------------------ */
-  --color-gray-50: var(--manti-gray-50);
-  --color-gray-100: var(--manti-gray-100);
-  --color-gray-200: var(--manti-gray-200);
-  --color-gray-300: var(--manti-gray-300);
-  --color-gray-400: var(--manti-gray-400);
-  --color-gray-500: var(--manti-gray-500);
-  --color-gray-600: var(--manti-gray-600);
-  --color-gray-700: var(--manti-gray-700);
-  --color-gray-800: var(--manti-gray-800);
-  --color-gray-900: var(--manti-gray-900);
-  --color-gray-950: var(--manti-gray-950);
+  --color-gray-50: var(--manti-gray-1);
+  --color-gray-100: var(--manti-gray-2);
+  --color-gray-200: var(--manti-gray-3);
+  --color-gray-300: var(--manti-gray-4);
+  --color-gray-400: var(--manti-gray-5);
+  --color-gray-500: var(--manti-gray-7);
+  --color-gray-600: var(--manti-gray-8);
+  --color-gray-700: var(--manti-gray-9);
+  --color-gray-800: var(--manti-gray-10);
+  --color-gray-900: var(--manti-gray-11);
+  --color-gray-950: var(--manti-gray-12);
 
-  --color-orange-50: var(--manti-orange-50);
-  --color-orange-100: var(--manti-orange-100);
-  --color-orange-200: var(--manti-orange-200);
-  --color-orange-300: var(--manti-orange-300);
-  --color-orange-400: var(--manti-orange-400);
-  --color-orange-500: var(--manti-orange-500);
-  --color-orange-600: var(--manti-orange-600);
-  --color-orange-700: var(--manti-orange-700);
-  --color-orange-800: var(--manti-orange-800);
-  --color-orange-900: var(--manti-orange-900);
-  --color-orange-950: var(--manti-orange-950);
+  --color-orange-50: var(--manti-orange-1);
+  --color-orange-100: var(--manti-orange-2);
+  --color-orange-200: var(--manti-orange-3);
+  --color-orange-300: var(--manti-orange-4);
+  --color-orange-400: var(--manti-orange-5);
+  --color-orange-500: var(--manti-orange-7);
+  --color-orange-600: var(--manti-orange-8);
+  --color-orange-700: var(--manti-orange-9);
+  --color-orange-800: var(--manti-orange-10);
+  --color-orange-900: var(--manti-orange-11);
+  --color-orange-950: var(--manti-orange-12);
 
-  --color-green-50: var(--manti-green-50);
-  --color-green-100: var(--manti-green-100);
-  --color-green-200: var(--manti-green-200);
-  --color-green-300: var(--manti-green-300);
-  --color-green-400: var(--manti-green-400);
-  --color-green-500: var(--manti-green-500);
-  --color-green-600: var(--manti-green-600);
-  --color-green-700: var(--manti-green-700);
-  --color-green-800: var(--manti-green-800);
-  --color-green-900: var(--manti-green-900);
-  --color-green-950: var(--manti-green-950);
+  --color-green-50: var(--manti-green-1);
+  --color-green-100: var(--manti-green-2);
+  --color-green-200: var(--manti-green-3);
+  --color-green-300: var(--manti-green-4);
+  --color-green-400: var(--manti-green-5);
+  --color-green-500: var(--manti-green-7);
+  --color-green-600: var(--manti-green-8);
+  --color-green-700: var(--manti-green-9);
+  --color-green-800: var(--manti-green-10);
+  --color-green-900: var(--manti-green-11);
+  --color-green-950: var(--manti-green-12);
 
-  --color-amber-50: var(--manti-amber-50);
-  --color-amber-100: var(--manti-amber-100);
-  --color-amber-200: var(--manti-amber-200);
-  --color-amber-300: var(--manti-amber-300);
-  --color-amber-400: var(--manti-amber-400);
-  --color-amber-500: var(--manti-amber-500);
-  --color-amber-600: var(--manti-amber-600);
-  --color-amber-700: var(--manti-amber-700);
-  --color-amber-800: var(--manti-amber-800);
-  --color-amber-900: var(--manti-amber-900);
-  --color-amber-950: var(--manti-amber-950);
+  --color-amber-50: var(--manti-amber-1);
+  --color-amber-100: var(--manti-amber-2);
+  --color-amber-200: var(--manti-amber-3);
+  --color-amber-300: var(--manti-amber-4);
+  --color-amber-400: var(--manti-amber-5);
+  --color-amber-500: var(--manti-amber-7);
+  --color-amber-600: var(--manti-amber-8);
+  --color-amber-700: var(--manti-amber-9);
+  --color-amber-800: var(--manti-amber-10);
+  --color-amber-900: var(--manti-amber-11);
+  --color-amber-950: var(--manti-amber-12);
 
-  --color-red-50: var(--manti-red-50);
-  --color-red-100: var(--manti-red-100);
-  --color-red-200: var(--manti-red-200);
-  --color-red-300: var(--manti-red-300);
-  --color-red-400: var(--manti-red-400);
-  --color-red-500: var(--manti-red-500);
-  --color-red-600: var(--manti-red-600);
-  --color-red-700: var(--manti-red-700);
-  --color-red-800: var(--manti-red-800);
-  --color-red-900: var(--manti-red-900);
-  --color-red-950: var(--manti-red-950);
+  --color-red-50: var(--manti-red-1);
+  --color-red-100: var(--manti-red-2);
+  --color-red-200: var(--manti-red-3);
+  --color-red-300: var(--manti-red-4);
+  --color-red-400: var(--manti-red-5);
+  --color-red-500: var(--manti-red-7);
+  --color-red-600: var(--manti-red-8);
+  --color-red-700: var(--manti-red-9);
+  --color-red-800: var(--manti-red-10);
+  --color-red-900: var(--manti-red-11);
+  --color-red-950: var(--manti-red-12);
 
-  --color-blue-50: var(--manti-blue-50);
-  --color-blue-100: var(--manti-blue-100);
-  --color-blue-200: var(--manti-blue-200);
-  --color-blue-300: var(--manti-blue-300);
-  --color-blue-400: var(--manti-blue-400);
-  --color-blue-500: var(--manti-blue-500);
-  --color-blue-600: var(--manti-blue-600);
-  --color-blue-700: var(--manti-blue-700);
-  --color-blue-800: var(--manti-blue-800);
-  --color-blue-900: var(--manti-blue-900);
-  --color-blue-950: var(--manti-blue-950);
+  --color-blue-50: var(--manti-blue-1);
+  --color-blue-100: var(--manti-blue-2);
+  --color-blue-200: var(--manti-blue-3);
+  --color-blue-300: var(--manti-blue-4);
+  --color-blue-400: var(--manti-blue-5);
+  --color-blue-500: var(--manti-blue-7);
+  --color-blue-600: var(--manti-blue-8);
+  --color-blue-700: var(--manti-blue-9);
+  --color-blue-800: var(--manti-blue-10);
+  --color-blue-900: var(--manti-blue-11);
+  --color-blue-950: var(--manti-blue-12);
 
   /* Primitive ramps — semantic role aliases --------------------------------- */
-  --color-primary-50: var(--manti-orange-50);
-  --color-primary-100: var(--manti-orange-100);
-  --color-primary-200: var(--manti-orange-200);
-  --color-primary-300: var(--manti-orange-300);
-  --color-primary-400: var(--manti-orange-400);
-  --color-primary-500: var(--manti-orange-500);
-  --color-primary-600: var(--manti-orange-600);
-  --color-primary-700: var(--manti-orange-700);
-  --color-primary-800: var(--manti-orange-800);
-  --color-primary-900: var(--manti-orange-900);
-  --color-primary-950: var(--manti-orange-950);
+  --color-primary-50: var(--manti-orange-1);
+  --color-primary-100: var(--manti-orange-2);
+  --color-primary-200: var(--manti-orange-3);
+  --color-primary-300: var(--manti-orange-4);
+  --color-primary-400: var(--manti-orange-5);
+  --color-primary-500: var(--manti-orange-7);
+  --color-primary-600: var(--manti-orange-8);
+  --color-primary-700: var(--manti-orange-9);
+  --color-primary-800: var(--manti-orange-10);
+  --color-primary-900: var(--manti-orange-11);
+  --color-primary-950: var(--manti-orange-12);
 
-  --color-neutral-50: var(--manti-gray-50);
-  --color-neutral-100: var(--manti-gray-100);
-  --color-neutral-200: var(--manti-gray-200);
-  --color-neutral-300: var(--manti-gray-300);
-  --color-neutral-400: var(--manti-gray-400);
-  --color-neutral-500: var(--manti-gray-500);
-  --color-neutral-600: var(--manti-gray-600);
-  --color-neutral-700: var(--manti-gray-700);
-  --color-neutral-800: var(--manti-gray-800);
-  --color-neutral-900: var(--manti-gray-900);
-  --color-neutral-950: var(--manti-gray-950);
+  --color-neutral-50: var(--manti-gray-1);
+  --color-neutral-100: var(--manti-gray-2);
+  --color-neutral-200: var(--manti-gray-3);
+  --color-neutral-300: var(--manti-gray-4);
+  --color-neutral-400: var(--manti-gray-5);
+  --color-neutral-500: var(--manti-gray-7);
+  --color-neutral-600: var(--manti-gray-8);
+  --color-neutral-700: var(--manti-gray-9);
+  --color-neutral-800: var(--manti-gray-10);
+  --color-neutral-900: var(--manti-gray-11);
+  --color-neutral-950: var(--manti-gray-12);
 
-  --color-success-50: var(--manti-green-50);
-  --color-success-100: var(--manti-green-100);
-  --color-success-200: var(--manti-green-200);
-  --color-success-300: var(--manti-green-300);
-  --color-success-400: var(--manti-green-400);
-  --color-success-500: var(--manti-green-500);
-  --color-success-600: var(--manti-green-600);
-  --color-success-700: var(--manti-green-700);
-  --color-success-800: var(--manti-green-800);
-  --color-success-900: var(--manti-green-900);
-  --color-success-950: var(--manti-green-950);
+  --color-success-50: var(--manti-green-1);
+  --color-success-100: var(--manti-green-2);
+  --color-success-200: var(--manti-green-3);
+  --color-success-300: var(--manti-green-4);
+  --color-success-400: var(--manti-green-5);
+  --color-success-500: var(--manti-green-7);
+  --color-success-600: var(--manti-green-8);
+  --color-success-700: var(--manti-green-9);
+  --color-success-800: var(--manti-green-10);
+  --color-success-900: var(--manti-green-11);
+  --color-success-950: var(--manti-green-12);
 
-  --color-warning-50: var(--manti-amber-50);
-  --color-warning-100: var(--manti-amber-100);
-  --color-warning-200: var(--manti-amber-200);
-  --color-warning-300: var(--manti-amber-300);
-  --color-warning-400: var(--manti-amber-400);
-  --color-warning-500: var(--manti-amber-500);
-  --color-warning-600: var(--manti-amber-600);
-  --color-warning-700: var(--manti-amber-700);
-  --color-warning-800: var(--manti-amber-800);
-  --color-warning-900: var(--manti-amber-900);
-  --color-warning-950: var(--manti-amber-950);
+  --color-warning-50: var(--manti-amber-1);
+  --color-warning-100: var(--manti-amber-2);
+  --color-warning-200: var(--manti-amber-3);
+  --color-warning-300: var(--manti-amber-4);
+  --color-warning-400: var(--manti-amber-5);
+  --color-warning-500: var(--manti-amber-7);
+  --color-warning-600: var(--manti-amber-8);
+  --color-warning-700: var(--manti-amber-9);
+  --color-warning-800: var(--manti-amber-10);
+  --color-warning-900: var(--manti-amber-11);
+  --color-warning-950: var(--manti-amber-12);
 
-  --color-danger-50: var(--manti-red-50);
-  --color-danger-100: var(--manti-red-100);
-  --color-danger-200: var(--manti-red-200);
-  --color-danger-300: var(--manti-red-300);
-  --color-danger-400: var(--manti-red-400);
-  --color-danger-500: var(--manti-red-500);
-  --color-danger-600: var(--manti-red-600);
-  --color-danger-700: var(--manti-red-700);
-  --color-danger-800: var(--manti-red-800);
-  --color-danger-900: var(--manti-red-900);
-  --color-danger-950: var(--manti-red-950);
+  --color-danger-50: var(--manti-red-1);
+  --color-danger-100: var(--manti-red-2);
+  --color-danger-200: var(--manti-red-3);
+  --color-danger-300: var(--manti-red-4);
+  --color-danger-400: var(--manti-red-5);
+  --color-danger-500: var(--manti-red-7);
+  --color-danger-600: var(--manti-red-8);
+  --color-danger-700: var(--manti-red-9);
+  --color-danger-800: var(--manti-red-10);
+  --color-danger-900: var(--manti-red-11);
+  --color-danger-950: var(--manti-red-12);
 
-  --color-info-50: var(--manti-blue-50);
-  --color-info-100: var(--manti-blue-100);
-  --color-info-200: var(--manti-blue-200);
-  --color-info-300: var(--manti-blue-300);
-  --color-info-400: var(--manti-blue-400);
-  --color-info-500: var(--manti-blue-500);
-  --color-info-600: var(--manti-blue-600);
-  --color-info-700: var(--manti-blue-700);
-  --color-info-800: var(--manti-blue-800);
-  --color-info-900: var(--manti-blue-900);
-  --color-info-950: var(--manti-blue-950);
+  --color-info-50: var(--manti-blue-1);
+  --color-info-100: var(--manti-blue-2);
+  --color-info-200: var(--manti-blue-3);
+  --color-info-300: var(--manti-blue-4);
+  --color-info-400: var(--manti-blue-5);
+  --color-info-500: var(--manti-blue-7);
+  --color-info-600: var(--manti-blue-8);
+  --color-info-700: var(--manti-blue-9);
+  --color-info-800: var(--manti-blue-10);
+  --color-info-900: var(--manti-blue-11);
+  --color-info-950: var(--manti-blue-12);
 
   /* Spacing — Manti's 4px grid is the base unit, so every numeric utility
      (`p-4`, `gap-2`, `h-10`, …) derives from the token. */

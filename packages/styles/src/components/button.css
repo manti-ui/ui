@@ -12,10 +12,11 @@
        private `--_*` knobs. See docs/styling.md. */
     --manti-button-radius: var(--manti-radius-md);
     --manti-button-height: var(--manti-control-height-md);
-    --manti-button-padding-x: var(--manti-space-4);
+    --manti-button-padding-x: var(--manti-space-3);
     --manti-button-font-size: var(--manti-text-sm);
     --manti-button-gap: var(--manti-space-2);
     --manti-button-cursor: default;
+    --manti-button-bg-hover: var(--variant-fill);
 
     position: relative;
     display: inline-flex;
@@ -44,7 +45,7 @@
     &[data-size='sm'] {
       --manti-button-height: var(--manti-control-height-sm);
       --manti-button-padding-x: var(--manti-space-3);
-      --manti-button-radius: var(--manti-radius-md);
+      --manti-button-radius: var(--manti-radius-sm);
     }
 
     &[data-size='lg'] {
@@ -85,7 +86,7 @@
       }
     }
 
-    /* Secondary (soft) — the translucent signature: a translucent neutral pill
+    /* Secondary (soft) — the translucent signature: a translucent amber pill
        with a light backdrop blur, a luminous hairline, and a top-lit inner
        highlight. The medium rung of the emphasis ladder. */
     &[data-variant='secondary'] {
@@ -114,7 +115,7 @@
       color: var(--variant-text);
 
       &:hover {
-        background: var(--variant-fill);
+        background: var(--manti-button-bg-hover);
       }
     }
 
@@ -125,7 +126,7 @@
       color: var(--variant-text);
 
       &:hover {
-        background: var(--variant-fill);
+        background: var(--manti-button-bg-hover);
         border-color: var(--variant-soft-text);
         box-shadow: var(--manti-panel-rim);
       }
