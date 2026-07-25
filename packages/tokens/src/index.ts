@@ -264,7 +264,11 @@ export const radiusFactor = '1';
  * references a channel and is structurally incapable of going round.
  *
  * - `pill`  — control-class parts that *may* become pill: button, input, select
- *   and combobox triggers, number-input, toggle, segmented control.
+ *   and combobox triggers, number-input, toggle, segmented control. No preset
+ *   raises it, deliberately: pill controls are a strong stylistic choice, and
+ *   binding them to a preset would also bind them to that preset's factor.
+ *   Raising the channel yourself composes with *any* factor:
+ *   `:root { --manti-radius-pill: 9999px }`.
  * - `thumb` — draggable handles (switch thumb, slider thumb), round by default
  *   because a square handle reads as broken at every size but `none`.
  */
@@ -275,19 +279,22 @@ export const radiusChannel = {
 
 /**
  * `[data-radius]` presets — set the attribute on any container to retune the
- * radius of everything inside it. Each mode is a full assignment of the factor
- * plus every channel, so modes never leak into one another.
+ * radius of everything inside it. One mode per distinct factor; a mode that only
+ * differed from its neighbour by a channel would be a picker row most pages
+ * cannot show a difference for.
  *
- * `pill` is the only mode that raises the `pill` channel; `none` is the only one
- * that lowers `full`, so squaring the system also squares the by-design-round
- * parts instead of leaving stray lozenges behind.
+ * Each mode is a full assignment of the factor plus every channel, so modes
+ * never leak into one another — and a mode still *lowers* `pill` even though
+ * none raises it, so a consumer who opted into pill controls globally can square
+ * a subtree with `data-radius="none"`. `none` is likewise the only mode that
+ * lowers `full`, so squaring the system also squares the by-design-round parts
+ * instead of leaving stray lozenges behind.
  */
 export const radiusModes = {
   none: { factor: '0', full: '0px', pill: '0px', thumb: '0.5px' },
   sharp: { factor: '0.6', full: '9999px', pill: '0px', thumb: '9999px' },
   default: { factor: '1', full: '9999px', pill: '0px', thumb: '9999px' },
   round: { factor: '1.4', full: '9999px', pill: '0px', thumb: '9999px' },
-  pill: { factor: '1.4', full: '9999px', pill: '9999px', thumb: '9999px' },
 } as const;
 
 /** The `data-radius` values Manti UI ships presets for. */

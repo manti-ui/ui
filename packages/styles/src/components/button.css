@@ -13,8 +13,8 @@
     /* Every button size is a multiple of one ramp step (`md`, the control-class
        anchor), so retuning that step moves all three sizes together and touches
        nothing outside the control class. `max(…, pill)` joins the opt-in
-       roundness channel: a no-op until `[data-radius='pill']` raises it. An
-       explicit `--manti-button-radius` still wins over both. */
+       roundness channel: a no-op until a consumer raises it. An explicit
+       `--manti-button-radius` still wins over both. */
     --_radius-base: var(--manti-radius-md);
     --manti-button-radius: max(var(--_radius-base), var(--manti-radius-pill));
     --manti-button-height: var(--manti-control-height-md);
