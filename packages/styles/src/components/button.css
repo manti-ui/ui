@@ -10,7 +10,13 @@
        surface; each defaults to a Tier-2 semantic token. Redefine these to
        restyle buttons without touching internals. Derived/computed values stay
        private `--_*` knobs. See docs/styling.md. */
-    --manti-button-radius: var(--manti-radius-md);
+    /* Every button size is a multiple of one ramp step (`md`, the control-class
+       anchor), so retuning that step moves all three sizes together and touches
+       nothing outside the control class. `max(…, pill)` joins the opt-in
+       roundness channel: a no-op until `[data-radius='pill']` raises it. An
+       explicit `--manti-button-radius` still wins over both. */
+    --_radius-base: var(--manti-radius-md);
+    --manti-button-radius: max(var(--_radius-base), var(--manti-radius-pill));
     --manti-button-height: var(--manti-control-height-md);
     --manti-button-padding-x: var(--manti-space-3);
     --manti-button-font-size: var(--manti-text-sm);
@@ -45,14 +51,14 @@
     &[data-size='sm'] {
       --manti-button-height: var(--manti-control-height-sm);
       --manti-button-padding-x: var(--manti-space-3);
-      --manti-button-radius: var(--manti-radius-sm);
+      --_radius-base: calc(var(--manti-radius-md) * 0.7);
     }
 
     &[data-size='lg'] {
       --manti-button-height: var(--manti-control-height-lg);
       --manti-button-padding-x: var(--manti-space-6);
       --manti-button-font-size: var(--manti-text-base);
-      --manti-button-radius: var(--manti-radius-lg);
+      --_radius-base: calc(var(--manti-radius-md) * 1.3);
     }
 
     &[data-full-width='true'] {

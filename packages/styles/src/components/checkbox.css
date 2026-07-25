@@ -7,6 +7,11 @@
   [data-scope='checkbox'][data-part='root'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-checkbox-size: 1.25rem;
+    /* Anchored on `xs`, the indicator-class step, and deliberately *not* joined
+       to `--manti-radius-pill`: a checkbox that rounds all the way reads as a
+       radio. Sizes scale that one step rather than hopping to a coarser one —
+       the ramp has no stop between 4px and 8px, and hopping is what makes a
+       small control overshoot into a circle. */
     --manti-checkbox-radius: var(--manti-radius-xs);
     --manti-checkbox-gap: var(--manti-space-3);
     --manti-checkbox-font-size: var(--manti-text-sm);
@@ -23,7 +28,7 @@
     }
 
     &[data-size='lg'] {
-      --manti-checkbox-radius: 10px;
+      --manti-checkbox-radius: calc(var(--manti-radius-xs) * 2.5);
       --manti-checkbox-size: 1.5rem;
       --manti-checkbox-indicator-size: 100%;
     }

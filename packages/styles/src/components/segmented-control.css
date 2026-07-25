@@ -16,7 +16,9 @@
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-md);
+    /* Control class — the track, its sliding indicator and the items all join
+       the pill channel together, or a pill track would frame square segments. */
+    border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
     box-shadow: var(--manti-panel-rim);
 
     &[data-orientation='vertical'] {
@@ -46,7 +48,7 @@
     width: var(--width);
     height: var(--height);
     background: var(--variant-solid);
-    border-radius: var(--manti-radius-sm);
+    border-radius: max(var(--manti-radius-sm), var(--manti-radius-pill));
     box-shadow: var(--manti-shadow-sm);
     transition-property: var(--transition-property, left, top, width, height);
     transition-duration: var(--manti-duration-base);
@@ -68,7 +70,7 @@
     min-width: var(--manti-segmented-control-height);
     height: var(--manti-segmented-control-height);
     padding-inline: var(--manti-segmented-control-padding-x);
-    border-radius: var(--manti-radius-sm);
+    border-radius: max(var(--manti-radius-sm), var(--manti-radius-pill));
     color: var(--manti-text-muted);
     cursor: pointer;
     user-select: none;

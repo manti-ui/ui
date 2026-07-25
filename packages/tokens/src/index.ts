@@ -222,7 +222,21 @@ export type MantiBuiltinVariant = (typeof variants)[number];
  */
 export type MantiVariant = MantiBuiltinVariant | (string & {});
 
-/** Corner radii. Generous and pillowy, echoing the folded mantı silhouette. */
+/**
+ * Corner radii. Generous and pillowy, echoing the folded mantı silhouette.
+ *
+ * These are the *resolved* values at `radiusFactor` 1 (source of truth for
+ * types, docs, and the Tailwind bridge). In the generated CSS every step except
+ * `full` is emitted as `calc(<step> * var(--manti-radius-factor))`, so the one
+ * factor rescales the whole ramp — see `radiusFactor` below.
+ *
+ * The ramp is a scale of *sizes*, not of *shapes*: `full` is the always-pill
+ * primitive for parts that are round by design (switch track, slider, spinner,
+ * avatar, radio, badge). Roundness that a theme may switch on belongs to the
+ * `radiusChannel` vocabulary instead, never to a ramp step — that separation is
+ * what keeps a small control (checkbox) from ever collapsing into a circle no
+ * matter how round the theme gets.
+ */
 export const radius = {
   xs: '4px',
   sm: '8px',
@@ -232,6 +246,52 @@ export const radius = {
   '2xl': '26px',
   full: '9999px',
 } as const;
+
+/**
+ * The multiplier every ramp step is scaled by. Override `--manti-radius-factor`
+ * once to make the whole system sharper or rounder without touching a single
+ * component; `[data-radius]` (see `radiusModes`) ships presets for it.
+ */
+export const radiusFactor = '1';
+
+/**
+ * Roundness channels — the opt-in half of the radius model.
+ *
+ * A component consumes a channel with `max(<ramp step>, var(--manti-radius-*))`,
+ * which is a no-op while the channel sits at its default and turns the part
+ * pill-shaped once a theme raises it. Because opting in is explicit, a part that
+ * must stay square-ish (checkbox, and any small indicator) simply never
+ * references a channel and is structurally incapable of going round.
+ *
+ * - `pill`  — control-class parts that *may* become pill: button, input, select
+ *   and combobox triggers, number-input, toggle, segmented control.
+ * - `thumb` — draggable handles (switch thumb, slider thumb), round by default
+ *   because a square handle reads as broken at every size but `none`.
+ */
+export const radiusChannel = {
+  pill: '0px',
+  thumb: '9999px',
+} as const;
+
+/**
+ * `[data-radius]` presets — set the attribute on any container to retune the
+ * radius of everything inside it. Each mode is a full assignment of the factor
+ * plus every channel, so modes never leak into one another.
+ *
+ * `pill` is the only mode that raises the `pill` channel; `none` is the only one
+ * that lowers `full`, so squaring the system also squares the by-design-round
+ * parts instead of leaving stray lozenges behind.
+ */
+export const radiusModes = {
+  none: { factor: '0', full: '0px', pill: '0px', thumb: '0.5px' },
+  sharp: { factor: '0.6', full: '9999px', pill: '0px', thumb: '9999px' },
+  default: { factor: '1', full: '9999px', pill: '0px', thumb: '9999px' },
+  round: { factor: '1.4', full: '9999px', pill: '0px', thumb: '9999px' },
+  pill: { factor: '1.4', full: '9999px', pill: '9999px', thumb: '9999px' },
+} as const;
+
+/** The `data-radius` values Manti UI ships presets for. */
+export type MantiRadiusMode = keyof typeof radiusModes;
 
 /**
  * Control heights — the shared vertical sizing of form controls (button, input,
@@ -489,6 +549,9 @@ export const mantiTokens = {
   variants,
   componentTokens,
   radius,
+  radiusFactor,
+  radiusChannel,
+  radiusModes,
   controlHeight,
   space,
   fontSize,

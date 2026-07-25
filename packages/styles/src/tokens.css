@@ -102,12 +102,13 @@
     --manti-blue-12: oklch(0.252 0.056 249);
 
     /* Radius */
-    --manti-radius-xs: 4px;
-    --manti-radius-sm: 8px;
-    --manti-radius-md: 14px;
-    --manti-radius-lg: 18px;
-    --manti-radius-xl: 20px;
-    --manti-radius-2xl: 26px;
+    --manti-radius-factor: 1;
+    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
+    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
+    --manti-radius-md: calc(14px * var(--manti-radius-factor));
+    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
+    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
+    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
     --manti-radius-full: 9999px;
 
     /* Control height */
@@ -197,6 +198,17 @@
     --manti-z-toast: 1200;
     --manti-z-modal: 1300;
     /* @tokens:generated:end */
+
+    /* Roundness channels --------------------------------------------------- *
+     * The ramp above is a scale of *sizes*; these two are the opt-in *shape*
+     * channels. A part joins a channel with `max(<ramp step>, var(--channel))`:
+     * a no-op while the channel sits at its default, pill-shaped once a theme
+     * raises it. Opting in is explicit, so a small indicator that must never go
+     * round (checkbox) simply never references a channel — no clamp needed, it
+     * is structurally incapable of collapsing into a circle. Keep small parts
+     * out of `pill`; that is the whole point of the split.                     */
+    --manti-radius-pill: 0px; /* control-class parts that may become pill */
+    --manti-radius-thumb: 9999px; /* draggable handles — round by default */
 
     /* Semantic surfaces & text ------------------------------------------- *
      * Cool and near-neutral. Dark is the hero — a deep near-black with a faint
@@ -359,6 +371,53 @@
 
   [data-theme='dark'] {
     color-scheme: dark;
+  }
+
+  /**
+   * Radius presets.
+   *
+   * Set `data-radius` on any container to retune the roundness of everything
+   * inside it. Each mode assigns the factor *and* every channel, so modes never
+   * leak into one another. `pill` is the only mode that raises the `pill`
+   * channel — that is what turns buttons and inputs into lozenges while the
+   * checkbox, which never joined the channel, keeps its square silhouette and
+   * stays distinguishable from the radio. `none` is the only mode that lowers
+   * `full`, so squaring the system also squares the by-design-round parts
+   * instead of leaving stray pills behind.
+   */
+  [data-radius='none'] {
+    --manti-radius-factor: 0;
+    --manti-radius-full: 0px;
+    --manti-radius-pill: 0px;
+    --manti-radius-thumb: 0.5px;
+  }
+
+  [data-radius='sharp'] {
+    --manti-radius-factor: 0.6;
+    --manti-radius-full: 9999px;
+    --manti-radius-pill: 0px;
+    --manti-radius-thumb: 9999px;
+  }
+
+  [data-radius='default'] {
+    --manti-radius-factor: 1;
+    --manti-radius-full: 9999px;
+    --manti-radius-pill: 0px;
+    --manti-radius-thumb: 9999px;
+  }
+
+  [data-radius='round'] {
+    --manti-radius-factor: 1.4;
+    --manti-radius-full: 9999px;
+    --manti-radius-pill: 0px;
+    --manti-radius-thumb: 9999px;
+  }
+
+  [data-radius='pill'] {
+    --manti-radius-factor: 1.4;
+    --manti-radius-full: 9999px;
+    --manti-radius-pill: 9999px;
+    --manti-radius-thumb: 9999px;
   }
 
   /**
@@ -559,7 +618,6 @@
     --variant-text: var(--manti-text);
     --variant-ring: var(--manti-focus-ring);
   }
-
   /* ───────────────────────────────────────────────────────────────────────
    * Label ink, chosen by measuring each solid above — DO NOT EDIT BY HAND.
    * Run `pnpm gen:variant-ink` after changing any `--variant-solid`.
