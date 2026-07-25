@@ -17,6 +17,8 @@
     "docs:preview": "vite preview packages/docs",
     "build:site": "pnpm docs:build && pnpm build:storybook && rm -rf packages/docs/dist/storybook && cp -r storybook-static packages/docs/dist/storybook",
     "gen:tokens": "pnpm --filter @manti-ui/styles gen:tokens",
+    "gen:variant-ink": "pnpm --filter @manti-ui/styles gen:variant-ink",
+    "report:variant-ink": "pnpm --filter @manti-ui/styles report:variant-ink",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "pnpm build:packages && changeset publish",
