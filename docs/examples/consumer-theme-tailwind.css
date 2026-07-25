@@ -24,10 +24,10 @@
  * ═══════════════════════════════════════════════════════════════════════════ */
 :root {
   /* Primitive ramp (primary = orange) */
-  --manti-orange-100: oklch(0.94 0.03 275);
-  --manti-orange-500: oklch(0.62 0.19 275);
-  --manti-orange-600: oklch(0.55 0.2 275);
-  --manti-orange-700: oklch(0.46 0.17 275);
+  --manti-orange-2: oklch(0.94 0.03 275);
+  --manti-orange-7: oklch(0.62 0.19 275);
+  --manti-orange-8: oklch(0.55 0.2 275);
+  --manti-orange-9: oklch(0.46 0.17 275);
 
   /* Semantic roller — light-dark() formunu koru */
   --manti-bg: light-dark(#fafafb, #0c0c10);
@@ -41,7 +41,7 @@
 
   /* Tipografi & focus */
   --manti-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --manti-focus-ring: var(--manti-orange-500);
+  --manti-focus-ring: var(--manti-orange-7);
 }
 
 /* Yeni variant — <Button variant="brand"> */
@@ -63,7 +63,7 @@
  *    bağlarsan tek kaynaktan beslenirler.
  * ═══════════════════════════════════════════════════════════════════════════ */
 @theme {
-  --color-brand: var(--manti-orange-600); /* → bg-brand, text-brand, border-brand */
+  --color-brand: var(--manti-orange-8); /* → bg-brand, text-brand, border-brand */
   --radius-pill: 100px; /* → rounded-pill */
 }
 

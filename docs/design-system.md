@@ -44,16 +44,17 @@ contract — tokens, nesting rules, the SSR-safe story — is in
 
 ## Color
 
-Six perceptually-uniform OKLCH ramps (`50`–`950`) from the mantı kitchen:
+Six perceptually-uniform OKLCH ramps (`1`–`12`, lightest → darkest) from the
+mantı kitchen:
 
-| Ramp     | Role    | Reference    |
-| -------- | ------- | ------------ |
-| `gray`   | neutral | warm neutral |
-| `orange` | primary | warm orange  |
-| `red`    | danger  | hot red      |
-| `green`  | —       | fresh green  |
-| `amber`  | —       | golden amber |
-| `blue`   | —       | calm blue    |
+| Ramp     | Role      | Reference    |
+| -------- | --------- | ------------ |
+| `gray`   | neutral   | warm neutral |
+| `orange` | primary   | warm orange  |
+| `red`    | danger    | hot red      |
+| `green`  | —         | fresh green  |
+| `amber`  | secondary | golden amber |
+| `blue`   | —         | calm blue    |
 
 ### Semantic & variant roles
 
@@ -123,17 +124,17 @@ every panel surface falls back to an opaque token surface automatically.
 
 ## Components
 
-| Component  | Variants | Notes                                                    |
-| ---------- | :------: | -------------------------------------------------------- |
+| Component  | Variants | Notes                                                       |
+| ---------- | :------: | ----------------------------------------------------------- |
 | `Button`   |   all    | primary … outline across an emphasis ladder, sizes, loading |
-| `Toggle`   |   all    | Zag.js toggle machine; controlled or uncontrolled        |
-| `Switch`   |   all    | real checkbox + `role="switch"`, smooth thumb            |
-| `Checkbox` |   all    | checked + indeterminate, drawn check                     |
-| `Input`    |   all    | label, hint, error, adornments, wired ARIA               |
-| `Badge`    |   all    | any variant, optional dot                                |
-| `Card`     |    —     | pillowy surface; `Header`/`Title`/`Body`/`Footer`        |
-| `Alert`    |   all    | dismiss, role escalates for the danger variant |
-| `Spinner`  |    —     | inherits `currentColor`                                  |
+| `Toggle`   |   all    | Zag.js toggle machine; controlled or uncontrolled           |
+| `Switch`   |   all    | real checkbox + `role="switch"`, smooth thumb               |
+| `Checkbox` |   all    | checked + indeterminate, drawn check                        |
+| `Input`    |   all    | label, hint, error, adornments, wired ARIA                  |
+| `Badge`    |   all    | any variant, optional dot                                   |
+| `Card`     |    —     | pillowy surface; `Header`/`Title`/`Body`/`Footer`           |
+| `Alert`    |   all    | dismiss, role escalates for the danger variant              |
+| `Spinner`  |    —     | inherits `currentColor`                                     |
 
 ## Anatomy contract
 

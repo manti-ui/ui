@@ -69,7 +69,17 @@ for (const [ramp, stops] of Object.entries(t.colorPrimitives))
     decl(`manti-${ramp}-${stop}`, ramp === 'gray' ? coolHued(value) : value);
 
 head('Radius');
-for (const [k, v] of Object.entries(t.radius)) decl(`manti-radius-${k}`, v);
+/* Anchored on `--manti-radius-factor`: every step is a multiple of it, so the
+   single factor makes the whole system sharper or rounder. `full` is exempt —
+   it is the always-pill primitive, not a size, and scaling it would only turn
+   9999px into a differently enormous 9999px. Roundness a theme can switch on
+   lives in the `--manti-radius-pill`/`-thumb` channels, hand-authored in
+   tokens.css alongside the `[data-radius]` presets. */
+decl('manti-radius-factor', t.radiusFactor);
+for (const [k, v] of Object.entries(t.radius)) {
+  if (k === 'full') decl(`manti-radius-${k}`, v);
+  else decl(`manti-radius-${k}`, `calc(${v} * var(--manti-radius-factor))`);
+}
 
 head('Control height');
 for (const [k, v] of Object.entries(t.controlHeight))
@@ -81,7 +91,11 @@ head('Spacing');
 const spaceUnit = t.space[1];
 for (const [k, v] of Object.entries(t.space)) {
   if (numeric(v) === 0 || k === '1') decl(`manti-space-${k}`, v);
-  else decl(`manti-space-${k}`, `calc(var(--manti-space-1) * ${ratio(v, spaceUnit)})`);
+  else
+    decl(
+      `manti-space-${k}`,
+      `calc(var(--manti-space-1) * ${ratio(v, spaceUnit)})`,
+    );
 }
 
 head('Typography');
@@ -91,9 +105,14 @@ for (const [k, v] of Object.entries(t.fontFamily)) decl(`manti-font-${k}`, v);
 const textBase = t.fontSize.base;
 for (const [k, v] of Object.entries(t.fontSize)) {
   if (k === 'base') decl(`manti-text-${k}`, v);
-  else decl(`manti-text-${k}`, `calc(var(--manti-text-base) * ${ratio(v, textBase)})`);
+  else
+    decl(
+      `manti-text-${k}`,
+      `calc(var(--manti-text-base) * ${ratio(v, textBase)})`,
+    );
 }
-for (const [k, v] of Object.entries(t.lineHeight)) decl(`manti-leading-${k}`, v);
+for (const [k, v] of Object.entries(t.lineHeight))
+  decl(`manti-leading-${k}`, v);
 for (const [k, v] of Object.entries(t.fontWeight)) decl(`manti-weight-${k}`, v);
 
 head('Motion');

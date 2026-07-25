@@ -87,7 +87,8 @@
     height: var(--manti-slider-thumb-size);
     background: var(--manti-surface-raised);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-full);
+    /* Thumb channel — see switch.css. */
+    border-radius: max(var(--manti-radius-xs), var(--manti-radius-thumb));
     box-shadow: var(--manti-shadow-sm);
     cursor: grab;
     transition:

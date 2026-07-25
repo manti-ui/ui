@@ -26,7 +26,7 @@ const inlineMeta: Record<string, ComponentMeta> = {
         type: 'MantiVariant',
         default: `'primary'`,
         description:
-          'Color and emphasis. primary (solid), secondary (soft) and tertiary (ghost) form the emphasis ladder; danger is the semantic hue; outline is a neutral bordered treatment; link renders as inline text; any custom variant is accepted.',
+          'Color and emphasis. primary (orange solid), secondary (amber soft) and tertiary (neutral ghost) form the emphasis ladder; danger is the semantic hue; outline is a neutral bordered treatment; link renders as inline text; any custom variant is accepted.',
       },
       {
         name: 'size',
@@ -164,8 +164,7 @@ const inlineMeta: Record<string, ComponentMeta> = {
         name: 'variant',
         type: 'MantiVariant',
         default: `'secondary'`,
-        description:
-          'Color and emphasis. Built-ins plus any custom variant.',
+        description: 'Color and emphasis. Built-ins plus any custom variant.',
       },
       {
         name: 'size',
@@ -193,8 +192,7 @@ const inlineMeta: Record<string, ComponentMeta> = {
         name: 'variant',
         type: 'MantiVariant',
         default: `'secondary'`,
-        description:
-          'Color and emphasis. Built-ins plus any custom variant.',
+        description: 'Color and emphasis. Built-ins plus any custom variant.',
       },
       {
         name: 'title',

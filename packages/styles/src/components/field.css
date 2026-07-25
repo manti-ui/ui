@@ -28,7 +28,7 @@
   [data-scope='field'][data-part='required'] {
     margin-inline-start: 0.125rem;
     color: var(--manti-text);
-    color: light-dark(var(--manti-red-600), var(--manti-red-400));
+    color: light-dark(var(--manti-red-8), var(--manti-red-5));
   }
 
   [data-scope='field'][data-part='control'] {
@@ -46,7 +46,8 @@
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-md);
+    /* Control class — joins the opt-in pill channel alongside button/select. */
+    border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
     color: var(--manti-text-muted);
     box-shadow: var(--manti-panel-rim), var(--manti-panel-inset);
     transition:
@@ -86,7 +87,7 @@
 
   [data-scope='field'][data-part='root'][data-invalid='true']
     [data-part='control'] {
-    border-color: light-dark(var(--manti-red-500), var(--manti-red-400));
+    border-color: light-dark(var(--manti-red-7), var(--manti-red-5));
   }
 
   [data-scope='field'][data-part='root']:has(:is(input, textarea):disabled)
@@ -140,7 +141,7 @@
 
   [data-scope='field'][data-part='error'] {
     font-size: var(--manti-text-xs);
-    color: light-dark(var(--manti-red-700), var(--manti-red-300));
+    color: light-dark(var(--manti-red-9), var(--manti-red-4));
   }
 
   /* Password affordances — rendered only for `type="password"`. ------------- */
@@ -187,7 +188,7 @@
     flex: none;
     align-items: center;
     padding-inline: var(--manti-space-1);
-    color: light-dark(var(--manti-amber-800), var(--manti-amber-300));
+    color: light-dark(var(--manti-amber-10), var(--manti-amber-4));
   }
 
   /* The notice reads as an icon, but the wording has to survive for assistive

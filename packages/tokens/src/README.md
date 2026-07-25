@@ -1,9 +1,10 @@
 # Tokens
 
 The typed Manti UI token contract: six OKLCH color ramps (`gray`, `orange`,
-`green`, `amber`, `red`, `blue`), plus `variants`, `radius`, `space`, `fontSize`,
-`lineHeight`, `fontWeight`, `fontFamily`, `shadow`, `duration`, `easing`,
-`breakpoint`, and `zIndex`.
+`green`, `amber`, `red`, `blue`), plus `variants`, `radius` (with its
+`radiusFactor`, `radiusChannel` and `radiusModes` companions), `space`,
+`fontSize`, `lineHeight`, `fontWeight`, `fontFamily`, `shadow`, `duration`,
+`easing`, `breakpoint`, and `zIndex`.
 
 This package is the typed source of truth and stays framework-agnostic. The same
 values are mirrored as CSS custom properties in `@manti-ui/styles`, where

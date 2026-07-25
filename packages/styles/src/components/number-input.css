@@ -30,7 +30,9 @@
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-md);
+    /* Control class — joins the opt-in pill channel; the flanking triggers below
+       round their outer corners to the same value so the group stays one shape. */
+    border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
     box-shadow: var(--manti-panel-rim), var(--manti-panel-inset);
     transition:
       border-color var(--manti-duration-base) var(--manti-ease-smooth),
@@ -65,7 +67,7 @@
 
   [data-scope='number-input'][data-part='root'][data-invalid]
     [data-part='control'] {
-    border-color: light-dark(var(--manti-red-500), var(--manti-red-400));
+    border-color: light-dark(var(--manti-red-7), var(--manti-red-5));
   }
 
   [data-scope='number-input'][data-part='root'][data-disabled]
@@ -118,13 +120,25 @@
 
   [data-scope='number-input'][data-part='decrement-trigger'] {
     border-inline-end: 1px solid var(--manti-panel-border);
-    border-start-start-radius: var(--manti-radius-md);
-    border-end-start-radius: var(--manti-radius-md);
+    border-start-start-radius: max(
+      var(--manti-radius-md),
+      var(--manti-radius-pill)
+    );
+    border-end-start-radius: max(
+      var(--manti-radius-md),
+      var(--manti-radius-pill)
+    );
   }
 
   [data-scope='number-input'][data-part='increment-trigger'] {
     border-inline-start: 1px solid var(--manti-panel-border);
-    border-start-end-radius: var(--manti-radius-md);
-    border-end-end-radius: var(--manti-radius-md);
+    border-start-end-radius: max(
+      var(--manti-radius-md),
+      var(--manti-radius-pill)
+    );
+    border-end-end-radius: max(
+      var(--manti-radius-md),
+      var(--manti-radius-pill)
+    );
   }
 }

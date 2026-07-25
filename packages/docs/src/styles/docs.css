@@ -390,6 +390,26 @@
     width: var(--manti-space-5);
     height: var(--manti-space-5);
   }
+  /* ---- Radius picker (right rail) ---- */
+  .docs-theme-radius {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    margin-top: var(--manti-space-2);
+  }
+  /* Five segments have to fit a 15rem rail: trim the per-item padding via the
+     component token and let the track span the full width. */
+  .docs-theme-radius [data-scope='segmented-control'][data-part='root'] {
+    display: flex;
+    width: 100%;
+  }
+  .docs-theme-radius [data-scope='segmented-control'][data-part='item'] {
+    --manti-segmented-control-height: 1.6rem;
+    --manti-segmented-control-padding-x: var(--manti-space-1);
+    flex: 1;
+    min-width: 0;
+    font-size: var(--manti-text-xs);
+  }
   /* ---- Prose ---- */
   .docs-prose {
     max-width: var(--docs-prose-max);
