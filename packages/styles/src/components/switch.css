@@ -65,7 +65,10 @@
     width: var(--_thumb-size);
     height: var(--_thumb-size);
     background: var(--manti-surface-raised);
-    border-radius: var(--manti-radius-full);
+    /* The thumb channel, not the plain `full` primitive: a handle has to stay
+       round at every radius mode but `none`, where it squares off with its
+       track instead of rattling around as a lone circle. */
+    border-radius: max(var(--manti-radius-xs), var(--manti-radius-thumb));
     box-shadow: var(--manti-shadow-sm);
     transition: transform var(--manti-duration-base) var(--manti-ease-smooth);
   }

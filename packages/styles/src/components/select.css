@@ -32,7 +32,9 @@
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-md);
+    /* Control class — joins the opt-in pill channel. The popup below keeps a
+       plain ramp step: a pill-shaped listbox would clip its own rows. */
+    border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
     color: var(--manti-text);
     font-family: var(--manti-font-sans);
     font-size: var(--manti-text-sm);
@@ -115,7 +117,6 @@
   [data-scope='select'][data-part='trigger'][data-state='open']
     [data-part='indicator'] {
     transform: rotate(180deg);
-
   }
 
   [data-scope='select'][data-part='positioner'] {
@@ -150,7 +151,6 @@
   [data-scope='select'][data-part='positioner']
     [data-scope='scroll-area'][data-part='viewport'] {
     max-height: var(--manti-select-content-max-height);
-
   }
 
   [data-scope='select'][data-part='content'] {

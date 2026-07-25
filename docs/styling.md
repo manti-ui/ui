@@ -97,7 +97,9 @@ altitude:
 }
 
 /* 2. Semantic role — THE primary theming lever. Cascades to every component
-      consistently (this radius change rounds buttons, cards, inputs alike). */
+      consistently (this radius change rounds buttons, cards, inputs alike).
+      For radius specifically, see "Radius" below: one factor retunes the whole
+      ramp, and `[data-radius]` ships presets for it. */
 :root {
   --manti-radius-md: 4px;
   --manti-focus-ring: var(--manti-blue-7);
@@ -124,11 +126,11 @@ Rest / hover / pressed washes for neutral surfaces (menu items, rows, date
 cells, …) come from a three-rung alpha ladder, so the whole system's hover
 strength is tuned in one place instead of per component:
 
-| Token                  | Role                    |
-| ---------------------- | ----------------------- |
-| `--manti-fill-subtle` | decorative / rest       |
+| Token                 | Role                       |
+| --------------------- | -------------------------- |
+| `--manti-fill-subtle` | decorative / rest          |
 | `--manti-fill`        | hover / keyboard highlight |
-| `--manti-fill-strong` | selected / pressed      |
+| `--manti-fill-strong` | selected / pressed         |
 
 They are alpha (built on `--manti-text`), so they stay theme-aware — a dark wash
 in light mode, a light wash in dark — and composite correctly over any surface.
@@ -141,15 +143,75 @@ The **variant-colored** analog is `--variant-fill` (hover) and
 a `[data-variant]` element gets an accent-tinted wash for the same states — and
 any custom variant that defines `--variant-soft-bg` gets them for free.
 
+### Radius
+
+The radius model separates **size** from **shape**, because one t-shirt ramp
+cannot serve both a 40px button and a 20px checkbox: a value that reads as
+"softened" on the button reads as "circle" on the checkbox, and a system where
+they share a step forces you to choose between the two.
+
+**Size — one factor rescales the ramp.** Every step except `full` is emitted as
+`calc(<step> * var(--manti-radius-factor))`, so the whole system gets sharper or
+rounder from a single property:
+
+```css
+:root {
+  --manti-radius-factor: 1.4; /* everything rounder, proportions preserved */
+}
+```
+
+**Shape — roundness is an opt-in channel, never a ramp step.** Two channels sit
+beside the ramp, and a part joins one with `max(<step>, var(--channel))`:
+
+| Channel                | Default  | Joined by                                                                                      |
+| ---------------------- | -------- | ---------------------------------------------------------------------------------------------- |
+| `--manti-radius-pill`  | `0px`    | control class: button, input, select/combobox trigger, number-input, toggle, segmented control |
+| `--manti-radius-thumb` | `9999px` | draggable handles: switch thumb, slider thumb                                                  |
+
+`max()` is a no-op while a channel sits at its default, and turns the part
+pill-shaped once you raise it. Because joining is explicit, a part that must
+stay square-ish simply never references a channel — the checkbox is
+**structurally incapable** of rounding into a radio, whatever the theme does. No
+clamp is involved, so an explicit `--manti-checkbox-radius` still works exactly
+as written.
+
+`--manti-radius-full` is a third, separate thing: the always-pill primitive for
+parts that are round _by design_ (switch track, slider, progress, spinner,
+avatar, radio, badge). It is not scaled by the factor.
+
+**Presets.** `data-radius` on any container assigns the factor and every channel
+at once — `none`, `sharp`, `default`, `round`, `pill`:
+
+```html
+<div data-radius="pill">…</div>
+<!-- buttons and inputs become lozenges; the checkbox stays a rounded square -->
+```
+
+**Anchoring convention.** A component anchors all of its sizes on **one** ramp
+step — its element class — and scales that step for size variants instead of
+hopping to a coarser one. Hopping is what makes a small control overshoot: the
+ramp has no stop between 4px and 8px, so a checkbox reaching for "one size up"
+lands at double. Button is the worked example: `sm`/`md`/`lg` are
+`0.7 / 1 / 1.3 ×` the `md` step, so retuning `--manti-radius-md` moves all three
+together and touches nothing outside the control class.
+
+| Element class   | Anchor step | Examples                                      |
+| --------------- | ----------- | --------------------------------------------- |
+| indicator       | `xs`        | checkbox, rating star, table cell marker      |
+| item            | `sm`        | menu/list row, tab, calendar day, pagination  |
+| control         | `md`        | button, input, trigger, toggle                |
+| surface         | `lg` / `xl` | card, dialog, drawer, popover, alert          |
+| round by design | `full`      | switch track, slider, progress, avatar, badge |
+
 ### Component tokens (Tier 3)
 
 Manti tokens form three tiers, each defaulting into the one above it:
 
-| Tier             | Example                  | Scope                            |
-| ---------------- | ------------------------ | -------------------------------- |
-| 1 — primitive    | `--manti-orange-7`    | the raw palette / scales         |
-| 2 — semantic     | `--manti-radius-md`, `--variant-solid` | purpose-based roles |
-| 3 — **component** | `--manti-button-radius`  | one component's structural knobs |
+| Tier              | Example                                | Scope                            |
+| ----------------- | -------------------------------------- | -------------------------------- |
+| 1 — primitive     | `--manti-orange-7`                     | the raw palette / scales         |
+| 2 — semantic      | `--manti-radius-md`, `--variant-solid` | purpose-based roles              |
+| 3 — **component** | `--manti-button-radius`                | one component's structural knobs |
 
 Component tokens are a small, curated set of `--manti-{component}-{property}`
 custom properties, each defaulting to a Tier-2 semantic token.
@@ -224,12 +286,12 @@ provider; it is pure CSS.
 <div class="manti-app" data-motion="full">…</div>
 ```
 
-| Value       | Behavior                                                              |
-| ----------- | -------------------------------------------------------------------- |
-| _(unset)_   | Same as `default`.                                                    |
-| `default`   | The shipped transitions and keyframes. The baseline look.            |
-| `none`      | Disables Manti's decorative transitions/animations. The spinner's functional rotation is kept. Animations on your _own_ content nested inside a component are left untouched, so you can supply your own motion. |
-| `full`      | Expressive, spring-driven motion — stronger presses, overshooting thumbs and dots, a tooltip blur-in, lifting cards with a tonal glow. |
+| Value     | Behavior                                                                                                                                                                                                         |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| _(unset)_ | Same as `default`.                                                                                                                                                                                               |
+| `default` | The shipped transitions and keyframes. The baseline look.                                                                                                                                                        |
+| `none`    | Disables Manti's decorative transitions/animations. The spinner's functional rotation is kept. Animations on your _own_ content nested inside a component are left untouched, so you can supply your own motion. |
+| `full`    | Expressive, spring-driven motion — stronger presses, overshooting thumbs and dots, a tooltip blur-in, lifting cards with a tonal glow.                                                                           |
 
 `full` is powered by two extra curves you can also reuse directly:
 `--manti-ease-spring` (gentle overshoot) and `--manti-ease-bounce` (snappier),
@@ -282,17 +344,17 @@ switches for free. It is a **full takeover**: Manti's values override Tailwind's
 defaults of the same name, so standard utilities (`bg-red-500`, `text-lg`,
 `rounded-lg`, `shadow-md`) resolve to Manti tokens.
 
-| Utility example                       | Resolves to                  |
-| ------------------------------------- | ---------------------------- |
-| `bg-surface`, `text-text-muted`              | semantic surface/text tokens |
-| `border-border`, `ring-ring`                 | semantic border/focus tokens |
-| `bg-orange-500`, `text-red-700`              | primitive ramps (plain names)|
-| `bg-primary-600`, `border-danger-300`        | semantic ramp aliases        |
-| `text-lg`, `font-semibold`, `leading-normal` | typography scale             |
-| `rounded-lg`, `shadow-md`                    | Manti radius/elevation       |
-| `h-control-md`, `min-h-control-sm`           | Manti control heights        |
-| `ease-smooth`, `ease-spring`                 | Manti motion curves          |
-| `font-sans`, `font-mono`              | Manti font stacks (override) |
+| Utility example                              | Resolves to                   |
+| -------------------------------------------- | ----------------------------- |
+| `bg-surface`, `text-text-muted`              | semantic surface/text tokens  |
+| `border-border`, `ring-ring`                 | semantic border/focus tokens  |
+| `bg-orange-500`, `text-red-700`              | primitive ramps (plain names) |
+| `bg-primary-600`, `border-danger-300`        | semantic ramp aliases         |
+| `text-lg`, `font-semibold`, `leading-normal` | typography scale              |
+| `rounded-lg`, `shadow-md`                    | Manti radius/elevation        |
+| `h-control-md`, `min-h-control-sm`           | Manti control heights         |
+| `ease-smooth`, `ease-spring`                 | Manti motion curves           |
+| `font-sans`, `font-mono`                     | Manti font stacks (override)  |
 
 Spacing is bound at its base unit — `--spacing` resolves to `--manti-space-1`
 (the 4px grid) — so every numeric utility (`p-4`, `gap-2`, `h-10`) derives from
