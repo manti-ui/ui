@@ -119,9 +119,10 @@ colocated `*.stories.tsx`, and have keyboard support, visible focus, and SR sema
   `!important`.
 - **Variants** are CSS-variable vocabularies (`--variant-solid`,
   `--variant-soft-bg`, …) selected per component via `[data-variant]`. The
-  five built-ins: `primary` (branded orange solid), `secondary` (neutral soft),
+  five built-ins: `primary` (branded orange solid), `secondary` (amber soft),
   `tertiary` (neutral ghost / text-only), `danger` (the one semantic hue, red
-  solid), `outline` (neutral bordered). The `variant` prop accepts any string;
+  solid), `outline` (neutral bordered). Note `secondary` shares the amber ramp
+  with warning semantics; `tertiary`/`outline` are the neutral treatments. The `variant` prop accepts any string;
   built-in variants keep TS autocomplete via `MantiVariant`/`MantiBuiltinVariant`
   from `@manti-ui/tokens`. The treatment (solid/soft/ghost/bordered) is chosen by
   the consuming component, not a separate prop.

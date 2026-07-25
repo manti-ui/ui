@@ -1,26 +1,42 @@
 import { useEffect, useState } from 'react';
-import { Button, ColorPicker } from '@manti-ui/react';
+import { Button, ColorPicker, SegmentedControl } from '@manti-ui/react';
 
 /**
- * Right-rail palette playground: pick a color for a variant and the whole docs
- * page re-skins live. Each picked base color is expanded into the full
+ * Right-rail playground: pick a color for a variant, or a radius preset, and the
+ * whole docs page re-skins live. Each picked base color is expanded into the full
  * `--variant-*` role vocabulary (solid/soft/border/text/ring, theme-aware via
  * `light-dark()` + `color-mix()`) and injected as an UNLAYERED override, which
  * beats the layered `@layer manti.tokens` defaults — the same escape hatch a
- * real consumer uses. Choices persist in localStorage.
+ * real consumer uses. Radius needs no injection at all: `data-radius` on the
+ * root element is the shipped preset API. Choices persist in localStorage.
  */
 
-type VariantKey = 'primary' | 'secondary' | 'danger';
+type VariantKey = 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger';
+
+/** Mirrors `radiusModes` in `@manti-ui/tokens`. */
+type RadiusMode = 'none' | 'sharp' | 'default' | 'round' | 'pill';
+
+const RADIUS_MODES: { value: RadiusMode; label: string }[] = [
+  { value: 'none', label: 'None' },
+  { value: 'sharp', label: 'Sharp' },
+  { value: 'default', label: 'Base' },
+  { value: 'round', label: 'Round' },
+  { value: 'pill', label: 'Pill' },
+];
 
 const SWATCHES: { key: VariantKey; label: string; fallback: string }[] = [
   { key: 'primary', label: 'Primary', fallback: '#e2681c' },
   { key: 'secondary', label: 'Secondary', fallback: '#6b7280' },
+  { key: 'tertiary', label: 'Tertiary', fallback: '#9ca3af' },
+  { key: 'success', label: 'Success', fallback: '#16a34a' },
   { key: 'danger', label: 'Danger', fallback: '#dc2626' },
 ];
 
 const DEFAULTS: Record<VariantKey, string> = {
   primary: '#e2681c',
   secondary: '#6b7280',
+  tertiary: '#9ca3af',
+  success: '#16a34a',
   danger: '#dc2626',
 };
 
@@ -70,10 +86,10 @@ function ramp(base: string): string {
     `--variant-solid-hover:${ld(mix(88, 'white'), mix(88, 'black'))}`,
     `--variant-solid-active:${ld(mix(78, 'white'), mix(78, 'black'))}`,
     `--variant-on-solid:${readableOn(base)}`,
-    `--variant-soft-bg:${ld(mix(14, 'white'), mix(22, 'var(--manti-gray-950)'))}`,
-    `--variant-soft-bg-hover:${ld(mix(22, 'white'), mix(32, 'var(--manti-gray-950)'))}`,
+    `--variant-soft-bg:${ld(mix(14, 'white'), mix(22, 'var(--manti-gray-12)'))}`,
+    `--variant-soft-bg-hover:${ld(mix(22, 'white'), mix(32, 'var(--manti-gray-12)'))}`,
     `--variant-soft-text:${ld(mix(75, 'black'), mix(42, 'white'))}`,
-    `--variant-border:${ld(mix(32, 'white'), mix(42, 'var(--manti-gray-900)'))}`,
+    `--variant-border:${ld(mix(32, 'white'), mix(42, 'var(--manti-gray-11)'))}`,
     `--variant-text:${ld(mix(78, 'black'), mix(45, 'white'))}`,
     `--variant-ring:${base}`,
   ].join(';');
@@ -103,12 +119,23 @@ function applyCss(css: string): void {
 type State = {
   colors: Record<VariantKey, string>;
   active: Record<VariantKey, boolean>;
+  radius: RadiusMode;
 };
 
 const INITIAL: State = {
   colors: { ...DEFAULTS },
-  active: { primary: false, secondary: false, danger: false },
+  active: {
+    primary: false,
+    secondary: false,
+    tertiary: false,
+    success: false,
+    danger: false,
+  },
+  radius: 'default',
 };
+
+const isRadiusMode = (value: unknown): value is RadiusMode =>
+  RADIUS_MODES.some((m) => m.value === value);
 
 function load(): State {
   try {
@@ -118,6 +145,8 @@ function load(): State {
     return {
       colors: { ...DEFAULTS, ...saved.colors },
       active: { ...INITIAL.active, ...saved.active },
+      // Older persisted payloads predate the radius picker.
+      radius: isRadiusMode(saved.radius) ? saved.radius : INITIAL.radius,
     };
   } catch {
     return INITIAL;
@@ -135,6 +164,9 @@ export function ThemePlayground() {
   // Apply + persist on every change.
   useEffect(() => {
     applyCss(buildCss(state.colors, state.active));
+    // `data-radius` is the shipped preset API — set the attribute and every
+    // component inside re-rounds itself; no override stylesheet involved.
+    document.documentElement.dataset.radius = state.radius;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {
@@ -142,13 +174,20 @@ export function ThemePlayground() {
     }
   }, [state]);
 
-  const anyActive = SWATCHES.some((s) => state.active[s.key]);
+  const anyActive =
+    SWATCHES.some((s) => state.active[s.key]) || state.radius !== 'default';
 
   const setColor = (key: VariantKey, value: string) =>
     setState((prev) => ({
+      ...prev,
       colors: { ...prev.colors, [key]: value },
       active: { ...prev.active, [key]: true },
     }));
+
+  const setRadius = (value: string) =>
+    setState((prev) =>
+      isRadiusMode(value) ? { ...prev, radius: value } : prev,
+    );
 
   const reset = () => setState(INITIAL);
 
@@ -160,8 +199,8 @@ export function ThemePlayground() {
           variant="tertiary"
           size="sm"
           iconOnly
-          aria-label="Reset palette"
-          title="Reset palette"
+          aria-label="Reset palette and radius"
+          title="Reset palette and radius"
           onClick={reset}
           disabled={!anyActive}
         >
@@ -184,6 +223,23 @@ export function ThemePlayground() {
           </li>
         ))}
       </ul>
+
+      <div className="docs-theme-radius">
+        <p className="docs-toc-label">Radius</p>
+        <p className="docs-theme-playground-hint">
+          One factor rescales the ramp; roundness is an opt-in channel. Try{' '}
+          <strong>Pill</strong> — controls turn into lozenges while checkboxes
+          keep their square silhouette.
+        </p>
+        {/* The picker is itself a control-class component, so it re-rounds along
+            with the page it is retuning. */}
+        <SegmentedControl
+          size="sm"
+          value={state.radius}
+          items={RADIUS_MODES}
+          onValueChange={setRadius}
+        />
+      </div>
     </section>
   );
 }

@@ -79,6 +79,6 @@
   }
 
   [data-scope='pin-input'][data-part='root'][data-invalid] [data-part='input'] {
-    border-color: light-dark(var(--manti-red-500), var(--manti-red-400));
+    border-color: light-dark(var(--manti-red-7), var(--manti-red-5));
   }
 }
