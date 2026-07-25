@@ -206,7 +206,11 @@
      * raises it. Opting in is explicit, so a small indicator that must never go
      * round (checkbox) simply never references a channel — no clamp needed, it
      * is structurally incapable of collapsing into a circle. Keep small parts
-     * out of `pill`; that is the whole point of the split.                     */
+     * out of `pill`; that is the whole point of the split.
+     *
+     * No `[data-radius]` preset raises `pill` — binding pill controls to a
+     * preset would bind them to that preset's factor too. Raise it yourself and
+     * it composes with any factor: `:root { --manti-radius-pill: 9999px }`.    */
     --manti-radius-pill: 0px; /* control-class parts that may become pill */
     --manti-radius-thumb: 9999px; /* draggable handles — round by default */
 
@@ -377,13 +381,16 @@
    * Radius presets.
    *
    * Set `data-radius` on any container to retune the roundness of everything
-   * inside it. Each mode assigns the factor *and* every channel, so modes never
-   * leak into one another. `pill` is the only mode that raises the `pill`
-   * channel — that is what turns buttons and inputs into lozenges while the
-   * checkbox, which never joined the channel, keeps its square silhouette and
-   * stays distinguishable from the radio. `none` is the only mode that lowers
-   * `full`, so squaring the system also squares the by-design-round parts
-   * instead of leaving stray pills behind.
+   * inside it. One mode per distinct factor — a mode that differed from its
+   * neighbour only by a channel would be a picker row most pages cannot show a
+   * difference for.
+   *
+   * Each mode assigns the factor *and* every channel, so modes never leak into
+   * one another. Note they still *lower* `pill` even though none raises it: a
+   * consumer who opted into pill controls globally can square a subtree with
+   * `data-radius="none"`. `none` is likewise the only mode that lowers `full`,
+   * so squaring the system also squares the by-design-round parts instead of
+   * leaving stray pills behind.
    */
   [data-radius='none'] {
     --manti-radius-factor: 0;
@@ -410,13 +417,6 @@
     --manti-radius-factor: 1.4;
     --manti-radius-full: 9999px;
     --manti-radius-pill: 0px;
-    --manti-radius-thumb: 9999px;
-  }
-
-  [data-radius='pill'] {
-    --manti-radius-factor: 1.4;
-    --manti-radius-full: 9999px;
-    --manti-radius-pill: 9999px;
     --manti-radius-thumb: 9999px;
   }
 

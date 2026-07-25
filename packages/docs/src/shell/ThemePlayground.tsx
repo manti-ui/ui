@@ -14,14 +14,13 @@ import { Button, ColorPicker, SegmentedControl } from '@manti-ui/react';
 type VariantKey = 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger';
 
 /** Mirrors `radiusModes` in `@manti-ui/tokens`. */
-type RadiusMode = 'none' | 'sharp' | 'default' | 'round' | 'pill';
+type RadiusMode = 'none' | 'sharp' | 'default' | 'round';
 
 const RADIUS_MODES: { value: RadiusMode; label: string }[] = [
   { value: 'none', label: 'None' },
   { value: 'sharp', label: 'Sharp' },
   { value: 'default', label: 'Base' },
   { value: 'round', label: 'Round' },
-  { value: 'pill', label: 'Pill' },
 ];
 
 const SWATCHES: { key: VariantKey; label: string; fallback: string }[] = [
@@ -227,9 +226,8 @@ export function ThemePlayground() {
       <div className="docs-theme-radius">
         <p className="docs-toc-label">Radius</p>
         <p className="docs-theme-playground-hint">
-          One factor rescales the ramp; roundness is an opt-in channel. Try{' '}
-          <strong>Pill</strong> — controls turn into lozenges while checkboxes
-          keep their square silhouette.
+          Each preset is one value of <code>--manti-radius-factor</code>, which
+          rescales the whole ramp proportionally.
         </p>
         {/* The picker is itself a control-class component, so it re-rounds along
             with the page it is retuning. */}

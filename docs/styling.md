@@ -175,17 +175,30 @@ stay square-ish simply never references a channel — the checkbox is
 clamp is involved, so an explicit `--manti-checkbox-radius` still works exactly
 as written.
 
+Pill-shaped controls are one line, and because no preset raises the channel it
+composes with whatever factor you are on:
+
+```css
+:root {
+  --manti-radius-pill: 9999px; /* buttons and inputs become lozenges */
+}
+```
+
 `--manti-radius-full` is a third, separate thing: the always-pill primitive for
 parts that are round _by design_ (switch track, slider, progress, spinner,
 avatar, radio, badge). It is not scaled by the factor.
 
 **Presets.** `data-radius` on any container assigns the factor and every channel
-at once — `none`, `sharp`, `default`, `round`, `pill`:
+at once — `none`, `sharp`, `default`, `round`, one per distinct factor
+(`0 / 0.6 / 1 / 1.4`):
 
 ```html
-<div data-radius="pill">…</div>
-<!-- buttons and inputs become lozenges; the checkbox stays a rounded square -->
+<div data-radius="sharp">…</div>
 ```
+
+The presets still _lower_ the `pill` channel even though none raises it, so if
+you opted into pill controls globally you can square a subtree with
+`data-radius="none"`.
 
 **Anchoring convention.** A component anchors all of its sizes on **one** ramp
 step — its element class — and scales that step for size variants instead of
