@@ -59,23 +59,33 @@ a step forces a choice between the two.
 
 - **Shape — roundness is an opt-in channel, never a ramp step.** A part joins a
   channel with `max(<step>, var(--manti-radius-pill))` — a no-op at the default,
-  pill-shaped once a theme raises it. Control-class parts (button, input, select
-  and combobox triggers, number-input, toggle, segmented control) join `pill`;
-  switch and slider thumbs join `--manti-radius-thumb`. Checkbox joins neither,
-  so it is structurally incapable of rounding into a radio no matter how round
-  the theme gets — with no clamp involved, an explicit `--manti-checkbox-radius`
-  still applies exactly as written.
+  pill-shaped once you raise it. Control-class parts (button, input, select and
+  combobox triggers, number-input, toggle, segmented control) join `pill`; switch
+  and slider thumbs join `--manti-radius-thumb`. Checkbox joins neither, so it is
+  structurally incapable of rounding into a radio no matter how round the theme
+  gets — with no clamp involved, an explicit `--manti-checkbox-radius` still
+  applies exactly as written.
+
+  No preset raises `pill`, deliberately: that would weld pill controls to one
+  factor. Raise it yourself and it composes with any of them.
+
+  ```css
+  :root {
+    --manti-radius-pill: 9999px; /* buttons and inputs become lozenges */
+  }
+  ```
 
 - **`[data-radius]` presets.** Set the attribute on any container to assign the
   factor and every channel at once:
 
   ```html
-  <div data-radius="pill">…</div>
-  <!-- controls become lozenges; the checkbox keeps its square silhouette -->
+  <div data-radius="sharp">…</div>
   ```
 
-  The five modes are `none`, `sharp`, `default`, `round` and `pill`, typed as
-  `radiusModes` in `@manti-ui/tokens`.
+  The four modes — `none`, `sharp`, `default`, `round`, one per distinct factor
+  (`0 / 0.6 / 1 / 1.4`) — are typed as `radiusModes` in `@manti-ui/tokens`. They
+  still _lower_ the `pill` channel, so a subtree can be squared with
+  `data-radius="none"` even if you opted into pill controls globally.
 
 Components now anchor every size on **one** ramp step and scale it, rather than
 hopping to a coarser one — hopping is what makes a small control overshoot.
