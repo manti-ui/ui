@@ -3,34 +3,34 @@ title: ToggleGroup
 slug: /components/toggle-group
 group: Buttons & Actions
 order: 58
-description: A set of toggle buttons backed by the Zag.js toggle-group machine.
+description: A keyboard-accessible group of single or multiple pressed buttons.
 ---
 
 # ToggleGroup
 
-A set of toggle buttons backed by the Zag.js toggle-group machine. Pass an
-`items` array; the machine owns roving focus, arrow-key navigation, and the
-pressed set.
+Pass items as `{ value, label, disabled? }`. The machine manages roving focus,
+arrow keys, and pressed values.
 
 <Demo name="toggle-group/basic" center />
 
-## Multiple
-
-Set `multiple` to let more than one item stay pressed at once.
+## Multiple selection
 
 <Demo name="toggle-group/multiple" center />
 
-## Props
+## Sizes
+
+<Demo name="toggle-group/sizes" center />
+
+## API
 
 <PropsTable component="toggle-group" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the toggle group. Class names and the
-DOM between parts are private.
+### Anatomy
 
 <Anatomy component="toggle-group" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="toggle-group" />

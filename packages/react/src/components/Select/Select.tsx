@@ -1,7 +1,6 @@
 import { useId, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { select } from '@manti-ui/folds';
-import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -14,6 +13,8 @@ export interface SelectItem {
   disabled?: boolean;
 }
 
+export type SelectVariant = 'default' | 'fill';
+
 export interface SelectProps {
   /** The options. */
   items: SelectItem[];
@@ -21,8 +22,8 @@ export interface SelectProps {
   label?: ReactNode;
   /** Text shown when nothing is selected. */
   placeholder?: string;
-  /** Selected-item variant. */
-  variant?: MantiVariant;
+  /** Visual treatment for the trigger. */
+  variant?: SelectVariant;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
   /** Allow selecting more than one option. */
@@ -64,7 +65,7 @@ export function Select({
   items,
   label,
   placeholder = 'Select…',
-  variant = 'primary',
+  variant = 'default',
   size = 'md',
   multiple,
   value,
@@ -110,17 +111,23 @@ export function Select({
       : undefined,
   });
   const api = select.connect(service, normalizeProps);
+  const contentProps = api.getContentProps();
+  const contentSide = (
+    contentProps as typeof contentProps & { 'data-side'?: 'top' | 'bottom' }
+  )['data-side'];
+  const connectedSide = api.open && items.length > 0 ? contentSide : undefined;
 
   return (
     <div
       {...api.getRootProps()}
       data-size={size}
-      data-variant={variant}
+      data-variant="primary"
+      data-appearance={variant}
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
-        <button {...api.getTriggerProps()}>
+        <button {...api.getTriggerProps()} data-connected={connectedSide}>
           <span
             {...api.getValueTextProps()}
             data-placeholder={api.empty || undefined}
@@ -143,12 +150,14 @@ export function Select({
       </div>
       {api.open && (
         <Portal>
-          <div {...api.getPositionerProps()} data-variant={variant}>
+          <div {...api.getPositionerProps()} data-variant="primary">
             <ScrollArea focusable={false}>
-              <ul {...api.getContentProps()}>
+              <ul {...contentProps}>
                 {items.map((item) => (
                   <li key={item.value} {...api.getItemProps({ item })}>
-                    <span {...api.getItemTextProps({ item })}>{item.label}</span>
+                    <span {...api.getItemTextProps({ item })}>
+                      {item.label}
+                    </span>
                     <span {...api.getItemIndicatorProps({ item })}>
                       {check}
                     </span>

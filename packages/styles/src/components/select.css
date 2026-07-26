@@ -1,7 +1,7 @@
 /**
  * Select — single/multi select backed by the Zag.js select machine. The trigger
- * reuses the translucent field surface; the portalled content is a translucent listbox
- * matching the Listbox/Menu panels.
+ * reuses the flat field surface; the portalled content is an opaque listbox
+ * matching the Listbox/Menu anatomy.
  */
 @layer manti.components {
   [data-scope='select'][data-part='root'] {
@@ -28,10 +28,8 @@
     width: 100%;
     min-height: var(--manti-select-height);
     padding-inline: var(--manti-space-3);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     /* Control class — joins the opt-in pill channel. The popup below keeps a
        plain ramp step: a pill-shaped listbox would clip its own rows. */
     border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
@@ -39,53 +37,38 @@
     font-family: var(--manti-font-sans);
     font-size: var(--manti-text-sm);
     text-align: start;
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-inset);
-    transition:
-      border-color var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+    transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:hover {
-      border-color: var(--manti-text-subtle);
+      border-color: var(--manti-border-strong);
     }
 
-    &[data-state='open'],
     &:focus-visible {
       outline: none;
-      border-color: var(--variant-ring, var(--manti-focus-ring));
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-      /* box-shadow:
-        var(--manti-panel-rim),
-        0 0 0 3px
-          color-mix(
-            in oklab,
-            var(--variant-ring, var(--manti-focus-ring)) 30%,
-            transparent
-          ); */
+      border-color: var(--variant-ring);
     }
 
-    /* Only when actually open: drop the divider between trigger and list so the
-       two read as one shape. (Not on focus-visible, or a focused-but-closed
-       trigger would show a bottomless box.) */
-    &[data-state='open'] {
+    &[data-connected] {
+      background: var(--manti-panel-tint-strong);
+      border-color: transparent;
+    }
+
+    &[data-connected='bottom'] {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
       border-bottom-color: transparent;
-      /* Drop the all-around inset rim (its bottom edge is the faint seam line);
-         keep only the top inset well. */
-      box-shadow: var(--manti-panel-inset);
+    }
+
+    &[data-connected='top'] {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-top-color: transparent;
     }
 
     &[data-disabled] {
       background: var(--manti-surface-sunken);
       opacity: 0.6;
       cursor: not-allowed;
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='select'][data-part='trigger'] {
-      background: var(--manti-surface-raised);
     }
   }
 
@@ -100,7 +83,41 @@
   }
 
   [data-scope='select'][data-part='root'][data-invalid] [data-part='trigger'] {
-    border-color: light-dark(var(--manti-red-7), var(--manti-red-5));
+    border-color: var(--manti-danger-border);
+  }
+
+  [data-scope='select'][data-part='root'][data-appearance='fill']
+    [data-part='trigger'] {
+    background: var(--manti-fill);
+    border-color: transparent;
+
+    &:hover {
+      background: var(--manti-fill-strong);
+      border-color: transparent;
+    }
+
+    &:focus-visible {
+      background: var(--manti-fill-strong);
+      border-color: var(--variant-ring);
+    }
+
+    &[data-connected] {
+      background: var(--manti-panel-tint-strong);
+      border-color: transparent;
+    }
+
+    &[data-connected='bottom'] {
+      border-bottom-color: transparent;
+    }
+
+    &[data-connected='top'] {
+      border-top-color: transparent;
+    }
+  }
+
+  [data-scope='select'][data-part='root'][data-appearance='fill'][data-invalid]
+    [data-part='trigger'] {
+    border-color: var(--manti-danger-border);
   }
 
   [data-scope='select'][data-part='value-text'][data-placeholder] {
@@ -132,20 +149,34 @@
   [data-scope='select'][data-part='positioner']
     [data-scope='scroll-area'][data-part='root'] {
     --manti-select-content-max-height: 18rem;
-    margin-top: -8px;
     width: 100%;
     background: var(--manti-panel-tint-strong);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
-    /* Follow the active variant (falls back to the neutral focus ring). The
-       portalled positioner now carries data-variant so this resolves. */
-    border-color: var(--variant-ring, var(--manti-focus-ring));
+    border: 1px solid transparent;
     border-radius: var(--manti-radius-md);
-    /* box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow); */
+  }
+
+  /* Join the panel on the side chosen by Floating UI, including when collision
+     handling flips it above the trigger. */
+  [data-scope='select'][data-part='positioner']
+    [data-scope='scroll-area'][data-part='root']:has(
+      [data-scope='select'][data-part='content'][data-side='bottom']
+    ) {
+    margin-top: -8px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-top: transparent;
+    border-top-color: transparent;
+  }
+
+  [data-scope='select'][data-part='positioner']
+    [data-scope='scroll-area'][data-part='root']:has(
+      [data-scope='select'][data-part='content'][data-side='top']
+    ) {
+    margin-bottom: -8px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-color: transparent;
   }
 
   [data-scope='select'][data-part='positioner']
@@ -164,34 +195,32 @@
     }
   }
 
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='select'][data-part='positioner']
-      [data-scope='scroll-area'][data-part='root'] {
-      background: var(--manti-surface-raised);
-    }
-  }
-
   [data-scope='select'][data-part='item'] {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--manti-space-2);
-    padding: var(--manti-space-2) var(--manti-space-3);
+    padding: var(--manti-space-2);
     border-radius: var(--manti-radius-sm);
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
+    line-height: var(--manti-leading-snug);
     user-select: none;
-    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+    transition:
+      background var(--manti-duration-fast) var(--manti-ease-soft),
+      color var(--manti-duration-fast) var(--manti-ease-soft);
 
     &[data-highlighted] {
-      background: var(--manti-fill);
+      background: var(--variant-fill);
     }
 
     &[data-state='checked'] {
-      color: var(--variant-text);
+      background: var(--variant-fill-strong);
       font-weight: var(--manti-weight-medium);
+    }
+
+    &[data-state='checked'][data-highlighted] {
+      background: var(--variant-fill-strong);
     }
 
     &[data-disabled] {

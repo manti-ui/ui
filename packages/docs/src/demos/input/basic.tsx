@@ -7,7 +7,6 @@ export default function InputBasic() {
         label="Recipe name"
         placeholder="Kayseri mantısı"
         hint="Shown to everyone browsing the cookbook."
-        variant="primary"
       />
     </div>
   );

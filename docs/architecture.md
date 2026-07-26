@@ -1,50 +1,74 @@
 # Architecture
 
-## Package boundaries
+Manti UI separates design, styling, behavior, and rendering.
 
-Manti UI separates framework-agnostic contracts from framework renderers:
+## Packages
 
-- `@manti-ui/tokens` owns primitive and semantic design tokens.
-- `@manti-ui/styles` owns CSS attached to stable `data-scope`, `data-part`, and
-  `data-state` contracts.
-- `@manti-ui/folds` owns Zag.js machines and shared interaction behavior.
-- `@manti-ui/react` connects machines through `@zag-js/react` and renders React
-  components.
+| Package            | Owns                                                     |
+| ------------------ | -------------------------------------------------------- |
+| `@manti-ui/tokens` | Typed primitive, semantic, variant, and component tokens |
+| `@manti-ui/styles` | Layered CSS for the public component anatomy             |
+| `@manti-ui/folds`  | Zag.js adapters and Manti-authored headless behavior     |
+| `@manti-ui/react`  | React components and hooks                               |
 
-Future `@manti-ui/vue`, `@manti-ui/svelte`, and `@manti-ui/solid` packages
-should consume the same tokens, CSS, and machine exports.
-
-## Dependency direction
+The dependency direction is one-way:
 
 ```text
 tokens <- styles
-folds   <- react
-styles   <- react
+folds  <- react
+styles <- react (peer dependency for consumers)
 ```
 
-Framework-specific packages must not define private token values or duplicate
-keyboard, focus, and state logic already owned by `folds`.
+React renderers must not duplicate tokens or behavior owned by lower layers.
 
-## Source layout
+## Component flow
+
+A behavioral component follows this path:
 
 ```text
-packages/
-  tokens/src/    Token contracts and generated outputs
-  styles/src/    Shared CSS
-  folds/src/     Zag.js behavior exports
-  react/src/     React components and Storybook stories
+Zag machine or Manti fold
+        ↓
+React adapter
+        ↓
+data-scope / data-part / data-state
+        ↓
+shared CSS and tokens
 ```
 
-## Component contract
+The React adapter imports machines through `@manti-ui/folds`, connects them with
+`@zag-js/react`, and renders the returned prop getters. Static components use
+the same anatomy contract without a machine.
 
-Each interactive component should define:
+```tsx
+const service = useMachine(component.machine, { id: useId(), ...props });
+const api = component.connect(service, normalizeProps);
 
-- a Zag.js machine export or documented machine configuration
-- stable anatomy and state attributes
-- shared semantic styles
-- a thin framework renderer
-- keyboard, screen-reader, and Storybook accessibility checks
-- equivalent cross-framework behavior tests when another adapter is added
+return <div {...api.getRootProps()} />;
+```
 
-Zag.js and its framework bindings are implementation details. Public Manti UI
-props, events, anatomy, and naming must remain under Manti UI's control.
+## Public contract
+
+Stable public surfaces are:
+
+- component props and exported types;
+- documented `data-scope`, `data-part`, and state attributes;
+- `--manti-*` and `--variant-*` custom properties;
+- documented component tokens;
+- stylesheet entry points and Manti cascade layers.
+
+Class names, private `--_*` variables, and DOM between documented anatomy parts
+may change.
+
+## Source map
+
+```text
+packages/tokens/src/             token contract
+packages/styles/src/             shared CSS
+packages/folds/src/              shared behavior
+packages/react/src/components/   React renderers and stories
+packages/docs/src/content/       documentation site pages
+```
+
+Each public component must export through
+`packages/react/src/components/index.ts`, include a colocated Storybook story,
+and have a docs page with props, anatomy, and component tokens.

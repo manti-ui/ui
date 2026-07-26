@@ -151,7 +151,6 @@
       border-radius: var(--manti-radius-sm);
       font-size: var(--manti-text-sm);
       font-weight: var(--manti-weight-semibold);
-      cursor: pointer;
       border: 1px solid var(--variant-border);
       color: var(--variant-text);
       background: none;

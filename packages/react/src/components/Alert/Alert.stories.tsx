@@ -2,13 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert } from './Alert';
 
-const variants = [
-  'primary',
-  'secondary',
-  'tertiary',
-  'danger',
-  'outline',
-] as const;
+const variants = ['primary', 'secondary', 'success', 'info', 'danger'] as const;
 
 const InfoIcon = (
   <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden>
@@ -54,7 +48,7 @@ export const Playground: Story = {};
 export const Variants: Story = {
   render: (args) => (
     <div style={{ display: 'grid', gap: '0.75rem', maxWidth: 520 }}>
-      {(['primary', 'secondary', 'tertiary', 'danger', 'outline'] as const).map((variant) => (
+      {variants.map((variant) => (
         <Alert
           {...args}
           key={variant}

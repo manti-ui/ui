@@ -3,35 +3,36 @@ title: PinInput
 slug: /components/pin-input
 group: Inputs
 order: 37
-description: A segmented code entry backed by the Zag.js pin-input machine.
+description: Segmented code entry with focus movement and paste support.
 ---
 
 # PinInput
 
-A segmented code entry backed by the Zag.js pin-input machine. The machine owns
-focus movement between cells, paste handling, and form wiring; you set the
-length and character type.
+Set `length` and `type`. The machine manages focus, paste, completion, and form
+behavior.
 
 <Demo name="pin-input/basic" center />
 
-## Masked
+## Masking
 
-Set `mask` to obscure the entered characters like a password field — useful for
-PINs rather than one-time codes.
+Set `mask` for secret values.
 
 <Demo name="pin-input/masked" center />
 
-## Props
+## Sizes
+
+<Demo name="pin-input/sizes" center />
+
+## API
 
 <PropsTable component="pin-input" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the field. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="pin-input" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="pin-input" />

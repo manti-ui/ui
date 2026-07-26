@@ -28,7 +28,30 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    rather than a bare literal or a private knob; keep only _derived_ `calc()`
    values as private `--_*`. Register every component token in the
    `componentTokens` map of `@manti-ui/tokens`.
-3. **Match the user's language.** Always reply in the same language the user wrote
+3. **Color-scale roles and interaction progression are mandatory.** Primitive
+   ramps are ordered `1`–`12`, but components must consume semantic roles or the
+   `--variant-*` vocabulary rather than picking primitive stops directly. Use
+   `1`–`2` for canvas/subtle surfaces; `3` for component rest, `4` for hover and
+   keyboard highlight, `5` for pressed/selected/checked; `6` for quiet chrome,
+   `7` for interactive borders and low-emphasis controls, `8` for focus rings
+   and strong interactive chrome; `9` for solid fills, `10` for solid hover;
+   `11` for supporting text and `12` for high-contrast text. Input-like controls
+   (including Input, Textarea, Select, Combobox, NumberInput, PinInput,
+   TagsInput, Editable, DatePicker, TimePicker, ColorPicker, and Clipboard) use
+   `--manti-border` at rest, strengthen to the neutral
+   `--manti-border-strong` on hover, and use `--variant-ring` while active,
+   focused, or open. The primary color must begin at active/focus/open for this
+   control family; never use a variant color for its resting or hover border.
+   Select is the deliberate open-state exception: once its popup is connected,
+   both trigger and popup borders become transparent.
+   Semantic mappings must be theme-aware: interaction strength increases in the
+   direction that gains contrast in each theme.
+   Filled and selected surfaces follow rest `3` → hover `4` → active `5`; solid
+   controls follow `9` → `10`. Define these mappings centrally in
+   `packages/styles/src/tokens.css`, consume only semantic/variant roles in
+   component CSS, and verify changes with `pnpm check:color-scale`,
+   `pnpm --filter @manti-ui/styles check:contrast`, and the styles build.
+4. **Match the user's language.** Always reply in the same language the user wrote
    their prompt in (e.g. Turkish prompt → Turkish answer). This applies to chat
    responses only; code, identifiers, comments, and docs stay in English.
 

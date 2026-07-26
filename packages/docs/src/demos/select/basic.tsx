@@ -10,13 +10,8 @@ const regions = [
 
 export default function SelectBasic() {
   return (
-    <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 7)' }}>
-      <Select
-        items={regions}
-        label="Region"
-        placeholder="Pick a region…"
-        variant="primary"
-      />
+    <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 5)' }}>
+      <Select items={regions} label="Region" placeholder="Pick a region…" />
     </div>
   );
 }

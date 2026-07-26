@@ -1,7 +1,7 @@
 /**
  * Badge — a compact status or label chip. The color variant drives the look:
- * primary/danger solid, secondary soft, tertiary text-only, outline bordered —
- * with an optional leading status dot.
+ * primary/danger solid, secondary soft, outline bordered — with an optional
+ * leading status dot. Badge intentionally omits the tertiary treatment.
  */
 @layer manti.components {
   [data-scope='badge'][data-part='root'] {
@@ -32,40 +32,22 @@
     }
 
     /* Solid — the default treatment (primary, danger, and custom variants). */
-    &:not([data-variant='secondary']):not([data-variant='tertiary']):not(
-        [data-variant='outline']
-      ) {
+    &:not([data-variant='secondary']):not([data-variant='outline']) {
       background: var(--variant-solid);
       color: var(--variant-on-solid);
     }
 
-    /* Secondary — the translucent amber chip. */
+    /* Secondary — a flat neutral chip with an invisible structural border. */
     &[data-variant='secondary'] {
-      background: color-mix(in oklab, var(--variant-soft-bg) 72%, transparent);
-      -webkit-backdrop-filter: var(--manti-panel-blur);
-      backdrop-filter: var(--manti-panel-blur);
-      border-color: var(--manti-panel-border);
+      background: var(--variant-soft-bg);
+      border-color: var(--variant-soft-bg);
       color: var(--variant-soft-text);
-      box-shadow: var(--manti-panel-rim);
-    }
-
-    /* Tertiary — the lowest rung: label text only, no container. */
-    &[data-variant='tertiary'] {
-      color: var(--variant-text);
     }
 
     /* Outline — a hairline-bordered chip on a transparent surface. */
     &[data-variant='outline'] {
       border-color: var(--variant-border);
       color: var(--variant-text);
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='badge'][data-part='root'][data-variant='secondary'] {
-      background: var(--variant-soft-bg);
     }
   }
 

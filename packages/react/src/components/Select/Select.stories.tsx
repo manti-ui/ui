@@ -19,7 +19,7 @@ const meta = {
     items: regions,
     label: 'Region',
     placeholder: 'Pick a region…',
-    variant: 'primary',
+    variant: 'default',
     size: 'md',
     multiple: false,
   },
@@ -27,7 +27,7 @@ const meta = {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
+      options: ['default', 'fill'],
     },
   },
 } satisfies Meta<typeof Select>;
@@ -36,6 +36,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
+
+export const Filled: Story = {
+  args: { variant: 'fill', label: undefined },
+};
 
 export const Multiple: Story = {
   args: {

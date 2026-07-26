@@ -1,12 +1,6 @@
 import { Badge } from '@manti-ui/react';
 
-const variants = [
-  'primary',
-  'secondary',
-  'tertiary',
-  'danger',
-  'outline',
-] as const;
+const variants = ['primary', 'secondary', 'danger', 'outline'] as const;
 
 export default function BadgeVariants() {
   return (

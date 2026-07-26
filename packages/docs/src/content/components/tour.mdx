@@ -3,28 +3,26 @@ title: Tour
 slug: /components/tour
 group: Overlays
 order: 60
-description: A guided product tour backed by the Zag.js tour machine.
+description: A guided product walkthrough with spotlighted or centered steps.
 ---
 
 # Tour
 
-A guided product tour backed by the Zag.js tour machine. Pass an ordered `steps`
-array and a `trigger` element; each step can spotlight an element via a CSS
-`target` selector or float in the center of the screen.
+Pass an ordered `steps` array and a `trigger`. A step can target an element with
+a CSS selector or appear in the center.
 
 <Demo name="tour/basic" />
 
-## Props
+## API
 
 <PropsTable component="tour" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the tour. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="tour" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="tour" />

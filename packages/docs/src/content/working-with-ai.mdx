@@ -1,0 +1,40 @@
+---
+title: Working with AI
+slug: /working-with-ai
+group: Guides
+order: 33
+description: Give coding agents the context and rules they need to use Manti UI correctly.
+---
+
+<AiPageHeader />
+
+Manti UI publishes a machine-readable project guide at
+[manti.design/llms.txt](https://manti.design/llms.txt). It covers installation,
+public APIs, components, tokens, styling rules, accessibility, and verification.
+
+Give the following prompt to a coding agent. Replace the final task placeholder
+with what you want it to build.
+
+## Copy this prompt
+
+```text
+Build the following React interface with Manti UI.
+
+Before writing code, read https://manti.design/llms.txt and treat it as the
+source of truth for Manti UI installation, components, public APIs, styling,
+accessibility, and verification. Follow the relevant component documentation
+linked from that file and verify real exported props and types instead of
+inventing APIs.
+
+After implementation, run the project's available validation commands and
+summarize the changes and assumptions.
+
+Task:
+[Describe the interface or change you want the agent to implement.]
+```
+
+## Keep the reference available
+
+Agents work best when they can access the URL directly. If network access is
+blocked, download [llms.txt](https://manti.design/llms.txt) and add it to the
+agent's context with your task.

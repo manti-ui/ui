@@ -30,15 +30,16 @@
     gap: var(--manti-clipboard-gap);
     min-height: var(--manti-clipboard-height);
     padding: 0 0 0 var(--manti-clipboard-padding-x);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     border-radius: var(--manti-clipboard-radius);
-    box-shadow: var(--manti-panel-rim);
+
+    &:hover {
+      border-color: var(--manti-border-strong);
+    }
 
     &:focus-within {
-      border-color: var(--manti-focus-ring);
+      border-color: var(--variant-ring, var(--manti-focus-ring));
     }
 
     /* The copied confirmation tints the whole field with the variant — focus
@@ -46,14 +47,6 @@
        "copied". */
     &[data-copied] {
       border-color: var(--variant-ring, var(--manti-focus-ring));
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='clipboard'][data-part='control'] {
-      background: var(--manti-surface-raised);
     }
   }
 

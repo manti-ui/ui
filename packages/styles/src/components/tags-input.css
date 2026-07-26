@@ -1,6 +1,6 @@
 /**
  * Tags Input — a multi-value entry field backed by the Zag.js tags-input
- * machine. Tags are variant soft pills inside the shared translucent field surface;
+ * machine. Tags are variant soft pills inside the shared flat field surface;
  * the entry input flows after the last tag and wraps as needed.
  */
 @layer manti.components {
@@ -27,32 +27,23 @@
     gap: var(--manti-space-2);
     min-height: var(--manti-tags-input-height);
     padding: var(--manti-space-1) var(--manti-space-1);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-inset);
-    transition:
-      border-color var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+    transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &:hover {
+      border-color: var(--manti-border-strong);
+    }
 
     &:focus-within {
       border-color: var(--variant-ring, var(--manti-focus-ring));
     }
   }
 
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='tags-input'][data-part='control'] {
-      background: var(--manti-surface-raised);
-    }
-  }
-
   [data-scope='tags-input'][data-part='root'][data-invalid]
     [data-part='control'] {
-    border-color: light-dark(var(--manti-red-7), var(--manti-red-5));
+    border-color: var(--manti-danger-border);
   }
 
   [data-scope='tags-input'][data-part='root'][data-disabled]

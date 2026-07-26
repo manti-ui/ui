@@ -3,124 +3,134 @@ title: Color & variants
 slug: /foundations/color-and-tones
 group: Foundations
 order: 21
-description: The OKLCH primitive ramps from the mantı kitchen and the five variants every variant-driven component consumes.
+description: Manti UI color ramps, semantic roles, component states, and variants.
 ---
 
 # Color & variants
 
-Manti UI's palette comes from the mantı kitchen — warm, edible references turned
-into perceptually-smooth color. Color is split in two: fixed **primitive ramps**
-you rarely touch directly, and **variants** — the single color-and-emphasis
-dimension that components actually read.
+Manti UI separates fixed color ramps from the semantic roles components use.
 
-## The OKLCH primitive ramps
+## Primitive ramps
 
-Six ramps run from `1` (lightest) to `12` (darkest), each authored in **OKLCH**
-so steps are perceptually even — equal jumps in lightness look equal to the eye,
-and hues stay stable across the scale. These values are fixed and identical in
-light and dark. The stops are a plain index rather than Tailwind-style `50…950`
-weights; if you use the Tailwind bridge, the familiar `bg-orange-500` utility
-names still work and map onto these stops.
+Six OKLCH ramps run from `1` (lightest) to `12` (darkest):
 
-Twelve steps because that is what the roles need: `1`–`2` page and panel
-backgrounds, `3`–`5` component backgrounds, `6`–`8` borders and separators,
-`9`–`10` the solid fills, `11`–`12` text.
-
-| Ramp     | Role      | Reference    |
-| -------- | --------- | ------------ |
-| `gray`   | neutral   | warm neutral |
-| `orange` | primary   | warm orange  |
-| `red`    | danger    | hot red      |
-| `green`  | —         | fresh green  |
-| `amber`  | secondary | golden amber |
-| `blue`   | —         | calm blue    |
-
-Each step is a `--manti-{ramp}-{step}` custom property — `--manti-orange-7`,
-`--manti-gray-12`, and so on.
+| Ramp     | Purpose     | Use it for                                             |
+| -------- | ----------- | ------------------------------------------------------ |
+| `gray`   | Neutral UI  | Surfaces, borders, text, and secondary controls        |
+| `orange` | Primary     | Main actions, selected states, and the product accent  |
+| `green`  | Success     | Positive feedback, completed states, and confirmations |
+| `blue`   | Information | Informational feedback, notices, and helpful context   |
+| `amber`  | Warning     | Caution, attention, and states that need review        |
+| `red`    | Danger      | Errors, destructive actions, and critical feedback     |
 
 <ColorRamps />
 
-Per the [design signature](/foundations/design-signature), these ramps never
-appear as gradients or a brand accent. They feed the variants below, and the warm
-`gray` ramp also backs the cool monochrome surfaces and text.
+Each stop is available as `--manti-{ramp}-{step}`. Component CSS should use
+semantic tokens or variants instead of choosing a stop directly.
 
-## The five variants
+## Primitive scale contract
 
-Variant-driven components — Button, Badge, Alert, Switch, and friends — never
-hard-code a hue. They set a `data-variant` and read a small, uniform vocabulary
-of `--variant-*` variables. A single `variant` prop carries **both** the hue and
-the emphasis. Manti UI ships five built-in variants:
+This mapping comes directly from `colorScaleRoles` in `@manti-ui/tokens`. Every
+color ramp uses the same contract:
 
-- `primary` — orange solid, the highest-emphasis signature accent
-- `secondary` — amber soft, the default for Badge and Alert
-- `tertiary` — neutral ghost (text only), the lowest emphasis
-- `danger` — red solid, the semantic hue
-- `outline` — neutral bordered: a transparent background with a visible border
+| Stop | Source role                  | Exact purpose                                     |
+| ---- | ---------------------------- | ------------------------------------------------- |
+| `1`  | `appBackground[0]`           | Lighter page or panel background position         |
+| `2`  | `appBackground[1]`           | Next page or panel background position            |
+| `3`  | `componentBackground.rest`   | Resting component background                      |
+| `4`  | `componentBackground.hover`  | Hovered component background                      |
+| `5`  | `componentBackground.active` | Active, pressed, or selected component background |
+| `6`  | `border.subtle`              | Subtle borders and separators                     |
+| `7`  | `border.interactive`         | Interactive borders                               |
+| `8`  | `border.strong`              | Strong borders and focus chrome                   |
+| `9`  | `solid.rest`                 | Resting solid fill                                |
+| `10` | `solid.hover`                | Hovered solid fill                                |
+| `11` | `text.lowContrast`           | Supporting or lower-contrast text                 |
+| `12` | `text.highContrast`          | Primary or highest-contrast text                  |
 
-The first three form an **emphasis ladder** (`primary` → `secondary` →
-`tertiary`); `danger` is the one semantic hue and `outline` is a neutral bordered
-treatment.
+This is the palette's intended role contract, not a promise that every component
+reads the primitive stop literally. Components consume semantic tokens or
+`--variant-*` roles, and `tokens.css` adapts them for theme and contrast.
 
-Two things worth knowing about `secondary`. It is chromatic, so the top two rungs
-of the ladder both carry color — when you want a genuinely quiet control, reach
-for `tertiary` or `outline`, not `secondary`. And it draws on the same `amber`
-ramp that reads as caution elsewhere, so an amber badge is not automatically a
-warning; use `danger`, or a custom variant, when the meaning has to be
-unambiguous.
+The current `--variant-solid*` mappings are:
+
+| Variant                         | Rest                     | Hover                     | Active                    |
+| ------------------------------- | ------------------------ | ------------------------- | ------------------------- |
+| `primary`                       | `orange-7`               | theme-aware `color-mix()` | theme-aware `color-mix()` |
+| `success`, `info`, and `danger` | matching hue at step `8` | theme-aware `color-mix()` | theme-aware `color-mix()` |
+| `secondary`                     | `gray-11` / `gray-3`     | `gray-10` / `gray-4`      | `gray-9` / `gray-5`       |
+| `tertiary` and `outline`        | semantic neutral value   | semantic neutral value    | semantic neutral value    |
+
+Values separated by `/` mean light theme / dark theme. These mappings deliberately
+depart from the nominal `9 → 10` solid pair when contrast requires it.
+
+Input-like controls are the main exception to the colored-border progression.
+They use the neutral border at rest and hover, then introduce the variant color
+at focus or open.
+
+## Built-in variants
+
+Manti ships seven variant palettes:
+
+- `primary` — orange, highest emphasis;
+- `secondary` — neutral soft surface;
+- `success` — green feedback;
+- `info` — blue feedback;
+- `tertiary` — neutral ghost;
+- `danger` — red feedback;
+- `outline` — neutral bordered treatment.
 
 <VariantGallery />
 
-## How a variant maps to `--variant-*`
+Individual components may expose a subset. Alert supports `primary`,
+`secondary`, `success`, `info`, and `danger`. Badge omits `tertiary`. Button also
+adds `link`.
 
-Selecting `[data-variant='primary']` swaps in a complete set of role variables
-that every variant-driven component consumes the same way:
+Every variant defines the same roles:
 
-```
---variant-solid            --variant-soft-bg          --variant-border
---variant-solid-hover      --variant-soft-bg-hover    --variant-text
---variant-solid-active     --variant-soft-text        --variant-ring
---variant-on-solid         --variant-fill             --variant-fill-strong
-```
-
-`--variant-fill` (hover) and `--variant-fill-strong` (selected/pressed) are the
-variant-colored interactive fills; they derive from `--variant-soft-bg`, so a
-custom variant that defines the soft role gets them for free.
-
-Because a component only ever reads `--variant-*` — never a raw ramp step — the
-same markup restyles completely when you change its variant:
-
-```tsx
-<Button variant="primary">Save</Button>
-<Button variant="danger">Delete</Button>
+```text
+--variant-solid
+--variant-solid-hover
+--variant-solid-active
+--variant-on-solid
+--variant-soft-bg
+--variant-soft-bg-hover
+--variant-soft-text
+--variant-border
+--variant-text
+--variant-ring
 ```
 
-The variant values themselves use `light-dark()` to stay theme-aware and
-`color-mix()` to derive soft surfaces and hover states from the resolved solid.
+## Custom variant
 
-## Custom variants
-
-Any string is a valid variant. To add your own, declare a `[data-variant]` block
-that defines the full `--variant-*` vocabulary, then pass it:
+Components typed with `MantiVariant` accept custom strings:
 
 ```css
 [data-variant='brand'] {
-  --variant-solid: oklch(0.62 0.16 270);
-  --variant-solid-hover: oklch(0.58 0.16 270);
-  --variant-solid-active: oklch(0.54 0.16 270);
+  --variant-solid: var(--manti-blue-9);
+  --variant-solid-hover: var(--manti-blue-10);
+  --variant-solid-active: color-mix(in oklab, var(--manti-blue-10) 88%, black);
   --variant-on-solid: var(--manti-text-on-accent);
-  --variant-soft-bg: oklch(0.62 0.16 270 / 0.16);
-  --variant-soft-bg-hover: oklch(0.62 0.16 270 / 0.24);
-  --variant-soft-text: oklch(0.72 0.14 270);
-  --variant-border: oklch(0.62 0.16 270 / 0.4);
-  --variant-text: oklch(0.72 0.14 270);
-  --variant-ring: oklch(0.62 0.16 270);
+  --variant-soft-bg: var(--manti-blue-2);
+  --variant-soft-bg-hover: var(--manti-blue-3);
+  --variant-soft-text: var(--manti-blue-9);
+  --variant-border: var(--manti-blue-7);
+  --variant-text: var(--manti-blue-9);
+  --variant-ring: var(--manti-blue-8);
 }
 ```
 
 ```tsx
-<Badge variant="brand">New</Badge>
+<Button variant="brand">Save</Button>
 ```
 
-The built-in variants keep TypeScript autocomplete via `MantiVariant`, while
-still accepting any custom string. Continue to [Design tokens](/foundations/tokens)
-for the full token contract.
+## Contributor checks
+
+Use semantic roles in component CSS, keep foregrounds explicit, and verify both
+themes:
+
+```bash
+pnpm check:color-scale
+pnpm --filter @manti-ui/styles check:contrast
+pnpm --filter @manti-ui/styles build
+```

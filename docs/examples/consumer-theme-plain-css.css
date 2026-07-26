@@ -1,115 +1,55 @@
-/* ───────────────────────────────────────────────────────────────────────────
- * Manti UI — kullanıcı tarafı tema override'ı (DÜZ CSS)
+/*
+ * Plain CSS theme example.
  *
- * Bu dosya, @manti-ui/react'i npm'den kuran bir uygulamanın KENDİ tasarım
- * token'larını Manti'ye nasıl bağlayacağını gösterir. Hiçbir bileşen fork
- * edilmez, hiçbir private (--_*) değişkene dokunulmaz, !important kullanılmaz.
+ * Import Manti first, then this unlayered file:
  *
- * Yükleme sırası (önemli):
- *   import '@manti-ui/styles/index.css';   // 1) önce Manti (layer'lı)
- *   import './consumer-theme-plain-css.css'; // 2) sonra bu dosya (layer'sız → kazanır)
- *
- * Neden kazanır: Manti'nin tüm CSS'i `@layer manti.*` içinde. Bu dosyadaki
- * kurallar layer'sız olduğu için specificity savaşı olmadan daima üstte gelir.
- * ─────────────────────────────────────────────────────────────────────────── */
+ *   import '@manti-ui/styles/index.css';
+ *   import './consumer-theme-plain-css.css';
+ */
 
-/* ═══════════════════════════════════════════════════════════════════════════
- * 1) PRIMITIVE RAMP — markanın ham paletini değiştir
- *    (variant'lar bu ramp'lardan beslendiği için renk her yere yayılır)
- * ═══════════════════════════════════════════════════════════════════════════ */
+/* Replace the primary ramp. */
 :root {
-  /* "orange" Manti'nin primary ramp'i. Kendi marka renginle ez. */
   --manti-orange-2: oklch(0.94 0.03 275);
   --manti-orange-3: oklch(0.89 0.06 275);
-  --manti-orange-4: oklch(0.82 0.09 275);
   --manti-orange-7: oklch(0.62 0.19 275);
   --manti-orange-8: oklch(0.55 0.2 275);
   --manti-orange-9: oklch(0.46 0.17 275);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- * 2) SEMANTIC ROLLER — yüzey, metin, kenarlık, focus, skala
- *    Renk rolleri light-dark(açık, koyu) formunda; bu formu KORU ki açık/koyu
- *    tema (data-theme + OS tercihi) otomatik çalışmaya devam etsin.
- * ═══════════════════════════════════════════════════════════════════════════ */
+/* Change shared semantic roles. */
 :root {
-  /* Yüzeyler & metin */
   --manti-bg: light-dark(#fafafb, #0c0c10);
   --manti-surface: light-dark(#ffffff, #15151b);
   --manti-surface-raised: light-dark(#ffffff, #1b1b22);
   --manti-text: light-dark(#16161a, #f4f4f6);
   --manti-text-muted: light-dark(#5c5c66, #b6b6c0);
   --manti-border: light-dark(#e6e6ea, #2a2a33);
-
-  /* Radius skalası — kendi yuvarlaklık dilin */
-  --manti-radius-xs: 2px;
-  --manti-radius-sm: 4px;
-  --manti-radius-md: 6px;
-  --manti-radius-lg: 10px;
-  --manti-radius-xl: 16px;
-
-  /* Tipografi & motion */
-  --manti-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --manti-radius-factor: 0.8;
+  --manti-font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
   --manti-focus-ring: var(--manti-orange-7);
   --manti-duration-base: 180ms;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- * 3) VARIANT — bir variant'un anlamını yeniden tanımla veya YENİ variant ekle
- *    Renk Manti'de yalnızca variant'dan gelir; markanı burada da görmek istersin.
- * ═══════════════════════════════════════════════════════════════════════════ */
-
-/* (a) Mevcut "primary" variant'unu doğrudan kendi marka rengine sabitle.
- *     (Primitive ramp'i 1. adımda ezdiysen bu çoğu zaman gereksiz; ince ayar
- *     veya ramp'tan bağımsız özel bir renk istiyorsan kullan.) */
-[data-variant='primary'] {
-  --variant-solid: light-dark(#5b3df5, #6d52ff);
-  --variant-solid-hover: light-dark(#4f33e0, #7e66ff);
-  --variant-solid-active: light-dark(#4329c4, #8f7aff);
-  --variant-on-solid: #ffffff;
-  --variant-soft-bg: light-dark(#eeeafd, #211c46);
-  --variant-soft-text: light-dark(#4329c4, #c4b8f8);
-  --variant-border: light-dark(#c9bdf8, #3a2f73);
-  --variant-text: light-dark(#4329c4, #b3a3f6);
-  --variant-ring: #6d52ff;
-}
-
-/* (b) Tamamen yeni bir variant: <Button variant="brand"> ile kullanılır.
- *     Tonal prop'lar herhangi bir string kabul eder. */
+/* Add a custom variant. */
 [data-variant='brand'] {
   --variant-solid: light-dark(#0d9488, #14b8a6);
   --variant-solid-hover: light-dark(#0b8076, #2dd4bf);
   --variant-solid-active: light-dark(#096a62, #5eead4);
   --variant-on-solid: #ffffff;
   --variant-soft-bg: light-dark(#d6f5f0, #0b2e2a);
+  --variant-soft-bg-hover: light-dark(#c0ebe4, #103b35);
   --variant-soft-text: light-dark(#0b6a60, #99f6e4);
   --variant-border: light-dark(#9fe5db, #155e54);
   --variant-text: light-dark(#0b6a60, #5eead4);
   --variant-ring: #14b8a6;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- * 4) NOKTA ATIŞI override'lar — anatomy selector'a layer'sız yaz
- *    Token'la ifade edemediğin tek bileşene özel görsel kararlar burada.
- *    Public kontrat: data-scope / data-part / data-variant / data-variant / data-size
- *    + durum attribute'leri (data-state, data-loading, disabled...).
- *    Asla --_radius gibi private knob'lara dokunma — onlar semver garantisi dışı.
- * ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Sadece Button: büyük harf + hap şekli */
+/* Target public anatomy for a component-specific rule. */
 [data-scope='button'][data-part='root'] {
   letter-spacing: 0.02em;
-  border-radius: var(--manti-radius-full);
 }
 
-/* Sadece solid Button hover'da hafif kalksın */
-[data-scope='button'][data-part='root'][data-variant='solid']:hover {
-  translate: 0 -1px;
-}
-
-/* Tek bir instance için her zaman className/style de kullanabilirsin:
- *   <Button className="my-cta">…</Button>
- */
+/* A normal class is enough for one instance. */
 .my-cta {
   box-shadow: 0 8px 24px -8px var(--manti-orange-8);
 }
