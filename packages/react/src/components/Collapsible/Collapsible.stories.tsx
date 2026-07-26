@@ -32,3 +32,7 @@ export const Playground: Story = {};
 export const OpenByDefault: Story = {
   args: { defaultOpen: true },
 };
+
+export const WithoutIndicator: Story = {
+  args: { indicator: false },
+};

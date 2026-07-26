@@ -3,49 +3,41 @@ title: Combobox
 slug: /components/combobox
 group: Inputs
 order: 23
-description: A typeahead select backed by the Zag.js combobox machine, filtered client-side.
+description: A client-filtered typeahead select with single or multiple selection.
 ---
 
 # Combobox
 
-A typeahead select backed by the Zag.js combobox machine. Pass an `items` array
-of `{ value, label }`; filtering runs client-side as the user types, and the
-portalled listbox owns keyboard navigation and selection.
+Pass options as `{ value, label, disabled? }`. Filtering runs by label while the
+Zag.js machine manages focus, keyboard navigation, and selection.
 
 <Demo name="combobox/basic" center />
 
-## Basic
+## Appearance
 
-The input filters the `items` list by label. Selecting an option closes the
-listbox and fills the input.
+Use `variant="fill"` for a neutral filled control. `size` uses the shared
+control-height scale.
 
-<Demo name="combobox/basic" center />
-
-## Multiple
-
-Set `multiple` to keep the listbox open and accumulate several selections.
-`defaultValue` seeds the initial selection in uncontrolled usage.
-
-<Demo name="combobox/multiple" center />
-
-## Sizes
-
-`size` sets the control height from the shared `--manti-control-height-*` scale,
-so a combobox lines up with an Input, Select or Button of the same size.
+<Demo name="combobox/variants" center />
 
 <Demo name="combobox/sizes" center />
 
-## Props
+## Multiple selection
+
+Set `multiple` to collect several values.
+
+<Demo name="combobox/multiple" center />
+
+## API
 
 <PropsTable component="combobox" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the combobox. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="combobox" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="combobox" />

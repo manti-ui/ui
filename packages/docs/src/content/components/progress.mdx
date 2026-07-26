@@ -3,48 +3,36 @@ title: Progress
 slug: /components/progress
 group: Feedback
 order: 39
-description: A determinate or indeterminate progress indicator backed by the Zag.js progress machine.
+description: Determinate or indeterminate progress as a bar or ring.
 ---
 
 # Progress
 
-A determinate or indeterminate progress indicator backed by the Zag.js progress
-machine. It renders as a linear bar or a circular ring.
-
-<Demo name="progress/basic" />
-
-## Linear
-
-The default `linear` variant fills a horizontal track. Set `showValue` to print
-the formatted percentage next to the label.
+The default `linear` view fills a horizontal track. Omit `value` for
+indeterminate progress.
 
 <Demo name="progress/basic" />
 
 ## Circular
 
-Set `variant="circular"` to render a ring, with the percentage centered inside
-when `showValue` is on.
+Use `variant="circular"` for a ring.
 
 <Demo name="progress/circular" center />
 
 ## Sizes
 
-`size` sets the track thickness on the linear bar and the diameter on the
-circular one.
-
 <Demo name="progress/sizes" />
 
-## Props
+## API
 
 <PropsTable component="progress" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the indicator. Class names and the
-DOM between parts are private.
+### Anatomy
 
 <Anatomy component="progress" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="progress" />

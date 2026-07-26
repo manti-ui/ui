@@ -21,7 +21,7 @@ const meta = {
     items: spices,
     label: 'Spice',
     placeholder: 'Search spices…',
-    variant: 'primary',
+    variant: 'default',
     size: 'md',
     multiple: false,
   },
@@ -29,7 +29,7 @@ const meta = {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
+      options: ['default', 'fill'],
     },
   },
 } satisfies Meta<typeof Combobox>;
@@ -38,6 +38,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
+
+export const Filled: Story = {
+  args: { variant: 'fill', label: undefined },
+};
 
 export const Multiple: Story = {
   args: { multiple: true, label: 'Spices', defaultValue: ['sumac', 'mint'] },

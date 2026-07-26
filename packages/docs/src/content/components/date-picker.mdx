@@ -3,42 +3,33 @@ title: DatePicker
 slug: /components/date-picker
 group: Inputs
 order: 25
-description: A calendar date picker backed by the Zag.js date-picker machine.
+description: A calendar field for single dates or ranges.
 ---
 
 # DatePicker
 
-A calendar date picker backed by the Zag.js date-picker machine. Values are ISO
-date strings (`YYYY-MM-DD`); the machine owns the calendar grid, month
-navigation, and keyboard selection.
-
-<Demo name="date-picker/basic" center />
-
-## Basic
-
-`selectionMode="single"` picks one day. Seed it with `defaultValue` as an array
-of ISO date strings.
+DatePicker uses ISO strings (`YYYY-MM-DD`). The Zag.js machine manages the
+popover, calendar grid, month navigation, and keyboard selection.
 
 <Demo name="date-picker/basic" center />
 
 ## Range
 
-`selectionMode="range"` selects a start and end day. `defaultValue` takes two ISO
-date strings.
+Set `selectionMode="range"` and provide two dates for a controlled or default
+value.
 
 <Demo name="date-picker/range" center />
 
-## Props
+## API
 
 <PropsTable component="date-picker" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the calendar. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="date-picker" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="date-picker" />

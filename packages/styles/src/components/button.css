@@ -50,8 +50,8 @@
 
     &[data-size='sm'] {
       --manti-button-height: var(--manti-control-height-sm);
-      --manti-button-padding-x: var(--manti-space-3);
-      --_radius-base: calc(var(--manti-radius-md) * 0.7);
+      --manti-button-padding-x: var(--manti-space-2);
+      --_radius-base: calc(var(--manti-radius-md) * 0.8);
     }
 
     &[data-size='lg'] {
@@ -81,7 +81,8 @@
       color: var(--variant-on-solid);
       box-shadow:
         var(--manti-shadow-sm),
-        inset 0 1px 0 0 oklch(1 0 0 / 0.12);
+        inset 0 1px 0 0
+          color-mix(in oklab, var(--variant-on-solid) 12%, transparent);
 
       &:hover {
         background-color: var(--variant-solid-hover);
@@ -92,23 +93,16 @@
       }
     }
 
-    /* Secondary (soft) — the translucent signature: a translucent amber pill
-       with a light backdrop blur, a luminous hairline, and a top-lit inner
-       highlight. The medium rung of the emphasis ladder. */
+    /* Secondary (soft) — a flat, quiet surface. Keep the structural border for
+       stable sizing, but merge it into the fill so the treatment is borderless. */
     &[data-variant='secondary'] {
-      background: color-mix(in oklab, var(--variant-soft-bg) 72%, transparent);
-      -webkit-backdrop-filter: var(--manti-panel-blur);
-      backdrop-filter: var(--manti-panel-blur);
-      border-color: var(--manti-panel-border);
+      background: var(--variant-soft-bg);
+      border-color: var(--variant-soft-bg);
       color: var(--variant-soft-text);
-      box-shadow: inset 0 0 5px 0 var(--manti-panel-highlight);
 
       &:hover {
-        background: color-mix(
-          in oklab,
-          var(--variant-soft-bg-hover) 80%,
-          transparent
-        );
+        background: var(--variant-soft-bg-hover);
+        border-color: var(--variant-soft-bg-hover);
       }
     }
 
@@ -180,18 +174,6 @@
 
     &[data-loading='true'] {
       cursor: progress;
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='button'][data-part='root'][data-variant='secondary'] {
-      background: var(--variant-soft-bg);
-
-      &:hover {
-        background: var(--variant-soft-bg-hover);
-      }
     }
   }
 

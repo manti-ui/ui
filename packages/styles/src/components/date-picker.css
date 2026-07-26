@@ -1,6 +1,6 @@
 /**
  * Date Picker — backed by the Zag.js date-picker machine. The control reuses the
- * translucent field; the portalled calendar matches the Select/Menu panels. Day
+ * flat field; the portalled calendar matches the Select/Menu panels. Day
  * cells carry machine state (`data-selected`, `data-today`, `data-in-range`,
  * `data-disabled`, `data-outside-range`).
  */
@@ -26,23 +26,17 @@
     align-items: center;
     min-height: var(--manti-date-picker-height);
     padding-inline: var(--manti-space-3);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim);
 
-    &:focus-within {
-      border-color: var(--variant-ring, var(--manti-focus-ring));
+    &:hover {
+      border-color: var(--manti-border-strong);
     }
-  }
 
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='date-picker'][data-part='control'] {
-      background: var(--manti-surface-raised);
+    &:focus-within,
+    &:has([data-part='trigger'][data-state='open']) {
+      border-color: var(--variant-ring, var(--manti-focus-ring));
     }
   }
 
@@ -78,23 +72,12 @@
     flex-direction: column;
     gap: var(--manti-space-2);
     padding: var(--manti-space-3);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
+    background: var(--manti-surface-raised);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
 
     &:focus-visible {
       outline: none;
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='date-picker'][data-part='content'] {
-      background: var(--manti-surface-raised);
     }
   }
 

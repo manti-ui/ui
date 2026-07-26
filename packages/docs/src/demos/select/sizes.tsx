@@ -15,7 +15,7 @@ export default function SelectSizes() {
         flexDirection: 'column',
         gap: 'var(--manti-space-4)',
         width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 7)',
+        maxWidth: 'calc(var(--manti-space-16) * 5)',
       }}
     >
       <Select size="sm" items={regions} label="Small" placeholder="Pick one…" />

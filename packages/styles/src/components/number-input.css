@@ -1,6 +1,6 @@
 /**
  * Number Input — a numeric stepper backed by the Zag.js number-input machine.
- * The control wraps decrement/input/increment in the shared translucent field
+ * The control wraps decrement/input/increment in the shared flat field
  * surface; state (`data-disabled`, `data-invalid`, `data-focus`) comes from the
  * machine.
  */
@@ -26,20 +26,15 @@
     grid-template-columns: auto 1fr auto;
     align-items: stretch;
     min-height: var(--manti-number-input-height);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     /* Control class — joins the opt-in pill channel; the flanking triggers below
        round their outer corners to the same value so the group stays one shape. */
     border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-inset);
-    transition:
-      border-color var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+    transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:hover {
-      border-color: var(--manti-text-subtle);
+      border-color: var(--manti-border-strong);
     }
 
     &:focus-within {
@@ -57,17 +52,9 @@
     --manti-number-input-height: var(--manti-control-height-lg);
   }
 
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='number-input'][data-part='control'] {
-      background: var(--manti-surface-raised);
-    }
-  }
-
   [data-scope='number-input'][data-part='root'][data-invalid]
     [data-part='control'] {
-    border-color: light-dark(var(--manti-red-7), var(--manti-red-5));
+    border-color: var(--manti-danger-border);
   }
 
   [data-scope='number-input'][data-part='root'][data-disabled]

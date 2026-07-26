@@ -3,43 +3,39 @@ title: Menu
 slug: /components/menu
 group: Navigation
 order: 33
-description: A dropdown command menu backed by the Zag.js menu machine.
+description: A keyboard-accessible command menu with groups and separators.
 ---
 
 # Menu
 
-A dropdown command menu backed by the Zag.js menu machine. The machine owns
-keyboard navigation, typeahead, and dismissal; you supply the trigger and the
-`items`.
+Pass a React element as `trigger`. Commands use
+`{ value, label, icon?, shortcut?, disabled? }`; `onSelect` receives the value.
 
 <Demo name="menu/basic" center />
 
-## Basic
+## Groups
 
-`trigger` is cloned with the machine's trigger props, so it works with any
-interactive element. Each command is `{ value, label, icon?, shortcut?, disabled? }`,
-and `onSelect` fires with the selected command's `value`.
-
-<Demo name="menu/basic" center />
-
-## Groups and separators
-
-Mix `{ type: 'group', label, items }` and `{ type: 'separator' }` entries into the
-`items` array to cluster commands under headings.
+Add `{ type: 'group', label, items }` or `{ type: 'separator' }` entries.
 
 <Demo name="menu/grouped" center />
 
-## Props
+## Placement
+
+`bottom-center` aliases the centered `bottom` placement. Use `-start` or `-end`
+for edge alignment.
+
+<Demo name="menu/bottom-center" center />
+
+## API
 
 <PropsTable component="menu" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the menu. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="menu" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="menu" />

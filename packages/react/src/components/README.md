@@ -1,12 +1,9 @@
-# Components
+# React components
 
-Public Manti UI React components. Each component lives in its own folder with a
-colocated `*.stories.tsx`, and owns only its renderer — visual styling lives in
-`@manti-ui/styles`, keyed to the `data-scope` / `data-part` / `data-state`
-contract, and interaction behavior comes from `@manti-ui/folds` where a Zag.js
-machine applies.
+Each folder contains one public renderer and a colocated Storybook story.
 
-Current set: `Alert`, `Badge`, `Button`, `Card`, `Checkbox`, `Spinner`,
-`Switch`, `Input`, `Toggle`.
-
-Export every public component through `../index.ts`.
+- Export public APIs through `../index.ts`.
+- Keep behavior in `@manti-ui/folds`.
+- Keep visual rules in `@manti-ui/styles`.
+- Render the documented `data-scope`, `data-part`, and state attributes.
+- Add the component page and metadata under `packages/docs/src/`.

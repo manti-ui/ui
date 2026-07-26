@@ -3,28 +3,26 @@ title: SignaturePad
 slug: /components/signature-pad
 group: Inputs
 order: 44
-description: A drawable signature surface backed by the Zag.js signature-pad machine.
+description: A pointer and touch signature surface with clear action.
 ---
 
 # SignaturePad
 
-A drawable signature surface backed by the Zag.js signature-pad machine. Draw
-with a pointer or finger; the machine records each stroke and the clear button
-resets the canvas.
+The machine records drawn paths. Use controlled or uncontrolled `paths`; the
+clear button resets the surface.
 
 <Demo name="signature-pad/basic" />
 
-## Props
+## API
 
 <PropsTable component="signature-pad" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the signature pad. Class names and the
-DOM between parts are private.
+### Anatomy
 
 <Anatomy component="signature-pad" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="signature-pad" />

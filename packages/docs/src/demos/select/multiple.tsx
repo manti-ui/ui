@@ -10,13 +10,12 @@ const regions = [
 
 export default function SelectMultiple() {
   return (
-    <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 7)' }}>
+    <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 5)' }}>
       <Select
         items={regions}
         label="Regions"
         multiple
         defaultValue={['kayseri', 'kashgar']}
-        variant="primary"
       />
     </div>
   );

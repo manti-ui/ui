@@ -2,6 +2,7 @@ import type { ComponentProps } from 'react';
 import { Link } from 'react-router-dom';
 import * as Manti from '@manti-ui/react';
 
+import { AiPageHeader } from '../doc/AiPageHeader';
 import { Anatomy } from '../doc/Anatomy';
 import { ColorRamps, VariantGallery } from '../doc/ColorRamps';
 import { ComponentStatusGrid } from '../doc/ComponentStatusGrid';
@@ -56,6 +57,7 @@ export const mdxComponents = {
   a: Anchor,
   pre: CodeBlock,
   Demo,
+  AiPageHeader,
   InstallTabs,
   LinkButton,
   PropsTable,

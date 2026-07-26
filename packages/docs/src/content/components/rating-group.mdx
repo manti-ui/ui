@@ -3,41 +3,34 @@ title: RatingGroup
 slug: /components/rating-group
 group: Inputs
 order: 42
-description: A star rating backed by the Zag.js rating-group machine.
+description: A keyboard-accessible star rating with optional half values.
 ---
 
 # RatingGroup
 
-A star rating backed by the Zag.js rating-group machine. The machine owns
-keyboard control, hover preview, and form wiring; you set the icon count and
-precision.
+Set the star `count`, value, size, and variant. The machine manages keyboard
+input, hover preview, and form behavior.
 
 <Demo name="rating-group/basic" center />
 
-## Half stars
-
-Set `allowHalf` to permit half-star precision — the fill clips to the hovered or
-selected half.
+## Half values
 
 <Demo name="rating-group/half-stars" center />
 
 ## Sizes
 
-`size` scales each star.
-
 <Demo name="rating-group/sizes" center />
 
-## Props
+## API
 
 <PropsTable component="rating-group" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the rating. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="rating-group" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="rating-group" />

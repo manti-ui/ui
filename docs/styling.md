@@ -1,47 +1,31 @@
-# Styling & Customization
+# Styling
 
-Manti UI is built to be restyled — with plain CSS, with design tokens, or with
-Tailwind CSS — without specificity battles or forked components. This document
-is the contract for how.
+Manti UI can be used as shipped, themed with tokens, overridden with plain CSS,
+or styled headlessly with Tailwind.
 
-## Getting the styles
+## Choose a stylesheet
 
-`@manti-ui/react` ships no CSS side effects. Import the stylesheet once at your
-app root:
+| Import                                | Includes                                    |
+| ------------------------------------- | ------------------------------------------- |
+| `@manti-ui/styles/index.css`          | Reset, tokens, base, components, and motion |
+| `@manti-ui/styles/tokens.css`         | Tokens only                                 |
+| `@manti-ui/styles/tailwind.css`       | Full styles plus the Tailwind v4 bridge     |
+| `@manti-ui/styles/tailwind-theme.css` | Tailwind v4 bridge only                     |
 
-```ts
-import '@manti-ui/styles/index.css';
-```
+`@manti-ui/react` has no CSS side effects. Import one stylesheet explicitly.
 
-Stylesheet entry points:
+## Cascade and selectors
 
-| Entry                                 | Contents                                               |
-| ------------------------------------- | ------------------------------------------------------ |
-| `@manti-ui/styles/index.css`          | Everything: reset, tokens, base, component styles      |
-| `@manti-ui/styles/tokens.css`         | Token custom properties only (for headless setups)     |
-| `@manti-ui/styles/tailwind.css`       | `index.css` + Tailwind v4 layer order + theme bridge   |
-| `@manti-ui/styles/tailwind-theme.css` | Tailwind v4 `@theme` bridge only (for headless setups) |
-
-## How the cascade is organized
-
-All Manti CSS lives in cascade layers, declared once in `index.css`:
+Manti CSS is layered:
 
 ```css
 @layer manti.reset, manti.tokens, manti.base, manti.components, manti.motion;
 ```
 
-This is the foundation of every customization story below, because of one CSS
-rule: **unlayered styles always beat layered styles**, regardless of
-specificity. Any ordinary CSS you write in your app wins over Manti UI without
-`!important`, without selector contests.
+Ordinary unlayered application CSS wins over Manti without `!important`.
+Import Manti first and application overrides second.
 
-(`manti.motion` is declared last so the optional [motion tiers](#motion-tiers)
-can override component animations by layer order alone.)
-
-## The stable selector contract
-
-Every component renders stable data attributes — they are public API and follow
-semver:
+Components expose stable anatomy attributes:
 
 ```html
 <button
@@ -50,372 +34,199 @@ semver:
   data-variant="primary"
   data-size="md"
 >
-  <span data-scope="button" data-part="label">…</span>
+  <span data-scope="button" data-part="label">Save</span>
 </button>
 ```
 
-- `data-scope` — the component (`button`, `switch`, `tabs`, …)
-- `data-part` — the anatomy piece (`root`, `label`, `trigger`, `content`, …)
-- `data-variant`, `data-size` — the chosen props (`data-variant` carries both hue
-  and emphasis)
-- state attributes (`data-state`, `data-loading`, `disabled`, …) — live state
+Use `data-scope`, `data-part`, documented state attributes, and tokens. Do not
+depend on class names, private `--_*` variables, or undocumented DOM structure.
 
-Class names and internal DOM details are _not_ part of the contract; target the
-data attributes.
+## Theme with tokens
 
-## Customizing with plain CSS
+Choose the broadest token that matches the decision:
 
-> Copy-paste starting points: [`examples/consumer-theme-plain-css.css`](./examples/consumer-theme-plain-css.css)
-> and [`examples/consumer-theme-tailwind.css`](./examples/consumer-theme-tailwind.css)
-> show a full rebrand at every altitude (primitive, semantic, component, variant).
+| Tier      | Example                 | Use for                             |
+| --------- | ----------------------- | ----------------------------------- |
+| Primitive | `--manti-orange-7`      | Replacing a raw palette or scale    |
+| Semantic  | `--manti-border`        | A system-wide purpose               |
+| Component | `--manti-button-radius` | One intentional component exception |
 
-### Override any component style
-
-Write normal (unlayered) CSS against the anatomy contract:
-
-```css
-/* Always wins over Manti's layered styles. */
-[data-scope='button'][data-part='root'] {
-  border-radius: 2px;
-  text-transform: uppercase;
-}
-
-[data-scope='button'][data-part='root'][data-variant='primary']:hover {
-  translate: 0 -1px;
-}
-```
-
-### Retheme with tokens
-
-Tokens are CSS custom properties; redefine them at any scope. Pick the right
-altitude:
-
-```css
-/* 1. Primitive ramp — rebrand the palette everywhere. */
-:root {
-  --manti-orange-7: oklch(0.65 0.2 280); /* the orange ramp is now purple */
-}
-
-/* 2. Semantic role — THE primary theming lever. Cascades to every component
-      consistently (this radius change rounds buttons, cards, inputs alike).
-      For radius specifically, see "Radius" below: one factor retunes the whole
-      ramp, and `[data-radius]` ships presets for it. */
-:root {
-  --manti-radius-md: 4px;
-  --manti-focus-ring: var(--manti-blue-7);
-}
-
-/* 3. Component token — escape hatch. Reach for it only to make ONE component
-      diverge from the system on purpose; otherwise prefer altitude 2. */
-:root {
-  --manti-button-radius: 9999px; /* buttons specifically become pills */
-}
-
-/* 4. Variant — remap what a variant means, globally or per subtree. */
-.marketing-section [data-variant='primary'] {
-  --variant-solid: var(--manti-blue-8);
-  --variant-solid-hover: var(--manti-blue-9);
-}
-
-/* 5. One instance — className or style, as usual. */
-```
-
-### Neutral interactive fills
-
-Rest / hover / pressed washes for neutral surfaces (menu items, rows, date
-cells, …) come from a three-rung alpha ladder, so the whole system's hover
-strength is tuned in one place instead of per component:
-
-| Token                 | Role                       |
-| --------------------- | -------------------------- |
-| `--manti-fill-subtle` | decorative / rest          |
-| `--manti-fill`        | hover / keyboard highlight |
-| `--manti-fill-strong` | selected / pressed         |
-
-They are alpha (built on `--manti-text`), so they stay theme-aware — a dark wash
-in light mode, a light wash in dark — and composite correctly over any surface.
-Reach for these instead of hand-mixing `color-mix(… var(--manti-text) N%,
-transparent)`. With the Tailwind bridge they are also utilities: `bg-fill`,
-`bg-fill-subtle`, `bg-fill-strong`.
-
-The **variant-colored** analog is `--variant-fill` (hover) and
-`--variant-fill-strong` (selected/pressed), derived from `--variant-soft-bg`, so
-a `[data-variant]` element gets an accent-tinted wash for the same states — and
-any custom variant that defines `--variant-soft-bg` gets them for free.
-
-### Radius
-
-The radius model separates **size** from **shape**, because one t-shirt ramp
-cannot serve both a 40px button and a 20px checkbox: a value that reads as
-"softened" on the button reads as "circle" on the checkbox, and a system where
-they share a step forces you to choose between the two.
-
-**Size — one factor rescales the ramp.** Every step except `full` is emitted as
-`calc(<step> * var(--manti-radius-factor))`, so the whole system gets sharper or
-rounder from a single property:
+Start with semantic roles:
 
 ```css
 :root {
-  --manti-radius-factor: 1.4; /* everything rounder, proportions preserved */
+  --manti-bg: light-dark(#fafafb, #0c0c10);
+  --manti-surface: light-dark(#ffffff, #15151b);
+  --manti-text: light-dark(#16161a, #f4f4f6);
+  --manti-border: light-dark(#e6e6ea, #2a2a33);
+  --manti-radius-factor: 0.8;
+  --manti-font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
 }
 ```
 
-**Shape — roundness is an opt-in channel, never a ramp step.** Two channels sit
-beside the ramp, and a part joins one with `max(<step>, var(--channel))`:
+Keep theme-aware color roles in `light-dark(light, dark)` form.
 
-| Channel                | Default  | Joined by                                                                                      |
-| ---------------------- | -------- | ---------------------------------------------------------------------------------------------- |
-| `--manti-radius-pill`  | `0px`    | control class: button, input, select/combobox trigger, number-input, toggle, segmented control |
-| `--manti-radius-thumb` | `9999px` | draggable handles: switch thumb, slider thumb                                                  |
-
-`max()` is a no-op while a channel sits at its default, and turns the part
-pill-shaped once you raise it. Because joining is explicit, a part that must
-stay square-ish simply never references a channel — the checkbox is
-**structurally incapable** of rounding into a radio, whatever the theme does. No
-clamp is involved, so an explicit `--manti-checkbox-radius` still works exactly
-as written.
-
-Pill-shaped controls are one line, and because no preset raises the channel it
-composes with whatever factor you are on:
+Use a component token only when that component should diverge:
 
 ```css
 :root {
-  --manti-radius-pill: 9999px; /* buttons and inputs become lozenges */
+  --manti-button-radius: var(--manti-radius-full);
 }
 ```
 
-`--manti-radius-full` is a third, separate thing: the always-pill primitive for
-parts that are round _by design_ (switch track, slider, progress, spinner,
-avatar, radio, badge). It is not scaled by the factor.
+The complete list is generated in
+[component-tokens.md](./component-tokens.md).
 
-**Presets.** `data-radius` on any container assigns the factor and every channel
-at once — `none`, `sharp`, `default`, `round`, one per distinct factor
-(`0 / 0.6 / 1 / 1.4`):
+## Variants
+
+Variant-driven components read the same roles:
+
+```text
+--variant-solid
+--variant-solid-hover
+--variant-solid-active
+--variant-on-solid
+--variant-soft-bg
+--variant-soft-bg-hover
+--variant-soft-text
+--variant-border
+--variant-text
+--variant-ring
+```
+
+Define these roles to add a custom variant:
+
+```css
+[data-variant='brand'] {
+  --variant-solid: var(--manti-blue-9);
+  --variant-solid-hover: var(--manti-blue-10);
+  --variant-solid-active: color-mix(in oklab, var(--manti-blue-10) 88%, black);
+  --variant-on-solid: var(--manti-text-on-accent);
+  --variant-soft-bg: var(--manti-blue-2);
+  --variant-soft-bg-hover: var(--manti-blue-3);
+  --variant-soft-text: var(--manti-blue-9);
+  --variant-border: var(--manti-blue-7);
+  --variant-text: var(--manti-blue-9);
+  --variant-ring: var(--manti-blue-8);
+}
+```
+
+```tsx
+<Button variant="brand">Save</Button>
+```
+
+Built-in names keep autocomplete. Components typed with `MantiVariant` also
+accept custom strings; components with a narrower semantic union do not.
+
+For neutral interaction states use `--manti-fill-subtle`, `--manti-fill`, and
+`--manti-fill-strong`. Variant-colored equivalents are derived as
+`--variant-fill` and `--variant-fill-strong`.
+
+## Radius
+
+Use the scale factor for system-wide roundness:
+
+```css
+:root {
+  --manti-radius-factor: 1.4;
+}
+```
+
+Or use a preset:
 
 ```html
 <div data-radius="sharp">…</div>
 ```
 
-The presets still _lower_ the `pill` channel even though none raises it, so if
-you opted into pill controls globally you can square a subtree with
-`data-radius="none"`.
+Available values are `none`, `sharp`, `default`, and `round`.
 
-**Anchoring convention.** A component anchors all of its sizes on **one** ramp
-step — its element class — and scales that step for size variants instead of
-hopping to a coarser one. Hopping is what makes a small control overshoot: the
-ramp has no stop between 4px and 8px, so a checkbox reaching for "one size up"
-lands at double. Button is the worked example: `sm`/`md`/`lg` are
-`0.7 / 1 / 1.3 ×` the `md` step, so retuning `--manti-radius-md` moves all three
-together and touches nothing outside the control class.
+Set `--manti-radius-pill: 9999px` to make participating controls pill-shaped.
+`--manti-radius-thumb` controls draggable handles. `--manti-radius-full` is for
+parts that must always be round.
 
-| Element class   | Anchor step | Examples                                      |
-| --------------- | ----------- | --------------------------------------------- |
-| indicator       | `xs`        | checkbox, rating star, table cell marker      |
-| item            | `sm`        | menu/list row, tab, calendar day, pagination  |
-| control         | `md`        | button, input, trigger, toggle                |
-| surface         | `lg` / `xl` | card, dialog, drawer, popover, alert          |
-| round by design | `full`      | switch track, slider, progress, avatar, badge |
-
-### Component tokens (Tier 3)
-
-Manti tokens form three tiers, each defaulting into the one above it:
-
-| Tier              | Example                                | Scope                            |
-| ----------------- | -------------------------------------- | -------------------------------- |
-| 1 — primitive     | `--manti-orange-7`                     | the raw palette / scales         |
-| 2 — semantic      | `--manti-radius-md`, `--variant-solid` | purpose-based roles              |
-| 3 — **component** | `--manti-button-radius`                | one component's structural knobs |
-
-Component tokens are a small, curated set of `--manti-{component}-{property}`
-custom properties, each defaulting to a Tier-2 semantic token.
-
-**Theme through Tier 2 first.** Semantic tokens are the front door: a change
-there cascades to every component consistently. Component tokens are a labelled
-**escape hatch** — public and semver-stable, so you _may_ override them, but
-reaching for them is the exception, not the everyday path. Use one only to make a
-single component **intentionally diverge** from the system (e.g. pill-shaped
-buttons while the rest of the UI keeps its radius):
-
-```css
-:root {
-  --manti-button-radius: 9999px; /* buttons differ from cards/inputs on purpose */
-}
-```
-
-If you find yourself overriding the _same_ property across many components, that
-is a signal to change the Tier-2 semantic token instead — both for consistency
-and to avoid the per-component sprawl this tier is deliberately kept small to
-prevent.
-
-Two rules keep this tier safe to depend on:
-
-- **Curated, not exhaustive.** Only _independent_ dimensions a designer would
-  reach for (radius, padding, sizing, gap, typography) are exposed. Color is
-  already covered by the `--variant-*` vocabulary, so this tier stays mostly
-  structural and small.
-- **Derived values stay private.** Anything a component computes from its tokens
-  (`calc()` geometry like a switch thumb's size and travel) remains a private
-  `--_*` knob, so you cannot put a component into an inconsistent state. The
-  `--_*` variables are _not_ API — target the named component tokens instead.
-
-The full per-component list lives in the `componentTokens` registry of
-`@manti-ui/tokens` (and powers the `MantiComponentToken` autocomplete type). See
-**[component-tokens.md](./component-tokens.md)** for the generated table of every
-component token and its default.
-
-### Register a custom variant
-
-Variant-driven components accept any string as `variant`. Define the
-`--variant-*` vocabulary for your own variant in plain CSS and pass its name:
-
-```css
-[data-variant='brand'] {
-  --variant-solid: light-dark(#5536da, #7c63f0);
-  --variant-solid-hover: light-dark(#4628c4, #8d77f2);
-  --variant-solid-active: light-dark(#3a1fae, #9e8bf5);
-  --variant-on-solid: white;
-  --variant-soft-bg: light-dark(#eeeafd, #2a2350);
-  --variant-soft-bg-hover: light-dark(#e0d9fb, #352b66);
-  --variant-soft-text: light-dark(#4628c4, #c4b8f8);
-  --variant-border: light-dark(#c4b8f8, #4a3d85);
-  --variant-text: light-dark(#4628c4, #b3a3f6);
-  --variant-ring: #7c63f0;
-}
-```
-
-```tsx
-<Button variant="brand">Ship it</Button>
-```
-
-Built-in variant names keep TypeScript autocomplete; custom strings are accepted.
-
-## Motion tiers
-
-Animation is opt-in-tunable through a single attribute — `data-motion` — set on
-`.manti-app` or any container, exactly like `data-theme`. No config object, no
-provider; it is pure CSS.
+## Motion
 
 ```html
-<div class="manti-app" data-motion="full">…</div>
+<div data-motion="none">…</div>
 ```
 
-| Value     | Behavior                                                                                                                                                                                                         |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| _(unset)_ | Same as `default`.                                                                                                                                                                                               |
-| `default` | The shipped transitions and keyframes. The baseline look.                                                                                                                                                        |
-| `none`    | Disables Manti's decorative transitions/animations. The spinner's functional rotation is kept. Animations on your _own_ content nested inside a component are left untouched, so you can supply your own motion. |
-| `full`    | Expressive, spring-driven motion — stronger presses, overshooting thumbs and dots, a tooltip blur-in, lifting cards with a tonal glow.                                                                           |
+Available values are `default`, `none`, and `full`. Nested values override their
+ancestor. Reduced-motion preferences override every tier.
 
-`full` is powered by two extra curves you can also reuse directly:
-`--manti-ease-spring` (gentle overshoot) and `--manti-ease-bounce` (snappier),
-both authored with the CSS `linear()` function, plus `--manti-duration-slower`.
+Reusable tokens include:
 
-`prefers-reduced-motion: reduce` always wins, even over `full` — a user who asks
-for no motion gets none regardless of the tier. Because `data-motion` is a plain
-attribute it is correct on the server too: the right tier renders on first paint
-with no flash.
+```text
+--manti-duration-fast | base | slow | slower
+--manti-ease-smooth | soft | spring | bounce
+```
 
-> Mixing nested, _opposite_ tiers (e.g. a `none` subtree inside a `full`
-> ancestor) is supported one level deep; on selector ties the inner tier wins.
-> Deeply interleaving tiers is not a designed use case.
+## Tailwind v4
 
-## Tailwind CSS v4
-
-### Styled components + utility overrides
-
-One import wires everything — Manti styles, the correct layer order, and the
-token theme bridge:
+Import Manti before Tailwind:
 
 ```css
-/* app.css — order matters: Manti BEFORE tailwindcss. */
 @import '@manti-ui/styles/tailwind.css';
 @import 'tailwindcss';
 ```
 
-The packaged file pins the layer order to
-`theme, base, manti, components, utilities`, which means:
-
-- Tailwind's preflight (`base`) sits _below_ Manti styles — it can't bleach
-  Manti components.
-- Tailwind utilities sit _above_ Manti styles — utility classes on a Manti
-  component always win:
+The order keeps Tailwind utilities above Manti components:
 
 ```tsx
-<Button className="rounded-none px-8 shadow-none">Sharp</Button>
+<Button className="rounded-none px-8 shadow-none">Save</Button>
 ```
 
-> If `tailwindcss` is imported first, Tailwind declares its layer order before
-> Manti's, and `manti` lands above `utilities` — overrides will silently stop
-> working. Keep the Manti import first.
+The bridge maps Manti tokens to standard utilities:
 
-### The theme bridge
+| Utility                         | Source                     |
+| ------------------------------- | -------------------------- |
+| `bg-surface`, `text-text-muted` | Semantic color roles       |
+| `bg-orange-500`, `text-red-700` | Primitive ramps            |
+| `bg-primary-600`                | Semantic ramp aliases      |
+| `text-lg`, `font-semibold`      | Typography                 |
+| `rounded-lg`, `shadow-md`       | Radius and elevation       |
+| `p-4`, `gap-2`, `h-control-md`  | Spacing and control height |
+| `ease-spring`                   | Motion                     |
 
-`tailwind-theme.css` binds the entire Manti token contract onto Tailwind theme
-variables with `@theme inline`, so generated utilities reference the underlying
-`var(--manti-*)` at runtime — they follow `light-dark()` and `data-theme`
-switches for free. It is a **full takeover**: Manti's values override Tailwind's
-defaults of the same name, so standard utilities (`bg-red-500`, `text-lg`,
-`rounded-lg`, `shadow-md`) resolve to Manti tokens.
-
-| Utility example                              | Resolves to                   |
-| -------------------------------------------- | ----------------------------- |
-| `bg-surface`, `text-text-muted`              | semantic surface/text tokens  |
-| `border-border`, `ring-ring`                 | semantic border/focus tokens  |
-| `bg-orange-500`, `text-red-700`              | primitive ramps (plain names) |
-| `bg-primary-600`, `border-danger-300`        | semantic ramp aliases         |
-| `text-lg`, `font-semibold`, `leading-normal` | typography scale              |
-| `rounded-lg`, `shadow-md`                    | Manti radius/elevation        |
-| `h-control-md`, `min-h-control-sm`           | Manti control heights         |
-| `ease-smooth`, `ease-spring`                 | Manti motion curves           |
-| `font-sans`, `font-mono`                     | Manti font stacks (override)  |
-
-Spacing is bound at its base unit — `--spacing` resolves to `--manti-space-1`
-(the 4px grid) — so every numeric utility (`p-4`, `gap-2`, `h-10`) derives from
-the token. Radius and shadow take over Tailwind's own scales directly, so
-`rounded-md` / `shadow-sm` resolve to Manti's values. The shared control height
-is exposed as `control-{sm,md,lg}` in the spacing namespace, so `h-control-md`
-and friends resolve to the token and follow any override. Named transition
-durations, z-index, and breakpoints have no Tailwind theme namespace to take
-over — reach durations/z-index through arbitrary values
-(`duration-[var(--manti-duration-base)]`), and breakpoints are bound as literals.
-
-### Headless: skip Manti's CSS entirely
-
-Don't import component styles at all; bring only the tokens (optional) and
-style the anatomy with utilities. State lives in data attributes, which
-Tailwind targets natively:
+For headless use, import tokens and the bridge without component CSS:
 
 ```css
-/* app.css */
-@import '@manti-ui/styles/tokens.css'; /* optional: keeps the token vocabulary */
-@import '@manti-ui/styles/tailwind-theme.css'; /* optional: token-aware utilities */
+@import '@manti-ui/styles/tokens.css';
+@import '@manti-ui/styles/tailwind-theme.css';
 @import 'tailwindcss';
 ```
 
-```tsx
-<Accordion.ItemTrigger className="flex w-full items-center justify-between p-4 data-[state=open]:font-semibold">
-  …
-  <ChevronIcon className="transition data-[state=open]:rotate-180" />
-</Accordion.ItemTrigger>
-```
+Then style public anatomy and state attributes with utilities.
 
-### Tailwind v3
+Tailwind v3 can reference `var(--manti-*)` from its config, but the `@theme`
+bridge is v4-only.
 
-The override story works unchanged: v3 utilities are unlayered, and unlayered
-CSS beats Manti's layers automatically. The `@theme` bridge is v4-only; in v3,
-reference the custom properties from `tailwind.config` instead
-(`colors: { surface: 'var(--manti-surface)' }`).
+## Contributor rules
 
-## What is public API
+When adding or changing component styles:
 
-Stable under semver:
+1. Add missing values to `@manti-ui/tokens`; do not hard-code visual values.
+2. Regenerate primitive CSS with `pnpm gen:tokens`.
+3. Consume semantic or `--variant-*` color roles in component CSS.
+4. Follow the state progression: `3 → 4 → 5`, `6 → 7 → 8`, or `9 → 10`.
+5. Register independent component dimensions in `componentTokens`.
+6. Keep derived `calc()` values private as `--_*`.
+7. Run the color-scale, contrast, styles build, and full verification checks.
 
-- token custom properties (`--manti-*`) and the `--variant-*` vocabulary
-- component tokens (`--manti-{component}-*`, registered in `componentTokens`)
-- the layer names (`manti.*`) and the rule that all Manti CSS is layered
-- `data-scope` / `data-part` anatomy and documented state attributes
-- the `data-motion` tiers (`none` / `default` / `full`)
-- the stylesheet entry points listed above
+Input-like controls use `--manti-border` at rest,
+`--manti-border-strong` on hover, and `--variant-ring` when focused or open.
+The primary color begins at focus/open, not at rest.
 
-Internal and free to change: `--_*` variables, exact declarations inside the
-layers, and the DOM between documented parts.
+## Public API
+
+Stable:
+
+- stylesheet entry points and Manti layer names;
+- `--manti-*`, `--variant-*`, and documented component tokens;
+- documented anatomy and state attributes;
+- `data-theme`, `data-motion`, and `data-radius`.
+
+Private:
+
+- `--_*` variables;
+- exact declarations inside a layer;
+- DOM between documented anatomy parts.

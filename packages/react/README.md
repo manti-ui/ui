@@ -1,7 +1,6 @@
 # @manti-ui/react
 
-React adapter for **Manti UI** — a framework-agnostic design system built on
-[Zag.js](https://zagjs.com) behavior machines.
+React components for Manti UI.
 
 ## Install
 
@@ -9,43 +8,32 @@ React adapter for **Manti UI** — a framework-agnostic design system built on
 npm install @manti-ui/react @manti-ui/styles
 ```
 
-`@manti-ui/react` pulls in `@manti-ui/tokens` and `@manti-ui/folds` automatically.
-`@manti-ui/styles` is a peer dependency — install it alongside the renderer.
-
-## Usage
-
-Import the stylesheet once at your app entry, then render components:
+`@manti-ui/styles` is a peer dependency. Import it once:
 
 ```tsx
 import '@manti-ui/styles/index.css';
 import { Button } from '@manti-ui/react';
 
 export function App() {
-  return (
-    <Button variant="primary">
-      Save
-    </Button>
-  );
+  return <Button variant="primary">Save</Button>;
 }
 ```
 
-Set the theme with a `data-theme="light"` / `data-theme="dark"` attribute on
-`<html>` (native `light-dark()` resolves the values).
+Use `data-theme="light"` or `data-theme="dark"` on an ancestor to choose a
+theme.
 
-### Using with Tailwind v4
-
-Import the bundled Tailwind entry **before** `tailwindcss`, then the full Manti
-token contract drives Tailwind's standard utilities (`bg-red-500`, `rounded-lg`, …):
+## Tailwind v4
 
 ```css
 @import '@manti-ui/styles/tailwind.css';
 @import 'tailwindcss';
 ```
 
-## Documentation
+Keep the Manti import first.
 
-<https://manti.design>
+## More
 
-## License
-
-[MIT](https://github.com/manti-ui/ui/blob/main/LICENSE)
+- [Documentation](https://manti.design)
+- [Components](https://manti.design/components)
+- [Styling](https://manti.design/guides/plain-css)
+- [MIT license](https://github.com/manti-ui/ui/blob/main/LICENSE)
