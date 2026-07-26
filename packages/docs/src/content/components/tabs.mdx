@@ -3,42 +3,36 @@ title: Tabs
 slug: /components/tabs
 group: Navigation
 order: 16
-description: Tabbed navigation backed by the Zag.js tabs machine, in three styles.
+description: Keyboard-accessible tabbed navigation in line, pill, or soft styles.
 ---
 
 # Tabs
 
-Tabbed navigation backed by the Zag.js tabs machine. Pass an `items` array and
-the machine owns roving focus, keyboard arrows, and the active indicator.
-
-<Demo name="tabs/basic" />
-
-## Basic
-
-Each item is `{ value, label, content }` — `value` keys the tab, `label` is the
-trigger, and `content` is the panel shown when it's active.
+Pass items as `{ value, label, content, icon?, disabled? }`. The machine manages
+focus, arrow keys, selection, and panels.
 
 <Demo name="tabs/basic" />
 
 ## Variants
 
-`variant` sets the visual style: `line` (a rail under the active tab), `pill` (a
-translucent segmented control with a sliding thumb), or `soft` (a translucent pill
-on the active tab, no enclosing track).
+Use `line`, `pill`, or `soft`.
 
 <Demo name="tabs/variants" />
 
-## Props
+## Sizes
+
+<Demo name="tabs/sizes" />
+
+## API
 
 <PropsTable component="tabs" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the tabs. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="tabs" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="tabs" />

@@ -1,126 +1,42 @@
-# Zag.js Coverage
+# Zag.js coverage
 
-Primary goal: adapt **every** Zag.js component machine into Manti UI. Each adapter
-keeps the renderer thin — the Zag machine (in `@manti-ui/folds`) owns behavior,
-the CSS (in `@manti-ui/styles`, keyed to `data-scope`/`data-part`/`data-state`)
-owns appearance, and the React component (in `@manti-ui/react`) only wires them
-together with a colocated story.
-
-## Adapter pattern
+Manti UI adapts Zag.js machines through `@manti-ui/folds`. React renderers
+connect the machine, render its public anatomy, and leave appearance to shared
+CSS.
 
 ```tsx
 const service = useMachine(component.machine, { id: useId(), ...props });
 const api = component.connect(service, normalizeProps);
-return <el {...api.getRootProps()}>{/* parts via api.getXxxProps() */}</el>;
 ```
-
-Collection components (Tabs, Accordion, RadioGroup, …) currently take a data-driven
-`items` prop. Promoting these to compound (`Tabs.Trigger`, …) APIs is a planned
-refinement once breadth is complete.
 
 ## Status
 
-Legend: ✅ done · ⬜ todo · 📦 backlog
+✅ shipped · ⬜ not implemented · 📦 built, then shelved
 
-📦 marks an adapter that was built and then shelved: its source is frozen under
-`backlog/<name>/`, mirroring its original repo paths, and it ships in no package.
-It is **not** open work — see `backlog/README.md` before re-adapting one.
+| Area              | Components                                                                                                               |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Inline behavior   | ✅ Toggle, Switch, Checkbox, RadioGroup, Collapsible, Accordion, Tabs, Tooltip                                           |
+| Overlays          | ✅ Dialog, Popover, HoverCard, Menu, Toast                                                                               |
+| Form inputs       | ✅ NumberInput, PinInput, Slider, TagsInput, Editable, ToggleGroup                                                       |
+| Selection         | ✅ Select, Combobox, Listbox, TreeView, Pagination                                                                       |
+| Display and media | ✅ Avatar, Progress, RatingGroup, Carousel, Clipboard, FileUpload, SignaturePad · 📦 QrCode                              |
+| Date and advanced | ✅ DatePicker, TimePicker, Steps, Tour, Splitter, ColorPicker, NavigationMenu, FloatingPanel · 📦 Timer · ⬜ AngleSlider |
 
-### Batch 1 — inline behavior ✅
+## Reused machines
 
-| Component   | Package               | Status |
-| ----------- | --------------------- | :----: |
-| Toggle      | `@zag-js/toggle`      |   ✅   |
-| Switch      | `@zag-js/switch`      |   ✅   |
-| Checkbox    | `@zag-js/checkbox`    |   ✅   |
-| Radio Group | `@zag-js/radio-group` |   ✅   |
-| Collapsible | `@zag-js/collapsible` |   ✅   |
-| Accordion   | `@zag-js/accordion`   |   ✅   |
-| Tabs        | `@zag-js/tabs`        |   ✅   |
-| Tooltip     | `@zag-js/tooltip`     |   ✅   |
+| Component        | Reuses     |
+| ---------------- | ---------- |
+| Calendar         | DatePicker |
+| ContextMenu      | Menu       |
+| Drawer           | Dialog     |
+| SegmentedControl | RadioGroup |
 
-### Batch 2 — overlays & floating ✅
+## Manti-authored behavior
 
-| Component  | Package              | Status |
-| ---------- | -------------------- | :----: |
-| Dialog     | `@zag-js/dialog`     |   ✅   |
-| Popover    | `@zag-js/popover`    |   ✅   |
-| Hover Card | `@zag-js/hover-card` |   ✅   |
-| Menu       | `@zag-js/menu`       |   ✅   |
-| Toast      | `@zag-js/toast`      |   ✅   |
+- `folds/shortcut` powers `useShortcut` and `useShortcuts`.
+- `folds/swipe` powers swipe-to-dismiss behavior in Toast.
+- `folds/table` wraps TanStack table-core for DataTable.
+- Marquee and ScrollArea do not use Zag machines.
 
-### Batch 3 — form inputs ✅
-
-| Component    | Package                | Status |
-| ------------ | ---------------------- | :----: |
-| Number Input | `@zag-js/number-input` |   ✅   |
-| Pin Input    | `@zag-js/pin-input`    |   ✅   |
-| Slider       | `@zag-js/slider`       |   ✅   |
-| Tags Input   | `@zag-js/tags-input`   |   ✅   |
-| Editable     | `@zag-js/editable`     |   ✅   |
-| Toggle Group | `@zag-js/toggle-group` |   ✅   |
-
-### Batch 4 — selection & data ✅
-
-| Component  | Package              | Status |
-| ---------- | -------------------- | :----: |
-| Select     | `@zag-js/select`     |   ✅   |
-| Combobox   | `@zag-js/combobox`   |   ✅   |
-| Listbox    | `@zag-js/listbox`    |   ✅   |
-| Tree View  | `@zag-js/tree-view`  |   ✅   |
-| Pagination | `@zag-js/pagination` |   ✅   |
-
-### Batch 5 — display & media ✅
-
-| Component     | Package                 | Status |
-| ------------- | ----------------------- | :----: |
-| Avatar        | `@zag-js/avatar`        |   ✅   |
-| Progress      | `@zag-js/progress`      |   ✅   |
-| Rating Group  | `@zag-js/rating-group`  |   ✅   |
-| Carousel      | `@zag-js/carousel`      |   ✅   |
-| QR Code       | `@zag-js/qr-code`       |   📦   |
-| Clipboard     | `@zag-js/clipboard`     |   ✅   |
-| File Upload   | `@zag-js/file-upload`   |   ✅   |
-| Signature Pad | `@zag-js/signature-pad` |   ✅   |
-
-### Batch 6 — date, time & advanced
-
-| Component       | Package                   | Status |
-| --------------- | ------------------------- | :----: |
-| Date Picker     | `@zag-js/date-picker`     |   ✅   |
-| Time Picker     | `@zag-js/time-picker`     |   ✅   |
-| Timer           | `@zag-js/timer`           |   📦   |
-| Steps           | `@zag-js/steps`           |   ✅   |
-| Tour            | `@zag-js/tour`            |   ✅   |
-| Splitter        | `@zag-js/splitter`        |   ✅   |
-| Angle Slider    | `@zag-js/angle-slider`    |   ⬜   |
-| Color Picker    | `@zag-js/color-picker`    |   ✅   |
-| Navigation Menu | `@zag-js/navigation-menu` |   ✅   |
-| Floating Panel  | `@zag-js/floating-panel`  |   ✅   |
-
-### Variants — one machine, a new guise
-
-A variant reuses an already-adapted batch machine, restyled and re-scoped for a
-different purpose (e.g. Drawer re-scopes the dialog parts to `drawer`).
-
-| Component         | Reuses        | Status |
-| ----------------- | ------------- | :----: |
-| Context Menu      | `menu`        |   ✅   |
-| Segmented Control | `radio-group` |   ✅   |
-| Drawer            | `dialog`      |   ✅   |
-| Nested Menu       | `menu`        |   ⬜   |
-| Range Slider      | `slider`      |   ⬜   |
-| Calendar          | `date-picker` |   ✅   |
-| Date Input        | `date-picker` |   ⬜   |
-
-### Manti-original primitives — no Zag machine
-
-Framework-agnostic behaviors Manti UI authors directly (a `@manti-ui/folds`
-primitive or pure CSS) to fill gaps in the Zag catalog.
-
-| Component               | Mechanism             | Status |
-| ----------------------- | --------------------- | :----: |
-| Marquee                 | CSS animation         |   ✅   |
-| Swipe                   | `folds/swipe`         |   ✅   |
-| Scroll Area             | CSS scrollbars        |   ✅   |
-| Input `type="password"` | `field` shell + state |   ✅   |
+Shelved source stays under `backlog/` and ships in no package. Read
+`backlog/README.md` before re-adapting a shelved component.

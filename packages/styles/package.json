@@ -72,8 +72,9 @@
     "gen:variant-ink:check": "node scripts/gen-variant-ink.mjs --check",
     "report:variant-ink": "node scripts/gen-variant-ink.mjs --report",
     "check:component-tokens": "node scripts/check-component-tokens.mjs",
+    "check:color-scale": "node scripts/check-color-scale.mjs",
     "gen:component-tokens-doc": "node scripts/gen-component-tokens-doc.mjs",
-    "build": "node scripts/gen-tokens-css.mjs --check && node scripts/check-component-tokens.mjs && node scripts/gen-variant-ink.mjs --check && node scripts/check-contrast.mjs --gate && node scripts/gen-component-tokens-doc.mjs --check && vite build && tsc -p tsconfig.build.json",
+    "build": "node scripts/gen-tokens-css.mjs --check && node scripts/check-component-tokens.mjs && node scripts/check-color-scale.mjs && node scripts/gen-variant-ink.mjs --check && node scripts/check-contrast.mjs --gate && node scripts/gen-component-tokens-doc.mjs --check && vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "check:contrast": "node scripts/check-contrast.mjs"
   },

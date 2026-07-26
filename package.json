@@ -18,6 +18,7 @@
     "build:site": "pnpm docs:build && pnpm build:storybook && rm -rf packages/docs/dist/storybook && cp -r storybook-static packages/docs/dist/storybook",
     "gen:tokens": "pnpm --filter @manti-ui/styles gen:tokens",
     "gen:variant-ink": "pnpm --filter @manti-ui/styles gen:variant-ink",
+    "check:color-scale": "pnpm --filter @manti-ui/styles check:color-scale",
     "report:variant-ink": "pnpm --filter @manti-ui/styles report:variant-ink",
     "changeset": "changeset",
     "version-packages": "changeset version",

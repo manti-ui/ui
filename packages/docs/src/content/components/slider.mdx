@@ -3,35 +3,32 @@ title: Slider
 slug: /components/slider
 group: Inputs
 order: 45
-description: A draggable value selector backed by the Zag.js slider machine.
+description: A keyboard and pointer value selector with range and marks.
 ---
 
 # Slider
 
-A draggable value selector backed by the Zag.js slider machine. The machine owns
-pointer dragging, keyboard stepping, and the filled range; you set the bounds and
-variant.
+Set `min`, `max`, and `step`. The machine manages pointer dragging, keyboard
+steps, and form state.
 
 <Demo name="slider/basic" />
 
 ## Range and marks
 
-Pass an array to `defaultValue` (or `value`) to get a two-thumb range slider, and
-`marks` to render tick marks along the track.
+Pass two values for a range. Add `marks` for labeled positions.
 
 <Demo name="slider/range" />
 
-## Props
+## API
 
 <PropsTable component="slider" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the slider. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="slider" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="slider" />

@@ -206,7 +206,11 @@
      * raises it. Opting in is explicit, so a small indicator that must never go
      * round (checkbox) simply never references a channel — no clamp needed, it
      * is structurally incapable of collapsing into a circle. Keep small parts
-     * out of `pill`; that is the whole point of the split.                     */
+     * out of `pill`; that is the whole point of the split.
+     *
+     * No `[data-radius]` preset raises `pill` — binding pill controls to a
+     * preset would bind them to that preset's factor too. Raise it yourself and
+     * it composes with any factor: `:root { --manti-radius-pill: 9999px }`.    */
     --manti-radius-pill: 0px; /* control-class parts that may become pill */
     --manti-radius-thumb: 9999px; /* draggable handles — round by default */
 
@@ -263,6 +267,21 @@
       oklch(0.6 0.007 var(--manti-cool-hue))
     );
     --manti-text-on-accent: oklch(0.99 0.003 var(--manti-cool-hue));
+
+    /* Semantic status/accent roles. Components consume these roles instead of
+       reaching into a primitive ramp; the light/dark step mapping stays here. */
+    --manti-danger-icon: light-dark(var(--manti-red-8), var(--manti-red-5));
+    --manti-danger-border: light-dark(var(--manti-red-7), var(--manti-red-5));
+    --manti-danger-text: light-dark(var(--manti-red-9), var(--manti-red-4));
+    --manti-warning-text: light-dark(
+      var(--manti-amber-10),
+      var(--manti-amber-4)
+    );
+    --manti-accent-fill: light-dark(
+      var(--manti-orange-8),
+      var(--manti-orange-7)
+    );
+    --manti-contrast-light: var(--manti-gray-1);
 
     --manti-link: var(--manti-text);
 
@@ -377,13 +396,16 @@
    * Radius presets.
    *
    * Set `data-radius` on any container to retune the roundness of everything
-   * inside it. Each mode assigns the factor *and* every channel, so modes never
-   * leak into one another. `pill` is the only mode that raises the `pill`
-   * channel — that is what turns buttons and inputs into lozenges while the
-   * checkbox, which never joined the channel, keeps its square silhouette and
-   * stays distinguishable from the radio. `none` is the only mode that lowers
-   * `full`, so squaring the system also squares the by-design-round parts
-   * instead of leaving stray pills behind.
+   * inside it. One mode per distinct factor — a mode that differed from its
+   * neighbour only by a channel would be a picker row most pages cannot show a
+   * difference for.
+   *
+   * Each mode assigns the factor *and* every channel, so modes never leak into
+   * one another. Note they still *lower* `pill` even though none raises it: a
+   * consumer who opted into pill controls globally can square a subtree with
+   * `data-radius="none"`. `none` is likewise the only mode that lowers `full`,
+   * so squaring the system also squares the by-design-round parts instead of
+   * leaving stray pills behind.
    */
   [data-radius='none'] {
     --manti-radius-factor: 0;
@@ -410,13 +432,6 @@
     --manti-radius-factor: 1.4;
     --manti-radius-full: 9999px;
     --manti-radius-pill: 0px;
-    --manti-radius-thumb: 9999px;
-  }
-
-  [data-radius='pill'] {
-    --manti-radius-factor: 1.4;
-    --manti-radius-full: 9999px;
-    --manti-radius-pill: 9999px;
     --manti-radius-thumb: 9999px;
   }
 
@@ -478,25 +493,38 @@
       var(--manti-orange-9),
       var(--manti-orange-3)
     );
-    --variant-border: light-dark(
-      var(--manti-orange-4),
-      color-mix(in oklab, var(--manti-orange-7) 38%, var(--manti-gray-11))
-    );
+    --variant-border: light-dark(var(--manti-orange-7), var(--manti-orange-8));
     --variant-text: light-dark(var(--manti-orange-9), var(--manti-orange-4));
-    --variant-ring: var(--manti-orange-7);
+    --variant-ring: light-dark(var(--manti-orange-8), var(--manti-orange-7));
   }
 
   [data-variant='secondary'] {
-    /* Golden amber. Structured exactly like primary (branded solid, same in both
-       themes, hover/active mixed off the resolved solid) so the two read as one
-       family at different hues rather than two different mechanisms.
+    /* Neutral soft treatment. The scale follows the shared role contract:
+       gray-3/4 for component rest/hover and gray-11 for readable soft text.
+       Solid values remain available to selection-driven components, while
+       Button, Badge, and Alert consume the softer roles below. */
+    --variant-solid: light-dark(var(--manti-gray-11), var(--manti-gray-3));
+    --variant-solid-hover: light-dark(
+      var(--manti-gray-10),
+      var(--manti-gray-4)
+    );
+    --variant-solid-active: light-dark(
+      var(--manti-gray-9),
+      var(--manti-gray-5)
+    );
+    --variant-soft-bg: light-dark(var(--manti-gray-3), var(--manti-gray-11));
+    --variant-soft-bg-hover: light-dark(
+      var(--manti-gray-4),
+      var(--manti-gray-10)
+    );
+    --variant-soft-text: light-dark(var(--manti-gray-11), var(--manti-gray-3));
+    --variant-border: light-dark(var(--manti-gray-6), var(--manti-gray-7));
+    --variant-text: light-dark(var(--manti-gray-11), var(--manti-gray-3));
+    --variant-ring: var(--manti-focus-ring);
+  }
 
-       Note this is the *second* chromatic variant: secondary is no longer the
-       neutral rung of the emphasis ladder, and amber is also the ramp behind
-       warning semantics — a `secondary` badge and a caution badge now share a
-       hue. Reach for `tertiary` or `outline` when a genuinely quiet, neutral
-       control is what is wanted. */
-    --variant-solid: var(--manti-amber-7);
+  [data-variant='success'] {
+    --variant-solid: var(--manti-green-8);
     --variant-solid-hover: light-dark(
       color-mix(in oklab, var(--variant-solid) 88%, white),
       color-mix(in oklab, var(--variant-solid) 88%, black)
@@ -506,29 +534,52 @@
       color-mix(in oklab, var(--variant-solid) 78%, black)
     );
     --variant-soft-bg: light-dark(
-      var(--manti-amber-2),
-      color-mix(in oklab, var(--manti-amber-7) 20%, var(--manti-gray-12))
+      var(--manti-green-2),
+      color-mix(in oklab, var(--manti-green-7) 20%, var(--manti-gray-12))
     );
     --variant-soft-bg-hover: light-dark(
-      var(--manti-amber-3),
-      color-mix(in oklab, var(--manti-amber-7) 30%, var(--manti-gray-12))
+      var(--manti-green-3),
+      color-mix(in oklab, var(--manti-green-7) 30%, var(--manti-gray-12))
     );
-    --variant-soft-text: light-dark(
-      var(--manti-amber-10),
-      var(--manti-amber-3)
-    );
+    --variant-soft-text: light-dark(var(--manti-green-9), var(--manti-green-3));
     --variant-border: light-dark(
-      var(--manti-amber-4),
-      color-mix(in oklab, var(--manti-amber-7) 38%, var(--manti-gray-11))
+      var(--manti-green-6),
+      color-mix(in oklab, var(--manti-green-7) 38%, var(--manti-gray-11))
     );
-    --variant-text: light-dark(var(--manti-amber-10), var(--manti-amber-4));
-    --variant-ring: var(--manti-amber-7);
+    --variant-text: light-dark(var(--manti-green-9), var(--manti-green-4));
+    --variant-ring: var(--manti-green-7);
+  }
+
+  [data-variant='info'] {
+    --variant-solid: var(--manti-blue-8);
+    --variant-solid-hover: light-dark(
+      color-mix(in oklab, var(--variant-solid) 88%, white),
+      color-mix(in oklab, var(--variant-solid) 88%, black)
+    );
+    --variant-solid-active: light-dark(
+      color-mix(in oklab, var(--variant-solid) 78%, white),
+      color-mix(in oklab, var(--variant-solid) 78%, black)
+    );
+    --variant-soft-bg: light-dark(
+      var(--manti-blue-2),
+      color-mix(in oklab, var(--manti-blue-7) 20%, var(--manti-gray-12))
+    );
+    --variant-soft-bg-hover: light-dark(
+      var(--manti-blue-3),
+      color-mix(in oklab, var(--manti-blue-7) 30%, var(--manti-gray-12))
+    );
+    --variant-soft-text: light-dark(var(--manti-blue-9), var(--manti-blue-3));
+    --variant-border: light-dark(
+      var(--manti-blue-6),
+      color-mix(in oklab, var(--manti-blue-7) 38%, var(--manti-gray-11))
+    );
+    --variant-text: light-dark(var(--manti-blue-9), var(--manti-blue-4));
+    --variant-ring: var(--manti-blue-7);
   }
 
   [data-variant='tertiary'] {
-    /* The lowest-emphasis rung, and — since secondary went amber — the first
-       genuinely neutral one. The ghost treatment (transparent surface, muted
-       text) is applied by the consumer. */
+    /* The lowest-emphasis neutral rung. It shares the gray family with
+       secondary, but the consumer applies a ghost treatment with no container. */
     --variant-solid: light-dark(
       oklch(0.22 0.01 var(--manti-cool-hue)),
       oklch(0.96 0.004 var(--manti-cool-hue))
@@ -580,7 +631,7 @@
     );
     --variant-soft-text: light-dark(var(--manti-red-9), var(--manti-red-3));
     --variant-border: light-dark(
-      var(--manti-red-4),
+      var(--manti-red-6),
       color-mix(in oklab, var(--manti-red-7) 38%, var(--manti-gray-11))
     );
     --variant-text: light-dark(var(--manti-red-9), var(--manti-red-4));
@@ -630,8 +681,19 @@
     --variant-on-solid: var(--manti-gray-12);
   }
   [data-variant='secondary'] {
-    /* dark ink, Lc 55+ in both themes */
-    --variant-on-solid: var(--manti-gray-12);
+    /* light on light, dark on dark */
+    --variant-on-solid: light-dark(
+      var(--manti-text-on-accent),
+      var(--manti-gray-12)
+    );
+  }
+  [data-variant='success'] {
+    /* light ink, Lc 75+ in both themes */
+    --variant-on-solid: var(--manti-text-on-accent);
+  }
+  [data-variant='info'] {
+    /* light ink, Lc 78+ in both themes */
+    --variant-on-solid: var(--manti-text-on-accent);
   }
   [data-variant='tertiary'] {
     /* light on light, dark on dark */

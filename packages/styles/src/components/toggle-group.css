@@ -1,19 +1,16 @@
 /**
  * Toggle Group — a segmented set of toggle buttons backed by the Zag.js
- * toggle-group machine. Items sit in a shared translucent container; the pressed
- * item (`data-state='on'`) fills with the active variant.
+ * toggle-group machine. Items sit in a shared flat container; the pressed item
+ * (`data-state='on'`) fills with the active variant.
  */
 @layer manti.components {
   [data-scope='toggle-group'][data-part='root'] {
     display: inline-flex;
     padding: var(--manti-space-1);
     gap: var(--manti-space-1);
-    background: var(--manti-panel-tint);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border-strong);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim);
 
     &[data-orientation='vertical'] {
       flex-direction: column;
@@ -22,14 +19,6 @@
     &[data-disabled] {
       opacity: 0.5;
       cursor: not-allowed;
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='toggle-group'][data-part='root'] {
-      background: var(--manti-surface);
     }
   }
 
@@ -65,8 +54,6 @@
     &[data-state='on'] {
       background: var(--variant-solid);
       color: var(--variant-on-solid);
-      box-shadow: var(--manti-shadow-sm);
-
       &:hover {
         background: var(--variant-solid-hover);
       }

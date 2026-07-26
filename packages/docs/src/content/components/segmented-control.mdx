@@ -3,44 +3,30 @@ title: SegmentedControl
 slug: /components/segmented-control
 group: Inputs
 order: 59
-description: A single-select control with a pill that slides to the active segment.
+description: A single-select group with a moving active indicator.
 ---
 
 # SegmentedControl
 
-A single-select control rendered as a row of segments, with a pill that slides
-to the active one. It is backed by the Zag.js radio-group machine, so it keeps
-full keyboard support, roving focus, and form semantics — the machine measures
-the selected segment and drives the indicator.
-
-<Demo name="segmented-control/basic" center />
-
-## Basic
-
-Pass `items` as `{ value, label, disabled? }` and set an initial `defaultValue`
-(or control it with `value` + `onValueChange`). The sliding pill fills with the
-`variant` (primary by default) and the active segment's label flips to the
-contrasting on-variant color.
+Pass items as `{ value, label, disabled? }`. The RadioGroup machine provides
+keyboard and form behavior while the indicator follows the selected item.
 
 <Demo name="segmented-control/basic" center />
 
 ## Sizes
 
-`size` sets the segment height and padding: `sm`, `md` (default), or `lg`.
-
 <Demo name="segmented-control/sizes" />
 
-## Props
+## API
 
 <PropsTable component="segmented-control" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the control. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="segmented-control" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="segmented-control" />

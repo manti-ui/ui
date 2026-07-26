@@ -1,19 +1,9 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## What this is
-
-Manti UI is a framework-agnostic design system built on **Zag.js** behavior
-machines. The driving goal is to adapt **every** Zag.js component machine into
-Manti UI (tracker: `docs/zag-coverage.md`). Today only a React renderer exists;
-the package layout exists so Vue/Svelte/Solid renderers can later consume the
-same tokens, CSS, and machines unchanged.
+# Repository Guidelines
 
 ## Rules (always apply)
 
 These rules are mandatory for every agent working in this repo. The identical set
-lives in `AGENTS.md` — keep the two copies byte-for-byte in sync.
+lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
 
 1. **Keep CLAUDE.md and AGENTS.md synchronized.** Whenever `CLAUDE.md` (Claude's
    memory) is changed, mirror the same change into `AGENTS.md`, and vice versa, so
@@ -38,139 +28,87 @@ lives in `AGENTS.md` — keep the two copies byte-for-byte in sync.
    rather than a bare literal or a private knob; keep only _derived_ `calc()`
    values as private `--_*`. Register every component token in the
    `componentTokens` map of `@manti-ui/tokens`.
-3. **Match the user's language.** Always reply in the same language the user wrote
+3. **Color-scale roles and interaction progression are mandatory.** Primitive
+   ramps are ordered `1`–`12`, but components must consume semantic roles or the
+   `--variant-*` vocabulary rather than picking primitive stops directly. Use
+   `1`–`2` for canvas/subtle surfaces; `3` for component rest, `4` for hover and
+   keyboard highlight, `5` for pressed/selected/checked; `6` for quiet chrome,
+   `7` for interactive borders and low-emphasis controls, `8` for focus rings
+   and strong interactive chrome; `9` for solid fills, `10` for solid hover;
+   `11` for supporting text and `12` for high-contrast text. Input-like controls
+   (including Input, Textarea, Select, Combobox, NumberInput, PinInput,
+   TagsInput, Editable, DatePicker, TimePicker, ColorPicker, and Clipboard) use
+   `--manti-border` at rest, strengthen to the neutral
+   `--manti-border-strong` on hover, and use `--variant-ring` while active,
+   focused, or open. The primary color must begin at active/focus/open for this
+   control family; never use a variant color for its resting or hover border.
+   Select is the deliberate open-state exception: once its popup is connected,
+   both trigger and popup borders become transparent.
+   Semantic mappings must be theme-aware: interaction strength increases in the
+   direction that gains contrast in each theme.
+   Filled and selected surfaces follow rest `3` → hover `4` → active `5`; solid
+   controls follow `9` → `10`. Define these mappings centrally in
+   `packages/styles/src/tokens.css`, consume only semantic/variant roles in
+   component CSS, and verify changes with `pnpm check:color-scale`,
+   `pnpm --filter @manti-ui/styles check:contrast`, and the styles build.
+4. **Match the user's language.** Always reply in the same language the user wrote
    their prompt in (e.g. Turkish prompt → Turkish answer). This applies to chat
    responses only; code, identifiers, comments, and docs stay in English.
 
-## Commands
+## Project Structure & Module Organization
 
-Node `>=22.12.0`, pnpm 10. Run from the repo root.
+This is a `pnpm` workspace for a framework-agnostic design system powered by
+Zag.js behavior machines.
+
+- `packages/tokens/`: shared design-token contract.
+- `packages/styles/`: shared CSS and state selectors.
+- `packages/folds/`: framework-agnostic Zag.js behavior.
+- `packages/react/`: React renderer and Storybook stories.
+- `.storybook/`: Storybook (react-vite) configuration — the single dev surface and visual gallery.
+- `design/logo-explorations/`: non-production brand exploration assets.
+- `docs/`: architecture and product vision.
+
+Keep component stories beside their implementation when practical. Export
+public React APIs through `packages/react/src/index.ts`.
+
+## Build, Test, and Development Commands
+
+Use Node `>=22.12.0` and `pnpm 10`.
 
 ```bash
-pnpm install          # install workspace deps
-pnpm dev              # build packages, then Storybook at localhost:6006
-pnpm storybook        # Storybook only, no rebuild (use after a pnpm dev build)
-pnpm lint             # eslint
-pnpm typecheck        # per-package tsc + stories
-pnpm build            # build all packages, then Storybook (storybook-static/)
-pnpm verify           # lint + typecheck + build — the required green gate
-pnpm format           # prettier --write .
-pnpm gen:tokens       # regenerate --manti-* CSS vars from the token contract
+pnpm install          # Install all workspace dependencies
+pnpm dev              # build packages, then run Storybook at localhost:6006
+pnpm storybook        # Run Storybook only, no rebuild (use after a pnpm dev build)
+pnpm build            # Build the packages and Storybook (storybook-static/)
+pnpm build:storybook  # Generate storybook-static/
+pnpm lint             # Run ESLint
+pnpm typecheck        # Check packages and stories
+pnpm verify           # Run lint, typecheck, and all production builds
+pnpm gen:tokens       # Regenerate --manti-* CSS vars from the token contract
 ```
 
-**`pnpm verify` must stay green and is the gate before any change is done.** There
-is no unit-test framework yet; verification is `verify` + Storybook (use the a11y
-panel and the per-story controls/variants). To build one package alone:
-`pnpm --filter @manti-ui/styles build`.
+Run `pnpm verify` before opening a pull request.
 
-## Architecture: the four-package split
+## Coding Style & Naming Conventions
 
-A component is assembled from three separate packages plus a renderer. Respect
-these boundaries — do not duplicate behavior, tokens, or styles across them.
+Write strict TypeScript and React function components. Prettier enforces semicolons, single quotes, trailing commas, and two-space indentation. Run `pnpm format` after broad edits.
 
-```
-@manti-ui/tokens   design-token contract (CSS custom properties, TS types)
-@manti-ui/styles   all CSS, keyed to data-scope/data-part/data-state  →  depends on tokens
-@manti-ui/folds    Zag.js machines + behavior contract (re-exports @zag-js/*)
-@manti-ui/react    thin renderers that wire folds + styles together   →  depends on folds, styles, tokens
-.storybook/        Storybook (react-vite) — the single dev surface + visual gallery
-```
+Use:
 
-Dependency direction is strict: `tokens ← styles`, `folds ← react`, `styles ← react`.
-Framework packages must **not** define private token values or reimplement
-keyboard/focus/state logic that `folds` already owns.
+- `PascalCase.tsx` for React components.
+- `camelCase` for functions and variables.
+- `*.stories.tsx` for Storybook stories.
+- semantic CSS names and tokens rather than raw product-specific colors.
 
-### The component contract
+Keep Zag.js machines framework-agnostic and adapters thin. Public components
+require typed exports, keyboard support, visible focus states, and meaningful
+screen-reader semantics.
 
-There are two component shapes:
+## Testing Guidelines
 
-- **Behavioral** (Switch, Toggle, Checkbox, RadioGroup, Collapsible, Accordion,
-  Tabs, Tooltip): the Zag machine owns state/keyboard/forms; the React adapter
-  only renders anatomy. Pattern (see `packages/react/src/components/Switch/Switch.tsx`):
-  ```tsx
-  const service = useMachine(component.machine, { id: useId(), ...props });
-  const api = component.connect(service, normalizeProps);
-  return <el {...api.getRootProps()}>{/* parts via api.getXxxProps() */}</el>;
-  ```
-  Machines are imported from `@manti-ui/folds` (e.g. `switchMachine`), never from
-  `@zag-js/*` directly in the renderer.
-- **Static** (Button, Badge, Card, Alert, Spinner, Input): no machine; the
-  renderer emits the `data-*` anatomy attributes by hand (see `Button.tsx`).
+No unit-test framework or coverage threshold is configured yet. Every public component must include Storybook coverage for variants, disabled/error states, and meaningful interactions. Use the Storybook accessibility panel for WCAG checks and verify integration behavior through the component's stories.
 
-Collection components currently take a data-driven `items` prop; promoting them to
-compound APIs (`Tabs.Trigger`, …) is a planned refinement, not yet the convention.
-
-Every public component must export typed props from
-`packages/react/src/components/index.ts` (re-exported via `src/index.ts`), ship a
-colocated `*.stories.tsx`, and have keyboard support, visible focus, and SR semantics.
-
-### The styling/customization contract (public API, semver-stable)
-
-`docs/styling.md` is the authoritative spec. Key invariants when touching CSS:
-
-- **Anatomy attributes are public API:** `data-scope` (component), `data-part`
-  (anatomy piece), `data-variant`/`data-size`, and state attrs
-  (`data-state`, `data-loading`, `disabled`). Class names and DOM between parts
-  are private — target the data attributes.
-- **All Manti CSS lives in cascade layers** declared once in
-  `packages/styles/src/index.css`:
-  `@layer manti.reset, manti.tokens, manti.base, manti.components, manti.motion;`
-  This is deliberate — unlayered app CSS always beats layered Manti CSS without
-  `!important`.
-- **Variants** are CSS-variable vocabularies (`--variant-solid`,
-  `--variant-soft-bg`, …) selected per component via `[data-variant]`. The
-  five built-ins: `primary` (branded orange solid), `secondary` (amber soft),
-  `tertiary` (neutral ghost / text-only), `danger` (the one semantic hue, red
-  solid), `outline` (neutral bordered). Note `secondary` shares the amber ramp
-  with warning semantics; `tertiary`/`outline` are the neutral treatments. The `variant` prop accepts any string;
-  built-in variants keep TS autocomplete via `MantiVariant`/`MantiBuiltinVariant`
-  from `@manti-ui/tokens`. The treatment (solid/soft/ghost/bordered) is chosen by
-  the consuming component, not a separate prop.
-- **Component tokens (Tier 3)** are a public-but-secondary per-component escape
-  hatch: `--manti-{component}-{property}` (e.g. `--manti-button-radius`), each
-  defaulting to a Tier-2 semantic token, registered in `componentTokens` of
-  `@manti-ui/tokens`. Semantic tokens (Tier 2) remain the primary theming lever;
-  component tokens are for making one component diverge on purpose, not the
-  everyday path. Only _independent_ dimensions are exposed; _derived_ `calc()`
-  values stay private `--_*` knobs and are never API. The styles build runs
-  `scripts/check-component-tokens.mjs`, which fails if the `--manti-{component}-*`
-  tokens defined in a component's CSS drift from the `componentTokens` registry —
-  add/rename a component token and you must update the registry too.
-- `data-motion` tiers (`none`/`default`/`full`) are pure CSS in
-  `packages/styles/src/motion/`.
-
-## Build gotchas (do not regress)
-
-The CSS theming relies on native `light-dark()` plus manual `data-theme`. The
-Vite/Lightning CSS setup is tuned to preserve this — these are easy to silently break:
-
-- **Keep the lightningcss transformer + evergreen `targets`** (chrome123 / edge123 /
-  firefox120 / safari17.5). Otherwise `light-dark()` is lowered to a
-  `prefers-color-scheme`-only polyfill that ignores `data-theme`.
-- **`build.cssTarget` in the styles package must be the evergreen ARRAY**, not a
-  single `'chrome123'`. A single chrome target makes the minifier strip the
-  `-webkit-backdrop-filter` that Safari ≤17 needs for translucent surfaces.
-  After a styles build, verify:
-  `grep -c -- -webkit-backdrop-filter dist/index.css` > 0 and
-  `grep -c prefers-color-scheme dist/index.css` == 0.
-- **`@manti-ui/react` ships NO CSS side effects.** Apps import
-  `@manti-ui/styles/index.css` (or `tailwind.css` / `tokens.css` /
-  `tailwind-theme.css`) explicitly; Storybook does this in `.storybook/preview.tsx`.
-- The Tailwind CSS entry points are emitted **verbatim** into `dist` by the
-  `manti:emit-standalone-css` plugin and must not pass through Lightning CSS or
-  `@theme inline` gets mangled. The react Vite config must externalize
-  `/^@manti-ui\//`.
-
-## Conventions
-
-- Strict TypeScript, React function components. Prettier: semicolons, single
-  quotes, trailing commas, two-space indent (`pnpm format` after broad edits).
-- `PascalCase.tsx` components, `camelCase` functions/vars, `*.stories.tsx` stories.
-- Use semantic CSS names/tokens, not raw product-specific colors. The design
-  signature is sleek monochrome cool-dark panels — **no gradients, no colored
-  accent**; color comes only from semantic variants.
-- Conventional Commit messages (e.g. `feat(button): add loading state`). Do not
-  commit `dist/`, `storybook-static/`, or cache dirs.
+When automated tests are introduced, colocate them as `ComponentName.test.tsx`.
 
 ## The backlog
 
@@ -186,3 +124,9 @@ A shelved component does **not** mean its behavior is unused: `folds/swipe` stil
 ships because Toast's swipe-to-dismiss is built on the core directly. Do not
 remove a `folds` primitive on the grounds that no component renders it — check
 consumers first.
+
+## Commit & Pull Request Guidelines
+
+This workspace currently has no readable Git history. Until a project convention is established, use concise Conventional Commit messages, for example `feat(button): add loading state` or `docs: clarify token naming`.
+
+Pull requests should explain the behavioral change, list verification commands, link relevant issues, and include Storybook screenshots for visual changes. Avoid committing generated `dist/`, `storybook-static/`, or cache directories.

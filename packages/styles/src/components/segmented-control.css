@@ -12,14 +12,11 @@
     position: relative;
     display: inline-flex;
     padding: var(--manti-space-1);
-    background: var(--manti-panel-tint);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border-strong);
     /* Control class — the track, its sliding indicator and the items all join
        the pill channel together, or a pill track would frame square segments. */
     border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
-    box-shadow: var(--manti-panel-rim);
 
     &[data-orientation='vertical'] {
       flex-direction: column;
@@ -28,14 +25,6 @@
     &[data-disabled] {
       opacity: 0.5;
       cursor: not-allowed;
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='segmented-control'][data-part='root'] {
-      background: var(--manti-surface);
     }
   }
 
@@ -49,7 +38,6 @@
     height: var(--height);
     background: var(--variant-solid);
     border-radius: max(var(--manti-radius-sm), var(--manti-radius-pill));
-    box-shadow: var(--manti-shadow-sm);
     transition-property: var(--transition-property, left, top, width, height);
     transition-duration: var(--manti-duration-base);
     transition-timing-function: var(--manti-ease-smooth);

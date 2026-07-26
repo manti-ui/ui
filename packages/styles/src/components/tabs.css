@@ -59,7 +59,7 @@
     align-self: flex-start;
     max-width: 100%;
     padding: var(--manti-space-1);
-    background: light-dark(oklch(0.2 0.02 280 / 0.05), var(--manti-panel-tint));
+    background: var(--manti-fill-subtle);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
@@ -83,7 +83,7 @@
   ) {
     [data-scope='tabs'][data-part='root'][data-variant='pill']
       [data-part='list'] {
-      background: light-dark(oklch(0.95 0.003 280), var(--manti-surface));
+      background: var(--manti-surface);
     }
   }
 
@@ -101,7 +101,6 @@
     font: inherit;
     font-weight: var(--manti-weight-semibold);
     white-space: nowrap;
-    cursor: pointer;
     transition: color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:hover {
@@ -194,13 +193,12 @@
   [data-scope='tabs'][data-part='root'][data-variant='soft']
     > [data-part='list']
     > [data-part='indicator'] {
-    background: light-dark(oklch(1 0 0 / 0.96), oklch(1 0 0 / 0.12));
+    background: var(--manti-panel-tint-strong);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid
-      light-dark(oklch(0.2 0.02 280 / 0.12), oklch(1 0 0 / 0.18));
+    border: 1px solid var(--manti-panel-border);
     box-shadow:
-      inset 0 1px 0 0 light-dark(oklch(1 0 0 / 0.95), oklch(1 0 0 / 0.16)),
+      var(--manti-panel-rim),
       var(--manti-shadow-md);
   }
 
@@ -225,7 +223,7 @@
     [data-scope='tabs'][data-part='root'][data-variant='soft']
       > [data-part='list']
       > [data-part='indicator'] {
-      background: light-dark(oklch(1 0 0), oklch(0.3 0.01 280));
+      background: var(--manti-surface-raised);
     }
   }
 

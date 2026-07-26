@@ -22,6 +22,11 @@
     --docs-max: 100rem;
     --docs-prose-max: 64rem;
     --docs-gutter: var(--manti-space-6);
+    --docs-props-table-min-w: 44rem;
+    --docs-props-name-w: 12%;
+    --docs-props-type-w: 40%;
+    --docs-props-default-w: 14%;
+    --docs-props-description-w: 34%;
 
     --docs-nav-bg: light-dark(
       oklch(0.99 0.002 280 / 0.42),
@@ -146,6 +151,23 @@
     gap: var(--manti-space-2);
   }
 
+  .docs-search-shortcut {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-1);
+    padding-inline: var(--manti-space-1);
+    border: 1px solid var(--manti-panel-border);
+    border-radius: var(--manti-radius-sm);
+    background: transparent;
+    color: var(--manti-text-muted);
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-text-xs);
+    font-weight: var(--manti-weight-medium);
+    font-variant-ligatures: none;
+    font-variant-numeric: tabular-nums;
+    line-height: var(--manti-leading-tight);
+  }
+
   /* nav text links */
   .docs-nav-link {
     padding: var(--manti-space-1) var(--manti-space-3);
@@ -235,16 +257,6 @@
   .docs-sidebar-nav [data-scope='collapsible'][data-part='trigger']:hover {
     background: none;
     color: var(--manti-text-muted);
-  }
-  .docs-nav-group-chevron {
-    flex: none;
-    color: var(--manti-text-subtle);
-    transition: transform var(--manti-duration-base) var(--manti-ease-smooth);
-  }
-  .docs-sidebar-nav
-    [data-scope='collapsible'][data-part='trigger'][data-state='open']
-    .docs-nav-group-chevron {
-    transform: rotate(180deg);
   }
   .docs-nav-list {
     list-style: none;
@@ -429,6 +441,56 @@
     font-weight: var(--manti-weight-bold);
     margin: 0 0 var(--manti-space-4);
   }
+  .docs-ai-page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-3) var(--manti-space-6);
+    margin-bottom: var(--manti-space-4);
+  }
+  .docs-prose .docs-ai-page-header h1 {
+    margin: 0;
+  }
+  .docs-ai-page-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+    margin-inline-start: auto;
+  }
+  .docs-ai-llms-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-1);
+    color: var(--manti-text-muted);
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    text-decoration: none;
+  }
+  .docs-ai-llms-link:hover {
+    color: var(--manti-text);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .docs-ai-llms-link:focus-visible {
+    border-radius: var(--manti-radius-sm);
+    outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
+    outline-offset: var(--manti-focus-ring-offset);
+  }
+  .docs-ai-download {
+    flex: none;
+    inline-size: var(--manti-control-height-sm);
+    block-size: var(--manti-control-height-sm);
+    min-height: var(--manti-control-height-sm);
+    padding-inline: 0;
+  }
+  .docs-ai-page-actions svg {
+    flex: none;
+  }
+  .docs-design-signature-note {
+    padding-block-start: var(--manti-space-4);
+  }
   .docs-prose h2 {
     font-size: var(--manti-text-2xl);
     margin: var(--manti-space-10) 0 var(--manti-space-4);
@@ -465,12 +527,12 @@
     color: var(--manti-text-subtle);
   }
 
-  .docs-prose a:not(.docs-plain):not(.docs-release) {
+  .docs-prose a:not(.docs-plain):not(.docs-release):not(.docs-ai-action) {
     color: var(--manti-link);
     text-decoration: none;
     text-underline-offset: 0.2em;
   }
-  .docs-prose a:not(.docs-plain):not(.docs-release):hover {
+  .docs-prose a:not(.docs-plain):not(.docs-release):not(.docs-ai-action):hover {
     text-decoration: underline;
   }
   .docs-prose strong {
@@ -532,6 +594,32 @@
   .docs-prose td code {
     white-space: nowrap;
   }
+  .docs-props-table-scroll {
+    width: 100%;
+    margin-bottom: var(--manti-space-6);
+    overflow-x: auto;
+  }
+  .docs-prose .docs-props-table {
+    min-width: var(--docs-props-table-min-w);
+    margin-bottom: 0;
+    table-layout: fixed;
+  }
+  .docs-props-table-name {
+    width: var(--docs-props-name-w);
+  }
+  .docs-props-table-type {
+    width: var(--docs-props-type-w);
+  }
+  .docs-props-table-default {
+    width: var(--docs-props-default-w);
+  }
+  .docs-props-table-description {
+    width: var(--docs-props-description-w);
+  }
+  .docs-prose .docs-props-table td:nth-child(2) code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 
   /* ---- Code blocks (Shiki dual theme, switched by data-theme) ---- */
   .docs-codeblock {
@@ -585,8 +673,7 @@
      colors come from a Prism theme carrying GitHub's palette (see live-theme.ts), so an
      editable block reads like a static one even though a different highlighter drew it. */
   .docs-live-editor {
-    border-radius: var(--manti-radius-lg);
-    border: 1px solid var(--manti-border);
+    border-top: 1px solid var(--manti-border);
     background: var(--manti-surface);
     font-size: var(--manti-text-sm);
     line-height: var(--manti-leading-normal);

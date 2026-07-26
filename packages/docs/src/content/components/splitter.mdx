@@ -3,35 +3,30 @@ title: Splitter
 slug: /components/splitter
 group: Layout
 order: 47
-description: A resizable split layout backed by the Zag.js splitter machine.
+description: Keyboard and pointer resizable split panes.
 ---
 
 # Splitter
 
-A resizable split layout backed by the Zag.js splitter machine. Pass a `panels`
-array and drag the dividers; the machine owns the resize math, keyboard support,
-and min/max constraints.
+Pass a `panels` array and matching default percentages. The machine manages
+resize math, keyboard controls, and panel constraints.
 
 <Demo name="splitter/basic" />
 
-## Three panels
-
-Add more entries to `panels` and matching `defaultSize` percentages for a
-multi-pane layout. Drag either divider to redistribute space.
+## Several panels
 
 <Demo name="splitter/three-panels" />
 
-## Props
+## API
 
 <PropsTable component="splitter" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the splitter. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="splitter" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="splitter" />
