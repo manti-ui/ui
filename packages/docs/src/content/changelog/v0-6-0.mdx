@@ -1,0 +1,150 @@
+---
+title: v0.6.0
+slug: /changelog/v0.6.0
+group: Changelog
+order: 1
+date: '2026-07-27'
+description: Surfaces go flat, secondary returns to neutral, success and info join the variant set, the input family gets a default/fill axis, and the docs ship llms.txt.
+---
+
+# v0.6.0
+
+_Released 2026-07-27._
+
+## Breaking changes
+
+- **`secondary` is neutral again.** v0.5.0 made it amber; this release puts it
+  back on the gray family and follows the shared role contract (`3`/`4` for
+  component rest/hover, `11` for readable soft text). The emphasis ladder is
+  monochrome below `primary` once more, so a `secondary` Badge or Button no
+  longer collides with warning semantics. If you adopted amber deliberately in
+  0.5.0, it is still one override away:
+
+  ```css
+  [data-variant='secondary'] {
+    --variant-soft-bg: var(--manti-amber-2);
+    --variant-soft-text: var(--manti-amber-10);
+  }
+  ```
+
+- **`success` and `info` join the variant set.** `variants` in
+  `@manti-ui/tokens` is now `primary`, `secondary`, `success`, `info`,
+  `tertiary`, `danger`, `outline` — green and blue built the same way as the
+  other chromatic variants, with `--variant-on-solid` measured rather than
+  picked. Anything that enumerates `MantiBuiltinVariant` (a `Record`, a
+  `switch`, a props table) sees two new members.
+
+- **Variant props are narrowed per component.** `variant` used to be
+  `MantiVariant` everywhere, which typed combinations no component ever
+  rendered. Each component that constrains the set now exports its own union:
+
+  - `AlertVariant` — `primary | secondary | success | info | danger`. Alert
+    drops `tertiary` and `outline`; there is no ghost or bordered message panel.
+  - `BadgeVariant` — every built-in variant except `tertiary`. The label-only
+    treatment is gone; reach for `outline` for the quietest chip.
+  - `InputVariant`, `TextareaVariant`, `SelectVariant`, `ComboboxVariant` — see
+    below.
+
+- **The input family's `variant` is no longer a color.** Input, Textarea, Select
+  and Combobox took a `MantiVariant` that only ever tinted the focus ring. It is
+  now a visual treatment, `'default' | 'fill'`, defaulting to `'default'`; the
+  ring follows `primary` regardless. A color passed today resolves to neither
+  treatment and fails typecheck.
+
+  ```diff
+  -<Input variant="primary" />
+  +<Input />          {/* outlined — the default */}
+  +<Input variant="fill" />  {/* filled: no resting border, --manti-fill surface */}
+  ```
+
+## Surfaces are flat
+
+The translucent panel treatment — `backdrop-filter`, the tint/rim/inset triad —
+is removed from Button, Badge, Alert, Collapsible and the whole field family.
+Blur is expensive to composite, it dropped out entirely on the `@supports`
+fallback path (so two users saw two different designs), and layered over a busy
+page it read as noise rather than depth. Those components now paint an opaque
+surface with a real border.
+
+- Solid controls keep their inner top highlight, but it is mixed off
+  `--variant-on-solid` instead of a hard-coded white, so it stays legible on
+  every variant.
+- Soft treatments (Button, Badge, Alert `secondary`) merge the border into the
+  fill: the one-pixel footprint survives for stable sizing, without drawing a
+  contrasting edge.
+- Blur-less `@supports` blocks are deleted along with the effect they guarded.
+
+## The input border progression, applied
+
+The control family — Input, Textarea, Select, Combobox and friends — now follows
+one rule end to end: `--manti-border` at rest, `--manti-border-strong` on hover,
+`--variant-ring` once active, focused or open. Primary color starts at focus and
+never appears on a resting border.
+
+- **`fill` appearance.** `data-appearance="fill"` swaps the outlined control for
+  a borderless `--manti-fill` surface that strengthens to `--manti-fill-strong`
+  on hover and focus, then shows the ring on focus.
+- **Select and Combobox connect to their popup.** The trigger reads
+  `data-connected="top" | "bottom"` from the positioner's resolved side and
+  drops the matching corner radii and border edge, so trigger and listbox read as
+  one shape. Closed or empty, the attribute is absent — no bottomless box on a
+  focused-but-closed trigger.
+- Invalid states, the required marker, the error message and the caps-lock
+  notice all move onto new semantic roles instead of reaching into the red and
+  amber ramps directly.
+
+## Components
+
+- **Collapsible** renders a state-aware chevron indicator by default — expand on
+  closed, collapse on open. Pass `indicator` for your own node or `false` to
+  suppress it; size it with the new `--manti-collapsible-icon-size` token. The
+  trigger's padding tightens by one step.
+- **Menu** accepts `bottom-center` as a placement alias for `bottom`, typed as
+  the new `MenuPlacement`.
+- **ColorPicker** pins its root to the primary variant so its ring matches the
+  rest of the control family.
+- **Button**'s `sm` step tightens: `--manti-space-2` of inline padding and a
+  radius factor of `0.8` rather than `0.7`.
+
+## Tokens
+
+- **Semantic status roles.** `--manti-danger-icon`, `--manti-danger-border`,
+  `--manti-danger-text`, `--manti-warning-text`, `--manti-accent-fill` and
+  `--manti-contrast-light` replace the `light-dark(var(--manti-red-8), …)` pairs
+  that had been inlined across component CSS. Both text roles are now audited by
+  the contrast gate.
+- **`colorScaleRoles` is exported** from `@manti-ui/tokens` — the `1`–`12`
+  contract (app background, component background, border, solid, text) as typed
+  data rather than prose, and reachable as `mantiTokens.color.scaleRoles`.
+- **A color-scale gate runs in the styles build.** `check:color-scale` fails the
+  build when component CSS names a raw color or a primitive ramp stop directly,
+  and when a built-in variant assigns a role a stop outside its band (borders
+  `6`–`8`, rings `7`–`8`, solids `9`–`10`, with the documented exceptions).
+  Available standalone as `pnpm check:color-scale`.
+- **The `pill` radius preset is dropped; the channel stays.** `pill` shared
+  `round`'s factor of `1.4` and differed only by raising `--manti-radius-pill`,
+  which the parts that read as unmistakably pill are pinned past anyway — so on
+  a real page the step showed no visible difference. Four presets remain, one per
+  distinct factor: `none` `0`, `sharp` `0.6`, `default` `1`, `round` `1.4`.
+  Nothing is lost, and raising the channel now composes with any factor:
+
+  ```css
+  :root {
+    --manti-radius-pill: 9999px;
+  }
+  ```
+
+## Documentation
+
+- **`llms.txt`** ships at [manti.design/llms.txt](https://manti.design/llms.txt)
+  — a condensed technical map of the install, the token tiers, the anatomy
+  contract and the component surface, written for coding agents. The new
+  _Working with AI_ page links and downloads it.
+- **The `size` prop is documented on the twelve components that shipped it
+  without showing it**: Badge, Combobox, DataTable, Drawer, Pagination, PinInput,
+  Progress, RatingGroup, Select, Spinner, Tabs and ToggleGroup. Each gets a
+  `## Sizes` section, because the prop scales something different in each —
+  control height, row density, panel extent, track thickness.
+- The repository guides (`README`, architecture, styling, design-system, token
+  and coverage docs) are rewritten against the current token system, and every
+  component page picks up the new variant vocabulary.
