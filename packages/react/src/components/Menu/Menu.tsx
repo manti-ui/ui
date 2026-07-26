@@ -7,6 +7,8 @@ import { cx } from '../../internal/props';
 import { renderTrigger } from '../../internal/floating';
 import type { Placement } from '../../internal/floating';
 
+export type MenuPlacement = Placement | 'bottom-center';
+
 /** A selectable command in the menu. */
 export interface MenuCommand {
   type?: 'item';
@@ -40,8 +42,8 @@ export interface MenuProps {
   trigger: ReactElement;
   /** The menu contents. */
   items: MenuItem[];
-  /** Placement relative to the trigger. */
-  placement?: Placement;
+  /** Placement relative to the trigger. `bottom-center` aliases `bottom`. */
+  placement?: MenuPlacement;
   /** Called with the value of the selected command. */
   onSelect?: (value: string) => void;
   /** Controlled open state. */
@@ -72,17 +74,17 @@ export function Menu({
 }: MenuProps) {
   const autoId = useId();
   const baseId = id ?? autoId;
+  const floatingPlacement =
+    placement === 'bottom-center' ? 'bottom' : placement;
   const service = useMachine(menu.machine, {
     id: baseId,
-    positioning: { placement },
+    positioning: { placement: floatingPlacement },
     open,
     defaultOpen,
     onOpenChange: onOpenChange
       ? (details) => onOpenChange(details.open)
       : undefined,
-    onSelect: onSelect
-      ? (details) => onSelect(details.value)
-      : undefined,
+    onSelect: onSelect ? (details) => onSelect(details.value) : undefined,
   });
   const api = menu.connect(service, normalizeProps);
 
@@ -130,7 +132,9 @@ export function Menu({
                       key={groupId}
                       {...api.getItemGroupProps({ id: groupId })}
                     >
-                      <div {...api.getItemGroupLabelProps({ htmlFor: groupId })}>
+                      <div
+                        {...api.getItemGroupLabelProps({ htmlFor: groupId })}
+                      >
                         {item.label}
                       </div>
                       {item.items.map(renderCommand)}

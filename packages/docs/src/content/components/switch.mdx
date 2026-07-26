@@ -3,48 +3,32 @@ title: Switch
 slug: /components/switch
 group: Inputs
 order: 12
-description: A smooth on/off control backed by a Zag.js machine, with sizes and variants.
+description: An on and off control with form behavior, sizes, and variants.
 ---
 
 # Switch
 
-A smooth on/off control backed by the Zag.js switch machine. The machine owns
-state, keyboard, and form behavior; toggle it with a click, the Space key, or a
-controlled `checked` prop.
+Use `defaultChecked` for uncontrolled state or `checked` with
+`onCheckedChange` for controlled state. `children` renders a label.
 
 <Demo name="switch/basic" center />
 
-## States
-
-A Switch can start on with `defaultChecked`, sit off by default, or be
-`disabled` to block interaction. Add a trailing label by passing children.
-
-<Demo name="switch/basic" />
-
-## Sizes
-
-`size` offers a compact `sm` and the default `md`.
+## Sizes and variants
 
 <Demo name="switch/sizes" />
 
-## Variants
-
-`variant` colors the control when it is on. Built-in variants are `primary`,
-`secondary`, `tertiary`, `danger`, and `outline`.
-
 <Demo name="switch/variants" />
 
-## Props
+## API
 
 <PropsTable component="switch" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the switch. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="switch" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="switch" />

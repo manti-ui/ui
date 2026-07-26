@@ -1,23 +1,23 @@
-# Component tokens reference
+# Component tokens
 
-> **Generated** from the `componentTokens` registry in `@manti-ui/tokens` and
-> each component's CSS. Do not edit the table by hand — run
-> `pnpm --filter @manti-ui/styles gen:component-tokens-doc`. The styles build
-> fails if this file is stale.
+This table is generated from `@manti-ui/tokens` and component CSS. Do not edit
+the generated region. Run:
 
-Tier-3 **component tokens** are the public, semver-stable per-component override
-surface. Each `--manti-{component}-{property}` defaults to the value shown
-below. Prefer Tier-2 semantic tokens for system-wide theming; reach for a
-component token only to make one component diverge on purpose — see
-[styling.md](./styling.md#component-tokens-tier-3).
+```bash
+pnpm --filter @manti-ui/styles gen:component-tokens-doc
+```
+
+Component tokens are public per-component overrides. Prefer semantic tokens for
+system-wide changes; use this list when one component should differ. See
+[Styling](./styling.md#theme-with-tokens).
 
 <!-- @component-tokens:generated:start -->
 
 | Component           | Token                                       | Default                                              |
 | ------------------- | ------------------------------------------- | ---------------------------------------------------- |
 | `accordion`         | `--manti-accordion-radius`                  | `var(--manti-radius-lg)`                             |
-| `accordion`         | `--manti-accordion-padding-x`               | `var(--manti-space-5)`                               |
-| `accordion`         | `--manti-accordion-padding-y`               | `var(--manti-space-4)`                               |
+| `accordion`         | `--manti-accordion-padding-x`               | `var(--manti-space-3)`                               |
+| `accordion`         | `--manti-accordion-padding-y`               | `var(--manti-space-2)`                               |
 | `accordion`         | `--manti-accordion-gap`                     | `var(--manti-space-3)`                               |
 | `alert`             | `--manti-alert-radius`                      | `var(--manti-radius-lg)`                             |
 | `alert`             | `--manti-alert-padding-x`                   | `var(--manti-space-4)`                               |
@@ -54,7 +54,7 @@ component token only to make one component diverge on purpose — see
 | `carousel`          | `--manti-carousel-indicator-size`           | `0.5rem`                                             |
 | `carousel`          | `--manti-carousel-viewport-height`          | `22rem`                                              |
 | `checkbox`          | `--manti-checkbox-size`                     | `1.25rem`                                            |
-| `checkbox`          | `--manti-checkbox-radius`                   | `var(--manti-radius-xs)`                             |
+| `checkbox`          | `--manti-checkbox-radius`                   | `var(--manti-radius-sm)`                             |
 | `checkbox`          | `--manti-checkbox-gap`                      | `var(--manti-space-3)`                               |
 | `checkbox`          | `--manti-checkbox-font-size`                | `var(--manti-text-sm)`                               |
 | `checkbox`          | `--manti-checkbox-indicator-size`           | `80%`                                                |
@@ -65,9 +65,10 @@ component token only to make one component diverge on purpose — see
 | `clipboard`         | `--manti-clipboard-font-size`               | `var(--manti-text-sm)`                               |
 | `clipboard`         | `--manti-clipboard-trigger-width`           | `2.5rem`                                             |
 | `collapsible`       | `--manti-collapsible-radius`                | `var(--manti-radius-md)`                             |
-| `collapsible`       | `--manti-collapsible-padding-x`             | `var(--manti-space-4)`                               |
-| `collapsible`       | `--manti-collapsible-padding-y`             | `var(--manti-space-3)`                               |
+| `collapsible`       | `--manti-collapsible-padding-x`             | `var(--manti-space-3)`                               |
+| `collapsible`       | `--manti-collapsible-padding-y`             | `var(--manti-space-2)`                               |
 | `collapsible`       | `--manti-collapsible-gap`                   | `var(--manti-space-2)`                               |
+| `collapsible`       | `--manti-collapsible-icon-size`             | `var(--manti-space-5)`                               |
 | `color-picker`      | `--manti-color-picker-height`               | `var(--manti-control-height-md)`                     |
 | `color-picker`      | `--manti-color-picker-panel-width`          | `16rem`                                              |
 | `color-picker`      | `--manti-color-picker-area-height`          | `9rem`                                               |

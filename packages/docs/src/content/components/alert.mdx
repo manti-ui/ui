@@ -3,43 +3,33 @@ title: Alert
 slug: /components/alert
 group: Feedback
 order: 15
-description: An inline, colored message with a title, description, and optional dismiss action.
+description: An inline status message with semantic variants and optional dismissal.
 ---
 
 # Alert
 
-An inline, colored message with an optional icon, title, description, and dismiss
-action. It defaults to `role="status"`, escalating to `role="alert"` for the
-danger variant.
+Alert supports `primary`, `secondary`, `success`, `info`, and `danger`. It uses
+`role="status"` by default and `role="alert"` for danger.
 
 <Demo name="alert/variants" />
 
-## Variants
+## Dismissal
 
-`variant` carries the color and semantic meaning. It defaults to `secondary`; pass any
-built-in variant (`primary`, `secondary`, `tertiary`, `danger`, `outline`) or a custom one.
-Pass a `title` for the bold leading line and children for the description.
-
-<Demo name="alert/variants" />
-
-## Dismissible
-
-Provide `onDismiss` to render a dismiss button. Drive the Alert's visibility
-from state so it can be hidden — and brought back — on demand.
+Provide `onDismiss` to show a close button. Your application owns whether the
+Alert remains rendered.
 
 <Demo name="alert/dismissible" center />
 
-## Props
+## API
 
 <PropsTable component="alert" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the alert. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="alert" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="alert" />

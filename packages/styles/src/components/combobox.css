@@ -1,7 +1,7 @@
 /**
  * Combobox — a typeahead select backed by the Zag.js combobox machine. The
- * control is the translucent field with an inline toggle; the portalled content
- * matches the Select/Listbox panels.
+ * control is a flat field with an inline toggle; the portalled content matches
+ * the Select/Listbox anatomy.
  */
 @layer manti.components {
   [data-scope='combobox'][data-part='root'] {
@@ -25,44 +25,36 @@
     align-items: center;
     min-height: var(--manti-combobox-height);
     padding-inline: var(--manti-space-3);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     /* Control class — joins the opt-in pill channel. */
     border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-inset);
-    transition:
-      border-color var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+    transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:hover {
-      border-color: var(--manti-text-subtle);
+      border-color: var(--manti-border-strong);
     }
 
     &:focus-within {
-      border-color: var(--variant-ring, var(--manti-focus-ring));
+      border-color: var(--variant-ring);
     }
 
-    /* Open — seam into the panel: a variant-colored border, squared bottom
-       corners with no divider, and no focus glow so the control and the list
-       read as one connected shape. */
-    &[data-open] {
-      border-color: var(--variant-ring, var(--manti-focus-ring));
+    /* Keep the focused border continuous as the control joins its panel. */
+    &[data-connected] {
+      background: var(--manti-panel-tint-strong);
+      border-color: var(--variant-ring);
+    }
+
+    &[data-connected='bottom'] {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
       border-bottom-color: transparent;
-      /* Drop the all-around inset rim (its bottom edge is the faint seam line);
-         keep only the top inset well. */
-      box-shadow: var(--manti-panel-inset);
     }
-  }
 
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='combobox'][data-part='control'] {
-      background: var(--manti-surface-raised);
+    &[data-connected='top'] {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-top-color: transparent;
     }
   }
 
@@ -78,7 +70,41 @@
 
   [data-scope='combobox'][data-part='root'][data-invalid]
     [data-part='control'] {
-    border-color: light-dark(var(--manti-red-7), var(--manti-red-5));
+    border-color: var(--manti-danger-border);
+  }
+
+  [data-scope='combobox'][data-part='root'][data-appearance='fill']
+    [data-part='control'] {
+    background: var(--manti-fill);
+    border-color: transparent;
+
+    &:hover {
+      background: var(--manti-fill-strong);
+      border-color: transparent;
+    }
+
+    &:focus-within {
+      background: var(--manti-fill-strong);
+      border-color: var(--variant-ring);
+    }
+
+    &[data-connected] {
+      background: var(--manti-panel-tint-strong);
+      border-color: var(--variant-ring);
+    }
+
+    &[data-connected='bottom'] {
+      border-bottom-color: transparent;
+    }
+
+    &[data-connected='top'] {
+      border-top-color: transparent;
+    }
+  }
+
+  [data-scope='combobox'][data-part='root'][data-appearance='fill'][data-invalid]
+    [data-part='control'] {
+    border-color: var(--manti-danger-border);
   }
 
   [data-scope='combobox'][data-part='input'] {
@@ -111,10 +137,10 @@
     gap: var(--manti-space-1);
     height: 1.625rem;
     padding-inline: var(--manti-space-2);
-    background: color-mix(in oklab, var(--variant-soft-bg) 80%, transparent);
+    background: var(--manti-fill);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-sm);
-    color: var(--variant-soft-text);
+    color: var(--manti-text);
     font-size: var(--manti-text-xs);
     font-weight: var(--manti-weight-medium);
     white-space: nowrap;
@@ -143,8 +169,8 @@
     align-items: center;
     justify-content: center;
     margin-inline-start: var(--manti-space-2);
+    padding: 0;
     color: var(--manti-text-muted);
-    cursor: pointer;
     transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
@@ -166,21 +192,34 @@
     [data-scope='scroll-area'][data-part='root'] {
     --manti-combobox-content-max-height: 18rem;
 
-    /* Seam onto the control above: pull up over the positioner gutter, drop the
-       top border and square the top corners so the two share one outline. Border
-       follows the active variant (data-variant rides on the portalled
-       positioner). */
-    margin-top: -8px;
     width: 100%;
     background: var(--manti-panel-tint-strong);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
-    border-color: var(--variant-ring, var(--manti-focus-ring));
+    border: 1px solid var(--variant-ring);
     border-radius: var(--manti-radius-md);
+  }
+
+  /* Join the panel on the side chosen by Floating UI, including when collision
+     handling flips it above the control. */
+  [data-scope='combobox'][data-part='positioner']
+    [data-scope='scroll-area'][data-part='root']:has(
+      [data-scope='combobox'][data-part='content'][data-side='bottom']
+    ) {
+    margin-top: -8px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-top: transparent;
+    border-top-color: transparent;
+  }
+
+  [data-scope='combobox'][data-part='positioner']
+    [data-scope='scroll-area'][data-part='root']:has(
+      [data-scope='combobox'][data-part='content'][data-side='top']
+    ) {
+    margin-bottom: -8px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-color: transparent;
   }
 
   [data-scope='combobox'][data-part='positioner']
@@ -207,15 +246,6 @@
     }
   }
 
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='combobox'][data-part='positioner']
-      [data-scope='scroll-area'][data-part='root'] {
-      background: var(--manti-surface-raised);
-    }
-  }
-
   [data-scope='combobox'][data-part='item'] {
     display: flex;
     align-items: center;
@@ -225,17 +255,23 @@
     border-radius: var(--manti-radius-sm);
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
-    cursor: pointer;
+    line-height: var(--manti-leading-snug);
     user-select: none;
-    transition: background var(--manti-duration-fast) var(--manti-ease-soft);
+    transition:
+      background var(--manti-duration-fast) var(--manti-ease-soft),
+      color var(--manti-duration-fast) var(--manti-ease-soft);
 
     &[data-highlighted] {
-      background: var(--manti-fill);
+      background: var(--variant-fill);
     }
 
     &[data-state='checked'] {
-      color: var(--variant-text);
+      background: var(--variant-fill-strong);
       font-weight: var(--manti-weight-medium);
+    }
+
+    &[data-state='checked'][data-highlighted] {
+      background: var(--variant-fill-strong);
     }
 
     &[data-disabled] {

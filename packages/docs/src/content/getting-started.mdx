@@ -3,75 +3,56 @@ title: Getting Started
 slug: /getting-started
 group: Getting Started
 order: 1
-description: Install Manti UI, import the styles, and render your first component.
+description: Install Manti UI, import its CSS, and render a React component.
 ---
 
 # Getting Started
 
-Manti UI ships as a small set of packages. For a React app you install two — the
-renderer and the stylesheet — and the tokens and behavior machines come along
-automatically.
-
 ## Install
-
-Install the packages with your package manager of choice:
 
 <InstallTabs packages="@manti-ui/react @manti-ui/styles" />
 
-`@manti-ui/react` pulls in `@manti-ui/tokens` and the behavior machines
-(`@manti-ui/folds`) automatically. `@manti-ui/styles` is a **peer dependency** —
-you install it alongside the renderer, so you stay in control of the CSS version
-and its import order (which matters when you also use Tailwind).
+`@manti-ui/react` includes tokens and behavior. `@manti-ui/styles` is a peer
+dependency so your app controls when CSS loads.
 
-## Import the styles once
+## Import CSS
 
-`@manti-ui/react` ships **no** CSS side effects, so import the stylesheet
-yourself, once, at your app entry. Keeping the import explicit leaves you in
-control of order (which matters when you also use Tailwind), and this single line
-sets up the cascade layers, design tokens, component styles, and motion tiers.
+Import the stylesheet once at the app entry:
 
 ```ts
-// main.tsx / app entry
 import '@manti-ui/styles/index.css';
 ```
 
-## Set the theme
-
-Theming is driven by a `data-theme` attribute on `<html>` (or any ancestor), with
-native `light-dark()` resolving the right values. Set it to `light` or `dark`:
-
-```html
-<html data-theme="dark">
-  …
-</html>
-```
-
-To avoid a flash, set it before paint with a tiny inline script that reads the
-user's stored choice or their system preference — exactly what this site does.
+For Tailwind v4, use the [Tailwind guide](/guides/tailwind) instead.
 
 ## Render a component
-
-Import any component and render it. Props like `variant` and `size` map to the
-public `data-*` anatomy that you can target with your own CSS.
 
 ```tsx
 import { Button } from '@manti-ui/react';
 
 export function Example() {
-  return (
-    <Button variant="primary">
-      Knead dough
-    </Button>
-  );
+  return <Button variant="primary">Save</Button>;
 }
 ```
 
 <Demo name="button/variants" center />
 
-## Where to next
+## Set theme preferences
 
-- **[Foundations](/foundations/design-signature)** — the design signature, color,
-  type, tokens and motion.
-- **[Components](/components)** — the full library.
-- **[Customizing with plain CSS](/guides/plain-css)** — the styling contract and
-  how your CSS always wins.
+Put preferences on `<html>` or any container:
+
+```html
+<html data-theme="dark" data-motion="default" data-radius="default">
+  …
+</html>
+```
+
+- `data-theme`: `light` or `dark`; omit it to follow the OS.
+- `data-motion`: `default`, `none`, or `full`.
+- `data-radius`: `none`, `sharp`, `default`, or `round`.
+
+## Next
+
+- [Browse components](/components)
+- [Learn the token model](/foundations/tokens)
+- [Customize with plain CSS](/guides/plain-css)

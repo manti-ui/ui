@@ -6,17 +6,14 @@
   [data-scope='accordion'][data-part='root'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-accordion-radius: var(--manti-radius-lg);
-    --manti-accordion-padding-x: var(--manti-space-5);
-    --manti-accordion-padding-y: var(--manti-space-4);
+    --manti-accordion-padding-x: var(--manti-space-3);
+    --manti-accordion-padding-y: var(--manti-space-2);
     --manti-accordion-gap: var(--manti-space-3);
     display: flex;
     flex-direction: column;
     background: var(--manti-panel-tint);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-accordion-radius);
-    box-shadow: var(--manti-panel-rim);
     overflow: clip;
   }
 
@@ -42,15 +39,15 @@
     background: none;
     border: none;
     color: var(--manti-text);
-    font: inherit;
-    font-weight: var(--manti-weight-semibold);
+    font-style: inherit;
+    font-size: var(--manti-text-base);
+    font-weight: var(--manti-weight-medium);
     text-align: start;
-    cursor: pointer;
     transition: background-color var(--manti-duration-fast)
       var(--manti-ease-soft);
 
     &:hover {
-      background: var(--manti-fill);
+      text-decoration: underline;
     }
 
     &:focus-visible {

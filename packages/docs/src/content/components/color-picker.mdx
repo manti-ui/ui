@@ -3,31 +3,26 @@ title: ColorPicker
 slug: /components/color-picker
 group: Inputs
 order: 22
-description: A color picker with a saturation area, hue, and alpha, backed by the Zag.js color-picker machine.
+description: A color picker with area, channel sliders, formats, and copy action.
 ---
 
 # ColorPicker
 
-A color picker backed by the Zag.js color-picker machine. The trigger shows the
-current swatch and value; opening it reveals a saturation area, hue and alpha
-sliders, format tabs (hex/rgba/hsla) beside an eyedropper button for sampling a
-color from the screen, and a copyable Clipboard field showing the color in the
-selected format. Values are CSS color strings, so they drop straight into any
-context.
+ColorPicker accepts CSS color strings. Its panel includes a saturation area,
+hue and alpha sliders, format tabs, an eyedropper, and a copy field.
 
 <Demo name="color-picker/basic" center />
 
-## Props
+## API
 
 <PropsTable component="color-picker" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the picker. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="color-picker" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="color-picker" />

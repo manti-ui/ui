@@ -1,6 +1,6 @@
 /**
  * Pin Input — segmented code entry backed by the Zag.js pin-input machine. Each
- * cell is a translucent field box; the focused cell rings with the active variant.
+ * cell is a flat field box; the focused cell rings with the active variant.
  */
 @layer manti.components {
   [data-scope='pin-input'][data-part='root'] {
@@ -27,24 +27,19 @@
     width: var(--manti-pin-input-size);
     height: var(--manti-pin-input-size);
     padding: 0;
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-inset);
     outline: none;
     text-align: center;
     color: var(--manti-text);
     font-size: var(--manti-text-lg);
     font-weight: var(--manti-weight-semibold);
     font-variant-numeric: tabular-nums;
-    transition:
-      border-color var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+    transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:hover {
-      border-color: var(--manti-text-subtle);
+      border-color: var(--manti-border-strong);
     }
 
     &:focus {
@@ -55,14 +50,6 @@
       background: var(--manti-surface-sunken);
       opacity: 0.6;
       cursor: not-allowed;
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='pin-input'][data-part='input'] {
-      background: var(--manti-surface-raised);
     }
   }
 
@@ -79,6 +66,6 @@
   }
 
   [data-scope='pin-input'][data-part='root'][data-invalid] [data-part='input'] {
-    border-color: light-dark(var(--manti-red-7), var(--manti-red-5));
+    border-color: var(--manti-danger-border);
   }
 }

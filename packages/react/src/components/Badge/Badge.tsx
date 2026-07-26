@@ -1,11 +1,13 @@
 import type { HTMLAttributes } from 'react';
-import type { MantiVariant } from '@manti-ui/tokens';
+import type { MantiBuiltinVariant } from '@manti-ui/tokens';
 
 import { cx } from '../../internal/props';
 
+export type BadgeVariant = Exclude<MantiBuiltinVariant, 'tertiary'>;
+
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  /** Color variant — drives hue and emphasis (solid → secondary soft → tertiary outline). */
-  variant?: MantiVariant;
+  /** Color variant — Badge intentionally omits the tertiary treatment. */
+  variant?: BadgeVariant;
   /** Chip size. */
   size?: 'sm' | 'md';
   /** Show a leading status dot. */

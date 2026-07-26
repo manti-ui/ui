@@ -43,6 +43,20 @@ const chrome = [
   ['text / bg', '--manti-text', '--manti-bg', 'text', true],
   ['text / surface', '--manti-text', '--manti-surface', 'text', true],
   [
+    'danger-text / surface',
+    '--manti-danger-text',
+    '--manti-surface',
+    'text',
+    true,
+  ],
+  [
+    'warning-text / surface',
+    '--manti-warning-text',
+    '--manti-surface',
+    'text',
+    true,
+  ],
+  [
     'text-muted / surface',
     '--manti-text-muted',
     '--manti-surface',

@@ -2,13 +2,13 @@ export { Accordion } from './Accordion/Accordion';
 export type { AccordionItem, AccordionProps } from './Accordion/Accordion';
 
 export { Alert } from './Alert/Alert';
-export type { AlertProps } from './Alert/Alert';
+export type { AlertProps, AlertVariant } from './Alert/Alert';
 
 export { Avatar } from './Avatar/Avatar';
 export type { AvatarProps } from './Avatar/Avatar';
 
 export { Badge } from './Badge/Badge';
-export type { BadgeProps } from './Badge/Badge';
+export type { BadgeProps, BadgeVariant } from './Badge/Badge';
 
 export { Button } from './Button/Button';
 export type { ButtonProps, ButtonSize } from './Button/Button';
@@ -35,7 +35,11 @@ export { ColorPicker } from './ColorPicker/ColorPicker';
 export type { ColorPickerProps } from './ColorPicker/ColorPicker';
 
 export { Combobox } from './Combobox/Combobox';
-export type { ComboboxItem, ComboboxProps } from './Combobox/Combobox';
+export type {
+  ComboboxItem,
+  ComboboxProps,
+  ComboboxVariant,
+} from './Combobox/Combobox';
 
 export { ContextMenu } from './ContextMenu/ContextMenu';
 export type { ContextMenuProps } from './ContextMenu/ContextMenu';
@@ -74,7 +78,7 @@ export { HoverCard } from './HoverCard/HoverCard';
 export type { HoverCardProps } from './HoverCard/HoverCard';
 
 export { Input } from './Input/Input';
-export type { InputProps } from './Input/Input';
+export type { InputProps, InputVariant } from './Input/Input';
 
 export { Listbox } from './Listbox/Listbox';
 export type { ListboxItem, ListboxProps } from './Listbox/Listbox';
@@ -87,6 +91,7 @@ export type {
   MenuCommand,
   MenuGroup,
   MenuItem,
+  MenuPlacement,
   MenuProps,
   MenuSeparator,
 } from './Menu/Menu';
@@ -129,7 +134,7 @@ export type {
 } from './SegmentedControl/SegmentedControl';
 
 export { Select } from './Select/Select';
-export type { SelectItem, SelectProps } from './Select/Select';
+export type { SelectItem, SelectProps, SelectVariant } from './Select/Select';
 
 export { SignaturePad } from './SignaturePad/SignaturePad';
 export type { SignaturePadProps } from './SignaturePad/SignaturePad';
@@ -175,7 +180,7 @@ export type {
 } from './Toast/Toast';
 
 export { Textarea } from './Textarea/Textarea';
-export type { TextareaProps } from './Textarea/Textarea';
+export type { TextareaProps, TextareaVariant } from './Textarea/Textarea';
 
 export { Toggle } from './Toggle/Toggle';
 export type { ToggleProps } from './Toggle/Toggle';

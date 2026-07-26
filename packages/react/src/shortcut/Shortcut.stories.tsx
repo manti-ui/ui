@@ -40,7 +40,7 @@ const muted: CSSProperties = {
 /** A small key-combo hint, rendered with the monospace token — no colored accent. */
 function Combo({ children }: { children: ReactNode }) {
   return (
-    <Badge variant="tertiary" style={{ fontFamily: 'var(--manti-font-mono)' }}>
+    <Badge variant="outline" style={{ fontFamily: 'var(--manti-font-mono)' }}>
       {children}
     </Badge>
   );

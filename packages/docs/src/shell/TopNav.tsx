@@ -56,9 +56,17 @@ export function TopNav() {
           variant="secondary"
           size="sm"
           leadingIcon={SearchIcon}
+          aria-keyshortcuts="Meta+K"
           onClick={() => setOpen(true)}
         >
           Search
+          <kbd
+            className="docs-search-shortcut"
+            aria-label="Command K"
+          >
+            <span aria-hidden="true">⌘</span>
+            <span aria-hidden="true">K</span>
+          </kbd>
         </Button>
         <a
           href={STORYBOOK_URL}

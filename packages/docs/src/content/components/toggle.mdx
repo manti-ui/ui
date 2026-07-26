@@ -3,34 +3,30 @@ title: Toggle
 slug: /components/toggle
 group: Buttons & Actions
 order: 57
-description: A pressable two-state button backed by the Zag.js toggle machine.
+description: A pressable two-state button with controlled or uncontrolled state.
 ---
 
 # Toggle
 
-A pressable two-state button backed by the Zag.js toggle machine. Off reads as a
-quiet outline; on fills with the variant. The machine owns keyboard, focus, and
-pressed state.
+Use `defaultPressed` for uncontrolled state or `pressed` with
+`onPressedChange` for controlled state.
 
 <Demo name="toggle/basic" center />
 
-## Controlled
-
-Drive the pressed state yourself with `pressed` and `onPressedChange`.
+## Controlled state
 
 <Demo name="toggle/controlled" center />
 
-## Props
+## API
 
 <PropsTable component="toggle" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the toggle. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="toggle" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="toggle" />

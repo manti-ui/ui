@@ -5,10 +5,10 @@ import type {
   KeyboardEvent,
   ReactNode,
 } from 'react';
-import type { MantiVariant } from '@manti-ui/tokens';
-
 import { cx, dataBool } from '../../internal/props';
 import { CapsLockIcon, EyeIcon, EyeOffIcon } from '../../internal/icons';
+
+export type InputVariant = 'default' | 'fill';
 
 export interface InputProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -22,8 +22,8 @@ export interface InputProps extends Omit<
   error?: ReactNode;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
-  /** Variant used for the focus ring. */
-  variant?: MantiVariant;
+  /** Visual treatment. */
+  variant?: InputVariant;
   /** Stretch to fill the available inline space. */
   fullWidth?: boolean;
   /** Content rendered inside the control, before the input. */
@@ -70,7 +70,7 @@ export function Input({
   hint,
   error,
   size = 'md',
-  variant = 'primary',
+  variant = 'default',
   fullWidth,
   leadingAddon,
   trailingAddon,
@@ -150,7 +150,8 @@ export function Input({
       data-scope="field"
       data-part="root"
       data-size={size}
-      data-variant={variant}
+      data-variant="primary"
+      data-appearance={variant}
       data-invalid={dataBool(invalid)}
       data-full-width={dataBool(fullWidth)}
       className={cx(className)}

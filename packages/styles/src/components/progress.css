@@ -7,10 +7,7 @@
  */
 @layer manti.components {
   [data-scope='progress'][data-part='root'] {
-    --variant-solid: light-dark(
-      var(--manti-orange-8),
-      var(--manti-orange-7)
-    );
+    --variant-solid: var(--manti-accent-fill);
 
     display: flex;
     flex-direction: column;

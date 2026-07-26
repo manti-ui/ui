@@ -3,29 +3,26 @@ title: ContextMenu
 slug: /components/context-menu
 group: Navigation
 order: 24
-description: A right-click context menu backed by the Zag.js menu machine, opened at the pointer.
+description: A menu opened by right-click or long press.
 ---
 
 # ContextMenu
 
-A right-click (or long-press) context menu backed by the same Zag.js menu machine
-as Menu, opened at the pointer. Wrap any region in `children` and pass `items` —
-commands, separators, and titled groups. It reuses the `menu` style scope, so its
-panel matches the dropdown menu.
+Wrap a region in `children` and pass Menu-style `items`. ContextMenu uses the
+same Zag.js machine and styling scope as [Menu](/components/menu).
 
 <Demo name="context-menu/basic" center />
 
-## Props
+## API
 
 <PropsTable component="context-menu" />
 
-## Anatomy
+## Styling
 
-ContextMenu reuses the `menu` scope. Target these public selectors to customize
-it. Class names and the DOM between parts are private.
+### Anatomy
 
 <Anatomy component="context-menu" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="context-menu" />

@@ -29,8 +29,8 @@
     gap: var(--manti-space-2);
     min-height: var(--manti-color-picker-height);
     padding-inline: var(--manti-space-2) var(--manti-space-3);
-    background: var(--manti-panel-tint-strong);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     border-radius: var(--manti-radius-md);
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
@@ -38,12 +38,13 @@
     cursor: pointer;
 
     &:hover {
-      border-color: var(--manti-text-subtle);
+      border-color: var(--manti-border-strong);
     }
 
-    &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
-      outline-offset: var(--manti-focus-ring-offset);
+    &:focus-visible,
+    &[data-state='open'] {
+      outline: none;
+      border-color: var(--variant-ring);
     }
 
     /* Swatch-only trigger (showValueText={false}) — no value text to balance,
@@ -72,23 +73,12 @@
     gap: var(--manti-space-3);
     width: var(--manti-color-picker-panel-width);
     padding: var(--manti-space-3);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
+    background: var(--manti-surface-raised);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
 
     &:focus-visible {
       outline: none;
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='color-picker'][data-part='content'] {
-      background: var(--manti-surface-raised);
     }
   }
 
@@ -109,9 +99,8 @@
   [data-scope='color-picker'][data-part='area-thumb'] {
     width: 0.875rem;
     height: 0.875rem;
-    border: 2px solid var(--manti-gray-1);
+    border: 2px solid var(--manti-contrast-light);
     border-radius: var(--manti-radius-full);
-    box-shadow: var(--manti-shadow-md);
   }
 
   /* Custom wrapper: the hue/alpha channel sliders stacked as a column. */
@@ -140,9 +129,8 @@
   [data-scope='color-picker'][data-part='channel-slider-thumb'] {
     width: 0.875rem;
     height: 0.875rem;
-    border: 2px solid var(--manti-gray-1);
+    border: 2px solid var(--manti-contrast-light);
     border-radius: var(--manti-radius-full);
-    box-shadow: var(--manti-shadow-md);
     /* Zag positions the thumb with top:50%/left:X% but (unlike the area thumb)
        adds no centering transform, so we recenter it onto that point here. */
     transform: translate(-50%, -50%);

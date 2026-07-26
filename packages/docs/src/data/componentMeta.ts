@@ -1,10 +1,6 @@
 /**
- * Per-component documentation data. The 8 Phase-1 exemplars carry full props +
- * anatomy; `componentCatalog` lists the whole library for the overview grid.
- *
- * Component tokens are NOT duplicated here — TokenTable reads them straight from
- * the `componentTokens` registry in `@manti-ui/tokens`, the single source of
- * truth, keyed by `scope`.
+ * Props and anatomy used by the component reference. Component tokens are read
+ * from `@manti-ui/tokens` instead of being duplicated here.
  */
 
 import type { ComponentMeta } from './component-meta-types';
@@ -15,18 +11,18 @@ export type {
   PropRow,
 } from './component-meta-types';
 
-// The 8 Phase-1 exemplars live inline; every other component ships its own file
-// under ./components/<key>.ts, auto-collected and merged below.
+// A small core lives inline. Other components keep metadata in
+// ./components/<key>.ts and are collected below.
 const inlineMeta: Record<string, ComponentMeta> = {
   button: {
     scope: 'button',
     props: [
       {
         name: 'variant',
-        type: 'MantiVariant',
+        type: `MantiVariant | 'link'`,
         default: `'primary'`,
         description:
-          'Color and emphasis. primary (orange solid), secondary (amber soft) and tertiary (neutral ghost) form the emphasis ladder; danger is the semantic hue; outline is a neutral bordered treatment; link renders as inline text; any custom variant is accepted.',
+          'Color and emphasis. Supports all built-ins, custom MantiVariant strings, and the Button-only link treatment.',
       },
       {
         name: 'size',
@@ -162,9 +158,10 @@ const inlineMeta: Record<string, ComponentMeta> = {
     props: [
       {
         name: 'variant',
-        type: 'MantiVariant',
+        type: `'primary' | 'secondary' | 'success' | 'info' | 'danger' | 'outline'`,
         default: `'secondary'`,
-        description: 'Color and emphasis. Built-ins plus any custom variant.',
+        description:
+          'Color treatment. Badge supports every built-in variant except tertiary.',
       },
       {
         name: 'size',
@@ -190,9 +187,10 @@ const inlineMeta: Record<string, ComponentMeta> = {
     props: [
       {
         name: 'variant',
-        type: 'MantiVariant',
+        type: 'AlertVariant',
         default: `'secondary'`,
-        description: 'Color and emphasis. Built-ins plus any custom variant.',
+        description:
+          'Semantic treatment: primary, secondary, success, info, or danger.',
       },
       {
         name: 'title',
@@ -415,7 +413,7 @@ export const componentCatalog: CatalogEntry[] = [
   entry('Alert', 'alert', 'Inline status message with variant and dismiss.'),
   entry('Avatar', 'avatar', 'User image with initials fallback.'),
   entry('Badge', 'badge', 'Compact status chip.'),
-  entry('Button', 'button', 'The workhorse action, five variants.'),
+  entry('Button', 'button', 'Action with variants, sizes, icons, and loading.'),
   entry(
     'Calendar',
     'calendar',

@@ -3,13 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Badge } from './Badge';
 
-const variants = [
-  'primary',
-  'secondary',
-  'tertiary',
-  'danger',
-  'outline',
-] as const;
+const variants = ['primary', 'secondary', 'danger', 'outline'] as const;
 
 const row: CSSProperties = {
   display: 'flex',

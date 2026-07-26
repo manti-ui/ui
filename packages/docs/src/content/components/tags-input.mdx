@@ -3,35 +3,32 @@ title: TagsInput
 slug: /components/tags-input
 group: Inputs
 order: 52
-description: A multi-value entry field backed by the Zag.js tags-input machine.
+description: Multi-value text entry with editable and removable tags.
 ---
 
 # TagsInput
 
-A multi-value entry field backed by the Zag.js tags-input machine. Type and press
-Enter to add a tag, Backspace to remove the last one; the machine owns editing,
-navigation, and the hidden form value.
+Press Enter to add a tag and Backspace to remove the last one. The machine
+manages editing, navigation, and hidden form values.
 
 <Demo name="tags-input/basic" />
 
-## States
+## State and limits
 
-Field flags — `invalid`, `disabled`, `readOnly` — and `max` to cap the number of
-tags behave like any Manti form control.
+Use `max`, `invalid`, `disabled`, `readOnly`, and `required` as needed.
 
 <Demo name="tags-input/states" />
 
-## Props
+## API
 
 <PropsTable component="tags-input" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the field. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="tags-input" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="tags-input" />

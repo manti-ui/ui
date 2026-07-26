@@ -1,0 +1,438 @@
+# Manti UI for coding agents
+
+> Manti UI is an accessible React component library built on
+> framework-agnostic design tokens, layered CSS, Zag.js behavior machines, and
+> a stable data-attribute anatomy.
+
+Use this file as the short technical map for generating or editing Manti UI
+code. The public documentation is at https://manti.design.
+
+## Quick start
+
+Install the React renderer and styles:
+
+```bash
+npm install @manti-ui/react @manti-ui/styles
+```
+
+Import CSS once at the application entry:
+
+```tsx
+import '@manti-ui/styles/index.css';
+import { Button } from '@manti-ui/react';
+
+export function App() {
+  return <Button variant="primary">Save</Button>;
+}
+```
+
+Manti supports React 18 and 19. React is the only renderer currently shipped.
+
+## Global controls
+
+Preferences can be set on `<html>` or any subtree:
+
+```html
+<html data-theme="dark" data-motion="default" data-radius="default">
+  …
+</html>
+```
+
+- `data-theme`: `light` or `dark`; omit it to follow the OS.
+- `data-motion`: `default`, `none`, or `full`.
+- `data-radius`: `none`, `sharp`, `default`, or `round`.
+- `.manti-app`: applies the themed app background, text, and font to a subtree.
+- `.manti-panel`: applies Manti's panel material to an application-owned
+  surface.
+
+## API conventions
+
+- Import components and public types from `@manti-ui/react`.
+- Import shortcut hooks from `@manti-ui/react/shortcut` or the package root.
+- Most interactive components support controlled and uncontrolled state:
+  `value` + `onValueChange` or `defaultValue`; `open` + `onOpenChange` or
+  `defaultOpen`; `checked` + `onCheckedChange` or `defaultChecked`.
+- Collection components use data arrays rather than compound children.
+- Common option shape: `{ value: string, label: ReactNode, disabled?: boolean }`.
+- Select and Combobox use `string[]` values even in single-selection mode.
+- Trigger-based overlays accept one React element and clone it with machine
+  props. Pass an element that accepts events, refs, ARIA, and data attributes.
+- Portals, focus management, keyboard behavior, and ARIA are built into
+  machine-backed components.
+- Native attributes pass through on Button, Input, Textarea, Card, Badge, and
+  similar static components where their public types allow them.
+- Icon-only controls need an accessible label.
+
+## Variants
+
+The built-in variant vocabulary is:
+
+```text
+primary secondary success info tertiary danger outline
+```
+
+Important exceptions:
+
+- Button supports all built-ins, custom `MantiVariant` strings, and `link`.
+- Alert supports `primary`, `secondary`, `success`, `info`, and `danger`.
+- Badge supports every built-in except `tertiary`.
+- Input, Textarea, Select, and Combobox use appearance values `default` and
+  `fill`; their semantic focus variant remains internal.
+- Tabs uses `line`, `pill`, and `soft`.
+- Progress uses `linear` and `circular`.
+
+Do not assume every `variant` prop has the same TypeScript union. Read the
+component's props table or exported type.
+
+## Styling contract
+
+Manti components expose public attributes:
+
+```html
+<button
+  data-scope="button"
+  data-part="root"
+  data-variant="primary"
+  data-size="md"
+  data-loading="true"
+>
+  …
+</button>
+```
+
+Stable styling surfaces:
+
+- documented `data-scope`, `data-part`, and state attributes;
+- `--manti-*` semantic and scale tokens;
+- `--variant-*` roles;
+- registered `--manti-{component}-{property}` component tokens;
+- Manti cascade layer names.
+
+Private surfaces:
+
+- class names;
+- variables beginning with `--_`;
+- DOM between documented anatomy parts;
+- exact declarations inside a Manti layer.
+
+Manti CSS is layered. Unlayered application CSS wins without `!important`.
+
+## Token model
+
+Tokens have three tiers:
+
+1. primitive color ramps and scale values;
+2. semantic roles and variants;
+3. component tokens for deliberate per-component divergence.
+
+Use semantic tokens first. Use a component token only when one component should
+differ from the system.
+
+Color ramps:
+
+```text
+gray orange green blue amber red
+```
+
+Color-scale roles:
+
+```text
+1   appBackground[0]: lighter page or panel background position
+2   appBackground[1]: next page or panel background position
+3   componentBackground.rest: resting component background
+4   componentBackground.hover: hovered component background
+5   componentBackground.active: active, pressed, or selected component background
+6   border.subtle: subtle borders and separators
+7   border.interactive: interactive borders
+8   border.strong: strong borders and focus chrome
+9   solid.rest: resting solid fill
+10  solid.hover: hovered solid fill
+11  text.lowContrast: supporting or lower-contrast text
+12  text.highContrast: primary or highest-contrast text
+```
+
+Component CSS must consume semantic or `--variant-*` color roles instead of raw
+ramp stops. Input-like controls use a neutral border at rest and hover; the
+variant color begins at focus or open.
+
+The scale above is an intent contract, not a literal component lookup table.
+`tokens.css` adapts roles for theme and contrast. Primary solid uses `orange-7`;
+success, info, and danger use step `8`; secondary uses `gray-11` / `gray-3` in
+light / dark mode; tertiary and outline use semantic neutral values. Interactive
+states may use `color-mix()` instead of another raw stop.
+
+Key token families:
+
+```text
+--manti-bg / surface / surface-raised / border / border-strong
+--manti-text / text-muted / text-subtle / focus-ring
+--manti-fill-subtle / fill / fill-strong
+--manti-radius-* / radius-factor / radius-pill / radius-thumb
+--manti-control-height-sm|md|lg
+--manti-space-* / text-* / leading-* / weight-*
+--manti-shadow-* / duration-* / ease-* / z-*
+```
+
+Full reference:
+
+- https://manti.design/foundations/tokens
+- https://manti.design/foundations/color-and-tones
+- https://manti.design/guides/theming-tokens
+
+## Plain CSS
+
+Import Manti before the application's unlayered overrides:
+
+```tsx
+import '@manti-ui/styles/index.css';
+import './theme.css';
+```
+
+```css
+:root {
+  --manti-bg: light-dark(#fafafb, #0c0c10);
+  --manti-radius-factor: 0.8;
+}
+
+[data-scope='button'][data-part='root'] {
+  letter-spacing: 0.02em;
+}
+```
+
+Guide: https://manti.design/guides/plain-css
+
+## Tailwind CSS v4
+
+Import Manti before Tailwind:
+
+```css
+@import '@manti-ui/styles/tailwind.css';
+@import 'tailwindcss';
+```
+
+The bridge maps Manti tokens to standard utilities such as `bg-surface`,
+`bg-primary-600`, `text-lg`, `rounded-md`, `shadow-sm`, `p-4`, and
+`h-control-md`.
+
+For headless use:
+
+```css
+@import '@manti-ui/styles/tokens.css';
+@import '@manti-ui/styles/tailwind-theme.css';
+@import 'tailwindcss';
+```
+
+Guide: https://manti.design/guides/tailwind
+
+## Component index
+
+### Actions and feedback
+
+- [Alert](https://manti.design/components/alert): inline semantic message;
+  optional `title`, `icon`, and `onDismiss`.
+- [Button](https://manti.design/components/button): primary action; variants,
+  sizes, icons, `loading`, `fullWidth`, and `iconOnly`.
+- [Clipboard](https://manti.design/components/clipboard): copy `value` with a
+  temporary confirmation state.
+- [Progress](https://manti.design/components/progress): determinate or
+  indeterminate linear/circular progress.
+- [Spinner](https://manti.design/components/spinner): loading indicator that
+  inherits `currentColor`.
+- [Toast](https://manti.design/components/toast): imperative notifications from
+  `createToaster`; render `Toaster` once.
+- [Toggle](https://manti.design/components/toggle): one pressable boolean state.
+- [ToggleGroup](https://manti.design/components/toggle-group): single or
+  multiple pressed values from an `items` array.
+
+### Form controls
+
+- [Checkbox](https://manti.design/components/checkbox): checked, unchecked, and
+  indeterminate form state.
+- [ColorPicker](https://manti.design/components/color-picker): CSS color input
+  with area, hue, alpha, formats, eyedropper, and copy.
+- [Combobox](https://manti.design/components/combobox): client-filtered
+  typeahead with single or multiple selection.
+- [DatePicker](https://manti.design/components/date-picker): single date or
+  range popover using ISO date strings.
+- [Editable](https://manti.design/components/editable): inline preview/edit
+  state.
+- [FileUpload](https://manti.design/components/file-upload): dropzone, browse,
+  validation, and removable file rows.
+- [Input](https://manti.design/components/input): native input with label,
+  helper, error, addons, and password reveal/Caps Lock controls.
+- [Listbox](https://manti.design/components/listbox): visible single or multiple
+  option list.
+- [NumberInput](https://manti.design/components/number-input): numeric field
+  with bounds and step controls.
+- [PinInput](https://manti.design/components/pin-input): segmented code input
+  with paste and completion behavior.
+- [RadioGroup](https://manti.design/components/radio-group): one selected value
+  from an items array.
+- [RatingGroup](https://manti.design/components/rating-group): star rating with
+  optional half values.
+- [SegmentedControl](https://manti.design/components/segmented-control):
+  RadioGroup behavior with a moving indicator.
+- [Select](https://manti.design/components/select): single or multiple
+  selection from a portalled listbox.
+- [SignaturePad](https://manti.design/components/signature-pad): pointer/touch
+  drawing with controlled or uncontrolled paths.
+- [Slider](https://manti.design/components/slider): single or range numeric
+  selection with marks.
+- [Switch](https://manti.design/components/switch): boolean form control with
+  label, size, and active variant.
+- [TagsInput](https://manti.design/components/tags-input): add, edit, and remove
+  text tags.
+- [Textarea](https://manti.design/components/textarea): native multiline field
+  with label, helper, error, and auto-resize.
+- [TimePicker](https://manti.design/components/time-picker): time input with
+  hour, minute, and period columns.
+
+### Navigation and disclosure
+
+- [Accordion](https://manti.design/components/accordion): one or several open
+  disclosure panels from an items array.
+- [Collapsible](https://manti.design/components/collapsible): one show/hide
+  region with a replaceable indicator.
+- [ContextMenu](https://manti.design/components/context-menu): Menu behavior
+  opened by right-click or long press.
+- [Menu](https://manti.design/components/menu): command items, groups, and
+  separators anchored to a trigger.
+- [NavigationMenu](https://manti.design/components/navigation-menu): site
+  navigation with rich link panels.
+- [Pagination](https://manti.design/components/pagination): page buttons from
+  total count and page size.
+- [Steps](https://manti.design/components/steps): multi-step flow with optional
+  built-in controls.
+- [Tabs](https://manti.design/components/tabs): tab labels and panels from an
+  items array.
+- [TreeView](https://manti.design/components/tree-view): nested branches and
+  leaves with expansion and selection.
+
+### Overlays
+
+- [Dialog](https://manti.design/components/dialog): modal with focus trap,
+  scroll lock, trigger, body, and footer render functions.
+- [Drawer](https://manti.design/components/drawer): Dialog behavior anchored to
+  a screen edge.
+- [FloatingPanel](https://manti.design/components/floating-panel): draggable,
+  resizable window-like panel.
+- [HoverCard](https://manti.design/components/hover-card): rich preview on hover
+  or focus.
+- [Popover](https://manti.design/components/popover): floating content anchored
+  to a trigger.
+- [Tooltip](https://manti.design/components/tooltip): short label on hover or
+  focus.
+- [Tour](https://manti.design/components/tour): guided steps targeting CSS
+  selectors or screen center.
+
+### Data display and layout
+
+- [Avatar](https://manti.design/components/avatar): image with fallback, size,
+  and shape.
+- [Badge](https://manti.design/components/badge): compact label or status chip.
+- [Calendar](https://manti.design/components/calendar): full inline month grid,
+  selection, and `renderDay`.
+- [Card](https://manti.design/components/card): compound Header, Title,
+  Description, Body, and Footer surface.
+- [Carousel](https://manti.design/components/carousel): drag, keyboard, and
+  snap-based slides.
+- [DataTable](https://manti.design/components/data-table): typed TanStack-backed
+  grid with sorting, filtering, pagination, and selection.
+- [Marquee](https://manti.design/components/marquee): reduced-motion-aware
+  looping content strip.
+- [ScrollArea](https://manti.design/components/scroll-area): bounded viewport
+  with draggable custom scrollbars.
+- [Splitter](https://manti.design/components/splitter): resizable panels with
+  keyboard-accessible handles.
+
+## Shortcut hooks
+
+```tsx
+import { useShortcut, useShortcuts } from '@manti-ui/react/shortcut';
+
+useShortcut('mod+k', openSearch);
+useShortcuts({ 'mod+/': toggleHelp, 'g d': goToDashboard });
+```
+
+Shortcuts ignore form fields by default and support global or ref-scoped
+bindings. Reference: https://manti.design/utilities/use-shortcut
+
+## Repository package map
+
+```text
+packages/tokens/src/index.ts
+  Typed token source of truth and componentTokens registry.
+
+packages/styles/src/tokens.css
+  Generated primitive region plus hand-authored semantic and variant roles.
+
+packages/styles/src/components/*.css
+  Framework-agnostic styles keyed to public anatomy.
+
+packages/folds/src/index.ts
+  Zag.js re-exports and Manti-authored headless behavior.
+
+packages/react/src/components/*/*.tsx
+  React renderers.
+
+packages/react/src/components/index.ts
+  Public component and type exports.
+
+packages/docs/src/content/components/*.mdx
+  Component guides and demos.
+
+packages/docs/src/data/components/*.ts
+  Props and anatomy metadata used by the docs site.
+```
+
+## Rules for coding agents contributing to Manti UI
+
+1. Use Node `>=22.12.0` and pnpm `10`.
+2. Keep machine behavior in `@manti-ui/folds` and React adapters thin.
+3. Import Zag machines through `@manti-ui/folds`, not `@zag-js/*` directly from
+   a renderer.
+4. Export every public React API through
+   `packages/react/src/components/index.ts`.
+5. Put every visual value behind a token. If a token is missing, add it to
+   `@manti-ui/tokens` first.
+6. Never edit the generated token region in
+   `packages/styles/src/tokens.css`; run `pnpm gen:tokens`.
+7. Use semantic or `--variant-*` color roles in component CSS, not raw ramp
+   stops.
+8. Register public independent component dimensions in `componentTokens`.
+   Keep derived `calc()` values private as `--_*`.
+9. Preserve the public `data-scope`, `data-part`, and state anatomy.
+10. Add or update Storybook coverage, docs metadata, component docs, and demos
+    with every public component change.
+11. Respect controlled/uncontrolled behavior, keyboard use, visible focus, and
+    screen-reader semantics.
+12. Do not publish QrCode or Timer from `backlog/`; they were built and shelved.
+    Do not remove `folds/swipe`; Toast still consumes it.
+
+## Verification
+
+```bash
+pnpm gen:tokens
+pnpm check:color-scale
+pnpm --filter @manti-ui/styles check:contrast
+pnpm --filter @manti-ui/styles build
+pnpm lint
+pnpm typecheck
+pnpm verify
+```
+
+Use `pnpm gen:tokens` only after token-contract changes. Run `pnpm verify`
+before a pull request.
+
+## More documentation
+
+- [Getting started](https://manti.design/getting-started)
+- [Components](https://manti.design/components)
+- [Architecture](https://manti.design/foundations/architecture)
+- [Design tokens](https://manti.design/foundations/tokens)
+- [Color and variants](https://manti.design/foundations/color-and-tones)
+- [Plain CSS](https://manti.design/guides/plain-css)
+- [Tailwind v4](https://manti.design/guides/tailwind)
+- [Zag.js coverage](https://manti.design/reference/zag-coverage)
+- [Storybook](https://manti.design/storybook/)
+- [Source repository](https://github.com/manti-ui/ui)

@@ -1,6 +1,6 @@
 /**
  * Time Picker — backed by the Zag.js time-picker machine. The control reuses the
- * translucent field; the portalled panel lays out hour/minute/period columns of
+ * flat field; the portalled panel lays out hour/minute/period columns of
  * selectable cells (`data-selected` highlights the active value).
  */
 @layer manti.components {
@@ -25,23 +25,17 @@
     align-items: center;
     min-height: var(--manti-time-picker-height);
     padding-inline: var(--manti-space-3);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim);
 
-    &:focus-within {
-      border-color: var(--variant-ring, var(--manti-focus-ring));
+    &:hover {
+      border-color: var(--manti-border-strong);
     }
-  }
 
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='time-picker'][data-part='control'] {
-      background: var(--manti-surface-raised);
+    &:focus-within,
+    &:has([data-part='trigger'][data-state='open']) {
+      border-color: var(--variant-ring, var(--manti-focus-ring));
     }
   }
 
@@ -80,23 +74,12 @@
     display: flex;
     gap: var(--manti-space-2);
     padding: var(--manti-space-3);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
+    background: var(--manti-surface-raised);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
 
     &:focus-visible {
       outline: none;
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='time-picker'][data-part='content'] {
-      background: var(--manti-surface-raised);
     }
   }
 
