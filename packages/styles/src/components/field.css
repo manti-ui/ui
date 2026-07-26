@@ -27,8 +27,7 @@
 
   [data-scope='field'][data-part='required'] {
     margin-inline-start: 0.125rem;
-    color: var(--manti-text);
-    color: light-dark(var(--manti-red-8), var(--manti-red-5));
+    color: var(--manti-danger-icon);
   }
 
   [data-scope='field'][data-part='control'] {
@@ -42,17 +41,12 @@
     gap: var(--manti-space-2);
     min-height: var(--manti-field-height);
     padding-inline: var(--manti-field-padding-x);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     /* Control class — joins the opt-in pill channel alongside button/select. */
     border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
     color: var(--manti-text-muted);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-inset);
-    transition:
-      border-color var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+    transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &[data-size='sm'] {
       --manti-field-height: var(--manti-control-height-sm);
@@ -69,25 +63,38 @@
     }
 
     &:hover {
-      border-color: var(--manti-text-subtle);
+      border-color: var(--manti-border-strong);
     }
 
     &:focus-within {
-      border-color: var(--variant-ring, var(--manti-focus-ring));
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='field'][data-part='control'] {
-      background: var(--manti-surface-raised);
+      border-color: var(--variant-ring);
     }
   }
 
   [data-scope='field'][data-part='root'][data-invalid='true']
     [data-part='control'] {
-    border-color: light-dark(var(--manti-red-7), var(--manti-red-5));
+    border-color: var(--manti-danger-border);
+  }
+
+  [data-scope='field'][data-part='root'][data-appearance='fill']
+    [data-part='control'] {
+    background: var(--manti-fill);
+    border-color: transparent;
+
+    &:hover {
+      background: var(--manti-fill-strong);
+      border-color: transparent;
+    }
+
+    &:focus-within {
+      background: var(--manti-fill-strong);
+      border-color: var(--variant-ring);
+    }
+  }
+
+  [data-scope='field'][data-part='root'][data-appearance='fill'][data-invalid='true']
+    [data-part='control'] {
+    border-color: var(--manti-danger-border);
   }
 
   [data-scope='field'][data-part='root']:has(:is(input, textarea):disabled)
@@ -141,7 +148,7 @@
 
   [data-scope='field'][data-part='error'] {
     font-size: var(--manti-text-xs);
-    color: light-dark(var(--manti-red-9), var(--manti-red-4));
+    color: var(--manti-danger-text);
   }
 
   /* Password affordances — rendered only for `type="password"`. ------------- */
@@ -170,8 +177,7 @@
     }
 
     &:focus-visible {
-      outline: var(--manti-focus-ring-width) solid
-        var(--variant-ring, var(--manti-focus-ring));
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
     }
 
@@ -188,7 +194,7 @@
     flex: none;
     align-items: center;
     padding-inline: var(--manti-space-1);
-    color: light-dark(var(--manti-amber-10), var(--manti-amber-4));
+    color: var(--manti-warning-text);
   }
 
   /* The notice reads as an icon, but the wording has to survive for assistive

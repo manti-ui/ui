@@ -12,7 +12,7 @@
        radio. Sizes scale that one step rather than hopping to a coarser one —
        the ramp has no stop between 4px and 8px, and hopping is what makes a
        small control overshoot into a circle. */
-    --manti-checkbox-radius: var(--manti-radius-xs);
+    --manti-checkbox-radius: var(--manti-radius-sm);
     --manti-checkbox-gap: var(--manti-space-3);
     --manti-checkbox-font-size: var(--manti-text-sm);
     --manti-checkbox-indicator-size: 80%;
@@ -20,11 +20,12 @@
     align-items: center;
     gap: var(--manti-checkbox-gap);
     cursor: pointer;
-    user-select: none;
 
     &[data-size='sm'] {
-      --manti-checkbox-size: 1rem;
-      --manti-checkbox-indicator-size: 95%;
+      user-select: none;
+			--manti-checkbox-size: 1rem;
+			--manti-checkbox-indicator-size: 95%;
+			--manti-checkbox-radius: calc(var(--manti-radius-xs) * 1.5);
     }
 
     &[data-size='lg'] {

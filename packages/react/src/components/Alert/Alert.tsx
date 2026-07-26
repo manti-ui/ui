@@ -1,14 +1,21 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import type { MantiVariant } from '@manti-ui/tokens';
 
 import { cx } from '../../internal/props';
+
+/** Semantic color variants supported by Alert. */
+export type AlertVariant =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'info'
+  | 'danger';
 
 export interface AlertProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   'title'
 > {
-  /** Color variant — sets the hue of the soft message panel. */
-  variant?: MantiVariant;
+  /** Semantic color variant — sets the hue of the soft message panel. */
+  variant?: AlertVariant;
   /** Bold leading line. */
   title?: ReactNode;
   /** Leading status icon. */
@@ -35,8 +42,7 @@ export function Alert({
   children,
   ...rest
 }: AlertProps) {
-  const resolvedRole =
-    role ?? (variant === 'danger' ? 'alert' : 'status');
+  const resolvedRole = role ?? (variant === 'danger' ? 'alert' : 'status');
 
   return (
     <div

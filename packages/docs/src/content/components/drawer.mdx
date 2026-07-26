@@ -3,53 +3,35 @@ title: Drawer
 slug: /components/drawer
 group: Overlays
 order: 26
-description: An edge-anchored panel that slides in, backed by the Zag.js dialog machine.
+description: A modal panel anchored to a screen edge.
 ---
 
 # Drawer
 
-An edge-anchored panel that slides in from a screen edge. It shares the Zag.js
-dialog machine with [Dialog](/components/dialog) — the same focus trapping,
-scroll locking, and dismissal — restyled to anchor to an edge and slide in.
+Drawer reuses Dialog behavior for focus, scroll locking, and dismissal. Pass a
+React element as `trigger` and content as `children`.
 
 <Demo name="drawer/basic" center />
 
-## Basic
+## Placement and size
 
-`trigger` is the element that opens the drawer — it's cloned with the machine's
-trigger props. Pass `title`, `description`, and body content as `children`.
-`footer` accepts a render function receiving `{ close }`, so action buttons can
-dismiss the drawer.
-
-<Demo name="drawer/basic" center />
-
-## Placement
-
-`placement` sets the edge the drawer slides in from: `right` (default), `left`,
-`top`, or `bottom`. `size` controls the panel's extent along its axis — the
-width for `left`/`right`, the height for `top`/`bottom`.
+`placement` is `left`, `right`, `top`, or `bottom`. `size` controls width for
+left/right and height for top/bottom.
 
 <Demo name="drawer/placements" center />
 
-## Sizes
-
-`size` sets the panel's main-axis extent — its width for a `start`/`end` drawer,
-its height for `top`/`bottom` — at 18rem, 24rem and 32rem. The cross axis always
-stretches to fill.
-
 <Demo name="drawer/sizes" center />
 
-## Props
+## API
 
 <PropsTable component="drawer" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the drawer. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="drawer" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="drawer" />

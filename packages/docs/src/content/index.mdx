@@ -3,7 +3,7 @@ title: Manti UI
 slug: /
 group: Overview
 order: 0
-description: A framework-agnostic design system built on Zag.js behavior machines.
+description: Accessible React components built on framework-agnostic tokens, CSS, and behavior.
 ---
 
 <section className="docs-hero">
@@ -13,17 +13,11 @@ description: A framework-agnostic design system built on Zag.js behavior machine
     width="400"
     height="400"
   />
-  <h1 className="docs-hero-title">
-    A design system that adapts, like its namesake.
-  </h1>
+  <h1 className="docs-hero-title">A design system made to adapt.</h1>
   <p className="docs-hero-lede">
-    Manti UI is a framework-agnostic design system built on{' '}
-    <a href="https://zagjs.com" target="_blank" rel="noreferrer">
-      Zag.js
-    </a>{' '}
-    behavior machines — sleek monochrome panels, semantic variants, and a
-    token-first customization contract. This entire documentation site is built
-    end-to-end with it.
+    Manti UI provides accessible React components over framework-agnostic
+    tokens, CSS, and behavior. Theme the system with CSS variables, use it with
+    Tailwind, or style its public anatomy yourself.
   </p>
   <div className="docs-hero-actions">
     <LinkButton to="/getting-started" size="lg">
@@ -40,11 +34,10 @@ description: A framework-agnostic design system built on Zag.js behavior machine
 <div className="docs-feature-grid">
   <Card>
     <Card.Body>
-      <Card.Title>Framework-agnostic</Card.Title>
+      <Card.Title>Accessible behavior</Card.Title>
       <Card.Description>
-        Behavior lives in Zag.js machines; tokens and CSS are framework-free. A
-        React renderer ships today, with Vue, Svelte and Solid able to reuse the
-        same foundations.
+        Zag.js machines handle keyboard, focus, state, forms, and ARIA for
+        interactive components.
       </Card.Description>
     </Card.Body>
   </Card>
@@ -52,28 +45,26 @@ description: A framework-agnostic design system built on Zag.js behavior machine
     <Card.Body>
       <Card.Title>Token-first theming</Card.Title>
       <Card.Description>
-        Every visual value comes from design tokens across three tiers —
-        primitive ramps, semantic roles and variants, and per-component tokens.
-        Theme the whole system from CSS variables.
+        Semantic and component tokens make broad themes and focused overrides
+        predictable.
       </Card.Description>
     </Card.Body>
   </Card>
   <Card>
     <Card.Body>
-      <Card.Title>Accessible by default</Card.Title>
+      <Card.Title>Stable styling contract</Card.Title>
       <Card.Description>
-        Keyboard support, focus management and screen-reader semantics are owned
-        by the machines, not bolted on — so every component behaves correctly
-        out of the box.
+        Public data attributes and layered CSS work with plain CSS or Tailwind
+        without component forks.
       </Card.Description>
     </Card.Body>
   </Card>
   <Card>
     <Card.Body>
-      <Card.Title>Smooth by design</Card.Title>
+      <Card.Title>Calm by default</Card.Title>
       <Card.Description>
-        Translucent panels, perceptual OKLCH color, and motion tiers you can
-        dial from none to full. The promise of mantı: smooth in every bite.
+        Neutral panels, semantic color, theme controls, and reduced-motion
+        support keep the interface clear.
       </Card.Description>
     </Card.Body>
   </Card>

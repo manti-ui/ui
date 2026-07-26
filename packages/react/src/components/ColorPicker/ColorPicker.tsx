@@ -155,7 +155,11 @@ export function ColorPicker({
   };
 
   return (
-    <div {...api.getRootProps()} className={cx(className)}>
+    <div
+      {...api.getRootProps()}
+      data-variant="primary"
+      className={cx(className)}
+    >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
         <button {...api.getTriggerProps()} data-value-text={showValueText}>

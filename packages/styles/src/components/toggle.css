@@ -16,14 +16,11 @@
     min-width: var(--manti-toggle-size);
     min-height: var(--manti-toggle-size);
     padding-inline: var(--manti-space-3);
-    background: var(--manti-panel-tint);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border-strong);
     /* Control class — joins the opt-in pill channel. */
     border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
     color: var(--manti-text-muted);
-    box-shadow: var(--manti-panel-rim);
     font-family: var(--manti-font-sans);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-semibold);
@@ -46,11 +43,8 @@
 
     &[data-state='on'] {
       background: var(--variant-solid);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
       border-color: transparent;
       color: var(--variant-on-solid);
-      box-shadow: var(--manti-shadow-sm);
 
       &:hover {
         background: var(--variant-solid-hover);
@@ -69,18 +63,6 @@
     &[data-disabled] {
       cursor: not-allowed;
       opacity: 0.5;
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='toggle'][data-part='root'] {
-      background: var(--manti-surface);
-
-      &[data-state='on'] {
-        background: var(--variant-solid);
-      }
     }
   }
 }

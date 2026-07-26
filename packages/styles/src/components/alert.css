@@ -17,21 +17,11 @@
     align-items: flex-start;
     gap: var(--manti-alert-gap);
     padding: var(--manti-alert-padding-y) var(--manti-alert-padding-x);
-    background: color-mix(in oklab, var(--variant-soft-bg) 78%, transparent);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--variant-border);
+    background: var(--variant-soft-bg);
+    /* Keep the one-pixel footprint without drawing a contrasting edge. */
+    border: 1px solid var(--variant-soft-bg);
     border-radius: var(--manti-alert-radius);
     color: var(--variant-soft-text);
-    box-shadow: var(--manti-panel-rim);
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='alert'][data-part='root'] {
-      background: var(--variant-soft-bg);
-    }
   }
 
   [data-scope='alert'][data-part='icon'] {

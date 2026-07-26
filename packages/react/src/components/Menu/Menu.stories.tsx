@@ -26,6 +26,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
+export const BottomCenter: Story = {
+  args: {
+    placement: 'bottom-center',
+    trigger: <Button variant="tertiary">Open bottom-center menu</Button>,
+  },
+};
+
 export const Grouped: Story = {
   args: {
     items: [

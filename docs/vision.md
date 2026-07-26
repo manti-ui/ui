@@ -1,26 +1,23 @@
-# Manti UI Vision
+# Vision
 
-Manti UI takes its central metaphor from mantı, a food shared across many
-regions and cultures.
+Manti UI should feel simple, adaptable, and calm.
 
-## Product principles
+## Principles
 
-- **Adaptable:** Mantı appears in many shapes. Components should support
-  composition without forcing one product aesthetic.
-- **Content-friendly:** Mantı accepts many fillings. Components should accept
-  varied content and application needs without becoming brittle.
-- **Smooth:** The eating experience and visual character feel soft and
-  continuous. Interaction should feel calm, responsive, and predictable.
-- **Familiar but distinctive:** The system should remain easy to understand
-  while developing a recognizable Manti UI character.
-- **Accessible by default:** Visual and interaction decisions should target
-  WCAG 2.2 AA. Zag.js machines define shared interaction behavior, while each
-  framework adapter remains responsible for correct DOM rendering.
+- **Adaptable:** components compose without forcing a product style.
+- **Content-friendly:** components accept varied content without brittle layout
+  assumptions.
+- **Smooth:** state changes are responsive, predictable, and quiet.
+- **Distinct but familiar:** the system has a recognizable material without
+  inventing unfamiliar interaction patterns.
+- **Accessible by default:** public components target WCAG 2.2 AA and include
+  keyboard, focus, and screen-reader behavior.
 
-## Current boundary
+## Scope
 
-The first design-system release is implemented: color, typography, spacing,
-radius, motion, and elevation tokens, plus a foundational React component set
-(Button, Toggle, Switch, Checkbox, Input, Badge, Card, Alert, Spinner).
-Iconography and additional framework adapters remain open. See
-[`design-system.md`](./design-system.md) for the reference.
+Manti UI currently ships a React renderer over framework-agnostic tokens, CSS,
+and behavior. The component catalog covers common actions, forms, navigation,
+overlays, feedback, data display, and layout.
+
+Future framework renderers may reuse the same lower-level contracts.
+Iconography remains application-owned.

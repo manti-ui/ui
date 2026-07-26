@@ -11,14 +11,14 @@ const meta = {
     label: 'Notes',
     placeholder: 'Add preparation notes',
     size: 'md',
-    variant: 'primary',
+    variant: 'default',
     rows: 4,
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
+      options: ['default', 'fill'],
     },
     resize: { control: 'inline-radio', options: ['none', 'vertical'] },
   },
@@ -35,6 +35,15 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
+
+export const Filled: Story = {
+  args: {
+    variant: 'fill',
+    label: undefined,
+    placeholder: 'Message',
+    resize: 'none',
+  },
+};
 
 export const WithDescription: Story = {
   args: {

@@ -55,10 +55,8 @@
     align-items: center;
     min-height: 1.75rem;
     padding-inline: var(--manti-space-3);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border-strong);
     border-radius: var(--manti-radius-sm);
     color: var(--manti-text);
     font-size: var(--manti-text-xs);

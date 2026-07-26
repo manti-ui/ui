@@ -3,42 +3,31 @@ title: FileUpload
 slug: /components/file-upload
 group: Inputs
 order: 28
-description: A file dropzone with previews backed by the Zag.js file-upload machine.
+description: A file dropzone with browsing, validation, and removable file rows.
 ---
 
 # FileUpload
 
-A file dropzone with a browse button and a list of accepted files, backed by the
-Zag.js file-upload machine. Constrain selection with `accept`, `maxFiles`, and
-`maxFileSize`.
+Drop files or use the browse button. Accepted files appear as removable rows.
 
 <Demo name="file-upload/basic" center />
 
-## Basic
+## Restrictions
 
-Drop files onto the zone or use the browse button. Accepted files appear as
-removable rows below.
-
-<Demo name="file-upload/basic" center />
-
-## Restricting types
-
-`accept` limits the file picker and drop validation — here, images only, capped
-at three files.
+Use `accept`, `maxFiles`, and `maxFileSize` to validate selection.
 
 <Demo name="file-upload/images-only" center />
 
-## Props
+## API
 
 <PropsTable component="file-upload" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the uploader. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="file-upload" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="file-upload" />

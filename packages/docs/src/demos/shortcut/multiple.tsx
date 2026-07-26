@@ -25,12 +25,16 @@ export default function ShortcutMultiple() {
       }}
     >
       <div
-        style={{ display: 'flex', gap: 'var(--manti-space-2)', flexWrap: 'wrap' }}
+        style={{
+          display: 'flex',
+          gap: 'var(--manti-space-2)',
+          flexWrap: 'wrap',
+        }}
       >
         {COMBOS.map((combo) => (
           <Badge
             key={combo}
-            variant="tertiary"
+            variant="outline"
             style={{ fontFamily: 'var(--manti-font-mono)' }}
           >
             {combo}

@@ -22,9 +22,9 @@ export const meta: ComponentMeta = {
     },
     {
       name: 'variant',
-      type: 'MantiVariant',
-      default: `'primary'`,
-      description: 'Selected-item variant.',
+      type: `'default' | 'fill'`,
+      default: `'default'`,
+      description: 'Visual treatment for the control.',
     },
     {
       name: 'size',

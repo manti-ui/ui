@@ -1,7 +1,6 @@
 import { useEffect, useId, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { combobox } from '@manti-ui/folds';
-import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -14,14 +13,16 @@ export interface ComboboxItem {
   disabled?: boolean;
 }
 
+export type ComboboxVariant = 'default' | 'fill';
+
 export interface ComboboxProps {
   /** The full option set; filtered client-side as the user types. */
   items: ComboboxItem[];
   /** Optional field label. */
   label?: ReactNode;
   placeholder?: string;
-  /** Selected-item variant. */
-  variant?: MantiVariant;
+  /** Visual treatment for the control. */
+  variant?: ComboboxVariant;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
   /** Allow selecting more than one option. */
@@ -74,7 +75,7 @@ export function Combobox({
   items,
   label,
   placeholder = 'Search…',
-  variant = 'primary',
+  variant = 'default',
   size = 'md',
   multiple,
   value,
@@ -152,15 +153,23 @@ export function Combobox({
     }
   }, [api, items, multiple]);
 
+  const contentProps = api.getContentProps();
+  const contentSide = (
+    contentProps as typeof contentProps & { 'data-side'?: 'top' | 'bottom' }
+  )['data-side'];
+  const connectedSide =
+    api.open && filtered.length > 0 ? contentSide : undefined;
+
   return (
     <div
       {...api.getRootProps()}
       data-size={size}
-      data-variant={variant}
+      data-variant="primary"
+      data-appearance={variant}
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
-      <div {...api.getControlProps()} data-open={api.open || undefined}>
+      <div {...api.getControlProps()} data-connected={connectedSide}>
         {multiple &&
           api.value.map((val) => {
             const item = items.find((i) => i.value === val);
@@ -202,12 +211,14 @@ export function Combobox({
       </div>
       {api.open && (
         <Portal>
-          <div {...api.getPositionerProps()} data-variant={variant}>
+          <div {...api.getPositionerProps()} data-variant="primary">
             <ScrollArea focusable={false}>
-              <ul {...api.getContentProps()}>
+              <ul {...contentProps}>
                 {filtered.map((item) => (
                   <li key={item.value} {...api.getItemProps({ item })}>
-                    <span {...api.getItemTextProps({ item })}>{item.label}</span>
+                    <span {...api.getItemTextProps({ item })}>
+                      {item.label}
+                    </span>
                     <span {...api.getItemIndicatorProps({ item })}>
                       {check}
                     </span>

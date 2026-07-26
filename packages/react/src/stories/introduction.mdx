@@ -12,7 +12,7 @@ import mantiAnimated from '../../../../public/manti-animated.svg';
 >
   <img
     src={mantiAnimated}
-    alt="Manti mascot blinking and smiling"
+    alt="Manti mascot"
     width={132}
     height={132}
     style={{ display: 'block' }}
@@ -21,42 +21,29 @@ import mantiAnimated from '../../../../public/manti-animated.svg';
 
 # Manti UI
 
-Manti UI is a framework-agnostic design system and UI kit inspired by mantı:
-adaptable in form, welcoming to different contents, and **smooth** in use.
+Manti UI is a React component library built on framework-agnostic tokens, CSS,
+and behavior.
 
-## The smooth design language
+## Start
 
-- **Smooth colors.** Six warm-tinted, perceptually-uniform OKLCH ramps under
-  plain color names — `gray`, `orange`, `green`, `amber`, `red`, and `blue`.
-  Light and dark themes resolve automatically through CSS `light-dark()`.
-- **Smooth transitions.** A shared `--manti-ease-smooth` curve and duration scale
-  make every state change feel calm and continuous.
-- **Smooth components.** Generous, pillowy radii echo the folded mantı
-  silhouette, and every control has a visible focus ring and accessible
-  semantics.
+```tsx
+import '@manti-ui/styles/index.css';
+import { Button } from '@manti-ui/react';
 
-## Try the theme toggle
+export function Example() {
+  return <Button variant="primary">Save</Button>;
+}
+```
 
-Use the **Theme** control in the toolbar above to switch between light and dark.
-Every variant-driven component reads the same `--variant-*` roles, so the whole
-system shifts together.
+Use the toolbar to switch themes. Component stories cover variants, states,
+sizes, and interactions.
 
-## What's inside
+## Packages
 
-- **Foundations:** Colors and Typography
-- **Components:** Button, Toggle, Switch, Checkbox, RadioGroup, Input, Badge,
-  Card, Alert, Spinner, Collapsible, Accordion, Tabs, and Tooltip
+- `@manti-ui/tokens` — typed token contract
+- `@manti-ui/styles` — shared CSS
+- `@manti-ui/folds` — Zag.js and Manti-authored behavior
+- `@manti-ui/react` — React renderers and hooks
 
-Behavior for interactive components comes from [Zag.js](https://zagjs.com)
-machines. Adapting the full Zag catalog is an ongoing effort — see
-`docs/zag-coverage.md`.
-
-## Architecture
-
-- **Shared tokens:** `@manti-ui/tokens` — the typed token contract
-- **Shared CSS:** `@manti-ui/styles` — `data-scope` / `data-part` / `data-state`
-  styling, framework-agnostic
-- **Shared behavior:** `@manti-ui/folds` — Zag.js interaction machines
-- **React adapter:** `@manti-ui/react` — thin renderers over the contracts above
-
-Every public React component ships with a colocated Storybook story.
+The full guides and component API reference live at
+[manti.design](https://manti.design).

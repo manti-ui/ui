@@ -3,34 +3,28 @@ title: TreeView
 slug: /components/tree-view
 group: Navigation
 order: 61
-description: A nested, keyboard-navigable tree backed by the Zag.js tree-view machine.
+description: A nested tree with keyboard navigation, expansion, and selection.
 ---
 
 # TreeView
 
-A nested, keyboard-navigable tree backed by the Zag.js tree-view machine. Pass a
-nested `items` array — branches carry a `children` array, leaves do not. The
-machine owns expansion, selection, and arrow-key navigation.
+Pass nested items; branches contain `children` and leaves do not. The machine
+manages expansion, selection, and arrow keys.
 
-## Basic
-
-Pass an `icon` render prop to put a leading icon on each row. It receives the
-node and its live state (`isBranch`, `expanded`, `selected`), so the demo below
-swaps an open/closed folder for branches and a file icon for leaves.
+Use the `icon` render prop to display node and state-aware icons.
 
 <Demo name="tree-view/basic" />
 
-## Props
+## API
 
 <PropsTable component="tree-view" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the tree. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="tree-view" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="tree-view" />

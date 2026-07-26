@@ -3,25 +3,15 @@ title: Button
 slug: /components/button
 group: Buttons & Actions
 order: 11
-description: The workhorse action — five color variants plus a link style, three sizes.
+description: An action button with semantic variants, sizes, icons, and loading state.
 ---
 
 # Button
 
-The workhorse action. Five color variants plus a `link` style, three sizes, a
-smooth press, and a loading state that keeps the button from collapsing.
+Button supports the seven built-in variants, custom `MantiVariant` strings, and
+a Button-only `link` treatment.
 
 <Demo name="button/variants" center />
-
-## Variants
-
-`variant` is the single color-and-emphasis dimension. `primary` (orange solid),
-`secondary` (amber soft), and `tertiary` (neutral ghost) form an emphasis
-ladder; `danger` (red solid) is the semantic hue and `outline` is a neutral
-bordered treatment. The Button-only `link` value renders as inline text. Any
-custom variant string works too.
-
-<Demo name="button/variants" />
 
 ## Sizes
 
@@ -29,22 +19,20 @@ custom variant string works too.
 
 ## Loading
 
-`loading` shows a spinner, blocks interaction, and preserves the button's width
-so the layout never jumps.
+`loading` blocks interaction, shows a Spinner, and preserves the button width.
 
 <Demo name="button/loading" center />
 
-## Props
+## API
 
 <PropsTable component="button" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the button. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="button" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="button" />

@@ -1,11 +1,16 @@
-# Tokens
+# @manti-ui/tokens
 
-The typed Manti UI token contract: six OKLCH color ramps (`gray`, `orange`,
-`green`, `amber`, `red`, `blue`), plus `variants`, `radius` (with its
-`radiusFactor`, `radiusChannel` and `radiusModes` companions), `space`,
-`fontSize`, `lineHeight`, `fontWeight`, `fontFamily`, `shadow`, `duration`,
-`easing`, `breakpoint`, and `zIndex`.
+The typed, framework-agnostic source of truth for Manti UI design tokens.
 
-This package is the typed source of truth and stays framework-agnostic. The same
-values are mirrored as CSS custom properties in `@manti-ui/styles`, where
-light/dark resolution is handled with the CSS `light-dark()` function.
+It defines color ramps and roles, variants, radius, control height, spacing,
+typography, elevation, motion, breakpoints, z-index, and component-token names.
+
+After changing this contract, run:
+
+```bash
+pnpm gen:tokens
+pnpm verify
+```
+
+Do not edit the generated token region in
+`packages/styles/src/tokens.css` by hand.

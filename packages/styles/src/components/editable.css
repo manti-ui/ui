@@ -1,7 +1,7 @@
 /**
  * Editable — an inline text field that toggles between a preview and an input,
  * backed by the Zag.js editable machine. Preview reads as plain text with a
- * hover affordance; edit mode shows the translucent field input plus triggers.
+ * hover affordance; edit mode shows the flat field input plus triggers.
  */
 @layer manti.components {
   [data-scope='editable'][data-part='root'] {
@@ -52,29 +52,20 @@
   [data-scope='editable'][data-part='input'] {
     min-width: 0;
     padding: var(--manti-space-2) var(--manti-space-3);
-    background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--manti-panel-border);
+    background: var(--manti-surface);
+    border: 1px solid var(--manti-border);
     border-radius: var(--manti-radius-md);
     outline: none;
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
-    box-shadow: var(--manti-panel-rim);
-    transition:
-      border-color var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth);
+    transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
+
+    &:hover {
+      border-color: var(--manti-border-strong);
+    }
 
     &:focus {
       border-color: var(--variant-ring, var(--manti-focus-ring));
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='editable'][data-part='input'] {
-      background: var(--manti-surface-raised);
     }
   }
 

@@ -45,6 +45,22 @@
  */
 const RAMP_STOPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
+/**
+ * The palette-role contract shared by every Manti color ramp.
+ *
+ * These names describe intent, not a component-specific implementation. The
+ * semantic layer maps them to theme-aware values; component CSS should consume
+ * semantic roles or `--variant-*`, not raw ramp stops. Keeping the map typed
+ * makes the scale legible to generators, docs, and future lint rules.
+ */
+export const colorScaleRoles = {
+  appBackground: [1, 2],
+  componentBackground: { rest: 3, hover: 4, active: 5 },
+  border: { subtle: 6, interactive: 7, strong: 8 },
+  solid: { rest: 9, hover: 10 },
+  text: { lowContrast: 11, highContrast: 12 },
+} as const;
+
 type RampSpec = {
   /** Per-stop lightness, lightest → darkest (the backbone). */
   lightness: number[];
@@ -195,16 +211,14 @@ export const colorPrimitives = {
 /**
  * Color variants available to variant-driven components (button, badge,
  * alert, ...). `primary/secondary/tertiary` are an emphasis ladder (orange
- * solid → amber soft → neutral ghost), `danger` is the one semantic hue, and
- * `outline` is a neutral bordered treatment.
- *
- * The ladder descends in emphasis but is no longer monochrome: `secondary`
- * carries amber, so the top two rungs are both chromatic. `tertiary` and
- * `outline` are the neutral, genuinely quiet treatments.
+ * solid → neutral soft → neutral ghost), `success/info/danger` are semantic
+ * hues, and `outline` is a neutral bordered treatment.
  */
 export const variants = [
   'primary',
   'secondary',
+  'success',
+  'info',
   'tertiary',
   'danger',
   'outline',
@@ -489,7 +503,7 @@ export const componentTokens = {
     'font-size',
     'trigger-width',
   ],
-  collapsible: ['radius', 'padding-x', 'padding-y', 'gap'],
+  collapsible: ['radius', 'padding-x', 'padding-y', 'gap', 'icon-size'],
   'color-picker': ['height', 'panel-width', 'area-height'],
   combobox: ['height', 'content-max-height'],
   'data-table': [
@@ -552,7 +566,7 @@ export type MantiComponentToken = {
 export const mantiTokens = {
   packageName: '@manti-ui/tokens',
   status: 'designed',
-  color: { primitives: colorPrimitives },
+  color: { primitives: colorPrimitives, scaleRoles: colorScaleRoles },
   variants,
   componentTokens,
   radius,

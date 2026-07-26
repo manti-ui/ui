@@ -3,31 +3,37 @@ title: Toast
 slug: /components/toast
 group: Feedback
 order: 56
-description: Translucent, variant-colored notifications backed by the Zag.js toast machine.
+description: Imperative transient notifications with semantic types and swipe dismissal.
 ---
 
 # Toast
 
-Toasts are created imperatively. `createToaster` returns a `toaster` store and a
-`Toaster` host element: render `<Toaster />` once near your app root, then call
-`toaster.create(...)`, `toaster.success(...)`, `toaster.error(...)`, and friends
-from anywhere. Each type maps to a semantic variant and icon.
+Create a store and host once, then send notifications from anywhere:
+
+```tsx
+const { toaster, Toaster } = createToaster();
+
+function App() {
+  return <Toaster />;
+}
+
+toaster.success({ title: 'Saved' });
+```
 
 <Demo name="toast/basic" center />
 
-## Props
+## API
 
-The options below are passed to `createToaster(options)`.
+The table describes `createToaster(options)`.
 
 <PropsTable component="toast" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the toasts. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="toast" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="toast" />
