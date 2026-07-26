@@ -17,9 +17,10 @@ export const meta: ComponentMeta = {
     },
     {
       name: 'placement',
-      type: `'top' | 'bottom' | 'left' | 'right' | '…-start' | '…-end'`,
+      type: `'top' | 'bottom' | 'bottom-center' | 'left' | 'right' | '…-start' | '…-end'`,
       default: `'bottom-start'`,
-      description: 'Placement of the menu relative to the trigger.',
+      description:
+        'Placement relative to the trigger. `bottom-center` is an explicit alias for the centered `bottom` placement.',
     },
     {
       name: 'onSelect',

@@ -3,35 +3,30 @@ title: Steps
 slug: /components/steps
 group: Navigation
 order: 48
-description: A step-by-step flow backed by the Zag.js steps machine.
+description: A controlled or uncontrolled multi-step flow.
 ---
 
 # Steps
 
-A step-by-step flow backed by the Zag.js steps machine. Pass an `items` array of
-`{ title, description, content }`; the machine tracks the active step and the
-built-in controls advance it.
+Pass items as `{ title, description, content }`. The machine tracks the active
+step and built-in controls move through the flow.
 
 <Demo name="steps/basic" />
 
-## Vertical
-
-Set `orientation="vertical"` to stack the steps as a left rail with the active
-panel beside it.
+## Vertical layout
 
 <Demo name="steps/vertical" />
 
-## Props
+## API
 
 <PropsTable component="steps" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the steps. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="steps" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="steps" />

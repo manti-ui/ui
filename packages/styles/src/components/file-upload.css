@@ -1,6 +1,6 @@
 /**
  * File Upload — a dropzone with previews backed by the Zag.js file-upload
- * machine. The dropzone is a dashed translucent panel that lights up on drag; each
+ * machine. The dropzone is a dashed flat panel that lights up on drag; each
  * accepted file lists its name, size, and a delete trigger.
  */
 @layer manti.components {
@@ -24,9 +24,7 @@
     justify-content: center;
     gap: var(--manti-space-3);
     padding: var(--manti-space-6);
-    background: var(--manti-panel-tint);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
+    background: var(--manti-surface);
     border: 1px dashed var(--manti-border-strong);
     border-radius: var(--manti-radius-md);
     color: var(--manti-text-muted);
@@ -45,14 +43,6 @@
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='file-upload'][data-part='dropzone'] {
-      background: var(--manti-surface);
     }
   }
 

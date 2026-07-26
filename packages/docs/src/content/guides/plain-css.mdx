@@ -3,91 +3,25 @@ title: Customizing with plain CSS
 slug: /guides/plain-css
 group: Guides
 order: 30
-description: Restyle any Manti component with ordinary CSS — no specificity battles, no forks, no !important.
+description: Theme tokens and override component anatomy with ordinary CSS.
 ---
 
 # Customizing with plain CSS
 
-Manti UI is built to be restyled with plain CSS — without specificity battles or
-forked components. This guide is the practical version of that contract: how the
-cascade is organized, which selectors are public API, and the three altitudes you
-can override at.
+## Import order
 
-## The cascade-layer model
-
-All Manti CSS lives in cascade layers, declared once in the stylesheet:
-
-```css
-@layer manti.reset, manti.tokens, manti.base, manti.components, manti.motion;
-```
-
-This is the foundation of everything below, because of one CSS rule:
-**unlayered styles always beat layered styles**, regardless of specificity. Any
-ordinary CSS you write in your app is unlayered, so it wins over Manti UI
-automatically — no `!important`, no selector contests, no fighting Manti's own
-rules.
-
-Order matters when you import. Load Manti first, then your overrides:
+Import Manti first and your overrides second:
 
 ```ts
-import '@manti-ui/styles/index.css'; // 1) Manti, layered
-import './my-theme.css'; // 2) your overrides, unlayered → win
+import '@manti-ui/styles/index.css';
+import './theme.css';
 ```
 
-## The stable selector contract
+Manti CSS is layered. Ordinary unlayered CSS wins without `!important`.
 
-Every component renders stable data attributes. They are public API and follow
-semver — target them, not class names:
+## Prefer tokens
 
-```html
-<button
-  data-scope="button"
-  data-part="root"
-  data-variant="primary"
-  data-size="md"
->
-  <span data-scope="button" data-part="label">…</span>
-</button>
-```
-
-- `data-scope` — the component (`button`, `switch`, `tabs`, …)
-- `data-part` — the anatomy piece (`root`, `label`, `trigger`, `content`, …)
-- `data-variant`, `data-size` — the chosen props
-- state attributes (`data-state`, `data-loading`, `disabled`, …) — live state
-
-Class names and the internal DOM between parts are _not_ part of the contract;
-they may change. Anchor your selectors to the data attributes above.
-
-## The three tiers of overriding
-
-Tokens form three tiers, each defaulting into the one above it. Pick the lowest
-altitude that does the job, and prefer redefining tokens over hand-writing rules.
-
-| Tier              | Example                             | Scope                            |
-| ----------------- | ----------------------------------- | -------------------------------- |
-| 1 — primitive     | `--manti-orange-7`               | the raw palette / scales         |
-| 2 — semantic      | `--manti-radius-md`, `--variant-solid` | purpose-based roles              |
-| 3 — **component** | `--manti-button-radius`             | one component's structural knobs |
-
-### Recolor a primitive ramp
-
-The primitive ramps feed the variants, so redefining one rebrands the palette
-everywhere it surfaces. `orange` is Manti's primary ramp:
-
-```css
-:root {
-  --manti-orange-2: oklch(0.94 0.03 275);
-  --manti-orange-7: oklch(0.62 0.19 275);
-  --manti-orange-8: oklch(0.55 0.2 275);
-  --manti-orange-9: oklch(0.46 0.17 275);
-}
-```
-
-### Override a semantic role
-
-Semantic roles are **the primary theming lever** — a change here cascades to every
-component consistently. Keep color roles in `light-dark(light, dark)` form so the
-`data-theme` switch keeps working:
+Use semantic tokens for changes that should affect the system:
 
 ```css
 :root {
@@ -95,69 +29,61 @@ component consistently. Keep color roles in `light-dark(light, dark)` form so th
   --manti-surface: light-dark(#ffffff, #15151b);
   --manti-text: light-dark(#16161a, #f4f4f6);
   --manti-border: light-dark(#e6e6ea, #2a2a33);
-
-  /* One radius scale rounds buttons, cards, and inputs alike. */
-  --manti-radius-md: 6px;
-  --manti-radius-lg: 10px;
-
-  --manti-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --manti-focus-ring: var(--manti-orange-7);
+  --manti-radius-factor: 0.8;
 }
 ```
 
-### Define a custom variant
-
-Color in Manti comes only from variants. A variant is a `--variant-*` vocabulary you can
-define for any string, then pass as a `variant` prop. Built-in variant names keep
-TypeScript autocomplete; custom strings are accepted too:
+Use a component token for one intentional exception:
 
 ```css
-[data-variant='brand'] {
-  --variant-solid: light-dark(#0d9488, #14b8a6);
-  --variant-solid-hover: light-dark(#0b8076, #2dd4bf);
-  --variant-solid-active: light-dark(#096a62, #5eead4);
-  --variant-on-solid: #ffffff;
-  --variant-soft-bg: light-dark(#d6f5f0, #0b2e2a);
-  --variant-soft-text: light-dark(#0b6a60, #99f6e4);
-  --variant-border: light-dark(#9fe5db, #155e54);
-  --variant-text: light-dark(#0b6a60, #5eead4);
-  --variant-ring: #14b8a6;
+:root {
+  --manti-button-radius: var(--manti-radius-full);
 }
 ```
 
-```tsx
-<Button variant="brand">Ship it</Button>
-```
+## Target anatomy
 
-You can also remap an existing variant for a subtree — scope the same block to a
-selector instead of `[data-variant='brand']`.
-
-### Target a component's anatomy
-
-When a visual decision can't be expressed through tokens, write a normal
-(unlayered) rule against the anatomy contract. These always win over Manti's
-layered styles:
+When tokens are not enough, use public data attributes:
 
 ```css
-/* Buttons only: tighter tracking and a pill shape. */
 [data-scope='button'][data-part='root'] {
   letter-spacing: 0.02em;
-  border-radius: var(--manti-radius-full);
 }
 
-/* Lift a solid button slightly on hover. */
-[data-scope='button'][data-part='root'][data-variant='solid']:hover {
+[data-scope='button'][data-part='root'][data-variant='primary']:hover {
   translate: 0 -1px;
 }
 ```
 
-> Never touch private `--_*` knobs (like a derived `--_radius`). They are not API
-> and a component computes them to stay internally consistent. Override the named
-> component tokens instead — see [Theming with tokens](/guides/theming-tokens).
+Stable selectors include:
 
-## Where to next
+- `data-scope` — component name;
+- `data-part` — anatomy part;
+- `data-variant` and `data-size`;
+- documented state attributes such as `data-state` or `data-loading`.
 
-- **[Theming with tokens](/guides/theming-tokens)** — the semantic roles and the
-  component-token escape hatch in depth.
-- **[Using with Tailwind v4](/guides/tailwind)** — the same overrides, plus the
-  utility and theme-bridge story.
+Class names, private `--_*` variables, and undocumented DOM are not public API.
+
+## Add a variant
+
+```css
+[data-variant='brand'] {
+  --variant-solid: var(--manti-blue-9);
+  --variant-solid-hover: var(--manti-blue-10);
+  --variant-solid-active: color-mix(in oklab, var(--manti-blue-10) 88%, black);
+  --variant-on-solid: var(--manti-text-on-accent);
+  --variant-soft-bg: var(--manti-blue-2);
+  --variant-soft-bg-hover: var(--manti-blue-3);
+  --variant-soft-text: var(--manti-blue-9);
+  --variant-border: var(--manti-blue-7);
+  --variant-text: var(--manti-blue-9);
+  --variant-ring: var(--manti-blue-8);
+}
+```
+
+```tsx
+<Button variant="brand">Save</Button>
+```
+
+Continue to [Theming with tokens](/guides/theming-tokens) for token-selection
+guidance or [Tailwind v4](/guides/tailwind) for utility integration.

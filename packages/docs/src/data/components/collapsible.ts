@@ -9,6 +9,12 @@ export const meta: ComponentMeta = {
       description: 'The content of the toggle button.',
     },
     {
+      name: 'indicator',
+      type: 'ReactNode | false',
+      description:
+        'Trailing indicator. Uses the state-aware Manti icon by default; pass false to hide it.',
+    },
+    {
       name: 'children',
       type: 'ReactNode',
       description: 'The collapsible content revealed when open.',
@@ -40,6 +46,10 @@ export const meta: ComponentMeta = {
       description: 'The wrapper around the trigger and content.',
     },
     { part: 'trigger', description: 'The button that toggles the disclosure.' },
+    {
+      part: 'indicator',
+      description: 'The paired chevrons that identify the disclosure control.',
+    },
     {
       part: 'content',
       description: 'The region that animates its height open and closed.',

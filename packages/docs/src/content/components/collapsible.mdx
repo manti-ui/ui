@@ -3,34 +3,29 @@ title: Collapsible
 slug: /components/collapsible
 group: Data Display
 order: 21
-description: A single open/close disclosure backed by the Zag.js collapsible machine.
+description: A single keyboard-accessible show and hide region.
 ---
 
 # Collapsible
 
-A single open/close disclosure backed by the Zag.js collapsible machine. The
-content animates its height smoothly as it opens and closes.
+Pass the button content as `trigger` and the revealed region as `children`. Use
+`open` with `onOpenChange` to control it.
+
+The default indicator follows state. Pass `indicator={false}` to hide it or a
+React node to replace it.
 
 <Demo name="collapsible/basic" center />
 
-## Basic
-
-Pass the toggle label as `trigger` and the revealed content as `children`. Use
-`defaultOpen` to start expanded, or `open` with `onOpenChange` to control it.
-
-<Demo name="collapsible/basic" center />
-
-## Props
+## API
 
 <PropsTable component="collapsible" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the collapsible. Class names and the
-DOM between parts are private.
+### Anatomy
 
 <Anatomy component="collapsible" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="collapsible" />

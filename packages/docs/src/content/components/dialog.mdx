@@ -3,48 +3,36 @@ title: Dialog
 slug: /components/dialog
 group: Overlays
 order: 17
-description: A modal translucent panel backed by the Zag.js dialog machine.
+description: A modal panel with focus trapping, dismissal, and scroll locking.
 ---
 
 # Dialog
 
-A modal translucent panel backed by the Zag.js dialog machine. The machine owns
-focus trapping, scroll locking, and dismissal; you supply the trigger and the
-content.
-
-<Demo name="dialog/basic" center />
-
-## Basic
-
-`trigger` is the element that opens the dialog — it's cloned with the machine's
-trigger props. Pass `title`, `description`, and body content as `children`.
+Pass a React element as `trigger`, then provide `title`, `description`, and body
+content. The machine manages focus, dismissal, and scroll locking.
 
 <Demo name="dialog/basic" center />
 
 ## Footer actions
 
-`footer` accepts a render function receiving `{ close }`, so action buttons can
-dismiss the dialog. Wire `onClick={close}` to any button that should close it.
+`footer` may be a function receiving `{ close }`.
 
 <Demo name="dialog/footer" center />
 
 ## Sizes
 
-`size` sets the panel's width preset: `sm`, `md` (default), or `lg`.
-
 <Demo name="dialog/sizes" center />
 
-## Props
+## API
 
 <PropsTable component="dialog" />
 
-## Anatomy
+## Styling
 
-Target these public selectors to customize the dialog. Class names and the DOM
-between parts are private.
+### Anatomy
 
 <Anatomy component="dialog" />
 
-## Component tokens
+### Tokens
 
 <TokenTable component="dialog" />

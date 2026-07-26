@@ -11,13 +11,13 @@ const meta = {
     label: 'Recipe name',
     placeholder: 'Kayseri mantısı',
     size: 'md',
-    variant: 'primary',
+    variant: 'default',
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
+      options: ['default', 'fill'],
     },
   },
   decorators: [
@@ -33,6 +33,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
+
+export const Filled: Story = {
+  args: { variant: 'fill', label: undefined, placeholder: 'Name' },
+};
 
 export const WithHint: Story = {
   args: { hint: 'Shown to everyone browsing the cookbook.' },
