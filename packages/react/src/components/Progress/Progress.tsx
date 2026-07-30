@@ -1,9 +1,10 @@
-import { useId } from 'react';
-import type { ReactNode } from 'react';
+import { forwardRef, useId } from 'react';
+import type { HTMLAttributes, ReactNode, Ref, SVGAttributes } from 'react';
 import { progress } from '@manti-ui/folds';
-import { normalizeProps, useMachine } from '@zag-js/react';
+import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
+import type { WithDataAttributes } from '../../internal/props';
 
 export interface ProgressProps {
   /** Linear bar or circular ring. */
@@ -22,22 +23,34 @@ export interface ProgressProps {
   showValue?: boolean;
   id?: string;
   className?: string;
+  /** Native/ARIA/data props for the element with `role="progressbar"`. */
+  rootProps?: WithDataAttributes<
+    | Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'role'>
+    | Omit<SVGAttributes<SVGSVGElement>, 'children' | 'role'>
+  >;
 }
 
 /** A determinate/indeterminate progress indicator backed by the Zag.js progress
  * machine. Renders a linear bar or a circular ring. */
-export function Progress({
-  variant = 'linear',
-  label,
-  size = 'md',
-  value,
-  defaultValue,
-  min,
-  max,
-  showValue,
-  id,
-  className,
-}: ProgressProps) {
+export const Progress = forwardRef<
+  HTMLDivElement | SVGSVGElement,
+  ProgressProps
+>(function Progress(
+  {
+    variant = 'linear',
+    label,
+    size = 'md',
+    value,
+    defaultValue,
+    min,
+    max,
+    showValue,
+    id,
+    className,
+    rootProps,
+  },
+  ref,
+) {
   const autoId = useId();
   const service = useMachine(progress.machine, {
     id: id ?? autoId,
@@ -47,10 +60,27 @@ export function Progress({
     max,
   });
   const api = progress.connect(service, normalizeProps);
+  const wrapperProps = api.getRootProps();
+  const machineTrackProps = api.getTrackProps();
+  const machineCircleProps = api.getCircleProps();
+  const trackProps = {
+    ...mergeProps(machineTrackProps, rootProps ?? {}),
+    role: machineTrackProps.role,
+    'aria-valuemin': machineTrackProps['aria-valuemin'],
+    'aria-valuemax': machineTrackProps['aria-valuemax'],
+    'aria-valuenow': machineTrackProps['aria-valuenow'],
+  };
+  const circleProps = {
+    ...mergeProps(machineCircleProps, rootProps ?? {}),
+    role: machineCircleProps.role,
+    'aria-valuemin': machineCircleProps['aria-valuemin'],
+    'aria-valuemax': machineCircleProps['aria-valuemax'],
+    'aria-valuenow': machineCircleProps['aria-valuenow'],
+  };
 
   return (
     <div
-      {...api.getRootProps()}
+      {...wrapperProps}
       data-variant={variant}
       data-size={size}
       className={cx(className)}
@@ -65,7 +95,7 @@ export function Progress({
       )}
       {variant === 'circular' ? (
         <div data-part="circle-wrap">
-          <svg {...api.getCircleProps()}>
+          <svg {...circleProps} ref={ref as Ref<SVGSVGElement>}>
             <circle {...api.getCircleTrackProps()} />
             <circle {...api.getCircleRangeProps()} />
           </svg>
@@ -74,10 +104,10 @@ export function Progress({
           )}
         </div>
       ) : (
-        <div {...api.getTrackProps()}>
+        <div {...trackProps} ref={ref as Ref<HTMLDivElement>}>
           <div {...api.getRangeProps()} />
         </div>
       )}
     </div>
   );
-}
+});

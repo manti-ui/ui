@@ -9,7 +9,8 @@
   }
 
   [data-scope='tooltip'][data-part='positioner'] {
-    z-index: var(--manti-z-popover) !important;
+    --manti-tooltip-z-index: var(--manti-z-popover);
+    z-index: var(--manti-tooltip-z-index) !important;
   }
 
   [data-scope='tooltip'][data-part='content'] {

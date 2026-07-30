@@ -184,6 +184,14 @@
     transition: opacity var(--manti-duration-fast) var(--manti-ease-soft);
   }
 
+  [data-scope='button'][data-part='leading-icon'],
+  [data-scope='button'][data-part='trailing-icon'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+  }
+
   [data-scope='button'][data-loading='true'] [data-part='label'] {
     opacity: 0;
   }

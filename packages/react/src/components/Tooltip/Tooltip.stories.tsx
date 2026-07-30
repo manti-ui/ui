@@ -22,3 +22,11 @@ export const Playground: Story = {};
 export const Delayed: Story = {
   args: { openDelay: 0, closeDelay: 0 },
 };
+
+export const PortalledAndControlled: Story = {
+  args: {
+    portalled: true,
+    defaultOpen: true,
+    placement: 'top',
+  },
+};

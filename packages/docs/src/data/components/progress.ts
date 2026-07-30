@@ -47,6 +47,12 @@ export const meta: ComponentMeta = {
       type: 'boolean',
       description: 'Show the formatted value text.',
     },
+    {
+      name: 'rootProps',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description:
+        'Native, ARIA, and data props for the element with role progressbar.',
+    },
   ],
   anatomy: [
     { part: 'root', description: 'The indicator wrapper.' },

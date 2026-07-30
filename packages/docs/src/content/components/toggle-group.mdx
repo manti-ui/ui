@@ -11,6 +11,11 @@ description: A keyboard-accessible group of single or multiple pressed buttons.
 Pass items as `{ value, label, disabled? }`. The machine manages roving focus,
 arrow keys, and pressed values.
 
+Use the discriminated API for type-safe values: `type="single"` uses a string,
+while `type="multiple"` uses a string array. The former array-only API remains
+available for compatibility. Give a single-select group an accessible name
+through `rootProps`.
+
 <Demo name="toggle-group/basic" center />
 
 ## Multiple selection

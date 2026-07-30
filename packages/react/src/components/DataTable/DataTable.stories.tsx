@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Badge } from '../Badge/Badge';
 import { DataTable } from './DataTable';
 import type { DataTableColumn } from './DataTable';
+import type { DataTableRowComponentProps } from './DataTable';
 
 interface Invoice {
   id: string;
@@ -38,9 +40,7 @@ const columns: DataTableColumn<Invoice>[] = [
     header: 'Status',
     cell: ({ getValue }) => {
       const status = getValue<Invoice['status']>();
-      return (
-        <Badge variant={statusVariant[status]}>{status}</Badge>
-      );
+      return <Badge variant={statusVariant[status]}>{status}</Badge>;
     },
   },
   {
@@ -115,4 +115,29 @@ export const FullFeatured: Story = {
 
 export const Empty: Story = {
   args: { data: [], emptyContent: 'No invoices yet.' },
+};
+
+function LiveInvoiceRow({
+  row,
+  rowProps,
+  children,
+}: DataTableRowComponentProps<Invoice>) {
+  const [mountedAt] = useState(() => Date.now());
+  return (
+    <tr {...rowProps} data-entity-id={row.id} data-mounted-at={mountedAt}>
+      {children}
+    </tr>
+  );
+}
+
+export const CustomRowComponent: Story = {
+  render: () => (
+    <DataTable<Invoice>
+      columns={columns}
+      data={data}
+      rowComponent={LiveInvoiceRow}
+      getRowId={(row) => row.id}
+      getRowProps={(row) => ({ 'aria-label': `Invoice ${row.id}` })}
+    />
+  ),
 };

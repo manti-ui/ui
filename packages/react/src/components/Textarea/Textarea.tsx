@@ -40,6 +40,10 @@ export interface TextareaProps extends Omit<
   maxHeight?: CSSProperties['maxHeight'];
   /** Native resize affordance. */
   resize?: 'none' | 'vertical';
+  /** Visual required marker. Pass `null` to keep native semantics without a marker. */
+  requiredIndicator?: ReactNode | null;
+  /** Which surface owns the visible focus treatment. */
+  focusRing?: 'control' | 'none';
 }
 
 /**
@@ -60,6 +64,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       autoResize,
       maxHeight,
       resize = 'vertical',
+      requiredIndicator = '*',
+      focusRing = 'control',
       rows = 3,
       id,
       required,
@@ -122,14 +128,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         data-invalid={dataBool(invalid)}
         data-disabled={dataBool(disabled)}
         data-full-width={dataBool(fullWidth)}
+        data-focus-ring={focusRing}
         className={cx(className)}
       >
         {label != null && (
           <label data-scope="field" data-part="label" htmlFor={textareaId}>
             {label}
-            {required && (
+            {required && requiredIndicator != null && (
               <span data-scope="field" data-part="required" aria-hidden>
-                *
+                {requiredIndicator}
               </span>
             )}
           </label>

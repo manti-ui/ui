@@ -54,6 +54,14 @@
     opacity: 0.9;
   }
 
+  [data-scope='alert'][data-part='actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--manti-space-2);
+    margin-block-start: var(--manti-space-2);
+  }
+
   [data-scope='alert'][data-part='dismiss'] {
     flex: none;
     display: grid;
