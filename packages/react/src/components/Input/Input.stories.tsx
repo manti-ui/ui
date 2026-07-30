@@ -73,6 +73,14 @@ export const Disabled: Story = {
   args: { defaultValue: 'Locked recipe', disabled: true },
 };
 
+export const RequiredWithoutMarker: Story = {
+  args: {
+    required: true,
+    requiredIndicator: null,
+    hint: 'Native required semantics remain active.',
+  },
+};
+
 /**
  * `type="password"` adds a show/hide toggle and a Caps Lock warning. Turn Caps
  * Lock on while focused to see the notice.

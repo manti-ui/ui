@@ -1,9 +1,10 @@
 import { useId } from 'react';
-import type { ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 import { tooltip } from '@manti-ui/folds';
-import { normalizeProps, useMachine } from '@zag-js/react';
+import { normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
+import type { Placement } from '../../internal/floating';
 
 export interface TooltipProps {
   /** The tooltip content. */
@@ -16,6 +17,18 @@ export interface TooltipProps {
   closeDelay?: number;
   /** Keep open while hovering the content. */
   interactive?: boolean;
+  /** Placement relative to the trigger. */
+  placement?: Placement;
+  /** Controlled open state. */
+  open?: boolean;
+  /** Initial open state for uncontrolled usage. */
+  defaultOpen?: boolean;
+  /** Called whenever the open state changes. */
+  onOpenChange?: (open: boolean) => void;
+  /** Render the floating content through a portal. */
+  portalled?: boolean;
+  /** Optional portal target. */
+  portalContainer?: RefObject<HTMLElement>;
   id?: string;
   className?: string;
 }
@@ -31,6 +44,12 @@ export function Tooltip({
   openDelay,
   closeDelay,
   interactive,
+  placement,
+  open,
+  defaultOpen,
+  onOpenChange,
+  portalled = false,
+  portalContainer,
   id,
   className,
 }: TooltipProps) {
@@ -40,18 +59,29 @@ export function Tooltip({
     openDelay,
     closeDelay,
     interactive,
+    positioning: placement ? { placement } : undefined,
+    open,
+    defaultOpen,
+    onOpenChange: onOpenChange
+      ? (details) => onOpenChange(details.open)
+      : undefined,
   });
   const api = tooltip.connect(service, normalizeProps);
+  const floating = api.open ? (
+    <div {...api.getPositionerProps()}>
+      <div {...api.getContentProps()} className={cx(className)}>
+        {content}
+      </div>
+    </div>
+  ) : null;
 
   return (
     <>
       <span {...api.getTriggerProps()}>{children}</span>
-      {api.open && (
-        <div {...api.getPositionerProps()}>
-          <div {...api.getContentProps()} className={cx(className)}>
-            {content}
-          </div>
-        </div>
+      {portalled && floating ? (
+        <Portal container={portalContainer}>{floating}</Portal>
+      ) : (
+        floating
       )}
     </>
   );

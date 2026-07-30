@@ -76,6 +76,20 @@
     border-color: var(--manti-danger-border);
   }
 
+  [data-scope='field'][data-part='root'][data-focus-ring='none']:not(
+      [data-invalid='true']
+    )
+    [data-part='control']:focus-within {
+    border-color: var(--manti-border);
+  }
+
+  [data-scope='field'][data-part='root'][data-focus-ring='none'][data-appearance='fill']:not(
+      [data-invalid='true']
+    )
+    [data-part='control']:focus-within {
+    border-color: transparent;
+  }
+
   [data-scope='field'][data-part='root'][data-appearance='fill']
     [data-part='control'] {
     background: var(--manti-fill);

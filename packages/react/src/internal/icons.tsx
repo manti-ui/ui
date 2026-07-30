@@ -20,6 +20,26 @@ export function CloseIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** A compact check glyph that inherits `currentColor`. */
+export function CheckIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="m2.5 7.2 2.8 2.8 6.2-6.2" />
+    </svg>
+  );
+}
+
 /** An open-eye glyph (password is visible). Inherits `currentColor`. */
 export function EyeIcon(props: SVGProps<SVGSVGElement>) {
   return (

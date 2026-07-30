@@ -1,12 +1,17 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { ElementType, MouseEvent, ReactElement, ReactNode } from 'react';
 import type { MantiVariant } from '@manti-ui/tokens';
 
 import { cx, dataBool } from '../../internal/props';
+import type {
+  PolymorphicProps,
+  PolymorphicRef,
+} from '../../internal/polymorphic';
 import { Spinner } from '../Spinner/Spinner';
 
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonOwnProps {
   /**
    * Color variant — drives hue and emphasis (primary solid → secondary soft →
    * tertiary ghost, plus danger and outline). The Button-only `link` value
@@ -25,39 +30,71 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   leadingIcon?: ReactNode;
   /** Content placed after the label. */
   trailingIcon?: ReactNode;
+  /** Disable activation. Non-button roots receive `aria-disabled`. */
+  disabled?: boolean;
 }
+
+export type ButtonProps<TElement extends ElementType = 'button'> =
+  PolymorphicProps<TElement, ButtonOwnProps>;
 
 /**
  * The workhorse action. Seven color variants forming an emphasis ladder
  * (primary solid → secondary soft → tertiary ghost), three sizes, a smooth
  * press, and a loading state that keeps the button from collapsing.
  */
-export function Button({
-  variant = 'primary',
-  size = 'md',
-  loading = false,
-  fullWidth,
-  iconOnly,
-  leadingIcon,
-  trailingIcon,
-  type = 'button',
-  disabled,
-  className,
-  children,
-  ...rest
-}: ButtonProps) {
+function ButtonImpl<TElement extends ElementType = 'button'>(
+  {
+    as,
+    variant = 'primary',
+    size = 'md',
+    loading = false,
+    fullWidth,
+    iconOnly,
+    leadingIcon,
+    trailingIcon,
+    disabled,
+    className,
+    children,
+    ...rest
+  }: ButtonProps<TElement>,
+  ref: PolymorphicRef<TElement>,
+) {
+  const Root = (as ?? 'button') as ElementType;
+  const blocked = disabled || loading;
+  const rootProps = rest as Record<string, unknown> & {
+    onClick?: (event: MouseEvent<HTMLElement>) => void;
+    tabIndex?: number;
+    type?: 'button' | 'submit' | 'reset';
+  };
+  const onClick = rootProps.onClick;
+  const isButton = Root === 'button';
+
   return (
-    <button
-      type={type}
+    <Root
+      {...rootProps}
+      ref={ref}
+      {...(isButton
+        ? {
+            type: rootProps.type ?? 'button',
+            disabled: blocked,
+          }
+        : {
+            'aria-disabled': blocked || undefined,
+            tabIndex: blocked ? (rootProps.tabIndex ?? -1) : rootProps.tabIndex,
+            onClick: blocked
+              ? (event: MouseEvent<HTMLElement>) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+              : onClick,
+          })}
       data-variant={variant}
       data-size={size}
       data-loading={dataBool(loading)}
       data-full-width={dataBool(fullWidth)}
       data-icon-only={dataBool(iconOnly)}
-      disabled={disabled || loading}
       aria-busy={loading || undefined}
       className={cx(className)}
-      {...rest}
       // Identity attributes are re-asserted after `rest` so a cloned trigger
       // (e.g. a Dialog/Popover trigger merging in `data-scope='dialog'`) can't
       // clobber the button's own scope and drop its styling.
@@ -70,10 +107,28 @@ export function Button({
         </span>
       )}
       <span data-scope="button" data-part="label">
-        {leadingIcon}
+        {leadingIcon != null && (
+          <span data-scope="button" data-part="leading-icon" aria-hidden="true">
+            {leadingIcon}
+          </span>
+        )}
         {children}
-        {trailingIcon}
+        {trailingIcon != null && (
+          <span
+            data-scope="button"
+            data-part="trailing-icon"
+            aria-hidden="true"
+          >
+            {trailingIcon}
+          </span>
+        )}
       </span>
-    </button>
+    </Root>
   );
 }
+
+export const Button = forwardRef(ButtonImpl as never) as unknown as <
+  TElement extends ElementType = 'button',
+>(
+  props: ButtonProps<TElement> & { ref?: PolymorphicRef<TElement> },
+) => ReactElement | null;

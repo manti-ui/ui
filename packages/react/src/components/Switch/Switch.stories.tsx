@@ -60,3 +60,10 @@ export const Variants: Story = {
     </div>
   ),
 };
+
+export const AriaLabelOnly: Story = {
+  args: {
+    children: undefined,
+    inputProps: { 'aria-label': 'Notifications' },
+  },
+};

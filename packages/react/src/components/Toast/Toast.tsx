@@ -21,6 +21,11 @@ export type ToastPlacement =
   | 'bottom'
   | 'bottom-end';
 
+export interface ToastTranslations {
+  /** Accessible label for each toast close button. */
+  closeTriggerLabel?: string;
+}
+
 export interface CreateToasterOptions {
   /** Corner the stack is anchored to. @default 'bottom-end' */
   placement?: ToastPlacement;
@@ -38,6 +43,8 @@ export interface CreateToasterOptions {
    * `@manti-ui/folds` swipe core. @default true
    */
   swipe?: boolean;
+  /** Default accessible wording used by every toast in this toaster. */
+  translations?: ToastTranslations;
 }
 
 /** The imperative toast store returned by {@link createToaster}. */
@@ -144,6 +151,7 @@ interface ToastItemProps {
   index: number;
   parent: toast.GroupService;
   swipe: boolean;
+  translations?: ToastTranslations;
 }
 
 function ToastItem({
@@ -151,16 +159,19 @@ function ToastItem({
   index,
   parent,
   swipe: swipeEnabled,
+  translations,
 }: ToastItemProps) {
-  const service = useMachine(toast.machine, { ...data, index, parent });
+  const service = useMachine(toast.machine, {
+    translations,
+    ...data,
+    index,
+    parent,
+  });
   const api = toast.connect(service, normalizeProps);
   const rootProps = api.getRootProps();
 
   const type = api.type ?? '';
-  const dir = useMemo(
-    () => dismissDirection(api.placement),
-    [api.placement],
-  );
+  const dir = useMemo(() => dismissDirection(api.placement), [api.placement]);
 
   // The element under the active gesture, captured at pointer-down so the swipe
   // callbacks can mutate it without attaching a ref to Zag's root.
@@ -254,7 +265,11 @@ function ToastItem({
 export function createToaster(
   options: CreateToasterOptions = {},
 ): ToasterInstance {
-  const { swipe: swipeEnabled = true, ...storeOptions } = options;
+  const {
+    swipe: swipeEnabled = true,
+    translations = { closeTriggerLabel: 'Close' },
+    ...storeOptions
+  } = options;
   const store = toast.createStore<ReactNode>({
     placement: 'bottom-end',
     overlap: true,
@@ -276,6 +291,7 @@ export function createToaster(
               index={index}
               parent={service}
               swipe={swipeEnabled}
+              translations={translations}
             />
           ))}
         </div>

@@ -19,6 +19,7 @@
     "gen:tokens": "pnpm --filter @manti-ui/styles gen:tokens",
     "gen:variant-ink": "pnpm --filter @manti-ui/styles gen:variant-ink",
     "check:color-scale": "pnpm --filter @manti-ui/styles check:color-scale",
+    "check:exports": "node scripts/check-react-exports.mjs",
     "report:variant-ink": "pnpm --filter @manti-ui/styles report:variant-ink",
     "changeset": "changeset",
     "version-packages": "changeset version",
@@ -26,9 +27,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
+    "test": "vitest run",
     "storybook": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p 6006",
     "typecheck": "pnpm -r --if-present typecheck && tsc -p tsconfig.storybook.json --noEmit",
-    "verify": "pnpm lint && pnpm typecheck && pnpm build"
+    "verify": "pnpm lint && pnpm typecheck && pnpm check:exports && pnpm test && pnpm build"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",
@@ -38,16 +40,21 @@
     "@storybook/addon-a11y": "^10.4.3",
     "@storybook/addon-docs": "^10.4.3",
     "@storybook/react-vite": "^10.4.3",
+    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^24.0.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^10.0.0",
     "globals": "^16.0.0",
+    "jsdom": "^30.0.0",
     "prettier": "^3.8.4",
     "storybook": "^10.4.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.61.0",
-    "vite": "^8.0.16"
+    "vite": "^8.0.16",
+    "vitest": "^4.1.10"
   }
 }

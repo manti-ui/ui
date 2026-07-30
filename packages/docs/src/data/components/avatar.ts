@@ -7,7 +7,7 @@ export const meta: ComponentMeta = {
       name: 'src',
       type: 'string',
       description:
-        'Image source. Falls back to children when it fails to load.',
+        'Image source. Empty/whitespace values are treated as missing and fall back to children.',
     },
     {
       name: 'alt',

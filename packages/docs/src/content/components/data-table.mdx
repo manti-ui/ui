@@ -23,6 +23,14 @@ Set `sortable` to add accessible sort buttons.
 
 <Demo name="data-table/sortable" />
 
+## Entity stores and row props
+
+Use `getRowProps`, `getCellProps`, and `getRowId` for native, ARIA, and data
+attributes. When each row must resolve a live entity reference with hooks, pass
+`rowComponent`. It is a real React component boundary, unlike a render callback,
+so hooks remain valid. Spread `rowProps` onto its semantic `<tr>` and render
+`children` for the generated cells.
+
 ## Filtering, pagination, and selection
 
 Enable `filterable`, `paginated`, or `selectable` independently or together.
