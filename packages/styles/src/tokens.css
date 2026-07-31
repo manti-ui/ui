@@ -400,15 +400,23 @@
    * neighbour only by a channel would be a picker row most pages cannot show a
    * difference for.
    *
-   * Each mode assigns the factor *and* every channel, so modes never leak into
-   * one another. Note they still *lower* `pill` even though none raises it: a
+   * Each generated mode re-declares every ramp step against its local factor
+   * and assigns every channel, so an inherited root value cannot bypass the
+   * subtree preset. Modes still *lower* `pill` even though none raises it: a
    * consumer who opted into pill controls globally can square a subtree with
    * `data-radius="none"`. `none` is likewise the only mode that lowers `full`,
    * so squaring the system also squares the by-design-round parts instead of
    * leaving stray pills behind.
    */
+  /* @radius-modes:generated:start */
   [data-radius='none'] {
     --manti-radius-factor: 0;
+    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
+    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
+    --manti-radius-md: calc(14px * var(--manti-radius-factor));
+    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
+    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
+    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
     --manti-radius-full: 0px;
     --manti-radius-pill: 0px;
     --manti-radius-thumb: 0.5px;
@@ -416,6 +424,12 @@
 
   [data-radius='sharp'] {
     --manti-radius-factor: 0.6;
+    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
+    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
+    --manti-radius-md: calc(14px * var(--manti-radius-factor));
+    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
+    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
+    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
     --manti-radius-full: 9999px;
     --manti-radius-pill: 0px;
     --manti-radius-thumb: 9999px;
@@ -423,6 +437,12 @@
 
   [data-radius='default'] {
     --manti-radius-factor: 1;
+    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
+    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
+    --manti-radius-md: calc(14px * var(--manti-radius-factor));
+    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
+    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
+    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
     --manti-radius-full: 9999px;
     --manti-radius-pill: 0px;
     --manti-radius-thumb: 9999px;
@@ -430,10 +450,17 @@
 
   [data-radius='round'] {
     --manti-radius-factor: 1.4;
+    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
+    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
+    --manti-radius-md: calc(14px * var(--manti-radius-factor));
+    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
+    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
+    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
     --manti-radius-full: 9999px;
     --manti-radius-pill: 0px;
     --manti-radius-thumb: 9999px;
   }
+  /* @radius-modes:generated:end */
 
   /**
    * Variant roles.

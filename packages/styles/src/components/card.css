@@ -14,21 +14,16 @@
     display: flex;
     flex-direction: column;
     background: var(--manti-panel-tint);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-card-radius);
     color: var(--manti-text);
-    box-shadow: var(--manti-panel-rim), var(--manti-shadow-md);
     overflow: clip;
     transition:
       transform var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth),
       border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &[data-elevated='true'] {
       background: var(--manti-panel-tint-strong);
-      box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     }
 
     &[data-interactive='true'] {
@@ -37,12 +32,10 @@
       &:hover {
         transform: translateY(-2px);
         background: var(--manti-panel-tint-strong);
-        box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
       }
 
       &:active {
         transform: translateY(0);
-        box-shadow: var(--manti-panel-rim), var(--manti-shadow-sm);
       }
 
       &:focus-visible {

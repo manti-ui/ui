@@ -48,11 +48,8 @@
     margin: auto;
     padding: var(--manti-dialog-padding-y) var(--manti-dialog-padding-x);
     background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-dialog-radius);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     color: var(--manti-text);
 
     &[data-size='sm'] {
