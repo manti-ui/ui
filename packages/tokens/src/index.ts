@@ -241,8 +241,9 @@ export type MantiVariant = MantiBuiltinVariant | (string & {});
  *
  * These are the *resolved* values at `radiusFactor` 1 (source of truth for
  * types, docs, and the Tailwind bridge). In the generated CSS every step except
- * `full` is emitted as `calc(<step> * var(--manti-radius-factor))`, so the one
- * factor rescales the whole ramp — see `radiusFactor` below.
+ * `full` is emitted as `calc(<step> * var(--manti-radius-factor))`. Shipped
+ * `[data-radius]` presets re-declare those steps in their own scope, so the
+ * local factor rescales the whole subtree — see `radiusFactor` below.
  *
  * The ramp is a scale of *sizes*, not of *shapes*: `full` is the always-pill
  * primitive for parts that are round by design (switch track, slider, spinner,
@@ -262,9 +263,12 @@ export const radius = {
 } as const;
 
 /**
- * The multiplier every ramp step is scaled by. Override `--manti-radius-factor`
- * once to make the whole system sharper or rounder without touching a single
- * component; `[data-radius]` (see `radiusModes`) ships presets for it.
+ * The multiplier every ramp step is scaled by. Override
+ * `--manti-radius-factor` at the same scope that declares the ramp (normally
+ * `:root`) to retune the whole system. For a nested subtree, use
+ * `[data-radius]` (see `radiusModes`): its generated preset re-declares every
+ * ramp step against the local factor so inherited, already-computed values do
+ * not leak in from an ancestor.
  */
 export const radiusFactor = '1';
 
@@ -297,12 +301,12 @@ export const radiusChannel = {
  * differed from its neighbour by a channel would be a picker row most pages
  * cannot show a difference for.
  *
- * Each mode is a full assignment of the factor plus every channel, so modes
- * never leak into one another — and a mode still *lowers* `pill` even though
- * none raises it, so a consumer who opted into pill controls globally can square
- * a subtree with `data-radius="none"`. `none` is likewise the only mode that
- * lowers `full`, so squaring the system also squares the by-design-round parts
- * instead of leaving stray lozenges behind.
+ * Each generated mode re-declares the ramp against its local factor and assigns
+ * every channel, so modes never leak into one another. A mode still *lowers*
+ * `pill` even though none raises it, so a consumer who opted into pill controls
+ * globally can square a subtree with `data-radius="none"`. `none` is likewise
+ * the only mode that lowers `full`, so squaring the system also squares the
+ * by-design-round parts instead of leaving stray lozenges behind.
  */
 export const radiusModes = {
   none: { factor: '0', full: '0px', pill: '0px', thumb: '0.5px' },

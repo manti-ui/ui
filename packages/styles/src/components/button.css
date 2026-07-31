@@ -79,10 +79,6 @@
       ):not([data-variant='link']) {
       background-color: var(--variant-solid);
       color: var(--variant-on-solid);
-      box-shadow:
-        var(--manti-shadow-sm),
-        inset 0 1px 0 0
-          color-mix(in oklab, var(--variant-on-solid) 12%, transparent);
 
       &:hover {
         background-color: var(--variant-solid-hover);

@@ -36,11 +36,8 @@
     gap: var(--manti-space-3);
     padding: var(--manti-space-6);
     background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     color: var(--manti-text);
-    box-shadow: var(--manti-panel-shadow);
 
     &[data-size='sm'] {
       --manti-drawer-size: 18rem;

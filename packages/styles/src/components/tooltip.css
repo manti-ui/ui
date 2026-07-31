@@ -20,12 +20,9 @@
     max-width: var(--manti-tooltip-max-width);
     padding: var(--manti-space-2) var(--manti-space-3);
     background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     color: var(--manti-text);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     font-size: var(--manti-text-sm);
     line-height: var(--manti-leading-snug);
     transform-origin: var(--transform-origin);
@@ -38,14 +35,6 @@
     &[data-state='closed'] {
       animation: manti-tooltip-out var(--manti-duration-fast)
         var(--manti-ease-soft);
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='tooltip'][data-part='content'] {
-      background: var(--manti-surface-raised);
     }
   }
 

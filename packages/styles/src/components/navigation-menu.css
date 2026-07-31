@@ -78,11 +78,8 @@
     min-width: var(--manti-navigation-menu-content-min-width);
     padding: var(--manti-space-2);
     background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
 
     &[hidden],
     &[data-state='closed'] {
