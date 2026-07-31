@@ -24,6 +24,10 @@ export interface AlertProps extends Omit<
   onDismiss?: () => void;
   /** Accessible label for the dismiss button. */
   dismissLabel?: string;
+  /** Product actions rendered below the description. */
+  actions?: ReactNode;
+  /** Alias for `actions` for message layouts that read as a footer. */
+  footer?: ReactNode;
 }
 
 /**
@@ -37,6 +41,8 @@ export function Alert({
   icon,
   onDismiss,
   dismissLabel = 'Dismiss',
+  actions,
+  footer,
   role,
   className,
   children,
@@ -67,6 +73,11 @@ export function Alert({
         {children != null && (
           <div data-scope="alert" data-part="description">
             {children}
+          </div>
+        )}
+        {(footer ?? actions) != null && (
+          <div data-scope="alert" data-part="actions">
+            {footer ?? actions}
           </div>
         )}
       </div>

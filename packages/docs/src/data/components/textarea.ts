@@ -65,6 +65,19 @@ export const meta: ComponentMeta = {
       description: 'Native resize affordance.',
     },
     {
+      name: 'requiredIndicator',
+      type: 'ReactNode | null',
+      default: `'*'`,
+      description:
+        'Visual marker for required fields. Null hides only the marker.',
+    },
+    {
+      name: 'focusRing',
+      type: `'control' | 'none'`,
+      default: `'control'`,
+      description: 'Choose whether the Manti control owns visible focus.',
+    },
+    {
       name: '...rest',
       type: 'TextareaHTMLAttributes',
       description:

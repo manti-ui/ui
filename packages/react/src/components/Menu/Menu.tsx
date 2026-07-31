@@ -1,17 +1,27 @@
 import { useId } from 'react';
-import type { ReactElement, ReactNode } from 'react';
+import type {
+  HTMLAttributes,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import { menu } from '@manti-ui/folds';
-import { normalizeProps, Portal, useMachine } from '@zag-js/react';
+import { mergeProps, normalizeProps, Portal, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
+import type { WithDataAttributes } from '../../internal/props';
 import { renderTrigger } from '../../internal/floating';
 import type { Placement } from '../../internal/floating';
+import { CheckIcon } from '../../internal/icons';
 
 export type MenuPlacement = Placement | 'bottom-center';
 
-/** A selectable command in the menu. */
-export interface MenuCommand {
-  type?: 'item';
+export type MenuItemRootProps = WithDataAttributes<
+  Omit<HTMLAttributes<HTMLDivElement>, 'children'>
+>;
+
+interface MenuCommandBase {
   /** Unique value reported to `onSelect`. */
   value: string;
   /** Visible label. */
@@ -21,7 +31,37 @@ export interface MenuCommand {
   /** Trailing hint, e.g. a keyboard shortcut. */
   shortcut?: ReactNode;
   disabled?: boolean;
+  /** Semantic visual tone exposed as `data-tone`. */
+  tone?: 'default' | 'danger';
+  /** Props merged onto the actual menu item root. */
+  itemProps?: MenuItemRootProps;
 }
+
+/** A selectable action in the menu. */
+export interface MenuActionCommand extends MenuCommandBase {
+  type?: 'item';
+}
+
+/** A controlled checkable menu item. */
+export interface MenuCheckboxCommand extends MenuCommandBase {
+  type: 'checkbox';
+  checked: boolean;
+  onCheckedChange?: (checked: boolean) => void;
+  closeOnSelect?: boolean;
+}
+
+/** A controlled radio menu item, normally rendered inside a labelled group. */
+export interface MenuRadioCommand extends MenuCommandBase {
+  type: 'radio';
+  checked: boolean;
+  onCheckedChange?: (checked: boolean) => void;
+  closeOnSelect?: boolean;
+}
+
+export type MenuCommand =
+  | MenuActionCommand
+  | MenuCheckboxCommand
+  | MenuRadioCommand;
 
 /** A horizontal divider between groups of items. */
 export interface MenuSeparator {
@@ -54,6 +94,8 @@ export interface MenuProps {
   onOpenChange?: (open: boolean) => void;
   id?: string;
   className?: string;
+  contentProps?: Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+  getItemProps?: (item: MenuCommand) => MenuItemRootProps;
 }
 
 /**
@@ -71,6 +113,8 @@ export function Menu({
   onOpenChange,
   id,
   className,
+  contentProps,
+  getItemProps,
 }: MenuProps) {
   const autoId = useId();
   const baseId = id ?? autoId;
@@ -84,30 +128,103 @@ export function Menu({
     onOpenChange: onOpenChange
       ? (details) => onOpenChange(details.open)
       : undefined,
-    onSelect: onSelect ? (details) => onSelect(details.value) : undefined,
   });
   const api = menu.connect(service, normalizeProps);
 
-  const renderCommand = (item: MenuCommand) => (
-    <div
-      key={item.value}
-      {...api.getItemProps({ value: item.value, disabled: item.disabled })}
-    >
-      {item.icon != null && (
-        <span data-scope="menu" data-part="item-icon">
-          {item.icon}
+  const renderCommand = (item: MenuCommand) => {
+    const isOption = item.type === 'checkbox' || item.type === 'radio';
+    const machineItemProps = isOption
+      ? api.getOptionItemProps({
+          type: item.type,
+          value: item.value,
+          checked: item.checked,
+          disabled: item.disabled,
+          closeOnSelect: item.closeOnSelect,
+          onCheckedChange: item.onCheckedChange,
+        })
+      : api.getItemProps({ value: item.value, disabled: item.disabled });
+    const machineOnClick = machineItemProps.onClick as
+      | MouseEventHandler<HTMLElement>
+      | undefined;
+    const machineOnKeyDown = machineItemProps.onKeyDown as
+      | KeyboardEventHandler<HTMLElement>
+      | undefined;
+    const externalItemProps = mergeProps(
+      item.itemProps ?? {},
+      getItemProps?.(item) ?? {},
+    );
+    const externalOnClick = externalItemProps.onClick as
+      | MouseEventHandler<HTMLElement>
+      | undefined;
+    const externalOnKeyDown = externalItemProps.onKeyDown as
+      | KeyboardEventHandler<HTMLElement>
+      | undefined;
+    const externalRootProps = { ...externalItemProps };
+    delete externalRootProps.onClick;
+    delete externalRootProps.onKeyDown;
+    const correctedMachineProps = {
+      ...machineItemProps,
+      onClick: ((event) => {
+        externalOnClick?.(event);
+        // Zag 1.41.x selects from prior highlighted state. A synthetic/AT click
+        // may not emit pointerdown first, so synchronize the clicked value.
+        if (!event.defaultPrevented && !item.disabled) {
+          onSelect?.(item.value);
+          api.setHighlightedValue(item.value);
+        }
+        if (!event.defaultPrevented) machineOnClick?.(event);
+      }) satisfies MouseEventHandler<HTMLElement>,
+      onKeyDown: ((event) => {
+        externalOnKeyDown?.(event);
+        if (
+          !event.defaultPrevented &&
+          !item.disabled &&
+          (event.key === 'Enter' || event.key === ' ')
+        ) {
+          onSelect?.(item.value);
+        }
+        if (!event.defaultPrevented) machineOnKeyDown?.(event);
+      }) satisfies KeyboardEventHandler<HTMLElement>,
+    };
+    const mergedItemProps = mergeProps(
+      externalRootProps,
+      correctedMachineProps,
+    );
+
+    return (
+      <div
+        key={item.value}
+        {...mergedItemProps}
+        data-tone={item.tone === 'danger' ? 'danger' : undefined}
+        data-variant={item.tone === 'danger' ? 'danger' : undefined}
+      >
+        {item.icon != null && (
+          <span data-scope="menu" data-part="item-icon" aria-hidden="true">
+            {item.icon}
+          </span>
+        )}
+        <span data-scope="menu" data-part="item-text">
+          {item.label}
         </span>
-      )}
-      <span data-scope="menu" data-part="item-text">
-        {item.label}
-      </span>
-      {item.shortcut != null && (
-        <span data-scope="menu" data-part="item-shortcut">
-          {item.shortcut}
-        </span>
-      )}
-    </div>
-  );
+        {item.shortcut != null && (
+          <span data-scope="menu" data-part="item-shortcut">
+            {item.shortcut}
+          </span>
+        )}
+        {isOption && (
+          <span
+            {...api.getItemIndicatorProps({
+              value: item.value,
+              checked: item.checked,
+              disabled: item.disabled,
+            })}
+          >
+            <CheckIcon />
+          </span>
+        )}
+      </div>
+    );
+  };
 
   return (
     <>
@@ -115,7 +232,10 @@ export function Menu({
       {api.open && (
         <Portal>
           <div {...api.getPositionerProps()}>
-            <div {...api.getContentProps()} className={cx(className)}>
+            <div
+              {...mergeProps(contentProps ?? {}, api.getContentProps())}
+              className={cx(contentProps?.className, className)}
+            >
               {items.map((item, index) => {
                 if ('type' in item && item.type === 'separator') {
                   return (

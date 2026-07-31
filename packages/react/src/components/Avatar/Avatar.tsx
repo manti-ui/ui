@@ -34,6 +34,7 @@ export function Avatar({
   const autoId = useId();
   const service = useMachine(avatar.machine, { id: id ?? autoId });
   const api = avatar.connect(service, normalizeProps);
+  const normalizedSrc = src?.trim() || undefined;
 
   return (
     <span
@@ -43,7 +44,9 @@ export function Avatar({
       className={cx(className)}
     >
       <span {...api.getFallbackProps()}>{children}</span>
-      {src != null && <img {...api.getImageProps()} src={src} alt={alt} />}
+      {normalizedSrc != null && (
+        <img {...api.getImageProps()} src={normalizedSrc} alt={alt} />
+      )}
     </span>
   );
 }

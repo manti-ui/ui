@@ -1,5 +1,11 @@
 /** Internal helpers shared by the React adapter. Not part of the public API. */
 
+export type DataAttributes = {
+  [key: `data-${string}`]: string | number | boolean | undefined;
+};
+
+export type WithDataAttributes<T> = T & DataAttributes;
+
 /** Join truthy class names; returns `undefined` when empty so the attribute is omitted. */
 export function cx(
   ...parts: Array<string | false | null | undefined>

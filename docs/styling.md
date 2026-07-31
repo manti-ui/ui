@@ -25,6 +25,23 @@ Manti CSS is layered:
 Ordinary unlayered application CSS wins over Manti without `!important`.
 Import Manti first and application overrides second.
 
+That also means an unlayered global reset can erase a layered component rule.
+Keep native resets away from every Manti anatomy, not only Button:
+
+```css
+button:not([data-scope][data-part]) {
+  padding: 0;
+}
+```
+
+For dense controls, override the component token that owns geometry:
+
+```css
+.compact-action {
+  --manti-button-height: var(--app-compact-control-height);
+}
+```
+
 Components expose stable anatomy attributes:
 
 ```html

@@ -8,6 +8,7 @@ import { ColorRamps, VariantGallery } from '../doc/ColorRamps';
 import { ComponentStatusGrid } from '../doc/ComponentStatusGrid';
 import { Demo } from '../doc/Demo';
 import { InstallTabs } from '../doc/InstallTabs';
+import { LandingPage } from '../doc/LandingPage';
 import { LinkButton } from '../doc/LinkButton';
 import { PropsTable } from '../doc/PropsTable';
 import { ReleasesList } from '../doc/ReleasesList';
@@ -59,6 +60,7 @@ export const mdxComponents = {
   Demo,
   AiPageHeader,
   InstallTabs,
+  LandingPage,
   LinkButton,
   PropsTable,
   Anatomy,

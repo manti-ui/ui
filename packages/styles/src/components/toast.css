@@ -43,12 +43,8 @@
       var(--variant-soft-bg) 26%,
       var(--manti-panel-tint-strong)
     );
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid
       color-mix(in oklab, var(--variant-border) 55%, var(--manti-panel-border));
-    border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     color: var(--manti-text);
 
     /* Semantic accent edge on the inline-start. */
@@ -70,18 +66,6 @@
       cursor: grabbing;
       user-select: none;
       transition: none;
-    }
-  }
-
-  @supports not (
-    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
-  ) {
-    [data-scope='toast'][data-part='root'] {
-      background: color-mix(
-        in oklab,
-        var(--variant-soft-bg) 26%,
-        var(--manti-surface-raised)
-      );
     }
   }
 

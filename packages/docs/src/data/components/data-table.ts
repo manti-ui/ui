@@ -42,7 +42,8 @@ export const meta: ComponentMeta = {
       name: 'paginated',
       type: 'boolean',
       default: 'false',
-      description: 'Paginate client-side, with a Pagination control in the footer.',
+      description:
+        'Paginate client-side, with a Pagination control in the footer.',
     },
     {
       name: 'pageSize',
@@ -59,7 +60,8 @@ export const meta: ComponentMeta = {
     {
       name: 'onSelectionChange',
       type: '(rows: TData[]) => void',
-      description: 'Called with the selected rows whenever the selection changes.',
+      description:
+        'Called with the selected rows whenever the selection changes.',
     },
     {
       name: 'size',
@@ -71,7 +73,8 @@ export const meta: ComponentMeta = {
       name: 'stickyHeader',
       type: 'boolean',
       default: 'false',
-      description: 'Pin the header while the body scrolls (needs a bounded height).',
+      description:
+        'Pin the header while the body scrolls (needs a bounded height).',
     },
     {
       name: 'zebra',
@@ -101,16 +104,41 @@ export const meta: ComponentMeta = {
       type: '(row: TData, index: number) => string',
       description: 'Derive a stable row id (defaults to the row index).',
     },
+    {
+      name: 'getRowProps',
+      type: '(row: TData, index: number) => HTMLAttributes<HTMLTableRowElement>',
+      description: 'Add native, ARIA, and data props to each row.',
+    },
+    {
+      name: 'getCellProps',
+      type: '(row: TData, columnId: string, index: number) => TdHTMLAttributes',
+      description: 'Add native, ARIA, and data props to each cell.',
+    },
+    {
+      name: 'rowComponent',
+      type: 'ComponentType<DataTableRowComponentProps<TData>>',
+      description:
+        'A hook-safe component boundary for resolving live/normalized row entities.',
+    },
   ],
   anatomy: [
-    { part: 'root', description: 'The panel framing the toolbar, grid, and footer.' },
+    {
+      part: 'root',
+      description: 'The panel framing the toolbar, grid, and footer.',
+    },
     {
       part: 'toolbar',
       description: 'The top bar holding the title and search box.',
     },
-    { part: 'title', description: 'The toolbar heading (when `title` is set).' },
+    {
+      part: 'title',
+      description: 'The toolbar heading (when `title` is set).',
+    },
     { part: 'search', description: 'The search field wrapper.' },
-    { part: 'viewport', description: 'The scrollable region wrapping the table.' },
+    {
+      part: 'viewport',
+      description: 'The scrollable region wrapping the table.',
+    },
     { part: 'table', description: 'The <table> element.' },
     { part: 'caption', description: 'The <caption>, when provided.' },
     { part: 'header', description: 'The <thead>.' },

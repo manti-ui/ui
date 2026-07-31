@@ -60,11 +60,8 @@
     max-width: 100%;
     padding: var(--manti-space-1);
     background: var(--manti-fill-subtle);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-full);
-    box-shadow: var(--manti-panel-rim);
 
     &[data-orientation='vertical'] {
       border-radius: var(--manti-radius-xl);
@@ -194,12 +191,7 @@
     > [data-part='list']
     > [data-part='indicator'] {
     background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
-    box-shadow:
-      var(--manti-panel-rim),
-      var(--manti-shadow-md);
   }
 
   [data-scope='tabs'][data-part='root'][data-variant='pill']

@@ -1,10 +1,25 @@
-import { useId } from 'react';
-import type { ReactNode } from 'react';
+import { forwardRef, useId } from 'react';
+import type {
+  InputHTMLAttributes,
+  LabelHTMLAttributes,
+  ReactNode,
+} from 'react';
 import { switchMachine } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
-import { normalizeProps, useMachine } from '@zag-js/react';
+import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
+import type { WithDataAttributes } from '../../internal/props';
+
+export type SwitchRootProps = WithDataAttributes<
+  Omit<LabelHTMLAttributes<HTMLLabelElement>, 'children'>
+>;
+export type SwitchInputProps = WithDataAttributes<
+  Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    'checked' | 'defaultChecked' | 'disabled' | 'name' | 'readOnly' | 'required'
+  >
+>;
 
 export interface SwitchProps {
   /** Control size. */
@@ -29,6 +44,10 @@ export interface SwitchProps {
   value?: string | number;
   id?: string;
   className?: string;
+  /** Props merged onto the wrapping label. Machine-owned behavior wins. */
+  rootProps?: SwitchRootProps;
+  /** Props merged onto the actual checkbox input used as the switch control. */
+  inputProps?: SwitchInputProps;
 }
 
 /**
@@ -36,22 +55,27 @@ export interface SwitchProps {
  * machine. The machine owns state, keyboard, and form behavior; this adapter
  * only renders the anatomy.
  */
-export function Switch({
-  size = 'md',
-  variant = 'primary',
-  children,
-  className,
-  id,
-  checked,
-  defaultChecked,
-  onCheckedChange,
-  disabled,
-  invalid,
-  required,
-  readOnly,
-  name,
-  value,
-}: SwitchProps) {
+export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
+  {
+    size = 'md',
+    variant = 'primary',
+    children,
+    className,
+    id,
+    checked,
+    defaultChecked,
+    onCheckedChange,
+    disabled,
+    invalid,
+    required,
+    readOnly,
+    name,
+    value,
+    rootProps,
+    inputProps,
+  },
+  ref,
+) {
   const autoId = useId();
   const service = useMachine(switchMachine.machine, {
     id: id ?? autoId,
@@ -68,19 +92,35 @@ export function Switch({
       : undefined,
   });
   const api = switchMachine.connect(service, normalizeProps);
+  const hasExplicitName =
+    inputProps?.['aria-label'] != null ||
+    inputProps?.['aria-labelledby'] != null;
+  const machineInputProps = api.getHiddenInputProps();
+  const mergedRootProps = mergeProps(rootProps ?? {}, api.getRootProps());
+  const mergedInputProps = mergeProps(inputProps ?? {}, {
+    ...machineInputProps,
+    'aria-labelledby': hasExplicitName
+      ? undefined
+      : machineInputProps['aria-labelledby'],
+  });
 
   return (
     <label
-      {...api.getRootProps()}
+      {...mergedRootProps}
       data-size={size}
       data-variant={variant}
-      className={cx(className)}
+      className={cx(mergedRootProps.className, className)}
     >
-      <input {...api.getHiddenInputProps()} data-part="hidden-input" />
+      <input
+        {...mergedInputProps}
+        ref={ref}
+        role="switch"
+        data-part="hidden-input"
+      />
       <span {...api.getControlProps()}>
         <span {...api.getThumbProps()} />
       </span>
       {children != null && <span {...api.getLabelProps()}>{children}</span>}
     </label>
   );
-}
+});

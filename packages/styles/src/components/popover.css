@@ -4,7 +4,8 @@
  */
 @layer manti.components {
   [data-scope='popover'][data-part='positioner'] {
-    z-index: var(--manti-z-popover) !important;
+    --manti-popover-z-index: var(--manti-z-popover);
+    z-index: var(--manti-popover-z-index) !important;
   }
 
   [data-scope='popover'][data-part='content'] {
@@ -19,11 +20,8 @@
     max-width: var(--manti-popover-max-width);
     padding: var(--manti-space-4);
     background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     color: var(--manti-text);
     font-size: var(--manti-text-sm);
     line-height: var(--manti-leading-normal);

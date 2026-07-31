@@ -52,6 +52,15 @@ export const Multiple: Story = {
   },
 };
 
+export const ScalarSingle: Story = {
+  args: {
+    type: 'single',
+    multiple: false,
+    defaultValue: 'center',
+    rootProps: { 'aria-label': 'Text alignment' },
+  },
+};
+
 export const Sizes: Story = {
   render: (args) => (
     <div style={{ display: 'grid', gap: '1rem', justifyItems: 'start' }}>

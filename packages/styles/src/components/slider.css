@@ -89,10 +89,8 @@
     border: 1px solid var(--manti-panel-border);
     /* Thumb channel — see switch.css. */
     border-radius: max(var(--manti-radius-xs), var(--manti-radius-thumb));
-    box-shadow: var(--manti-shadow-sm);
     cursor: grab;
     transition:
-      box-shadow var(--manti-duration-fast) var(--manti-ease-smooth),
       transform var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &[data-dragging] {

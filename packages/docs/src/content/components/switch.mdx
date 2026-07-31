@@ -9,7 +9,9 @@ description: An on and off control with form behavior, sizes, and variants.
 # Switch
 
 Use `defaultChecked` for uncontrolled state or `checked` with
-`onCheckedChange` for controlled state. `children` renders a label.
+`onCheckedChange` for controlled state. The actual input uses `role="switch"`.
+`children` renders a visible label; use `inputProps` for `aria-label` or
+`aria-labelledby` when the label lives elsewhere.
 
 <Demo name="switch/basic" center />
 
