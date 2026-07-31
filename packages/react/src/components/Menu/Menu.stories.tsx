@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 
 import { Menu } from './Menu';
 import { Button } from '../Button/Button';
@@ -55,5 +56,44 @@ export const Grouped: Story = {
         ],
       },
     ],
+  },
+};
+
+export const OptionsAndDanger: Story = {
+  render: (args) => {
+    const [compact, setCompact] = useState(true);
+    const [theme, setTheme] = useState('system');
+    return (
+      <Menu
+        {...args}
+        items={[
+          {
+            type: 'checkbox',
+            value: 'compact',
+            label: 'Compact density',
+            checked: compact,
+            closeOnSelect: false,
+            onCheckedChange: setCompact,
+          },
+          {
+            type: 'group',
+            label: 'Theme',
+            items: ['light', 'dark', 'system'].map((value) => ({
+              type: 'radio' as const,
+              value,
+              label: value,
+              checked: theme === value,
+              onCheckedChange: () => setTheme(value),
+            })),
+          },
+          { type: 'separator' },
+          {
+            value: 'delete',
+            label: 'Delete account',
+            tone: 'danger',
+          },
+        ]}
+      />
+    );
   },
 };

@@ -8,8 +8,10 @@ description: A keyboard-accessible command menu with groups and separators.
 
 # Menu
 
-Pass a React element as `trigger`. Commands use
-`{ value, label, icon?, shortcut?, disabled? }`; `onSelect` receives the value.
+Pass a React element as `trigger`. Action commands use
+`{ value, label, icon?, shortcut?, disabled?, tone?, itemProps? }`;
+`onSelect` receives the clicked value for pointer, keyboard, and programmatic
+activation.
 
 <Demo name="menu/basic" center />
 
@@ -18,6 +20,17 @@ Pass a React element as `trigger`. Commands use
 Add `{ type: 'group', label, items }` or `{ type: 'separator' }` entries.
 
 <Demo name="menu/grouped" center />
+
+## Checkbox and radio items
+
+Set `type="checkbox"` or `type="radio"` together with `checked` and
+`onCheckedChange`. Manti renders `menuitemcheckbox` or `menuitemradio` and an
+`item-indicator` part. Use `tone="danger"` for destructive commands.
+
+`itemProps` customizes one item; `getItemProps` customizes items centrally.
+Handlers are chained with the machine, while machine-owned roles and keyboard
+behavior remain authoritative. Menu items do not support nested interactive
+controls.
 
 ## Placement
 

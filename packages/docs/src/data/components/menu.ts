@@ -16,6 +16,17 @@ export const meta: ComponentMeta = {
         'The menu contents: commands, separators (`{ type: "separator" }`), or groups (`{ type: "group", label, items }`).',
     },
     {
+      name: 'getItemProps',
+      type: '(item: MenuCommand) => MenuItemRootProps',
+      description:
+        'Add class, style, ARIA, data attributes, or handlers to item roots.',
+    },
+    {
+      name: 'contentProps',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description: 'Props merged onto the floating menu content.',
+    },
+    {
       name: 'placement',
       type: `'top' | 'bottom' | 'bottom-center' | 'left' | 'right' | '…-start' | '…-end'`,
       default: `'bottom-start'`,
@@ -63,6 +74,10 @@ export const meta: ComponentMeta = {
     {
       part: 'item-shortcut',
       description: 'Trailing hint, e.g. a keyboard shortcut.',
+    },
+    {
+      part: 'item-indicator',
+      description: 'Checked indicator for checkbox and radio items.',
     },
     {
       part: 'item-group-label',

@@ -1,11 +1,13 @@
 /**
- * Generate the primitive/scale `--manti-*` custom properties in
- * `src/tokens.css` from the typed token contract in `@manti-ui/tokens`.
+ * Generate the primitive/scale `--manti-*` custom properties and scoped radius
+ * presets in `src/tokens.css` from the typed token contract in
+ * `@manti-ui/tokens`.
  *
  * The token contract (`packages/tokens/src/index.ts`) is the single source of
  * truth for primitive ramps and plain scale values. This script mirrors those
- * values into the CSS custom-property region delimited by the
- * `@tokens:generated` markers, so the two can never drift by hand.
+ * values into the CSS custom-property regions delimited by the
+ * `@tokens:generated` and `@radius-modes:generated` markers, so they can never
+ * drift by hand.
  *
  * The theme-aware roles (semantic surfaces/text, elevation, glass, ambient) and
  * the `--variant-*` vocabulary stay hand-authored below the region — they use
@@ -25,6 +27,8 @@ const TOKENS_TS = resolve(here, '../../tokens/src/index.ts');
 const CSS = resolve(here, '../src/tokens.css');
 const START = '/* @tokens:generated:start */';
 const END = '/* @tokens:generated:end */';
+const RADIUS_MODES_START = '/* @radius-modes:generated:start */';
+const RADIUS_MODES_END = '/* @radius-modes:generated:end */';
 const check = process.argv.includes('--check');
 
 const t = await import(TOKENS_TS);
@@ -124,6 +128,29 @@ for (const [k, v] of Object.entries(t.zIndex)) decl(`manti-z-${k}`, v);
 
 const block = lines.join('\n');
 
+/* Radius scale variables are normally computed on `:root`. A custom property
+   inherited from there carries its already-computed value, so changing only
+   `--manti-radius-factor` on a subtree cannot rescale those inherited steps.
+   Re-declare the scale in every shipped `[data-radius]` scope so each step is
+   computed against that mode's local factor. This keeps the documented subtree
+   preset API real while deriving every resolved size from the token contract. */
+const radiusModeLines = [];
+for (const [mode, settings] of Object.entries(t.radiusModes)) {
+  radiusModeLines.push(`  [data-radius='${mode}'] {`);
+  radiusModeLines.push(`    --manti-radius-factor: ${settings.factor};`);
+  for (const [step, value] of Object.entries(t.radius)) {
+    if (step === 'full') continue;
+    radiusModeLines.push(
+      `    --manti-radius-${step}: calc(${value} * var(--manti-radius-factor));`,
+    );
+  }
+  radiusModeLines.push(`    --manti-radius-full: ${settings.full};`);
+  radiusModeLines.push(`    --manti-radius-pill: ${settings.pill};`);
+  radiusModeLines.push(`    --manti-radius-thumb: ${settings.thumb};`);
+  radiusModeLines.push('  }', '');
+}
+const radiusModesBlock = radiusModeLines.join('\n').trimEnd();
+
 const raw = await readFile(CSS, 'utf8');
 const start = raw.indexOf(START);
 const end = raw.indexOf(END);
@@ -134,8 +161,22 @@ if (start === -1 || end === -1 || end < start) {
   process.exit(1);
 }
 
-const spliced =
+const withTokens =
   raw.slice(0, start + START.length) + '\n' + block + '\n    ' + raw.slice(end);
+const radiusStart = withTokens.indexOf(RADIUS_MODES_START);
+const radiusEnd = withTokens.indexOf(RADIUS_MODES_END);
+if (radiusStart === -1 || radiusEnd === -1 || radiusEnd < radiusStart) {
+  console.error(
+    'gen-tokens-css: could not find the @radius-modes:generated markers in tokens.css',
+  );
+  process.exit(1);
+}
+const spliced =
+  withTokens.slice(0, radiusStart + RADIUS_MODES_START.length) +
+  '\n' +
+  radiusModesBlock +
+  '\n  ' +
+  withTokens.slice(radiusEnd);
 const config = await prettier.resolveConfig(CSS);
 const formatted = await prettier.format(spliced, {
   ...config,
@@ -154,6 +195,8 @@ if (check) {
   console.log('tokens.css is in sync with the token contract.');
 } else {
   await writeFile(CSS, formatted);
-  const count = lines.filter((l) => l.includes('--manti-')).length;
+  const count =
+    lines.filter((l) => l.includes('--manti-')).length +
+    radiusModeLines.filter((l) => l.includes('--manti-')).length;
   console.log(`gen-tokens-css: wrote ${count} generated declarations.`);
 }

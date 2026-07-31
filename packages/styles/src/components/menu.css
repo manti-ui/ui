@@ -4,7 +4,8 @@
  */
 @layer manti.components {
   [data-scope='menu'][data-part='positioner'] {
-    z-index: var(--manti-z-popover) !important;
+    --manti-menu-z-index: var(--manti-z-popover);
+    z-index: var(--manti-menu-z-index) !important;
   }
 
   [data-scope='menu'][data-part='content'] {
@@ -68,6 +69,14 @@
       color: var(--manti-text-subtle);
       cursor: not-allowed;
     }
+
+    &[data-tone='danger'] {
+      color: var(--manti-danger-text);
+
+      &[data-highlighted] {
+        background: var(--variant-soft-bg);
+      }
+    }
   }
 
   [data-scope='menu'][data-part='item-icon'] {
@@ -86,6 +95,17 @@
     font-size: var(--manti-text-xs);
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.04em;
+  }
+
+  [data-scope='menu'][data-part='item-indicator'] {
+    display: inline-flex;
+    flex: none;
+    color: var(--variant-text);
+    visibility: hidden;
+
+    &[data-state='checked'] {
+      visibility: visible;
+    }
   }
 
   [data-scope='menu'][data-part='item-group-label'] {

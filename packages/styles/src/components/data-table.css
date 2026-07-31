@@ -29,7 +29,6 @@
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-data-table-radius);
-    box-shadow: var(--manti-panel-rim);
   }
 
   @supports not (

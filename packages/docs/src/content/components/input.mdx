@@ -18,6 +18,10 @@ Input accepts native input attributes and wires label, helper text, error text,
 Use `variant="fill"` for a neutral filled control. `size`, `error`, `disabled`,
 and native attributes work across both appearances.
 
+`requiredIndicator={null}` keeps native required semantics without adding a
+visible marker. When another product shell owns the visible focus treatment,
+set `focusRing="none"`. The forwarded ref always targets the native input.
+
 <Demo name="input/variants" />
 
 <Demo name="input/states" />

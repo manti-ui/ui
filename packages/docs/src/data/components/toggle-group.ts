@@ -21,24 +21,36 @@ export const meta: ComponentMeta = {
       description: 'Active variant for pressed items.',
     },
     {
-      name: 'multiple',
-      type: 'boolean',
-      description: 'Allow more than one item to be pressed at once.',
+      name: 'type',
+      type: `'single' | 'multiple'`,
+      description:
+        'Selection mode. Single mode uses scalar string values; multiple mode uses arrays.',
     },
     {
       name: 'value',
-      type: 'string[]',
+      type: 'string | string[]',
       description: 'Controlled pressed values.',
     },
     {
       name: 'defaultValue',
-      type: 'string[]',
+      type: 'string | string[]',
       description: 'Initial pressed values for uncontrolled usage.',
     },
     {
       name: 'onValueChange',
-      type: '(value: string[]) => void',
+      type: '(value: string | string[]) => void',
       description: 'Called whenever the pressed set changes.',
+    },
+    {
+      name: 'rootProps',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description:
+        'ARIA, data, style, class, and native props for the group root.',
+    },
+    {
+      name: 'getItemProps',
+      type: '(item: ToggleGroupItem) => ButtonHTMLAttributes',
+      description: 'Props merged onto every item button.',
     },
     {
       name: 'orientation',

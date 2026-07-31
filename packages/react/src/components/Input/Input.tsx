@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { forwardRef, useId, useState } from 'react';
 import type {
   FocusEvent,
   InputHTMLAttributes,
@@ -30,6 +30,10 @@ export interface InputProps extends Omit<
   leadingAddon?: ReactNode;
   /** Content rendered inside the control, after the input. */
   trailingAddon?: ReactNode;
+  /** Visual required marker. Pass `null` to keep native semantics without a marker. */
+  requiredIndicator?: ReactNode | null;
+  /** Which surface owns the visible focus treatment. */
+  focusRing?: 'control' | 'none';
 
   /* Password affordances. Like the inherited `min`/`max` (number) or `accept`
      (file), these apply to one type only — they are inert unless
@@ -65,34 +69,39 @@ export interface InputProps extends Omit<
  * shared `field` shell, so sizing, the focus ring, and the invalid state behave
  * identically across every type.
  */
-export function Input({
-  label,
-  hint,
-  error,
-  size = 'md',
-  variant = 'default',
-  fullWidth,
-  leadingAddon,
-  trailingAddon,
-  showPasswordToggle = true,
-  passwordVisible,
-  defaultPasswordVisible,
-  onPasswordVisibilityChange,
-  showCapsLockWarning = true,
-  capsLockLabel = 'Caps Lock is on',
-  showPasswordLabel = 'Show password',
-  hidePasswordLabel = 'Hide password',
-  type = 'text',
-  id,
-  required,
-  disabled,
-  className,
-  onKeyDown,
-  onKeyUp,
-  onBlur,
-  'aria-describedby': ariaDescribedby,
-  ...rest
-}: InputProps) {
+export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
+  {
+    label,
+    hint,
+    error,
+    size = 'md',
+    variant = 'default',
+    fullWidth,
+    leadingAddon,
+    trailingAddon,
+    requiredIndicator = '*',
+    focusRing = 'control',
+    showPasswordToggle = true,
+    passwordVisible,
+    defaultPasswordVisible,
+    onPasswordVisibilityChange,
+    showCapsLockWarning = true,
+    capsLockLabel = 'Caps Lock is on',
+    showPasswordLabel = 'Show password',
+    hidePasswordLabel = 'Hide password',
+    type = 'text',
+    id,
+    required,
+    disabled,
+    className,
+    onKeyDown,
+    onKeyUp,
+    onBlur,
+    'aria-describedby': ariaDescribedby,
+    ...rest
+  },
+  ref,
+) {
   const autoId = useId();
   const inputId = id ?? autoId;
   const invalid = error != null;
@@ -154,14 +163,15 @@ export function Input({
       data-appearance={variant}
       data-invalid={dataBool(invalid)}
       data-full-width={dataBool(fullWidth)}
+      data-focus-ring={focusRing}
       className={cx(className)}
     >
       {label != null && (
         <label data-scope="field" data-part="label" htmlFor={inputId}>
           {label}
-          {required && (
+          {required && requiredIndicator != null && (
             <span data-scope="field" data-part="required" aria-hidden>
-              *
+              {requiredIndicator}
             </span>
           )}
         </label>
@@ -173,6 +183,7 @@ export function Input({
           </span>
         )}
         <input
+          ref={ref}
           data-scope="field"
           data-part="input"
           {...rest}
@@ -236,4 +247,4 @@ export function Input({
       )}
     </div>
   );
-}
+});

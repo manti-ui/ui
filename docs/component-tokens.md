@@ -85,6 +85,7 @@ system-wide changes; use this list when one component should differ. See
 | `dialog`            | `--manti-dialog-padding-x`                  | `var(--manti-space-6)`                               |
 | `dialog`            | `--manti-dialog-padding-y`                  | `var(--manti-space-6)`                               |
 | `dialog`            | `--manti-dialog-gap`                        | `var(--manti-space-3)`                               |
+| `dialog`            | `--manti-dialog-z-index`                    | `var(--manti-z-overlay)`                             |
 | `drawer`            | `--manti-drawer-size`                       | `24rem`                                              |
 | `editable`          | `--manti-editable-height`                   | `var(--manti-control-height-md)`                     |
 | `field`             | `--manti-field-height`                      | `var(--manti-control-height-md)`                     |
@@ -99,12 +100,14 @@ system-wide changes; use this list when one component should differ. See
 | `marquee`           | `--manti-marquee-duration`                  | `20s`                                                |
 | `menu`              | `--manti-menu-min-width`                    | `12rem`                                              |
 | `menu`              | `--manti-menu-max-width`                    | `20rem`                                              |
+| `menu`              | `--manti-menu-z-index`                      | `var(--manti-z-popover)`                             |
 | `navigation-menu`   | `--manti-navigation-menu-content-min-width` | `16rem`                                              |
 | `number-input`      | `--manti-number-input-height`               | `var(--manti-control-height-md)`                     |
 | `number-input`      | `--manti-number-input-stepper-width`        | `2.25rem`                                            |
 | `pagination`        | `--manti-pagination-size`                   | `2.25rem`                                            |
 | `pin-input`         | `--manti-pin-input-size`                    | `2.75rem`                                            |
 | `popover`           | `--manti-popover-max-width`                 | `20rem`                                              |
+| `popover`           | `--manti-popover-z-index`                   | `var(--manti-z-popover)`                             |
 | `progress`          | `--manti-progress-track-height`             | `0.5rem`                                             |
 | `progress`          | `--manti-progress-circle-size`              | `5rem`                                               |
 | `rating-group`      | `--manti-rating-group-size`                 | `1.5rem`                                             |
@@ -135,6 +138,7 @@ system-wide changes; use this list when one component should differ. See
 | `toggle-group`      | `--manti-toggle-group-height`               | `2rem`                                               |
 | `toggle-group`      | `--manti-toggle-group-padding-x`            | `var(--manti-space-3)`                               |
 | `tooltip`           | `--manti-tooltip-max-width`                 | `18rem`                                              |
+| `tooltip`           | `--manti-tooltip-z-index`                   | `var(--manti-z-popover)`                             |
 | `tour`              | `--manti-tour-width`                        | `20rem`                                              |
 
 <!-- @component-tokens:generated:end -->

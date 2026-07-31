@@ -37,6 +37,13 @@ export const meta: ComponentMeta = {
       description:
         'Allow dismissing a toast by swiping it toward its anchored edge.',
     },
+    {
+      name: 'translations',
+      type: '{ closeTriggerLabel?: string }',
+      default: `{ closeTriggerLabel: 'Close' }`,
+      description:
+        'Factory-level accessible wording, overridable by per-toast options.',
+    },
   ],
   anatomy: [
     {

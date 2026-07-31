@@ -83,7 +83,6 @@
   [data-scope='pagination'][data-part='item'][data-selected] {
     background: var(--variant-solid);
     color: var(--variant-on-solid);
-    box-shadow: var(--manti-shadow-sm);
 
     &:hover {
       background: var(--variant-solid-hover);

@@ -25,8 +25,12 @@ export type { CarouselProps } from './Carousel/Carousel';
 export { Checkbox } from './Checkbox/Checkbox';
 export type { CheckboxProps } from './Checkbox/Checkbox';
 
-export { Clipboard } from './Clipboard/Clipboard';
-export type { ClipboardProps } from './Clipboard/Clipboard';
+export { Clipboard, useClipboard } from './Clipboard/Clipboard';
+export type {
+  ClipboardProps,
+  UseClipboardOptions,
+  UseClipboardReturn,
+} from './Clipboard/Clipboard';
 
 export { Collapsible } from './Collapsible/Collapsible';
 export type { CollapsibleProps } from './Collapsible/Collapsible';
@@ -48,6 +52,7 @@ export { DataTable } from './DataTable/DataTable';
 export type {
   DataTableColumn,
   DataTableProps,
+  DataTableRowComponentProps,
   DataTableSize,
 } from './DataTable/DataTable';
 
@@ -55,7 +60,11 @@ export { DatePicker } from './DatePicker/DatePicker';
 export type { DatePickerProps } from './DatePicker/DatePicker';
 
 export { Dialog } from './Dialog/Dialog';
-export type { DialogProps, DialogSize } from './Dialog/Dialog';
+export type {
+  DialogProps,
+  DialogRenderProps,
+  DialogSize,
+} from './Dialog/Dialog';
 
 export { Drawer } from './Drawer/Drawer';
 export type {
@@ -88,11 +97,15 @@ export type { MarqueeProps } from './Marquee/Marquee';
 
 export { Menu } from './Menu/Menu';
 export type {
+  MenuActionCommand,
+  MenuCheckboxCommand,
   MenuCommand,
   MenuGroup,
   MenuItem,
+  MenuItemRootProps,
   MenuPlacement,
   MenuProps,
+  MenuRadioCommand,
   MenuSeparator,
 } from './Menu/Menu';
 
@@ -152,10 +165,14 @@ export { Steps } from './Steps/Steps';
 export type { StepItem, StepsProps } from './Steps/Steps';
 
 export { Switch } from './Switch/Switch';
-export type { SwitchProps } from './Switch/Switch';
+export type {
+  SwitchInputProps,
+  SwitchProps,
+  SwitchRootProps,
+} from './Switch/Switch';
 
 export { Tabs } from './Tabs/Tabs';
-export type { TabItem, TabsProps } from './Tabs/Tabs';
+export type { TabItem, TabsProps, TabsVariant } from './Tabs/Tabs';
 
 export { TagsInput } from './TagsInput/TagsInput';
 export type { TagsInputProps } from './TagsInput/TagsInput';
@@ -174,6 +191,7 @@ export { createToaster } from './Toast/Toast';
 export type {
   CreateToasterOptions,
   MantiToaster,
+  ToastTranslations,
   ToastPlacement,
   ToasterInstance,
   ToasterProps,
@@ -188,11 +206,19 @@ export type { ToggleProps } from './Toggle/Toggle';
 export { ToggleGroup } from './ToggleGroup/ToggleGroup';
 export type {
   ToggleGroupItem,
+  ToggleGroupLegacyProps,
+  ToggleGroupMultipleProps,
   ToggleGroupProps,
+  ToggleGroupSingleProps,
 } from './ToggleGroup/ToggleGroup';
 
 export { Tooltip } from './Tooltip/Tooltip';
 export type { TooltipProps } from './Tooltip/Tooltip';
 
 export { Tour } from './Tour/Tour';
-export type { TourProps, TourStep } from './Tour/Tour';
+export type {
+  TourProps,
+  TourStep,
+  TourStepAction,
+  TourStepActionType,
+} from './Tour/Tour';

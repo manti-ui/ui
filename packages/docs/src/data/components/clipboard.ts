@@ -4,6 +4,12 @@ export const meta: ComponentMeta = {
   scope: 'clipboard',
   props: [
     {
+      name: 'useClipboard',
+      type: '(options: UseClipboardOptions) => UseClipboardReturn',
+      description:
+        'Headless copied state and copy action for product-owned buttons and Web Share fallbacks.',
+    },
+    {
       name: 'value',
       type: 'string',
       description: 'The value to copy to the clipboard.',

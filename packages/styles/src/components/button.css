@@ -79,10 +79,6 @@
       ):not([data-variant='link']) {
       background-color: var(--variant-solid);
       color: var(--variant-on-solid);
-      box-shadow:
-        var(--manti-shadow-sm),
-        inset 0 1px 0 0
-          color-mix(in oklab, var(--variant-on-solid) 12%, transparent);
 
       &:hover {
         background-color: var(--variant-solid-hover);
@@ -182,6 +178,14 @@
     align-items: center;
     gap: var(--manti-space-2);
     transition: opacity var(--manti-duration-fast) var(--manti-ease-soft);
+  }
+
+  [data-scope='button'][data-part='leading-icon'],
+  [data-scope='button'][data-part='trailing-icon'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
   }
 
   [data-scope='button'][data-loading='true'] [data-part='label'] {

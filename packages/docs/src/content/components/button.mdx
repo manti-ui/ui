@@ -11,6 +11,11 @@ description: An action button with semantic variants, sizes, icons, and loading 
 Button supports the seven built-in variants, custom `MantiVariant` strings, and
 a Button-only `link` treatment.
 
+Set `as="a"` for navigation without nesting interactive elements. Native props
+and the ref type follow the selected root. Leading and trailing icons are
+decorative and render in public `leading-icon` / `trailing-icon` anatomy parts;
+the accessible name must come from children or `aria-label`.
+
 <Demo name="button/variants" center />
 
 ## Sizes

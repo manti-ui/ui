@@ -95,6 +95,14 @@ export const Loading: Story = {
   args: { loading: true },
 };
 
+export const PolymorphicLink: Story = {
+  render: (args) => (
+    <Button {...args} as="a" href="#button-link-target">
+      Navigate as an anchor
+    </Button>
+  ),
+};
+
 export const Disabled: Story = {
   args: { disabled: true },
   render: (args) => (

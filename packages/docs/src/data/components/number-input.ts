@@ -70,11 +70,18 @@ export const meta: ComponentMeta = {
       type: 'boolean',
       description: 'Make the field read-only.',
     },
+    {
+      name: 'rootProps / inputProps',
+      type: 'HTMLAttributes / InputHTMLAttributes',
+      description:
+        'Props for the wrapper and actual numeric input, including ARIA and data attributes.',
+    },
   ],
   anatomy: [
     {
       part: 'root',
-      description: 'The field wrapper carrying scope, size, variant, and state.',
+      description:
+        'The field wrapper carrying scope, size, variant, and state.',
     },
     {
       part: 'label',

@@ -1,0 +1,114 @@
+---
+title: Application integration
+slug: /guides/integration
+group: Guides
+order: 35
+description: Integrate Manti with existing resets, focus shells, dense layouts, tests, and native forms.
+---
+
+# Application integration
+
+## Cascade layers and application resets
+
+Manti styles live in cascade layers. Unlayered application CSS wins regardless
+of selector specificity, so a broad reset such as `button { padding: 0 }` can
+erase the geometry of Button, ToggleGroup, Menu, and other button-backed
+anatomies.
+
+Import Manti before application CSS and keep native resets away from Manti
+parts:
+
+```css
+button:not([data-scope][data-part]) {
+  padding: 0;
+}
+```
+
+When overriding anatomy, prefer low-specificity selectors:
+
+```css
+:where([data-scope='button'][data-part='root']).compact-action {
+  --manti-button-height: var(--app-compact-control-height);
+  --manti-button-padding-x: var(--app-compact-control-padding);
+}
+```
+
+Component variables define control geometry. Setting only `height` does not
+override a component's token-backed `min-height`.
+
+## Focus ownership
+
+Input and Textarea put the visible focus treatment on the outer `control` part;
+the native input is intentionally outline-free. If an existing search shell or
+composite widget already paints focus, use `focusRing="none"` and keep one
+visible owner:
+
+```tsx
+<SearchShell>
+  <Input aria-label="Search" focusRing="none" />
+</SearchShell>
+```
+
+Do not remove both focus indicators. Global `input:focus-visible` rules should
+either exclude Manti field inputs or be placed in a controlled layer.
+
+## Inline SVG
+
+Manti's reset makes SVG replaced media block-level. Wrap application icons or
+restore inline flow for text-adjacent SVG:
+
+```css
+.app-inline-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+```
+
+Button's `leadingIcon` and `trailingIcon` slots already render inside inline-flex
+anatomy parts.
+
+## Vitest and jsdom
+
+Zag/Floating UI components expect `PointerEvent` and `ResizeObserver`. Add small
+test-environment shims when jsdom does not provide them:
+
+```ts
+class ResizeObserverMock implements ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+globalThis.ResizeObserver ??= ResizeObserverMock;
+globalThis.PointerEvent ??= MouseEvent as typeof PointerEvent;
+```
+
+Test pointer, keyboard, and direct click activation independently for menus and
+other composite controls.
+
+## Native forms
+
+Manti fields compose with the platform form element; a state-owning Form
+primitive is not required:
+
+```tsx
+<form onSubmit={handleSubmit}>
+  <Input name="email" label="Email" required />
+  <Button type="submit">Save</Button>
+</form>
+```
+
+Use `requiredIndicator={null}` when native required semantics should remain
+without a visual marker.
+
+## Combined local date and time
+
+For a single native local datetime value, Input remains the smallest contract:
+
+```tsx
+<Input type="datetime-local" name="endsAt" label="Ends at" />
+```
+
+When product requirements need separate DatePicker and TimePicker surfaces,
+place both under one visible field label and combine their values in application
+state. Keep one accessible group name and one validation message.

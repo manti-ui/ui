@@ -5,9 +5,10 @@
  */
 @layer manti.components {
   [data-scope='dialog'][data-part='backdrop'] {
+    --manti-dialog-z-index: var(--manti-z-overlay);
     position: fixed;
     inset: 0;
-    z-index: var(--manti-z-overlay);
+    z-index: var(--manti-dialog-z-index);
     background: var(--manti-overlay);
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
@@ -19,9 +20,10 @@
   }
 
   [data-scope='dialog'][data-part='positioner'] {
+    --manti-dialog-z-index: var(--manti-z-overlay);
     position: fixed;
     inset: 0;
-    z-index: var(--manti-z-overlay);
+    z-index: var(--manti-dialog-z-index);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,11 +48,8 @@
     margin: auto;
     padding: var(--manti-dialog-padding-y) var(--manti-dialog-padding-x);
     background: var(--manti-panel-tint-strong);
-    -webkit-backdrop-filter: var(--manti-panel-blur);
-    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-dialog-radius);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     color: var(--manti-text);
 
     &[data-size='sm'] {

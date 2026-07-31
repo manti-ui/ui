@@ -58,11 +58,26 @@ const inlineMeta: Record<string, ComponentMeta> = {
         type: 'ReactNode',
         description: 'Content placed after the label.',
       },
+      {
+        name: 'as',
+        type: 'ElementType',
+        default: `'button'`,
+        description:
+          'Polymorphic root. Native props and ref follow the selected element.',
+      },
     ],
     anatomy: [
       { part: 'root', description: 'The <button> element.' },
       { part: 'spinner', description: 'Loading indicator (when loading).' },
       { part: 'label', description: 'Wraps icons and children.' },
+      {
+        part: 'leading-icon',
+        description: 'Decorative leading icon wrapper.',
+      },
+      {
+        part: 'trailing-icon',
+        description: 'Decorative trailing icon wrapper.',
+      },
     ],
   },
 
@@ -111,6 +126,12 @@ const inlineMeta: Record<string, ComponentMeta> = {
         type: 'string',
         description: 'Form field name and submitted value when checked.',
       },
+      {
+        name: 'rootProps / inputProps',
+        type: 'LabelHTMLAttributes / InputHTMLAttributes',
+        description:
+          'Props for the wrapping label and actual role=switch input.',
+      },
     ],
     anatomy: [
       { part: 'root', description: 'The <label> wrapping the control.' },
@@ -135,6 +156,12 @@ const inlineMeta: Record<string, ComponentMeta> = {
         type: 'boolean',
         default: 'false',
         description: 'Apply the smooth hover lift. Pair with real semantics.',
+      },
+      {
+        name: 'as',
+        type: 'ElementType',
+        default: `'div'`,
+        description: 'Polymorphic semantic root such as article, aside, or li.',
       },
     ],
     anatomy: [
@@ -175,6 +202,13 @@ const inlineMeta: Record<string, ComponentMeta> = {
         default: 'false',
         description: 'Show a leading status dot.',
       },
+      {
+        name: 'as',
+        type: 'ElementType',
+        default: `'span'`,
+        description:
+          'Polymorphic root, for example an anchor when the badge navigates.',
+      },
     ],
     anatomy: [
       { part: 'root', description: 'The chip element.' },
@@ -212,6 +246,12 @@ const inlineMeta: Record<string, ComponentMeta> = {
         type: `'status' | 'alert'`,
         description: 'Auto-escalates to alert for the danger variant.',
       },
+      {
+        name: 'actions / footer',
+        type: 'ReactNode',
+        description:
+          'One or more product actions rendered below the description.',
+      },
     ],
     anatomy: [
       { part: 'root', description: 'The alert container.' },
@@ -219,6 +259,7 @@ const inlineMeta: Record<string, ComponentMeta> = {
       { part: 'content', description: 'Title + description wrapper.' },
       { part: 'title', description: 'The bold leading line.' },
       { part: 'description', description: 'Supporting copy.' },
+      { part: 'actions', description: 'Product actions or footer content.' },
       { part: 'dismiss', description: 'Close button (when onDismiss).' },
     ],
   },
@@ -365,6 +406,21 @@ const inlineMeta: Record<string, ComponentMeta> = {
         name: 'interactive',
         type: 'boolean',
         description: 'Keep open while hovering the content.',
+      },
+      {
+        name: 'placement',
+        type: 'Placement',
+        description: 'Placement relative to the trigger.',
+      },
+      {
+        name: 'open / defaultOpen / onOpenChange',
+        type: 'controlled state',
+        description: 'Controlled or uncontrolled open state.',
+      },
+      {
+        name: 'portalled / portalContainer',
+        type: 'boolean / RefObject<HTMLElement>',
+        description: 'Portal the content, optionally into a custom host.',
       },
     ],
     anatomy: [

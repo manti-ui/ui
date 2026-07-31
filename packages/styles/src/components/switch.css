@@ -69,7 +69,6 @@
        round at every radius mode but `none`, where it squares off with its
        track instead of rattling around as a lone circle. */
     border-radius: max(var(--manti-radius-xs), var(--manti-radius-thumb));
-    box-shadow: var(--manti-shadow-sm);
     transition: transform var(--manti-duration-base) var(--manti-ease-smooth);
   }
 

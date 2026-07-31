@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert } from './Alert';
+import { Button } from '../Button/Button';
 
 const variants = ['primary', 'secondary', 'success', 'info', 'danger'] as const;
 
@@ -73,5 +74,19 @@ export const Dismissible: Story = {
         <Alert {...args} onDismiss={() => setOpen(false)} />
       </div>
     );
+  },
+};
+
+export const WithActions: Story = {
+  args: {
+    title: 'Restore draft?',
+    actions: (
+      <>
+        <Button size="sm">Restore</Button>
+        <Button size="sm" variant="tertiary">
+          Discard
+        </Button>
+      </>
+    ),
   },
 };
