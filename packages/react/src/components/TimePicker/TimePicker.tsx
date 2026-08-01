@@ -2,8 +2,9 @@ import { useEffect, useId, useMemo, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { timePicker } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
-import { normalizeProps, Portal, useMachine } from '@zag-js/react';
+import { normalizeProps, useMachine } from '@zag-js/react';
 
+import { Portal } from '../../internal/Portal';
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
@@ -119,7 +120,11 @@ export function TimePicker({
   };
 
   return (
-    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
+    <div
+      {...api.getRootProps()}
+      data-variant={variant}
+      className={cx(className)}
+    >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
         <input {...api.getInputProps()} />
