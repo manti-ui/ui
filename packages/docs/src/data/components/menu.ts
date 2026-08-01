@@ -7,13 +7,19 @@ export const meta: ComponentMeta = {
       name: 'trigger',
       type: 'ReactElement',
       description:
-        'Element that opens the menu. Cloned with the machine trigger props.',
+        'Element that opens the menu. Cloned with the machine trigger props. Composition alternative: a `Menu.Trigger` child.',
     },
     {
       name: 'items',
       type: 'MenuItem[]',
       description:
-        'The menu contents: commands, separators (`{ type: "separator" }`), or groups (`{ type: "group", label, items }`).',
+        'The menu contents: commands, separators (`{ type: "separator" }`), or groups (`{ type: "group", label, items }`). Omit it to compose the parts as children instead.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      description:
+        'Composed parts — `Menu.Trigger` and `Menu.Content` — used when `items` is omitted.',
     },
     {
       name: 'getItemProps',

@@ -1,0 +1,142 @@
+---
+title: v0.7.0
+slug: /changelog/v0.7.0
+group: Changelog
+order: 1
+date: '2026-08-01'
+description: Menu and ContextMenu become composable, portal-backed components survive SSR hydration, the integration APIs open up across the library, and the docs site is prerendered.
+---
+
+# v0.7.0
+
+_Released 2026-08-01._
+
+## Menu and ContextMenu are composable
+
+Both components now expose the parts below the trigger as a compound API, so a
+command can render whatever it needs instead of the fixed
+`{ value, label, icon, shortcut }` descriptor:
+
+```tsx
+<Menu>
+  <Menu.Trigger>
+    <Button variant="tertiary">Serve as…</Button>
+  </Menu.Trigger>
+  <Menu.Content>
+    <Menu.Group>
+      <Menu.GroupLabel>Toppings</Menu.GroupLabel>
+      <Menu.Item value="yogurt" shortcut="⌘1" onSelect={serve}>
+        Garlic yogurt
+      </Menu.Item>
+    </Menu.Group>
+    <Menu.Separator />
+    <Menu.CheckboxItem
+      value="compact"
+      checked={compact}
+      onCheckedChange={setCompact}
+    >
+      Compact density
+    </Menu.CheckboxItem>
+  </Menu.Content>
+</Menu>
+```
+
+The parts are `Menu.Trigger`, `Menu.Content`, `Menu.Item`,
+`Menu.CheckboxItem`, `Menu.RadioItem`, `Menu.Group`, `Menu.GroupLabel`,
+`Menu.Separator`, `Menu.ItemIcon`, `Menu.ItemText`, `Menu.ItemShortcut`, and
+`Menu.ItemIndicator`. Each command also takes its own `onSelect`, so an action
+can live next to the item that triggers it.
+
+The `items` shorthand is unchanged and now renders through those same parts, so
+existing usage keeps working. ContextMenu exposes the same set: it treats
+`children` as its target region when `items` is present, and as composed parts
+when `items` is omitted.
+
+## Portal-backed components survive hydration
+
+Every overlay in the library — Dialog, Drawer, Menu, ContextMenu, Popover,
+HoverCard, Tooltip, Select, Combobox, DatePicker, TimePicker, ColorPicker,
+FloatingPanel, Toast and Tour — now mounts its portal only after hydration.
+
+Zag's `Portal` branches on `typeof window`: it renders its children inline on
+the server and through `createPortal` in the browser. A server-rendered page
+therefore hydrated into a differently shaped tree than it shipped — the inline
+markup was discarded and every `useId` after it shifted, leaving stale `id` /
+`aria-labelledby` pairs that React does not patch up. The server and the first
+client render now both produce nothing, and the portal appears in the commit
+right after. Overlay content is closed at rest, so nothing is lost from
+prerendered HTML.
+
+If you render Manti in Next.js, Remix, Astro, or any other SSR/SSG setup, this
+removes a whole class of hydration warnings without any change on your side.
+
+## Integration APIs
+
+The library opens up where applications kept having to reach around it:
+
+- **Polymorphic primitives.** Button, Badge, and Card take an `as` prop and
+  forward their props and ref to whatever they render — a router `Link`, an
+  `<a>`, a `<label>`.
+- **Refs reach native controls.** Input, Textarea, NumberInput, Switch, and
+  Progress forward their ref to the element you would expect, and Switch adds
+  `rootProps` / `inputProps` (`SwitchRootProps`, `SwitchInputProps`) for the
+  anatomy in between.
+- **ToggleGroup gains a discriminated API.** `type="single"` types `value` as
+  `string`, `type="multiple"` as `string[]`. The old `multiple` boolean shape
+  still works and is typed as `ToggleGroupLegacyProps`, marked deprecated.
+- **Tooltip gains the floating contract** the other overlays already had:
+  `placement`, controlled `open` / `defaultOpen` / `onOpenChange`, and
+  `portalled` / `portalContainer`.
+- **DataTable takes a row component** (`DataTableRowComponentProps`), so a row
+  can become a link or carry application state.
+- **Dialog accepts render-prop children** (`DialogRenderProps`) for content
+  that needs the open state or the close callback.
+- **Clipboard exports `useClipboard`** (`UseClipboardOptions`,
+  `UseClipboardReturn`) for copy behaviour without the field anatomy.
+- **Toast takes `ToastTranslations`**, and Tour exports `TourStepAction` /
+  `TourStepActionType`.
+
+Menu also fixes selection on a direct click: the machine turns `Enter` into a
+real `click()`, and reading `context.get()` within the same tick returned the
+previous value, so a click could select the wrong item.
+
+A new [Application integration](/guides/integration) guide covers cascade
+layers and application resets, focus ownership with `focusRing="none"`, inline
+SVG, jsdom/Vitest shims, and native forms.
+
+## Tokens
+
+- `--manti-dialog-z-index`, `--manti-menu-z-index`,
+  `--manti-popover-z-index`, and `--manti-tooltip-z-index` make overlay
+  stacking overridable per component instead of only through the global `z`
+  scale.
+- `--manti-progress-circle-thickness` sizes the circular Progress ring and
+  tracks the `sm`, `md`, and `lg` sizes.
+
+## Fixes
+
+- **Progress (circular).** Zag sizes the ring inline from `--size` /
+  `--thickness`, and those inline declarations beat the stylesheet — neither
+  var was defined, so the ring collapsed to an unsized svg. Both now derive
+  from `--manti-progress-circle-size` and the new thickness token. The
+  indeterminate state animates a quarter-arc around the track instead of
+  sitting still, the value text renders through `getValueTextProps()` so it is
+  announced, and `showValue` no longer draws a duplicate header above the ring.
+- **Zag.js 1.43.0.** The 37 pinned machines move up from 1.41.2, which lands
+  fixes with no API change on our side: ContextMenu no longer flashes at the
+  top-left corner before positioning; DatePicker gains disabled / read-only /
+  controlled-open fixes and keyboard range selection matching the pointer;
+  TagsInput submits its current tags in `FormData` instead of its initial
+  value; Toast stops flickering when an overlapped stack expands; Popover and
+  Dialog fix tabbing out of portalled content when the trigger is last on the
+  page; Tour fixes `action: "skip"` steps; ColorPicker no longer commits a
+  partial channel value when `Enter` confirms an IME composition; Splitter
+  honours `collapsedSize`; SignaturePad fixes controlled `paths`.
+  `@zag-js/time-picker` stays at 1.22.1 — upstream has not published it since.
+
+## Documentation
+
+Every docs route is now prerendered to its own static HTML file with a
+per-route `<head>` and a generated sitemap, so crawlers read the real page
+instead of an empty root element. The site also ships component test coverage
+notes and the integration guide above.

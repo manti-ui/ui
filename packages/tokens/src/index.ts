@@ -532,7 +532,7 @@ export const componentTokens = {
   pagination: ['size'],
   'pin-input': ['size'],
   popover: ['max-width', 'z-index'],
-  progress: ['track-height', 'circle-size'],
+  progress: ['track-height', 'circle-size', 'circle-thickness'],
   'rating-group': ['size'],
   'scroll-area': ['size'],
   'segmented-control': ['height', 'padding-x'],
