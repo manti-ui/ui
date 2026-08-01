@@ -9,13 +9,13 @@ export const meta: ComponentMeta = {
       name: 'children',
       type: 'ReactNode',
       description:
-        'The region that opens the menu on right-click (or long-press on touch).',
+        'With `items`, the region that opens the menu on right-click (or long-press on touch). Without it, the composed parts.',
     },
     {
       name: 'items',
       type: 'MenuItem[]',
       description:
-        'The menu contents — commands, separators, and titled groups.',
+        'The menu contents — commands, separators, and titled groups. Omit it to compose `ContextMenu.Trigger` and `ContextMenu.Content` as children instead.',
     },
     {
       name: 'onSelect',
