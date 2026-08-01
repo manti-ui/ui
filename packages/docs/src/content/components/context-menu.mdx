@@ -13,6 +13,27 @@ same Zag.js machine and styling scope as [Menu](/components/menu).
 
 <Demo name="context-menu/basic" center />
 
+## Composition
+
+Omit `items` and compose the parts instead. ContextMenu shares every part below
+the trigger with [Menu](/components/menu#composition) — only the trigger
+differs, because the menu opens at the pointer rather than under a button.
+
+```tsx
+<ContextMenu onSelect={run}>
+  <ContextMenu.Trigger>{region}</ContextMenu.Trigger>
+  <ContextMenu.Content>
+    <ContextMenu.Item value="copy" shortcut="⌘C">
+      Copy
+    </ContextMenu.Item>
+    <ContextMenu.Separator />
+    <ContextMenu.Item value="delete" tone="danger">
+      Delete
+    </ContextMenu.Item>
+  </ContextMenu.Content>
+</ContextMenu>
+```
+
 ## API
 
 <PropsTable component="context-menu" />

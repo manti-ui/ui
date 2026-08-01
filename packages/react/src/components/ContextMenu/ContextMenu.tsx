@@ -1,16 +1,25 @@
 import { useId } from 'react';
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { menu } from '@manti-ui/folds';
-import { normalizeProps, Portal, useMachine } from '@zag-js/react';
+import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
-import type { MenuCommand, MenuItem } from '../Menu/Menu';
+import { MenuProvider, menuParts, useMenuSelection } from '../Menu/MenuParts';
+import { renderMenuItems } from '../Menu/MenuItems';
+import type { MenuGetItemProps, MenuItem } from '../Menu/MenuItems';
 
 export interface ContextMenuProps {
-  /** The region that opens the menu on right-click (or long-press on touch). */
-  children: ReactNode;
-  /** The menu contents. */
-  items: MenuItem[];
+  /**
+   * With `items`, the region that opens the menu on right-click (or long-press
+   * on touch). Without it, the composed parts — `ContextMenu.Trigger` and
+   * `ContextMenu.Content`.
+   */
+  children?: ReactNode;
+  /**
+   * Declarative menu contents. Omit it and compose `ContextMenu.Content` with
+   * `ContextMenu.Item`, `ContextMenu.Group`, and `ContextMenu.Separator`.
+   */
+  items?: MenuItem[];
   /** Called with the value of the selected command. */
   onSelect?: (value: string) => void;
   /** Controlled open state. */
@@ -20,15 +29,30 @@ export interface ContextMenuProps {
   /** Called whenever the open state changes. */
   onOpenChange?: (open: boolean) => void;
   id?: string;
+  /** Class applied to the floating panel. */
   className?: string;
+  contentProps?: Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
+  getItemProps?: MenuGetItemProps;
 }
 
 /**
  * A right-click (or long-press) context menu backed by the same Zag.js menu
  * machine as {@link Menu}, opened at the pointer via its context trigger. The
  * machine owns keyboard navigation, typeahead, positioning, and dismissal; this
- * adapter wraps the target region and renders the translucent panel through a portal.
- * It reuses the `menu` style scope, so its panel matches the dropdown menu.
+ * adapter renders the translucent panel through a portal. It shares the `menu`
+ * style scope and every part below the trigger with {@link Menu}, so its panel
+ * matches the dropdown menu.
+ *
+ * Pass `items` with the target region as `children`, or compose the parts:
+ *
+ * ```tsx
+ * <ContextMenu onSelect={run}>
+ *   <ContextMenu.Trigger>{region}</ContextMenu.Trigger>
+ *   <ContextMenu.Content>
+ *     <ContextMenu.Item value="copy">Copy</ContextMenu.Item>
+ *   </ContextMenu.Content>
+ * </ContextMenu>
+ * ```
  */
 export function ContextMenu({
   children,
@@ -39,9 +63,12 @@ export function ContextMenu({
   onOpenChange,
   id,
   className,
+  contentProps,
+  getItemProps,
 }: ContextMenuProps) {
   const autoId = useId();
   const baseId = id ?? autoId;
+  const selection = useMenuSelection();
   const service = useMachine(menu.machine, {
     id: baseId,
     open,
@@ -49,67 +76,42 @@ export function ContextMenu({
     onOpenChange: onOpenChange
       ? (details) => onOpenChange(details.open)
       : undefined,
-    onSelect: onSelect ? (details) => onSelect(details.value) : undefined,
   });
   const api = menu.connect(service, normalizeProps);
 
-  const renderCommand = (item: MenuCommand) => (
-    <div
-      key={item.value}
-      {...api.getItemProps({ value: item.value, disabled: item.disabled })}
-    >
-      {item.icon != null && (
-        <span data-scope="menu" data-part="item-icon">
-          {item.icon}
-        </span>
-      )}
-      <span data-scope="menu" data-part="item-text">
-        {item.label}
-      </span>
-      {item.shortcut != null && (
-        <span data-scope="menu" data-part="item-shortcut">
-          {item.shortcut}
-        </span>
-      )}
-    </div>
-  );
-
   return (
-    <>
-      <div {...api.getContextTriggerProps()}>{children}</div>
-      {api.open && (
-        <Portal>
-          <div {...api.getPositionerProps()}>
-            <div {...api.getContentProps()} className={cx(className)}>
-              {items.map((item, index) => {
-                if ('type' in item && item.type === 'separator') {
-                  return (
-                    <div
-                      key={`separator-${index}`}
-                      {...api.getSeparatorProps()}
-                    />
-                  );
-                }
-                if ('type' in item && item.type === 'group') {
-                  const groupId = `${baseId}-group-${index}`;
-                  return (
-                    <div
-                      key={groupId}
-                      {...api.getItemGroupProps({ id: groupId })}
-                    >
-                      <div {...api.getItemGroupLabelProps({ htmlFor: groupId })}>
-                        {item.label}
-                      </div>
-                      {item.items.map(renderCommand)}
-                    </div>
-                  );
-                }
-                return renderCommand(item as MenuCommand);
-              })}
-            </div>
-          </div>
-        </Portal>
+    <MenuProvider
+      value={{
+        api,
+        registerItem: selection.registerItem,
+        emitSelect: (value) => selection.emit(value, onSelect),
+        contentProps,
+        contentClassName: cx(className),
+      }}
+    >
+      {items != null ? (
+        <>
+          <menuParts.ContextTrigger>{children}</menuParts.ContextTrigger>
+          <menuParts.Content>
+            {renderMenuItems(items, getItemProps)}
+          </menuParts.Content>
+        </>
+      ) : (
+        children
       )}
-    </>
+    </MenuProvider>
   );
 }
+
+ContextMenu.Trigger = menuParts.ContextTrigger;
+ContextMenu.Content = menuParts.Content;
+ContextMenu.Item = menuParts.Item;
+ContextMenu.CheckboxItem = menuParts.CheckboxItem;
+ContextMenu.RadioItem = menuParts.RadioItem;
+ContextMenu.ItemIcon = menuParts.ItemIcon;
+ContextMenu.ItemText = menuParts.ItemText;
+ContextMenu.ItemShortcut = menuParts.ItemShortcut;
+ContextMenu.ItemIndicator = menuParts.ItemIndicator;
+ContextMenu.Group = menuParts.Group;
+ContextMenu.GroupLabel = menuParts.GroupLabel;
+ContextMenu.Separator = menuParts.Separator;
