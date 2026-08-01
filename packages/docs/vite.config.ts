@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 import mdx from '@mdx-js/rollup';
 import rehypeShiki from '@shikijs/rehype';
@@ -11,9 +12,10 @@ import remarkFrontmatter from 'remark-frontmatter';
 import remarkGfm from 'remark-gfm';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { defineConfig } from 'vite';
+import type { Plugin } from 'vite';
 
 import { searchIndexPlugin } from './src/search/vite-plugin-search';
-import { seoPlugin } from './src/seo/vite-plugin-seo';
+import { docDatesPlugin } from './src/seo/vite-plugin-doc-dates';
 
 // Evergreen browsers that support `light-dark()`, CSS nesting and `color-mix()`
 // natively. Mirrors packages/styles/vite.config.ts and .storybook/main.ts so the
@@ -33,6 +35,35 @@ const mantiVersion = (
     readFileSync(new URL('../react/package.json', import.meta.url), 'utf8'),
   ) as { version: string }
 ).version;
+
+/**
+ * Make `vite preview` resolve pretty URLs the way the deploy does.
+ *
+ * Every route is prerendered to `dist/<slug>/index.html`, and Netlify serves
+ * that file for `/components/button` before any redirect applies. Vite's
+ * preview server is SPA-only: it falls back to the root index.html for any
+ * extensionless path, so without this the landing page is served for every
+ * route locally and the prerendered pages look like they were never emitted.
+ */
+function previewPrettyUrls(): Plugin {
+  return {
+    name: 'manti:preview-pretty-urls',
+    configurePreviewServer(server) {
+      const outDir = join(server.config.root, server.config.build.outDir);
+      server.middlewares.use((req, _res, next) => {
+        const [path = '/', search] = (req.url ?? '/').split(/(?=\?)/, 2);
+        // The existence of `<path>/index.html` is the whole test — no guard on
+        // the path's shape. Slugs carry dots (`/changelog/v0.6.0`), so anything
+        // that treats a dotted segment as a file extension misses them.
+        const clean = path.replace(/\/+$/, '');
+        if (clean && existsSync(join(outDir, clean, 'index.html'))) {
+          req.url = `${clean}/index.html${search ?? ''}`;
+        }
+        next();
+      });
+    },
+  };
+}
 
 export default defineConfig({
   define: {
@@ -69,7 +100,8 @@ export default defineConfig({
     },
     react(),
     searchIndexPlugin(),
-    seoPlugin(),
+    docDatesPlugin(),
+    previewPrettyUrls(),
   ],
   server: {
     watch: {

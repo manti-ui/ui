@@ -11,6 +11,14 @@ declare module '*.mdx' {
   export default MDXComponent;
 }
 
+declare module 'virtual:manti-doc-dates' {
+  const dates: Record<
+    string,
+    import('./seo/vite-plugin-doc-dates').DocDates | undefined
+  >;
+  export default dates;
+}
+
 declare module 'virtual:manti-search' {
   const docs: {
     slug: string;

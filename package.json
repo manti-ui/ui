@@ -13,7 +13,7 @@
     "build:storybook": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 storybook build",
     "dev": "pnpm build:packages && pnpm storybook",
     "docs:dev": "pnpm build:packages && vite packages/docs",
-    "docs:build": "pnpm build:packages && vite build packages/docs",
+    "docs:build": "pnpm build:packages && pnpm --filter @manti-ui/docs build",
     "docs:preview": "vite preview packages/docs",
     "build:site": "pnpm docs:build && pnpm build:storybook && rm -rf packages/docs/dist/storybook && cp -r storybook-static packages/docs/dist/storybook",
     "gen:tokens": "pnpm --filter @manti-ui/styles gen:tokens",

@@ -26,16 +26,20 @@ Floating surfaces share one panel treatment:
 <Card style={{ maxWidth: 'var(--manti-space-16)', minWidth: '20rem' }}>
   <Card.Body>
     <Card.Title>The signature surface</Card.Title>
+    {/* An expression, not markdown: prose on its own lines inside a JSX element
+        is parsed as a markdown block and wrapped in a <p>, which would nest
+        inside the <p> that Card.Description renders. A browser un-nests that
+        while parsing the prerendered HTML, breaking hydration for the route. */}
     <Card.Description>
-      A rounded panel with a quiet border, top highlight, and soft shadow.
+      {'A rounded panel with a quiet border, top highlight, and soft shadow.'}
     </Card.Description>
   </Card.Body>
 </Card>
 
-<p className="docs-design-signature-note">
+<div className="docs-design-signature-note">
   Use <code>.manti-panel</code> for application-owned menus, sheets, or command
   palettes. Manti falls back to an opaque surface when blur is unavailable.
-</p>
+</div>
 
 ## Main controls
 
