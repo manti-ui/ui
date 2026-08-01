@@ -47,6 +47,7 @@ export type {
 
 export { ContextMenu } from './ContextMenu/ContextMenu';
 export type { ContextMenuProps } from './ContextMenu/ContextMenu';
+export type { ContextMenuTriggerProps } from './Menu/Menu';
 
 export { DataTable } from './DataTable/DataTable';
 export type {
@@ -99,14 +100,25 @@ export { Menu } from './Menu/Menu';
 export type {
   MenuActionCommand,
   MenuCheckboxCommand,
+  MenuCheckboxItemProps,
   MenuCommand,
+  MenuContentProps,
   MenuGroup,
+  MenuGroupLabelProps,
+  MenuGroupProps,
   MenuItem,
+  MenuItemIndicatorProps,
+  MenuItemProps,
   MenuItemRootProps,
+  MenuItemSlotProps,
   MenuPlacement,
   MenuProps,
   MenuRadioCommand,
+  MenuRadioItemProps,
   MenuSeparator,
+  MenuSeparatorProps,
+  MenuTone,
+  MenuTriggerProps,
 } from './Menu/Menu';
 
 export { NavigationMenu } from './NavigationMenu/NavigationMenu';

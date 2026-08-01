@@ -12,9 +12,9 @@
       content="ArcCKPjRExRfvKesBpEaHuXr9fy3wbbL5NjPDjUaaR8"
     />
     <!-- seo:start -->
-    <!-- Managed block: vite-plugin-seo regenerates this per route at build time
-         (see src/seo/vite-plugin-seo.ts). The values below are the home-route
-         baseline used in dev and as the SPA fallback. -->
+    <!-- Managed block: the prerenderer regenerates this per route at build time
+         (see scripts/prerender.mjs + src/seo/head.ts). The values below are the
+         home-route baseline used in dev and as the SPA fallback. -->
     <title>
       Manti UI — a framework-agnostic design system & UI Kit on Zag.js
     </title>
@@ -54,12 +54,6 @@
       // No-flash theme init — must run before first paint. Mirrors the Manti
       // theme mechanism used in .storybook/preview.tsx (data-theme on <html>).
       (function () {
-        // Marks JS as available before first paint, which hides the prerendered
-        // SEO fallback (see .docs-seo-fallback in src/styles/docs.css). Without
-        // it the fallback nav paints and stays until React mounts — a flash of
-        // unstyled links. Raw-HTML crawlers run neither JS nor CSS, so they
-        // still read the fallback; no-JS browsers still render it.
-        document.documentElement.dataset.js = 'true';
         try {
           var stored = localStorage.getItem('manti-theme');
           var prefersDark =
@@ -74,7 +68,9 @@
     </script>
   </head>
   <body>
+    <!-- The production build replaces this with the route's prerendered markup
+         (scripts/prerender.mjs); entry-client.tsx hydrates whatever it finds. -->
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/entry-client.tsx"></script>
   </body>
 </html>

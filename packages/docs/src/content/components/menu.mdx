@@ -15,6 +15,49 @@ activation.
 
 <Demo name="menu/basic" center />
 
+## Composition
+
+Omit `items` and compose the parts instead when a command needs to render more
+than a label, an icon, and a shortcut. Both shapes drive the same machine and
+the same markup — the shorthand is built out of these parts.
+
+`Menu.Item` wraps its children in the `item-text` slot. Render `Menu.ItemIcon`,
+`Menu.ItemText`, `Menu.ItemShortcut`, or `Menu.ItemIndicator` yourself and the
+item hands the whole row over to you. Each command also takes its own
+`onSelect`, so an action can live next to the item that triggers it.
+
+<Demo name="menu/composed" center />
+
+```tsx
+<Menu>
+  <Menu.Trigger>
+    <Button variant="tertiary">Serve as…</Button>
+  </Menu.Trigger>
+  <Menu.Content>
+    <Menu.Group>
+      <Menu.GroupLabel>Toppings</Menu.GroupLabel>
+      <Menu.Item value="yogurt" shortcut="⌘1" onSelect={serve}>
+        Garlic yogurt
+      </Menu.Item>
+    </Menu.Group>
+    <Menu.Separator />
+    <Menu.CheckboxItem
+      value="compact"
+      checked={compact}
+      onCheckedChange={setCompact}
+    >
+      Compact density
+    </Menu.CheckboxItem>
+  </Menu.Content>
+</Menu>
+```
+
+The parts are `Menu.Trigger`, `Menu.Content`, `Menu.Item`,
+`Menu.CheckboxItem`, `Menu.RadioItem`, `Menu.Group`, `Menu.GroupLabel`,
+`Menu.Separator`, `Menu.ItemIcon`, `Menu.ItemText`, `Menu.ItemShortcut`, and
+`Menu.ItemIndicator`. [ContextMenu](/components/context-menu) exposes the same
+set below its trigger.
+
 ## Groups
 
 Add `{ type: 'group', label, items }` or `{ type: 'separator' }` entries.
