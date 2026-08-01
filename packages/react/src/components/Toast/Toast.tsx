@@ -6,8 +6,9 @@ import type {
 } from 'react';
 import { swipe as swipeBehavior, toast } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
-import { normalizeProps, Portal, useMachine } from '@zag-js/react';
+import { normalizeProps, useMachine } from '@zag-js/react';
 
+import { Portal } from '../../internal/Portal';
 import { cx } from '../../internal/props';
 import { CloseIcon } from '../../internal/icons';
 import { Spinner } from '../Spinner/Spinner';

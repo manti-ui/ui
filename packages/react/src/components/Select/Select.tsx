@@ -1,8 +1,9 @@
 import { useId, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { select } from '@manti-ui/folds';
-import { normalizeProps, Portal, useMachine } from '@zag-js/react';
+import { normalizeProps, useMachine } from '@zag-js/react';
 
+import { Portal } from '../../internal/Portal';
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
