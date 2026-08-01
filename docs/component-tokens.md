@@ -110,6 +110,7 @@ system-wide changes; use this list when one component should differ. See
 | `popover`           | `--manti-popover-z-index`                   | `var(--manti-z-popover)`                             |
 | `progress`          | `--manti-progress-track-height`             | `0.5rem`                                             |
 | `progress`          | `--manti-progress-circle-size`              | `5rem`                                               |
+| `progress`          | `--manti-progress-circle-thickness`         | `var(--manti-space-2)`                               |
 | `rating-group`      | `--manti-rating-group-size`                 | `1.5rem`                                             |
 | `scroll-area`       | `--manti-scroll-area-size`                  | `var(--manti-space-2)`                               |
 | `segmented-control` | `--manti-segmented-control-height`          | `2rem`                                               |

@@ -85,10 +85,10 @@ export const Progress = forwardRef<
       data-size={size}
       className={cx(className)}
     >
-      {(label != null || showValue) && (
+      {(label != null || (showValue && variant === 'linear')) && (
         <div data-part="header">
           {label != null && <span {...api.getLabelProps()}>{label}</span>}
-          {showValue && (
+          {showValue && variant === 'linear' && (
             <span {...api.getValueTextProps()}>{api.valueAsString}</span>
           )}
         </div>
@@ -100,7 +100,9 @@ export const Progress = forwardRef<
             <circle {...api.getCircleRangeProps()} />
           </svg>
           {showValue && (
-            <span data-part="circle-text">{api.percentAsString}</span>
+            <span {...api.getValueTextProps()} data-part="circle-text">
+              {api.valueAsString}
+            </span>
           )}
         </div>
       ) : (
