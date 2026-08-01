@@ -1,5 +1,8 @@
 node_modules
 dist
+# Intermediate SSR bundle for the docs prerenderer; removed on a clean run, left
+# behind when one fails (packages/docs/scripts/prerender.mjs).
+dist-ssr
 storybook-static
 .vite
 .cache

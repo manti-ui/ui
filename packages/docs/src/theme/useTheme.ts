@@ -29,7 +29,16 @@ function subscribe(onChange: () => void) {
  * `data-theme` on `<html>`. Every consumer sees the same value, whoever set it.
  */
 export function useTheme() {
-  const theme = useSyncExternalStore(subscribe, currentTheme);
+  // The third argument is the prerender/hydration snapshot: there is no DOM
+  // during `renderToString`, and on hydration React must reproduce exactly the
+  // markup that was prerendered. `dark` matches the `data-theme` baked into
+  // index.html; if the inline script already switched to light, React re-reads
+  // `currentTheme` right after hydrating and re-renders — no mismatch.
+  const theme = useSyncExternalStore(
+    subscribe,
+    currentTheme,
+    (): Theme => 'dark',
+  );
 
   const setTheme = useCallback((next: Theme) => {
     // Nothing to set in React: the attribute write is what notifies every subscriber.

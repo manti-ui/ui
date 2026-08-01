@@ -1487,46 +1487,6 @@
     margin-top: var(--manti-space-2);
   }
 
-  /* No-JS fallback baked into each prerendered route by vite-plugin-seo: the
-     page heading + a grouped nav of every route. React replaces it on mount, so
-     it only ever renders without JS — keep it plain and quiet.
-
-     The `[data-js]` gate below is what stops it from flashing: the inline script
-     in index.html sets the attribute before first paint, so a JS-capable browser
-     never paints the fallback while the bundle loads. */
-  .docs-seo-fallback {
-    max-width: var(--docs-max);
-    margin-inline: auto;
-    padding: var(--manti-space-8) var(--docs-gutter);
-    display: grid;
-    gap: var(--manti-space-4);
-  }
-  .docs-seo-fallback nav {
-    display: grid;
-    gap: var(--manti-space-4);
-  }
-  .docs-seo-fallback h2 {
-    margin: 0;
-    font-size: var(--manti-text-sm);
-    color: var(--manti-text-subtle);
-  }
-  .docs-seo-fallback ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--manti-space-2) var(--manti-space-4);
-    color: var(--manti-text-muted);
-    font-size: var(--manti-text-sm);
-  }
-  .docs-seo-fallback a {
-    color: inherit;
-  }
-  [data-js] .docs-seo-fallback {
-    display: none;
-  }
-
   /* Standard screen-reader-only pattern: keeps landmark/heading structure in
      the outline (a11y + SEO) without rendering anything. */
   .docs-visually-hidden {
