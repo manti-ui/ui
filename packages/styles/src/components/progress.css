@@ -87,37 +87,55 @@
     place-items: center;
   }
 
+  /* Zag sizes the ring inline from `--size`/`--thickness` (svg width/height,
+   * circle cx/cy/r/stroke-width). Those inline declarations win over CSS, so the
+   * two vars must be defined here or the whole ring collapses to an unsized svg. */
   [data-scope='progress'][data-part='circle'] {
     --manti-progress-circle-size: 5rem;
+    --manti-progress-circle-thickness: var(--manti-space-2);
+    --size: var(--manti-progress-circle-size);
+    --thickness: var(--manti-progress-circle-thickness);
 
-    width: var(--manti-progress-circle-size);
-    height: var(--manti-progress-circle-size);
-    transform: rotate(-90deg);
+    width: var(--size);
+    height: var(--size);
   }
 
   [data-scope='progress'][data-part='root'][data-size='sm']
     [data-part='circle'] {
     --manti-progress-circle-size: 3.5rem;
+    --manti-progress-circle-thickness: calc(var(--manti-space-1) * 1.5);
   }
 
   [data-scope='progress'][data-part='root'][data-size='lg']
     [data-part='circle'] {
     --manti-progress-circle-size: 7rem;
+    --manti-progress-circle-thickness: calc(var(--manti-space-1) * 2.5);
   }
 
   [data-scope='progress'][data-part='circle-track'] {
     stroke: var(--manti-border-strong);
-    stroke-width: 8px;
-    fill: none;
   }
 
   [data-scope='progress'][data-part='circle-range'] {
     stroke: var(--variant-solid);
-    stroke-width: 8px;
     stroke-linecap: round;
-    fill: none;
     transition: stroke-dashoffset var(--manti-duration-base)
       var(--manti-ease-smooth);
+
+    &[data-state='indeterminate'] {
+      stroke-dasharray: calc(var(--circumference) * 0.25) var(--circumference) !important;
+      stroke-dashoffset: 0 !important;
+      animation: manti-progress-circular-indeterminate 1.1s linear infinite;
+    }
+  }
+
+  @keyframes manti-progress-circular-indeterminate {
+    0% {
+      transform: rotate(-90deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
   }
 
   [data-scope='progress'][data-part='circle-text'] {
