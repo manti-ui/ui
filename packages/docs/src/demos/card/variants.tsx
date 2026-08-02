@@ -14,7 +14,9 @@ export default function CardVariants() {
       <Card elevated style={cardStyle}>
         <Card.Body>
           <Card.Title>Elevated</Card.Title>
-          <Card.Description>Lifted with a soft shadow.</Card.Description>
+          <Card.Description>
+            Raised with a stronger surface tint.
+          </Card.Description>
         </Card.Body>
       </Card>
       <Card interactive tabIndex={0} style={cardStyle}>

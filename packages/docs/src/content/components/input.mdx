@@ -3,7 +3,7 @@ title: Input
 slug: /components/input
 group: Inputs
 order: 30
-description: A labeled native input with helper text, errors, addons, and password controls.
+description: A labeled native input with helper text, errors, left and right content, and password controls.
 ---
 
 # Input
@@ -12,6 +12,19 @@ Input accepts native input attributes and wires label, helper text, error text,
 `aria-describedby`, and `aria-invalid`.
 
 <Demo name="input/basic" />
+
+## Left and right content
+
+Use `left` and `right` to place text or any React node inside the input frame.
+Both slots share the control's focus, invalid, filled, and disabled states. This
+makes them suitable for units, currency symbols, icons, badges, shortcuts, or
+small actions.
+
+Give icon-only interactive content its own accessible label. `left` and `right`
+replace the deprecated `leadingAddon` and `trailingAddon` names; the old props
+remain available for backwards compatibility.
+
+<Demo name="input/left-right" />
 
 ## Appearance and state
 

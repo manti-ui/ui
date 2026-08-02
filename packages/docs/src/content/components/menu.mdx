@@ -3,84 +3,105 @@ title: Menu
 slug: /components/menu
 group: Navigation
 order: 33
-description: A keyboard-accessible command menu with groups and separators.
+description: A keyboard-accessible command menu with groups and nested menus.
 ---
 
 # Menu
 
-Pass a React element as `trigger`. Action commands use
-`{ value, label, icon?, shortcut?, disabled?, tone?, itemProps? }`;
-`onSelect` receives the clicked value for pointer, keyboard, and programmatic
-activation.
+Menu displays a floating list of actions or choices. Pass the trigger element,
+describe the rows with `items`, and handle a selected action with `onSelect`.
+Manti manages positioning, focus, keyboard navigation, and dismissal.
+
+Use [Popover](/components/popover) instead when the floating panel contains form
+controls or arbitrary interactive content.
+
+## Basic usage
+
+Start with an array of commands. Each command needs a unique `value` and a
+visible `label`. `onSelect` receives the selected value.
 
 <Demo name="menu/basic" center />
 
-## Composition
+Add `shortcut` to display a keyboard hint. It only displays the hint; register
+the actual shortcut separately with `useShortcut`.
 
-Omit `items` and compose the parts instead when a command needs to render more
-than a label, an icon, and a shortcut. Both shapes drive the same machine and
-the same markup — the shorthand is built out of these parts.
+## Groups and item states
 
-`Menu.Item` wraps its children in the `item-text` slot. Render `Menu.ItemIcon`,
-`Menu.ItemText`, `Menu.ItemShortcut`, or `Menu.ItemIndicator` yourself and the
-item hands the whole row over to you. Each command also takes its own
-`onSelect`, so an action can live next to the item that triggers it.
-
-<Demo name="menu/composed" center />
-
-```tsx
-<Menu>
-  <Menu.Trigger>
-    <Button variant="tertiary">Serve as…</Button>
-  </Menu.Trigger>
-  <Menu.Content>
-    <Menu.Group>
-      <Menu.GroupLabel>Toppings</Menu.GroupLabel>
-      <Menu.Item value="yogurt" shortcut="⌘1" onSelect={serve}>
-        Garlic yogurt
-      </Menu.Item>
-    </Menu.Group>
-    <Menu.Separator />
-    <Menu.CheckboxItem
-      value="compact"
-      checked={compact}
-      onCheckedChange={setCompact}
-    >
-      Compact density
-    </Menu.CheckboxItem>
-  </Menu.Content>
-</Menu>
-```
-
-The parts are `Menu.Trigger`, `Menu.Content`, `Menu.Item`,
-`Menu.CheckboxItem`, `Menu.RadioItem`, `Menu.Group`, `Menu.GroupLabel`,
-`Menu.Separator`, `Menu.ItemIcon`, `Menu.ItemText`, `Menu.ItemShortcut`, and
-`Menu.ItemIndicator`. [ContextMenu](/components/context-menu) exposes the same
-set below its trigger.
-
-## Groups
-
-Add `{ type: 'group', label, items }` or `{ type: 'separator' }` entries.
+Use a group to label related actions and a separator to divide different sets.
+An item can also be disabled or use `tone: 'danger'` for a destructive action.
 
 <Demo name="menu/grouped" center />
 
-## Checkbox and radio items
+Useful item properties:
 
-Set `type="checkbox"` or `type="radio"` together with `checked` and
-`onCheckedChange`. Manti renders `menuitemcheckbox` or `menuitemradio` and an
-`item-indicator` part. Use `tone="danger"` for destructive commands.
+- `icon`: leading visual affordance;
+- `shortcut`: trailing keyboard hint;
+- `disabled`: visible but unavailable action;
+- `tone: 'danger'`: destructive action styling;
+- `onSelect`: handler for only that item.
 
-`itemProps` customizes one item; `getItemProps` customizes items centrally.
-Handlers are chained with the machine, while machine-owned roles and keyboard
-behavior remain authoritative. Menu items do not support nested interactive
-controls.
+## Checkable items
 
-## Placement
+Checkbox items represent independent settings. Radio items represent one choice
+from a set. Both are controlled: pass `checked` and update application state in
+`onCheckedChange`.
 
-`bottom-center` aliases the centered `bottom` placement. Use `-start` or `-end`
-for edge alignment.
+<Demo name="menu/options" center />
 
-<Demo name="menu/bottom-center" center />
+Set `closeOnSelect: false` when a choice should leave the menu open. Radio
+exclusivity comes from application state rather than the group itself.
+
+## Submenus
+
+A submenu is another `items` array nested inside an item. No separate submenu
+component is required.
+
+<Demo name="menu/nested" center />
+
+Submenus may contain more submenus. Keep every `value` unique across the whole
+tree. Selecting a leaf closes the complete tree; placement and keyboard routing
+are handled automatically. If the submenu label is not plain text, provide
+`ariaLabel`.
+
+## Item reference
+
+`MenuItem[]` accepts these shapes:
+
+| Shape                                      | Use for                   |
+| ------------------------------------------ | ------------------------- |
+| `{ value, label }`                         | Action                    |
+| `{ type: 'checkbox', … }`                  | Independent choice        |
+| `{ type: 'radio', … }`                     | One choice from a set     |
+| `{ type: 'group', label, items }`          | Labelled group            |
+| `{ type: 'separator' }`                    | Divider                   |
+| `{ type: 'submenu', value, label, items }` | Another level of commands |
+
+## State and events
+
+The root `onSelect` observes every selectable item, including leaves inside a
+submenu. An item's own `onSelect` runs after the root handler.
+
+The root menu is uncontrolled by default. Use `open` with `onOpenChange` only
+when application state must own whether it is open:
+
+```tsx
+<Menu
+  open={open}
+  onOpenChange={setOpen}
+  trigger={<Button>Account</Button>}
+  items={items}
+/>
+```
+
+`itemProps` adds DOM props to one item. `getItemProps` applies props to every
+action and submenu trigger. Prefer semantic properties such as `disabled` and
+`tone` before reaching for these lower-level escape hatches.
+
+## Menu or Popover?
+
+Use Menu when every row is an action, checkbox, radio, or submenu trigger. Use
+Popover for ToggleGroup, Input, Select, Slider, forms, explanatory content, or
+a mixture of controls and commands.
 
 ## API
 

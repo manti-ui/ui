@@ -22,22 +22,29 @@ describe('ContextMenu', () => {
     expect(onSelect).toHaveBeenCalledExactlyOnceWith('copy');
   });
 
-  it('renders composed parts when items is omitted', () => {
+  it('opens nested items with the same declarative model', async () => {
     const onSelect = vi.fn();
     render(
-      <ContextMenu defaultOpen onSelect={onSelect}>
-        <ContextMenu.Trigger>
-          <p>Right-click me</p>
-        </ContextMenu.Trigger>
-        <ContextMenu.Content>
-          <ContextMenu.Item value="copy">Copy</ContextMenu.Item>
-        </ContextMenu.Content>
+      <ContextMenu
+        defaultOpen
+        onSelect={onSelect}
+        items={[
+          {
+            type: 'submenu',
+            value: 'share',
+            label: 'Share',
+            items: [{ value: 'copy-link', label: 'Copy link' }],
+          },
+        ]}
+      >
+        <p>Right-click me</p>
       </ContextMenu>,
     );
 
-    expect(screen.getByText('Right-click me')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Copy' }));
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Share' }));
+    await screen.findByRole('menuitem', { name: 'Copy link' });
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Copy link' }));
 
-    expect(onSelect).toHaveBeenCalledExactlyOnceWith('copy');
+    expect(onSelect).toHaveBeenCalledExactlyOnceWith('copy-link');
   });
 });

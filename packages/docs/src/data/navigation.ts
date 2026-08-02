@@ -21,6 +21,7 @@ export interface NavGroup {
 const GROUP_ORDER = [
   'Getting Started',
   'Foundations',
+  'Typography',
   'Guides',
   // Framework-agnostic primitives that aren't visual components (hooks like
   // useShortcut), each its own page ordered by `order`.
@@ -31,6 +32,20 @@ const GROUP_ORDER = [
 ] as const;
 
 export const navGroups: NavGroup[] = GROUP_ORDER.map((label) => {
+  if (label === 'Typography') {
+    const items: NavItem[] = pages
+      .filter(
+        (page) =>
+          page.slug === '/typography' || page.slug.startsWith('/typography/'),
+      )
+      .map((page) => ({
+        slug: page.slug,
+        title: page.slug === '/typography' ? 'Overview' : page.title,
+        badge: page.badge,
+      }));
+    return { label, items };
+  }
+
   if (label === 'Components') {
     // The `/components` overview first, then every component page A→Z.
     const overview: NavItem[] = pages

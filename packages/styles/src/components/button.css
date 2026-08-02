@@ -45,7 +45,6 @@
       background-color var(--manti-duration-base) var(--manti-ease-smooth),
       border-color var(--manti-duration-base) var(--manti-ease-smooth),
       color var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth),
       transform var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &[data-size='sm'] {
@@ -115,8 +114,8 @@
       }
     }
 
-    /* Outline — a hairline-bordered pill on a transparent surface; a light
-       tonal wash and a rim on hover. Shares the ghost's no-hover-blur rationale. */
+    /* Outline — a hairline-bordered pill on a transparent surface with a light
+       tonal wash on hover. Shares the ghost's no-hover-blur rationale. */
     &[data-variant='outline'] {
       border-color: var(--variant-border);
       color: var(--variant-text);
@@ -124,7 +123,6 @@
       &:hover {
         background: var(--manti-button-bg-hover);
         border-color: var(--variant-soft-text);
-        box-shadow: var(--manti-panel-rim);
       }
     }
 
@@ -141,7 +139,6 @@
       text-decoration: none;
       text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
       text-underline-offset: 0.2em;
-      box-shadow: none;
 
       &:hover {
         text-decoration: underline;
@@ -165,7 +162,6 @@
     &[aria-disabled='true'] {
       cursor: not-allowed;
       opacity: 0.5;
-      box-shadow: none;
     }
 
     &[data-loading='true'] {

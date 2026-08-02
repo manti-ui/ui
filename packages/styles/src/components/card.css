@@ -1,8 +1,7 @@
 /**
- * Card — the signature surface: a translucent panel over the ambient mesh, a
- * hairline border, a top-lit rim catching the light, and a soft deep shadow.
- * The most recognizable Manti UI shape. Elevated cards deepen the shadow and
- * tint; interactive cards lift smoothly.
+ * Card — the signature surface: a translucent panel over the ambient mesh with
+ * a quiet hairline border. Elevated cards strengthen the tint; interactive
+ * cards lift smoothly.
  */
 @layer manti.components {
   [data-scope='card'][data-part='root'] {

@@ -1,0 +1,30 @@
+/** Kbd — semantic keyboard input rendered as a compact key cap. */
+@layer manti.components {
+  [data-scope='kbd'][data-part='root'] {
+    --manti-kbd-radius: var(--manti-radius-sm);
+    --manti-kbd-padding-x: var(--manti-space-2);
+    --manti-kbd-padding-y: var(--manti-space-1);
+    --manti-kbd-font-size: var(--manti-text-xs);
+    --manti-kbd-border-width: calc(var(--manti-focus-ring-offset) / 2);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--manti-kbd-padding-y) var(--manti-kbd-padding-x);
+    background: var(--manti-surface-raised);
+    border: var(--manti-kbd-border-width) solid var(--manti-border);
+    border-radius: var(--manti-kbd-radius);
+    color: var(--manti-text);
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-kbd-font-size);
+    font-weight: var(--manti-weight-medium);
+    line-height: var(--manti-leading-tight);
+    vertical-align: baseline;
+    white-space: nowrap;
+
+    &[data-size='md'] {
+      --manti-kbd-padding-x: var(--manti-space-3);
+      --manti-kbd-font-size: var(--manti-text-sm);
+    }
+  }
+}

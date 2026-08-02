@@ -35,11 +35,7 @@ export function ComponentStatusGrid() {
         );
 
         return item.documented ? (
-          <Link
-            key={item.key}
-            to={`/components/${item.key}`}
-            className="docs-plain"
-          >
+          <Link key={item.key} to={item.slug} className="docs-plain">
             {card}
           </Link>
         ) : (
