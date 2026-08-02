@@ -19,7 +19,6 @@
       background-color var(--manti-duration-base) var(--manti-ease-smooth),
       border-color var(--manti-duration-base) var(--manti-ease-smooth),
       color var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth),
       transform var(--manti-duration-base) var(--manti-ease-spring);
 
     /* Lift the higher-emphasis rungs (solid + secondary soft); the tertiary
@@ -80,30 +79,18 @@
 
   /* Field — the focus ring blooms in. */
   [data-motion='full'] [data-scope='field'][data-part='control'] {
-    transition:
-      border-color var(--manti-duration-base) var(--manti-ease-smooth),
-      box-shadow var(--manti-duration-base) var(--manti-ease-spring);
+    transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
   }
 
-  /* Card — interactive cards lift higher and cast a variant glow. Cards carry no
-     variant, so the glow falls back to the signature orange. */
+  /* Card — interactive cards lift higher while their border strengthens. */
   [data-motion='full'] [data-scope='card'][data-part='root'] {
     transition:
       transform var(--manti-duration-base) var(--manti-ease-spring),
-      box-shadow var(--manti-duration-base) var(--manti-ease-smooth),
       border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &[data-interactive='true']:hover {
       transform: translateY(-4px);
-      box-shadow:
-        var(--manti-panel-rim),
-        var(--manti-panel-shadow),
-        0 18px 40px -16px
-          color-mix(
-            in oklab,
-            var(--variant-solid, var(--manti-orange-7)) 35%,
-            transparent
-          );
+      border-color: var(--manti-border-strong);
     }
   }
 

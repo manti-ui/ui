@@ -35,7 +35,6 @@
     backdrop-filter: none;
     border: none;
     border-radius: 0;
-    box-shadow: none;
 
     &:focus-visible {
       outline: none;
@@ -190,7 +189,6 @@
     /* Reset the DatePicker today ring that leaks through the shared date-picker
        scope — Calendar marks today with the variant chip on the number instead. */
     &[data-today] {
-      box-shadow: none;
     }
 
     &[data-selected] {

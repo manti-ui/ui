@@ -128,32 +128,23 @@ describe('Menu', () => {
     expect(onSelect).toHaveBeenCalledWith('delete');
   });
 
-  it('reports selection from composed parts, root first then item', () => {
+  it('reports selection to the root and the command', () => {
     const onSelect = vi.fn();
     const onItemSelect = vi.fn();
     render(
-      <Menu defaultOpen onSelect={onSelect}>
-        <Menu.Trigger>
-          <button type="button">Open</button>
-        </Menu.Trigger>
-        <Menu.Content>
-          <Menu.Group>
-            <Menu.GroupLabel>Toppings</Menu.GroupLabel>
-            <Menu.Item value="yogurt" onSelect={onItemSelect}>
-              Garlic yogurt
-            </Menu.Item>
-          </Menu.Group>
-          <Menu.Separator />
-          <Menu.CheckboxItem value="compact" checked>
-            Compact
-          </Menu.CheckboxItem>
-        </Menu.Content>
-      </Menu>,
+      <Menu
+        trigger={<button type="button">Open</button>}
+        defaultOpen
+        onSelect={onSelect}
+        items={[
+          {
+            value: 'yogurt',
+            label: 'Garlic yogurt',
+            onSelect: onItemSelect,
+          },
+        ]}
+      />,
     );
-
-    expect(
-      screen.getByRole('menuitemcheckbox', { name: 'Compact' }),
-    ).toHaveAttribute('aria-checked', 'true');
 
     fireEvent.click(screen.getByRole('menuitem', { name: 'Garlic yogurt' }));
 
@@ -161,30 +152,110 @@ describe('Menu', () => {
     expect(onItemSelect).toHaveBeenCalledExactlyOnceWith('yogurt');
   });
 
-  it('lets a command lay out its own slots', () => {
+  it('opens a nested menu and selects its command through the root', async () => {
+    const onSelect = vi.fn();
     render(
-      <Menu defaultOpen>
-        <Menu.Trigger>
-          <button type="button">Open</button>
-        </Menu.Trigger>
-        <Menu.Content>
-          <Menu.Item value="edit">
-            <Menu.ItemIcon>
-              <svg data-testid="pencil" />
-            </Menu.ItemIcon>
-            <Menu.ItemText>Edit</Menu.ItemText>
-            <Menu.ItemShortcut>⌘E</Menu.ItemShortcut>
-          </Menu.Item>
-        </Menu.Content>
-      </Menu>,
+      <Menu
+        trigger={<button type="button">Open</button>}
+        defaultOpen
+        onSelect={onSelect}
+        items={[
+          { value: 'new', label: 'New' },
+          {
+            type: 'submenu',
+            value: 'share',
+            label: 'Share',
+            items: [
+              { value: 'messages', label: 'Messages' },
+              {
+                type: 'submenu',
+                value: 'more',
+                label: 'More',
+                items: [{ value: 'airdrop', label: 'AirDrop' }],
+              },
+            ],
+          },
+        ]}
+      />,
     );
 
-    const item = screen.getByRole('menuitem', { name: /Edit/ });
-    // Composed slots replace the wrapper, they do not nest inside one.
-    expect(item.querySelectorAll('[data-part="item-text"]')).toHaveLength(1);
-    expect(item.querySelector('[data-part="item-icon"]')).toContainElement(
-      screen.getByTestId('pencil'),
+    const share = screen.getByRole('menuitem', { name: 'Share' });
+    expect(share).toHaveAttribute('aria-haspopup', 'menu');
+    fireEvent.click(share);
+
+    await waitFor(() =>
+      expect(
+        screen.getByRole('menuitem', { name: 'Messages' }),
+      ).toBeInTheDocument(),
     );
+    expect(
+      screen
+        .getByRole('menuitem', { name: 'Messages' })
+        .closest('[role="menu"]'),
+    ).toHaveAttribute('data-nested');
+    fireEvent.click(screen.getByRole('menuitem', { name: 'More' }));
+    await screen.findByRole('menuitem', { name: 'AirDrop' });
+    fireEvent.click(screen.getByRole('menuitem', { name: 'AirDrop' }));
+
+    await waitFor(() => expect(onSelect).toHaveBeenCalledOnce());
+    expect(onSelect).toHaveBeenCalledWith('airdrop');
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+  });
+
+  it('routes keyboard focus into and out of a submenu', async () => {
+    render(
+      <Menu
+        trigger={<button type="button">Open</button>}
+        defaultOpen
+        items={[
+          {
+            type: 'submenu',
+            value: 'share',
+            label: 'Share',
+            items: [{ value: 'messages', label: 'Messages' }],
+          },
+        ]}
+      />,
+    );
+
+    const rootMenu = screen.getByRole('menu');
+    fireEvent.keyDown(rootMenu, { key: 'ArrowDown' });
+    await waitFor(() =>
+      expect(rootMenu).toHaveAttribute('aria-activedescendant'),
+    );
+    fireEvent.keyDown(rootMenu, { key: 'ArrowRight' });
+
+    await waitFor(() => expect(screen.getAllByRole('menu')).toHaveLength(2));
+    const childMenu = screen.getAllByRole('menu')[1];
+    fireEvent.keyDown(childMenu, { key: 'ArrowLeft' });
+
+    await waitFor(() => expect(screen.getAllByRole('menu')).toHaveLength(1));
+    await waitFor(() => expect(rootMenu).toHaveFocus());
+  });
+
+  it('does not open a disabled submenu', () => {
+    render(
+      <Menu
+        trigger={<button type="button">Open</button>}
+        defaultOpen
+        items={[
+          {
+            type: 'submenu',
+            value: 'share',
+            label: 'Share',
+            disabled: true,
+            items: [{ value: 'messages', label: 'Messages' }],
+          },
+        ]}
+      />,
+    );
+
+    const share = screen.getByRole('menuitem', { name: 'Share' });
+    expect(share).toHaveAttribute('aria-disabled', 'true');
+    fireEvent.click(share);
+    expect(
+      screen.queryByRole('menuitem', { name: 'Messages' }),
+    ).not.toBeInTheDocument();
   });
 
   it('honors a consumer preventing item activation', () => {

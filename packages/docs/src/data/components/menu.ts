@@ -7,19 +7,13 @@ export const meta: ComponentMeta = {
       name: 'trigger',
       type: 'ReactElement',
       description:
-        'Element that opens the menu. Cloned with the machine trigger props. Composition alternative: a `Menu.Trigger` child.',
+        'Required element that opens the menu. Cloned with the machine trigger props.',
     },
     {
       name: 'items',
       type: 'MenuItem[]',
       description:
-        'The menu contents: commands, separators (`{ type: "separator" }`), or groups (`{ type: "group", label, items }`). Omit it to compose the parts as children instead.',
-    },
-    {
-      name: 'children',
-      type: 'ReactNode',
-      description:
-        'Composed parts — `Menu.Trigger` and `Menu.Content` — used when `items` is omitted.',
+        'Required recursive contents: commands, checkbox/radio choices, separators, groups, and `{ type: "submenu", value, label, items }` entries.',
     },
     {
       name: 'getItemProps',
@@ -59,6 +53,11 @@ export const meta: ComponentMeta = {
       type: '(open: boolean) => void',
       description: 'Called whenever the open state changes.',
     },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      description: 'Accessible name for the root menu panel.',
+    },
   ],
   anatomy: [
     {
@@ -68,6 +67,10 @@ export const meta: ComponentMeta = {
     {
       part: 'item',
       description: 'A single selectable command.',
+    },
+    {
+      part: 'trigger-item',
+      description: 'A command that opens a nested menu.',
     },
     {
       part: 'item-icon',
@@ -84,6 +87,10 @@ export const meta: ComponentMeta = {
     {
       part: 'item-indicator',
       description: 'Checked indicator for checkbox and radio items.',
+    },
+    {
+      part: 'submenu-indicator',
+      description: 'Directional affordance shown on a submenu trigger.',
     },
     {
       part: 'item-group-label',

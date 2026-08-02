@@ -38,14 +38,24 @@ export const meta: ComponentMeta = {
       description: 'Stretch to fill the available inline space.',
     },
     {
+      name: 'left',
+      type: 'ReactNode',
+      description: 'Text or custom content rendered to the left of the input.',
+    },
+    {
+      name: 'right',
+      type: 'ReactNode',
+      description: 'Text or custom content rendered to the right of the input.',
+    },
+    {
       name: 'leadingAddon',
       type: 'ReactNode',
-      description: 'Content rendered inside the control, before the input.',
+      description: 'Deprecated alias for left.',
     },
     {
       name: 'trailingAddon',
       type: 'ReactNode',
-      description: 'Content rendered inside the control, after the input.',
+      description: 'Deprecated alias for right.',
     },
     {
       name: 'requiredIndicator',
@@ -127,7 +137,10 @@ export const meta: ComponentMeta = {
       part: 'control',
       description: 'The input frame, holding addons and the input.',
     },
-    { part: 'addon', description: 'A leading or trailing adornment.' },
+    {
+      part: 'addon',
+      description: 'Content in the left or right slot of the input frame.',
+    },
     { part: 'input', description: 'The native text input.' },
     {
       part: 'visibility-trigger',

@@ -1,0 +1,26 @@
+/** Code — semantic inline code with a quiet token-backed surface. */
+@layer manti.components {
+  [data-scope='code'][data-part='root'] {
+    --manti-code-radius: var(--manti-radius-xs);
+    --manti-code-padding-x: var(--manti-space-1);
+    --manti-code-padding-y: calc(var(--manti-space-1) / 2);
+    --manti-code-font-size: var(--manti-text-sm);
+
+    padding: var(--manti-code-padding-y) var(--manti-code-padding-x);
+    background: var(--manti-fill);
+    border-radius: var(--manti-code-radius);
+    box-decoration-break: clone;
+    color: var(--manti-text);
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-code-font-size);
+    font-weight: var(--manti-weight-medium);
+    line-height: var(--manti-leading-normal);
+    overflow-wrap: anywhere;
+    -webkit-box-decoration-break: clone;
+
+    &[data-size='md'] {
+      --manti-code-padding-x: var(--manti-space-2);
+      --manti-code-font-size: var(--manti-text-base);
+    }
+  }
+}

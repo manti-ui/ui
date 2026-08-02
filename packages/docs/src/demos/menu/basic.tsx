@@ -1,19 +1,24 @@
 import { Button, Menu } from '@manti-ui/react';
 import type { MenuItem } from '@manti-ui/react';
+import { useState } from 'react';
 
 const items: MenuItem[] = [
-  { value: 'yogurt', label: 'Garlic yogurt', shortcut: '⌘1' },
-  { value: 'butter', label: 'Chili butter', shortcut: '⌘2' },
-  { value: 'broth', label: 'In broth', shortcut: '⌘3' },
-  { type: 'separator' },
-  { value: 'plain', label: 'Plain', disabled: true },
+  { value: 'new', label: 'New file' },
+  { value: 'open', label: 'Open…' },
+  { value: 'save', label: 'Save', shortcut: '⌘S' },
 ];
 
 export default function MenuBasic() {
+  const [selected, setSelected] = useState('Nothing selected');
+
   return (
-    <Menu
-      trigger={<Button variant="tertiary">Serve as…</Button>}
-      items={items}
-    />
+    <>
+      <Menu
+        trigger={<Button variant="tertiary">File</Button>}
+        items={items}
+        onSelect={setSelected}
+      />
+      <span aria-live="polite">Selected: {selected}</span>
+    </>
   );
 }

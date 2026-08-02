@@ -189,7 +189,7 @@ Import Manti before Tailwind:
 The order keeps Tailwind utilities above Manti components:
 
 ```tsx
-<Button className="rounded-none px-8 shadow-none">Save</Button>
+<Button className="rounded-none px-8">Save</Button>
 ```
 
 The bridge maps Manti tokens to standard utilities:
@@ -200,7 +200,7 @@ The bridge maps Manti tokens to standard utilities:
 | `bg-orange-500`, `text-red-700` | Primitive ramps            |
 | `bg-primary-600`                | Semantic ramp aliases      |
 | `text-lg`, `font-semibold`      | Typography                 |
-| `rounded-lg`, `shadow-md`       | Radius and elevation       |
+| `rounded-lg`                    | Radius                     |
 | `p-4`, `gap-2`, `h-control-md`  | Spacing and control height |
 | `ease-spring`                   | Motion                     |
 

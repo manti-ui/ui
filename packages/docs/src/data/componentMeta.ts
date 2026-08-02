@@ -149,7 +149,7 @@ const inlineMeta: Record<string, ComponentMeta> = {
         name: 'elevated',
         type: 'boolean',
         default: 'false',
-        description: 'Lift with a soft shadow instead of a border.',
+        description: 'Strengthen the card surface tint.',
       },
       {
         name: 'interactive',
@@ -451,16 +451,23 @@ export const componentMeta: Record<string, ComponentMeta> = {
 
 export interface CatalogEntry {
   name: string;
-  /** Documentation slug key; documented entries link to /components/{key}. */
+  /** Metadata and token-registry key. */
   key: string;
+  /** Documentation route. */
+  slug: string;
   summary: string;
   documented: boolean;
 }
 
 const DOCUMENTED = new Set(Object.keys(componentMeta));
 
-function entry(name: string, key: string, summary: string): CatalogEntry {
-  return { name, key, summary, documented: DOCUMENTED.has(key) };
+function entry(
+  name: string,
+  key: string,
+  summary: string,
+  slug = `/components/${key}`,
+): CatalogEntry {
+  return { name, key, slug, summary, documented: DOCUMENTED.has(key) };
 }
 
 /** The whole library, for the Components overview grid. */
@@ -469,6 +476,12 @@ export const componentCatalog: CatalogEntry[] = [
   entry('Alert', 'alert', 'Inline status message with variant and dismiss.'),
   entry('Avatar', 'avatar', 'User image with initials fallback.'),
   entry('Badge', 'badge', 'Compact status chip.'),
+  entry(
+    'Blockquote',
+    'blockquote',
+    'Semantic long-form quotation.',
+    '/typography/blockquote',
+  ),
   entry('Button', 'button', 'Action with variants, sizes, icons, and loading.'),
   entry(
     'Calendar',
@@ -480,6 +493,7 @@ export const componentCatalog: CatalogEntry[] = [
   entry('Checkbox', 'checkbox', 'Boolean choice with indeterminate.'),
   entry('Clipboard', 'clipboard', 'Copy-to-clipboard field.'),
   entry('Collapsible', 'collapsible', 'Single show/hide region.'),
+  entry('Code', 'code', 'Token-backed inline code.', '/typography/code'),
   entry('ColorPicker', 'color-picker', 'Area + channel color selection.'),
   entry('Combobox', 'combobox', 'Autocomplete text + listbox.'),
   entry('ContextMenu', 'context-menu', 'Right-click menu surface.'),
@@ -494,8 +508,9 @@ export const componentCatalog: CatalogEntry[] = [
   entry(
     'Input',
     'input',
-    'Labeled text input; type="password" adds a reveal toggle.',
+    'Labeled text input with left/right content and password controls.',
   ),
+  entry('Kbd', 'kbd', 'Semantic keyboard-input label.', '/typography/kbd'),
   entry('Listbox', 'listbox', 'Selectable option list.'),
   entry('Marquee', 'marquee', 'Continuous scrolling ticker.'),
   entry('Menu', 'menu', 'Dropdown command menu.'),

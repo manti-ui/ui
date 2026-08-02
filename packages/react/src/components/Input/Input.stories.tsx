@@ -49,11 +49,11 @@ export const Invalid: Story = {
   },
 };
 
-export const WithAddons: Story = {
+export const WithLeftAndRight: Story = {
   args: {
     label: 'Servings',
-    leadingAddon: <span aria-hidden>🍽️</span>,
-    trailingAddon: <span style={{ fontSize: 13 }}>people</span>,
+    left: <span aria-hidden>−</span>,
+    right: 'people',
     placeholder: '4',
     type: 'number',
   },

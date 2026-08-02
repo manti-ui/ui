@@ -10,6 +10,9 @@ export type { AvatarProps } from './Avatar/Avatar';
 export { Badge } from './Badge/Badge';
 export type { BadgeProps, BadgeVariant } from './Badge/Badge';
 
+export { Blockquote } from './Blockquote/Blockquote';
+export type { BlockquoteProps, BlockquoteSize } from './Blockquote/Blockquote';
+
 export { Button } from './Button/Button';
 export type { ButtonProps, ButtonSize } from './Button/Button';
 
@@ -35,6 +38,9 @@ export type {
 export { Collapsible } from './Collapsible/Collapsible';
 export type { CollapsibleProps } from './Collapsible/Collapsible';
 
+export { Code } from './Code/Code';
+export type { CodeProps, CodeSize } from './Code/Code';
+
 export { ColorPicker } from './ColorPicker/ColorPicker';
 export type { ColorPickerProps } from './ColorPicker/ColorPicker';
 
@@ -47,7 +53,6 @@ export type {
 
 export { ContextMenu } from './ContextMenu/ContextMenu';
 export type { ContextMenuProps } from './ContextMenu/ContextMenu';
-export type { ContextMenuTriggerProps } from './Menu/Menu';
 
 export { DataTable } from './DataTable/DataTable';
 export type {
@@ -90,6 +95,9 @@ export type { HoverCardProps } from './HoverCard/HoverCard';
 export { Input } from './Input/Input';
 export type { InputProps, InputVariant } from './Input/Input';
 
+export { Kbd } from './Kbd/Kbd';
+export type { KbdProps, KbdSize } from './Kbd/Kbd';
+
 export { Listbox } from './Listbox/Listbox';
 export type { ListboxItem, ListboxProps } from './Listbox/Listbox';
 
@@ -100,25 +108,16 @@ export { Menu } from './Menu/Menu';
 export type {
   MenuActionCommand,
   MenuCheckboxCommand,
-  MenuCheckboxItemProps,
   MenuCommand,
-  MenuContentProps,
   MenuGroup,
-  MenuGroupLabelProps,
-  MenuGroupProps,
   MenuItem,
-  MenuItemIndicatorProps,
-  MenuItemProps,
   MenuItemRootProps,
-  MenuItemSlotProps,
   MenuPlacement,
   MenuProps,
   MenuRadioCommand,
-  MenuRadioItemProps,
   MenuSeparator,
-  MenuSeparatorProps,
+  MenuSubmenu,
   MenuTone,
-  MenuTriggerProps,
 } from './Menu/Menu';
 
 export { NavigationMenu } from './NavigationMenu/NavigationMenu';

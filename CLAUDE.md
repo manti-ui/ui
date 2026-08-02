@@ -51,7 +51,13 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    `packages/styles/src/tokens.css`, consume only semantic/variant roles in
    component CSS, and verify changes with `pnpm check:color-scale`,
    `pnpm --filter @manti-ui/styles check:contrast`, and the styles build.
-4. **Match the user's language.** Always reply in the same language the user wrote
+4. **Never use box shadows.** `box-shadow` is prohibited everywhere in Manti UI,
+   including components, utilities, documentation surfaces, examples, motion
+   states, and focus treatments. Do not add shadow tokens or shadow-based
+   elevation. Communicate hierarchy with surface contrast, borders, spacing,
+   and layering instead; use an outline only when it conveys a real boundary,
+   focus state, or functional mask rather than simulated elevation.
+5. **Match the user's language.** Always reply in the same language the user wrote
    their prompt in (e.g. Turkish prompt → Turkish answer). This applies to chat
    responses only; code, identifiers, comments, and docs stay in English.
 

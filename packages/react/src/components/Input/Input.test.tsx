@@ -19,4 +19,38 @@ describe('Input', () => {
     expect(screen.getByText('Email')).toHaveTextContent('Email');
     expect(screen.queryByText('*')).not.toBeInTheDocument();
   });
+
+  it('renders text and React nodes in the left and right slots', () => {
+    render(
+      <Input
+        aria-label="Amount"
+        left="TRY"
+        right={<button type="button">Clear</button>}
+      />,
+    );
+
+    expect(screen.getByText('TRY')).toHaveAttribute('data-position', 'left');
+    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument();
+    expect(screen.getByText('Clear').parentElement).toHaveAttribute(
+      'data-position',
+      'right',
+    );
+  });
+
+  it('prefers left and right over the deprecated addon aliases', () => {
+    render(
+      <Input
+        aria-label="Amount"
+        left="New left"
+        right="New right"
+        leadingAddon="Old left"
+        trailingAddon="Old right"
+      />,
+    );
+
+    expect(screen.getByText('New left')).toBeInTheDocument();
+    expect(screen.getByText('New right')).toBeInTheDocument();
+    expect(screen.queryByText('Old left')).not.toBeInTheDocument();
+    expect(screen.queryByText('Old right')).not.toBeInTheDocument();
+  });
 });

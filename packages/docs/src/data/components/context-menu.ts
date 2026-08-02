@@ -9,13 +9,13 @@ export const meta: ComponentMeta = {
       name: 'children',
       type: 'ReactNode',
       description:
-        'With `items`, the region that opens the menu on right-click (or long-press on touch). Without it, the composed parts.',
+        'Required region that opens the menu on right-click or long-press.',
     },
     {
       name: 'items',
       type: 'MenuItem[]',
       description:
-        'The menu contents — commands, separators, and titled groups. Omit it to compose `ContextMenu.Trigger` and `ContextMenu.Content` as children instead.',
+        'Required recursive menu contents, including groups, options, and nested submenus.',
     },
     {
       name: 'onSelect',
@@ -45,8 +45,13 @@ export const meta: ComponentMeta = {
     },
     { part: 'content', description: 'The translucent menu panel.' },
     { part: 'item', description: 'A selectable command.' },
+    { part: 'trigger-item', description: 'A nested-menu trigger.' },
     { part: 'item-icon', description: 'A leading icon on a command.' },
     { part: 'item-text', description: 'The command label.' },
+    {
+      part: 'submenu-indicator',
+      description: 'Directional affordance on a nested-menu trigger.',
+    },
     {
       part: 'item-shortcut',
       description: 'The trailing keyboard-shortcut hint.',

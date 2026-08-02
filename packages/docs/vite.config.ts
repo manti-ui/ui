@@ -17,6 +17,45 @@ import type { Plugin } from 'vite';
 import { searchIndexPlugin } from './src/search/vite-plugin-search';
 import { docDatesPlugin } from './src/seo/vite-plugin-doc-dates';
 
+interface MdxNode {
+  type?: string;
+  name?: string;
+  attributes?: Array<{ type?: string; name?: string; value?: unknown }>;
+  children?: MdxNode[];
+}
+
+/**
+ * Keep the canonical example visible on every component page.
+ *
+ * Component MDX files should not have to remember a presentation prop. During
+ * compilation, the first flow-level `<Demo>` receives `defaultCodeOpen`; later
+ * demos remain collapsed by default.
+ */
+function remarkOpenPrimaryComponentDemo() {
+  return (tree: MdxNode, file: { path?: string }) => {
+    const path = String(file.path ?? '').replaceAll('\\', '/');
+    if (!path.includes('/src/content/components/')) return;
+
+    let found = false;
+    const visit = (node: MdxNode) => {
+      if (found) return;
+      if (node.type === 'mdxJsxFlowElement' && node.name === 'Demo') {
+        node.attributes ??= [];
+        node.attributes.push({
+          type: 'mdxJsxAttribute',
+          name: 'defaultCodeOpen',
+          value: null,
+        });
+        found = true;
+        return;
+      }
+      node.children?.forEach(visit);
+    };
+
+    visit(tree);
+  };
+}
+
 // Evergreen browsers that support `light-dark()`, CSS nesting and `color-mix()`
 // natively. Mirrors packages/styles/vite.config.ts and .storybook/main.ts so the
 // imported Manti CSS keeps `data-theme` theming and the `-webkit-backdrop-filter`
@@ -79,6 +118,7 @@ export default defineConfig({
           remarkGfm,
           remarkFrontmatter,
           [remarkMdxFrontmatter, { name: 'frontmatter' }],
+          remarkOpenPrimaryComponentDemo,
         ],
         rehypePlugins: [
           rehypeSlug,

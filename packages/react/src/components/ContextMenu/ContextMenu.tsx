@@ -5,21 +5,14 @@ import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
 import { MenuProvider, menuParts, useMenuSelection } from '../Menu/MenuParts';
-import { renderMenuItems } from '../Menu/MenuItems';
+import { MenuItems } from '../Menu/MenuItems';
 import type { MenuGetItemProps, MenuItem } from '../Menu/MenuItems';
 
 export interface ContextMenuProps {
-  /**
-   * With `items`, the region that opens the menu on right-click (or long-press
-   * on touch). Without it, the composed parts — `ContextMenu.Trigger` and
-   * `ContextMenu.Content`.
-   */
-  children?: ReactNode;
-  /**
-   * Declarative menu contents. Omit it and compose `ContextMenu.Content` with
-   * `ContextMenu.Item`, `ContextMenu.Group`, and `ContextMenu.Separator`.
-   */
-  items?: MenuItem[];
+  /** Region that opens the menu on right-click or long-press. */
+  children: ReactNode;
+  /** Declarative commands, groups, separators, options, and submenus. */
+  items: MenuItem[];
   /** Called with the value of the selected command. */
   onSelect?: (value: string) => void;
   /** Controlled open state. */
@@ -43,14 +36,11 @@ export interface ContextMenuProps {
  * style scope and every part below the trigger with {@link Menu}, so its panel
  * matches the dropdown menu.
  *
- * Pass `items` with the target region as `children`, or compose the parts:
+ * Pass the target region as `children` and describe the menu with `items`.
  *
  * ```tsx
- * <ContextMenu onSelect={run}>
- *   <ContextMenu.Trigger>{region}</ContextMenu.Trigger>
- *   <ContextMenu.Content>
- *     <ContextMenu.Item value="copy">Copy</ContextMenu.Item>
- *   </ContextMenu.Content>
+ * <ContextMenu items={[{ value: 'copy', label: 'Copy' }]} onSelect={run}>
+ *   {region}
  * </ContextMenu>
  * ```
  */
@@ -83,35 +73,17 @@ export function ContextMenu({
     <MenuProvider
       value={{
         api,
+        service,
         registerItem: selection.registerItem,
         emitSelect: (value) => selection.emit(value, onSelect),
         contentProps,
         contentClassName: cx(className),
       }}
     >
-      {items != null ? (
-        <>
-          <menuParts.ContextTrigger>{children}</menuParts.ContextTrigger>
-          <menuParts.Content>
-            {renderMenuItems(items, getItemProps)}
-          </menuParts.Content>
-        </>
-      ) : (
-        children
-      )}
+      <menuParts.ContextTrigger>{children}</menuParts.ContextTrigger>
+      <menuParts.Content>
+        <MenuItems items={items} getItemProps={getItemProps} />
+      </menuParts.Content>
     </MenuProvider>
   );
 }
-
-ContextMenu.Trigger = menuParts.ContextTrigger;
-ContextMenu.Content = menuParts.Content;
-ContextMenu.Item = menuParts.Item;
-ContextMenu.CheckboxItem = menuParts.CheckboxItem;
-ContextMenu.RadioItem = menuParts.RadioItem;
-ContextMenu.ItemIcon = menuParts.ItemIcon;
-ContextMenu.ItemText = menuParts.ItemText;
-ContextMenu.ItemShortcut = menuParts.ItemShortcut;
-ContextMenu.ItemIndicator = menuParts.ItemIndicator;
-ContextMenu.Group = menuParts.Group;
-ContextMenu.GroupLabel = menuParts.GroupLabel;
-ContextMenu.Separator = menuParts.Separator;

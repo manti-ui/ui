@@ -245,7 +245,6 @@
     background: none;
     border: none;
     border-radius: var(--manti-radius-md);
-    box-shadow: none;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     color: var(--manti-text-subtle);
@@ -1030,10 +1029,6 @@
 
   .docs-framework-icon-react {
     color: var(--docs-react-brand);
-    filter: drop-shadow(
-      0 0 var(--manti-space-2)
-        color-mix(in oklab, var(--docs-react-brand) 28%, transparent)
-    );
   }
 
   .docs-framework-icon-upcoming {
@@ -1089,7 +1084,6 @@
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-2xl);
     background: var(--manti-panel-tint-strong);
-    box-shadow: var(--manti-panel-rim), var(--manti-panel-shadow);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
   }
@@ -1153,7 +1147,6 @@
   }
 
   .docs-preview-content [data-scope='card'][data-part='root'] {
-    box-shadow: none;
   }
 
   .docs-preview-content [data-scope='card'][data-part='body'] {
@@ -1210,12 +1203,6 @@
     height: var(--manti-space-2);
     border-radius: var(--manti-radius-full);
     background: var(--variant-solid, var(--manti-accent-fill));
-    box-shadow: 0 0 0 var(--manti-space-1)
-      color-mix(
-        in oklab,
-        var(--variant-solid, var(--manti-accent-fill)) 18%,
-        transparent
-      );
   }
 
   .docs-preview-activity {
@@ -1235,7 +1222,6 @@
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-full);
     background: var(--manti-panel-tint-strong);
-    box-shadow: var(--manti-shadow-md);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     color: var(--manti-text-muted);
@@ -1473,7 +1459,6 @@
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-2xl);
     background: var(--manti-panel-tint);
-    box-shadow: var(--manti-panel-rim);
     text-align: center;
   }
 
@@ -1813,7 +1798,6 @@
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     border: none;
-    box-shadow: none;
   }
   .install-card-body [data-scope='clipboard'][data-part='trigger'] {
     width: auto;
