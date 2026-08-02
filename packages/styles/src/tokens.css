@@ -313,25 +313,11 @@
     --manti-selection-bg: var(--manti-orange-7);
     --manti-selection-text: var(--manti-gray-12);
 
-    /* Elevation ---------------------------------------------------------- */
-    --manti-shadow-sm: light-dark(
-      0 1px 2px -1px oklch(0.2 0.03 var(--manti-cool-hue) / 0.1),
-      0 1px 2px -1px oklch(0 0 0 / 0.5)
-    );
-    --manti-shadow-md: light-dark(
-      0 8px 24px -10px oklch(0.2 0.03 var(--manti-cool-hue) / 0.16),
-      0 10px 30px -12px oklch(0 0 0 / 0.6)
-    );
-    --manti-shadow-lg: light-dark(
-      0 24px 50px -16px oklch(0.2 0.03 var(--manti-cool-hue) / 0.2),
-      0 28px 60px -18px oklch(0 0 0 / 0.7)
-    );
-
     /* Material — sleek translucent panel --------------------------------------- *
      * The Manti UI signature: floating surfaces are a translucent panel over
-     * the ambient mesh — a light backdrop blur, a hairline border, a top-lit
-     * rim, and a soft, deep shadow. Cards carry an accent gradient lit along
-     * the top edge (see card.css). Retune the whole material from here.        */
+     * the ambient mesh with a light backdrop blur and a hairline border.
+     * Cards carry an accent gradient lit along the top edge (see card.css).
+     * Retune the whole material from here.                                    */
     --manti-panel-tint: light-dark(
       oklch(0.99 0.002 var(--manti-cool-hue) / 0.62),
       oklch(0.2 0.008 var(--manti-cool-hue) / 0.55)
@@ -345,26 +331,6 @@
       oklch(0.2 0.02 var(--manti-cool-hue) / 0.1),
       oklch(1 0 0 / 0.09)
     );
-    --manti-panel-highlight: light-dark(
-      oklch(1 0 0 / 0.9),
-      oklch(1 0 0 / 0.08)
-    );
-    /* One theme-aware shadow color, layered three deep into the full token. */
-    --manti-panel-shadow-color: light-dark(
-      oklch(0.2 0.04 var(--manti-cool-hue) / 0.14),
-      oklch(0 0 0 / 0.6)
-    );
-    --manti-panel-shadow:
-      0 1px 2px -1px var(--manti-panel-shadow-color),
-      0 16px 36px -16px var(--manti-panel-shadow-color),
-      0 36px 70px -28px var(--manti-panel-shadow-color);
-    /* Reusable inset pieces that recombine across surface states.          *
-     * `rim` is the top-lit hairline every panel/control carries; `inset`   *
-     * is the recessed well an input control shows at rest. Compose them —   *
-     * e.g. `box-shadow: var(--manti-panel-rim), var(--manti-panel-inset)`. */
-    --manti-panel-rim: inset 0 0 5px 0 var(--manti-panel-highlight);
-    --manti-panel-inset: inset 0 2px 5px -3px var(--manti-panel-shadow-color);
-
     /* Ambient — the color the dark refracts ------------------------------ *
      * Three soft glows behind every `.manti-app`/`body`: a faint violet,
      * magenta, and warm ember. Pure scene lighting (not a gradient element),

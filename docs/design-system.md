@@ -60,8 +60,8 @@ stop.
 ## Material
 
 The default material is cool, near-neutral, and translucent. Panels share a
-border, top highlight, blur, and shadow. Use `.manti-panel` to apply the same
-material to application-owned surfaces.
+quiet border and blur, while surface contrast and spacing communicate hierarchy.
+Use `.manti-panel` to apply the same material to application-owned surfaces.
 
 Key controls:
 
@@ -69,8 +69,6 @@ Key controls:
 --manti-panel-tint
 --manti-panel-tint-strong
 --manti-panel-border
---manti-panel-highlight
---manti-panel-shadow
 --manti-panel-blur
 ```
 

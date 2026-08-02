@@ -170,7 +170,7 @@ Key token families:
 --manti-radius-* / radius-factor / radius-pill / radius-thumb
 --manti-control-height-sm|md|lg
 --manti-space-* / text-* / leading-* / weight-*
---manti-shadow-* / duration-* / ease-* / z-*
+--manti-duration-* / ease-* / z-*
 ```
 
 Full reference:
@@ -211,7 +211,7 @@ Import Manti before Tailwind:
 ```
 
 The bridge maps Manti tokens to standard utilities such as `bg-surface`,
-`bg-primary-600`, `text-lg`, `rounded-md`, `shadow-sm`, `p-4`, and
+`bg-primary-600`, `text-lg`, `rounded-md`, `p-4`, and
 `h-control-md`.
 
 For headless use:
@@ -295,8 +295,8 @@ Guide: https://manti.design/guides/tailwind
   region with a replaceable indicator.
 - [ContextMenu](https://manti.design/components/context-menu): Menu behavior
   opened by right-click or long press.
-- [Menu](https://manti.design/components/menu): command items, groups, and
-  separators anchored to a trigger.
+- [Menu](https://manti.design/components/menu): recursive command items,
+  groups, options, separators, and nested menus anchored to a trigger.
 - [NavigationMenu](https://manti.design/components/navigation-menu): site
   navigation with rich link panels.
 - [Pagination](https://manti.design/components/pagination): page buttons from

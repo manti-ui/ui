@@ -1,16 +1,14 @@
 /**
- * Compound parts shared by {@link Menu} and {@link ContextMenu}. Both drive the
- * same Zag.js menu machine and render into the same `menu` style scope, so they
- * differ only in how the menu is opened — everything below the trigger is one
- * set of parts.
+ * Internal render parts shared by {@link Menu} and {@link ContextMenu}. Public
+ * components accept a declarative item model; these adapters keep the Zag.js
+ * machine wiring and DOM anatomy in one place.
  *
  * A root publishes its connected machine through `MenuContext`; every part
- * reads the machine from there rather than through props, so consumers can
- * compose the panel freely.
+ * reads the machine from there rather than threading it through every recursive
+ * menu level.
  */
 import {
   createContext,
-  isValidElement,
   useCallback,
   useContext,
   useEffect,
@@ -25,7 +23,6 @@ import type { PropTypes } from '@zag-js/react';
 import { Portal } from '../../internal/Portal';
 import { cx } from '../../internal/props';
 import type { WithDataAttributes } from '../../internal/props';
-import { renderTrigger } from '../../internal/floating';
 import { CheckIcon } from '../../internal/icons';
 
 export type MenuApi = menu.Api<PropTypes>;
@@ -42,6 +39,9 @@ type MenuSelectHandler = (value: string) => void;
 
 interface MenuContextValue {
   api: MenuApi;
+  service: menu.Service;
+  /** Whether this machine renders a submenu rather than the root menu. */
+  nested?: boolean;
   /**
    * Subscribe a command's own `onSelect` to the menu's selection event.
    * Returns an unsubscribe function.
@@ -49,7 +49,7 @@ interface MenuContextValue {
   registerItem: (value: string, handler: MenuSelectHandler) => () => void;
   /** Report a command as selected. */
   emitSelect: (value: string) => void;
-  /** Defaults merged onto `Menu.Content`, so both API shapes style it alike. */
+  /** Defaults merged onto the root menu content. */
   contentProps?: Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
   contentClassName?: string;
 }
@@ -114,31 +114,6 @@ const MenuItemContext = createContext<MenuItemContextValue | null>(null);
 /** Identity of the enclosing `Menu.Group`, so its label can point back at it. */
 const MenuGroupContext = createContext<string | null>(null);
 
-/* -------------------------------------------------------------------------- */
-/* Triggers                                                                    */
-/* -------------------------------------------------------------------------- */
-
-export interface MenuTriggerProps extends HTMLAttributes<HTMLElement> {
-  /**
-   * The element that opens the menu. A single element child is cloned with the
-   * machine's trigger props; anything else is wrapped in a plain button.
-   */
-  children?: ReactNode;
-}
-
-function MenuTrigger({ children, ...rest }: MenuTriggerProps) {
-  const { api } = useMenuContext('Menu.Trigger');
-  const triggerProps = mergeProps(rest, api.getTriggerProps());
-  if (isValidElement(children)) {
-    return <>{renderTrigger(children, triggerProps)}</>;
-  }
-  return (
-    <button type="button" {...triggerProps}>
-      {children}
-    </button>
-  );
-}
-
 export type ContextMenuTriggerProps = HTMLAttributes<HTMLDivElement>;
 
 /** The region that opens a context menu on right-click (or long-press). */
@@ -173,6 +148,7 @@ function MenuContent({
 }: MenuContentProps) {
   const {
     api,
+    nested,
     contentProps: rootContentProps,
     contentClassName,
   } = useMenuContext('Menu.Content');
@@ -182,6 +158,7 @@ function MenuContent({
       <div {...mergeProps(positionerProps ?? {}, api.getPositionerProps())}>
         <div
           {...mergeProps(rootContentProps ?? {}, rest, api.getContentProps())}
+          data-nested={nested ? '' : undefined}
           className={cx(
             rootContentProps?.className,
             contentClassName,
@@ -264,34 +241,6 @@ function MenuItemIndicator({
       {children ?? <CheckIcon />}
     </span>
   );
-}
-
-/**
- * Slots a command may lay out itself. When one of them appears among an item's
- * children, the item stops wrapping those children in a text slot and hands the
- * row's layout over to the consumer.
- */
-const ITEM_SLOTS = new Set<unknown>([
-  MenuItemIcon,
-  MenuItemText,
-  MenuItemShortcut,
-  MenuItemIndicator,
-]);
-
-function inspectChildren(children: ReactNode) {
-  let hasSlot = false;
-  let hasIndicator = false;
-  const visit = (node: ReactNode) => {
-    if (Array.isArray(node)) {
-      node.forEach((child) => visit(child as ReactNode));
-      return;
-    }
-    if (!isValidElement(node)) return;
-    if (ITEM_SLOTS.has(node.type)) hasSlot = true;
-    if (node.type === MenuItemIndicator) hasIndicator = true;
-  };
-  visit(children);
-  return { hasSlot, hasIndicator };
 }
 
 /* -------------------------------------------------------------------------- */
@@ -389,7 +338,6 @@ function MenuCommandItem({
       ? { 'data-tone': 'danger', 'data-variant': 'danger' }
       : {};
 
-  const { hasSlot, hasIndicator } = inspectChildren(children);
   const itemState: MenuItemContextValue = isOption
     ? { value, disabled, checked: checked ?? false }
     : { value, disabled };
@@ -401,9 +349,9 @@ function MenuCommandItem({
         className={cx(className)}
       >
         {icon != null && <MenuItemIcon>{icon}</MenuItemIcon>}
-        {hasSlot ? children : <MenuItemText>{children}</MenuItemText>}
+        <MenuItemText>{children}</MenuItemText>
         {shortcut != null && <MenuItemShortcut>{shortcut}</MenuItemShortcut>}
-        {isOption && !hasIndicator && <MenuItemIndicator />}
+        {isOption && <MenuItemIndicator />}
       </div>
     </MenuItemContext.Provider>
   );
@@ -479,7 +427,6 @@ function MenuSeparator({ className, ...rest }: MenuSeparatorProps) {
 
 /** Every part below the trigger, shared by `Menu` and `ContextMenu`. */
 export const menuParts = {
-  Trigger: MenuTrigger,
   ContextTrigger: ContextMenuTrigger,
   Content: MenuContent,
   Item: MenuItem,

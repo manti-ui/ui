@@ -3,8 +3,8 @@
  *
  * Binds the **entire** Manti token contract onto Tailwind's own theme
  * namespaces, so Manti *becomes* the Tailwind theme: plain utilities like
- * `bg-red-500`, `text-lg`, `font-semibold`, `rounded-lg`, `shadow-md`, and
- * `leading-normal` all resolve to Manti tokens. `@theme inline` makes the
+ * `bg-red-500`, `text-lg`, `font-semibold`, `rounded-lg`, and `leading-normal`
+ * all resolve to Manti tokens. `@theme inline` makes the
  * generated utilities reference `var(--manti-*)` directly, so they stay
  * theme-aware at runtime (`light-dark()` + `data-theme`) instead of freezing a
  * value at build time.
@@ -16,7 +16,7 @@
  * Binding rules:
  * - Full takeover. Every Manti scale maps onto the matching Tailwind namespace
  *   and overrides Tailwind's default of the same name (color, font-size,
- *   font-weight, line-height, radius, shadow, easing, font-family, spacing).
+ *   font-weight, line-height, radius, easing, font-family, spacing).
  *   A host app that imports this file gets Manti's values for the standard
  *   utilities — that is the intent.
  * - Colors are exposed twice: by plain color name (`bg-orange-500`) and by
@@ -253,11 +253,6 @@
   --radius-xl: var(--manti-radius-xl);
   --radius-2xl: var(--manti-radius-2xl);
   --radius-full: var(--manti-radius-full);
-
-  /* Elevation — takes over Tailwind's `shadow-*` (`shadow-md` → Manti). ----- */
-  --shadow-sm: var(--manti-shadow-sm);
-  --shadow-md: var(--manti-shadow-md);
-  --shadow-lg: var(--manti-shadow-lg);
 
   /* Motion ------------------------------------------------------------------ */
   --ease-smooth: var(--manti-ease-smooth);

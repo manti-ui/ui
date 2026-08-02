@@ -44,6 +44,6 @@
  *
  *   <Card className="bg-surface text-text rounded-lg" />
  *   <Button variant="brand">Save</Button>
- *   <Button className="rounded-pill px-8 shadow-none">Save</Button>
+ *   <Button className="rounded-pill px-8">Save</Button>
  *   <Button className="data-[loading=true]:opacity-70">Save</Button>
  */

@@ -48,9 +48,6 @@
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
-    box-shadow:
-      inset 0 0 5px 0 var(--manti-panel-highlight),
-      var(--manti-panel-shadow);
   }
 
   /* Where backdrop-filter is unavailable, fall back to an opaque surface so

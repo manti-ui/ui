@@ -34,6 +34,9 @@ system-wide changes; use this list when one component should differ. See
 | `badge`             | `--manti-badge-padding-x`                   | `var(--manti-space-2)`                               |
 | `badge`             | `--manti-badge-gap`                         | `var(--manti-space-1)`                               |
 | `badge`             | `--manti-badge-dot-size`                    | `0.5em`                                              |
+| `blockquote`        | `--manti-blockquote-accent-width`           | `var(--manti-focus-ring-width)`                      |
+| `blockquote`        | `--manti-blockquote-padding-x`              | `var(--manti-space-4)`                               |
+| `blockquote`        | `--manti-blockquote-font-size`              | `var(--manti-text-base)`                             |
 | `button`            | `--manti-button-radius`                     | `max(var(--_radius-base), var(--manti-radius-pill))` |
 | `button`            | `--manti-button-height`                     | `var(--manti-control-height-md)`                     |
 | `button`            | `--manti-button-padding-x`                  | `var(--manti-space-3)`                               |
@@ -64,6 +67,10 @@ system-wide changes; use this list when one component should differ. See
 | `clipboard`         | `--manti-clipboard-gap`                     | `var(--manti-space-2)`                               |
 | `clipboard`         | `--manti-clipboard-font-size`               | `var(--manti-text-sm)`                               |
 | `clipboard`         | `--manti-clipboard-trigger-width`           | `2.5rem`                                             |
+| `code`              | `--manti-code-radius`                       | `var(--manti-radius-xs)`                             |
+| `code`              | `--manti-code-padding-x`                    | `var(--manti-space-1)`                               |
+| `code`              | `--manti-code-padding-y`                    | `calc(var(--manti-space-1) / 2)`                     |
+| `code`              | `--manti-code-font-size`                    | `var(--manti-text-sm)`                               |
 | `collapsible`       | `--manti-collapsible-radius`                | `var(--manti-radius-md)`                             |
 | `collapsible`       | `--manti-collapsible-padding-x`             | `var(--manti-space-3)`                               |
 | `collapsible`       | `--manti-collapsible-padding-y`             | `var(--manti-space-2)`                               |
@@ -94,12 +101,21 @@ system-wide changes; use this list when one component should differ. See
 | `floating-panel`    | `--manti-floating-panel-min-width`          | `16rem`                                              |
 | `floating-panel`    | `--manti-floating-panel-min-height`         | `8rem`                                               |
 | `hover-card`        | `--manti-hover-card-max-width`              | `20rem`                                              |
+| `kbd`               | `--manti-kbd-radius`                        | `var(--manti-radius-sm)`                             |
+| `kbd`               | `--manti-kbd-padding-x`                     | `var(--manti-space-2)`                               |
+| `kbd`               | `--manti-kbd-padding-y`                     | `var(--manti-space-1)`                               |
+| `kbd`               | `--manti-kbd-font-size`                     | `var(--manti-text-xs)`                               |
+| `kbd`               | `--manti-kbd-border-width`                  | `calc(var(--manti-focus-ring-offset) / 2)`           |
 | `listbox`           | `--manti-listbox-min-width`                 | `14rem`                                              |
 | `listbox`           | `--manti-listbox-max-height`                | `18rem`                                              |
 | `marquee`           | `--manti-marquee-gap`                       | `var(--manti-space-8)`                               |
 | `marquee`           | `--manti-marquee-duration`                  | `20s`                                                |
 | `menu`              | `--manti-menu-min-width`                    | `12rem`                                              |
 | `menu`              | `--manti-menu-max-width`                    | `20rem`                                              |
+| `menu`              | `--manti-menu-submenu-min-width`            | `10rem`                                              |
+| `menu`              | `--manti-menu-submenu-indicator-size`       | `var(--manti-space-4)`                               |
+| `menu`              | `--manti-menu-submenu-offset`               | `var(--manti-space-3)`                               |
+| `menu`              | `--manti-menu-motion-offset`                | `calc(var(--manti-space-1) / 2)`                     |
 | `menu`              | `--manti-menu-z-index`                      | `var(--manti-z-popover)`                             |
 | `navigation-menu`   | `--manti-navigation-menu-content-min-width` | `16rem`                                              |
 | `number-input`      | `--manti-number-input-height`               | `var(--manti-control-height-md)`                     |
@@ -141,5 +157,6 @@ system-wide changes; use this list when one component should differ. See
 | `tooltip`           | `--manti-tooltip-max-width`                 | `18rem`                                              |
 | `tooltip`           | `--manti-tooltip-z-index`                   | `var(--manti-z-popover)`                             |
 | `tour`              | `--manti-tour-width`                        | `20rem`                                              |
+| `tour`              | `--manti-tour-overlay-extent`               | `100vmax`                                            |
 
 <!-- @component-tokens:generated:end -->

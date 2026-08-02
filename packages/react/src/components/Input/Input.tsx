@@ -26,9 +26,13 @@ export interface InputProps extends Omit<
   variant?: InputVariant;
   /** Stretch to fill the available inline space. */
   fullWidth?: boolean;
-  /** Content rendered inside the control, before the input. */
+  /** Content rendered inside the control, to the left of the input. */
+  left?: ReactNode;
+  /** Content rendered inside the control, to the right of the input. */
+  right?: ReactNode;
+  /** @deprecated Use `left` instead. */
   leadingAddon?: ReactNode;
-  /** Content rendered inside the control, after the input. */
+  /** @deprecated Use `right` instead. */
   trailingAddon?: ReactNode;
   /** Visual required marker. Pass `null` to keep native semantics without a marker. */
   requiredIndicator?: ReactNode | null;
@@ -77,6 +81,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     size = 'md',
     variant = 'default',
     fullWidth,
+    left,
+    right,
     leadingAddon,
     trailingAddon,
     requiredIndicator = '*',
@@ -105,6 +111,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const autoId = useId();
   const inputId = id ?? autoId;
   const invalid = error != null;
+  const leftContent = left !== undefined ? left : leadingAddon;
+  const rightContent = right !== undefined ? right : trailingAddon;
   const hintId = hint != null ? `${inputId}-hint` : undefined;
   const errorId = invalid ? `${inputId}-error` : undefined;
 
@@ -177,9 +185,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         </label>
       )}
       <div data-scope="field" data-part="control" data-size={size}>
-        {leadingAddon != null && (
-          <span data-scope="field" data-part="addon">
-            {leadingAddon}
+        {leftContent != null && (
+          <span data-scope="field" data-part="addon" data-position="left">
+            {leftContent}
           </span>
         )}
         <input
@@ -213,9 +221,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             </span>
           </span>
         )}
-        {trailingAddon != null && (
-          <span data-scope="field" data-part="addon">
-            {trailingAddon}
+        {rightContent != null && (
+          <span data-scope="field" data-part="addon" data-position="right">
+            {rightContent}
           </span>
         )}
         {isPassword && showPasswordToggle && (

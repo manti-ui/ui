@@ -4,7 +4,7 @@ slug: /changelog/v0.4.0
 group: Changelog
 order: 4
 date: '2026-07-19'
-description: TextField is renamed to Input and PasswordInput folds into <Input type="password">, plus panel rim/inset box-shadows become semantic tokens.
+description: TextField is renamed to Input and PasswordInput folds into <Input type="password">, plus panel material roles are centralized.
 ---
 
 # v0.4.0
@@ -69,8 +69,5 @@ _Released 2026-07-19._
   `role="status"` live region and the input's `aria-describedby`, so it is hidden
   from the screen, not from the accessibility tree. `capsLockLabel` is therefore
   now an assistive-tech-only string.
-- **Panels** — the top-lit hairline rim and the recessed control-well shadow are
-  now two semantic tokens, `--manti-panel-rim` and `--manti-panel-inset`, instead
-  of literal `inset` box-shadow values repeated across ~34 component stylesheets.
-  Tuning the rim is now a single edit, and the rim itself softens from a 1px top
-  edge to a 5px ambient spread.
+- **Panels** — repeated panel material values are centralized as semantic roles,
+  making the treatment consistent and adjustable from one place.

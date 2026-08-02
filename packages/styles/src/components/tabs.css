@@ -53,7 +53,7 @@
   /* pill: an enclosed, translucent track that hugs its tabs. Theme-specific
      fill: the original lighter panel fill in dark, and a very subtle groove in light
      (a near-white track is invisible, but a gray one reads too heavy) — the
-     active thumb does the rest with its own edge and shadow. */
+     active thumb does the rest with its own edge and surface contrast. */
   [data-scope='tabs'][data-part='root'][data-variant='pill']
     [data-part='list'] {
     align-self: flex-start;
@@ -183,7 +183,7 @@
 
   /* pill & soft: a translucent thumb that lifts above the track. A light
      tint (so it reads against the dark track), with blur, a hairline, and a
-     soft shadow — the active tab looks raised, like the reference. */
+     stronger surface — the active tab looks raised, like the reference. */
   [data-scope='tabs'][data-part='root'][data-variant='pill']
     > [data-part='list']
     > [data-part='indicator'],

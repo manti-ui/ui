@@ -12,9 +12,11 @@
   }
 
   [data-scope='tour'][data-part='spotlight'] {
+    --manti-tour-overlay-extent: 100vmax;
+
     position: absolute;
     border-radius: var(--manti-radius-md);
-    box-shadow: 0 0 0 9999px var(--manti-overlay);
+    outline: var(--manti-tour-overlay-extent) solid var(--manti-overlay);
     /* Layer order (Zag --tour-layer): backdrop 0 < spotlight 1 < positioner 2. */
     z-index: calc(var(--manti-z-modal) + 1);
   }
