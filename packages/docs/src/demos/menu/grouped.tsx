@@ -4,29 +4,26 @@ import type { MenuItem } from '@manti-ui/react';
 const items: MenuItem[] = [
   {
     type: 'group',
-    label: 'Toppings',
+    label: 'Edit',
     items: [
-      { value: 'yogurt', label: 'Garlic yogurt' },
-      { value: 'butter', label: 'Chili butter' },
-      { value: 'mint', label: 'Dried mint' },
+      { value: 'undo', label: 'Undo', disabled: true },
+      { value: 'copy', label: 'Copy', shortcut: '⌘C' },
+      { value: 'paste', label: 'Paste', shortcut: '⌘V' },
     ],
   },
   { type: 'separator' },
   {
     type: 'group',
-    label: 'Style',
+    label: 'Document',
     items: [
-      { value: 'kayseri', label: 'Kayseri (tiny)' },
-      { value: 'steamed', label: 'Steamed (large)' },
+      { value: 'rename', label: 'Rename' },
+      { value: 'delete', label: 'Delete', tone: 'danger' },
     ],
   },
 ];
 
 export default function MenuGrouped() {
   return (
-    <Menu
-      trigger={<Button variant="tertiary">Customize…</Button>}
-      items={items}
-    />
+    <Menu trigger={<Button variant="tertiary">Actions</Button>} items={items} />
   );
 }

@@ -395,13 +395,6 @@ export const fontFamily = {
   mono: "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace",
 } as const;
 
-/** Soft, warm-tinted elevation. */
-export const shadow = {
-  sm: '0 1px 2px -1px oklch(0.2 0.02 60 / 0.12)',
-  md: '0 6px 16px -6px oklch(0.2 0.02 60 / 0.18)',
-  lg: '0 18px 40px -12px oklch(0.2 0.02 60 / 0.22)',
-} as const;
-
 /** Smooth motion. The brand promise lives here. */
 export const duration = {
   fast: '120ms',
@@ -479,6 +472,7 @@ export const componentTokens = {
   ],
   avatar: ['size', 'radius'],
   badge: ['radius', 'font-size', 'padding-y', 'padding-x', 'gap', 'dot-size'],
+  blockquote: ['accent-width', 'padding-x', 'font-size'],
   button: [
     'radius',
     'height',
@@ -508,6 +502,7 @@ export const componentTokens = {
     'trigger-width',
   ],
   collapsible: ['radius', 'padding-x', 'padding-y', 'gap', 'icon-size'],
+  code: ['radius', 'padding-x', 'padding-y', 'font-size'],
   'color-picker': ['height', 'panel-width', 'area-height'],
   combobox: ['height', 'content-max-height'],
   'data-table': [
@@ -524,9 +519,18 @@ export const componentTokens = {
   field: ['height', 'padding-x', 'padding-y'],
   'floating-panel': ['min-width', 'min-height'],
   'hover-card': ['max-width'],
+  kbd: ['radius', 'padding-x', 'padding-y', 'font-size', 'border-width'],
   listbox: ['min-width', 'max-height'],
   marquee: ['gap', 'duration'],
-  menu: ['min-width', 'max-width', 'z-index'],
+  menu: [
+    'min-width',
+    'max-width',
+    'submenu-min-width',
+    'submenu-indicator-size',
+    'submenu-offset',
+    'motion-offset',
+    'z-index',
+  ],
   'navigation-menu': ['content-min-width'],
   'number-input': ['height', 'stepper-width'],
   pagination: ['size'],
@@ -549,7 +553,7 @@ export const componentTokens = {
   toggle: ['size'],
   'toggle-group': ['height', 'padding-x'],
   tooltip: ['max-width', 'z-index'],
-  tour: ['width'],
+  tour: ['width', 'overlay-extent'],
 } as const;
 
 export type MantiComponentTokens = typeof componentTokens;
@@ -583,7 +587,6 @@ export const mantiTokens = {
   lineHeight,
   fontWeight,
   fontFamily,
-  shadow,
   duration,
   easing,
   breakpoint,

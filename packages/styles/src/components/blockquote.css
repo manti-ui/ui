@@ -1,0 +1,22 @@
+/** Blockquote — semantic long-form quotation with a quiet leading accent. */
+@layer manti.components {
+  [data-scope='blockquote'][data-part='root'] {
+    --manti-blockquote-accent-width: var(--manti-focus-ring-width);
+    --manti-blockquote-padding-x: var(--manti-space-4);
+    --manti-blockquote-font-size: var(--manti-text-base);
+
+    margin: var(--manti-space-0);
+    padding-inline-start: var(--manti-blockquote-padding-x);
+    border-inline-start: var(--manti-blockquote-accent-width) solid
+      var(--manti-border-strong);
+    color: var(--manti-text-muted);
+    font-family: var(--manti-font-sans);
+    font-size: var(--manti-blockquote-font-size);
+    line-height: var(--manti-leading-relaxed);
+
+    &[data-size='lg'] {
+      --manti-blockquote-padding-x: var(--manti-space-6);
+      --manti-blockquote-font-size: var(--manti-text-lg);
+    }
+  }
+}

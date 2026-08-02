@@ -40,6 +40,15 @@ export function CheckIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** A compact direction-neutral submenu affordance. Mirrored by CSS in RTL. */
+export function SubmenuIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true" {...props}>
+      <path fill="currentColor" d="m6 3 5 5-5 5V3Z" />
+    </svg>
+  );
+}
+
 /** An open-eye glyph (password is visible). Inherits `currentColor`. */
 export function EyeIcon(props: SVGProps<SVGSVGElement>) {
   return (

@@ -19,8 +19,7 @@ through semantic variants instead of decoration.
 Floating surfaces share one panel treatment:
 
 - translucent surface tint;
-- subtle border and top highlight;
-- soft shadow;
+- subtle border;
 - blur when the browser and layout support it.
 
 <Card style={{ maxWidth: 'var(--manti-space-16)', minWidth: '20rem' }}>
@@ -31,7 +30,7 @@ Floating surfaces share one panel treatment:
         inside the <p> that Card.Description renders. A browser un-nests that
         while parsing the prerendered HTML, breaking hydration for the route. */}
     <Card.Description>
-      {'A rounded panel with a quiet border, top highlight, and soft shadow.'}
+      {'A rounded panel with a quiet border and clear surface contrast.'}
     </Card.Description>
   </Card.Body>
 </Card>
@@ -47,7 +46,6 @@ Floating surfaces share one panel treatment:
 .manti-app {
   --manti-panel-tint: oklch(0.2 0.008 280 / 0.55);
   --manti-panel-border: oklch(1 0 0 / 0.09);
-  --manti-panel-highlight: oklch(1 0 0 / 0.08);
   --manti-panel-blur: blur(16px) saturate(160%);
 }
 ```

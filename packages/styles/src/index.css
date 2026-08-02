@@ -18,7 +18,9 @@
 @import './components/segmented-control.css';
 @import './components/field.css';
 @import './components/badge.css';
+@import './components/blockquote.css';
 @import './components/card.css';
+@import './components/code.css';
 @import './components/alert.css';
 @import './components/spinner.css';
 @import './components/collapsible.css';
@@ -61,6 +63,7 @@
 @import './components/scroll-area.css';
 @import './components/data-table.css';
 @import './components/marquee.css';
+@import './components/kbd.css';
 
 /* Motion tiers — declared last so [data-motion] overrides win by layer order.
    Import `none` after `full` so an inner [data-motion="none"] subtree reliably

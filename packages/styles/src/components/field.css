@@ -151,8 +151,12 @@
 
   [data-scope='field'][data-part='addon'] {
     display: inline-flex;
+    flex: none;
     align-items: center;
     color: var(--manti-text-subtle);
+    font-size: var(--manti-text-sm);
+    line-height: var(--manti-leading-normal);
+    white-space: nowrap;
   }
 
   [data-scope='field'][data-part='hint'] {

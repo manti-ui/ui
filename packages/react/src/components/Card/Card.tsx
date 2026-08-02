@@ -8,7 +8,7 @@ import type {
 } from '../../internal/polymorphic';
 
 interface CardOwnProps {
-  /** Lift the card with a soft shadow instead of a border. */
+  /** Strengthen the card's surface tint. */
   elevated?: boolean;
   /** Apply the smooth hover lift. Pair with real semantics (link, button, onClick). */
   interactive?: boolean;

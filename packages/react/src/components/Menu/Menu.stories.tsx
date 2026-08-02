@@ -59,32 +59,33 @@ export const Grouped: Story = {
   },
 };
 
-export const Composed: Story = {
-  render: () => (
-    <Menu>
-      <Menu.Trigger>
-        <Button variant="tertiary">Serve as…</Button>
-      </Menu.Trigger>
-      <Menu.Content>
-        <Menu.Group>
-          <Menu.GroupLabel>Toppings</Menu.GroupLabel>
-          <Menu.Item value="yogurt" shortcut="⌘1">
-            Garlic yogurt
-          </Menu.Item>
-          <Menu.Item value="butter" shortcut="⌘2">
-            Chili butter
-          </Menu.Item>
-        </Menu.Group>
-        <Menu.Separator />
-        <Menu.Item value="plain" disabled>
-          Plain
-        </Menu.Item>
-        <Menu.Item value="delete" tone="danger">
-          Send it back
-        </Menu.Item>
-      </Menu.Content>
-    </Menu>
-  ),
+export const Nested: Story = {
+  args: {
+    trigger: <Button variant="tertiary">File</Button>,
+    items: [
+      { value: 'new', label: 'New file', shortcut: '⌘N' },
+      {
+        type: 'submenu',
+        value: 'share',
+        label: 'Share',
+        items: [
+          { value: 'messages', label: 'Messages' },
+          { value: 'mail', label: 'Mail' },
+          {
+            type: 'submenu',
+            value: 'more',
+            label: 'More',
+            items: [
+              { value: 'airdrop', label: 'AirDrop' },
+              { value: 'notes', label: 'Notes' },
+            ],
+          },
+        ],
+      },
+      { type: 'separator' },
+      { value: 'print', label: 'Print…', shortcut: '⌘P' },
+    ],
+  },
 };
 
 export const OptionsAndDanger: Story = {

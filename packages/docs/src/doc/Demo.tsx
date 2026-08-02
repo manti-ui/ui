@@ -58,11 +58,18 @@ export interface DemoProps {
    * dropdown opens downward (e.g. NavigationMenu) and would otherwise be
    * clipped by the canvas overflow. */
   roomy?: boolean;
+  /** Show the editable source initially while keeping the show/hide control. */
+  defaultCodeOpen?: boolean;
 }
 
-export function Demo({ name, center, roomy }: DemoProps) {
+export function Demo({
+  name,
+  center,
+  roomy,
+  defaultCodeOpen = false,
+}: DemoProps) {
   const { Component, source } = resolve(name);
-  const [showCode, setShowCode] = useState(false);
+  const [showCode, setShowCode] = useState(defaultCodeOpen);
 
   const canvasClass = [
     'docs-demo-canvas',
