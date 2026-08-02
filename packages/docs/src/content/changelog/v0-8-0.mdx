@@ -1,0 +1,96 @@
+---
+title: v0.8.0
+slug: /changelog/v0.8.0
+group: Changelog
+order: 1
+date: '2026-08-03'
+description: Blockquote, Code, and Kbd join the typography set; menus gain recursive submenus; Input gets left and right slots; and shadows leave the design contract.
+---
+
+# v0.8.0
+
+_Released 2026-08-03._
+
+## Typography primitives
+
+Three small semantic components join the React package:
+
+- **Blockquote** renders a native `blockquote` with `md` and `lg` sizes and a
+  quiet accent boundary.
+- **Code** renders inline `code` with `sm` and `md` sizes.
+- **Kbd** renders a native `kbd` key cap with `sm` and `md` sizes.
+
+Each component forwards its ref and native HTML attributes. Their spacing,
+type, borders, and radius are backed by public component tokens, and all three
+ship with Storybook stories, regression tests, and dedicated docs pages.
+
+```tsx
+import { Blockquote, Code, Kbd } from '@manti-ui/react';
+
+<Blockquote>
+  Press <Kbd>⌘</Kbd> <Kbd>K</Kbd>, then enter <Code>settings</Code>.
+</Blockquote>;
+```
+
+## Recursive menus
+
+Menu and ContextMenu now describe nested navigation with the same `items`
+model used for ordinary commands:
+
+```tsx
+<Menu
+  trigger={<Button>Actions</Button>}
+  items={[
+    { value: 'edit', label: 'Edit' },
+    {
+      type: 'submenu',
+      value: 'share',
+      label: 'Share',
+      items: [
+        { value: 'copy-link', label: 'Copy link' },
+        { value: 'email', label: 'Email' },
+      ],
+    },
+  ]}
+  onSelect={run}
+/>
+```
+
+Submenus can nest recursively. Zag owns arrow-key routing, focus, dismissal,
+placement, and selection across the tree; selecting a leaf closes the complete
+menu. The item model also has first-class action, checkbox, radio, group, and
+separator shapes, plus `getItemProps` for application integration.
+
+**Migration from v0.7:** the short-lived compound API (`Menu.Trigger`,
+`Menu.Content`, `Menu.Item`, and the matching ContextMenu parts) has been
+removed. Pass `trigger` and `items` to Menu, and pass the target as children
+with `items` to ContextMenu. This keeps one recursive, serializable model for
+every menu depth instead of splitting top-level and nested content between two
+APIs.
+
+## Input slots
+
+Input gains `left` and `right` slots inside the field frame for units, currency
+symbols, icons, badges, shortcuts, and small actions. Both participate in the
+control's focus, invalid, filled, and disabled states.
+
+The older `leadingAddon` and `trailingAddon` names remain as deprecated aliases,
+so existing inputs continue to render while applications migrate.
+
+## Design contract
+
+- The old shadow primitive and every remaining `box-shadow` treatment are gone.
+  Hierarchy now comes from surfaces, borders, spacing, and real boundaries.
+- Blockquote, Code, Kbd, Menu submenu geometry and motion, and Tour's overlay
+  extent are registered as public component tokens.
+- Menu motion now distinguishes root panels from nested panels and respects the
+  submenu's opening direction.
+- Card, Button, Calendar, DatePicker, Tabs, Tour, and shared field styling are
+  tightened around the same token-backed surface and interaction vocabulary.
+
+## Documentation
+
+The docs add full pages and demos for the three typography primitives, recursive
+menus, menu options, and Input's left/right slots. Component metadata, anatomy,
+navigation, Tailwind guidance, consumer-theme examples, and the machine-readable
+project guide have been updated to match the public API.
