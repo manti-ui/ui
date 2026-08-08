@@ -83,7 +83,11 @@ export function Slider({
   const api = slider.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
+    <div
+      {...api.getRootProps()}
+      data-variant={variant}
+      className={cx(className)}
+    >
       {(label != null || showValue) && (
         <div data-part="header">
           {label != null && <label {...api.getLabelProps()}>{label}</label>}
@@ -98,11 +102,9 @@ export function Slider({
         <div {...api.getTrackProps()}>
           <div {...api.getRangeProps()} />
         </div>
-        {api.value.map((_, index) => (
-          <div key={index} {...api.getThumbProps({ index })}>
-            <input {...api.getHiddenInputProps({ index })} />
-          </div>
-        ))}
+        {/* Markers before the thumbs: every part of the control shares one grid
+            cell, so DOM order is paint order. A tick under the thumb would
+            otherwise show through the handle it is sitting behind. */}
         {marks != null && marks.length > 0 && (
           <div {...api.getMarkerGroupProps()}>
             {marks.map((markValue) => (
@@ -113,6 +115,11 @@ export function Slider({
             ))}
           </div>
         )}
+        {api.value.map((_, index) => (
+          <div key={index} {...api.getThumbProps({ index })}>
+            <input {...api.getHiddenInputProps({ index })} />
+          </div>
+        ))}
       </div>
     </div>
   );

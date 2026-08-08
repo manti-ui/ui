@@ -32,9 +32,25 @@
 
   [data-scope='field'][data-part='control'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
-    --manti-field-height: var(--manti-control-height-md);
-    --manti-field-padding-x: var(--manti-space-3);
-    --manti-field-padding-y: var(--manti-space-2);
+    /* Sizing comes from the shared size channel (see styles/src/size.css), so
+       a field, the controls built on it, and the popups those controls open all
+       land on the same `sm | md | lg` rhythm. */
+    --manti-field-height: var(
+      --manti-size-control-height,
+      var(--manti-control-height-md)
+    );
+    --manti-field-padding-x: var(
+      --manti-size-control-padding-x,
+      var(--manti-space-3)
+    );
+    --manti-field-padding-y: var(
+      --manti-size-item-padding-y,
+      var(--manti-space-2)
+    );
+    --manti-field-font-size: var(--manti-size-text, var(--manti-text-sm));
+    /* Inline inset of an element slot. Text slots keep the shell's padding;
+       a node slot trades it for this much smaller one (see `addon` below). */
+    --manti-field-addon-padding-x: var(--manti-space-1);
 
     display: flex;
     align-items: center;
@@ -48,16 +64,6 @@
     color: var(--manti-text-muted);
     transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
-    &[data-size='sm'] {
-      --manti-field-height: var(--manti-control-height-sm);
-    }
-
-    &[data-size='lg'] {
-      --manti-field-height: var(--manti-control-height-lg);
-      --manti-field-padding-x: var(--manti-space-4);
-      --manti-field-padding-y: var(--manti-space-3);
-    }
-
     &[data-multiline='true'] {
       align-items: stretch;
     }
@@ -66,6 +72,10 @@
       border-color: var(--manti-border-strong);
     }
 
+    /* Input-like control: the primary color starts at active/focus, never at
+       rest or hover. Pressing anywhere in the shell counts — the click is on
+       its way to focusing the input. */
+    &:active,
     &:focus-within {
       border-color: var(--variant-ring);
     }
@@ -79,14 +89,14 @@
   [data-scope='field'][data-part='root'][data-focus-ring='none']:not(
       [data-invalid='true']
     )
-    [data-part='control']:focus-within {
+    [data-part='control']:is(:active, :focus-within) {
     border-color: var(--manti-border);
   }
 
   [data-scope='field'][data-part='root'][data-focus-ring='none'][data-appearance='fill']:not(
       [data-invalid='true']
     )
-    [data-part='control']:focus-within {
+    [data-part='control']:is(:active, :focus-within) {
     border-color: transparent;
   }
 
@@ -100,6 +110,7 @@
       border-color: transparent;
     }
 
+    &:active,
     &:focus-within {
       background: var(--manti-fill-strong);
       border-color: var(--variant-ring);
@@ -125,7 +136,7 @@
     border: none;
     outline: none;
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-field-font-size);
 
     &::placeholder {
       color: var(--manti-text-subtle);
@@ -154,9 +165,31 @@
     flex: none;
     align-items: center;
     color: var(--manti-text-subtle);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-field-font-size);
     line-height: var(--manti-leading-normal);
     white-space: nowrap;
+  }
+
+  /* An element slot (a button, an icon, a shortcut key) paints its own box, so
+     stacking it on top of the shell's padding parks it far inside the frame.
+     The adapter marks those slots `data-slot="node"`: the addon cancels the
+     shell's padding on its own side and re-adds the much smaller addon inset,
+     which keeps the padding on the other side and the input untouched. Text
+     slots read as part of the value and keep the shell's padding as is. */
+  [data-scope='field'][data-part='addon'][data-slot='node'] {
+    --_addon-pull: calc(
+      var(--manti-field-addon-padding-x) - var(--manti-field-padding-x)
+    );
+
+    &[data-position='left'] {
+      margin-inline-start: var(--_addon-pull);
+      padding-inline-start: var(--manti-field-addon-padding-x);
+    }
+
+    &[data-position='right'] {
+      margin-inline-end: var(--_addon-pull);
+      padding-inline-end: var(--manti-field-addon-padding-x);
+    }
   }
 
   [data-scope='field'][data-part='hint'] {
@@ -192,6 +225,11 @@
     &:hover {
       color: var(--manti-text);
       background: var(--manti-fill);
+    }
+
+    &:active {
+      color: var(--manti-text);
+      background: var(--manti-fill-strong);
     }
 
     &:focus-visible {

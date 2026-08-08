@@ -85,4 +85,17 @@
     [data-part='star-fill'][data-half] {
     clip-path: inset(0 50% 0 0);
   }
+
+  /* Pressed — keyed on the control, not the item: a rating is committed as a
+     run of stars, so the whole run deepens to the solid ladder's `active` rung
+     rather than just the one under the pointer. */
+  [data-scope='rating-group'][data-part='control']:active
+    [data-part='star-fill'] {
+    color: var(--variant-solid-active);
+  }
+
+  [data-scope='rating-group'][data-part='control']:active
+    [data-part='star-bg'] {
+    color: var(--manti-text-subtle);
+  }
 }

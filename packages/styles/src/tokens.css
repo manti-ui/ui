@@ -326,6 +326,15 @@
       oklch(0.995 0.0015 var(--manti-cool-hue) / 0.94),
       oklch(0.22 0.009 var(--manti-cool-hue) / 0.93)
     );
+    /* Pressed rung of the panel material — the `active` stop of the surface
+       ladder for chrome built out of the tint (collapsible/carousel/calendar
+       triggers, interactive cards). Like every interaction role it moves in the
+       direction that gains contrast per theme: darker in light, lighter in
+       dark. Ladder: tint (rest) → tint-strong (hover) → tint-pressed (active). */
+    --manti-panel-tint-pressed: light-dark(
+      oklch(0.945 0.004 var(--manti-cool-hue) / 0.97),
+      oklch(0.27 0.011 var(--manti-cool-hue) / 0.96)
+    );
     --manti-panel-blur: blur(12px) saturate(140%);
     --manti-panel-border: light-dark(
       oklch(0.2 0.02 var(--manti-cool-hue) / 0.1),
@@ -441,7 +450,15 @@
   /* Variant-colored interactive fills — the accent analog of --manti-fill-*,
      derived from --variant-soft-bg so every variant (including custom ones
      that define --variant-soft-bg) gets them for free. base = hover,
-     strong = selected/pressed. Declared on `[data-variant]`, NOT `:root`:
+     strong = selected/pressed.
+
+     Every variant below also carries the opaque soft ladder in full —
+     soft-bg (rest, stop 3) → soft-bg-hover (hover, stop 4) →
+     soft-bg-active (pressed/selected, stop 5) — and the solid ladder
+     solid → solid-hover → solid-active, so any clickable part can express a
+     press in its own variant instead of falling back to a neutral wash.
+
+     Declared on `[data-variant]`, NOT `:root`:
      a custom property's inner var() resolves where the property is declared,
      and `:root` has no --variant-soft-bg, so a root-level fill would compute
      to invalid and inherit as invalid everywhere. */
@@ -482,6 +499,10 @@
       var(--manti-orange-3),
       color-mix(in oklab, var(--manti-orange-7) 30%, var(--manti-gray-12))
     );
+    --variant-soft-bg-active: light-dark(
+      var(--manti-orange-4),
+      color-mix(in oklab, var(--manti-orange-7) 42%, var(--manti-gray-12))
+    );
     --variant-soft-text: light-dark(
       var(--manti-orange-9),
       var(--manti-orange-3)
@@ -510,6 +531,10 @@
       var(--manti-gray-4),
       var(--manti-gray-10)
     );
+    --variant-soft-bg-active: light-dark(
+      var(--manti-gray-5),
+      var(--manti-gray-9)
+    );
     --variant-soft-text: light-dark(var(--manti-gray-11), var(--manti-gray-3));
     --variant-border: light-dark(var(--manti-gray-6), var(--manti-gray-7));
     --variant-text: light-dark(var(--manti-gray-11), var(--manti-gray-3));
@@ -533,6 +558,10 @@
     --variant-soft-bg-hover: light-dark(
       var(--manti-green-3),
       color-mix(in oklab, var(--manti-green-7) 30%, var(--manti-gray-12))
+    );
+    --variant-soft-bg-active: light-dark(
+      var(--manti-green-4),
+      color-mix(in oklab, var(--manti-green-7) 42%, var(--manti-gray-12))
     );
     --variant-soft-text: light-dark(var(--manti-green-9), var(--manti-green-3));
     --variant-border: light-dark(
@@ -560,6 +589,10 @@
     --variant-soft-bg-hover: light-dark(
       var(--manti-blue-3),
       color-mix(in oklab, var(--manti-blue-7) 30%, var(--manti-gray-12))
+    );
+    --variant-soft-bg-active: light-dark(
+      var(--manti-blue-4),
+      color-mix(in oklab, var(--manti-blue-7) 42%, var(--manti-gray-12))
     );
     --variant-soft-text: light-dark(var(--manti-blue-9), var(--manti-blue-3));
     --variant-border: light-dark(
@@ -593,6 +626,10 @@
       oklch(0.9 0.005 var(--manti-cool-hue)),
       oklch(0.31 0.01 var(--manti-cool-hue))
     );
+    --variant-soft-bg-active: light-dark(
+      oklch(0.855 0.006 var(--manti-cool-hue)),
+      oklch(0.365 0.011 var(--manti-cool-hue))
+    );
     --variant-soft-text: light-dark(
       oklch(0.3 0.01 var(--manti-cool-hue)),
       oklch(0.92 0.005 var(--manti-cool-hue))
@@ -621,6 +658,10 @@
     --variant-soft-bg-hover: light-dark(
       var(--manti-red-3),
       color-mix(in oklab, var(--manti-red-7) 30%, var(--manti-gray-12))
+    );
+    --variant-soft-bg-active: light-dark(
+      var(--manti-red-4),
+      color-mix(in oklab, var(--manti-red-7) 42%, var(--manti-gray-12))
     );
     --variant-soft-text: light-dark(var(--manti-red-9), var(--manti-red-3));
     --variant-border: light-dark(
@@ -653,6 +694,10 @@
     --variant-soft-bg-hover: light-dark(
       oklch(0.9 0.005 var(--manti-cool-hue)),
       oklch(0.31 0.01 var(--manti-cool-hue))
+    );
+    --variant-soft-bg-active: light-dark(
+      oklch(0.855 0.006 var(--manti-cool-hue)),
+      oklch(0.365 0.011 var(--manti-cool-hue))
     );
     --variant-soft-text: light-dark(
       oklch(0.3 0.01 var(--manti-cool-hue)),

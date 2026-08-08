@@ -3,8 +3,8 @@
  * panels. The group machine sets the stacking transforms (`--x`, `--y`,
  * `--scale`, `--opacity`, `--z-index`, `--height`) inline; the component layer
  * only animates and skins them. The toast type maps to a `data-variant`, so the
- * accent edge, tint, border, and status icon all read from the `--variant-*`
- * vocabulary. The renderer adds an extra `transform` (composed on top of the
+ * tint, border, and status icon all read from the `--variant-*` vocabulary.
+ * The renderer adds an extra `transform` (composed on top of the
  * `translate` stacking offset) while swiping a toast toward its dismiss edge.
  */
 @layer manti.components {
@@ -15,6 +15,7 @@
   [data-scope='toast'][data-part='root'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-toast-width: 20rem;
+    --manti-toast-radius: var(--manti-radius-lg);
 
     translate: var(--x) var(--y);
     scale: var(--scale);
@@ -38,34 +39,39 @@
     max-width: calc(100vw - var(--manti-space-8));
     padding: var(--manti-space-4);
     overflow: hidden;
+    /* Deep, barely-tinted glass: the toast floats over live content, so it sits
+       on the low-alpha `panel-tint` rung rather than the near-opaque `strong`
+       one, and the variant only whispers through. The status icon carries the
+       semantic colour on its own, so there is no accent edge. */
     background: color-mix(
       in oklab,
-      var(--variant-soft-bg) 26%,
-      var(--manti-panel-tint-strong)
+      var(--variant-soft-bg) 10%,
+      var(--manti-panel-tint)
     );
+    -webkit-backdrop-filter: var(--manti-panel-blur);
+    backdrop-filter: var(--manti-panel-blur);
     border: 1px solid
-      color-mix(in oklab, var(--variant-border) 55%, var(--manti-panel-border));
+      color-mix(in oklab, var(--variant-border) 30%, var(--manti-panel-border));
+    border-radius: var(--manti-toast-radius);
     color: var(--manti-text);
-
-    /* Semantic accent edge on the inline-start. */
-    &::before {
-      content: '';
-      position: absolute;
-      inset-block: 0;
-      inset-inline-start: 0;
-      width: 3px;
-      background: var(--variant-solid);
-    }
-
-    /* Swipe-to-dismiss affordance (renderer drives the transform). */
-    &[data-swipe] {
-      cursor: grab;
-    }
 
     &[data-swiping] {
       cursor: grabbing;
       user-select: none;
       transition: none;
+    }
+  }
+
+  /* Without backdrop blur, fall back to an opaque surface so text stays legible. */
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    [data-scope='toast'][data-part='root'] {
+      background: color-mix(
+        in oklab,
+        var(--variant-soft-bg) 10%,
+        var(--manti-surface)
+      );
     }
   }
 
@@ -103,11 +109,15 @@
     border-radius: var(--manti-radius-sm);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-medium);
-    cursor: pointer;
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
 
     &:hover {
       background: var(--variant-soft-bg-hover);
+    }
+
+    /* Pressed — the soft ladder's `active` rung, in the toast's own variant. */
+    &:active {
+      background: var(--variant-soft-bg-active);
     }
 
     &:focus-visible {
@@ -129,13 +139,17 @@
     background: transparent;
     border: 0;
     border-radius: var(--manti-radius-sm);
-    cursor: pointer;
     transition:
       background var(--manti-duration-fast) var(--manti-ease-soft),
       color var(--manti-duration-fast) var(--manti-ease-soft);
 
     &:hover {
       background: var(--manti-fill);
+      color: var(--manti-text);
+    }
+
+    &:active {
+      background: var(--manti-fill-strong);
       color: var(--manti-text);
     }
 

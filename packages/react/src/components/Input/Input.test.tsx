@@ -37,6 +37,22 @@ describe('Input', () => {
     );
   });
 
+  it('marks text slots and element slots apart so each gets its own inset', () => {
+    render(
+      <Input
+        aria-label="Amount"
+        left="TRY"
+        right={<button type="button">Clear</button>}
+      />,
+    );
+
+    expect(screen.getByText('TRY')).toHaveAttribute('data-slot', 'text');
+    expect(screen.getByText('Clear').parentElement).toHaveAttribute(
+      'data-slot',
+      'node',
+    );
+  });
+
   it('prefers left and right over the deprecated addon aliases', () => {
     render(
       <Input

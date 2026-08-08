@@ -37,6 +37,9 @@
       border-color: var(--manti-border-strong);
     }
 
+    /* Input-like control: the primary color starts at active/focus — pressing a
+       stepper counts, since the press bubbles to the control. */
+    &:active,
     &:focus-within {
       border-color: var(--variant-ring, var(--manti-focus-ring));
     }
@@ -95,6 +98,13 @@
 
     &:hover {
       background: var(--variant-fill);
+      color: var(--variant-soft-text);
+    }
+
+    /* Pressed — the `active` rung of the variant wash ladder. A stepper is held
+       down to repeat, so this is the state it spends the most time in. */
+    &:active {
+      background: var(--variant-fill-strong);
       color: var(--variant-soft-text);
     }
 

@@ -38,6 +38,8 @@
       border-color: var(--manti-border-strong);
     }
 
+    /* Input-like control: the primary color starts at active/focus/open. */
+    &:active,
     &:focus-within {
       border-color: var(--variant-ring, var(--manti-focus-ring));
     }
@@ -75,6 +77,12 @@
 
     &:hover {
       color: var(--manti-text);
+    }
+
+    /* The copy button has no surface of its own, so the press lands on the
+       variant ink it is about to confirm with. */
+    &:active {
+      color: var(--variant-text);
     }
 
     &[data-copied] {

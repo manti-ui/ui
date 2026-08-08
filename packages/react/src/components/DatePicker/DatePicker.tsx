@@ -13,6 +13,8 @@ export interface DatePickerProps {
   label?: ReactNode;
   /** Selection-highlight variant. */
   variant?: MantiVariant;
+  /** Control size; the calendar's cells follow it. */
+  size?: 'sm' | 'md' | 'lg';
   /** single, multiple, or range selection. */
   selectionMode?: 'single' | 'multiple' | 'range';
   /** Controlled value as ISO date strings (YYYY-MM-DD). */
@@ -56,6 +58,7 @@ const GRID_COLUMNS = 4;
 export function DatePicker({
   label,
   variant = 'primary',
+  size = 'md',
   selectionMode = 'single',
   value,
   defaultValue,
@@ -97,6 +100,7 @@ export function DatePicker({
     <div
       {...api.getRootProps()}
       data-variant={variant}
+      data-size={size}
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
@@ -109,7 +113,13 @@ export function DatePicker({
         </button>
       </div>
       <Portal>
-        <div {...api.getPositionerProps()} data-variant={variant}>
+        {/* The calendar is portalled out of the root, so the size cannot
+            inherit: re-stamp it and the cells follow the control. */}
+        <div
+          {...api.getPositionerProps()}
+          data-variant={variant}
+          data-size={size}
+        >
           <div {...api.getContentProps()}>
             {/* Day view */}
             <div hidden={api.view !== 'day'}>

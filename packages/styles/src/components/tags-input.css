@@ -66,9 +66,10 @@
     font-size: var(--manti-text-xs);
     font-weight: var(--manti-weight-medium);
 
-    &[data-highlighted] {
-      background: var(--variant-soft-bg-hover);
-    }
+    /* A tag reads as one flat chip in every machine state. Zag stamps
+       `data-highlighted` on pointer-down (and on arrow-key navigation), but the
+       tint it used to carry made a plain click look like a selection the user
+       never asked for, so the attribute is deliberately left unstyled here. */
   }
 
   [data-scope='tags-input'][data-part='item-delete-trigger'] {

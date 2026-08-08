@@ -45,9 +45,19 @@
       background: var(--manti-fill);
     }
 
+    /* Pressed — the neutral wash's `active` rung; a selected node takes the
+       variant's own soft `active` rung so the press still reads on the tint. */
+    &:active {
+      background: var(--manti-fill-strong);
+    }
+
     &[data-selected] {
       background: var(--variant-fill-strong);
       color: var(--variant-soft-text);
+    }
+
+    &[data-selected]:active {
+      background: var(--variant-soft-bg-active);
     }
 
     &[data-focus] {

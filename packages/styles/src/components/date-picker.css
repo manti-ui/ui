@@ -20,12 +20,19 @@
 
   [data-scope='date-picker'][data-part='control'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
-    --manti-date-picker-height: var(--manti-control-height-md);
+    --manti-date-picker-height: var(
+      --manti-size-control-height,
+      var(--manti-control-height-md)
+    );
+    --manti-date-picker-padding-x: var(
+      --manti-size-control-padding-x,
+      var(--manti-space-3)
+    );
 
     display: flex;
     align-items: center;
     min-height: var(--manti-date-picker-height);
-    padding-inline: var(--manti-space-3);
+    padding-inline: var(--manti-date-picker-padding-x);
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
     border-radius: var(--manti-radius-md);
@@ -34,6 +41,8 @@
       border-color: var(--manti-border-strong);
     }
 
+    /* Input-like control: the primary color starts at active/focus/open. */
+    &:active,
     &:focus-within,
     &:has([data-part='trigger'][data-state='open']) {
       border-color: var(--variant-ring, var(--manti-focus-ring));
@@ -47,7 +56,7 @@
     border: none;
     outline: none;
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-size-text, var(--manti-text-sm));
   }
 
   [data-scope='date-picker'][data-part='trigger'] {
@@ -61,6 +70,24 @@
     &:hover {
       color: var(--manti-text);
     }
+
+    /* An icon-only affordance has no surface to tint, so the press is carried
+       by the variant's own ink. */
+    &:active {
+      color: var(--variant-text);
+    }
+  }
+
+  /* Navigation glyphs are inline SVGs with intrinsic 16px attributes; the size
+     channel overrides them so they track their row. */
+  [data-scope='date-picker']:is(
+      [data-part='trigger'],
+      [data-part='prev-trigger'],
+      [data-part='next-trigger']
+    )
+    > svg {
+    width: var(--manti-size-icon, var(--manti-text-base));
+    height: var(--manti-size-icon, var(--manti-text-base));
   }
 
   [data-scope='date-picker'][data-part='positioner'] {
@@ -68,10 +95,25 @@
   }
 
   [data-scope='date-picker'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-date-picker-content-padding: var(
+      --manti-size-panel-padding,
+      var(--manti-space-2)
+    );
+    /* One square per day; the header row and the nav buttons are derived from
+       it so the whole calendar rescales from a single value. */
+    --manti-date-picker-cell-size: var(
+      --manti-size-cell,
+      var(--manti-control-height-md)
+    );
+    --manti-date-picker-nav-size: calc(
+      var(--manti-date-picker-cell-size) - var(--manti-space-1)
+    );
+
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-2);
-    padding: var(--manti-space-3);
+    padding: var(--manti-date-picker-content-padding);
     background: var(--manti-surface-raised);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
@@ -94,9 +136,9 @@
     flex: none;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: var(--manti-radius-sm);
+    width: var(--manti-date-picker-nav-size);
+    height: var(--manti-date-picker-nav-size);
+    border-radius: var(--manti-size-item-radius, var(--manti-radius-sm));
     color: var(--manti-text-muted);
     cursor: pointer;
     transition:
@@ -105,6 +147,11 @@
 
     &:hover {
       background: var(--manti-fill);
+      color: var(--manti-text);
+    }
+
+    &:active {
+      background: var(--manti-fill-strong);
       color: var(--manti-text);
     }
 
@@ -119,17 +166,21 @@
     flex: 1;
     align-items: center;
     justify-content: center;
-    min-height: 2rem;
+    min-height: var(--manti-date-picker-nav-size);
     padding-inline: var(--manti-space-2);
-    border-radius: var(--manti-radius-sm);
+    border-radius: var(--manti-size-item-radius, var(--manti-radius-sm));
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-size-text, var(--manti-text-sm));
     font-weight: var(--manti-weight-semibold);
     cursor: pointer;
     transition: background var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
       background: var(--manti-fill);
+    }
+
+    &:active {
+      background: var(--manti-fill-strong);
     }
 
     &:focus-visible {
@@ -143,11 +194,11 @@
   }
 
   [data-scope='date-picker'][data-part='table-head'] {
-    width: 2.5rem;
-    height: 2rem;
+    width: calc(var(--manti-date-picker-cell-size) + var(--manti-space-1));
+    height: var(--manti-date-picker-nav-size);
     text-align: center;
     color: var(--manti-text-subtle);
-    font-size: var(--manti-text-xs);
+    font-size: var(--manti-size-text-sub, var(--manti-text-xs));
     font-weight: var(--manti-weight-medium);
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -162,11 +213,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: var(--manti-radius-sm);
+    width: var(--manti-date-picker-cell-size);
+    height: var(--manti-date-picker-cell-size);
+    border-radius: var(--manti-size-item-radius, var(--manti-radius-sm));
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-size-text, var(--manti-text-sm));
     font-variant-numeric: tabular-nums;
     cursor: pointer;
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
@@ -175,6 +226,12 @@
 
     &:hover {
       background: var(--manti-fill);
+    }
+
+    /* Pressed — the neutral wash's `active` rung for a plain day; a day already
+       in range or selected takes its own variant rung below. */
+    &:active {
+      background: var(--manti-fill-strong);
     }
 
     &[data-today] {
@@ -197,8 +254,17 @@
       border-end-end-radius: var(--manti-radius-sm);
     }
 
+    &[data-in-range]:active {
+      background: var(--variant-fill-strong);
+    }
+
     &[data-selected] {
       background: var(--variant-solid);
+      color: var(--variant-on-solid);
+    }
+
+    &[data-selected]:active {
+      background: var(--variant-solid-active);
       color: var(--variant-on-solid);
     }
 
@@ -235,7 +301,7 @@
   [data-scope='date-picker'][data-part='table-cell-trigger'][data-view='month'],
   [data-scope='date-picker'][data-part='table-cell-trigger'][data-view='year'] {
     width: 100%;
-    min-width: 3.5rem;
-    height: 2.5rem;
+    min-width: calc(var(--manti-date-picker-cell-size) * 1.5);
+    height: calc(var(--manti-date-picker-cell-size) + var(--manti-space-1));
   }
 }

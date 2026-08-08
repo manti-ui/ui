@@ -19,12 +19,19 @@
 
   [data-scope='time-picker'][data-part='control'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
-    --manti-time-picker-height: var(--manti-control-height-md);
+    --manti-time-picker-height: var(
+      --manti-size-control-height,
+      var(--manti-control-height-md)
+    );
+    --manti-time-picker-padding-x: var(
+      --manti-size-control-padding-x,
+      var(--manti-space-3)
+    );
 
     display: flex;
     align-items: center;
     min-height: var(--manti-time-picker-height);
-    padding-inline: var(--manti-space-3);
+    padding-inline: var(--manti-time-picker-padding-x);
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
     border-radius: var(--manti-radius-md);
@@ -33,6 +40,8 @@
       border-color: var(--manti-border-strong);
     }
 
+    /* Input-like control: the primary color starts at active/focus/open. */
+    &:active,
     &:focus-within,
     &:has([data-part='trigger'][data-state='open']) {
       border-color: var(--variant-ring, var(--manti-focus-ring));
@@ -46,7 +55,7 @@
     border: none;
     outline: none;
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-size-text, var(--manti-text-sm));
     font-variant-numeric: tabular-nums;
   }
 
@@ -61,6 +70,19 @@
     &:hover {
       color: var(--manti-text);
     }
+
+    /* An icon-only affordance has no surface to tint, so the press is carried
+       by the variant's own ink. */
+    &:active {
+      color: var(--variant-text);
+    }
+  }
+
+  /* The clock glyph is an inline SVG with intrinsic 16px attributes; the size
+     channel overrides them so it tracks the control. */
+  [data-scope='time-picker'][data-part='trigger'] > svg {
+    width: var(--manti-size-icon, var(--manti-text-base));
+    height: var(--manti-size-icon, var(--manti-text-base));
   }
 
   [data-scope='time-picker'][data-part='positioner'] {
@@ -70,10 +92,14 @@
   [data-scope='time-picker'][data-part='content'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-time-picker-column-height: 15rem;
+    --manti-time-picker-content-padding: var(
+      --manti-size-panel-padding,
+      var(--manti-space-2)
+    );
 
     display: flex;
     gap: var(--manti-space-2);
-    padding: var(--manti-space-3);
+    padding: var(--manti-time-picker-content-padding);
     background: var(--manti-surface-raised);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
@@ -116,16 +142,32 @@
      hour / minute / period. Style them uniformly. */
   [data-scope='time-picker'][data-part='cell'] {
     --manti-time-picker-cell-min-width: 3.5rem;
+    --manti-time-picker-cell-padding-y: var(
+      --manti-size-item-padding-y,
+      var(--manti-space-2)
+    );
+    --manti-time-picker-cell-padding-x: var(
+      --manti-size-item-padding-x,
+      var(--manti-space-3)
+    );
+    --manti-time-picker-cell-radius: var(
+      --manti-size-item-radius,
+      var(--manti-radius-sm)
+    );
+    --manti-time-picker-cell-font-size: var(
+      --manti-size-text,
+      var(--manti-text-sm)
+    );
 
     display: flex;
     align-items: center;
     justify-content: center;
     min-width: var(--manti-time-picker-cell-min-width);
-    padding-block: var(--manti-space-2);
-    padding-inline: var(--manti-space-3);
-    border-radius: var(--manti-radius-sm);
+    padding-block: var(--manti-time-picker-cell-padding-y);
+    padding-inline: var(--manti-time-picker-cell-padding-x);
+    border-radius: var(--manti-time-picker-cell-radius);
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-time-picker-cell-font-size);
     font-variant-numeric: tabular-nums;
     scroll-snap-align: center;
     cursor: pointer;
@@ -137,10 +179,19 @@
       background: var(--manti-fill);
     }
 
+    &:active {
+      background: var(--manti-fill-strong);
+    }
+
     &[data-selected] {
       background: var(--variant-solid);
       color: var(--variant-on-solid);
       font-weight: var(--manti-weight-semibold);
+    }
+
+    &[data-selected]:active {
+      background: var(--variant-solid-active);
+      color: var(--variant-on-solid);
     }
 
     &[data-disabled] {

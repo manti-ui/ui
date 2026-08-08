@@ -10,6 +10,11 @@ description: Choose between primitive, semantic, variant, and component tokens.
 
 Use the broadest token that matches the design decision.
 
+Prefer to see it before you write it? The
+[Theme Studio](https://studio.manti.design) tunes these same tokens live on a
+full product surface, then hands the result back as CSS, as an agent prompt, or
+as a shareable link.
+
 | Need                                    | Use             |
 | --------------------------------------- | --------------- |
 | Replace a palette or scale              | Primitive token |
@@ -58,6 +63,27 @@ See [Color & variants](/foundations/color-and-tones) for the full role list.
 
 If the same override appears on several components, move it to a semantic token
 instead. Do not override private `--_*` variables.
+
+## Retune a size step
+
+`sm | md | lg` is one shared rhythm. A control and the surface it opens resolve
+the same `--manti-size-*` channel, so a `sm` Select opens a `sm` listbox and a
+`lg` Menu lays out `lg` rows. Popups are portalled, so each adapter re-stamps
+`data-size` on its positioner rather than relying on inheritance.
+
+Retune a step once and every control and popup on it follows:
+
+```css
+[data-size='sm'] {
+  --manti-size-item-padding-y: 0.125rem;
+  --manti-size-text: 0.8125rem;
+}
+```
+
+The channel carries `text`, `text-sub`, `icon`, `control-height`,
+`control-padding-x`, `panel-padding`, `panel-gap`, `item-padding-y`,
+`item-padding-x`, `item-gap`, `item-radius`, and `cell`. Every component token
+above defaults to one of them, so a per-component override still wins.
 
 Continue to [plain CSS](/guides/plain-css) for anatomy selectors or
 [Tailwind](/guides/tailwind) for utility integration.

@@ -18,8 +18,6 @@ export interface PopoverProps {
   children?: ReactNode;
   /** Placement relative to the trigger. */
   placement?: Placement;
-  /** Render the arrow pointing at the trigger. */
-  showArrow?: boolean;
   /** Show the corner close button. */
   showCloseButton?: boolean;
   /** Make the popover modal (trap focus, block outside interaction). */
@@ -41,14 +39,14 @@ export interface PopoverProps {
 /**
  * A floating panel anchored to a trigger, backed by the Zag.js popover machine.
  * The machine owns positioning, focus, and dismissal; this adapter renders the
- * translucent panel through a portal.
+ * translucent panel through a portal. The panel is arrowless by design — the
+ * offset alone anchors it to the trigger.
  */
 export function Popover({
   trigger,
   title,
   children,
   placement = 'bottom',
-  showArrow = true,
   showCloseButton = false,
   modal,
   open,
@@ -81,11 +79,6 @@ export function Popover({
         <Portal>
           <div {...api.getPositionerProps()}>
             <div {...api.getContentProps()} className={cx(className)}>
-              {showArrow && (
-                <div {...api.getArrowProps()}>
-                  <div {...api.getArrowTipProps()} />
-                </div>
-              )}
               {title != null && <div {...api.getTitleProps()}>{title}</div>}
               {children != null && (
                 <div {...api.getDescriptionProps()}>{children}</div>

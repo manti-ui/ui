@@ -52,6 +52,12 @@
       color: var(--manti-text);
     }
 
+    /* Pressed — the neutral wash's `active` rung. */
+    &:active {
+      background: var(--manti-fill-strong);
+      color: var(--manti-text);
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);
@@ -107,6 +113,10 @@
 
     &:hover {
       background: var(--manti-fill);
+    }
+
+    &:active {
+      background: var(--manti-fill-strong);
     }
 
     &:focus-visible {

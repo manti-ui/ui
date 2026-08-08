@@ -51,16 +51,24 @@
       color: var(--variant-soft-text);
     }
 
+    /* Pressed — the `active` rung of the variant wash ladder while off, and of
+       the solid ladder while on. */
+    &:active {
+      background: var(--variant-fill-strong);
+      color: var(--variant-soft-text);
+    }
+
     &[data-state='on'] {
       background: var(--variant-solid);
       color: var(--variant-on-solid);
       &:hover {
         background: var(--variant-solid-hover);
       }
-    }
 
-    &:active {
-      transform: scale(0.97);
+      &:active {
+        background: var(--variant-solid-active);
+        color: var(--variant-on-solid);
+      }
     }
 
     &:focus-visible {

@@ -26,12 +26,6 @@ export const meta: ComponentMeta = {
       description: 'Placement relative to the trigger.',
     },
     {
-      name: 'showArrow',
-      type: 'boolean',
-      default: 'true',
-      description: 'Render the arrow pointing at the trigger.',
-    },
-    {
       name: 'showCloseButton',
       type: 'boolean',
       default: 'false',
@@ -77,7 +71,6 @@ export const meta: ComponentMeta = {
       description: 'The portalled wrapper that positions the panel.',
     },
     { part: 'content', description: 'The translucent floating panel.' },
-    { part: 'arrow', description: 'The arrow pointing at the trigger.' },
     { part: 'title', description: 'The optional heading.' },
     { part: 'description', description: 'The panel body content.' },
     { part: 'close-trigger', description: 'The optional corner close button.' },

@@ -68,6 +68,12 @@
       color: var(--variant-soft-text);
     }
 
+    /* Pressed — the `active` rung of the variant wash ladder. */
+    &:active {
+      background: var(--variant-fill-strong);
+      color: var(--variant-soft-text);
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
@@ -86,6 +92,11 @@
 
     &:hover {
       background: var(--variant-solid-hover);
+      color: var(--variant-on-solid);
+    }
+
+    &:active {
+      background: var(--variant-solid-active);
       color: var(--variant-on-solid);
     }
   }

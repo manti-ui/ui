@@ -196,6 +196,7 @@ function MenuSubmenuItem({
           api,
           service,
           nested: true,
+          size: parent.size,
           registerItem: parent.registerItem,
           emitSelect: parent.emitSelect,
         }}

@@ -63,16 +63,16 @@ export interface ToasterInstance {
 }
 
 /**
- * Map a toast type to the color variant that skins it. The palette only carries
- * `danger` (red) and `primary` (orange) as semantic accents, so success/warning
- * share the orange attention accent, errors are red, and info/loading stay
- * neutral.
+ * Map a toast type to the color variant that skins it. Each status reads as its
+ * own semantic hue: success is green, info is blue, errors are red. The palette
+ * carries no dedicated `warning`, so warnings borrow the orange attention
+ * accent, and loading (plus any untyped toast) stays neutral.
  */
 const VARIANT_BY_TYPE: Record<string, MantiVariant> = {
-  success: 'primary',
+  success: 'success',
   error: 'danger',
   warning: 'primary',
-  info: 'secondary',
+  info: 'info',
   loading: 'secondary',
 };
 

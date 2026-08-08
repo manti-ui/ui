@@ -25,6 +25,14 @@ visible `label`. `onSelect` receives the selected value.
 Add `shortcut` to display a keyboard hint. It only displays the hint; register
 the actual shortcut separately with `useShortcut`.
 
+## Sizes
+
+`size` sets the panel's row rhythm: type, padding, and icon size. It matches the
+scale every other control uses, so a `sm` trigger can open a `sm` menu. Submenus
+inherit the size of the menu that opened them.
+
+<Demo name="menu/sizes" center />
+
 ## Groups and item states
 
 Use a group to label related actions and a separator to divide different sets.
