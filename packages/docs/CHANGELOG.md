@@ -1,5 +1,14 @@
 # @manti-ui/docs
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`3b90e4a`](https://github.com/manti-ui/ui/commit/3b90e4aa9180c0839fc2e546177f92530c905aad), [`3b90e4a`](https://github.com/manti-ui/ui/commit/3b90e4aa9180c0839fc2e546177f92530c905aad), [`3b90e4a`](https://github.com/manti-ui/ui/commit/3b90e4aa9180c0839fc2e546177f92530c905aad), [`3b90e4a`](https://github.com/manti-ui/ui/commit/3b90e4aa9180c0839fc2e546177f92530c905aad)]:
+  - @manti-ui/styles@1.0.0
+  - @manti-ui/react@1.0.0
+  - @manti-ui/tokens@1.0.0
+
 ## 0.0.3
 
 ### Patch Changes
