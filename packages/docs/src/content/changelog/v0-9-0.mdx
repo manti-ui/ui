@@ -1,0 +1,107 @@
+---
+title: v0.9.0
+slug: /changelog/v0.9.0
+group: Changelog
+order: 1
+date: '2026-08-08'
+description: Popups now open at the size of the control that opened them, Slider marks land on their values, panel hairlines run through every arrow, and Popover drops its arrow for a documented placement set.
+---
+
+# v0.9.0
+
+_Released 2026-08-08._
+
+## Size travels with the surface a control opens
+
+A `sm` Select used to open a listbox with `md` rows. The popup is portalled out
+of the control, so `data-size` on the root never reached it, and every popup
+rendered at one fixed size no matter what the trigger was set to. The same held
+for Combobox, and Menu, Listbox, DatePicker, TimePicker, and ColorPicker had no
+`size` at all.
+
+`sm | md | lg` is now one shared rhythm, resolved from a `--manti-size-*`
+channel in `packages/styles/src/size.css`: type, supporting type, icon, control
+height and padding, panel padding and gap, item padding, gap and radius, and
+the square cell used by calendar and time grids.
+
+```tsx
+<Select size="sm" items={items} />
+<Menu size="lg" trigger={<Button>Actions</Button>} items={items} />
+```
+
+Each adapter re-stamps `data-size` on its positioner, so the portalled surface
+resolves the same step as the control that opened it. Menu and ContextMenu gain
+a `size` prop that submenus inherit; Listbox, DatePicker, TimePicker, and
+ColorPicker gain one too. ColorPicker's panel is a saturation canvas with no
+rows to rescale, so `size` there covers the trigger.
+
+Every value on those surfaces derives from the spacing, type, radius, and
+control-height scales, so retuning `--manti-space-1` or `--manti-text-base`
+rescales popups too, and a theme can retune a single step by redeclaring one
+channel variable under `[data-size='sm']`. Each sizing value is also a public
+component token defaulting to the channel
+(`--manti-select-item-padding-y`, `--manti-menu-item-font-size`,
+`--manti-date-picker-cell-size`, and so on), so a single component can still be
+overridden on its own.
+
+Two knock-on changes: field-backed controls (Input, Textarea) now scale their
+type with `size` instead of holding at `--manti-text-sm`, so a `sm` input
+matches a `sm` Select beside it, and Select's rows pick up the same horizontal
+padding as Combobox, Menu, and Listbox rows.
+
+## Slider marks land on their values
+
+Zag positions each marker at `inset-inline-start: <percent>` of the marker
+group, but the group's children are all absolutely positioned, so as a flex item
+of the control it collapsed to zero width. Every percentage resolved against
+`0`, and the whole set of ticks piled up on a single point at the end of the
+track, which made `marks` an effectively broken prop.
+
+The control is now a one-cell grid stack, so the track and the marker group
+share the same box and the markers get the track's real length to position
+against. Each dot is pulled back half its size on the axis Zag does not centre,
+and a tick the range has already passed switches to `--variant-on-solid` so it
+stays visible on the filled track. The dot size is the new
+`--manti-slider-marker-size` component token. The marker group also renders
+before the thumbs, so a tick at the current value no longer shows through the
+handle standing on it.
+
+## Arrows keep the panel hairline
+
+Tooltip, HoverCard, and Tour bubbles draw a `--manti-panel-border` outline, but
+the arrow tip drew only a background, so the notch punched a borderless gap in
+that outline and read as a rendering artifact. Zag rotates the tip square 45°
+per side, which always leaves its top and left edges facing away from the
+bubble, so the hairline now goes on exactly those two and the outline runs
+continuously through the notch in every placement.
+
+Tour's arrow also inherited the wrong material: an opaque `surface-raised` tip
+against a `panel-tint-strong` card showed up as a lighter patch stuck to its
+edge. It now uses the same panel tint as the card it belongs to.
+
+Tooltip never rendered an arrow at all. The stylesheet has carried arrow rules
+since the component was adapted, but the React adapter skipped the part, so they
+were dead. Tooltip now renders the arrow like HoverCard does, behind the same
+`showArrow` prop (default `true`).
+
+## Popover drops its arrow
+
+The Popover arrow drew a notch that broke the panel's silhouette: a small tinted
+wedge between the trigger and the top edge of the panel, with its own border
+seam. The panel is anchored by its offset alone, so the wedge carried no
+information the position did not already give.
+
+**Breaking:** the `showArrow` prop and the `arrow` part are gone. The panel is
+arrowless in every placement.
+
+`placement` is unchanged and still defaults to `bottom`, but it is now shown in
+the docs: all twelve popper placements (`top`, `right`, `bottom`, `left`, each
+with a `-start` and `-end` alignment) render as a live demo alongside a
+Storybook `Placements` story.
+
+## Documentation
+
+The docs add size demos for Menu and Listbox, the twelve-placement Popover
+demo, a GitHub stars badge and a Theme Studio card in the shell, and refreshed
+logo marks. Component metadata, anatomy, token tables, theming guides, and the
+machine-readable project guide have been updated to match the public API.
