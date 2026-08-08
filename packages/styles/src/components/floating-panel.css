@@ -98,6 +98,11 @@
       color: var(--manti-text);
     }
 
+    &:active {
+      background: var(--manti-fill-strong);
+      color: var(--manti-text);
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);

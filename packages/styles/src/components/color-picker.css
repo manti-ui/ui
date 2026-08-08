@@ -22,18 +22,28 @@
 
   [data-scope='color-picker'][data-part='trigger'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
-    --manti-color-picker-height: var(--manti-control-height-md);
+    --manti-color-picker-height: var(
+      --manti-size-control-height,
+      var(--manti-control-height-md)
+    );
+    --manti-color-picker-padding-x: var(
+      --manti-size-control-padding-x,
+      var(--manti-space-3)
+    );
+    --manti-color-picker-swatch-size: calc(
+      var(--manti-color-picker-height) * 0.68
+    );
 
     display: inline-flex;
     align-items: center;
     gap: var(--manti-space-2);
     min-height: var(--manti-color-picker-height);
-    padding-inline: var(--manti-space-2) var(--manti-space-3);
+    padding-inline: var(--manti-space-2) var(--manti-color-picker-padding-x);
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
     border-radius: var(--manti-radius-md);
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-size-text, var(--manti-text-sm));
     font-family: var(--manti-font-mono);
     cursor: pointer;
 
@@ -41,6 +51,8 @@
       border-color: var(--manti-border-strong);
     }
 
+    /* Input-like control: the primary color starts at active/focus/open. */
+    &:active,
     &:focus-visible,
     &[data-state='open'] {
       outline: none;
@@ -55,8 +67,8 @@
   }
 
   [data-scope='color-picker'][data-part='root'] [data-part='value-swatch'] {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: var(--manti-color-picker-swatch-size);
+    height: var(--manti-color-picker-swatch-size);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-sm);
   }

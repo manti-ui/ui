@@ -87,6 +87,23 @@
     color: var(--variant-on-solid);
   }
 
+  /* Pressed — the indicator is the step's only surface, so the press is routed
+     to it: an unvisited step takes the neutral wash's `active` rung, a
+     current/complete one the solid ladder's. */
+  [data-scope='steps'][data-part='trigger']:active [data-part='indicator'] {
+    background: var(--manti-fill-strong);
+    color: var(--manti-text);
+  }
+
+  [data-scope='steps'][data-part='trigger'][data-current]:active
+    [data-part='indicator'],
+  [data-scope='steps'][data-part='trigger'][data-complete]:active
+    [data-part='indicator'] {
+    background: var(--variant-solid-active);
+    border-color: transparent;
+    color: var(--variant-on-solid);
+  }
+
   [data-scope='steps'][data-part='trigger'][data-current] {
     color: var(--manti-text);
   }
@@ -155,10 +172,18 @@
       color: var(--variant-text);
       background: none;
 
+      &:active {
+        background: var(--variant-fill-strong);
+      }
+
       &:last-child {
         background: var(--variant-solid);
         border-color: transparent;
         color: var(--variant-on-solid);
+
+        &:active {
+          background: var(--variant-solid-active);
+        }
       }
 
       &:disabled {

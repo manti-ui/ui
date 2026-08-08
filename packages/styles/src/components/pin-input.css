@@ -42,6 +42,8 @@
       border-color: var(--manti-border-strong);
     }
 
+    /* Input-like control: the primary color starts at active/focus. */
+    &:active,
     &:focus {
       border-color: var(--variant-ring, var(--manti-focus-ring));
     }

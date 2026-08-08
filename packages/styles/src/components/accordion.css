@@ -50,6 +50,13 @@
       text-decoration: underline;
     }
 
+    /* Pressed — the neutral wash ladder's `active` rung. The trigger has no
+       resting surface of its own, so the wash is the whole press signal. */
+    &:active {
+      background: var(--manti-fill-strong);
+      text-decoration: underline;
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
       outline-offset: -3px;

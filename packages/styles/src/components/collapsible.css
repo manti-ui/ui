@@ -36,6 +36,11 @@
       background: var(--manti-panel-tint-strong);
     }
 
+    /* Pressed — the panel material's own `active` rung. */
+    &:active {
+      background: var(--manti-panel-tint-pressed);
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
       outline-offset: var(--manti-focus-ring-offset);
@@ -69,6 +74,10 @@
 
       &:hover {
         background: var(--manti-bg-subtle);
+      }
+
+      &:active {
+        background: var(--manti-surface-sunken);
       }
     }
   }

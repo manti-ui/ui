@@ -10,6 +10,16 @@ import { CapsLockIcon, EyeIcon, EyeOffIcon } from '../../internal/icons';
 
 export type InputVariant = 'default' | 'fill';
 
+/**
+ * How a left/right slot spends the control's inline padding. Plain text (a
+ * currency symbol, a unit) reads as part of the value, so it keeps the shell's
+ * padding. Anything else is an element that paints its own box — the shell
+ * hands that side's padding over to the addon, which insets it far less. See
+ * `field.css`.
+ */
+const slotKind = (content: ReactNode): 'text' | 'node' =>
+  typeof content === 'string' || typeof content === 'number' ? 'text' : 'node';
+
 export interface InputProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'size'
@@ -186,7 +196,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       )}
       <div data-scope="field" data-part="control" data-size={size}>
         {leftContent != null && (
-          <span data-scope="field" data-part="addon" data-position="left">
+          <span
+            data-scope="field"
+            data-part="addon"
+            data-position="left"
+            data-slot={slotKind(leftContent)}
+          >
             {leftContent}
           </span>
         )}
@@ -222,7 +237,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           </span>
         )}
         {rightContent != null && (
-          <span data-scope="field" data-part="addon" data-position="right">
+          <span
+            data-scope="field"
+            data-part="addon"
+            data-position="right"
+            data-slot={slotKind(rightContent)}
+          >
             {rightContent}
           </span>
         )}

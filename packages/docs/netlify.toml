@@ -43,15 +43,15 @@
 #     Storybook's manager bootstrap are inline scripts.
 #   - 'unsafe-eval': Storybook's runtime needs it for some addon panels.
 #   - style-src 'unsafe-inline': React inline styles + Shiki token colors.
-#   - img-src allows https://i.pravatar.cc (Avatar demo portraits),
-#     https://avatars.githubusercontent.com (landing team portraits), and
-#     data:/blob: (QrCode data URIs, SignaturePad exports, FileUpload previews).
+#   - img-src allows https://avatars.githubusercontent.com (Avatar demo and
+#     landing team portraits) and data:/blob: (QrCode data URIs, SignaturePad
+#     exports, FileUpload previews).
 # Everything else is same-origin. If a demo gains a new external resource, add
 # its origin here or the browser will silently block it.
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://i.pravatar.cc https://avatars.githubusercontent.com; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://avatars.githubusercontent.com; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"

@@ -5,6 +5,7 @@ import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
 import { MenuProvider, menuParts, useMenuSelection } from '../Menu/MenuParts';
+import type { MenuSize } from '../Menu/MenuParts';
 import { MenuItems } from '../Menu/MenuItems';
 import type { MenuGetItemProps, MenuItem } from '../Menu/MenuItems';
 
@@ -13,6 +14,8 @@ export interface ContextMenuProps {
   children: ReactNode;
   /** Declarative commands, groups, separators, options, and submenus. */
   items: MenuItem[];
+  /** Row rhythm of the panel. Submenus inherit it. */
+  size?: MenuSize;
   /** Called with the value of the selected command. */
   onSelect?: (value: string) => void;
   /** Controlled open state. */
@@ -47,6 +50,7 @@ export interface ContextMenuProps {
 export function ContextMenu({
   children,
   items,
+  size = 'md',
   onSelect,
   open,
   defaultOpen,
@@ -74,6 +78,7 @@ export function ContextMenu({
       value={{
         api,
         service,
+        size,
         registerItem: selection.registerItem,
         emitSelect: (value) => selection.emit(value, onSelect),
         contentProps,

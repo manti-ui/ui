@@ -23,6 +23,7 @@ const meta = {
     defaultValue: ['beef'],
   },
   argTypes: {
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     selectionMode: { control: 'inline-radio', options: ['single', 'multiple'] },
     variant: {
       control: 'select',

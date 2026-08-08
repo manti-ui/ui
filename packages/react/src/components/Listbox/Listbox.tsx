@@ -19,6 +19,8 @@ export interface ListboxProps {
   label?: ReactNode;
   /** Selected-item variant. */
   variant?: MantiVariant;
+  /** Row rhythm, shared with every other sized control. */
+  size?: 'sm' | 'md' | 'lg';
   /** Single or multiple selection. */
   selectionMode?: 'single' | 'multiple';
   /** Controlled selected values. */
@@ -50,6 +52,7 @@ export function Listbox({
   items,
   label,
   variant = 'primary',
+  size = 'md',
   selectionMode = 'single',
   value,
   defaultValue,
@@ -83,7 +86,12 @@ export function Listbox({
   const api = listbox.connect(service, normalizeProps);
 
   return (
-    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
+    <div
+      {...api.getRootProps()}
+      data-variant={variant}
+      data-size={size}
+      className={cx(className)}
+    >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <ul {...api.getContentProps()}>
         {items.map((item) => (

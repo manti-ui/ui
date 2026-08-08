@@ -37,7 +37,7 @@ function ToastDemo({ swipe, placement }: ToastDemoProps) {
           Default
         </Button>
         <Button
-          variant="primary"
+          variant="success"
           onClick={() =>
             toaster.success({
               title: 'Saved',
@@ -70,7 +70,7 @@ function ToastDemo({ swipe, placement }: ToastDemoProps) {
           Warning
         </Button>
         <Button
-          variant="secondary"
+          variant="info"
           onClick={() =>
             toaster.info({ title: 'Tip', description: 'Rest the dough first.' })
           }

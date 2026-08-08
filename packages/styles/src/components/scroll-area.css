@@ -40,7 +40,8 @@
     }
   }
 
-  [data-scope='scroll-area'][data-orientation='vertical'] [data-part='viewport'] {
+  [data-scope='scroll-area'][data-orientation='vertical']
+    [data-part='viewport'] {
     overflow: hidden auto;
     overscroll-behavior-y: contain;
   }
@@ -64,7 +65,8 @@
   /* Horizontal/bidirectional content must take its intrinsic width so it can
      overflow the viewport; a plain block child would shrink to fit and never
      scroll. Vertical content keeps auto width so text still wraps. */
-  [data-scope='scroll-area'][data-orientation='horizontal'] [data-part='content'],
+  [data-scope='scroll-area'][data-orientation='horizontal']
+    [data-part='content'],
   [data-scope='scroll-area'][data-orientation='both'] [data-part='content'] {
     width: max-content;
   }
@@ -122,6 +124,12 @@
     &:hover {
       background: var(--manti-text-subtle);
     }
+
+    /* Pressed — one rung past hover, so grabbing the thumb is distinguishable
+       from pointing at it. */
+    &:active {
+      background: var(--manti-text-muted);
+    }
   }
 
   [data-scope='scroll-area'][data-part='scrollbar'][data-orientation='vertical']
@@ -137,6 +145,6 @@
   }
 
   [data-scope='scroll-area'][data-dragging] [data-part='thumb'] {
-    background: var(--manti-text-subtle);
+    background: var(--manti-text-muted);
   }
 }

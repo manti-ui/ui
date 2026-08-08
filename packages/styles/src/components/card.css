@@ -35,6 +35,7 @@
 
       &:active {
         transform: translateY(0);
+        background: var(--manti-panel-tint-pressed);
       }
 
       &:focus-visible {
@@ -52,6 +53,13 @@
 
       &[data-elevated='true'],
       &[data-interactive='true']:hover {
+        background: var(--manti-surface-raised);
+      }
+
+      /* Without blur there is no rung above `surface-raised` that gains
+         contrast in both themes, so the press keeps the hover surface and is
+         carried by the transform settling back to 0. */
+      &[data-interactive='true']:active {
         background: var(--manti-surface-raised);
       }
     }

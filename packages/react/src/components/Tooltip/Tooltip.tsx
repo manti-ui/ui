@@ -20,6 +20,8 @@ export interface TooltipProps {
   interactive?: boolean;
   /** Placement relative to the trigger. */
   placement?: Placement;
+  /** Render the arrow pointing at the trigger. */
+  showArrow?: boolean;
   /** Controlled open state. */
   open?: boolean;
   /** Initial open state for uncontrolled usage. */
@@ -46,6 +48,7 @@ export function Tooltip({
   closeDelay,
   interactive,
   placement,
+  showArrow = true,
   open,
   defaultOpen,
   onOpenChange,
@@ -71,6 +74,11 @@ export function Tooltip({
   const floating = api.open ? (
     <div {...api.getPositionerProps()}>
       <div {...api.getContentProps()} className={cx(className)}>
+        {showArrow && (
+          <div {...api.getArrowProps()}>
+            <div {...api.getArrowTipProps()} />
+          </div>
+        )}
         {content}
       </div>
     </div>

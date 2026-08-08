@@ -151,7 +151,14 @@ export function Select({
       </div>
       {api.open && (
         <Portal>
-          <div {...api.getPositionerProps()} data-variant="primary">
+          {/* The listbox is portalled out of the root, so the size cannot
+              inherit: re-stamp it here and the size channel resolves the same
+              rhythm for the rows as for the trigger. */}
+          <div
+            {...api.getPositionerProps()}
+            data-variant="primary"
+            data-size={size}
+          >
             <ScrollArea focusable={false}>
               <ul {...contentProps}>
                 {items.map((item) => (
