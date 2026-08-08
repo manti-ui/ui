@@ -9,16 +9,32 @@ export default function AvatarBasic() {
         alignItems: 'center',
       }}
     >
-      <Avatar src="https://i.pravatar.cc/120?img=12" alt="A person" size="sm">
+      <Avatar
+        src="https://avatars.githubusercontent.com/u/72797914?v=4"
+        alt="A person"
+        size="sm"
+      >
         MU
       </Avatar>
-      <Avatar src="https://i.pravatar.cc/120?img=12" alt="A person" size="md">
+      <Avatar
+        src="https://avatars.githubusercontent.com/u/72797914?v=4"
+        alt="A person"
+        size="md"
+      >
         MU
       </Avatar>
-      <Avatar src="https://i.pravatar.cc/120?img=12" alt="A person" size="lg">
+      <Avatar
+        src="https://avatars.githubusercontent.com/u/72797914?v=4"
+        alt="A person"
+        size="lg"
+      >
         MU
       </Avatar>
-      <Avatar src="https://i.pravatar.cc/120?img=12" alt="A person" size="xl">
+      <Avatar
+        src="https://avatars.githubusercontent.com/u/72797914?v=4"
+        alt="A person"
+        size="xl"
+      >
         MU
       </Avatar>
     </div>

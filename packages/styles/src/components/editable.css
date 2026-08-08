@@ -44,6 +44,10 @@
       );
     }
 
+    &:active {
+      background: var(--manti-fill-strong);
+    }
+
     &[data-empty] {
       color: var(--manti-text-subtle);
     }
@@ -64,6 +68,8 @@
       border-color: var(--manti-border-strong);
     }
 
+    /* Input-like control: the primary color starts at active/focus. */
+    &:active,
     &:focus {
       border-color: var(--variant-ring, var(--manti-focus-ring));
     }
@@ -96,6 +102,11 @@
       border-color: var(--variant-soft-text);
     }
 
+    &:active {
+      background: var(--variant-fill-strong);
+      border-color: var(--variant-soft-text);
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
@@ -109,6 +120,11 @@
 
     &:hover {
       background: var(--variant-solid-hover);
+      border-color: transparent;
+    }
+
+    &:active {
+      background: var(--variant-solid-active);
       border-color: transparent;
     }
   }

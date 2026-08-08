@@ -13,6 +13,7 @@ const meta = {
     defaultValue: '12:30',
   },
   argTypes: {
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     variant: {
       control: 'select',
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],

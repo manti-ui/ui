@@ -8,7 +8,7 @@ const meta = {
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
   args: {
-    src: 'https://i.pravatar.cc/120?img=12',
+    src: 'https://avatars.githubusercontent.com/u/72797914?v=4',
     alt: 'A person',
     children: 'MU',
     size: 'md',

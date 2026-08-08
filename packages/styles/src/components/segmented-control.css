@@ -45,6 +45,16 @@
     z-index: 0;
   }
 
+  /* The pill is a sibling of the segments, so a press on the *selected* segment
+     is routed to it from the root — it is the surface that actually carries the
+     selected color. */
+  [data-scope='segmented-control'][data-part='root']:has(
+      [data-part='item'][data-state='checked']:active
+    )
+    [data-part='indicator'] {
+    background: var(--variant-solid-active);
+  }
+
   [data-scope='segmented-control'][data-part='item'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-segmented-control-height: 2rem;
@@ -62,9 +72,18 @@
     color: var(--manti-text-muted);
     cursor: pointer;
     user-select: none;
-    transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
+    transition:
+      background var(--manti-duration-fast) var(--manti-ease-smooth),
+      color var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
+      color: var(--manti-text);
+    }
+
+    /* Pressing an unselected segment washes it neutrally; the selected one is
+       already covered by the sliding pill, which darkens instead (below). */
+    &:active:not([data-state='checked']) {
+      background: var(--manti-fill);
       color: var(--manti-text);
     }
 

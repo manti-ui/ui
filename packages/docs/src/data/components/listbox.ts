@@ -20,6 +20,12 @@ export const meta: ComponentMeta = {
       description: 'Variant applied to the selected item.',
     },
     {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description: 'Row rhythm: type, padding, and icon size.',
+    },
+    {
       name: 'selectionMode',
       type: `'single' | 'multiple'`,
       default: `'single'`,

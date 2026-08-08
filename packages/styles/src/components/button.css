@@ -23,6 +23,7 @@
     --manti-button-gap: var(--manti-space-2);
     --manti-button-cursor: default;
     --manti-button-bg-hover: var(--variant-fill);
+    --manti-button-bg-active: var(--variant-fill-strong);
 
     position: relative;
     display: inline-flex;
@@ -99,6 +100,11 @@
         background: var(--variant-soft-bg-hover);
         border-color: var(--variant-soft-bg-hover);
       }
+
+      &:active {
+        background: var(--variant-soft-bg-active);
+        border-color: var(--variant-soft-bg-active);
+      }
     }
 
     /* Tertiary (ghost) — the lowest rung: text only, a subtle variant wash on
@@ -112,6 +118,10 @@
       &:hover {
         background: var(--manti-button-bg-hover);
       }
+
+      &:active {
+        background: var(--manti-button-bg-active);
+      }
     }
 
     /* Outline — a hairline-bordered pill on a transparent surface with a light
@@ -122,6 +132,11 @@
 
       &:hover {
         background: var(--manti-button-bg-hover);
+        border-color: var(--variant-soft-text);
+      }
+
+      &:active {
+        background: var(--manti-button-bg-active);
         border-color: var(--variant-soft-text);
       }
     }
@@ -147,10 +162,6 @@
       &:active {
         transform: none;
       }
-    }
-
-    &:active {
-      transform: translateY(1px);
     }
 
     &:focus-visible {

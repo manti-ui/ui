@@ -48,6 +48,13 @@
     --arrow-background: var(--manti-panel-tint-strong);
   }
 
+  /* Same hairline as the panel, on the tip's two outward edges. See tooltip.css
+     for why the top and left borders are the ones that face out. */
+  [data-scope='hover-card'][data-part='arrow-tip'] {
+    border-top: 1px solid var(--manti-panel-border);
+    border-left: 1px solid var(--manti-panel-border);
+  }
+
   @keyframes manti-hover-card-in {
     from {
       opacity: 0;

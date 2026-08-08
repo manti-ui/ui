@@ -20,6 +20,9 @@ const meta = {
       { value: 'plain', label: 'Plain', disabled: true },
     ],
   },
+  argTypes: {
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+  },
 } satisfies Meta<typeof Menu>;
 
 export default meta;

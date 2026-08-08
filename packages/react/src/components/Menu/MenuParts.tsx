@@ -30,6 +30,9 @@ export type MenuApi = menu.Api<PropTypes>;
 /** Semantic visual tone of a command, exposed as `data-tone` / `data-variant`. */
 export type MenuTone = 'default' | 'danger';
 
+/** Row rhythm of the menu panel, shared with every other sized control. */
+export type MenuSize = 'sm' | 'md' | 'lg';
+
 /** Props accepted by a command's root element. */
 export type MenuItemRootProps = WithDataAttributes<
   Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onSelect'>
@@ -42,6 +45,8 @@ interface MenuContextValue {
   service: menu.Service;
   /** Whether this machine renders a submenu rather than the root menu. */
   nested?: boolean;
+  /** Size of the panel; submenus inherit it from their parent menu. */
+  size?: MenuSize;
   /**
    * Subscribe a command's own `onSelect` to the menu's selection event.
    * Returns an unsubscribe function.
@@ -149,13 +154,20 @@ function MenuContent({
   const {
     api,
     nested,
+    size,
     contentProps: rootContentProps,
     contentClassName,
   } = useMenuContext('Menu.Content');
   if (!api.open) return null;
   return (
     <Portal>
-      <div {...mergeProps(positionerProps ?? {}, api.getPositionerProps())}>
+      {/* The panel is portalled out of the trigger, so the size cannot inherit:
+          stamp it on the positioner and the size channel resolves the row
+          rhythm for everything inside. */}
+      <div
+        {...mergeProps(positionerProps ?? {}, api.getPositionerProps())}
+        data-size={size}
+      >
         <div
           {...mergeProps(rootContentProps ?? {}, rest, api.getContentProps())}
           data-nested={nested ? '' : undefined}

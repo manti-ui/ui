@@ -28,6 +28,7 @@
   --variant-on-solid: #ffffff;
   --variant-soft-bg: light-dark(#d6f5f0, #0b2e2a);
   --variant-soft-bg-hover: light-dark(#c0ebe4, #103b35);
+  --variant-soft-bg-active: light-dark(#a9e1d8, #164a42);
   --variant-soft-text: light-dark(#0b6a60, #99f6e4);
   --variant-border: light-dark(#9fe5db, #155e54);
   --variant-text: light-dark(#0b6a60, #5eead4);

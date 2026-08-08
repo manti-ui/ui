@@ -9,6 +9,7 @@
 @import './reset.css';
 @import './tokens.css';
 @import './base.css';
+@import './size.css';
 
 @import './components/button.css';
 @import './components/toggle.css';

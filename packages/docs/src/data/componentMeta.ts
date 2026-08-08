@@ -413,6 +413,12 @@ const inlineMeta: Record<string, ComponentMeta> = {
         description: 'Placement relative to the trigger.',
       },
       {
+        name: 'showArrow',
+        type: 'boolean',
+        default: 'true',
+        description: 'Render the arrow pointing at the trigger.',
+      },
+      {
         name: 'open / defaultOpen / onOpenChange',
         type: 'controlled state',
         description: 'Controlled or uncontrolled open state.',
@@ -427,6 +433,7 @@ const inlineMeta: Record<string, ComponentMeta> = {
       { part: 'trigger', description: 'Inline wrapper around the child.' },
       { part: 'positioner', description: 'Positions the floating content.' },
       { part: 'content', description: 'The floating label.' },
+      { part: 'arrow', description: 'The arrow pointing at the trigger.' },
     ],
   },
 };

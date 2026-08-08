@@ -143,6 +143,20 @@ export default defineConfig({
     docDatesPlugin(),
     previewPrettyUrls(),
   ],
+  // One React instance, always. The docs resolve `@manti-ui/react` to its source
+  // through the `development` condition, so React is reached through a second
+  // package's node_modules as well as the docs' own.
+  resolve: {
+    dedupe: ['react', 'react-dom'],
+  },
+  optimizeDeps: {
+    // react-live is only reachable through the lazy `import('./DemoLive')`. If the
+    // cold scan ever misses it, the dev server re-optimizes on the first "Show
+    // code" and re-hashes the shared React chunk — the page then holds two React
+    // copies and the live editor dies on a null hook dispatcher. Naming it here
+    // keeps it in the first optimize pass instead of a mid-session one.
+    include: ['react-live'],
+  },
   server: {
     watch: {
       // The Manti packages are symlinked into node_modules, so their source is

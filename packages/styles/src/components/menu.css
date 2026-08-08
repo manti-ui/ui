@@ -13,16 +13,21 @@
     --manti-menu-min-width: 12rem;
     --manti-menu-max-width: 20rem;
     --manti-menu-submenu-min-width: 10rem;
-    --manti-menu-submenu-indicator-size: var(--manti-space-4);
+    --manti-menu-submenu-indicator-size: var(
+      --manti-size-icon,
+      var(--manti-space-4)
+    );
     --manti-menu-submenu-offset: var(--manti-space-3);
     --manti-menu-motion-offset: calc(var(--manti-space-1) / 2);
+    --manti-menu-padding: var(--manti-size-panel-padding, var(--manti-space-2));
+    --manti-menu-gap: var(--manti-size-panel-gap, var(--manti-space-1));
 
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-1);
+    gap: var(--manti-menu-gap);
     min-width: var(--manti-menu-min-width);
     max-width: var(--manti-menu-max-width);
-    padding: var(--manti-space-2);
+    padding: var(--manti-menu-padding);
     background: var(--manti-panel-tint-strong);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
@@ -73,12 +78,28 @@
   }
 
   [data-scope='menu']:is([data-part='item'], [data-part='trigger-item']) {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-menu-item-padding-y: var(
+      --manti-size-item-padding-y,
+      var(--manti-space-2)
+    );
+    --manti-menu-item-padding-x: var(
+      --manti-size-item-padding-x,
+      var(--manti-space-3)
+    );
+    --manti-menu-item-gap: var(--manti-size-item-gap, var(--manti-space-2));
+    --manti-menu-item-radius: var(
+      --manti-size-item-radius,
+      var(--manti-radius-sm)
+    );
+    --manti-menu-item-font-size: var(--manti-size-text, var(--manti-text-sm));
+
     display: flex;
     align-items: center;
-    gap: var(--manti-space-2);
-    padding: var(--manti-space-2) var(--manti-space-3);
-    border-radius: var(--manti-radius-sm);
-    font-size: var(--manti-text-sm);
+    gap: var(--manti-menu-item-gap);
+    padding: var(--manti-menu-item-padding-y) var(--manti-menu-item-padding-x);
+    border-radius: var(--manti-menu-item-radius);
+    font-size: var(--manti-menu-item-font-size);
     line-height: var(--manti-leading-snug);
     color: var(--manti-text);
     cursor: pointer;
@@ -87,6 +108,13 @@
 
     &[data-highlighted] {
       background: var(--manti-fill);
+    }
+
+    /* Pressed — the `active` rung of the neutral wash ladder (rest → fill →
+       fill-strong). Menu has no variant of its own, so the press reads
+       neutral; a danger command takes its own variant rung below. */
+    &:active {
+      background: var(--manti-fill-strong);
     }
 
     &[data-part='trigger-item'][data-state='open'] {
@@ -103,6 +131,10 @@
 
       &[data-highlighted] {
         background: var(--variant-soft-bg);
+      }
+
+      &:active {
+        background: var(--variant-soft-bg-hover);
       }
     }
   }
@@ -124,6 +156,14 @@
     color: var(--manti-text-muted);
   }
 
+  /* Leading affordances and the check are inline SVGs carrying intrinsic pixel
+     attributes; the size channel overrides them so they track the row. */
+  [data-scope='menu']:is([data-part='item-icon'], [data-part='item-indicator'])
+    > svg {
+    width: var(--manti-size-icon, var(--manti-text-base));
+    height: var(--manti-size-icon, var(--manti-text-base));
+  }
+
   [data-scope='menu'][data-part='item-text'] {
     flex: 1 1 auto;
   }
@@ -131,7 +171,7 @@
   [data-scope='menu'][data-part='item-shortcut'] {
     flex: none;
     color: var(--manti-text-subtle);
-    font-size: var(--manti-text-xs);
+    font-size: var(--manti-size-text-sub, var(--manti-text-xs));
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.04em;
   }
@@ -148,17 +188,20 @@
   }
 
   [data-scope='menu'][data-part='item-group-label'] {
-    padding: var(--manti-space-2) var(--manti-space-3) var(--manti-space-1);
+    padding: var(--manti-size-item-padding-y, var(--manti-space-2))
+      var(--manti-size-item-padding-x, var(--manti-space-3))
+      var(--manti-space-1);
     color: var(--manti-text-subtle);
-    font-size: var(--manti-text-xs);
+    font-size: var(--manti-size-text-sub, var(--manti-text-xs));
     font-weight: var(--manti-weight-semibold);
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
 
+  /* Bleed to the panel edge whatever the panel padding is. */
   [data-scope='menu'][data-part='separator'] {
     height: 1px;
-    margin: var(--manti-space-1) calc(var(--manti-space-2) * -1);
+    margin: var(--manti-space-1) calc(var(--manti-menu-padding) * -1);
     background: var(--manti-border);
   }
 

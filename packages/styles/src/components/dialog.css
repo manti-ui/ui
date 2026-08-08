@@ -121,6 +121,13 @@
       color: var(--manti-text);
     }
 
+    /* Pressed — the neutral wash's `active` rung, shared by every close
+       trigger in the system (dialog/drawer/popover/toast/file-upload). */
+    &:active {
+      background: var(--manti-fill-strong);
+      color: var(--manti-text);
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);

@@ -139,7 +139,8 @@ export const meta: ComponentMeta = {
     },
     {
       part: 'addon',
-      description: 'Content in the left or right slot of the input frame.',
+      description:
+        'Content in the left or right slot of the input frame. Carries data-position and data-slot ("text" or "node").',
     },
     { part: 'input', description: 'The native text input.' },
     {

@@ -69,6 +69,11 @@
       background: var(--manti-surface-raised);
     }
 
+    /* Pressed — the panel material's `active` rung. */
+    &:active {
+      background: var(--manti-panel-tint-pressed);
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);

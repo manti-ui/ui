@@ -34,17 +34,32 @@
     --manti-slider-thumb-size: 1.125rem;
     --manti-slider-track-size: 0.375rem;
     --manti-slider-length: 12rem;
+    --manti-slider-marker-size: 0.25rem;
 
     position: relative;
-    display: flex;
+    /* A single stacked cell, not a flex row: the track and the marker group have
+       to occupy the same box so each marker can resolve its
+       `inset-inline-start: <percent>` against the track's full length. As flex
+       items they cannot: the marker group's children are all absolutely
+       positioned, so it collapses to zero width and every marker lands on the
+       same point at the end of the row. */
+    display: grid;
+    grid-template-areas: 'stack';
     align-items: center;
+
+    & > * {
+      grid-area: stack;
+    }
 
     &[data-orientation='horizontal'] {
       min-height: var(--manti-slider-thumb-size);
     }
 
     &[data-orientation='vertical'] {
-      flex-direction: column;
+      /* Mirrored: the group needs the full height to position `bottom` against,
+         and the track is centred across the control's width instead. */
+      align-items: stretch;
+      justify-items: center;
       width: var(--manti-slider-thumb-size);
       height: var(--manti-slider-length);
     }
@@ -91,11 +106,16 @@
     border-radius: max(var(--manti-radius-xs), var(--manti-radius-thumb));
     cursor: grab;
     transition:
-      transform var(--manti-duration-fast) var(--manti-ease-smooth);
+      transform var(--manti-duration-fast) var(--manti-ease-smooth),
+      border-color var(--manti-duration-fast) var(--manti-ease-smooth);
 
+    /* Pressed / dragging — the handle takes the variant's own edge so a grabbed
+       thumb is not just bigger but colored, matching the range it rides. */
+    &:active,
     &[data-dragging] {
       cursor: grabbing;
       transform: scale(1.1);
+      border-color: var(--variant-solid);
     }
 
     &:focus-visible {
@@ -109,15 +129,31 @@
     opacity: 0.6;
   }
 
-  [data-scope='slider'][data-part='marker-group'] {
-    position: absolute;
-    inset: 0;
-  }
-
+  /* The group carries `position: relative` from Zag as an inline style, which no
+     stylesheet rule can outrank, so it is sized (via the stacked grid cell
+     above) rather than re-positioned. It stays an empty line box on the track's
+     centre; the markers inside are the only thing that paints. */
   [data-scope='slider'][data-part='marker'] {
-    width: 0.25rem;
-    height: 0.25rem;
+    width: var(--manti-slider-marker-size);
+    height: var(--manti-slider-marker-size);
     background: var(--manti-text-subtle);
     border-radius: var(--manti-radius-full);
+    /* Zag centres each marker along the track it slides on (horizontal gets
+       `--translate-x: -50%`), never across it. Pull the dot back half its size
+       on the axis Zag leaves alone so it sits ON the rail, not beside it. */
+    &[data-orientation='horizontal'] {
+      margin-block-start: calc(var(--manti-slider-marker-size) / -2);
+    }
+
+    &[data-orientation='vertical'] {
+      margin-inline-start: calc(var(--manti-slider-marker-size) / -2);
+    }
+
+    /* A tick the range has passed sits on the filled track, where the subtle
+       neutral disappears. Zag reports which side of the value each marker falls
+       on, so switch to the fill's own measured label ink instead. */
+    &[data-state='under-value'] {
+      background: color-mix(in oklab, var(--variant-on-solid) 60%, transparent);
+    }
   }
 }

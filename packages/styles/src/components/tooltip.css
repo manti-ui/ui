@@ -43,6 +43,16 @@
     --arrow-background: var(--manti-panel-tint-strong);
   }
 
+  /* The tip is a square Zag rotates 45° per side, so its top and left edges are
+     always the two that face away from the bubble. Carrying the panel hairline
+     on exactly those two continues the bubble's outline around the notch —
+     without it the arrow reads as a gap in the border. Physical properties,
+     because the rotation Zag writes inline is physical too. */
+  [data-scope='tooltip'][data-part='arrow-tip'] {
+    border-top: 1px solid var(--manti-panel-border);
+    border-left: 1px solid var(--manti-panel-border);
+  }
+
   @keyframes manti-tooltip-in {
     from {
       opacity: 0;

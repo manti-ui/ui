@@ -13,6 +13,8 @@ import { Tabs } from '../Tabs/Tabs';
 export interface ColorPickerProps {
   /** Optional field label. */
   label?: ReactNode;
+  /** Trigger size, shared with every other sized control. */
+  size?: 'sm' | 'md' | 'lg';
   /** Controlled value as a CSS color string. */
   value?: string;
   /** Initial value for uncontrolled usage. */
@@ -91,6 +93,7 @@ const checkIcon = (
 /** A color picker backed by the Zag.js color-picker machine. */
 export function ColorPicker({
   label,
+  size = 'md',
   value,
   defaultValue = '#7c3aed',
   onValueChange,
@@ -159,6 +162,7 @@ export function ColorPicker({
     <div
       {...api.getRootProps()}
       data-variant="primary"
+      data-size={size}
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
@@ -174,7 +178,9 @@ export function ColorPicker({
         </button>
       </div>
       <Portal>
-        <div {...api.getPositionerProps()}>
+        {/* The panel is portalled out of the root, so the size cannot inherit:
+            re-stamp it and the panel's type follows the trigger. */}
+        <div {...api.getPositionerProps()} data-size={size}>
           <div {...api.getContentProps()}>
             <div {...api.getAreaProps()}>
               <div {...api.getAreaBackgroundProps()} />

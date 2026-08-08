@@ -4,6 +4,14 @@
  * matching the Listbox/Menu anatomy.
  */
 @layer manti.components {
+  /* The trigger lives in the root and the listbox in the portalled positioner,
+     so anything both sides need is declared on both: the adapter stamps the
+     same `data-size` on each, and the size channel resolves independently. */
+  [data-scope='select']:is([data-part='root'], [data-part='positioner']) {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-select-icon-size: var(--manti-size-icon, var(--manti-text-base));
+  }
+
   [data-scope='select'][data-part='root'] {
     display: flex;
     flex-direction: column;
@@ -19,7 +27,15 @@
 
   [data-scope='select'][data-part='trigger'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
-    --manti-select-height: var(--manti-control-height-md);
+    --manti-select-height: var(
+      --manti-size-control-height,
+      var(--manti-control-height-md)
+    );
+    --manti-select-padding-x: var(
+      --manti-size-control-padding-x,
+      var(--manti-space-3)
+    );
+    --manti-select-font-size: var(--manti-size-text, var(--manti-text-sm));
 
     display: flex;
     align-items: center;
@@ -27,7 +43,7 @@
     gap: var(--manti-space-2);
     width: 100%;
     min-height: var(--manti-select-height);
-    padding-inline: var(--manti-space-3);
+    padding-inline: var(--manti-select-padding-x);
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
     /* Control class — joins the opt-in pill channel. The popup below keeps a
@@ -35,12 +51,18 @@
     border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
     color: var(--manti-text);
     font-family: var(--manti-font-sans);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-select-font-size);
     text-align: start;
     transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:hover {
       border-color: var(--manti-border-strong);
+    }
+
+    /* Input-like control: the primary color starts at active/focus/open, so a
+       press hands the border straight to the variant ring. */
+    &:active {
+      border-color: var(--variant-ring);
     }
 
     &:focus-visible {
@@ -72,16 +94,6 @@
     }
   }
 
-  [data-scope='select'][data-part='root'][data-size='sm']
-    [data-part='trigger'] {
-    --manti-select-height: var(--manti-control-height-sm);
-  }
-
-  [data-scope='select'][data-part='root'][data-size='lg']
-    [data-part='trigger'] {
-    --manti-select-height: var(--manti-control-height-lg);
-  }
-
   [data-scope='select'][data-part='root'][data-invalid] [data-part='trigger'] {
     border-color: var(--manti-danger-border);
   }
@@ -94,6 +106,11 @@
     &:hover {
       background: var(--manti-fill-strong);
       border-color: transparent;
+    }
+
+    &:active {
+      background: var(--manti-fill-strong);
+      border-color: var(--variant-ring);
     }
 
     &:focus-visible {
@@ -129,6 +146,17 @@
     flex: none;
     color: var(--manti-text-muted);
     transition: transform var(--manti-duration-base) var(--manti-ease-smooth);
+  }
+
+  /* The chevron and the check are inline SVGs with intrinsic 16px attributes;
+     the size channel overrides both so they track the row they sit in. */
+  [data-scope='select']:is(
+      [data-part='indicator'],
+      [data-part='item-indicator']
+    )
+    > svg {
+    width: var(--manti-select-icon-size);
+    height: var(--manti-select-icon-size);
   }
 
   [data-scope='select'][data-part='trigger'][data-state='open']
@@ -185,10 +213,20 @@
   }
 
   [data-scope='select'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-select-content-padding: var(
+      --manti-size-panel-padding,
+      var(--manti-space-2)
+    );
+    --manti-select-content-gap: var(
+      --manti-size-panel-gap,
+      var(--manti-space-1)
+    );
+
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-1);
-    padding: var(--manti-space-2);
+    gap: var(--manti-select-content-gap);
+    padding: var(--manti-select-content-padding);
 
     &:focus-visible {
       outline: none;
@@ -196,14 +234,31 @@
   }
 
   [data-scope='select'][data-part='item'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-select-item-padding-y: var(
+      --manti-size-item-padding-y,
+      var(--manti-space-2)
+    );
+    --manti-select-item-padding-x: var(
+      --manti-size-item-padding-x,
+      var(--manti-space-3)
+    );
+    --manti-select-item-gap: var(--manti-size-item-gap, var(--manti-space-2));
+    --manti-select-item-radius: var(
+      --manti-size-item-radius,
+      var(--manti-radius-sm)
+    );
+    --manti-select-item-font-size: var(--manti-size-text, var(--manti-text-sm));
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--manti-space-2);
-    padding: var(--manti-space-2);
-    border-radius: var(--manti-radius-sm);
+    gap: var(--manti-select-item-gap);
+    padding: var(--manti-select-item-padding-y)
+      var(--manti-select-item-padding-x);
+    border-radius: var(--manti-select-item-radius);
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-select-item-font-size);
     line-height: var(--manti-leading-snug);
     user-select: none;
     transition:
@@ -214,6 +269,12 @@
       background: var(--variant-fill);
     }
 
+    /* Pressed — the `active` rung of the variant wash ladder, which is also
+       where the row lands once the press selects it. */
+    &:active {
+      background: var(--variant-fill-strong);
+    }
+
     &[data-state='checked'] {
       background: var(--variant-fill-strong);
       font-weight: var(--manti-weight-medium);
@@ -221,6 +282,10 @@
 
     &[data-state='checked'][data-highlighted] {
       background: var(--variant-fill-strong);
+    }
+
+    &[data-state='checked']:active {
+      background: var(--variant-soft-bg-active);
     }
 
     &[data-disabled] {

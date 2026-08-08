@@ -7,10 +7,11 @@ import { cx } from '../../internal/props';
 import { renderTrigger } from '../../internal/floating';
 import type { Placement } from '../../internal/floating';
 import { MenuProvider, menuParts, useMenuSelection } from './MenuParts';
+import type { MenuSize } from './MenuParts';
 import { MenuItems } from './MenuItems';
 import type { MenuGetItemProps, MenuItem } from './MenuItems';
 
-export type { MenuItemRootProps, MenuTone } from './MenuParts';
+export type { MenuItemRootProps, MenuSize, MenuTone } from './MenuParts';
 export type {
   MenuActionCommand,
   MenuCheckboxCommand,
@@ -31,6 +32,8 @@ export interface MenuProps {
   items: MenuItem[];
   /** Placement relative to the trigger. `bottom-center` aliases `bottom`. */
   placement?: MenuPlacement;
+  /** Row rhythm of the panel. Submenus inherit it. */
+  size?: MenuSize;
   /** Called with the value of the selected command. */
   onSelect?: (value: string) => void;
   /** Controlled open state. */
@@ -69,6 +72,7 @@ export function Menu({
   trigger,
   items,
   placement = 'bottom-start',
+  size = 'md',
   onSelect,
   open,
   defaultOpen,
@@ -101,6 +105,7 @@ export function Menu({
       value={{
         api,
         service,
+        size,
         registerItem: selection.registerItem,
         emitSelect: (value) => selection.emit(value, onSelect),
         contentProps,
