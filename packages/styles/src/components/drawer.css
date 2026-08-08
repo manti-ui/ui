@@ -92,22 +92,26 @@
   }
 
   /* Slide-in per edge. Content mounts already open, so the entrance plays once. */
-  [data-scope='drawer'][data-placement='right'] [data-part='content'][data-state='open'] {
+  [data-scope='drawer'][data-placement='right']
+    [data-part='content'][data-state='open'] {
     animation: manti-drawer-in-right var(--manti-duration-slow)
       var(--manti-ease-smooth);
   }
 
-  [data-scope='drawer'][data-placement='left'] [data-part='content'][data-state='open'] {
+  [data-scope='drawer'][data-placement='left']
+    [data-part='content'][data-state='open'] {
     animation: manti-drawer-in-left var(--manti-duration-slow)
       var(--manti-ease-smooth);
   }
 
-  [data-scope='drawer'][data-placement='top'] [data-part='content'][data-state='open'] {
+  [data-scope='drawer'][data-placement='top']
+    [data-part='content'][data-state='open'] {
     animation: manti-drawer-in-top var(--manti-duration-slow)
       var(--manti-ease-smooth);
   }
 
-  [data-scope='drawer'][data-placement='bottom'] [data-part='content'][data-state='open'] {
+  [data-scope='drawer'][data-placement='bottom']
+    [data-part='content'][data-state='open'] {
     animation: manti-drawer-in-bottom var(--manti-duration-slow)
       var(--manti-ease-smooth);
   }
@@ -173,6 +177,11 @@
 
     &:hover {
       background: var(--manti-fill);
+      color: var(--manti-text);
+    }
+
+    &:active {
+      background: var(--manti-fill-strong);
       color: var(--manti-text);
     }
 

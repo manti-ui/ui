@@ -1,4 +1,20 @@
-import { Button, Input } from '@manti-ui/react';
+import { Button, Input, Kbd } from '@manti-ui/react';
+
+const SearchIcon = (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
+    <circle cx="11" cy="11" r="7" />
+    <path d="m20 20-3.2-3.2" />
+  </svg>
+);
 
 export default function InputLeftRight() {
   return (
@@ -25,6 +41,12 @@ export default function InputLeftRight() {
             Apply
           </Button>
         }
+      />
+      <Input
+        aria-label="Search invoices"
+        placeholder="Search invoices…"
+        left={SearchIcon}
+        right={<Kbd>⌘K</Kbd>}
       />
     </div>
   );

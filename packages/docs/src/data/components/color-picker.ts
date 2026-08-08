@@ -33,6 +33,13 @@ export const meta: ComponentMeta = {
         'Show the formatted value text (e.g. rgba(...)) next to the swatch in the trigger. Set to false to show only the color swatch.',
     },
     {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description:
+        'Trigger size: height, padding, type, and swatch. The panel keeps its own fixed canvas.',
+    },
+    {
       name: 'placement',
       type: 'Placement',
       default: `'bottom-start'`,

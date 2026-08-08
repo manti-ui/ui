@@ -25,6 +25,8 @@ export interface TimePickerProps {
   label?: ReactNode;
   /** Selection-highlight variant. */
   variant?: MantiVariant;
+  /** Control size; the panel's cells follow it. */
+  size?: 'sm' | 'md' | 'lg';
   /** Initial value as "HH:mm" (24-hour). */
   defaultValue?: string;
   /** Called whenever the value changes; emits the formatted time string. */
@@ -43,6 +45,7 @@ export interface TimePickerProps {
 export function TimePicker({
   label,
   variant = 'primary',
+  size = 'md',
   defaultValue,
   onValueChange,
   placement = 'bottom-start',
@@ -123,6 +126,7 @@ export function TimePicker({
     <div
       {...api.getRootProps()}
       data-variant={variant}
+      data-size={size}
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
@@ -149,7 +153,13 @@ export function TimePicker({
         </button>
       </div>
       <Portal>
-        <div {...api.getPositionerProps()} data-variant={variant}>
+        {/* The panel is portalled out of the root, so the size cannot inherit:
+            re-stamp it and the cells follow the control. */}
+        <div
+          {...api.getPositionerProps()}
+          data-variant={variant}
+          data-size={size}
+        >
           <div {...api.getContentProps()} ref={contentRef}>
             {renderColumn(
               'hour',

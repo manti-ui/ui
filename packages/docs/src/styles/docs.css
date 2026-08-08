@@ -168,6 +168,23 @@
     line-height: var(--manti-leading-tight);
   }
 
+  /* Outbound header links (Studio, GitHub). They sit at the same muted weight
+     as the neighbouring nav links rather than the ghost button's full
+     `--variant-text`, and brighten to full contrast on hover. */
+  .docs-nav-outbound {
+    color: var(--manti-text-muted);
+  }
+  .docs-nav-outbound:hover {
+    color: var(--manti-text);
+  }
+
+  .docs-nav-github-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--manti-space-1);
+    font-variant-numeric: tabular-nums;
+  }
+
   /* nav text links */
   .docs-nav-link {
     padding: var(--manti-space-1) var(--manti-space-3);
@@ -348,7 +365,7 @@
     padding-top: var(--manti-space-5);
     border-top: 1px solid var(--manti-border);
   }
-  /* First rail block on TOC-less pages — drop the divider/offset. */
+  /* First rail block on TOC-less pages: drop the divider/offset. */
   .docs-toc > .docs-theme-playground:first-child {
     margin-top: 0;
     padding-top: 0;
@@ -364,10 +381,12 @@
   .docs-theme-playground .docs-toc-label {
     margin: 0;
   }
-  .docs-theme-playground-hint {
+  /* Group heading inside the rail block ("Basic", "Radius", "Advanced"). One
+     step quieter than `.docs-toc-label`, which stays the block's own title. */
+  .docs-theme-group-label {
     margin: 0;
     font-size: var(--manti-text-xs);
-    line-height: var(--manti-leading-normal);
+    font-weight: var(--manti-weight-medium);
     color: var(--manti-text-muted);
   }
   .docs-theme-swatches {
@@ -385,13 +404,14 @@
     justify-content: space-between;
     gap: var(--manti-space-2);
   }
-  .docs-theme-swatch [data-scope='color-picker'][data-part='label'] {
+  .docs-theme-swatch [data-scope='color-picker'][data-part='label'],
+  .docs-theme-radius-label {
     margin: 0;
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-medium);
     color: var(--manti-text);
   }
-  /* Compact the swatch-only trigger for the narrow rail — hug the swatch instead
+  /* Compact the swatch-only trigger for the narrow rail: hug the swatch instead
      of the full control height. */
   .docs-theme-swatch [data-scope='color-picker'][data-part='trigger'] {
     min-height: 0;
@@ -408,7 +428,7 @@
     gap: var(--manti-space-2);
     margin-top: var(--manti-space-2);
   }
-  /* Five segments have to fit a 15rem rail: trim the per-item padding via the
+  /* Four segments have to fit a 15rem rail: trim the per-item padding via the
      component token and let the track span the full width. */
   .docs-theme-radius [data-scope='segmented-control'][data-part='root'] {
     display: flex;
@@ -420,6 +440,70 @@
     flex: 1;
     min-width: 0;
     font-size: var(--manti-text-xs);
+  }
+
+  /* ---- Theme Studio doorway (right rail) ----
+     Continues the playground block above it (same "Make it yours" heading), so
+     it carries no divider of its own: the two-color quick pass, then the door
+     to the full instrument. */
+  .docs-theme-cta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+    margin-top: var(--manti-space-4);
+  }
+  /* First rail block on TOC-less pages, or with the playground absent: it owns
+     the divider/offset instead. */
+  .docs-toc > .docs-theme-cta:first-child {
+    margin-top: 0;
+  }
+  .docs-theme-cta-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    padding: var(--manti-space-3);
+    border: 1px solid var(--manti-border);
+    border-radius: var(--manti-radius-md);
+    background: var(--manti-surface);
+    color: var(--manti-text);
+    text-decoration: none;
+    transition:
+      border-color var(--manti-duration-fast) var(--manti-ease-smooth),
+      background var(--manti-duration-fast) var(--manti-ease-smooth);
+  }
+  .docs-theme-cta-link:hover {
+    border-color: var(--manti-border-strong);
+    background: var(--manti-surface-raised);
+  }
+  .docs-theme-cta-swatches {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-1);
+  }
+  .docs-theme-cta-swatches i {
+    width: var(--manti-space-5);
+    height: var(--manti-space-5);
+    border-radius: var(--manti-radius-xs);
+  }
+  /* Pushed to the far end of the swatch row — the card's only affordance that
+     says this link leaves the docs. */
+  .docs-theme-cta-external {
+    display: inline-flex;
+    margin-inline-start: auto;
+    color: var(--manti-text-muted);
+    transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
+  }
+  .docs-theme-cta-link:hover .docs-theme-cta-external {
+    color: var(--manti-text);
+  }
+  .docs-theme-cta-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-1);
+  }
+  .docs-theme-cta-copy strong {
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-semibold);
   }
   /* ---- Prose ---- */
   .docs-prose {
@@ -984,7 +1068,6 @@
 
   .docs-landing-hero-copy > p,
   .docs-landing-section-heading > p,
-  .docs-theme-lab-copy > p,
   .docs-landing-cta > p {
     margin: 0;
     max-width: 54ch;
@@ -1057,6 +1140,9 @@
 
   .docs-hero-stage {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-12);
     min-width: 0;
     padding: var(--manti-space-10) 0 var(--manti-space-12) var(--manti-space-8);
   }
@@ -1293,28 +1379,36 @@
     text-wrap: balance;
   }
 
-  .docs-theme-lab {
-    display: grid;
-    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
-    align-items: center;
-    gap: var(--manti-space-16);
-    margin-block-start: var(--manti-space-16);
-    padding-inline: var(--manti-space-12);
-    border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-2xl);
+  .docs-hero-customizer {
+    position: relative;
+    z-index: var(--manti-z-raised);
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-4);
+    width: min(100%, var(--docs-preview-max));
+    margin-inline: auto;
+    padding: var(--manti-space-4);
+    border-radius: var(--manti-radius-xl);
     background: var(--manti-bg-subtle);
   }
 
-  .docs-theme-lab-copy {
+  .docs-hero-customizer-header {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-3);
+  }
+
+  .docs-hero-customizer-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--manti-space-4);
   }
 
   .docs-theme-control {
     width: 100%;
-    margin: var(--manti-space-3) 0 0;
+    margin: 0;
     padding: 0;
     border: 0;
   }
@@ -1383,61 +1477,60 @@
     background: var(--manti-green-9);
   }
 
-  .docs-theme-stage {
-    display: grid;
-    place-items: center;
-    min-width: 0;
-    padding: var(--manti-space-12);
-    border-radius: var(--manti-radius-xl);
-    background: var(--manti-bg);
-    overflow: hidden;
-  }
-
-  .docs-product-preview[data-compact] {
-    --docs-preview-max: 30rem;
-  }
-
   .docs-architecture-flow {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--manti-space-16);
     margin: 0;
     padding: 0;
     list-style: none;
-    border-block: 1px solid var(--manti-border);
   }
 
   .docs-architecture-flow li {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-2);
-    padding: var(--manti-space-8) var(--manti-space-6);
+    align-items: center;
+    gap: var(--manti-space-3);
+    min-width: 0;
+    text-align: center;
   }
 
-  .docs-architecture-flow li + li {
-    border-inline-start: 1px solid var(--manti-border);
-  }
-
-  .docs-architecture-flow li + li::before {
-    content: '→';
+  .docs-architecture-flow li:not(:last-child)::after {
+    content: '⟶';
     position: absolute;
-    inset: 50% auto auto 0;
-    translate: -50% -50%;
+    inset-block: 0;
+    inset-inline-end: calc(var(--manti-space-16) * -1);
     display: grid;
     place-items: center;
-    width: var(--manti-space-6);
-    height: var(--manti-space-6);
-    border: 1px solid var(--manti-border);
-    border-radius: var(--manti-radius-full);
-    background: var(--manti-bg);
-    color: var(--manti-text-subtle);
+    width: var(--manti-space-16);
+    color: var(--variant-text);
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-text-2xl);
+    font-weight: var(--manti-weight-semibold);
   }
 
-  .docs-architecture-flow span {
+  .docs-architecture-step {
     color: var(--manti-text-subtle);
     font-family: var(--manti-font-mono);
     font-size: var(--manti-text-xs);
+  }
+
+  .docs-architecture-visual {
+    display: grid;
+    place-items: center;
+    width: calc(var(--manti-space-16) * 2);
+    height: calc(var(--manti-space-16) * 2);
+    border-radius: var(--manti-radius-full);
+    background: var(--manti-bg-subtle);
+    overflow: hidden;
+  }
+
+  .docs-architecture-visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .docs-architecture-flow strong {
@@ -1448,6 +1541,7 @@
     margin: 0;
     color: var(--manti-text-subtle);
     font-size: var(--manti-text-sm);
+    line-height: var(--manti-leading-relaxed);
   }
 
   .docs-landing-cta {
@@ -1583,9 +1677,6 @@
     .docs-landing-hero {
       gap: var(--manti-space-8);
     }
-    .docs-theme-lab {
-      grid-template-columns: minmax(0, 1fr);
-    }
   }
   @media (max-width: 820px) {
     .docs-layout {
@@ -1618,8 +1709,7 @@
       margin-inline: auto;
       padding-inline: var(--manti-space-8);
     }
-    .docs-proof-strip,
-    .docs-architecture-flow {
+    .docs-proof-strip {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .docs-proof-strip > div:nth-child(3) {
@@ -1627,19 +1717,6 @@
     }
     .docs-proof-strip > div:nth-child(n + 3) {
       border-top: 1px solid var(--manti-border);
-    }
-    .docs-theme-lab {
-      padding-inline: var(--manti-space-6);
-    }
-    .docs-architecture-flow li:nth-child(3) {
-      border-inline-start: 0;
-      border-top: 1px solid var(--manti-border);
-    }
-    .docs-architecture-flow li:nth-child(4) {
-      border-top: 1px solid var(--manti-border);
-    }
-    .docs-architecture-flow li:nth-child(3)::before {
-      content: none;
     }
   }
   @media (max-width: 640px) {
@@ -1654,7 +1731,6 @@
     }
     .docs-landing-hero-copy > p,
     .docs-landing-section-heading > p,
-    .docs-theme-lab-copy > p,
     .docs-landing-cta > p {
       font-size: var(--manti-text-base);
     }
@@ -1700,23 +1776,15 @@
     .docs-landing-cta h2 {
       font-size: var(--manti-text-3xl);
     }
-    .docs-theme-lab {
-      gap: var(--manti-space-8);
-      margin-block-start: var(--manti-space-8);
-      padding-inline: var(--manti-space-4);
-    }
-    .docs-theme-stage {
-      padding: var(--manti-space-4);
+    .docs-hero-customizer-controls {
+      grid-template-columns: minmax(0, 1fr);
     }
     .docs-architecture-flow {
       grid-template-columns: minmax(0, 1fr);
+      gap: var(--manti-space-12);
     }
-    .docs-architecture-flow li + li,
-    .docs-architecture-flow li:nth-child(3) {
-      border-inline-start: 0;
-      border-top: 1px solid var(--manti-border);
-    }
-    .docs-architecture-flow li + li::before {
+
+    .docs-architecture-flow li:not(:last-child)::after {
       content: none;
     }
     .docs-landing-cta {

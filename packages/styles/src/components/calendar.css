@@ -70,6 +70,12 @@
       border-color: var(--manti-text-subtle);
     }
 
+    /* Pressed — the panel material's `active` rung. */
+    &:active {
+      background: var(--manti-panel-tint-pressed);
+      border-color: var(--manti-text-subtle);
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
@@ -93,6 +99,11 @@
 
     &:hover {
       background: var(--manti-fill);
+      color: var(--manti-text);
+    }
+
+    &:active {
+      background: var(--manti-fill-strong);
       color: var(--manti-text);
     }
 
@@ -186,6 +197,12 @@
       background: var(--manti-fill);
     }
 
+    /* Pressed — the neutral wash's `active` rung for an unselected day; a
+       selected day takes the variant's own soft `active` rung below. */
+    &:active {
+      background: var(--manti-fill-strong);
+    }
+
     /* Reset the DatePicker today ring that leaks through the shared date-picker
        scope — Calendar marks today with the variant chip on the number instead. */
     &[data-today] {
@@ -198,8 +215,17 @@
       color: var(--manti-text);
     }
 
+    &[data-selected]:active {
+      background: var(--variant-soft-bg-active);
+      color: var(--manti-text);
+    }
+
     &[data-in-range] {
       background: var(--variant-fill);
+    }
+
+    &[data-in-range]:active {
+      background: var(--variant-fill-strong);
     }
 
     /* Keep range ends square so they don't round inside the continuous grid. */

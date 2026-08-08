@@ -82,6 +82,13 @@
       background: color-mix(in oklab, currentColor 12%, transparent);
     }
 
+    /* Pressed — the same wash one rung stronger. It is mixed from the alert's
+       own ink, so it already carries the variant. */
+    &:active {
+      opacity: 1;
+      background: color-mix(in oklab, currentColor 20%, transparent);
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: 1px;

@@ -20,14 +20,19 @@
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-listbox-min-width: 14rem;
     --manti-listbox-max-height: 18rem;
+    --manti-listbox-padding: var(
+      --manti-size-panel-padding,
+      var(--manti-space-2)
+    );
+    --manti-listbox-gap: var(--manti-size-panel-gap, var(--manti-space-1));
 
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-1);
+    gap: var(--manti-listbox-gap);
     min-width: var(--manti-listbox-min-width);
     max-height: var(--manti-listbox-max-height);
     overflow-y: auto;
-    padding: var(--manti-space-2);
+    padding: var(--manti-listbox-padding);
     background: var(--manti-panel-tint-strong);
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-md);
@@ -46,20 +51,45 @@
   }
 
   [data-scope='listbox'][data-part='item'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-listbox-item-padding-y: var(
+      --manti-size-item-padding-y,
+      var(--manti-space-2)
+    );
+    --manti-listbox-item-padding-x: var(
+      --manti-size-item-padding-x,
+      var(--manti-space-3)
+    );
+    --manti-listbox-item-gap: var(--manti-size-item-gap, var(--manti-space-2));
+    --manti-listbox-item-radius: var(
+      --manti-size-item-radius,
+      var(--manti-radius-sm)
+    );
+    --manti-listbox-item-font-size: var(
+      --manti-size-text,
+      var(--manti-text-sm)
+    );
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--manti-space-2);
-    padding: var(--manti-space-2) var(--manti-space-3);
-    border-radius: var(--manti-radius-sm);
+    gap: var(--manti-listbox-item-gap);
+    padding: var(--manti-listbox-item-padding-y)
+      var(--manti-listbox-item-padding-x);
+    border-radius: var(--manti-listbox-item-radius);
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-listbox-item-font-size);
     cursor: pointer;
     user-select: none;
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
 
     &[data-highlighted] {
       background: var(--manti-fill);
+    }
+
+    /* Pressed — the `active` rung of the neutral wash ladder. */
+    &:active {
+      background: var(--manti-fill-strong);
     }
 
     &[data-state='checked'] {
@@ -73,6 +103,12 @@
       background: var(--variant-soft-bg-hover);
     }
 
+    /* Pressing a selected row takes the soft ladder's `active` rung, so the
+       press is legible on top of the already-tinted surface. */
+    &[data-state='checked']:active {
+      background: var(--variant-soft-bg-active);
+    }
+
     &[data-disabled] {
       color: var(--manti-text-subtle);
       cursor: not-allowed;
@@ -83,5 +119,12 @@
     display: inline-flex;
     flex: none;
     color: var(--variant-soft-text);
+  }
+
+  /* The check is an inline SVG with intrinsic 16px attributes; the size channel
+     overrides them so it tracks the row. */
+  [data-scope='listbox'][data-part='item-indicator'] > svg {
+    width: var(--manti-size-icon, var(--manti-text-base));
+    height: var(--manti-size-icon, var(--manti-text-base));
   }
 }

@@ -40,6 +40,13 @@
       background: var(--variant-fill);
     }
 
+    /* Pressed — the whole dropzone is the click target, so it takes the variant
+       wash's `active` rung on the way to the file dialog. */
+    &:active {
+      border-color: var(--variant-solid);
+      background: var(--variant-fill-strong);
+    }
+
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: var(--manti-focus-ring-offset);
@@ -64,6 +71,10 @@
 
     &:hover {
       background: var(--variant-solid-hover);
+    }
+
+    &:active {
+      background: var(--variant-solid-active);
     }
   }
 
@@ -125,6 +136,11 @@
 
     &:hover {
       background: var(--manti-fill);
+      color: var(--manti-text);
+    }
+
+    &:active {
+      background: var(--manti-fill-strong);
       color: var(--manti-text);
     }
 

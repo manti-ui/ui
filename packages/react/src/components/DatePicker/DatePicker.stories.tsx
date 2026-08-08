@@ -14,6 +14,7 @@ const meta = {
     defaultValue: ['2026-06-15'],
   },
   argTypes: {
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     selectionMode: {
       control: 'inline-radio',
       options: ['single', 'multiple', 'range'],

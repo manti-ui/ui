@@ -1,0 +1,111 @@
+/**
+ * Size channel.
+ *
+ * `sm | md | lg` is one shared rhythm rather than a per-component invention: a
+ * control and the surface it opens have to read at the same size. A `sm` Select
+ * opens a `sm` listbox, a `lg` Menu lays out `lg` rows, and a `sm` TimePicker
+ * scrolls `sm` cells.
+ *
+ * Popup surfaces are portalled out of their control, so the size cannot simply
+ * inherit through the DOM. Each adapter re-stamps `data-size` on the positioner,
+ * and the allowlist below turns that attribute into the resolved `--manti-size-*`
+ * values every part inside reads. The list is explicit on purpose: plenty of
+ * components spend `data-size` on something else entirely (Dialog width, Avatar
+ * diameter, DataTable density), and those must not open the channel for whatever
+ * they happen to contain.
+ *
+ * Every value derives from the spacing, type, radius, and control-height scales,
+ * so retuning `--manti-space-1` or `--manti-text-base` rescales popups too.
+ * Themes can retune a single step by redeclaring a channel variable under the
+ * matching `[data-size]` scope.
+ */
+@layer manti.base {
+  :where(
+    [data-scope='field'][data-part='control'],
+    [data-scope='select'][data-part='root'],
+    [data-scope='select'][data-part='positioner'],
+    [data-scope='combobox'][data-part='root'],
+    [data-scope='combobox'][data-part='positioner'],
+    [data-scope='menu'][data-part='positioner'],
+    [data-scope='listbox'][data-part='root'],
+    [data-scope='date-picker'][data-part='root'],
+    [data-scope='date-picker'][data-part='positioner'],
+    [data-scope='time-picker'][data-part='root'],
+    [data-scope='time-picker'][data-part='positioner'],
+    [data-scope='color-picker'][data-part='root'],
+    [data-scope='color-picker'][data-part='positioner']
+  )[data-size='sm'] {
+    --manti-size-text: var(--manti-text-xs);
+    --manti-size-text-sub: calc(var(--manti-text-base) * 0.6875);
+    --manti-size-icon: calc(var(--manti-text-base) * 0.875);
+    --manti-size-control-height: var(--manti-control-height-sm);
+    --manti-size-control-padding-x: var(--manti-space-2);
+    --manti-size-panel-padding: var(--manti-space-1);
+    --manti-size-panel-gap: calc(var(--manti-space-1) / 2);
+    --manti-size-item-padding-y: calc(var(--manti-space-1) * 1.25);
+    --manti-size-item-padding-x: var(--manti-space-2);
+    --manti-size-item-gap: var(--manti-space-1);
+    --manti-size-item-radius: var(--manti-radius-xs);
+    --manti-size-cell: var(--manti-control-height-sm);
+  }
+
+  /* `md` is also the fallback every part below spells out, so a component that
+     never receives `data-size` still resolves the same rhythm. */
+  :where(
+    [data-scope='field'][data-part='control'],
+    [data-scope='select'][data-part='root'],
+    [data-scope='select'][data-part='positioner'],
+    [data-scope='combobox'][data-part='root'],
+    [data-scope='combobox'][data-part='positioner'],
+    [data-scope='menu'][data-part='positioner'],
+    [data-scope='listbox'][data-part='root'],
+    [data-scope='date-picker'][data-part='root'],
+    [data-scope='date-picker'][data-part='positioner'],
+    [data-scope='time-picker'][data-part='root'],
+    [data-scope='time-picker'][data-part='positioner'],
+    [data-scope='color-picker'][data-part='root'],
+    [data-scope='color-picker'][data-part='positioner']
+  )[data-size='md'] {
+    --manti-size-text: var(--manti-text-sm);
+    --manti-size-text-sub: var(--manti-text-xs);
+    --manti-size-icon: var(--manti-text-base);
+    --manti-size-control-height: var(--manti-control-height-md);
+    --manti-size-control-padding-x: var(--manti-space-3);
+    --manti-size-panel-padding: var(--manti-space-2);
+    --manti-size-panel-gap: var(--manti-space-1);
+    --manti-size-item-padding-y: var(--manti-space-2);
+    --manti-size-item-padding-x: var(--manti-space-3);
+    --manti-size-item-gap: var(--manti-space-2);
+    --manti-size-item-radius: var(--manti-radius-sm);
+    --manti-size-cell: var(--manti-control-height-md);
+  }
+
+  :where(
+    [data-scope='field'][data-part='control'],
+    [data-scope='select'][data-part='root'],
+    [data-scope='select'][data-part='positioner'],
+    [data-scope='combobox'][data-part='root'],
+    [data-scope='combobox'][data-part='positioner'],
+    [data-scope='menu'][data-part='positioner'],
+    [data-scope='listbox'][data-part='root'],
+    [data-scope='date-picker'][data-part='root'],
+    [data-scope='date-picker'][data-part='positioner'],
+    [data-scope='time-picker'][data-part='root'],
+    [data-scope='time-picker'][data-part='positioner'],
+    [data-scope='color-picker'][data-part='root'],
+    [data-scope='color-picker'][data-part='positioner']
+  )[data-size='lg'] {
+    --manti-size-text: var(--manti-text-base);
+    --manti-size-text-sub: var(--manti-text-sm);
+    --manti-size-icon: calc(var(--manti-text-base) * 1.25);
+    --manti-size-control-height: var(--manti-control-height-lg);
+    --manti-size-control-padding-x: var(--manti-space-4);
+    --manti-size-panel-padding: var(--manti-space-2);
+    --manti-size-panel-gap: var(--manti-space-1);
+    --manti-size-item-padding-y: var(--manti-space-3);
+    --manti-size-item-padding-x: var(--manti-space-4);
+    --manti-size-item-gap: var(--manti-space-2);
+    --manti-size-item-radius: var(--manti-radius-sm);
+    --manti-size-cell: var(--manti-control-height-lg);
+  }
+}

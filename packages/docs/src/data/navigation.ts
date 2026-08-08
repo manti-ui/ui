@@ -81,6 +81,13 @@ export const navGroups: NavGroup[] = GROUP_ORDER.map((label) => {
 /** Flattened, in-order list of every sidebar page (for prev/next if needed). */
 export const flatNav: NavItem[] = navGroups.flatMap((group) => group.items);
 
+/**
+ * The Theme Studio: its own app on its own subdomain (repo: manti-ui/studio).
+ * It is not a docs route, so it sits with the outbound links on the right of
+ * the header rather than in `primaryNav`.
+ */
+export const STUDIO_URL = 'https://studio.manti.design';
+
 /** Condensed primary links shown in the top navigation bar. */
 export const primaryNav: NavItem[] = [
   { slug: '/getting-started', title: 'Getting Started' },
@@ -95,7 +102,11 @@ export const MANTI_VERSION = __MANTI_VERSION__;
 /** Release-notes page for the current version (target of the header badge). */
 export const LATEST_CHANGELOG_SLUG = `/changelog/v${MANTI_VERSION}`;
 
-export const GITHUB_URL = 'https://github.com/manti-ui/ui';
+/** `owner/name` of the public repository. */
+export const GITHUB_REPO = 'manti-ui/ui';
+export const GITHUB_URL = `https://github.com/${GITHUB_REPO}`;
+/** Unauthenticated repo endpoint — read client-side for the star count. */
+export const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}`;
 // Storybook ships in the same Netlify deploy, served at the /storybook subpath.
 // Trailing slash is required so Storybook's relative asset URLs resolve under it.
 export const STORYBOOK_URL = '/storybook/';

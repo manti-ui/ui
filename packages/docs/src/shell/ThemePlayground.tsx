@@ -6,12 +6,16 @@ import { Button, ColorPicker, SegmentedControl } from '@manti-ui/react';
  * whole docs page re-skins live. Each picked base color is expanded into the full
  * `--variant-*` role vocabulary (solid/soft/border/text/ring, theme-aware via
  * `light-dark()` + `color-mix()`) and injected as an UNLAYERED override, which
- * beats the layered `@layer manti.tokens` defaults — the same escape hatch a
- * real consumer uses. Radius needs no injection at all: `data-radius` on the
- * root element is the shipped preset API. Choices persist in localStorage.
+ * beats the layered `@layer manti.tokens` defaults, the same escape hatch a real
+ * consumer uses. Radius needs no injection at all: `data-radius` on the root
+ * element is the shipped preset API. Choices persist in localStorage.
+ *
+ * This is the quick pass over the two colors most themes start from; the Theme
+ * Studio card below it is the full instrument (every variant, typography, and a
+ * copyable stylesheet).
  */
 
-type VariantKey = 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger';
+type VariantKey = 'primary' | 'secondary';
 
 /** Mirrors `radiusModes` in `@manti-ui/tokens`. */
 type RadiusMode = 'none' | 'sharp' | 'default' | 'round';
@@ -23,20 +27,14 @@ const RADIUS_MODES: { value: RadiusMode; label: string }[] = [
   { value: 'round', label: 'Round' },
 ];
 
-const SWATCHES: { key: VariantKey; label: string; fallback: string }[] = [
-  { key: 'primary', label: 'Primary', fallback: '#e2681c' },
-  { key: 'secondary', label: 'Secondary', fallback: '#6b7280' },
-  { key: 'tertiary', label: 'Tertiary', fallback: '#9ca3af' },
-  { key: 'success', label: 'Success', fallback: '#16a34a' },
-  { key: 'danger', label: 'Danger', fallback: '#dc2626' },
+const SWATCHES: { key: VariantKey; label: string }[] = [
+  { key: 'primary', label: 'Primary' },
+  { key: 'secondary', label: 'Secondary' },
 ];
 
 const DEFAULTS: Record<VariantKey, string> = {
   primary: '#e2681c',
   secondary: '#6b7280',
-  tertiary: '#9ca3af',
-  success: '#16a34a',
-  danger: '#dc2626',
 };
 
 const STORAGE_KEY = 'manti-docs-palette';
@@ -123,13 +121,7 @@ type State = {
 
 const INITIAL: State = {
   colors: { ...DEFAULTS },
-  active: {
-    primary: false,
-    secondary: false,
-    tertiary: false,
-    success: false,
-    danger: false,
-  },
+  active: { primary: false, secondary: false },
   radius: 'default',
 };
 
@@ -142,9 +134,10 @@ function load(): State {
     if (!raw) return INITIAL;
     const saved = JSON.parse(raw) as Partial<State>;
     return {
+      // Payloads persisted by earlier passes may carry variants this panel no
+      // longer offers; only the keys in DEFAULTS are ever read back.
       colors: { ...DEFAULTS, ...saved.colors },
       active: { ...INITIAL.active, ...saved.active },
-      // Older persisted payloads predate the radius picker.
       radius: isRadiusMode(saved.radius) ? saved.radius : INITIAL.radius,
     };
   } catch {
@@ -163,7 +156,7 @@ export function ThemePlayground() {
   // Apply + persist on every change.
   useEffect(() => {
     applyCss(buildCss(state.colors, state.active));
-    // `data-radius` is the shipped preset API — set the attribute and every
+    // `data-radius` is the shipped preset API: set the attribute and every
     // component inside re-rounds itself; no override stylesheet involved.
     document.documentElement.dataset.radius = state.radius;
     try {
@@ -193,7 +186,7 @@ export function ThemePlayground() {
   return (
     <section className="docs-theme-playground" aria-label="Palette playground">
       <div className="docs-theme-playground-header">
-        <p className="docs-toc-label">Try your palette</p>
+        <p className="docs-toc-label">Make it yours</p>
         <Button
           variant="tertiary"
           size="sm"
@@ -206,16 +199,13 @@ export function ThemePlayground() {
           <ResetIcon />
         </Button>
       </div>
-      <p className="docs-theme-playground-hint">
-        Map your own colors onto Manti’s variants and preview the whole page
-        live.
-      </p>
+      <p className="docs-theme-group-label">Basic</p>
       <ul className="docs-theme-swatches">
         {SWATCHES.map((s) => (
           <li key={s.key} className="docs-theme-swatch">
             <ColorPicker
               label={s.label}
-              value={state.colors[s.key] ?? s.fallback}
+              value={state.colors[s.key]}
               showValueText={false}
               onValueChange={(value) => setColor(s.key, value)}
             />
@@ -224,11 +214,9 @@ export function ThemePlayground() {
       </ul>
 
       <div className="docs-theme-radius">
-        <p className="docs-toc-label">Radius</p>
-        <p className="docs-theme-playground-hint">
-          Each preset is one value of <code>--manti-radius-factor</code>, which
-          rescales the whole ramp proportionally.
-        </p>
+        {/* A row of the Basic group, so it is labelled like the color rows
+            above it rather than as a group of its own. */}
+        <p className="docs-theme-radius-label">Radius</p>
         {/* The picker is itself a control-class component, so it re-rounds along
             with the page it is retuning. */}
         <SegmentedControl

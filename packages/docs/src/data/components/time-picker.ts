@@ -15,6 +15,13 @@ export const meta: ComponentMeta = {
       description: 'Selection-highlight variant for the active cells.',
     },
     {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description:
+        'Control size. The portalled panel follows it, down to the hour and minute cells.',
+    },
+    {
       name: 'defaultValue',
       type: 'string',
       description: 'Initial value as "HH:mm" (24-hour).',

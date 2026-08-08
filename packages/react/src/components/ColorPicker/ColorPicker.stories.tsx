@@ -11,6 +11,9 @@ const meta = {
     label: 'Accent color',
     defaultValue: '#7c3aed',
   },
+  argTypes: {
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+  },
 } satisfies Meta<typeof ColorPicker>;
 
 export default meta;

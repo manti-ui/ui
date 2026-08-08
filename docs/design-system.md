@@ -68,6 +68,7 @@ Key controls:
 ```css
 --manti-panel-tint
 --manti-panel-tint-strong
+--manti-panel-tint-pressed
 --manti-panel-border
 --manti-panel-blur
 ```

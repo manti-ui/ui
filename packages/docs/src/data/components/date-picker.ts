@@ -15,6 +15,13 @@ export const meta: ComponentMeta = {
       description: 'Selection-highlight variant.',
     },
     {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description:
+        'Control size. The portalled calendar follows it, down to the day cells.',
+    },
+    {
       name: 'selectionMode',
       type: `'single' | 'multiple' | 'range'`,
       default: `'single'`,

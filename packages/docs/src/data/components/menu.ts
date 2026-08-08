@@ -34,6 +34,13 @@ export const meta: ComponentMeta = {
         'Placement relative to the trigger. `bottom-center` is an explicit alias for the centered `bottom` placement.',
     },
     {
+      name: 'size',
+      type: `'sm' | 'md' | 'lg'`,
+      default: `'md'`,
+      description:
+        'Row rhythm of the panel: type, padding, and icon size. Submenus inherit it.',
+    },
+    {
       name: 'onSelect',
       type: '(value: string) => void',
       description: 'Called with the value of the selected command.',

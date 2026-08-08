@@ -1,6 +1,6 @@
 /**
- * Popover — backed by the Zag.js popover machine. A translucent panel anchored to
- * its trigger, with an optional arrow. Fades and lifts in on open.
+ * Popover — backed by the Zag.js popover machine. A translucent, arrowless panel
+ * anchored to its trigger. Fades and lifts in on open.
  */
 @layer manti.components {
   [data-scope='popover'][data-part='positioner'] {
@@ -61,11 +61,6 @@
     color: var(--manti-text-muted);
   }
 
-  [data-scope='popover'][data-part='arrow'] {
-    --arrow-size: 8px;
-    --arrow-background: var(--manti-panel-tint-strong);
-  }
-
   [data-scope='popover'][data-part='close-trigger'] {
     position: absolute;
     top: var(--manti-space-2);
@@ -87,6 +82,11 @@
 
     &:hover {
       background: var(--manti-fill);
+      color: var(--manti-text);
+    }
+
+    &:active {
+      background: var(--manti-fill-strong);
       color: var(--manti-text);
     }
 

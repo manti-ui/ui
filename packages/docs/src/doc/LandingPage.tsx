@@ -11,7 +11,7 @@ import {
 } from '@manti-ui/react';
 import type { MantiBuiltinVariant, MantiRadiusMode } from '@manti-ui/tokens';
 
-import { MANTI_VERSION } from '../data/navigation';
+import { MANTI_VERSION, STUDIO_URL } from '../data/navigation';
 import { ReactIcon, SolidIcon, SvelteIcon, VueIcon } from './framework-icons';
 import { LinkButton } from './LinkButton';
 
@@ -91,18 +91,15 @@ function FrameworkSupport() {
 function ProductPreview({
   theme = 'primary',
   radius,
-  compact = false,
 }: {
   theme?: PreviewTheme;
   radius?: MantiRadiusMode;
-  compact?: boolean;
 }) {
   return (
     <div
       className="docs-product-preview"
       data-variant={theme}
       data-radius={radius}
-      data-compact={compact || undefined}
     >
       <div className="docs-preview-toolbar">
         <span className="docs-preview-mark">
@@ -210,23 +207,30 @@ function ProductPreview({
   );
 }
 
-function ThemeLab() {
-  const [theme, setTheme] = useState<PreviewTheme>('primary');
-  const [radius, setRadius] = useState<MantiRadiusMode>('default');
-
+function PreviewCustomizer({
+  theme,
+  radius,
+  onThemeChange,
+  onRadiusChange,
+}: {
+  theme: PreviewTheme;
+  radius: MantiRadiusMode;
+  onThemeChange: (theme: PreviewTheme) => void;
+  onRadiusChange: (radius: MantiRadiusMode) => void;
+}) {
   return (
-    <section
-      className="docs-landing-section docs-theme-lab"
-      aria-labelledby="theme-lab-title"
+    <div
+      className="docs-hero-customizer"
+      role="group"
+      aria-label="Customize the preview"
     >
-      <div className="docs-theme-lab-copy">
-        <span className="docs-landing-kicker">Adapt without forks</span>
-        <h2 id="theme-lab-title">One system. Your signature.</h2>
-        <p>
-          Semantic variants and shared shape channels let an entire interface
-          change character without rewriting a component.
-        </p>
-
+      <div className="docs-hero-customizer-header">
+        <span className="docs-eyebrow">Adapt the preview</span>
+        <LinkButton to={STUDIO_URL} variant="secondary" size="sm" external>
+          Open Theme Studio
+        </LinkButton>
+      </div>
+      <div className="docs-hero-customizer-controls">
         <fieldset className="docs-theme-control">
           <legend>Theme</legend>
           <div className="docs-theme-options">
@@ -238,7 +242,7 @@ function ThemeLab() {
                 data-active={theme === option.value || undefined}
                 data-theme-option={option.value}
                 aria-pressed={theme === option.value}
-                onClick={() => setTheme(option.value)}
+                onClick={() => onThemeChange(option.value)}
               >
                 <span aria-hidden="true" />
                 {option.label}
@@ -257,7 +261,7 @@ function ThemeLab() {
                 className="docs-theme-option"
                 data-active={radius === option.value || undefined}
                 aria-pressed={radius === option.value}
-                onClick={() => setRadius(option.value)}
+                onClick={() => onRadiusChange(option.value)}
               >
                 {option.label}
               </button>
@@ -265,15 +269,14 @@ function ThemeLab() {
           </div>
         </fieldset>
       </div>
-
-      <div className="docs-theme-stage">
-        <ProductPreview theme={theme} radius={radius} compact />
-      </div>
-    </section>
+    </div>
   );
 }
 
 export function LandingPage() {
+  const [theme, setTheme] = useState<PreviewTheme>('primary');
+  const [radius, setRadius] = useState<MantiRadiusMode>('default');
+
   return (
     <div className="docs-landing">
       <section className="docs-landing-hero" aria-labelledby="landing-title">
@@ -317,9 +320,9 @@ export function LandingPage() {
           <FrameworkSupport />
         </div>
 
-        <div className="docs-hero-stage">
+        <div className="docs-hero-stage" data-variant={theme}>
           <div className="docs-preview-scene">
-            <ProductPreview />
+            <ProductPreview theme={theme} radius={radius} />
             <div className="docs-floating-note docs-floating-note-top">
               <span>⌘ K</span>
               Search everything
@@ -329,6 +332,12 @@ export function LandingPage() {
               Accessible by default
             </div>
           </div>
+          <PreviewCustomizer
+            theme={theme}
+            radius={radius}
+            onThemeChange={setTheme}
+            onRadiusChange={setRadius}
+          />
         </div>
       </section>
 
@@ -351,42 +360,42 @@ export function LandingPage() {
         </div>
       </section>
 
-      <ThemeLab />
-
       <section
         className="docs-landing-section docs-architecture"
         aria-labelledby="architecture-title"
       >
         <div className="docs-landing-section-heading">
-          <span className="docs-landing-kicker">Built in layers</span>
-          <h2 id="architecture-title">
-            Own the surface. Reuse the hard parts.
-          </h2>
+          <span className="docs-landing-kicker">Three-tier token system</span>
+          <h2 id="architecture-title">From raw values to public contracts.</h2>
           <p>
-            Each layer has one job, so future renderers can share the same
-            behavior and visual contract.
+            Each decision gains meaning as it moves through the system, while
+            every renderer consumes the same visual language.
           </p>
         </div>
         <ol className="docs-architecture-flow">
           <li>
-            <span>01</span>
-            <strong>Tokens</strong>
-            <p>Typed visual decisions</p>
+            <span className="docs-architecture-step">01</span>
+            <div className="docs-architecture-visual" aria-hidden="true">
+              <img src="/mantı-r1.svg" alt="" />
+            </div>
+            <strong>Primitive tokens</strong>
+            <p>Raw scales for color, space, type, radius, and motion.</p>
           </li>
           <li>
-            <span>02</span>
-            <strong>Styles</strong>
-            <p>Stable public anatomy</p>
+            <span className="docs-architecture-step">02</span>
+            <div className="docs-architecture-visual" aria-hidden="true">
+              <img src="/mantı-r2.svg" alt="" />
+            </div>
+            <strong>Semantic tokens</strong>
+            <p>Theme-aware roles that describe intent instead of values.</p>
           </li>
           <li>
-            <span>03</span>
-            <strong>Folds</strong>
-            <p>Framework-free behavior</p>
-          </li>
-          <li>
-            <span>04</span>
-            <strong>Renderers</strong>
-            <p>Thin, accessible adapters</p>
+            <span className="docs-architecture-step">03</span>
+            <div className="docs-architecture-visual" aria-hidden="true">
+              <img src="/mantı-r3.svg" alt="" />
+            </div>
+            <strong>Component tokens</strong>
+            <p>Stable public contracts for adapting each component.</p>
           </li>
         </ol>
       </section>

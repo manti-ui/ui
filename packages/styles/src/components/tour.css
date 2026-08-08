@@ -85,7 +85,16 @@
 
   [data-scope='tour'][data-part='arrow'] {
     --arrow-size: 0.625rem;
-    --arrow-background: var(--manti-surface-raised);
+    /* The card is the translucent panel material, so the notch is too — an
+       opaque `surface-raised` tip read as a lighter patch stuck to its edge. */
+    --arrow-background: var(--manti-panel-tint-strong);
+  }
+
+  /* Same hairline as the card, on the tip's two outward edges. See tooltip.css
+     for why the top and left borders are the ones that face out. */
+  [data-scope='tour'][data-part='arrow-tip'] {
+    border-top: 1px solid var(--manti-panel-border);
+    border-left: 1px solid var(--manti-panel-border);
   }
 
   [data-scope='tour'][data-part='close-trigger'] {
@@ -95,10 +104,23 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: var(--manti-space-1);
+    margin: calc(var(--manti-space-1) * -1);
+    border-radius: var(--manti-radius-sm);
     color: var(--manti-text-muted);
     cursor: pointer;
+    transition:
+      color var(--manti-duration-fast) var(--manti-ease-soft),
+      background var(--manti-duration-fast) var(--manti-ease-soft);
 
     &:hover {
+      color: var(--manti-text);
+    }
+
+    /* Pressed — the neutral wash's `active` rung, matching every other close
+       trigger in the system. */
+    &:active {
+      background: var(--manti-fill-strong);
       color: var(--manti-text);
     }
   }
@@ -124,10 +146,18 @@
       color: var(--variant-text);
       background: none;
 
+      &:active {
+        background: var(--variant-fill-strong);
+      }
+
       &:last-child {
         background: var(--variant-solid);
         border-color: transparent;
         color: var(--variant-on-solid);
+
+        &:active {
+          background: var(--variant-solid-active);
+        }
       }
 
       &:focus-visible {

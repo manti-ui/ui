@@ -38,7 +38,8 @@
       (
           var(--manti-splitter-line-size-active) -
             var(--manti-splitter-line-size)
-        ) / 2
+        ) /
+        2
     );
 
     flex: none;
@@ -86,10 +87,17 @@
        [data-focus]: after a mouse drag ends the machine keeps the trigger focused
        (POINTER_UP → focused state), so a focus-based rule would leave the handle
        stuck in the active variant. Keyboard focus is signalled by the ring below. */
-    &:hover::before,
-    &[data-dragging]::before {
+    &:hover::before {
       background: var(--variant-solid);
       outline-width: var(--_line-grow);
+    }
+
+    /* Pressed / dragging — the solid ladder's `active` rung, so grabbing the
+       handle reads a step deeper than merely pointing at it. */
+    &:active::before,
+    &[data-dragging]::before {
+      background: var(--variant-solid-active);
+      outline: var(--_line-grow) solid var(--variant-solid-active);
     }
 
     &:focus-visible {

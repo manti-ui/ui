@@ -3,15 +3,15 @@ import { Link, NavLink } from 'react-router-dom';
 import { Badge, Button, Dialog } from '@manti-ui/react';
 
 import {
-  GITHUB_URL,
   LATEST_CHANGELOG_SLUG,
   MANTI_VERSION,
-  STORYBOOK_URL,
+  STUDIO_URL,
   primaryNav,
 } from '../data/navigation';
 import { useSearch } from '../search/SearchProvider';
 import { useTheme } from '../theme/useTheme';
-import { MenuIcon, MoonIcon, SearchIcon, SunIcon } from './icons';
+import { GithubStars } from './GithubStars';
+import { ExternalIcon, MenuIcon, MoonIcon, SearchIcon, SunIcon } from './icons';
 import { SidebarNav } from './Sidebar';
 
 export function TopNav() {
@@ -60,30 +60,27 @@ export function TopNav() {
           onClick={() => setOpen(true)}
         >
           Search
-          <kbd
-            className="docs-search-shortcut"
-            aria-label="Command K"
-          >
+          <kbd className="docs-search-shortcut" aria-label="Command K">
             <span aria-hidden="true">⌘</span>
             <span aria-hidden="true">K</span>
           </kbd>
         </Button>
-        <a
-          href={STORYBOOK_URL}
+        {/* The Theme Studio is a separate app on its own subdomain, so this is
+            a real anchor. Handing it to the router would resolve it as a docs
+            route and 404. */}
+        <Button
+          as="a"
+          href={STUDIO_URL}
           target="_blank"
           rel="noreferrer"
-          className="docs-nav-link"
+          variant="tertiary"
+          size="sm"
+          trailingIcon={ExternalIcon}
+          className="docs-nav-outbound"
         >
-          Storybook
-        </a>
-        <a
-          href={GITHUB_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="docs-nav-link"
-        >
-          GitHub
-        </a>
+          Studio
+        </Button>
+        <GithubStars />
         <Button
           iconOnly
           variant="tertiary"

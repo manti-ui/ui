@@ -4,6 +4,14 @@
  * the Select/Listbox anatomy.
  */
 @layer manti.components {
+  /* The control lives in the root and the listbox in the portalled positioner,
+     so anything both sides need is declared on both: the adapter stamps the
+     same `data-size` on each, and the size channel resolves independently. */
+  [data-scope='combobox']:is([data-part='root'], [data-part='positioner']) {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-combobox-icon-size: var(--manti-size-icon, var(--manti-text-base));
+  }
+
   [data-scope='combobox'][data-part='root'] {
     display: flex;
     flex-direction: column;
@@ -19,12 +27,19 @@
 
   [data-scope='combobox'][data-part='control'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
-    --manti-combobox-height: var(--manti-control-height-md);
+    --manti-combobox-height: var(
+      --manti-size-control-height,
+      var(--manti-control-height-md)
+    );
+    --manti-combobox-padding-x: var(
+      --manti-size-control-padding-x,
+      var(--manti-space-3)
+    );
 
     display: flex;
     align-items: center;
     min-height: var(--manti-combobox-height);
-    padding-inline: var(--manti-space-3);
+    padding-inline: var(--manti-combobox-padding-x);
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
     /* Control class — joins the opt-in pill channel. */
@@ -33,6 +48,11 @@
 
     &:hover {
       border-color: var(--manti-border-strong);
+    }
+
+    /* Input-like control: the primary color starts at active/focus/open. */
+    &:active {
+      border-color: var(--variant-ring);
     }
 
     &:focus-within {
@@ -58,16 +78,6 @@
     }
   }
 
-  [data-scope='combobox'][data-part='root'][data-size='sm']
-    [data-part='control'] {
-    --manti-combobox-height: var(--manti-control-height-sm);
-  }
-
-  [data-scope='combobox'][data-part='root'][data-size='lg']
-    [data-part='control'] {
-    --manti-combobox-height: var(--manti-control-height-lg);
-  }
-
   [data-scope='combobox'][data-part='root'][data-invalid]
     [data-part='control'] {
     border-color: var(--manti-danger-border);
@@ -81,6 +91,11 @@
     &:hover {
       background: var(--manti-fill-strong);
       border-color: transparent;
+    }
+
+    &:active {
+      background: var(--manti-fill-strong);
+      border-color: var(--variant-ring);
     }
 
     &:focus-within {
@@ -115,7 +130,7 @@
     border: none;
     outline: none;
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-size-text, var(--manti-text-sm));
 
     &::placeholder {
       color: var(--manti-text-subtle);
@@ -152,14 +167,22 @@
     justify-content: center;
     padding: 0;
     border: none;
+    border-radius: var(--manti-radius-xs);
     background: none;
     color: currentcolor;
     opacity: 0.7;
     cursor: pointer;
-    transition: opacity var(--manti-duration-fast) var(--manti-ease-smooth);
+    transition:
+      opacity var(--manti-duration-fast) var(--manti-ease-smooth),
+      background var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
       opacity: 1;
+    }
+
+    &:active {
+      opacity: 1;
+      background: var(--manti-fill-strong);
     }
   }
 
@@ -176,6 +199,23 @@
     &:hover {
       color: var(--manti-text);
     }
+
+    /* An icon-only affordance has no surface to tint, so the press is carried
+       by the variant's own ink instead of a neutral wash. */
+    &:active {
+      color: var(--variant-text);
+    }
+  }
+
+  /* The toggle chevron and the row check are inline SVGs with intrinsic 16px
+     attributes; the size channel overrides both so they track their row. */
+  [data-scope='combobox']:is(
+      [data-part='trigger'],
+      [data-part='item-indicator']
+    )
+    > svg {
+    width: var(--manti-combobox-icon-size);
+    height: var(--manti-combobox-icon-size);
   }
 
   [data-scope='combobox'][data-part='positioner'] {
@@ -236,10 +276,20 @@
   }
 
   [data-scope='combobox'][data-part='content'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-combobox-content-padding: var(
+      --manti-size-panel-padding,
+      var(--manti-space-2)
+    );
+    --manti-combobox-content-gap: var(
+      --manti-size-panel-gap,
+      var(--manti-space-1)
+    );
+
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-1);
-    padding: var(--manti-space-2);
+    gap: var(--manti-combobox-content-gap);
+    padding: var(--manti-combobox-content-padding);
 
     &:focus-visible {
       outline: none;
@@ -247,14 +297,34 @@
   }
 
   [data-scope='combobox'][data-part='item'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-combobox-item-padding-y: var(
+      --manti-size-item-padding-y,
+      var(--manti-space-2)
+    );
+    --manti-combobox-item-padding-x: var(
+      --manti-size-item-padding-x,
+      var(--manti-space-3)
+    );
+    --manti-combobox-item-gap: var(--manti-size-item-gap, var(--manti-space-2));
+    --manti-combobox-item-radius: var(
+      --manti-size-item-radius,
+      var(--manti-radius-sm)
+    );
+    --manti-combobox-item-font-size: var(
+      --manti-size-text,
+      var(--manti-text-sm)
+    );
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--manti-space-2);
-    padding: var(--manti-space-2) var(--manti-space-3);
-    border-radius: var(--manti-radius-sm);
+    gap: var(--manti-combobox-item-gap);
+    padding: var(--manti-combobox-item-padding-y)
+      var(--manti-combobox-item-padding-x);
+    border-radius: var(--manti-combobox-item-radius);
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-combobox-item-font-size);
     line-height: var(--manti-leading-snug);
     user-select: none;
     transition:
@@ -265,6 +335,11 @@
       background: var(--variant-fill);
     }
 
+    /* Pressed — the `active` rung of the variant wash ladder. */
+    &:active {
+      background: var(--variant-fill-strong);
+    }
+
     &[data-state='checked'] {
       background: var(--variant-fill-strong);
       font-weight: var(--manti-weight-medium);
@@ -272,6 +347,10 @@
 
     &[data-state='checked'][data-highlighted] {
       background: var(--variant-fill-strong);
+    }
+
+    &[data-state='checked']:active {
+      background: var(--variant-soft-bg-active);
     }
 
     &[data-disabled] {

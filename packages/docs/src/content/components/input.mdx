@@ -20,6 +20,12 @@ Both slots share the control's focus, invalid, filled, and disabled states. This
 makes them suitable for units, currency symbols, icons, badges, shortcuts, or
 small actions.
 
+Spacing follows the kind of content. A text slot reads as part of the value and
+keeps the control's `padding-x`. Anything else is an element that paints its own
+box, so the control hands that side's padding to the slot, which insets it by
+`--manti-field-addon-padding-x` instead. Buttons, icons, and shortcut keys land
+near the frame edge without stacking two paddings.
+
 Give icon-only interactive content its own accessible label. `left` and `right`
 replace the deprecated `leadingAddon` and `trailingAddon` names; the old props
 remain available for backwards compatibility.

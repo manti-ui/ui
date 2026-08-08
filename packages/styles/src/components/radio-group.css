@@ -69,6 +69,20 @@
     }
   }
 
+  /* Pressed. The press lands on the item (label included), so the state is
+     routed down to the dot — the only part with a surface. */
+  [data-scope='radio-group'][data-part='item']:active:not([data-disabled])
+    [data-part='item-control'] {
+    background: var(--manti-fill-strong);
+    border-color: var(--manti-border-strong);
+  }
+
+  [data-scope='radio-group'][data-part='item']:active:not([data-disabled])
+    [data-part='item-control'][data-state='checked'] {
+    background: var(--variant-solid-active);
+    border-color: var(--variant-solid-active);
+  }
+
   [data-scope='radio-group'][data-part='item']:has(input:focus-visible)
     [data-part='item-control'] {
     outline: var(--manti-focus-ring-width) solid var(--variant-ring);

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import type { TocEntry } from '../types';
 import { ThemePlayground } from './ThemePlayground';
+import { ThemeStudioCard } from './ThemeStudioCard';
 
 interface FlatTocItem {
   id: string;
@@ -72,6 +73,7 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
         </nav>
       )}
       <ThemePlayground />
+      <ThemeStudioCard />
     </aside>
   );
 }

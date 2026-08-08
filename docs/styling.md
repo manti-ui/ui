@@ -94,6 +94,29 @@ Use a component token only when that component should diverge:
 The complete list is generated in
 [component-tokens.md](./component-tokens.md).
 
+## The size channel
+
+`sm | md | lg` is one shared rhythm rather than a per-component invention: a
+control and the surface it opens read at the same size. `data-size` resolves the
+`--manti-size-*` channel (`packages/styles/src/size.css`), and every sizing
+component token defaults to one of its values.
+
+Popups are portalled out of their control, so nothing inherits through the DOM:
+the adapter re-stamps `data-size` on the positioner, which is why a `sm` Select
+opens a `sm` listbox and a `lg` Menu lays out `lg` rows.
+
+Retune a step for the whole system:
+
+```css
+[data-size='sm'] {
+  --manti-size-item-padding-y: 0.125rem;
+}
+```
+
+The channel carries `text`, `text-sub`, `icon`, `control-height`,
+`control-padding-x`, `panel-padding`, `panel-gap`, `item-padding-y`,
+`item-padding-x`, `item-gap`, `item-radius`, and `cell`.
+
 ## Variants
 
 Variant-driven components read the same roles:
@@ -105,6 +128,7 @@ Variant-driven components read the same roles:
 --variant-on-solid
 --variant-soft-bg
 --variant-soft-bg-hover
+--variant-soft-bg-active
 --variant-soft-text
 --variant-border
 --variant-text
@@ -121,6 +145,7 @@ Define these roles to add a custom variant:
   --variant-on-solid: var(--manti-text-on-accent);
   --variant-soft-bg: var(--manti-blue-2);
   --variant-soft-bg-hover: var(--manti-blue-3);
+  --variant-soft-bg-active: var(--manti-blue-4);
   --variant-soft-text: var(--manti-blue-9);
   --variant-border: var(--manti-blue-7);
   --variant-text: var(--manti-blue-9);

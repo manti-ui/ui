@@ -111,25 +111,35 @@
     display: inline-flex;
     align-items: center;
     gap: var(--manti-space-1);
-    margin: 0;
-    padding: 0;
+    /* Padded and pulled back by the same step, so the press wash and the focus
+       ring get a box to sit in without moving the header text. */
+    margin: calc(var(--manti-space-1) * -1);
+    padding: var(--manti-space-1);
     background: none;
     border: none;
+    border-radius: var(--manti-radius-xs);
     color: inherit;
     font: inherit;
     letter-spacing: inherit;
     text-align: inherit;
     cursor: pointer;
-    transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
+    transition:
+      background var(--manti-duration-fast) var(--manti-ease-smooth),
+      color var(--manti-duration-fast) var(--manti-ease-smooth);
 
     &:hover {
+      color: var(--manti-text);
+    }
+
+    /* Pressed — the neutral wash's `active` rung. */
+    &:active {
+      background: var(--manti-fill-strong);
       color: var(--manti-text);
     }
 
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
       outline-offset: var(--manti-focus-ring-offset);
-      border-radius: var(--manti-radius-xs);
     }
   }
 
@@ -188,10 +198,25 @@
     background: var(--manti-fill);
   }
 
+  /* Pressed — one rung past hover on the neutral wash ladder. */
+  [data-scope='data-table'][data-part='root'][data-interactive='true']
+    [data-part='row']:active:not([data-selected='true'])
+    [data-part='cell'] {
+    background: var(--manti-fill-strong);
+  }
+
   /* Selected rows — a stronger, exclusive tint (see :not() guards above). */
   [data-scope='data-table'][data-part='row'][data-selected='true']
     [data-part='cell'] {
     background: var(--manti-fill-strong);
+  }
+
+  /* A selected row is already at `fill-strong`, so its press borrows the
+     variant's soft `active` rung to stay legible. */
+  [data-scope='data-table'][data-part='root'][data-interactive='true']
+    [data-part='row'][data-selected='true']:active
+    [data-part='cell'] {
+    background: var(--variant-soft-bg-active, var(--manti-fill-strong));
   }
 
   [data-scope='data-table'][data-part='empty'] {

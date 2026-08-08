@@ -46,6 +46,9 @@ const meta = {
     items,
     children: <Region />,
   },
+  argTypes: {
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+  },
 } satisfies Meta<typeof ContextMenu>;
 
 export default meta;
