@@ -1,0 +1,110 @@
+---
+title: v0.10.0
+slug: /changelog/v0.10.0
+group: Changelog
+order: 1
+date: '2026-08-19'
+description: Text and Heading put the type scale behind a component API, tracking becomes a token, Switch drops its variant prop, and Foundations moves to a hub page.
+---
+
+# v0.10.0
+
+_Released 2026-08-19._
+
+## Text and Heading
+
+The Typography category shipped only Blockquote, Code, and Kbd, so body copy and
+titles had no component at all. Anyone laying out text rebuilt the scale by
+hand, this documentation site included: its stylesheet redeclared the heading
+sizes and their tracking, and the only way to reach `--manti-text-muted` was an
+inline style.
+
+Both components now render real semantics from the shared scale. Text is a `<p>`
+unless `as` says otherwise; Heading is a real `h1`–`h6`.
+
+```tsx
+<Heading level={2}>Design tokens are mandatory</Heading>
+<Text emphasis="muted">
+  Every visual value comes from the token contract.
+</Text>
+```
+
+### Size carries the weight
+
+`size` takes a scale stop and, optionally, a weight after a slash:
+
+```tsx
+<Text size="lg" />          // stop only
+<Text size="lg/semibold" /> // stop and weight
+```
+
+The two forms are not equivalent. Writing the stop alone emits no weight
+attribute at all, which leaves the decision to CSS. A consumer who decides that
+`lg` means semibold in _their_ system says so once, rather than repeating it at
+every call site:
+
+```css
+[data-scope='text'][data-part='root'][data-size='lg'] {
+  --manti-text-weight: var(--manti-weight-semibold);
+}
+```
+
+Spelling out `lg/regular` overrides that again locally.
+
+### Rank and size stay independent
+
+Heading's `level` picks the element and a default stop; `size` overrides the
+stop without touching the element. A section can stay an `h2` for the document
+outline while laying out small, and a hero can be an `h1` at display size,
+without anyone reaching for a styled `<div>`.
+
+```tsx
+<Heading level={1} size="5xl">Hero</Heading>
+<Heading level={2} size="sm" emphasis="muted">Eyebrow</Heading>
+```
+
+Leaving the weight off keeps the stylesheet's default, which is bold at
+`level={1}` and semibold elsewhere.
+
+### Two color axes
+
+`emphasis` walks the neutral ladder (`default`, `muted`, `subtle`, mapping to
+`--manti-text` and its two quieter roles) and answers how loud a line is.
+`variant` is the separate semantic axis on `--variant-text`. They are
+independent, so "quiet but red" is expressible; `variant` wins when both are
+set.
+
+Text also carries `align`, `truncate`, and `lineClamp`.
+
+## Tracking is a token
+
+Optical letter-spacing had no token, so the literals were scattered: `-0.01em`
+on the docs headings, `0.02em`, `0.04em`, and `0.06em` on small label text
+across six component stylesheets. The contract gains a `letterSpacing` ramp,
+generated into `--manti-tracking-tighter | tight | normal | wide | wider |
+widest` and bound into the Tailwind bridge as `--tracking-*`.
+
+The stops are exactly the values already in use, so nothing moves visually. Text
+and Heading step through them automatically as `size` grows, since body tracking
+on a display size reads as loose.
+
+## Switch drops its variant
+
+**Breaking:** `Switch` no longer accepts `variant`. A switch reports one
+boolean, so recoloring the on-state per call site said nothing the control did
+not already say, and every usage had settled on the default anyway. The checked
+track now always uses the primary channel. To recolor it, override the switch
+component tokens in CSS.
+
+## Foundations moves to a hub page
+
+Foundations was a sidebar section competing with Components for the same
+vertical space while holding five mostly-read-once pages. It is now a landing
+grid reached from the top nav, leaving the sidebar to the reference material
+people navigate between.
+
+The docs also fix a long-standing leak: the prose stylesheet claimed every
+`h2`, `p`, `blockquote`, and `code` on the page, and it sits in a later cascade
+layer than the Manti component styles. Headings rendered inside a demo picked up
+the prose section divider, and Blockquote and Code were being silently
+overridden. Those rules now exclude component roots.
