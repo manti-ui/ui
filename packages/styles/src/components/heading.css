@@ -1,0 +1,124 @@
+/**
+ * Heading — the same token-backed type surface as Text, tuned for titles:
+ * semibold, tight leading, and negative tracking that grows with the size.
+ *
+ * `data-level` carries the semantic heading rank and `data-size` the visual
+ * stop; they are deliberately independent, so an <h2> can be laid out small
+ * without breaking the document outline. `data-level='1'` is the one place the
+ * rank feeds the look, matching the bold/semibold split the docs prose uses.
+ */
+@layer manti.components {
+  [data-scope='heading'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-heading-font-size: var(--manti-text-2xl);
+    --manti-heading-line-height: var(--manti-leading-tight);
+    --manti-heading-weight: var(--manti-weight-semibold);
+    --manti-heading-tracking: var(--manti-tracking-tight);
+
+    margin: var(--manti-space-0);
+    color: var(--manti-text);
+    font-family: var(--manti-font-sans);
+    font-size: var(--manti-heading-font-size);
+    font-weight: var(--manti-heading-weight);
+    line-height: var(--manti-heading-line-height);
+    letter-spacing: var(--manti-heading-tracking);
+    text-wrap: balance;
+
+    /* A top-level title carries the extra weight on its own. */
+    &[data-level='1'] {
+      --manti-heading-weight: var(--manti-weight-bold);
+    }
+
+    /* Type scale. Small stops sit at normal tracking — the optical correction
+       only earns its keep once the letterforms get large. */
+    &[data-size='xs'] {
+      --manti-heading-font-size: var(--manti-text-xs);
+      --manti-heading-tracking: var(--manti-tracking-normal);
+    }
+
+    &[data-size='sm'] {
+      --manti-heading-font-size: var(--manti-text-sm);
+      --manti-heading-tracking: var(--manti-tracking-normal);
+    }
+
+    &[data-size='base'] {
+      --manti-heading-font-size: var(--manti-text-base);
+      --manti-heading-tracking: var(--manti-tracking-normal);
+    }
+
+    &[data-size='lg'] {
+      --manti-heading-font-size: var(--manti-text-lg);
+    }
+
+    &[data-size='xl'] {
+      --manti-heading-font-size: var(--manti-text-xl);
+    }
+
+    &[data-size='2xl'] {
+      --manti-heading-font-size: var(--manti-text-2xl);
+    }
+
+    &[data-size='3xl'] {
+      --manti-heading-font-size: var(--manti-text-3xl);
+    }
+
+    &[data-size='4xl'] {
+      --manti-heading-font-size: var(--manti-text-4xl);
+      --manti-heading-tracking: var(--manti-tracking-tighter);
+    }
+
+    &[data-size='5xl'] {
+      --manti-heading-font-size: var(--manti-text-5xl);
+      --manti-heading-tracking: var(--manti-tracking-tighter);
+    }
+
+    /* Weight — an explicit prop outranks the level-1 default above. */
+    &[data-weight='regular'] {
+      --manti-heading-weight: var(--manti-weight-regular);
+    }
+
+    &[data-weight='medium'] {
+      --manti-heading-weight: var(--manti-weight-medium);
+    }
+
+    &[data-weight='semibold'] {
+      --manti-heading-weight: var(--manti-weight-semibold);
+    }
+
+    &[data-weight='bold'] {
+      --manti-heading-weight: var(--manti-weight-bold);
+    }
+
+    /* Neutral emphasis ladder. `default` is the base rule above. */
+    &[data-emphasis='muted'] {
+      color: var(--manti-text-muted);
+    }
+
+    &[data-emphasis='subtle'] {
+      color: var(--manti-text-subtle);
+    }
+
+    /* Semantic color. Declared after emphasis so it wins on a tie. */
+    &[data-variant] {
+      color: var(--variant-text);
+    }
+
+    &[data-align='start'] {
+      text-align: start;
+    }
+
+    &[data-align='center'] {
+      text-align: center;
+    }
+
+    &[data-align='end'] {
+      text-align: end;
+    }
+
+    &[data-truncate] {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}
