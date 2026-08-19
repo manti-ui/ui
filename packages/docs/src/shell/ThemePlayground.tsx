@@ -62,15 +62,77 @@ function toRgb(color: string): [number, number, number] {
     : [0, 0, 0];
 }
 
-/** Pick a legible on-solid text color (near-white or near-black) by luminance. */
-function readableOn(color: string): string {
-  const [r, g, b] = toRgb(color);
+// --- ink selection (mirrors scripts/gen-variant-ink.mjs in @manti-ui/styles) -
+// The build picks each shipped variant's `--variant-on-solid` by measurement:
+// the same two ink tokens as candidates, WCAG AA (4.5:1) as the floor, APCA Lc
+// as the tiebreak above it. A playground color must get the same ink the build
+// would generate for it, or the default and the first user tweak disagree.
+
+type Rgb = [number, number, number];
+
+const INK_TOKENS = ['var(--manti-text-on-accent)', 'var(--manti-gray-12)'];
+const AA = 4.5;
+
+let inkProbe: HTMLSpanElement | undefined;
+function resolveRgb(cssColor: string): Rgb {
+  if (!inkProbe) {
+    inkProbe = document.createElement('span');
+    inkProbe.style.display = 'none';
+    document.body.append(inkProbe);
+  }
+  inkProbe.style.color = cssColor;
+  return toRgb(getComputedStyle(inkProbe).color);
+}
+
+function luminance([r, g, b]: Rgb): number {
   const lin = (c: number) => {
     const s = c / 255;
     return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
   };
-  const L = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
-  return L > 0.5 ? '#16161a' : '#ffffff';
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+}
+
+function wcag(a: Rgb, b: Rgb): number {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+/** APCA-W3 Lc magnitude (0.0.98G 4g constants), matching colorjs.io's APCA. */
+function apca(text: Rgb, bg: Rgb): number {
+  const y = ([r, g, b]: Rgb) => {
+    let Y =
+      0.2126729 * Math.pow(r / 255, 2.4) +
+      0.7151522 * Math.pow(g / 255, 2.4) +
+      0.072175 * Math.pow(b / 255, 2.4);
+    if (Y < 0.022) Y += Math.pow(0.022 - Y, 1.414);
+    return Y;
+  };
+  const Ytxt = y(text);
+  const Ybg = y(bg);
+  const sapc =
+    Ybg > Ytxt
+      ? (Math.pow(Ybg, 0.56) - Math.pow(Ytxt, 0.57)) * 1.14
+      : (Math.pow(Ybg, 0.65) - Math.pow(Ytxt, 0.62)) * 1.14;
+  if (Math.abs(sapc) < 0.1) return 0;
+  return (Math.abs(sapc) - 0.027) * 100;
+}
+
+/**
+ * Pick `--variant-on-solid` for a custom solid. The build refuses a solid that
+ * no ink clears AA on; the playground cannot reject input, so it falls back to
+ * the higher WCAG ratio there.
+ */
+function readableOn(color: string): string {
+  const bg = toRgb(color);
+  const scored = INK_TOKENS.map((token) => {
+    const ink = resolveRgb(token);
+    return { token, ratio: wcag(ink, bg), lc: apca(ink, bg) };
+  });
+  const passing = scored.filter((s) => s.ratio >= AA);
+  const pool = passing.length ? passing : scored;
+  return pool.reduce((a, b) =>
+    (passing.length ? b.lc > a.lc : b.ratio > a.ratio) ? b : a,
+  ).token;
 }
 
 /** Expand one base color into the full `--variant-*` role vocabulary. */
