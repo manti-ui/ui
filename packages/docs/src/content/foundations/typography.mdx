@@ -3,16 +3,19 @@ title: Typography
 slug: /typography
 group: Typography
 order: 10
-description: Manti UI font families, sizes, weights, and line heights.
+description: Manti UI font families, sizes, weights, line heights, and tracking.
 ---
 
 # Typography
 
 Manti UI uses a compact UI-first type scale.
 
-The typography primitives add Manti's token-backed visual language without
-giving up native HTML semantics: [Blockquote](/typography/blockquote),
-[Code](/typography/code), and [Kbd](/typography/kbd).
+[Text](/typography/text) and [Heading](/typography/heading) put that scale
+behind a component API, with a neutral emphasis ladder and semantic color as two
+independent axes. The remaining primitives add Manti's token-backed visual
+language without giving up native HTML semantics:
+[Blockquote](/typography/blockquote), [Code](/typography/code), and
+[Kbd](/typography/kbd).
 
 ## Size
 
@@ -34,6 +37,23 @@ Available weights are `regular` (400), `medium` (500), `semibold` (600), and
 `bold` (700).
 
 <WeightScale />
+
+## Tracking
+
+Optical letter-spacing. Large type reads as loose unless it is pulled in, and
+small label-ish text reads as cramped unless it is pushed out. The stops are
+`--manti-tracking-tighter` (`-0.02em`), `tight` (`-0.01em`), `normal`, `wide`
+(`0.02em`), `wider` (`0.04em`), and `widest` (`0.06em`).
+
+Because the values are in `em`, each stop scales with whatever font size it
+lands on. Text and Heading step through them automatically as `size` grows.
+
+```css
+.hero-title {
+  font-size: var(--manti-text-5xl);
+  letter-spacing: var(--manti-tracking-tighter);
+}
+```
 
 ## Families
 

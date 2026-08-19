@@ -1,6 +1,6 @@
 # Design system
 
-Manti UI uses one visual idea: **smooth**. Surfaces are quiet, controls are
+Mantı UI uses one visual idea: **smooth**. Surfaces are quiet, controls are
 clear, and interaction never depends on decoration alone.
 
 ## Theme
@@ -95,6 +95,7 @@ Parts that are round by design use `--manti-radius-full`.
 - Type: `--manti-text-xs` through `--manti-text-5xl`
 - Weight: `--manti-weight-regular` through `--manti-weight-bold`
 - Line height: `--manti-leading-tight` through `--manti-leading-relaxed`
+- Tracking: `--manti-tracking-tighter` through `--manti-tracking-widest`
 - Spacing: `--manti-space-0` through `--manti-space-16`, based on a 4px unit
 - Control height: `--manti-control-height-sm | md | lg`
 
@@ -107,7 +108,7 @@ Set `data-motion` on any container:
 | Value     | Result                                     |
 | --------- | ------------------------------------------ |
 | `default` | Standard transitions and animations        |
-| `none`    | Decorative Manti motion is removed         |
+| `none`    | Decorative Mantı motion is removed         |
 | `full`    | More expressive spring and bounce movement |
 
 `prefers-reduced-motion: reduce` always wins. The Spinner keeps its functional
