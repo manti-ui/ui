@@ -5,7 +5,6 @@ import type {
   ReactNode,
 } from 'react';
 import { switchMachine } from '@manti-ui/folds';
-import type { MantiVariant } from '@manti-ui/tokens';
 import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props';
@@ -24,8 +23,6 @@ export type SwitchInputProps = WithDataAttributes<
 export interface SwitchProps {
   /** Control size. */
   size?: 'sm' | 'md';
-  /** Active variant when on. */
-  variant?: MantiVariant;
   /** Optional trailing label. */
   children?: ReactNode;
   /** Controlled checked state. */
@@ -58,7 +55,6 @@ export interface SwitchProps {
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
   {
     size = 'md',
-    variant = 'primary',
     children,
     className,
     id,
@@ -108,7 +104,6 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
     <label
       {...mergedRootProps}
       data-size={size}
-      data-variant={variant}
       className={cx(mergedRootProps.className, className)}
     >
       <input

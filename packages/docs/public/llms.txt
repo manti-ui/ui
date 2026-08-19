@@ -279,7 +279,7 @@ Guide: https://manti.design/guides/tailwind
 - [Slider](https://manti.design/components/slider): single or range numeric
   selection with marks.
 - [Switch](https://manti.design/components/switch): boolean form control with
-  label, size, and active variant.
+  a label and two sizes.
 - [TagsInput](https://manti.design/components/tags-input): add, edit, and remove
   text tags.
 - [Textarea](https://manti.design/components/textarea): native multiline field
@@ -344,6 +344,28 @@ Guide: https://manti.design/guides/tailwind
   with draggable custom scrollbars.
 - [Splitter](https://manti.design/components/splitter): resizable panels with
   keyboard-accessible handles.
+
+### Typography
+
+- [Text](https://manti.design/typography/text): body copy; `size` carries the
+  scale stop and optionally the weight after a slash (`"lg"` or `"lg/semibold"`),
+  plus `align`, `truncate`/`lineClamp`, and `as` for the element. Renders a
+  `<p>` by default. Omitting the weight leaves it to CSS, so a consumer can
+  redefine what a stop means for their own system.
+- [Heading](https://manti.design/typography/heading): `h1`-`h6` via `level`,
+  with `size` as an independent visual stop so the document outline and the
+  layout never have to agree. `size` takes the same optional
+  `/weight` suffix; without it the level decides (bold at 1, semibold below).
+- [Blockquote](https://manti.design/typography/blockquote): semantic
+  `<blockquote>` with a quiet leading accent.
+- [Code](https://manti.design/typography/code): token-backed inline `<code>`.
+- [Kbd](https://manti.design/typography/kbd): semantic `<kbd>` key cap; use one
+  element per key in a combination.
+
+Text and Heading share two independent color axes: `emphasis`
+(`default | muted | subtle`, the neutral ladder on `--manti-text-*`) and
+`variant` (semantic color on `--variant-text`). `variant` wins when both are set,
+so "quiet but red" is expressible.
 
 ## Shortcut hooks
 

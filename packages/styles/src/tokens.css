@@ -152,6 +152,12 @@
     --manti-weight-medium: 500;
     --manti-weight-semibold: 600;
     --manti-weight-bold: 700;
+    --manti-tracking-tighter: -0.02em;
+    --manti-tracking-tight: -0.01em;
+    --manti-tracking-normal: 0em;
+    --manti-tracking-wide: 0.02em;
+    --manti-tracking-wider: 0.04em;
+    --manti-tracking-widest: 0.06em;
 
     /* Motion */
     --manti-duration-fast: 120ms;

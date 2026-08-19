@@ -21,14 +21,14 @@ export function TopNav() {
 
   return (
     <header className="docs-nav">
-      <Link to="/" className="docs-brand" aria-label="Manti UI home">
+      <Link to="/" className="docs-brand" aria-label="Mantı UI home">
         <img
           src="/manti-white.svg"
-          alt="Manti UI logo"
+          alt="Mantı UI logo"
           width="40"
           height="40"
         />
-        <span>Manti UI</span>
+        <span>Mantı UI</span>
       </Link>
 
       <Link

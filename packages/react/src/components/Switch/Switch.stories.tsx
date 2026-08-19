@@ -10,16 +10,11 @@ const meta = {
   args: {
     children: 'Garlic yogurt',
     size: 'md',
-    variant: 'primary',
     defaultChecked: true,
     disabled: false,
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md'] },
-    variant: {
-      control: 'select',
-      options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
-    },
   },
 } satisfies Meta<typeof Switch>;
 
@@ -30,7 +25,7 @@ export const Playground: Story = {};
 
 export const States: Story = {
   render: (args) => (
-    <div style={{ display: 'grid', gap: '0.75rem' }}>
+    <div style={{ display: 'grid', gap: 'var(--manti-space-3)' }}>
       <Switch {...args} defaultChecked={false}>
         Off
       </Switch>
@@ -47,16 +42,14 @@ export const States: Story = {
   ),
 };
 
-export const Variants: Story = {
+export const Sizes: Story = {
   render: (args) => (
-    <div style={{ display: 'grid', gap: '0.75rem' }}>
-      {(['primary', 'secondary', 'tertiary', 'danger', 'outline'] as const).map(
-        (variant) => (
-          <Switch {...args} key={variant} variant={variant}>
-            {variant}
-          </Switch>
-        ),
-      )}
+    <div style={{ display: 'grid', gap: 'var(--manti-space-3)' }}>
+      {(['sm', 'md'] as const).map((size) => (
+        <Switch {...args} key={size} size={size}>
+          {size}
+        </Switch>
+      ))}
     </div>
   ),
 };
