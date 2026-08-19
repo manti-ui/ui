@@ -1,0 +1,87 @@
+---
+title: Text
+slug: /typography/text
+group: Typography
+order: 11
+description: Token-backed body copy with a neutral emphasis ladder and semantic color.
+badge: New
+---
+
+# Text
+
+Text renders body copy from the shared type scale. It carries no layout of its
+own beyond alignment and truncation, so it drops into a card, a form, or a table
+cell without fighting the surrounding grid.
+
+<Demo name="typography/text" />
+
+By default it renders a `<p>`. Use `as` when the element should be something
+else — a `<span>` inside a sentence, a `<label>` beside a field, an `<li>` in a
+list. The styling stays identical; only the semantics change.
+
+## Size and weight
+
+`size` selects a stop on the same scale the tokens expose, from `xs` through
+`5xl`. Line height and tracking tighten automatically as the size grows, because
+body leading on a display size reads as loose rather than generous.
+
+<Demo name="typography/text-sizes" />
+
+Weight rides the same prop, after a slash:
+
+```tsx
+<Text size="lg" />           // stop only
+<Text size="lg/semibold" />  // stop and weight
+```
+
+The two halves are not equivalent. Writing the stop alone leaves the weight to
+the stylesheet, so a consumer who decides that `lg` means semibold in *their*
+system says it once in CSS instead of at every call site:
+
+```css
+[data-scope='text'][data-part='root'][data-size='lg'] {
+  --manti-text-weight: var(--manti-weight-semibold);
+}
+```
+
+Spelling out `lg/regular` overrides that again at the call site.
+
+## Emphasis
+
+`emphasis` walks the neutral ladder. It answers "how loud is this line?", not
+"what color is it": all three rungs stay neutral and are contrast-checked in
+both themes.
+
+<Demo name="typography/text-emphasis" />
+
+## Variant
+
+`variant` is the separate, semantic color axis. Because the two axes are
+independent, a message can be red *and* quiet at the same time. When both are
+set, `variant` wins.
+
+<Demo name="typography/text-variants" />
+
+## Truncation
+
+`truncate` clamps to a single line with an ellipsis; `lineClamp` clamps to a
+given number of lines. Setting both leaves `lineClamp` in charge.
+
+<Demo name="typography/text-truncate" />
+
+## API
+
+Text accepts every native attribute of whatever element `as` resolves to, in
+addition to the props below.
+
+<PropsTable component="text" />
+
+## Styling
+
+### Anatomy
+
+<Anatomy component="text" />
+
+### Tokens
+
+<TokenTable component="text" />

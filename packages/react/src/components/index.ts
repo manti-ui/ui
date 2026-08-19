@@ -89,6 +89,9 @@ export type { FileUploadProps } from './FileUpload/FileUpload';
 export { FloatingPanel } from './FloatingPanel/FloatingPanel';
 export type { FloatingPanelProps } from './FloatingPanel/FloatingPanel';
 
+export { Heading } from './Heading/Heading';
+export type { HeadingLevel, HeadingProps } from './Heading/Heading';
+
 export { HoverCard } from './HoverCard/HoverCard';
 export type { HoverCardProps } from './HoverCard/HoverCard';
 
@@ -187,6 +190,16 @@ export type { TabItem, TabsProps, TabsVariant } from './Tabs/Tabs';
 
 export { TagsInput } from './TagsInput/TagsInput';
 export type { TagsInputProps } from './TagsInput/TagsInput';
+
+export { Text } from './Text/Text';
+export type {
+  TextAlign,
+  TextEmphasis,
+  TextProps,
+  TextScale,
+  TextSize,
+  TextWeight,
+} from './Text/Text';
 
 export { TimePicker } from './TimePicker/TimePicker';
 export type { TimePickerProps } from './TimePicker/TimePicker';

@@ -1,7 +1,7 @@
 # Repository documentation
 
 Use the public [documentation site](https://manti.design) when building an app
-with Manti UI. The files in this folder describe the repository and its stable
+with Mantı UI. The files in this folder describe the repository and its stable
 design contracts.
 
 | Document                                  | Use it for                                   |

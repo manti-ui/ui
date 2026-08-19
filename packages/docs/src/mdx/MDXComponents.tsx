@@ -7,6 +7,7 @@ import { Anatomy } from '../doc/Anatomy';
 import { ColorRamps, VariantGallery } from '../doc/ColorRamps';
 import { ComponentStatusGrid } from '../doc/ComponentStatusGrid';
 import { Demo } from '../doc/Demo';
+import { FoundationsGrid } from '../doc/FoundationsGrid';
 import { InstallTabs } from '../doc/InstallTabs';
 import { LandingPage } from '../doc/LandingPage';
 import { LinkButton } from '../doc/LinkButton';
@@ -70,5 +71,6 @@ export const mdxComponents = {
   TypeScale,
   WeightScale,
   ComponentStatusGrid,
+  FoundationsGrid,
   ReleasesList,
 };

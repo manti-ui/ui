@@ -1,6 +1,6 @@
 # Styling
 
-Manti UI can be used as shipped, themed with tokens, overridden with plain CSS,
+Mantı UI can be used as shipped, themed with tokens, overridden with plain CSS,
 or styled headlessly with Tailwind.
 
 ## Choose a stylesheet
@@ -16,17 +16,17 @@ or styled headlessly with Tailwind.
 
 ## Cascade and selectors
 
-Manti CSS is layered:
+Mantı CSS is layered:
 
 ```css
 @layer manti.reset, manti.tokens, manti.base, manti.components, manti.motion;
 ```
 
-Ordinary unlayered application CSS wins over Manti without `!important`.
-Import Manti first and application overrides second.
+Ordinary unlayered application CSS wins over Mantı without `!important`.
+Import Mantı first and application overrides second.
 
 That also means an unlayered global reset can erase a layered component rule.
-Keep native resets away from every Manti anatomy, not only Button:
+Keep native resets away from every Mantı anatomy, not only Button:
 
 ```css
 button:not([data-scope][data-part]) {
@@ -204,20 +204,20 @@ Reusable tokens include:
 
 ## Tailwind v4
 
-Import Manti before Tailwind:
+Import Mantı before Tailwind:
 
 ```css
 @import '@manti-ui/styles/tailwind.css';
 @import 'tailwindcss';
 ```
 
-The order keeps Tailwind utilities above Manti components:
+The order keeps Tailwind utilities above Mantı components:
 
 ```tsx
 <Button className="rounded-none px-8">Save</Button>
 ```
 
-The bridge maps Manti tokens to standard utilities:
+The bridge maps Mantı tokens to standard utilities:
 
 | Utility                         | Source                     |
 | ------------------------------- | -------------------------- |
@@ -262,7 +262,7 @@ The primary color begins at focus/open, not at rest.
 
 Stable:
 
-- stylesheet entry points and Manti layer names;
+- stylesheet entry points and Mantı layer names;
 - `--manti-*`, `--variant-*`, and documented component tokens;
 - documented anatomy and state attributes;
 - `data-theme`, `data-motion`, and `data-radius`.

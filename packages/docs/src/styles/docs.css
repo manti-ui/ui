@@ -19,7 +19,6 @@
     --docs-nav-h: 3.5rem;
     --docs-sidebar-w: 16rem;
     --docs-toc-w: 15rem;
-    --docs-max: 100rem;
     --docs-prose-max: 64rem;
     --docs-gutter: var(--manti-space-6);
     --docs-props-table-min-w: 44rem;
@@ -79,7 +78,7 @@
     font-weight: var(--manti-weight-bold);
     color: var(--manti-text);
     text-decoration: none;
-    letter-spacing: -0.01em;
+    letter-spacing: var(--manti-tracking-tight);
   }
 
   .docs-brand img {
@@ -210,8 +209,6 @@
   .docs-layout {
     flex: 1;
     width: 100%;
-    max-width: var(--docs-max);
-    margin-inline: auto;
     display: grid;
     grid-template-columns: var(--docs-sidebar-w) minmax(0, 1fr) var(
         --docs-toc-w
@@ -254,6 +251,8 @@
   }
 
   .docs-sidebar-nav [data-scope='collapsible'][data-part='trigger'] {
+    --manti-collapsible-icon-size: var(--manti-space-4);
+
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -267,7 +266,7 @@
     color: var(--manti-text-subtle);
     font-size: var(--manti-text-xs);
     font-weight: var(--manti-weight-semibold);
-    letter-spacing: 0.06em;
+    letter-spacing: var(--manti-tracking-widest);
     text-transform: uppercase;
   }
   .docs-sidebar-nav [data-scope='collapsible'][data-part='trigger']:hover {
@@ -313,7 +312,7 @@
     color: var(--variant-soft-text);
     font-size: var(--manti-text-xs);
     font-weight: var(--manti-weight-semibold);
-    letter-spacing: 0.02em;
+    letter-spacing: var(--manti-tracking-wide);
     line-height: var(--manti-leading-relaxed);
   }
 
@@ -322,7 +321,7 @@
     margin: 0 0 var(--manti-space-3);
     font-size: var(--manti-text-xs);
     font-weight: var(--manti-weight-semibold);
-    letter-spacing: 0.06em;
+    letter-spacing: var(--manti-tracking-widest);
     text-transform: uppercase;
     color: var(--manti-text-subtle);
   }
@@ -505,21 +504,29 @@
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-semibold);
   }
-  /* ---- Prose ---- */
+  /* ---- Prose ----
+     Element rules below are for the page's own markdown. Manti components render
+     real semantic elements too (Heading -> h1-h6, Text -> p, Blockquote, Code),
+     and this layer sits after the Manti layers, so an unguarded `.docs-prose h2`
+     would beat `heading.css` and stamp the section divider onto every heading in
+     a demo. Exclude component roots by `[data-scope]`, the same way the tables
+     below do. Descendants are left alone on purpose: a plain <h3> written inside
+     a <Card> in MDX is still prose. */
   .docs-prose {
     max-width: var(--docs-prose-max);
+    margin-inline: auto;
     color: var(--manti-text);
     font-size: var(--manti-text-base);
     line-height: var(--manti-leading-relaxed);
   }
-  .docs-prose :is(h1, h2, h3, h4) {
+  .docs-prose :is(h1, h2, h3, h4):not([data-scope]) {
     color: var(--manti-text);
     font-weight: var(--manti-weight-semibold);
     line-height: var(--manti-leading-tight);
-    letter-spacing: -0.01em;
+    letter-spacing: var(--manti-tracking-tight);
     scroll-margin-top: calc(var(--docs-nav-h) + var(--manti-space-4));
   }
-  .docs-prose h1 {
+  .docs-prose h1:not([data-scope]) {
     font-size: var(--manti-text-4xl);
     font-weight: var(--manti-weight-bold);
     margin: 0 0 var(--manti-space-4);
@@ -574,17 +581,17 @@
   .docs-design-signature-note {
     padding-block-start: var(--manti-space-4);
   }
-  .docs-prose h2 {
+  .docs-prose h2:not([data-scope]) {
     font-size: var(--manti-text-2xl);
     margin: var(--manti-space-10) 0 var(--manti-space-4);
     padding-top: var(--manti-space-4);
     border-top: 1px solid var(--manti-border);
   }
-  .docs-prose h3 {
+  .docs-prose h3:not([data-scope]) {
     font-size: var(--manti-text-xl);
     margin: var(--manti-space-8) 0 var(--manti-space-3);
   }
-  .docs-prose h4 {
+  .docs-prose h4:not([data-scope]) {
     font-size: var(--manti-text-lg);
     margin: var(--manti-space-6) 0 var(--manti-space-2);
   }
@@ -596,7 +603,7 @@
     content: ' #';
     color: var(--manti-text-subtle);
   }
-  .docs-prose p {
+  .docs-prose p:not([data-scope]) {
     margin: 0 0 var(--manti-space-4);
   }
   .docs-prose :is(ul, ol) {
@@ -622,7 +629,7 @@
     font-weight: var(--manti-weight-semibold);
     color: var(--manti-text);
   }
-  .docs-prose blockquote {
+  .docs-prose blockquote:not([data-scope]) {
     margin: 0 0 var(--manti-space-4);
     padding: var(--manti-space-1) var(--manti-space-4);
     border-inline-start: 2px solid var(--manti-border-strong);
@@ -640,7 +647,7 @@
   }
 
   /* inline code — but reset for shiki blocks below */
-  .docs-prose code {
+  .docs-prose code:not([data-scope]) {
     font-family: var(--manti-font-mono);
     font-size: 0.875em;
     padding: 0.1em 0.35em;
@@ -671,7 +678,7 @@
     color: var(--manti-text-muted);
     font-weight: var(--manti-weight-semibold);
     font-size: var(--manti-text-xs);
-    letter-spacing: 0.04em;
+    letter-spacing: var(--manti-tracking-wider);
     text-transform: uppercase;
   }
   .docs-prose td code {

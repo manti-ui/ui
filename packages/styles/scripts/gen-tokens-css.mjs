@@ -118,6 +118,9 @@ for (const [k, v] of Object.entries(t.fontSize)) {
 for (const [k, v] of Object.entries(t.lineHeight))
   decl(`manti-leading-${k}`, v);
 for (const [k, v] of Object.entries(t.fontWeight)) decl(`manti-weight-${k}`, v);
+/* Optical tracking. `em` units, so each stop scales with its font size. */
+for (const [k, v] of Object.entries(t.letterSpacing))
+  decl(`manti-tracking-${k}`, v);
 
 head('Motion');
 for (const [k, v] of Object.entries(t.duration)) decl(`manti-duration-${k}`, v);

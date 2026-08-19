@@ -66,6 +66,13 @@
   --leading-normal: var(--manti-leading-normal);
   --leading-relaxed: var(--manti-leading-relaxed);
 
+  --tracking-tighter: var(--manti-tracking-tighter);
+  --tracking-tight: var(--manti-tracking-tight);
+  --tracking-normal: var(--manti-tracking-normal);
+  --tracking-wide: var(--manti-tracking-wide);
+  --tracking-wider: var(--manti-tracking-wider);
+  --tracking-widest: var(--manti-tracking-widest);
+
   /* Semantic surfaces & text ----------------------------------------------- */
   --color-bg: var(--manti-bg);
   --color-bg-subtle: var(--manti-bg-subtle);

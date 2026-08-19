@@ -91,12 +91,6 @@ const inlineMeta: Record<string, ComponentMeta> = {
         description: 'Control size.',
       },
       {
-        name: 'variant',
-        type: 'MantiVariant',
-        default: `'primary'`,
-        description: 'Active variant when checked.',
-      },
-      {
         name: 'checked',
         type: 'boolean',
         description: 'Controlled checked state.',
@@ -511,6 +505,12 @@ export const componentCatalog: CatalogEntry[] = [
   entry('Editable', 'editable', 'Click-to-edit inline text.'),
   entry('FileUpload', 'file-upload', 'Drag-and-drop file input.'),
   entry('FloatingPanel', 'floating-panel', 'Draggable floating surface.'),
+  entry(
+    'Heading',
+    'heading',
+    'Titles whose rank and visual size stay independent.',
+    '/typography/heading',
+  ),
   entry('HoverCard', 'hover-card', 'Rich preview on hover.'),
   entry(
     'Input',
@@ -544,6 +544,12 @@ export const componentCatalog: CatalogEntry[] = [
   entry('Switch', 'switch', 'Smooth on/off toggle.'),
   entry('Tabs', 'tabs', 'Tabbed navigation.'),
   entry('TagsInput', 'tags-input', 'Token / chip text entry.'),
+  entry(
+    'Text',
+    'text',
+    'Body copy with a neutral emphasis ladder.',
+    '/typography/text',
+  ),
   entry('Textarea', 'textarea', 'Multiline text input.'),
   entry('TimePicker', 'time-picker', 'Time selection control.'),
   entry('Toast', 'toast', 'Transient notifications.'),
