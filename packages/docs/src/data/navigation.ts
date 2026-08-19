@@ -20,9 +20,8 @@ export interface NavGroup {
  */
 const GROUP_ORDER = [
   'Getting Started',
-  'Foundations',
-  'Typography',
   'Guides',
+  'Typography',
   // Framework-agnostic primitives that aren't visual components (hooks like
   // useShortcut), each its own page ordered by `order`.
   'Utilities',
@@ -91,7 +90,7 @@ export const STUDIO_URL = 'https://studio.manti.design';
 /** Condensed primary links shown in the top navigation bar. */
 export const primaryNav: NavItem[] = [
   { slug: '/getting-started', title: 'Getting Started' },
-  { slug: '/foundations/design-signature', title: 'Foundations' },
+  { slug: '/foundations', title: 'Foundations' },
   { slug: '/components', title: 'Components' },
   { slug: '/guides/plain-css', title: 'Guides' },
   { slug: '/changelog', title: 'Changelog' },

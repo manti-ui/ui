@@ -17,7 +17,6 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
           key={group.label}
           className="docs-nav-group"
           defaultOpen
-          indicator={false}
           trigger={<span>{group.label}</span>}
         >
           <ul className="docs-nav-list">
