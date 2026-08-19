@@ -1,6 +1,6 @@
 # Design system
 
-Manti UI uses one visual idea: **smooth**. Surfaces are quiet, controls are
+Mantı UI uses one visual idea: **smooth**. Surfaces are quiet, controls are
 clear, and interaction never depends on decoration alone.
 
 ## Theme
@@ -107,7 +107,7 @@ Set `data-motion` on any container:
 | Value     | Result                                     |
 | --------- | ------------------------------------------ |
 | `default` | Standard transitions and animations        |
-| `none`    | Decorative Manti motion is removed         |
+| `none`    | Decorative Mantı motion is removed         |
 | `full`    | More expressive spring and bounce movement |
 
 `prefers-reduced-motion: reduce` always wins. The Spinner keeps its functional
