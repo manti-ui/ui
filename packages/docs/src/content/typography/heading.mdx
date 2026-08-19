@@ -1,0 +1,70 @@
+---
+title: Heading
+slug: /typography/heading
+group: Typography
+order: 12
+description: A token-backed heading whose semantic rank and visual size stay independent.
+badge: New
+---
+
+# Heading
+
+Heading renders a real `h1`–`h6` element with Manti's title treatment: tighter
+leading than body copy, semibold weight, and optical tracking that pulls in as
+the type grows.
+
+<Demo name="typography/heading" />
+
+## Level
+
+`level` picks both the element and a sensible default size, so plain markup
+already reads correctly.
+
+<Demo name="typography/heading-levels" />
+
+## Level and size are independent
+
+Document outline and visual hierarchy are different problems. `size` overrides
+the stop `level` implies, which means a section can stay an `h2` for screen
+readers while laying out small, and a hero can be an `h1` at display size —
+without anyone reaching for a styled `<div>`.
+
+<Demo name="typography/heading-level-vs-size" />
+
+If you genuinely need the look without the rank, `as` overrides the element and
+leaves the styling in place.
+
+## Weight
+
+Weight rides the `size` prop after a slash, the same way [Text](/typography/text)
+does. Leaving it off keeps the stylesheet's default, which is bold at `level={1}`
+and semibold everywhere else:
+
+```tsx
+<Heading level={1} />                  // bold, from the level
+<Heading level={1} size="4xl/regular" />  // same stop, weight overridden
+```
+
+## Emphasis and variant
+
+Heading shares [Text](/typography/text)'s two color axes: `emphasis` for the
+neutral ladder and `variant` for semantic color.
+
+<Demo name="typography/heading-emphasis" />
+
+## API
+
+Heading accepts every native attribute of the rendered heading element in
+addition to the props below.
+
+<PropsTable component="heading" />
+
+## Styling
+
+### Anatomy
+
+<Anatomy component="heading" />
+
+### Tokens
+
+<TokenTable component="heading" />

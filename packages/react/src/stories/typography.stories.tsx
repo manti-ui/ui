@@ -23,7 +23,14 @@ export const Scale: Story = {
   render: () => (
     <div style={page}>
       <div>
-        <h1 style={{ fontSize: 32, letterSpacing: '-0.03em' }}>Type scale</h1>
+        <h1
+          style={{
+            fontSize: 32,
+            letterSpacing: 'var(--manti-tracking-tighter)',
+          }}
+        >
+          Type scale
+        </h1>
         <p style={{ color: 'var(--manti-text-muted)' }}>
           A calm, readable scale in Inter. Sizes are exposed as{' '}
           <code>--manti-text-*</code> tokens.
@@ -44,7 +51,12 @@ export const Scale: Story = {
             >
               {name}
             </span>
-            <span style={{ fontSize: value, letterSpacing: '-0.02em' }}>
+            <span
+              style={{
+                fontSize: value,
+                letterSpacing: 'var(--manti-tracking-tighter)',
+              }}
+            >
               Mantı keeps it smooth
             </span>
           </div>
