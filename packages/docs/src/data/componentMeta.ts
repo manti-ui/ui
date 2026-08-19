@@ -91,12 +91,6 @@ const inlineMeta: Record<string, ComponentMeta> = {
         description: 'Control size.',
       },
       {
-        name: 'variant',
-        type: 'MantiVariant',
-        default: `'primary'`,
-        description: 'Active variant when checked.',
-      },
-      {
         name: 'checked',
         type: 'boolean',
         description: 'Controlled checked state.',
