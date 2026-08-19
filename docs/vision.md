@@ -1,6 +1,6 @@
 # Vision
 
-Manti UI should feel simple, adaptable, and calm.
+Mantı UI should feel simple, adaptable, and calm.
 
 ## Principles
 
@@ -15,7 +15,7 @@ Manti UI should feel simple, adaptable, and calm.
 
 ## Scope
 
-Manti UI currently ships a React renderer over framework-agnostic tokens, CSS,
+Mantı UI currently ships a React renderer over framework-agnostic tokens, CSS,
 and behavior. The component catalog covers common actions, forms, navigation,
 overlays, feedback, data display, and layout.
 

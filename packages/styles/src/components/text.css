@@ -1,0 +1,137 @@
+/**
+ * Text — token-backed body copy. Two orthogonal color axes: `data-emphasis`
+ * walks the neutral ladder (--manti-text → muted → subtle), `data-variant`
+ * switches to a semantic hue. Variant is declared last so a semantic color
+ * wins when both are set, which is what "a quiet danger message" needs.
+ *
+ * `data-size` here spends the attribute on a type-scale stop rather than the
+ * sm|md|lg control rhythm — Text opens no surface, so it never re-stamps the
+ * size channel.
+ */
+@layer manti.components {
+  [data-scope='text'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-text-font-size: var(--manti-text-base);
+    --manti-text-line-height: var(--manti-leading-normal);
+    --manti-text-weight: var(--manti-weight-regular);
+    --manti-text-tracking: var(--manti-tracking-normal);
+
+    margin: var(--manti-space-0);
+    color: var(--manti-text);
+    font-family: var(--manti-font-sans);
+    font-size: var(--manti-text-font-size);
+    font-weight: var(--manti-text-weight);
+    line-height: var(--manti-text-line-height);
+    letter-spacing: var(--manti-text-tracking);
+
+    /* Type scale. Leading tightens and tracking pulls in as the size grows —
+       body leading on a display size reads as loose, not generous. */
+    &[data-size='xs'] {
+      --manti-text-font-size: var(--manti-text-xs);
+    }
+
+    &[data-size='sm'] {
+      --manti-text-font-size: var(--manti-text-sm);
+    }
+
+    &[data-size='base'] {
+      --manti-text-font-size: var(--manti-text-base);
+    }
+
+    &[data-size='lg'] {
+      --manti-text-font-size: var(--manti-text-lg);
+    }
+
+    &[data-size='xl'] {
+      --manti-text-font-size: var(--manti-text-xl);
+      --manti-text-line-height: var(--manti-leading-snug);
+    }
+
+    &[data-size='2xl'] {
+      --manti-text-font-size: var(--manti-text-2xl);
+      --manti-text-line-height: var(--manti-leading-snug);
+      --manti-text-tracking: var(--manti-tracking-tight);
+    }
+
+    &[data-size='3xl'] {
+      --manti-text-font-size: var(--manti-text-3xl);
+      --manti-text-line-height: var(--manti-leading-tight);
+      --manti-text-tracking: var(--manti-tracking-tight);
+    }
+
+    &[data-size='4xl'] {
+      --manti-text-font-size: var(--manti-text-4xl);
+      --manti-text-line-height: var(--manti-leading-tight);
+      --manti-text-tracking: var(--manti-tracking-tighter);
+    }
+
+    &[data-size='5xl'] {
+      --manti-text-font-size: var(--manti-text-5xl);
+      --manti-text-line-height: var(--manti-leading-tight);
+      --manti-text-tracking: var(--manti-tracking-tighter);
+    }
+
+    /* Weight — the optional half of `size`, e.g. `lg/semibold`. `regular` is
+       spelled out so it can win back a stop whose default was overridden. */
+    &[data-weight='regular'] {
+      --manti-text-weight: var(--manti-weight-regular);
+    }
+
+    &[data-weight='medium'] {
+      --manti-text-weight: var(--manti-weight-medium);
+    }
+
+    &[data-weight='semibold'] {
+      --manti-text-weight: var(--manti-weight-semibold);
+    }
+
+    &[data-weight='bold'] {
+      --manti-text-weight: var(--manti-weight-bold);
+    }
+
+    /* Neutral emphasis ladder. `default` is the base rule above. */
+    &[data-emphasis='muted'] {
+      color: var(--manti-text-muted);
+    }
+
+    &[data-emphasis='subtle'] {
+      color: var(--manti-text-subtle);
+    }
+
+    /* Semantic color. Declared after emphasis so it wins on a tie. */
+    &[data-variant] {
+      color: var(--variant-text);
+    }
+
+    &[data-align='start'] {
+      text-align: start;
+    }
+
+    &[data-align='center'] {
+      text-align: center;
+    }
+
+    &[data-align='end'] {
+      text-align: end;
+    }
+
+    &[data-align='justify'] {
+      text-align: justify;
+    }
+
+    &[data-truncate] {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    /* Multi-line clamp. The line count is a caller-supplied derived value, so it
+       rides a private knob rather than the public component-token tier. */
+    &[data-line-clamp] {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: var(--_line-clamp, 2);
+    }
+  }
+}

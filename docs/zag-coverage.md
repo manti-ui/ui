@@ -1,6 +1,6 @@
 # Zag.js coverage
 
-Manti UI adapts Zag.js machines through `@manti-ui/folds`. React renderers
+Mantı UI adapts Zag.js machines through `@manti-ui/folds`. React renderers
 connect the machine, render its public anatomy, and leave appearance to shared
 CSS.
 
@@ -31,7 +31,7 @@ const api = component.connect(service, normalizeProps);
 | Drawer           | Dialog     |
 | SegmentedControl | RadioGroup |
 
-## Manti-authored behavior
+## Mantı-authored behavior
 
 - `folds/shortcut` powers `useShortcut` and `useShortcuts`.
 - `folds/swipe` powers swipe-to-dismiss behavior in Toast.

@@ -21,6 +21,9 @@ describe('Switch', () => {
     const control = screen.getByRole('switch', { name: 'Notifications' });
     expect(control).toBe(ref.current);
     expect(control).toHaveAttribute('data-testid', 'switch-input');
-    expect(screen.getByTestId('switch-root')).toContainElement(control);
+    const root = screen.getByTestId('switch-root');
+    expect(root).toContainElement(control);
+    expect(root).toHaveAttribute('data-size', 'md');
+    expect(root).not.toHaveAttribute('data-variant');
   });
 });

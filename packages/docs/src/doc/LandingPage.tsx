@@ -199,7 +199,7 @@ function ProductPreview({
           <span className="docs-status-dot" aria-hidden="true" />
           All systems calm
         </span>
-        <Switch size="sm" defaultChecked variant={theme}>
+        <Switch size="sm" defaultChecked>
           Focus mode
         </Switch>
       </div>

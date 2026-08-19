@@ -395,6 +395,23 @@ export const fontFamily = {
   mono: "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace",
 } as const;
 
+/**
+ * Optical letter-spacing.
+ *
+ * Type needs different tracking at different sizes: large display sizes read as
+ * loose unless they are pulled in, and small all-caps-ish labels read as cramped
+ * unless they are pushed out. Emitted verbatim in `em`, so every stop scales
+ * with whatever font size it lands on.
+ */
+export const letterSpacing = {
+  tighter: '-0.02em',
+  tight: '-0.01em',
+  normal: '0em',
+  wide: '0.02em',
+  wider: '0.04em',
+  widest: '0.06em',
+} as const;
+
 /** Smooth motion. The brand promise lives here. */
 export const duration = {
   fast: '120ms',
@@ -543,6 +560,7 @@ export const componentTokens = {
   editable: ['height'],
   field: ['height', 'padding-x', 'padding-y', 'font-size', 'addon-padding-x'],
   'floating-panel': ['min-width', 'min-height'],
+  heading: ['font-size', 'line-height', 'weight', 'tracking'],
   'hover-card': ['max-width'],
   kbd: ['radius', 'padding-x', 'padding-y', 'font-size', 'border-width'],
   listbox: [
@@ -603,6 +621,7 @@ export const componentTokens = {
   steps: ['indicator-size'],
   switch: ['track-width', 'track-height', 'track-padding'],
   'tags-input': ['height'],
+  text: ['font-size', 'line-height', 'weight', 'tracking'],
   'time-picker': [
     'height',
     'padding-x',
@@ -652,6 +671,7 @@ export const mantiTokens = {
   lineHeight,
   fontWeight,
   fontFamily,
+  letterSpacing,
   duration,
   easing,
   breakpoint,

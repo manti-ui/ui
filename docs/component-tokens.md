@@ -118,6 +118,10 @@ system-wide changes; use this list when one component should differ. See
 | `field`             | `--manti-field-addon-padding-x`             | `var(--manti-space-1)`                                               |
 | `floating-panel`    | `--manti-floating-panel-min-width`          | `16rem`                                                              |
 | `floating-panel`    | `--manti-floating-panel-min-height`         | `8rem`                                                               |
+| `heading`           | `--manti-heading-font-size`                 | `var(--manti-text-2xl)`                                              |
+| `heading`           | `--manti-heading-line-height`               | `var(--manti-leading-tight)`                                         |
+| `heading`           | `--manti-heading-weight`                    | `var(--manti-weight-semibold)`                                       |
+| `heading`           | `--manti-heading-tracking`                  | `var(--manti-tracking-tight)`                                        |
 | `hover-card`        | `--manti-hover-card-max-width`              | `20rem`                                                              |
 | `kbd`               | `--manti-kbd-radius`                        | `var(--manti-radius-sm)`                                             |
 | `kbd`               | `--manti-kbd-padding-x`                     | `var(--manti-space-2)`                                               |
@@ -190,6 +194,10 @@ system-wide changes; use this list when one component should differ. See
 | `switch`            | `--manti-switch-track-height`               | `1.5rem`                                                             |
 | `switch`            | `--manti-switch-track-padding`              | `0.1875rem`                                                          |
 | `tags-input`        | `--manti-tags-input-height`                 | `var(--manti-control-height-md)`                                     |
+| `text`              | `--manti-text-font-size`                    | `var(--manti-text-base)`                                             |
+| `text`              | `--manti-text-line-height`                  | `var(--manti-leading-normal)`                                        |
+| `text`              | `--manti-text-weight`                       | `var(--manti-weight-regular)`                                        |
+| `text`              | `--manti-text-tracking`                     | `var(--manti-tracking-normal)`                                       |
 | `time-picker`       | `--manti-time-picker-height`                | `var( --manti-size-control-height, var(--manti-control-height-md) )` |
 | `time-picker`       | `--manti-time-picker-padding-x`             | `var( --manti-size-control-padding-x, var(--manti-space-3) )`        |
 | `time-picker`       | `--manti-time-picker-column-height`         | `15rem`                                                              |
