@@ -15,6 +15,32 @@ Color roles use CSS `light-dark()`. The OS preference is used by default; set
 Import `@manti-ui/styles/index.css` once. Apply `.manti-app` (or use `body`) for
 the themed background, text, font, and ambient surface treatment.
 
+## Presets
+
+The fastest way to a different look is a shipped preset — one import, every
+component re-skinned:
+
+```css
+@import '@manti-ui/styles/index.css';
+@import '@manti-ui/styles/themes/ocean.css';
+```
+
+| Preset     | Character                                  |
+| ---------- | ------------------------------------------ |
+| default    | Warm orange over a cool neutral (no file)  |
+| `violet`   | Electric violet with generous corners      |
+| `ocean`    | Bright sky blue on a cold neutral, rounded |
+| `forest`   | Deep green with tight, sober corners       |
+| `rose`     | Hot rose over a warm neutral, rounded      |
+| `graphite` | Monochrome, square, and compact            |
+
+A preset moves colors, the neutral hue, the radius factor, and — for Graphite —
+density. Files sit in `@layer manti.theme`, so an unlayered override still wins.
+Use `themes.css` plus `data-manti-theme` to show several on one page.
+
+When no preset fits, tune tokens (see [Styling](./styling.md)); for anything
+custom, the [Theme Studio](https://studio.manti.design) is the next step.
+
 ## Color
 
 Six OKLCH ramps run from `1` to `12`:

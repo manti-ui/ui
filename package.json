@@ -17,6 +17,7 @@
     "docs:preview": "vite preview packages/docs",
     "build:site": "pnpm docs:build && pnpm build:storybook && rm -rf packages/docs/dist/storybook && cp -r storybook-static packages/docs/dist/storybook",
     "gen:tokens": "pnpm --filter @manti-ui/styles gen:tokens",
+    "gen:presets": "pnpm --filter @manti-ui/styles gen:presets",
     "gen:variant-ink": "pnpm --filter @manti-ui/styles gen:variant-ink",
     "check:color-scale": "pnpm --filter @manti-ui/styles check:color-scale",
     "check:exports": "node scripts/check-react-exports.mjs",

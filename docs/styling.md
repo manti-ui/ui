@@ -11,6 +11,8 @@ or styled headlessly with Tailwind.
 | `@manti-ui/styles/tokens.css`         | Tokens only                                 |
 | `@manti-ui/styles/tailwind.css`       | Full styles plus the Tailwind v4 bridge     |
 | `@manti-ui/styles/tailwind-theme.css` | Tailwind v4 bridge only                     |
+| `@manti-ui/styles/themes/<id>.css`    | One shipped theme preset, on `:root`        |
+| `@manti-ui/styles/themes.css`         | Every preset, scoped to `data-manti-theme`  |
 
 `@manti-ui/react` has no CSS side effects. Import one stylesheet explicitly.
 
@@ -19,7 +21,8 @@ or styled headlessly with Tailwind.
 Mantı CSS is layered:
 
 ```css
-@layer manti.reset, manti.tokens, manti.base, manti.components, manti.motion;
+@layer manti.reset, manti.tokens, manti.theme, manti.base, manti.components,
+  manti.motion;
 ```
 
 Ordinary unlayered application CSS wins over Mantı without `!important`.
@@ -57,6 +60,30 @@ Components expose stable anatomy attributes:
 
 Use `data-scope`, `data-part`, documented state attributes, and tokens. Do not
 depend on class names, private `--_*` variables, or undocumented DOM structure.
+
+## Theme presets
+
+The fastest theme is one already built. Import a preset after `index.css` and
+every component re-skins — variant palettes, neutral hue, radius, progress fill,
+and text selection:
+
+```css
+@import '@manti-ui/styles/index.css';
+@import '@manti-ui/styles/themes/ocean.css';
+```
+
+Manti ships `violet`, `ocean`, `forest`, `rose`, and `graphite`; the default
+theme needs no file. They live in `@layer manti.theme`, above the token defaults
+and below unlayered application CSS, so retuning one role on top of a preset
+still works. For more than one theme on a page, import `themes.css` and set
+`data-manti-theme` on a container.
+
+Definitions live in `presets` in `@manti-ui/tokens`;
+`packages/styles/scripts/gen-preset-css.mjs` generates the stylesheets, and the
+styles build gates every preset on contrast and interaction progression.
+
+Tune the tokens below when no preset fits, or reach for the
+[Theme Studio](https://studio.manti.design) for anything custom.
 
 ## Theme with tokens
 

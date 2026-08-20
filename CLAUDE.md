@@ -99,6 +99,7 @@ pnpm lint             # Run ESLint
 pnpm typecheck        # Check packages and stories
 pnpm verify           # Run lint, typecheck, and all production builds
 pnpm gen:tokens       # Regenerate --manti-* CSS vars from the token contract
+pnpm gen:presets      # Regenerate the shipped theme presets in styles/src/themes
 ```
 
 Run `pnpm verify` before opening a pull request.

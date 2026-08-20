@@ -12,7 +12,7 @@
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import prettier from 'prettier';
 
@@ -24,7 +24,7 @@ const START = '<!-- @component-tokens:generated:start -->';
 const END = '<!-- @component-tokens:generated:end -->';
 const check = process.argv.includes('--check');
 
-const { componentTokens } = await import(TOKENS_TS);
+const { componentTokens } = await import(pathToFileURL(TOKENS_TS).href);
 
 /** The base (first-declared) default value of each `--manti-{comp}-*` token. */
 async function defaults(comp) {
