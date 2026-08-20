@@ -3,8 +3,14 @@
  *
  * Layer order is declared once, up front, so later imports can never reorder
  * cascade priority. Reset is lowest priority, components highest.
+ *
+ * `manti.theme` is where the shipped presets land (`themes/<id>.css`). It sits
+ * above `manti.tokens` so a preset beats the defaults regardless of import
+ * order, and below anything unlayered so a consumer can still retune one role
+ * on top of the preset they adopted.
  */
-@layer manti.reset, manti.tokens, manti.base, manti.components, manti.motion;
+@layer manti.reset, manti.tokens, manti.theme, manti.base, manti.components,
+  manti.motion;
 
 @import './reset.css';
 @import './tokens.css';
