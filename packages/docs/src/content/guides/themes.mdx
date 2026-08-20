@@ -1,0 +1,75 @@
+---
+title: Theme presets
+slug: /guides/themes
+group: Guides
+order: 29
+description: Adopt a shipped theme with one import, or scope several on one page.
+---
+
+# Theme presets
+
+Manti ships six themes. Five of them are a stylesheet you import after
+`index.css`; the sixth is what you already have.
+
+```js
+import '@manti-ui/styles/index.css';
+import '@manti-ui/styles/themes/ocean.css';
+```
+
+That is the whole adoption cost. Every component re-skins: the variant palettes,
+the neutral hue, the corner radius, the progress fill, and the text selection.
+
+<ThemePresets />
+
+## What a preset moves
+
+A preset is not colors-only. Each one sets `--manti-cool-hue` and
+`--manti-radius-factor`, expands its base colors into the full `--variant-*`
+vocabulary, and re-points `--manti-accent-fill` and `--manti-selection-*` —
+the two branded roles no `[data-variant]` block can reach. Graphite also carries
+a density, so its spacing unit and control heights come in tighter.
+
+The definitions live in `presets` in `@manti-ui/tokens`, and
+`packages/styles/scripts/gen-preset-css.mjs` generates the stylesheets from
+them. The contrast floor and the interaction progression are checked per preset
+in the styles build, so a theme that fails either never ships.
+
+## Override on top of one
+
+Theme files sit in `@layer manti.theme`, above the token defaults and below
+anything unlayered. Adopt a preset and retune a role on top of it:
+
+```css
+@import '@manti-ui/styles/index.css';
+@import '@manti-ui/styles/themes/forest.css';
+
+:root {
+  --manti-radius-factor: 1;
+}
+```
+
+Import order between the two stylesheets does not matter — the layer decides.
+
+## More than one theme on a page
+
+For a gallery, a themed section, or a preview pane, import the scoped file once
+and set `data-manti-theme` on any container:
+
+```js
+import '@manti-ui/styles/themes.css';
+```
+
+```html
+<section data-manti-theme="rose">…</section>
+```
+
+Nested scopes re-resolve the neutral ramp, the surfaces, the radius steps, and
+the spacing locally, so a scoped preset looks the same as its `:root` twin.
+`data-manti-theme` is independent of `data-theme` — light and dark still follow
+the OS or whatever you force.
+
+## When a preset is not enough
+
+Reach for [theming with tokens](/guides/theming-tokens) for a targeted change,
+or the [Theme Studio](https://studio.manti.design) to tune every role on a live
+product surface and export the result.

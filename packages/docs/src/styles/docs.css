@@ -953,6 +953,46 @@
     margin-bottom: var(--manti-space-6);
   }
 
+  /* ---- Theme presets ---- */
+  .docs-theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    gap: var(--manti-space-4);
+    margin-bottom: var(--manti-space-4);
+  }
+  .docs-theme-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    padding: var(--manti-space-4);
+    border: 1px solid var(--manti-border);
+    border-radius: var(--manti-radius-lg);
+    background: var(--manti-surface);
+    color: var(--manti-text);
+  }
+  .docs-theme-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-2);
+  }
+  .docs-theme-note {
+    margin: 0;
+    font-size: var(--manti-text-sm);
+    color: var(--manti-text-muted);
+  }
+  .docs-theme-import {
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-text-xs);
+    color: var(--manti-text-subtle);
+    word-break: break-all;
+  }
+  .docs-theme-footnote {
+    font-size: var(--manti-text-sm);
+    color: var(--manti-text-muted);
+    margin-bottom: var(--manti-space-6);
+  }
+
   .docs-type-row {
     display: flex;
     align-items: baseline;
