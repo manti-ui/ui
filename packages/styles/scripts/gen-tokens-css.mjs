@@ -18,7 +18,7 @@
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import prettier from 'prettier';
 
@@ -31,7 +31,7 @@ const RADIUS_MODES_START = '/* @radius-modes:generated:start */';
 const RADIUS_MODES_END = '/* @radius-modes:generated:end */';
 const check = process.argv.includes('--check');
 
-const t = await import(TOKENS_TS);
+const t = await import(pathToFileURL(TOKENS_TS).href);
 
 const lines = [];
 const decl = (name, value) => lines.push(`    --${name}: ${value};`);

@@ -319,6 +319,94 @@ export const radiusModes = {
 export type MantiRadiusMode = keyof typeof radiusModes;
 
 /**
+ * A theme preset — one opinionated starting point over the shipped defaults.
+ *
+ * `colors` names a base color per variant; the generator expands each into the
+ * full `--variant-*` vocabulary. `density` scales the spacing unit and the
+ * control heights.
+ */
+export type MantiPresetDefinition = {
+  label: string;
+  description: string;
+  /** The shipped theme. It needs no stylesheet, so none is generated. */
+  default: boolean;
+  colors: Partial<Record<'primary' | 'success' | 'info' | 'danger', string>>;
+  coolHue: number;
+  radiusFactor: string;
+  density: number;
+};
+
+/**
+ * The presets the Theme Studio offers, shipped as importable stylesheets:
+ * `@manti-ui/styles/themes/<id>.css` (whole app) or the `data-manti-theme`
+ * scopes in `@manti-ui/styles/themes.css` (one section).
+ *
+ * `packages/styles/scripts/gen-preset-css.mjs` generates both from this map,
+ * so a preset can never drift from the CSS that ships it.
+ */
+export const presets = {
+  manti: {
+    label: 'Manti',
+    description: 'The shipped default — warm orange over a cool neutral.',
+    default: true,
+    colors: {},
+    coolHue: 280,
+    radiusFactor: '1',
+    density: 1,
+  },
+  violet: {
+    label: 'Violet',
+    description: 'Electric violet with generous corners.',
+    default: false,
+    colors: { primary: '#7c3aed' },
+    coolHue: 300,
+    radiusFactor: '1.2',
+    density: 1,
+  },
+  ocean: {
+    label: 'Ocean',
+    description: 'Bright sky blue on a cold neutral, rounded.',
+    default: false,
+    // Info is a stop darker than the studio swatch: no ink clears AA on
+    // #0284c7 (4.45:1), and the preset gate refuses to ship that.
+    colors: { primary: '#0ea5e9', info: '#0369a1' },
+    coolHue: 235,
+    radiusFactor: '1.4',
+    density: 1,
+  },
+  forest: {
+    label: 'Forest',
+    description: 'Deep green with tight, sober corners.',
+    default: false,
+    colors: { primary: '#15803d', success: '#16a34a' },
+    coolHue: 150,
+    radiusFactor: '0.6',
+    density: 1,
+  },
+  rose: {
+    label: 'Rose',
+    description: 'Hot rose over a warm neutral, rounded.',
+    default: false,
+    colors: { primary: '#e11d48', danger: '#be123c' },
+    coolHue: 350,
+    radiusFactor: '1.4',
+    density: 1,
+  },
+  graphite: {
+    label: 'Graphite',
+    description: 'Monochrome, square, and compact.',
+    default: false,
+    colors: { primary: '#4b5563' },
+    coolHue: 250,
+    radiusFactor: '0',
+    density: 0.9,
+  },
+} as const satisfies Record<string, MantiPresetDefinition>;
+
+/** The `presets` keys — `'manti' | 'violet' | …`. */
+export type MantiPresetId = keyof typeof presets;
+
+/**
  * Control heights — the shared vertical sizing of form controls (button, input,
  * select, number-input, combobox). A Tier-2 semantic scale so a consumer can
  * resize every control at once; components default their `--manti-*-height`
@@ -665,6 +753,7 @@ export const mantiTokens = {
   radiusFactor,
   radiusChannel,
   radiusModes,
+  presets,
   controlHeight,
   space,
   fontSize,

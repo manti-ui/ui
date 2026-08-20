@@ -4,14 +4,21 @@
  * Primitive stops are the palette author's vocabulary. Component CSS consumes
  * semantic roles or the uniform --variant-* vocabulary so theme mapping and
  * contrast decisions stay centralized in tokens.css.
+ *
+ * The shipped presets are checked on the other half of the contract: their
+ * ladders are generated from one base color, so what matters is that each rung
+ * still moves in the direction that gains contrast for its theme.
  */
 import { readdir, readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+
+import { readTokensCss } from './lib/tokens-css.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const components = resolve(here, '../src/components');
 const tokensPath = resolve(here, '../src/tokens.css');
+const tokensTs = resolve(here, '../../tokens/src/index.ts');
 const primitive = /--manti-(gray|orange|green|amber|red|blue)-(\d+)/g;
 const rawColor = /(?:oklch|rgb|rgba|hsl|hsla)\(|#[0-9a-fA-F]{3,8}\b/;
 const files = (await readdir(components)).filter((file) =>
@@ -77,6 +84,66 @@ for (const match of tokens.matchAll(variantBlock)) {
         violations.push(
           `tokens.css: variant ${variant} ${property} uses ${primitiveMatch[0]} (expected step ${min}–${max})`,
         );
+      }
+    }
+  }
+}
+
+// ── preset interaction progression ───────────────────────────────────────────
+// Rest → hover → active must keep moving one way, and the way the shipped
+// variants move: a soft surface deepens into the page (darker on light, lighter
+// on dark), a solid fill lifts off it (lighter on light, darker on dark). A
+// preset that inverts a rung would read as a control lighting up on press in one
+// theme and dimming in the other.
+const { presets } = await import(pathToFileURL(tokensTs).href);
+const ladders = [
+  {
+    name: 'soft',
+    lightens: false,
+    rungs: [
+      '--variant-soft-bg',
+      '--variant-soft-bg-hover',
+      '--variant-soft-bg-active',
+    ],
+  },
+  {
+    name: 'solid',
+    lightens: true,
+    rungs: [
+      '--variant-solid',
+      '--variant-solid-hover',
+      '--variant-solid-active',
+    ],
+  },
+];
+
+for (const [id, preset] of Object.entries(presets)) {
+  if (preset.default) continue;
+  const themePath = resolve(here, `../src/themes/${id}.css`);
+  const { variantScopes, resolveToken } = await readTokensCss([
+    tokensPath,
+    themePath,
+  ]);
+  for (const variant of Object.keys(preset.colors)) {
+    const scope = variantScopes.get(variant);
+    for (const { name, lightens, rungs } of ladders) {
+      for (const theme of ['light', 'dark']) {
+        const up = lightens === (theme === 'light');
+        const steps = rungs.map((token) => {
+          const { c, err } = resolveToken(token, theme, scope);
+          if (err) violations.push(`themes/${id}.css: ${err}`);
+          return c && c.to('oklch').coords[0];
+        });
+        if (steps.some((l) => l == null)) continue;
+        const ordered = steps.every(
+          (l, i) => i === 0 || (up ? l > steps[i - 1] : l < steps[i - 1]),
+        );
+        if (!ordered)
+          violations.push(
+            `themes/${id}.css: ${variant} ${name} ladder should get ` +
+              `${up ? 'lighter' : 'darker'} in ${theme} ` +
+              `(L ${steps.map((l) => l.toFixed(3)).join(' → ')})`,
+          );
       }
     }
   }

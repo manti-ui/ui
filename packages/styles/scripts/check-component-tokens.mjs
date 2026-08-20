@@ -18,13 +18,13 @@
  */
 import { readdir, readFile } from 'node:fs/promises';
 import { basename, dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const TOKENS_TS = resolve(here, '../../tokens/src/index.ts');
 const COMPONENTS = resolve(here, '../src/components');
 
-const { componentTokens } = await import(TOKENS_TS);
+const { componentTokens } = await import(pathToFileURL(TOKENS_TS).href);
 
 const sorted = (xs) => [...xs].sort();
 const eq = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
