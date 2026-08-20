@@ -11,15 +11,9 @@ export default function ShortcutGlobal() {
   useShortcut('mod+i', () => setOpen(true));
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--manti-space-3)',
-      }}
-    >
+    <div className="shortcut-status">
       <Button onClick={() => setOpen(true)}>Open dialog</Button>
-      <Badge variant="outline" style={{ fontFamily: 'var(--manti-font-mono)' }}>
+      <Badge variant="outline" className="shortcut-key">
         mod+i
       </Badge>
       <Dialog

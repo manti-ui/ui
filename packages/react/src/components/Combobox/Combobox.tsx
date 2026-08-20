@@ -4,6 +4,7 @@ import { combobox } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { Portal } from '../../internal/Portal';
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
@@ -130,6 +131,7 @@ export function Combobox({
       : undefined,
   });
   const api = combobox.connect(service, normalizeProps);
+  const focusVisibleProps = useFocusVisible<HTMLDivElement>();
 
   // Keep the selection (and its check indicator) in sync with the typed text:
   // the checked item is always the one whose label exactly matches the input.
@@ -158,8 +160,15 @@ export function Combobox({
   const contentSide = (
     contentProps as typeof contentProps & { 'data-side'?: 'top' | 'bottom' }
   )['data-side'];
+  const placementSide = placement.startsWith('top')
+    ? 'top'
+    : placement.startsWith('bottom')
+      ? 'bottom'
+      : undefined;
   const connectedSide =
-    api.open && filtered.length > 0 ? contentSide : undefined;
+    api.open && filtered.length > 0
+      ? (contentSide ?? placementSide)
+      : undefined;
 
   return (
     <div
@@ -170,7 +179,11 @@ export function Combobox({
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
-      <div {...api.getControlProps()} data-connected={connectedSide}>
+      <div
+        {...api.getControlProps()}
+        {...focusVisibleProps}
+        data-connected={connectedSide}
+      >
         {multiple &&
           api.value.map((val) => {
             const item = items.find((i) => i.value === val);

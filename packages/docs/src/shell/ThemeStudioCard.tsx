@@ -29,14 +29,14 @@ export function ThemeStudioCard() {
         rel="noreferrer"
         className="docs-theme-cta-link"
       >
+        <span className="docs-theme-cta-copy">
+          <strong>Theme Studio</strong>
+          <span className="docs-theme-cta-external">{ExternalIcon}</span>
+        </span>
         <span className="docs-theme-cta-swatches" aria-hidden="true">
           {SWATCHES.map((color) => (
             <i key={color} style={{ background: color }} />
           ))}
-          <span className="docs-theme-cta-external">{ExternalIcon}</span>
-        </span>
-        <span className="docs-theme-cta-copy">
-          <strong>Theme Studio</strong>
         </span>
       </a>
     </section>

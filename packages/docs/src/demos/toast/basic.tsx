@@ -5,14 +5,7 @@ export default function ToastBasic() {
   const { toaster, Toaster } = useMemo(() => createToaster(), []);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 'var(--manti-space-2)',
-        justifyContent: 'center',
-      }}
-    >
+    <div className="toast-actions">
       <Button
         onClick={() =>
           toaster.create({

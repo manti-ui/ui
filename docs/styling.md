@@ -141,8 +141,11 @@ Retune a step for the whole system:
 ```
 
 The channel carries `text`, `text-sub`, `icon`, `control-height`,
-`control-padding-x`, `panel-padding`, `panel-gap`, `item-padding-y`,
-`item-padding-x`, `item-gap`, `item-radius`, and `cell`.
+`control-padding-x`, `control-radius`, `panel-radius`, `panel-padding`,
+`panel-gap`, `item-padding-y`, `item-padding-x`, `item-gap`, `item-radius`,
+and `cell`. Controls and the panels they open use the matching radius step;
+row-level treatments use `item-radius` so a large menu row does not become a
+pill by accident.
 
 ## Variants
 
@@ -207,11 +210,13 @@ Or use a preset:
 <div data-radius="sharp">…</div>
 ```
 
-Available values are `none`, `sharp`, `default`, and `round`.
+Available values are `none`, `sharp`, `default`, `round`, and `pill`. `none` is
+the square mode; the other four are positive shape profiles.
 
-Set `--manti-radius-pill: 9999px` to make participating controls pill-shaped.
-`--manti-radius-thumb` controls draggable handles. `--manti-radius-full` is for
-parts that must always be round.
+The `pill` preset makes participating controls pill-shaped. For a custom
+profile, set `--manti-radius-pill: 9999px` yourself. `--manti-radius-thumb`
+controls draggable handles. `--manti-radius-full` is for parts that must always
+be round.
 
 ## Motion
 

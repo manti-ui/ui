@@ -8,7 +8,7 @@ const items = [
 
 export default function StepsVertical() {
   return (
-    <div style={{ width: '100%' }}>
+    <div className="steps-field">
       <Steps items={items} variant="primary" orientation="vertical" />
     </div>
   );

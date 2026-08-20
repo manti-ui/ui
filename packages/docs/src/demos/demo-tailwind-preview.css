@@ -1,0 +1,217 @@
+/*
+ * Minimal Tailwind utility aliases for the docs' live preview. A consuming app
+ * gets these utilities from Tailwind v4; the docs site has no Tailwind compiler,
+ * so the aliases keep its editable preview faithful without changing the public
+ * demo source or adding another runtime dependency.
+ */
+.docs-demo-canvas :is(.flex, .inline-flex) {
+  display: flex;
+}
+
+.docs-demo-canvas .grid {
+  display: grid;
+}
+
+.docs-demo-canvas .inline-flex {
+  display: inline-flex;
+}
+
+.docs-demo-canvas .flex-col {
+  flex-direction: column;
+}
+
+.docs-demo-canvas .flex-wrap {
+  flex-wrap: wrap;
+}
+
+.docs-demo-canvas .items-center {
+  align-items: center;
+}
+
+.docs-demo-canvas .items-start {
+  align-items: flex-start;
+}
+
+.docs-demo-canvas .justify-center {
+  justify-content: center;
+}
+
+.docs-demo-canvas .justify-between {
+  justify-content: space-between;
+}
+
+.docs-demo-canvas .place-items-center {
+  place-items: center;
+}
+
+.docs-demo-canvas .gap-1 {
+  gap: var(--manti-space-1);
+}
+
+.docs-demo-canvas .gap-2 {
+  gap: var(--manti-space-2);
+}
+
+.docs-demo-canvas .gap-3 {
+  gap: var(--manti-space-3);
+}
+
+.docs-demo-canvas .gap-4 {
+  gap: var(--manti-space-4);
+}
+
+.docs-demo-canvas .gap-5 {
+  gap: var(--manti-space-5);
+}
+
+.docs-demo-canvas .gap-6 {
+  gap: var(--manti-space-6);
+}
+
+.docs-demo-canvas .w-full {
+  width: 100%;
+}
+
+.docs-demo-canvas [class~='w-[calc(var(--manti-space-16)*4)]'] {
+  width: calc(var(--manti-space-16) * 4);
+}
+
+.docs-demo-canvas [class~='w-[calc(var(--manti-space-16)*5)]'] {
+  width: calc(var(--manti-space-16) * 5);
+}
+
+.docs-demo-canvas [class~='max-w-[calc(var(--manti-space-16)*5)]'] {
+  max-width: calc(var(--manti-space-16) * 5);
+}
+
+.docs-demo-canvas [class~='max-w-[calc(var(--manti-space-16)*6)]'] {
+  max-width: calc(var(--manti-space-16) * 6);
+}
+
+.docs-demo-canvas [class~='max-w-[calc(var(--manti-space-16)*7)]'] {
+  max-width: calc(var(--manti-space-16) * 7);
+}
+
+.docs-demo-canvas [class~='max-w-[calc(var(--manti-space-16)*8)]'] {
+  max-width: calc(var(--manti-space-16) * 8);
+}
+
+.docs-demo-canvas [class~='max-w-[calc(var(--manti-space-16)*9)]'] {
+  max-width: calc(var(--manti-space-16) * 9);
+}
+
+.docs-demo-canvas [class~='max-w-[calc(var(--manti-space-16)*10)]'] {
+  max-width: calc(var(--manti-space-16) * 10);
+}
+
+.docs-demo-canvas [class~='h-[calc(var(--manti-space-16)*3)]'] {
+  height: calc(var(--manti-space-16) * 3);
+}
+
+.docs-demo-canvas [class~='h-[calc(var(--manti-space-16)*2.75)]'] {
+  height: calc(var(--manti-space-16) * 2.75);
+}
+
+.docs-demo-canvas [class~='h-[calc(var(--manti-space-16)*3.25)]'] {
+  height: calc(var(--manti-space-16) * 3.25);
+}
+
+.docs-demo-canvas .border {
+  border: calc(var(--manti-focus-ring-width) / 3) solid var(--manti-border);
+}
+
+.docs-demo-canvas .border-border {
+  border-color: var(--manti-border);
+}
+
+.docs-demo-canvas .border-border-strong {
+  border-color: var(--manti-border-strong);
+}
+
+.docs-demo-canvas .border-dashed {
+  border-style: dashed;
+}
+
+.docs-demo-canvas .rounded-md {
+  border-radius: var(--manti-radius-md);
+}
+
+.docs-demo-canvas .rounded-lg {
+  border-radius: var(--manti-radius-lg);
+}
+
+.docs-demo-canvas .bg-surface {
+  background: var(--manti-surface);
+}
+
+.docs-demo-canvas .bg-surface-raised {
+  background: var(--manti-surface-raised);
+}
+
+.docs-demo-canvas .text-text-muted {
+  color: var(--manti-text-muted);
+}
+
+.docs-demo-canvas .text-text-subtle {
+  color: var(--manti-text-subtle);
+}
+
+.docs-demo-canvas .text-sm {
+  font-size: var(--manti-text-sm);
+}
+
+.docs-demo-canvas .text-lg {
+  font-size: var(--manti-text-lg);
+}
+
+.docs-demo-canvas .text-xl {
+  font-size: var(--manti-text-xl);
+}
+
+.docs-demo-canvas .font-mono {
+  font-family: var(--manti-font-mono);
+}
+
+.docs-demo-canvas .font-semibold {
+  font-weight: var(--manti-weight-semibold);
+}
+
+.docs-demo-canvas .leading-normal {
+  line-height: var(--manti-leading-normal);
+}
+
+.docs-demo-canvas .select-none {
+  user-select: none;
+}
+
+.docs-demo-canvas .outline-none {
+  outline: none;
+}
+
+.docs-demo-canvas .m-0 {
+  margin: 0;
+}
+
+.docs-demo-canvas .p-3 {
+  padding: var(--manti-space-3);
+}
+
+.docs-demo-canvas .p-4 {
+  padding: var(--manti-space-4);
+}
+
+.docs-demo-canvas .p-5 {
+  padding: var(--manti-space-5);
+}
+
+.docs-demo-canvas .px-1 {
+  padding-inline: var(--manti-space-1);
+}
+
+.docs-demo-canvas .pt-3 {
+  padding-block-start: var(--manti-space-3);
+}
+
+.docs-demo-canvas [class~='min-h-[calc(var(--manti-space-16)*1.5)]'] {
+  min-height: calc(var(--manti-space-16) * 1.5);
+}

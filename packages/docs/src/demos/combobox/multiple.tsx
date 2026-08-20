@@ -12,7 +12,7 @@ const spices = [
 
 export default function ComboboxMultiple() {
   return (
-    <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 5)' }}>
+    <div className="combobox-field">
       <Combobox
         items={spices}
         label="Spices"

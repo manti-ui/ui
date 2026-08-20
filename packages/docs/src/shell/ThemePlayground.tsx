@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { oklchToRgb, parseOklchValue } from '@manti-ui/folds';
 import { Button, ColorPicker, SegmentedControl } from '@manti-ui/react';
+import { colorPrimitives } from '@manti-ui/tokens';
 
 /**
  * Right-rail playground: pick a color for a variant, or a radius preset, and the
@@ -18,13 +20,14 @@ import { Button, ColorPicker, SegmentedControl } from '@manti-ui/react';
 type VariantKey = 'primary' | 'secondary';
 
 /** Mirrors `radiusModes` in `@manti-ui/tokens`. */
-type RadiusMode = 'none' | 'sharp' | 'default' | 'round';
+type RadiusMode = 'none' | 'sharp' | 'default' | 'round' | 'pill';
 
 const RADIUS_MODES: { value: RadiusMode; label: string }[] = [
   { value: 'none', label: 'None' },
   { value: 'sharp', label: 'Sharp' },
   { value: 'default', label: 'Base' },
   { value: 'round', label: 'Round' },
+  { value: 'pill', label: 'Pill' },
 ];
 
 const SWATCHES: { key: VariantKey; label: string }[] = [
@@ -33,8 +36,8 @@ const SWATCHES: { key: VariantKey; label: string }[] = [
 ];
 
 const DEFAULTS: Record<VariantKey, string> = {
-  primary: '#e2681c',
-  secondary: '#6b7280',
+  primary: colorPrimitives.orange[7],
+  secondary: colorPrimitives.gray[7],
 };
 
 const STORAGE_KEY = 'manti-docs-palette';
@@ -43,12 +46,22 @@ const STYLE_EL_ID = 'manti-playground-theme';
 // --- color parsing (browser only) ------------------------------------------
 let parseCtx: CanvasRenderingContext2D | null | undefined;
 function toRgb(color: string): [number, number, number] {
+  // Chromium preserves modern CSS colors in CSSOM (`oklch(...)`) instead of
+  // serializing them to rgb(). Never treat the OKLCH channels as RGB bytes;
+  // convert the value through the same native color-space model as the picker.
+  const oklch = parseOklchValue(color);
+  if (oklch) {
+    const rgb = oklchToRgb(oklch);
+    return [rgb.red, rgb.green, rgb.blue];
+  }
+
   if (parseCtx === undefined) {
     parseCtx = document.createElement('canvas').getContext('2d');
   }
   if (!parseCtx) return [0, 0, 0];
-  // Setting an invalid value is ignored, so seed a known one first; the canvas
-  // then normalizes any valid CSS color to `#rrggbb` or `rgba(...)`.
+  // For legacy CSS color formats, setting an invalid value is ignored, so seed
+  // a known one first; the canvas then normalizes them to `#rrggbb` or
+  // `rgba(...)`.
   parseCtx.fillStyle = '#000';
   parseCtx.fillStyle = color;
   const normalized = parseCtx.fillStyle;
@@ -138,7 +151,7 @@ function readableOn(color: string): string {
 /** Expand one base color into the full `--variant-*` role vocabulary. */
 function ramp(base: string): string {
   const mix = (pct: number, other: string) =>
-    `color-mix(in oklab, ${base} ${pct}%, ${other})`;
+    `color-mix(in oklch, ${base} ${pct}%, ${other})`;
   const ld = (light: string, dark: string) => `light-dark(${light}, ${dark})`;
   return [
     `--variant-solid:${base}`,
@@ -268,6 +281,9 @@ export function ThemePlayground() {
             <ColorPicker
               label={s.label}
               value={state.colors[s.key]}
+              colorSpace="oklch"
+              format="oklch"
+              formats={['oklch']}
               showValueText={false}
               onValueChange={(value) => setColor(s.key, value)}
             />
@@ -282,6 +298,8 @@ export function ThemePlayground() {
         {/* The picker is itself a control-class component, so it re-rounds along
             with the page it is retuning. */}
         <SegmentedControl
+          // Keep the picker compact and leave enough headroom for `round` to
+          // remain visibly different from the fully rounded `pill` profile.
           size="sm"
           value={state.radius}
           items={RADIUS_MODES}

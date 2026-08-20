@@ -8,15 +8,20 @@ description: A color picker with area, channel sliders, formats, and copy action
 
 # ColorPicker
 
-ColorPicker accepts CSS color strings. Its panel includes a saturation area,
-hue and alpha sliders, format tabs, an eyedropper, and a copy field.
+ColorPicker accepts `hex`, `rgba`, `hsla`, `hsba`, and `oklch` CSS color strings.
+Its panel includes a color-space area, channel sliders, format tabs, an
+eyedropper, and an editable copy field. `format` controls the output string;
+`colorSpace="oklch"` keeps palette interaction in native OKLCH channels, so
+changing the area or sliders does not round-trip through sRGB. `defaultFormat`
+sets the initial format when `format` is uncontrolled. Use `formats` to limit
+the copy tabs; the selected format is included automatically.
 
 <Demo name="color-picker/basic" center />
 
 ## Sizes
 
 `size` sets the trigger's height, padding, type, and swatch. The panel keeps its
-own canvas: a saturation area and sliders have no rows to rescale.
+own canvas; its channel controls use the same size channel as the trigger.
 
 ## API
 

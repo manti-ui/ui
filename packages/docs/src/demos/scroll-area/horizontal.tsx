@@ -4,21 +4,9 @@ export default function ScrollAreaHorizontal() {
   return (
     <ScrollArea
       orientation="horizontal"
-      style={{
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 6)',
-        border: '1px solid var(--manti-border)',
-        borderRadius: 'var(--manti-radius-md)',
-        background: 'var(--manti-surface)',
-      }}
+      className="scroll-area-horizontal"
     >
-      <div
-        style={{
-          display: 'flex',
-          gap: 'var(--manti-space-2)',
-          padding: 'var(--manti-space-3)',
-        }}
-      >
+      <div className="scroll-area-row">
         {Array.from({ length: 16 }, (_, i) => (
           <Badge key={i} variant="secondary">
             Tag {i + 1}

@@ -77,6 +77,11 @@ export const meta: ComponentMeta = {
       type: 'string',
       description: 'Form field name.',
     },
+    {
+      name: 'aria-label',
+      type: 'string',
+      description: 'Accessible name when no visible label is provided.',
+    },
   ],
   anatomy: [
     { part: 'root', description: 'The field wrapper.' },

@@ -93,7 +93,7 @@
     color: var(--manti-text-subtle);
     font-size: var(--manti-data-table-header-font-size);
     font-weight: var(--manti-weight-semibold);
-    letter-spacing: 0.02em;
+    letter-spacing: var(--manti-tracking-wide);
     text-align: start;
     white-space: nowrap;
     vertical-align: middle;

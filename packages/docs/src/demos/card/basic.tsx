@@ -2,17 +2,9 @@ import { Badge, Button, Card } from '@manti-ui/react';
 
 export default function CardBasic() {
   return (
-    <Card
-      style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 8)' }}
-    >
+    <Card className="card-panel">
       <Card.Header>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <div className="card-header">
           <Card.Title>Kayseri Mantısı</Card.Title>
           <Badge variant="primary" dot>
             Fresh

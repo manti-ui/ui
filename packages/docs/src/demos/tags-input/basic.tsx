@@ -2,7 +2,7 @@ import { TagsInput } from '@manti-ui/react';
 
 export default function TagsInputBasic() {
   return (
-    <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 7)' }}>
+    <div className="tags-input">
       <TagsInput
         label="Fillings"
         variant="primary"

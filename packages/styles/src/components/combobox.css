@@ -43,14 +43,18 @@
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
     /* Control class — joins the opt-in pill channel. */
-    border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
+    border-radius: max(
+      var(--manti-size-control-radius, var(--manti-radius-md)),
+      var(--manti-radius-pill)
+    );
     transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:hover {
       border-color: var(--manti-border-strong);
     }
 
-    /* Input-like control: the primary color starts at active/focus/open. */
+    /* Input-like control: the primary color starts at active/focus. Opening
+       keeps the trigger's neutral border instead of introducing accent ink. */
     &:active {
       border-color: var(--variant-ring);
     }
@@ -59,10 +63,21 @@
       border-color: var(--variant-ring);
     }
 
-    /* Keep the focused border continuous as the control joins its panel. */
+    /* The control owns the keyboard ring for both the text input and toggle;
+       neither child paints a second nested indicator. */
+    &:has(:focus-visible):not([data-focus-visible='false']) {
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+
+    &[data-state='open'] {
+      border-color: var(--manti-border);
+    }
+
+    /* Keep the neutral border visible as the control joins its panel. */
     &[data-connected] {
       background: var(--manti-panel-tint-strong);
-      border-color: var(--variant-ring);
+      border-color: var(--manti-border);
     }
 
     &[data-connected='bottom'] {
@@ -103,9 +118,13 @@
       border-color: var(--variant-ring);
     }
 
+    &[data-state='open'] {
+      border-color: transparent;
+    }
+
     &[data-connected] {
       background: var(--manti-panel-tint-strong);
-      border-color: var(--variant-ring);
+      border-color: transparent;
     }
 
     &[data-connected='bottom'] {
@@ -168,6 +187,7 @@
     padding: 0;
     border: none;
     border-radius: var(--manti-radius-xs);
+    outline: none;
     background: none;
     color: currentcolor;
     opacity: 0.7;
@@ -193,6 +213,7 @@
     justify-content: center;
     margin-inline-start: var(--manti-space-2);
     padding: 0;
+    outline: none;
     color: var(--manti-text-muted);
     transition: color var(--manti-duration-fast) var(--manti-ease-smooth);
 
@@ -236,8 +257,8 @@
     background: var(--manti-panel-tint-strong);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid var(--variant-ring);
-    border-radius: var(--manti-radius-md);
+    border: 1px solid var(--manti-border);
+    border-radius: var(--manti-size-panel-radius, var(--manti-radius-md));
   }
 
   /* Join the panel on the side chosen by Floating UI, including when collision
@@ -246,7 +267,7 @@
     [data-scope='scroll-area'][data-part='root']:has(
       [data-scope='combobox'][data-part='content'][data-side='bottom']
     ) {
-    margin-top: -8px;
+    margin-top: calc(-1 * var(--manti-space-2));
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-top-color: transparent;
@@ -256,7 +277,7 @@
     [data-scope='scroll-area'][data-part='root']:has(
       [data-scope='combobox'][data-part='content'][data-side='top']
     ) {
-    margin-bottom: -8px;
+    margin-bottom: calc(-1 * var(--manti-space-2));
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     border-bottom-color: transparent;

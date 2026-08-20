@@ -103,17 +103,19 @@ Unsupported `backdrop-filter` environments receive an opaque fallback.
 
 ## Radius
 
-`--manti-radius-factor` rescales the radius ramp. `data-radius` provides four
-presets:
+`--manti-radius-factor` rescales the radius ramp. `data-radius` provides one
+square mode and four positive shape presets:
 
 ```html
 <div data-radius="none">…</div>
 <div data-radius="sharp">…</div>
 <div data-radius="default">…</div>
 <div data-radius="round">…</div>
+<div data-radius="pill">…</div>
 ```
 
-Set `--manti-radius-pill: 9999px` when controls should become pill-shaped.
+The `pill` preset makes participating controls pill-shaped. Set
+`--manti-radius-pill: 9999px` yourself for a custom profile.
 Parts that are round by design use `--manti-radius-full`.
 
 ## Typography and spacing

@@ -2,20 +2,8 @@ import { Kbd } from '@manti-ui/react';
 
 export default function KbdDemo() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--manti-space-4)',
-      }}
-    >
-      <span
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 'var(--manti-space-2)',
-        }}
-      >
+    <div className="kbd-list">
+      <span className="kbd-item">
         <Kbd>⌘</Kbd>
         <span>+</span>
         <Kbd>K</Kbd>

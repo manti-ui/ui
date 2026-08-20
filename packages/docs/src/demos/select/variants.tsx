@@ -8,14 +8,7 @@ const regions = [
 
 export default function SelectVariants() {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gap: 'var(--manti-space-4)',
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 5)',
-      }}
-    >
+    <div className="select-grid">
       <Select items={regions} label="Default" placeholder="Pick a region…" />
       <Select
         items={regions}

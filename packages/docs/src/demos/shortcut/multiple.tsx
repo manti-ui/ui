@@ -17,50 +17,24 @@ export default function ShortcutMultiple() {
   });
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gap: 'var(--manti-space-3)',
-        width: 'calc(var(--manti-space-16) * 4)',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          gap: 'var(--manti-space-2)',
-          flexWrap: 'wrap',
-        }}
-      >
+    <div className="shortcut-grid">
+      <div className="shortcut-list">
         {COMBOS.map((combo) => (
-          <Badge
-            key={combo}
-            variant="outline"
-            style={{ fontFamily: 'var(--manti-font-mono)' }}
-          >
+          <Badge key={combo} variant="outline" className="shortcut-key">
             {combo}
           </Badge>
         ))}
       </div>
-      <Card
-        style={{
-          display: 'grid',
-          gap: 'var(--manti-space-1)',
-          padding: 'var(--manti-space-4)',
-          minHeight: 'calc(var(--manti-space-16) * 1.5)',
-        }}
-      >
+      <Card className="shortcut-log">
         {log.length === 0 ? (
-          <span style={{ color: 'var(--manti-text-muted)' }}>
-            Press a shortcut…
-          </span>
+          <span className="shortcut-empty">Press a shortcut…</span>
         ) : (
           log.map((entry, index) => (
             <span
               key={`${entry}-${index}`}
-              style={{
-                fontFamily: 'var(--manti-font-mono)',
-                opacity: index === 0 ? 1 : 0.5,
-              }}
+              className={
+                index === 0 ? 'shortcut-entry' : 'shortcut-entry-muted'
+              }
             >
               {entry}
             </span>

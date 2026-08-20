@@ -75,7 +75,7 @@ export function Accordion({
         const itemProps = { value: item.value, disabled: item.disabled };
         return (
           <div key={item.value} {...api.getItemProps(itemProps)}>
-            <h3>
+            <h3 data-scope="accordion" data-part="item-heading">
               <button {...api.getItemTriggerProps(itemProps)}>
                 {item.title}
                 <span {...api.getItemIndicatorProps(itemProps)}>{Chevron}</span>

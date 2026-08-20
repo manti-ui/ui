@@ -2,7 +2,7 @@ import { Textarea } from '@manti-ui/react';
 
 export default function TextareaBasic() {
   return (
-    <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 6)' }}>
+    <div className="textarea-field">
       <Textarea
         label="Recipe notes"
         placeholder="Add preparation notes"

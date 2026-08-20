@@ -1,26 +1,19 @@
-import { Badge, Button, Calendar, SegmentedControl } from '@manti-ui/react';
+import {
+  Badge,
+  Button,
+  Calendar,
+  Heading,
+  SegmentedControl,
+} from '@manti-ui/react';
 
 export default function CalendarBoard() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-        }}
-      >
-        <h2
-          style={{
-            margin: 0,
-            fontSize: 'var(--manti-text-xl)',
-            fontWeight: 'var(--manti-weight-semibold)',
-          }}
-        >
+    <div className="calendar">
+      <div className="calendar-toolbar">
+        <Heading level={2} size="xl" className="calendar-heading">
           Calendar
-        </h2>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        </Heading>
+        <div className="calendar-actions">
           <SegmentedControl
             size="sm"
             variant="primary"

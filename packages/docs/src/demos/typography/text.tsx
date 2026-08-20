@@ -2,7 +2,7 @@ import { Text } from '@manti-ui/react';
 
 export default function TextDemo() {
   return (
-    <div style={{ display: 'grid', gap: 'var(--manti-space-3)' }}>
+    <div className="text-list">
       <Text size="lg/semibold">
         Behavior you can trust, styling you can own.
       </Text>

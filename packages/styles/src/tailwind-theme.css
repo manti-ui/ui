@@ -61,6 +61,7 @@
   --font-weight-semibold: var(--manti-weight-semibold);
   --font-weight-bold: var(--manti-weight-bold);
 
+  --leading-none: var(--manti-leading-none);
   --leading-tight: var(--manti-leading-tight);
   --leading-snug: var(--manti-leading-snug);
   --leading-normal: var(--manti-leading-normal);

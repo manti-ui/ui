@@ -5,19 +5,27 @@
  */
 @layer manti.components {
   [data-scope='radio-group'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-radio-group-gap: var(--manti-space-3);
+    --manti-radio-group-horizontal-gap: var(--manti-space-5);
+    --manti-radio-group-item-gap: var(--manti-space-3);
+    --manti-radio-group-control-size: var(--manti-text-xl);
+    --manti-radio-group-dot-size: var(--manti-space-2);
+    --manti-radio-group-label-font-size: var(--manti-text-sm);
+    --manti-radio-group-item-font-size: var(--manti-text-sm);
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-3);
+    gap: var(--manti-radio-group-gap);
 
     &[data-orientation='horizontal'] {
       flex-direction: row;
       flex-wrap: wrap;
-      gap: var(--manti-space-5);
+      gap: var(--manti-radio-group-horizontal-gap);
     }
   }
 
   [data-scope='radio-group'][data-part='label'] {
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-radio-group-label-font-size);
     font-weight: var(--manti-weight-semibold);
     color: var(--manti-text);
   }
@@ -25,7 +33,7 @@
   [data-scope='radio-group'][data-part='item'] {
     display: inline-flex;
     align-items: center;
-    gap: var(--manti-space-3);
+    gap: var(--manti-radio-group-item-gap);
     cursor: pointer;
 
     &[data-disabled] {
@@ -37,8 +45,8 @@
   [data-scope='radio-group'][data-part='item-control'] {
     position: relative;
     flex: none;
-    width: 1.25rem;
-    height: 1.25rem;
+    width: var(--manti-radio-group-control-size);
+    height: var(--manti-radio-group-control-size);
     background: var(--manti-surface-raised);
     border: 1.5px solid var(--manti-border-strong);
     border-radius: var(--manti-radius-full);
@@ -51,8 +59,8 @@
       position: absolute;
       inset: 0;
       margin: auto;
-      width: 0.5rem;
-      height: 0.5rem;
+      width: var(--manti-radio-group-dot-size);
+      height: var(--manti-radio-group-dot-size);
       border-radius: var(--manti-radius-full);
       background: var(--variant-on-solid);
       transform: scale(0);
@@ -90,7 +98,7 @@
   }
 
   [data-scope='radio-group'][data-part='item-text'] {
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-radio-group-item-font-size);
     font-weight: var(--manti-weight-medium);
     color: var(--manti-text);
   }

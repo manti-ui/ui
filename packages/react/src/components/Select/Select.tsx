@@ -4,6 +4,7 @@ import { select } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { Portal } from '../../internal/Portal';
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
@@ -42,6 +43,8 @@ export interface SelectProps {
   required?: boolean;
   /** Form field name. */
   name?: string;
+  /** Accessible name when no visible label is provided. */
+  'aria-label'?: string;
   id?: string;
   className?: string;
 }
@@ -77,6 +80,7 @@ export function Select({
   invalid,
   required,
   name,
+  'aria-label': ariaLabel,
   id,
   className,
 }: SelectProps) {
@@ -112,11 +116,26 @@ export function Select({
       : undefined,
   });
   const api = select.connect(service, normalizeProps);
+  const triggerProps = api.getTriggerProps();
   const contentProps = api.getContentProps();
+  const triggerSide = (
+    triggerProps as typeof triggerProps & {
+      'data-side'?: 'top' | 'bottom';
+    }
+  )['data-side'];
   const contentSide = (
     contentProps as typeof contentProps & { 'data-side'?: 'top' | 'bottom' }
   )['data-side'];
-  const connectedSide = api.open && items.length > 0 ? contentSide : undefined;
+  const placementSide = placement.startsWith('top')
+    ? 'top'
+    : placement.startsWith('bottom')
+      ? 'bottom'
+      : undefined;
+  const connectedSide =
+    api.open && items.length > 0
+      ? (triggerSide ?? contentSide ?? placementSide)
+      : undefined;
+  const focusVisibleProps = useFocusVisible<HTMLButtonElement>();
 
   return (
     <div
@@ -128,7 +147,15 @@ export function Select({
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
-        <button {...api.getTriggerProps()} data-connected={connectedSide}>
+        <button
+          {...triggerProps}
+          {...focusVisibleProps}
+          aria-label={ariaLabel}
+          aria-labelledby={
+            ariaLabel != null ? undefined : triggerProps['aria-labelledby']
+          }
+          data-connected={connectedSide}
+        >
           <span
             {...api.getValueTextProps()}
             data-placeholder={api.empty || undefined}

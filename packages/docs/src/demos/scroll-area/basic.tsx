@@ -1,4 +1,4 @@
-import { ScrollArea } from '@manti-ui/react';
+import { ScrollArea, Text } from '@manti-ui/react';
 
 const paragraphs = [
   'Mantı is a family of dumplings found from Central Asia to Anatolia. The Turkish kind is tiny — squares of thin dough pinched around a pinch of spiced lamb or beef, then boiled.',
@@ -10,30 +10,10 @@ const paragraphs = [
 
 export default function ScrollAreaBasic() {
   return (
-    <ScrollArea
-      style={{
-        height: '13rem',
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 6)',
-        border: '1px solid var(--manti-border)',
-        borderRadius: 'var(--manti-radius-md)',
-        background: 'var(--manti-surface)',
-      }}
-    >
-      <div
-        style={{
-          display: 'grid',
-          gap: 'var(--manti-space-3)',
-          padding: 'var(--manti-space-4)',
-          color: 'var(--manti-text-muted)',
-          fontSize: 'var(--manti-text-sm)',
-          lineHeight: 'var(--manti-leading-normal)',
-        }}
-      >
+    <ScrollArea className="scroll-area">
+      <div className="scroll-area-content">
         {paragraphs.map((p, i) => (
-          <p key={i} style={{ margin: 0 }}>
-            {p}
-          </p>
+          <Text key={i}>{p}</Text>
         ))}
       </div>
     </ScrollArea>
