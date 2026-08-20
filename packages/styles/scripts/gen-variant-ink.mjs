@@ -16,14 +16,9 @@
  * resample); nothing tied the two together, so the ink could quietly stop being
  * the right choice and only a human reading the contrast report would notice.
  *
- * Ranking is lexicographic: clear WCAG 2.1 AA (4.5:1) first, then maximise APCA
- * Lc among whatever survives. The order matters because the two metrics
- * genuinely disagree here. On the primary orange, light ink scores Lc 65 against
- * dark ink's 41 — APCA much prefers it — yet it lands at 3.39:1 where dark ink
- * reaches 5.24:1. AA is the floor the contrast gate enforces and the one a
- * consumer is held to, so AA wins and APCA only breaks ties above it. If no
- * candidate clears the bar the script says so and exits non-zero rather than
- * quietly shipping the least-bad ink.
+ * The ranking itself lives in `lib/variant-ink.mjs`, shared with the preset
+ * theme generator. If no candidate clears the bar the script says so and exits
+ * non-zero rather than quietly shipping the least-bad ink.
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve as presolve } from 'node:path';
@@ -31,7 +26,8 @@ import { fileURLToPath } from 'node:url';
 
 import prettier from 'prettier';
 
-import { apca, readTokensCss, wcag } from './lib/tokens-css.mjs';
+import { readTokensCss } from './lib/tokens-css.mjs';
+import { AA, INKS, pickInk } from './lib/variant-ink.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const CSS = presolve(here, '../src/tokens.css');
@@ -40,19 +36,7 @@ const END = '/* @variant-ink:generated:end */';
 const check = process.argv.includes('--check');
 const report = process.argv.includes('--report');
 
-/**
- * The inks a solid may carry. Both are existing tokens, so the generated region
- * never introduces a bespoke literal: `--manti-text-on-accent` is the near-white
- * used across accent surfaces, `--manti-gray-12` the darkest neutral.
- */
-const INKS = [
-  { token: '--manti-text-on-accent', label: 'light' },
-  { token: '--manti-gray-12', label: 'dark' },
-];
-
 const THEMES = ['light', 'dark'];
-/** WCAG 2.1 AA for normal text — the same bar `check-contrast.mjs` gates on. */
-const AA = 4.5;
 
 const { variantScopes, resolveToken } = await readTokensCss(CSS);
 
@@ -69,7 +53,7 @@ for (const [variant, scope] of variantScopes) {
       failed = true;
       continue;
     }
-    const scored = [];
+    const candidates = [];
     for (const ink of INKS) {
       const c = resolveToken(ink.token, theme, scope);
       if (c.err) {
@@ -77,16 +61,11 @@ for (const [variant, scope] of variantScopes) {
         failed = true;
         continue;
       }
-      scored.push({
-        ...ink,
-        lc: apca(c.c, solid.c),
-        ratio: wcag(c.c, solid.c),
-      });
+      candidates.push({ ...ink, c: c.c });
     }
-    if (scored.length < INKS.length) continue;
-    // AA first, Lc second — see the header note on why the order is not free.
-    const passing = scored.filter((s) => s.ratio >= AA);
-    if (!passing.length) {
+    if (candidates.length < INKS.length) continue;
+    const { scored, chosen } = pickInk(solid.c, candidates);
+    if (!chosen) {
       const best = scored.reduce((a, b) => (b.ratio > a.ratio ? b : a));
       console.error(
         `gen-variant-ink: ${variant} (${theme}): no ink clears AA on this solid ` +
@@ -95,9 +74,8 @@ for (const [variant, scope] of variantScopes) {
       failed = true;
       continue;
     }
-    passing.sort((a, b) => b.lc - a.lc);
-    perTheme[theme] = passing[0];
-    rows.push({ variant, theme, scored, chosen: passing[0] });
+    perTheme[theme] = chosen;
+    rows.push({ variant, theme, scored, chosen });
   }
   if (Object.keys(perTheme).length === THEMES.length)
     picks.set(variant, perTheme);
