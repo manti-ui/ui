@@ -17,13 +17,46 @@ export const meta: ComponentMeta = {
       name: 'defaultValue',
       type: 'string',
       default: `'#7c3aed'`,
-      description: 'Initial value for uncontrolled usage.',
+      description:
+        'Initial CSS color value for uncontrolled usage. Hex, rgba, hsla, hsba, and oklch strings are accepted.',
+    },
+    {
+      name: 'format',
+      type: 'ColorPickerFormat',
+      default: `'rgba'`,
+      description:
+        'Output format used by the trigger, editable value field, selected copy tab, and onValueChange callback.',
+    },
+    {
+      name: 'defaultFormat',
+      type: 'ColorPickerFormat',
+      default: `'rgba'`,
+      description:
+        'Initial output format when format is uncontrolled. The selected format is always included in the copy tabs.',
+    },
+    {
+      name: 'colorSpace',
+      type: 'ColorSpaceId',
+      description:
+        'Color space used by the interactive palette. `oklch` keeps area and channel changes in native OKLCH values.',
+    },
+    {
+      name: 'formats',
+      type: 'readonly ColorPickerFormat[]',
+      default: `['hex', 'rgba', 'hsla']`,
+      description:
+        'Formats shown in the copy tabs. The selected format is included automatically when it is not in this list.',
+    },
+    {
+      name: 'onFormatChange',
+      type: '(format: ColorPickerFormat) => void',
+      description: 'Called when a copy tab changes the selected color format.',
     },
     {
       name: 'onValueChange',
       type: '(value: string) => void',
       description:
-        'Called whenever the value changes; emits a CSS color string.',
+        'Called whenever the value changes; emits a CSS color string in the selected format.',
     },
     {
       name: 'showValueText',
@@ -37,7 +70,7 @@ export const meta: ComponentMeta = {
       type: `'sm' | 'md' | 'lg'`,
       default: `'md'`,
       description:
-        'Trigger size: height, padding, type, and swatch. The panel keeps its own fixed canvas.',
+        'Trigger size: height, padding, type, and swatch. The panel receives the same size channel.',
     },
     {
       name: 'placement',
@@ -70,7 +103,11 @@ export const meta: ComponentMeta = {
     },
     { part: 'positioner', description: 'Positions the floating panel.' },
     { part: 'content', description: 'The translucent picker panel.' },
-    { part: 'area', description: 'The saturation/value selection area.' },
+    {
+      part: 'area',
+      description:
+        'The two-dimensional color selection area; in OKLCH, its axes are chroma and lightness.',
+    },
     {
       part: 'area-background',
       description: 'The hue-tinted backdrop of the area.',
@@ -78,7 +115,7 @@ export const meta: ComponentMeta = {
     { part: 'area-thumb', description: 'The draggable area handle.' },
     {
       part: 'channel-slider',
-      description: 'A hue or alpha slider track wrapper.',
+      description: 'A color-space channel slider track wrapper.',
     },
     {
       part: 'channel-slider-track',

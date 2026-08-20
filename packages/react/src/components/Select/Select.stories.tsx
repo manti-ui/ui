@@ -38,7 +38,7 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
 
 export const Filled: Story = {
-  args: { variant: 'fill', label: undefined },
+  args: { variant: 'fill', label: undefined, 'aria-label': 'Region' },
 };
 
 export const Multiple: Story = {

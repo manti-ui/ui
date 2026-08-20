@@ -35,6 +35,8 @@ export * as steps from '@zag-js/steps';
 export * as tour from '@zag-js/tour';
 export * as splitter from '@zag-js/splitter';
 export * as colorPicker from '@zag-js/color-picker';
+export * as nativeColorPicker from './color-picker';
+export * from './color-picker';
 export * as navigationMenu from '@zag-js/navigation-menu';
 export * as floatingPanel from '@zag-js/floating-panel';
 

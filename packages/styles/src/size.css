@@ -15,25 +15,34 @@
  * they happen to contain.
  *
  * Every value derives from the spacing, type, radius, and control-height scales,
- * so retuning `--manti-space-1` or `--manti-text-base` rescales popups too.
+ * so retuning `--manti-space-1`, `--manti-text-base`, or the radius factor
+ * rescales popups too. Radius travels with the surface: a compact control opens
+ * a compact panel, while row-level treatments use the smaller item step.
  * Themes can retune a single step by redeclaring a channel variable under the
  * matching `[data-size]` scope.
  */
 @layer manti.base {
   :where(
+    [data-scope='button'][data-part='root'],
     [data-scope='field'][data-part='control'],
+    [data-scope='number-input'][data-part='root'],
     [data-scope='select'][data-part='root'],
     [data-scope='select'][data-part='positioner'],
     [data-scope='combobox'][data-part='root'],
     [data-scope='combobox'][data-part='positioner'],
     [data-scope='menu'][data-part='positioner'],
     [data-scope='listbox'][data-part='root'],
+    [data-scope='pagination'][data-part='root'],
+    [data-scope='pin-input'][data-part='root'],
+    [data-scope='segmented-control'][data-part='root'],
+    [data-scope='tabs'][data-part='root'],
     [data-scope='date-picker'][data-part='root'],
     [data-scope='date-picker'][data-part='positioner'],
     [data-scope='time-picker'][data-part='root'],
     [data-scope='time-picker'][data-part='positioner'],
     [data-scope='color-picker'][data-part='root'],
-    [data-scope='color-picker'][data-part='positioner']
+    [data-scope='color-picker'][data-part='positioner'],
+    [data-scope='toggle-group'][data-part='root']
   )[data-size='sm'] {
     --manti-size-text: var(--manti-text-xs);
     --manti-size-text-sub: calc(var(--manti-text-base) * 0.6875);
@@ -46,25 +55,34 @@
     --manti-size-item-padding-x: var(--manti-space-2);
     --manti-size-item-gap: var(--manti-space-1);
     --manti-size-item-radius: var(--manti-radius-xs);
+    --manti-size-control-radius: var(--manti-radius-sm);
+    --manti-size-panel-radius: var(--manti-radius-sm);
     --manti-size-cell: var(--manti-control-height-sm);
   }
 
   /* `md` is also the fallback every part below spells out, so a component that
      never receives `data-size` still resolves the same rhythm. */
   :where(
+    [data-scope='button'][data-part='root'],
     [data-scope='field'][data-part='control'],
+    [data-scope='number-input'][data-part='root'],
     [data-scope='select'][data-part='root'],
     [data-scope='select'][data-part='positioner'],
     [data-scope='combobox'][data-part='root'],
     [data-scope='combobox'][data-part='positioner'],
     [data-scope='menu'][data-part='positioner'],
     [data-scope='listbox'][data-part='root'],
+    [data-scope='pagination'][data-part='root'],
+    [data-scope='pin-input'][data-part='root'],
+    [data-scope='segmented-control'][data-part='root'],
+    [data-scope='tabs'][data-part='root'],
     [data-scope='date-picker'][data-part='root'],
     [data-scope='date-picker'][data-part='positioner'],
     [data-scope='time-picker'][data-part='root'],
     [data-scope='time-picker'][data-part='positioner'],
     [data-scope='color-picker'][data-part='root'],
-    [data-scope='color-picker'][data-part='positioner']
+    [data-scope='color-picker'][data-part='positioner'],
+    [data-scope='toggle-group'][data-part='root']
   )[data-size='md'] {
     --manti-size-text: var(--manti-text-sm);
     --manti-size-text-sub: var(--manti-text-xs);
@@ -77,23 +95,32 @@
     --manti-size-item-padding-x: var(--manti-space-3);
     --manti-size-item-gap: var(--manti-space-2);
     --manti-size-item-radius: var(--manti-radius-sm);
+    --manti-size-control-radius: var(--manti-radius-md);
+    --manti-size-panel-radius: var(--manti-radius-md);
     --manti-size-cell: var(--manti-control-height-md);
   }
 
   :where(
+    [data-scope='button'][data-part='root'],
     [data-scope='field'][data-part='control'],
+    [data-scope='number-input'][data-part='root'],
     [data-scope='select'][data-part='root'],
     [data-scope='select'][data-part='positioner'],
     [data-scope='combobox'][data-part='root'],
     [data-scope='combobox'][data-part='positioner'],
     [data-scope='menu'][data-part='positioner'],
     [data-scope='listbox'][data-part='root'],
+    [data-scope='pagination'][data-part='root'],
+    [data-scope='pin-input'][data-part='root'],
+    [data-scope='segmented-control'][data-part='root'],
+    [data-scope='tabs'][data-part='root'],
     [data-scope='date-picker'][data-part='root'],
     [data-scope='date-picker'][data-part='positioner'],
     [data-scope='time-picker'][data-part='root'],
     [data-scope='time-picker'][data-part='positioner'],
     [data-scope='color-picker'][data-part='root'],
-    [data-scope='color-picker'][data-part='positioner']
+    [data-scope='color-picker'][data-part='positioner'],
+    [data-scope='toggle-group'][data-part='root']
   )[data-size='lg'] {
     --manti-size-text: var(--manti-text-base);
     --manti-size-text-sub: var(--manti-text-sm);
@@ -105,7 +132,9 @@
     --manti-size-item-padding-y: var(--manti-space-3);
     --manti-size-item-padding-x: var(--manti-space-4);
     --manti-size-item-gap: var(--manti-space-2);
-    --manti-size-item-radius: var(--manti-radius-sm);
+    --manti-size-item-radius: var(--manti-radius-md);
+    --manti-size-control-radius: var(--manti-radius-lg);
+    --manti-size-panel-radius: var(--manti-radius-lg);
     --manti-size-cell: var(--manti-control-height-lg);
   }
 }

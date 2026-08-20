@@ -5,7 +5,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // The single source of Manti's look — identical to .storybook/preview.tsx, so
 // the docs site renders with the exact same tokens, components and motion.
 import '@manti-ui/styles/index.css';
+// The scoped presets, so the theme gallery can preview each one in place.
+import '@manti-ui/styles/themes.css';
 import './styles/docs.css';
+import './demos/demo.css';
+import './demos/demo-tailwind-preview.css';
 
 import { routes } from './routes';
 

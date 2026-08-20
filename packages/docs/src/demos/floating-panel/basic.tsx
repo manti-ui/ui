@@ -1,11 +1,11 @@
-import { Button, FloatingPanel } from '@manti-ui/react';
+import { Button, FloatingPanel, Text } from '@manti-ui/react';
 
 export default function FloatingPanelBasic() {
   return (
     <FloatingPanel trigger={<Button>Open panel</Button>} title="Layers">
-      <p style={{ margin: 0, color: 'var(--manti-text-muted)' }}>
+      <Text emphasis="muted">
         Drag me by the header, or resize from any edge.
-      </p>
+      </Text>
     </FloatingPanel>
   );
 }

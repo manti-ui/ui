@@ -4,6 +4,7 @@ import { pinInput } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx } from '../../internal/props';
 
 export interface PinInputProps {
@@ -85,10 +86,12 @@ export function PinInput({
       : undefined,
   });
   const api = pinInput.connect(service, normalizeProps);
+  const focusVisibleProps = useFocusVisible<HTMLDivElement>();
 
   return (
     <div
       {...api.getRootProps()}
+      {...focusVisibleProps}
       data-size={size}
       data-variant={variant}
       className={cx(className)}

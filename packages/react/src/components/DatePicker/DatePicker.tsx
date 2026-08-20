@@ -5,6 +5,7 @@ import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { Portal } from '../../internal/Portal';
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
 
@@ -95,6 +96,7 @@ export function DatePicker({
       : undefined,
   });
   const api = datePicker.connect(service, normalizeProps);
+  const focusVisibleProps = useFocusVisible<HTMLDivElement>();
 
   return (
     <div
@@ -104,7 +106,7 @@ export function DatePicker({
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
-      <div {...api.getControlProps()}>
+      <div {...api.getControlProps()} {...focusVisibleProps}>
         <input {...api.getInputProps()} />
         <button {...api.getTriggerProps()} aria-label="Open calendar">
           {navIcon(

@@ -2,13 +2,7 @@ import { Blockquote } from '@manti-ui/react';
 
 export default function BlockquoteDemo() {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gap: 'var(--manti-space-6)',
-        maxWidth: 'calc(var(--manti-space-16) * 10)',
-      }}
-    >
+    <div className="blockquote-list">
       <Blockquote>
         Components should preserve the meaning of the HTML they render.
       </Blockquote>

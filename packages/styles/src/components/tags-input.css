@@ -39,6 +39,13 @@
     &:focus-within {
       border-color: var(--variant-ring, var(--manti-focus-ring));
     }
+
+    /* The composite surface owns the keyboard ring for the entry and tag
+       controls, preventing duplicate rings around a delete button. */
+    &:has(:focus-visible):not([data-focus-visible='false']) {
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
   }
 
   [data-scope='tags-input'][data-part='root'][data-invalid]
@@ -80,6 +87,7 @@
     opacity: 0.7;
     cursor: pointer;
     padding: 0;
+    outline: none;
     transition: opacity var(--manti-duration-fast) var(--manti-ease-smooth);
     &:hover {
       opacity: 1;

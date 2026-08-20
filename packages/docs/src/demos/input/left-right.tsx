@@ -18,14 +18,7 @@ const SearchIcon = (
 
 export default function InputLeftRight() {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gap: 'var(--manti-space-4)',
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 6)',
-      }}
-    >
+    <div className="input-pair-grid">
       <Input
         label="Price"
         left="$"
@@ -46,7 +39,13 @@ export default function InputLeftRight() {
         aria-label="Search invoices"
         placeholder="Search invoices…"
         left={SearchIcon}
-        right={<Kbd>⌘K</Kbd>}
+        right={
+          <span className="kbd-item">
+            <Kbd>⌘</Kbd>
+            <span>+</span>
+            <Kbd>K</Kbd>
+          </span>
+        }
       />
     </div>
   );

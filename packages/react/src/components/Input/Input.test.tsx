@@ -1,5 +1,5 @@
 import { createRef } from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import { Input } from './Input';
@@ -68,5 +68,22 @@ describe('Input', () => {
     expect(screen.getByText('New right')).toBeInTheDocument();
     expect(screen.queryByText('Old left')).not.toBeInTheDocument();
     expect(screen.queryByText('Old right')).not.toBeInTheDocument();
+  });
+
+  it('shows the focus treatment for keyboard focus but not pointer focus', () => {
+    render(<Input aria-label="Recipe name" />);
+
+    const input = screen.getByRole('textbox', { name: 'Recipe name' });
+    const control = input.closest('[data-part="control"]');
+    if (!control) throw new Error('Input control was not rendered');
+
+    fireEvent.pointerDown(input);
+    fireEvent.focus(input);
+    expect(control).toHaveAttribute('data-focus-visible', 'false');
+
+    fireEvent.blur(input);
+    fireEvent.keyDown(document.body, { key: 'Tab' });
+    fireEvent.focus(input);
+    expect(control).toHaveAttribute('data-focus-visible', 'true');
   });
 });

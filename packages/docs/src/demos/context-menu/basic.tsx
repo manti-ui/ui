@@ -20,19 +20,7 @@ const items: MenuItem[] = [
 export default function ContextMenuBasic() {
   return (
     <ContextMenu items={items}>
-      <div
-        style={{
-          display: 'grid',
-          placeItems: 'center',
-          width: 'calc(var(--manti-space-16) * 5)',
-          height: 'calc(var(--manti-space-16) * 2.75)',
-          borderRadius: 'var(--manti-radius-lg)',
-          border: '1px dashed var(--manti-border-strong)',
-          color: 'var(--manti-text-muted)',
-          fontSize: 'var(--manti-text-sm)',
-          userSelect: 'none',
-        }}
-      >
+      <div className="context-menu-target">
         Right-click anywhere here
       </div>
     </ContextMenu>

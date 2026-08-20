@@ -17,7 +17,7 @@ export default function DrawerBasic() {
         </>
       )}
     >
-      <div style={{ display: 'grid', gap: 'var(--manti-space-4)' }}>
+      <div className="drawer-grid">
         <Input label="Name" defaultValue="Kayseri mantı" fullWidth />
         <Input label="Filling" defaultValue="Spiced lamb" fullWidth />
         <Input

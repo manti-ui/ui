@@ -20,7 +20,7 @@ const Tags = () => (
 
 export default function MarqueeDirections() {
   return (
-    <div style={{ display: 'grid', gap: 'var(--manti-space-6)' }}>
+    <div className="marquee-grid">
       <Marquee direction="left">
         <Tags />
       </Marquee>

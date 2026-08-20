@@ -7,7 +7,7 @@
 
 # Manti UI
 
-Manti UI is a React component library built on framework-agnostic tokens, CSS,
+Mantı UI is a React component library built on framework-agnostic tokens, CSS,
 and behavior machines. It is named after mantı: one simple form that adapts to
 many contents and contexts.
 
@@ -58,7 +58,6 @@ future renderers can reuse the same behavior, anatomy, and styles.
 - [Components](https://manti.design/components)
 - [Repository docs](docs/README.md)
 - [Coding-agent guide](llms.txt)
-- [Storybook](https://manti.design/storybook/)
 
 ## Development
 

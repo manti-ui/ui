@@ -10,13 +10,23 @@
   [data-scope='select']:is([data-part='root'], [data-part='positioner']) {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-select-icon-size: var(--manti-size-icon, var(--manti-text-base));
+    /* A connected trigger and its portalled panel form one surface. Keep the
+       shared outside corners in sync and cap them at the trigger's half-height
+       so `round` and `pill` cannot produce different clamped radii. */
+    --_select-connected-radius: min(
+      var(--manti-size-panel-radius, var(--manti-radius-md)),
+      calc(var(--manti-size-control-height, var(--manti-control-height-md)) / 2)
+    );
   }
 
   [data-scope='select'][data-part='root'] {
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-2);
     min-width: 0;
+
+    &:has(> [data-part='label']) {
+      gap: var(--manti-space-2);
+    }
   }
 
   [data-scope='select'][data-part='label'] {
@@ -48,7 +58,10 @@
     border: 1px solid var(--manti-border);
     /* Control class — joins the opt-in pill channel. The popup below keeps a
        plain ramp step: a pill-shaped listbox would clip its own rows. */
-    border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
+    border-radius: max(
+      var(--manti-size-control-radius, var(--manti-radius-md)),
+      var(--manti-radius-pill)
+    );
     color: var(--manti-text);
     font-family: var(--manti-font-sans);
     font-size: var(--manti-select-font-size);
@@ -59,29 +72,37 @@
       border-color: var(--manti-border-strong);
     }
 
-    /* Input-like control: the primary color starts at active/focus/open, so a
-       press hands the border straight to the variant ring. */
+    /* Input-like control: the primary color starts at active/focus. Opening
+       keeps the trigger's neutral border instead of introducing accent ink. */
     &:active {
+      background-color: var(--variant-surface-sunken);
+    }
+
+    &:focus-visible:not([data-focus-visible='false']) {
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+      outline-offset: var(--manti-focus-ring-offset);
       border-color: var(--variant-ring);
     }
 
-    &:focus-visible {
-      outline: none;
-      border-color: var(--variant-ring);
+    &[data-state='open'] {
+      border-color: var(--manti-border);
     }
 
     &[data-connected] {
       background: var(--manti-panel-tint-strong);
       border-color: transparent;
+      border-radius: var(--_select-connected-radius);
     }
 
-    &[data-connected='bottom'] {
+    &[data-connected='bottom'],
+    &[data-state='open'][data-side='bottom'] {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
       border-bottom-color: transparent;
     }
 
-    &[data-connected='top'] {
+    &[data-connected='top'],
+    &[data-state='open'][data-side='top'] {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
       border-top-color: transparent;
@@ -108,14 +129,15 @@
       border-color: transparent;
     }
 
-    &:active {
+    &:focus-visible:not([data-focus-visible='false']) {
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+      outline-offset: var(--manti-focus-ring-offset);
       background: var(--manti-fill-strong);
       border-color: var(--variant-ring);
     }
 
-    &:focus-visible {
-      background: var(--manti-fill-strong);
-      border-color: var(--variant-ring);
+    &[data-state='open'] {
+      border-color: transparent;
     }
 
     &[data-connected] {
@@ -123,11 +145,13 @@
       border-color: transparent;
     }
 
-    &[data-connected='bottom'] {
+    &[data-connected='bottom'],
+    &[data-state='open'][data-side='bottom'] {
       border-bottom-color: transparent;
     }
 
-    &[data-connected='top'] {
+    &[data-connected='top'],
+    &[data-state='open'][data-side='top'] {
       border-top-color: transparent;
     }
   }
@@ -181,8 +205,8 @@
     background: var(--manti-panel-tint-strong);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
-    border: 1px solid transparent;
-    border-radius: var(--manti-radius-md);
+    border: 1px solid var(--manti-border);
+    border-radius: var(--_select-connected-radius);
   }
 
   /* Join the panel on the side chosen by Floating UI, including when collision
@@ -191,20 +215,20 @@
     [data-scope='scroll-area'][data-part='root']:has(
       [data-scope='select'][data-part='content'][data-side='bottom']
     ) {
-    margin-top: -8px;
+    margin-top: calc(-1 * var(--manti-space-2));
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-top-color: transparent;
+    border-color: transparent;
   }
 
   [data-scope='select'][data-part='positioner']
     [data-scope='scroll-area'][data-part='root']:has(
       [data-scope='select'][data-part='content'][data-side='top']
     ) {
-    margin-bottom: -8px;
+    margin-bottom: calc(-1 * var(--manti-space-2));
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    border-bottom-color: transparent;
+    border-color: transparent;
   }
 
   [data-scope='select'][data-part='positioner']

@@ -5,12 +5,19 @@
  */
 @layer manti.components {
   [data-scope='toggle-group'][data-part='root'] {
+    --manti-toggle-group-radius: var(
+      --manti-size-control-radius,
+      var(--manti-radius-md)
+    );
     display: inline-flex;
     padding: var(--manti-space-1);
     gap: var(--manti-space-1);
     background: var(--manti-surface);
     border: 1px solid var(--manti-border-strong);
-    border-radius: var(--manti-radius-md);
+    border-radius: max(
+      var(--manti-toggle-group-radius),
+      var(--manti-radius-pill)
+    );
 
     &[data-orientation='vertical'] {
       flex-direction: column;
@@ -35,7 +42,10 @@
     min-height: var(--manti-toggle-group-height);
     padding-inline: var(--manti-toggle-group-padding-x);
     border: 1px solid transparent;
-    border-radius: var(--manti-radius-sm);
+    border-radius: max(
+      var(--manti-size-item-radius, var(--manti-radius-sm)),
+      var(--manti-radius-pill)
+    );
     color: var(--manti-text-muted);
     font-family: var(--manti-font-sans);
     font-size: var(--manti-text-sm);

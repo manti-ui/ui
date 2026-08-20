@@ -10,15 +10,7 @@ const spices = [
 
 export default function ComboboxSizes() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--manti-space-4)',
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 5)',
-      }}
-    >
+    <div className="combobox-stack">
       <Combobox size="sm" items={spices} label="Small" placeholder="Search…" />
       <Combobox size="md" items={spices} label="Medium" placeholder="Search…" />
       <Combobox size="lg" items={spices} label="Large" placeholder="Search…" />

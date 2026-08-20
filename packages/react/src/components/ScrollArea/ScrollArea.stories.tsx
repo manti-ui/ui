@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ScrollArea } from './ScrollArea';
 import { Badge } from '../Badge/Badge';
 import { Card } from '../Card/Card';
+import { Heading } from '../Heading/Heading';
+import { Text } from '../Text/Text';
 
 const paragraphs = [
   'Mantı is a family of dumplings found from Central Asia to Anatolia. The Turkish kind is tiny — squares of thin dough pinched around a pinch of spiced lamb or beef, then boiled.',
@@ -25,9 +27,7 @@ const Prose = () => (
     }}
   >
     {paragraphs.map((p, i) => (
-      <p key={i} style={{ margin: 0 }}>
-        {p}
-      </p>
+      <Text key={i}>{p}</Text>
     ))}
   </div>
 );
@@ -61,9 +61,13 @@ export const Playground: Story = {};
 export const InsideCard: Story = {
   render: () => (
     <Card style={{ width: '24rem' }}>
-      <h3 style={{ margin: '0 0 0.5rem', fontSize: 'var(--manti-text-lg)' }}>
+      <Heading
+        level={3}
+        size="lg"
+        style={{ marginBottom: 'var(--manti-space-2)' }}
+      >
         About mantı
-      </h3>
+      </Heading>
       <ScrollArea style={{ height: '10rem' }}>
         <div
           style={{
@@ -76,9 +80,7 @@ export const InsideCard: Story = {
           }}
         >
           {paragraphs.map((p, i) => (
-            <p key={i} style={{ margin: 0 }}>
-              {p}
-            </p>
+            <Text key={i}>{p}</Text>
           ))}
         </div>
       </ScrollArea>

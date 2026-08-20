@@ -59,13 +59,29 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    `lg` Menu lays out `lg` rows. Never let a sized control open a fixed-size
    surface, and never open the channel on a component that spends `data-size` on
    something else (Dialog width, Avatar diameter, DataTable density).
-5. **Never use box shadows.** `box-shadow` is prohibited everywhere in Manti UI,
+5. **Typography flows through Text and Heading.** The shared type scale is the
+   token set in `@manti-ui/tokens` (`--manti-text-*`, `--manti-weight-*`,
+   `--manti-leading-*`, `--manti-tracking-*`), rendered by the `Text` and
+   `Heading` components. In stories, demos, docs pages, and every other
+   authored surface, never write a raw `<h1>`-`<h6>` or `<p>`; render copy
+   with `Heading`/`Text` (the polymorphic `as` prop covers spans, labels, and
+   other elements). Inside a component adapter, an element that is an anatomy
+   part (it carries the machine's `data-scope`/`data-part`, like Dialog's
+   title) must stay a native element, because `Text`/`Heading` stamp their own
+   `data-scope`/`data-part` and spend `data-size` on the type scale, which
+   collides with the part-override contract and the size channel of rule 4.
+   Such parts instead compose their look in CSS strictly from the typography
+   tokens above: no raw font sizes, weights, line heights, or letter spacings
+   anywhere in component CSS. When a needed stop is missing, extend the
+   contract in `@manti-ui/tokens` (then run `pnpm gen:tokens`) instead of
+   hard-coding a value.
+6. **Never use box shadows.** `box-shadow` is prohibited everywhere in Manti UI,
    including components, utilities, documentation surfaces, examples, motion
    states, and focus treatments. Do not add shadow tokens or shadow-based
    elevation. Communicate hierarchy with surface contrast, borders, spacing,
    and layering instead; use an outline only when it conveys a real boundary,
    focus state, or functional mask rather than simulated elevation.
-6. **Match the user's language.** Always reply in the same language the user wrote
+7. **Match the user's language.** Always reply in the same language the user wrote
    their prompt in (e.g. Turkish prompt → Turkish answer). This applies to chat
    responses only; code, identifiers, comments, and docs stay in English.
 
@@ -99,6 +115,7 @@ pnpm lint             # Run ESLint
 pnpm typecheck        # Check packages and stories
 pnpm verify           # Run lint, typecheck, and all production builds
 pnpm gen:tokens       # Regenerate --manti-* CSS vars from the token contract
+pnpm gen:presets      # Regenerate the shipped theme presets in styles/src/themes
 ```
 
 Run `pnpm verify` before opening a pull request.

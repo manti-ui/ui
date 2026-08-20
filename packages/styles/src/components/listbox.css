@@ -35,7 +35,7 @@
     padding: var(--manti-listbox-padding);
     background: var(--manti-panel-tint-strong);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-size-panel-radius, var(--manti-radius-md));
 
     &:focus-visible {
       outline: none;
@@ -113,6 +113,15 @@
       color: var(--manti-text-subtle);
       cursor: not-allowed;
     }
+  }
+
+  /* Listbox uses `aria-activedescendant`, so the content receives DOM focus
+     while the highlighted item is the active keyboard target. */
+  [data-scope='listbox'][data-part='content']:focus-visible
+    [data-scope='listbox'][data-part='item'][data-highlighted],
+  [data-scope='listbox'][data-part='item']:focus-visible {
+    outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+    outline-offset: var(--manti-focus-ring-offset);
   }
 
   [data-scope='listbox'][data-part='item-indicator'] {

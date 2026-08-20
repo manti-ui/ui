@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Badge } from '../Badge/Badge';
 import { Button } from '../Button/Button';
 import { Card } from './Card';
+import { Text } from '../Text/Text';
 
 const meta = {
   title: 'Components/Card',
@@ -67,9 +68,9 @@ export const Interactive: Story = {
     <Card {...args} tabIndex={0}>
       <Card.Body>
         <Card.Title>Hover me</Card.Title>
-        <p style={{ marginTop: 8, color: 'var(--manti-text-muted)' }}>
+        <Text emphasis="muted" style={{ marginTop: 'var(--manti-space-2)' }}>
           The whole surface lifts smoothly on hover and focus.
-        </p>
+        </Text>
       </Card.Body>
     </Card>
   ),

@@ -20,12 +20,7 @@ const items = [
 
 export default function TabsBasic() {
   return (
-    <div
-      style={{
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 8)',
-      }}
-    >
+    <div className="tabs">
       <Tabs items={items} />
     </div>
   );

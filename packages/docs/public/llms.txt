@@ -179,6 +179,28 @@ Full reference:
 - https://manti.design/foundations/color-and-tones
 - https://manti.design/guides/theming-tokens
 
+## Theme presets
+
+The fastest theme is a shipped one. Import it after `index.css`; order between
+the two does not matter, because the theme file pins the layer order itself.
+
+```tsx
+import '@manti-ui/styles/index.css';
+import '@manti-ui/styles/themes/ocean.css';
+```
+
+`violet`, `ocean`, `forest`, `rose`, `graphite`. The default theme is a no-op
+and ships no file. A preset moves the `--variant-*` ramps, `--manti-cool-hue`,
+`--manti-radius-factor`, `--manti-accent-fill`, `--manti-selection-*`, and (for
+`graphite`) density. Files sit in `@layer manti.theme`, so unlayered application
+CSS still wins over them.
+
+For several themes on one page, import `@manti-ui/styles/themes.css` and set
+`data-manti-theme="ocean"` on a container. It is independent of `data-theme`,
+which stays light/dark.
+
+Guide: https://manti.design/guides/themes
+
 ## Plain CSS
 
 Import Manti before the application's unlayered overrides:
@@ -453,6 +475,7 @@ before a pull request.
 - [Architecture](https://manti.design/foundations/architecture)
 - [Design tokens](https://manti.design/foundations/tokens)
 - [Color and variants](https://manti.design/foundations/color-and-tones)
+- [Theme presets](https://manti.design/guides/themes)
 - [Plain CSS](https://manti.design/guides/plain-css)
 - [Tailwind v4](https://manti.design/guides/tailwind)
 - [Zag.js coverage](https://manti.design/reference/zag-coverage)

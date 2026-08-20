@@ -2,7 +2,7 @@ import { Heading } from '@manti-ui/react';
 
 export default function HeadingEmphasisDemo() {
   return (
-    <div style={{ display: 'grid', gap: 'var(--manti-space-4)' }}>
+    <div className="heading-list">
       <Heading level={3}>Default title</Heading>
       <Heading level={3} emphasis="muted">
         Muted title

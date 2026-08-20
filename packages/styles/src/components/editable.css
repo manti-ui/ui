@@ -75,6 +75,14 @@
     }
   }
 
+  [data-scope='editable'][data-part='area']:not([data-focus-visible='false'])
+    :is([data-part='input'], [data-part='preview']):focus-visible,
+  [data-scope='editable'][data-part='area'][data-focus-visible='true']
+    :is([data-part='input'], [data-part='preview']):focus {
+    outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+    outline-offset: var(--manti-focus-ring-offset);
+  }
+
   [data-scope='editable'][data-part='control'] {
     display: inline-flex;
     gap: var(--manti-space-2);
