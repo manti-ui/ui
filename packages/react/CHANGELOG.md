@@ -1,5 +1,14 @@
 # @manti-ui/react
 
+## 1.0.0
+
+### Patch Changes
+
+- Updated dependencies [[`c7aeeb5`](https://github.com/manti-ui/ui/commit/c7aeeb5c097015cf5afde9bdbca11fa8e47dc7e5)]:
+  - @manti-ui/tokens@1.0.0
+  - @manti-ui/styles@1.0.0
+  - @manti-ui/folds@1.0.0
+
 ## 0.2.0
 
 ### Minor Changes
