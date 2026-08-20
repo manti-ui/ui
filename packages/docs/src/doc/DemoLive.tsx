@@ -1,9 +1,11 @@
-import { useContext, useState } from 'react';
+import { useContext, useId, useRef, useState } from 'react';
 import * as React from 'react';
 import type { ReactNode } from 'react';
 import * as manti from '@manti-ui/react';
 import { Alert, Button } from '@manti-ui/react';
 import { LiveContext, LiveEditor, LiveProvider, LivePreview } from 'react-live';
+import { Highlight, Prism } from 'prism-react-renderer';
+import type { PrismTheme } from 'prism-react-renderer';
 
 import { useTheme } from '../theme/useTheme';
 import { toLiveCode } from './live-code';
@@ -42,6 +44,10 @@ const scope = { React, ...bindable(React), ...bindable(manti) };
 export interface DemoLiveProps {
   /** The demo's source, verbatim — imports and all. */
   source: string;
+  /** Optional plain-CSS source shown in the CSS code subtab. */
+  cssSource?: string;
+  /** The copy-ready component stylesheet filename shown by the CSS subtab. */
+  cssFileName: string;
   /** Canvas classes computed by Demo, so the live preview sits where the static one did. */
   canvasClass: string;
   /** The framework switcher / hide-code row, rendered between preview and editor. */
@@ -55,10 +61,22 @@ export interface DemoLiveProps {
  * Loaded lazily by Demo — react-live carries a transpiler (sucrase) and a highlighter
  * (Prism), which no reader should pay for until they open the code.
  */
-export default function DemoLive({ source, canvasClass, bar }: DemoLiveProps) {
+export default function DemoLive({
+  source,
+  cssSource,
+  cssFileName,
+  canvasClass,
+  bar,
+}: DemoLiveProps) {
   const [code, setCode] = useState(source);
+  const [cssCode, setCssCode] = useState(cssSource ?? '');
+  const [codeTab, setCodeTab] = useState<'tsx' | 'css'>('tsx');
   const { theme } = useTheme();
-  const edited = code.trim() !== source.trim();
+  const cssTabId = useId();
+  const codeEdited = code.trim() !== source.trim();
+  const cssEdited = cssSource != null && cssCode.trim() !== cssSource.trim();
+  const showingCss = codeTab === 'css' && cssSource != null;
+  const copyCode = showingCss ? cssCode : code;
 
   return (
     <LiveProvider
@@ -70,6 +88,7 @@ export default function DemoLive({ source, canvasClass, bar }: DemoLiveProps) {
       enableTypeScript
       language="tsx"
     >
+      {cssSource && <style data-component-css="true">{cssCode}</style>}
       <div className={canvasClass}>
         {/* `display: contents` on the preview wrapper (see docs.css) hoists the
             demo's own elements up to be direct flex children of the canvas, so
@@ -81,25 +100,129 @@ export default function DemoLive({ source, canvasClass, bar }: DemoLiveProps) {
       <LiveErrorPanel />
       {bar}
       <div className="docs-codeblock docs-live">
+        {cssSource && (
+          <div
+            className="docs-live-tabs"
+            role="tablist"
+            aria-label="Code files"
+          >
+            <button
+              id={`${cssTabId}-tsx`}
+              type="button"
+              role="tab"
+              aria-selected={codeTab === 'tsx'}
+              aria-controls={`${cssTabId}-tsx-panel`}
+              tabIndex={codeTab === 'tsx' ? 0 : -1}
+              onClick={() => setCodeTab('tsx')}
+            >
+              Component.tsx
+            </button>
+            <button
+              id={`${cssTabId}-css`}
+              type="button"
+              role="tab"
+              aria-selected={codeTab === 'css'}
+              aria-controls={`${cssTabId}-css-panel`}
+              tabIndex={codeTab === 'css' ? 0 : -1}
+              onClick={() => setCodeTab('css')}
+            >
+              {cssFileName}
+            </button>
+          </div>
+        )}
         <div className="docs-live-actions">
-          {edited && (
+          {(showingCss ? cssEdited : codeEdited) && (
             <Button
               variant="tertiary"
               size="sm"
-              onClick={() => setCode(source)}
+              onClick={() =>
+                showingCss ? setCssCode(cssSource ?? '') : setCode(source)
+              }
             >
               Reset
             </Button>
           )}
-          <CopyButton code={code} />
+          <CopyButton code={copyCode} />
         </div>
-        <LiveEditor
-          className="docs-live-editor"
-          onChange={setCode}
-          aria-label="Editable demo source"
-        />
+        {showingCss ? (
+          <div
+            id={`${cssTabId}-css-panel`}
+            className="docs-live-css"
+            role="tabpanel"
+            aria-labelledby={`${cssTabId}-css`}
+          >
+            <CssEditor
+              code={cssCode}
+              onChange={setCssCode}
+              theme={livePrismThemes[theme]}
+            />
+          </div>
+        ) : (
+          <div
+            id={`${cssTabId}-tsx-panel`}
+            role="tabpanel"
+            aria-labelledby={`${cssTabId}-tsx`}
+          >
+            <LiveEditor
+              className="docs-live-editor"
+              onChange={setCode}
+              aria-label="Editable demo source"
+            />
+          </div>
+        )}
       </div>
     </LiveProvider>
+  );
+}
+
+interface CssEditorProps {
+  code: string;
+  onChange: (code: string) => void;
+  theme: PrismTheme;
+}
+
+function CssEditor({ code, onChange, theme }: CssEditorProps) {
+  const highlightRef = useRef<HTMLPreElement>(null);
+
+  function syncScroll(event: React.UIEvent<HTMLTextAreaElement>) {
+    const input = event.currentTarget;
+    if (highlightRef.current) {
+      highlightRef.current.style.transform = `translate(${-input.scrollLeft}px, ${-input.scrollTop}px)`;
+    }
+  }
+
+  return (
+    <div className="docs-live-css-editor">
+      <Highlight prism={Prism} language="css" code={code} theme={theme}>
+        {({ tokens, getLineProps, getTokenProps }) => (
+          <pre
+            ref={highlightRef}
+            className="docs-live-css-highlight"
+            aria-hidden="true"
+          >
+            {tokens.map((line, lineIndex) => (
+              <span key={lineIndex} {...getLineProps({ line })}>
+                {line
+                  .filter((token) => !token.empty)
+                  .map((token, tokenIndex) => (
+                    <span key={tokenIndex} {...getTokenProps({ token })} />
+                  ))}
+                {'\n'}
+              </span>
+            ))}
+          </pre>
+        )}
+      </Highlight>
+      <textarea
+        className="docs-live-css-input"
+        value={code}
+        onChange={(event) => onChange(event.target.value)}
+        onScroll={syncScroll}
+        aria-label="Editable CSS source"
+        spellCheck={false}
+        wrap="off"
+      />
+    </div>
   );
 }
 

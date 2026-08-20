@@ -24,7 +24,10 @@
     height: var(--manti-pagination-size);
     padding-inline: var(--manti-space-2);
     border: 1px solid transparent;
-    border-radius: var(--manti-radius-sm);
+    border-radius: max(
+      var(--manti-size-control-radius, var(--manti-radius-md)),
+      var(--manti-radius-pill)
+    );
     color: var(--manti-text-muted);
     font-family: var(--manti-font-sans);
     font-size: var(--manti-text-sm);

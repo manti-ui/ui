@@ -8,13 +8,7 @@ const fillings = [
 
 export default function ListboxSizes() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        gap: 'var(--manti-space-4)',
-        flexWrap: 'wrap',
-      }}
-    >
+    <div className="listbox-options">
       <Listbox
         size="sm"
         items={fillings}

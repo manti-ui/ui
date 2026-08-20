@@ -21,6 +21,10 @@
   [data-scope='number-input'][data-part='control'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-number-input-height: var(--manti-control-height-md);
+    --manti-number-input-radius: max(
+      var(--manti-size-control-radius, var(--manti-radius-md)),
+      var(--manti-radius-pill)
+    );
 
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -30,7 +34,7 @@
     border: 1px solid var(--manti-border);
     /* Control class — joins the opt-in pill channel; the flanking triggers below
        round their outer corners to the same value so the group stays one shape. */
-    border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
+    border-radius: var(--manti-number-input-radius);
     transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:hover {
@@ -42,6 +46,13 @@
     &:active,
     &:focus-within {
       border-color: var(--variant-ring, var(--manti-focus-ring));
+    }
+
+    /* The control is the composite focus surface; its stepper buttons do not
+       add a second nested ring. */
+    &:has(:focus-visible):not([data-focus-visible='false']) {
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+      outline-offset: var(--manti-focus-ring-offset);
     }
   }
 
@@ -90,6 +101,7 @@
     align-items: center;
     justify-content: center;
     width: var(--manti-number-input-stepper-width);
+    outline: none;
     color: var(--manti-text-muted);
     cursor: pointer;
     transition:
@@ -117,25 +129,13 @@
 
   [data-scope='number-input'][data-part='decrement-trigger'] {
     border-inline-end: 1px solid var(--manti-panel-border);
-    border-start-start-radius: max(
-      var(--manti-radius-md),
-      var(--manti-radius-pill)
-    );
-    border-end-start-radius: max(
-      var(--manti-radius-md),
-      var(--manti-radius-pill)
-    );
+    border-start-start-radius: var(--manti-number-input-radius);
+    border-end-start-radius: var(--manti-number-input-radius);
   }
 
   [data-scope='number-input'][data-part='increment-trigger'] {
     border-inline-start: 1px solid var(--manti-panel-border);
-    border-start-end-radius: max(
-      var(--manti-radius-md),
-      var(--manti-radius-pill)
-    );
-    border-end-end-radius: max(
-      var(--manti-radius-md),
-      var(--manti-radius-pill)
-    );
+    border-start-end-radius: var(--manti-number-input-radius);
+    border-end-end-radius: var(--manti-number-input-radius);
   }
 }

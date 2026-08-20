@@ -1,8 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Carousel } from './Carousel';
+import { Text } from '../Text/Text';
 
-const palette = ['#1f2933', '#27333f', '#30404d', '#3a4d5c', '#45596b'];
+const palette = [
+  'var(--manti-surface)',
+  'var(--manti-surface-raised)',
+  'var(--manti-surface-sunken)',
+  'var(--manti-surface)',
+  'var(--manti-surface-raised)',
+];
 
 const slide = (label: string, bg: string) => (
   <div
@@ -10,14 +17,14 @@ const slide = (label: string, bg: string) => (
       display: 'grid',
       placeItems: 'center',
       height: 200,
-      borderRadius: 12,
+      borderRadius: 'var(--manti-radius-lg)',
+      border: '1px solid var(--manti-border)',
       background: bg,
-      color: '#fff',
-      fontSize: 24,
-      fontWeight: 600,
     }}
   >
-    {label}
+    <Text as="span" size="2xl/semibold">
+      {label}
+    </Text>
   </div>
 );
 

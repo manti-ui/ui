@@ -8,14 +8,7 @@ const items = [
 
 export default function ToggleGroupSizes() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--manti-space-4)',
-        alignItems: 'flex-start',
-      }}
-    >
+    <div className="toggle-group-options">
       <ToggleGroup size="sm" items={items} defaultValue={['center']} />
       <ToggleGroup size="md" items={items} defaultValue={['center']} />
       <ToggleGroup size="lg" items={items} defaultValue={['center']} />

@@ -268,7 +268,7 @@
     padding-inline: var(--manti-space-1);
     border-radius: var(--manti-radius-full);
     font-weight: var(--manti-weight-medium);
-    line-height: 1;
+    line-height: var(--manti-leading-none);
   }
 
   /* Today: a filled variant chip on the number — the monochrome, variant-driven

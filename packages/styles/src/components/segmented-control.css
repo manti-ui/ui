@@ -9,6 +9,10 @@
  */
 @layer manti.components {
   [data-scope='segmented-control'][data-part='root'] {
+    --manti-segmented-control-radius: var(
+      --manti-size-control-radius,
+      var(--manti-radius-md)
+    );
     position: relative;
     display: inline-flex;
     padding: var(--manti-space-1);
@@ -16,7 +20,10 @@
     border: 1px solid var(--manti-border-strong);
     /* Control class — the track, its sliding indicator and the items all join
        the pill channel together, or a pill track would frame square segments. */
-    border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
+    border-radius: max(
+      var(--manti-segmented-control-radius),
+      var(--manti-radius-pill)
+    );
 
     &[data-orientation='vertical'] {
       flex-direction: column;
@@ -37,7 +44,10 @@
     width: var(--width);
     height: var(--height);
     background: var(--variant-solid);
-    border-radius: max(var(--manti-radius-sm), var(--manti-radius-pill));
+    border-radius: max(
+      var(--manti-size-item-radius, var(--manti-radius-sm)),
+      var(--manti-radius-pill)
+    );
     transition-property: var(--transition-property, left, top, width, height);
     transition-duration: var(--manti-duration-base);
     transition-timing-function: var(--manti-ease-smooth);
@@ -68,7 +78,10 @@
     min-width: var(--manti-segmented-control-height);
     height: var(--manti-segmented-control-height);
     padding-inline: var(--manti-segmented-control-padding-x);
-    border-radius: max(var(--manti-radius-sm), var(--manti-radius-pill));
+    border-radius: max(
+      var(--manti-size-item-radius, var(--manti-radius-sm)),
+      var(--manti-radius-pill)
+    );
     color: var(--manti-text-muted);
     cursor: pointer;
     user-select: none;
@@ -113,7 +126,7 @@
     font-family: var(--manti-font-sans);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-medium);
-    line-height: 1;
+    line-height: var(--manti-leading-none);
   }
 
   [data-scope='segmented-control'][data-part='root'][data-size='lg']

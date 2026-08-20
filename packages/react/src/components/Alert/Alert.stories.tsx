@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert } from './Alert';
 import { Button } from '../Button/Button';
+import { Text } from '../Text/Text';
 
 const variants = ['primary', 'secondary', 'success', 'info', 'danger'] as const;
 
@@ -67,7 +68,7 @@ export const Dismissible: Story = {
   render: (args) => {
     const [open, setOpen] = useState(true);
     if (!open) {
-      return <p style={{ color: 'var(--manti-text-muted)' }}>Dismissed.</p>;
+      return <Text emphasis="muted">Dismissed.</Text>;
     }
     return (
       <div style={{ maxWidth: 520 }}>

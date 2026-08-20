@@ -22,15 +22,7 @@ const variants = ['line', 'pill', 'soft'] as const;
 
 export default function TabsVariants() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--manti-space-6)',
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 8)',
-      }}
-    >
+    <div className="tabs-stack">
       {variants.map((variant) => (
         <Tabs key={variant} items={items} variant={variant} />
       ))}

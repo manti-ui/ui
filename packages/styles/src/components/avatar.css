@@ -52,6 +52,6 @@
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: var(--manti-tracking-wide);
   }
 }

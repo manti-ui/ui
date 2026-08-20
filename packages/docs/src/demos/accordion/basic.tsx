@@ -20,7 +20,7 @@ const items = [
 
 export default function AccordionBasic() {
   return (
-    <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 7)' }}>
+    <div className="accordion">
       <Accordion items={items} defaultValue={['shape']} />
     </div>
   );

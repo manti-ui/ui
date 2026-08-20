@@ -12,18 +12,10 @@ export default function ShortcutScoped() {
   useShortcut('mod+s', () => setSaves((n) => n + 1), { scope: ref });
 
   return (
-    <div ref={ref} tabIndex={-1} style={{ outline: 'none' }}>
-      <Card
-        elevated
-        style={{
-          display: 'grid',
-          gap: 'var(--manti-space-3)',
-          padding: 'var(--manti-space-5)',
-          width: 'calc(var(--manti-space-16) * 4)',
-        }}
-      >
+    <div ref={ref} tabIndex={-1} className="shortcut-scope">
+      <Card elevated className="shortcut-panel">
         <strong>Editor region</strong>
-        <span style={{ color: 'var(--manti-text-muted)' }}>
+        <span className="shortcut-empty">
           Click to focus, then press ⌘S / Ctrl+S to save.
         </span>
         <Badge variant={saves > 0 ? 'primary' : 'secondary'}>

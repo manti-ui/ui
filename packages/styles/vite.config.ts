@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 import { defineConfig, type Plugin } from 'vite';
@@ -15,10 +15,19 @@ const evergreen = {
 };
 
 // Shipped verbatim, outside the library bundle: `tokens.css` so headless
-// consumers can pull the token vocabulary alone, and the Tailwind entries
-// because `@theme` must survive untouched for the consumer's Tailwind v4
-// pipeline (Lightning CSS would not preserve it).
-const standaloneCss = ['tokens.css', 'tailwind.css', 'tailwind-theme.css'];
+// consumers can pull the token vocabulary alone, the Tailwind entries because
+// `@theme` must survive untouched for the consumer's Tailwind v4 pipeline
+// (Lightning CSS would not preserve it), and the generated preset themes
+// because each is its own opt-in entry point.
+const standaloneCss = [
+  'tokens.css',
+  'tailwind.css',
+  'tailwind-theme.css',
+  'themes.css',
+  ...readdirSync(resolve(import.meta.dirname, 'src/themes'))
+    .filter((file) => file.endsWith('.css'))
+    .map((file) => `themes/${file}`),
+];
 
 function emitStandaloneCss(): Plugin {
   return {

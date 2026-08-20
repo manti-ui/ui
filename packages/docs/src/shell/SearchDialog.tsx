@@ -59,7 +59,7 @@ export function SearchDialog() {
       <div onKeyDown={onKeyDown}>
         <Input
           className="docs-search-field"
-          autoFocus
+          data-autofocus
           fullWidth
           type="search"
           placeholder="Search components, foundations, guides…"

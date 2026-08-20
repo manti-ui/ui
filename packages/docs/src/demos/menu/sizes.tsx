@@ -9,7 +9,7 @@ const items: MenuItem[] = [
 
 export default function MenuSizes() {
   return (
-    <div style={{ display: 'flex', gap: 'var(--manti-space-3)' }}>
+    <div className="menu-options">
       <Menu
         size="sm"
         trigger={

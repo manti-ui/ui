@@ -42,7 +42,11 @@ export { Code } from './Code/Code';
 export type { CodeProps, CodeSize } from './Code/Code';
 
 export { ColorPicker } from './ColorPicker/ColorPicker';
-export type { ColorPickerProps } from './ColorPicker/ColorPicker';
+export type {
+  ColorPickerFormat,
+  ColorPickerProps,
+  ColorSpaceId,
+} from './ColorPicker/ColorPicker';
 
 export { Combobox } from './Combobox/Combobox';
 export type {

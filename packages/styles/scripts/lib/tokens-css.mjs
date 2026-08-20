@@ -59,23 +59,30 @@ export function splitTop(s, sep = ',') {
 /**
  * Parse `tokens.css` and return its declarations plus a resolver bound to them.
  *
+ * Pass an array of paths to overlay later files on earlier ones, which is what a
+ * preset theme file does to the shipped tokens: same merge order the cascade
+ * applies, so the audit measures what a consumer actually gets.
+ *
  * `color(value, theme, scope)` → {@link Color} or null.
  * `resolveToken(name, theme, scope)` → `{ c }` or `{ err }`, so a caller can
  * report *why* a token did not resolve instead of printing a bare `?`.
  */
 export async function readTokensCss(path) {
-  const raw = (await readFile(path, 'utf8')).replace(/\/\*[\s\S]*?\*\//g, '');
-
-  const root = decls(blockBody(raw, /:root\s*\{/));
+  const root = new Map();
   const variantScopes = new Map();
-  for (const m of raw.matchAll(/\[data-variant='([\w-]+)'\]\s*\{/g)) {
-    // A variant may be declared in more than one block (a hand-authored one and
-    // a generated one); walking them in source order and overwriting reproduces
-    // what the cascade does at equal specificity — last declaration wins.
-    const merged = variantScopes.get(m[1]) ?? new Map();
-    for (const [k, v] of decls(blockBody(raw.slice(m.index), /\{/)))
-      merged.set(k, v);
-    variantScopes.set(m[1], merged);
+
+  for (const file of Array.isArray(path) ? path : [path]) {
+    const raw = (await readFile(file, 'utf8')).replace(/\/\*[\s\S]*?\*\//g, '');
+    for (const [k, v] of decls(blockBody(raw, /:root\s*\{/))) root.set(k, v);
+    for (const m of raw.matchAll(/\[data-variant='([\w-]+)'\]\s*\{/g)) {
+      // A variant may be declared in more than one block (a hand-authored one
+      // and a generated one); walking them in source order and overwriting
+      // reproduces what the cascade does at equal specificity — last wins.
+      const merged = variantScopes.get(m[1]) ?? new Map();
+      for (const [k, v] of decls(blockBody(raw.slice(m.index), /\{/)))
+        merged.set(k, v);
+      variantScopes.set(m[1], merged);
+    }
   }
 
   /** Resolve a scalar (number or var → number), e.g. a hue channel. */
@@ -89,6 +96,8 @@ export async function readTokensCss(path) {
   function color(v, theme, scope) {
     v = v.trim();
     if (v === 'white' || v === 'black') return new Color(v);
+    // Preset themes carry their base colors as plain hex.
+    if (/^#[0-9a-f]{3,8}$/i.test(v)) return new Color(v);
 
     let m = v.match(/^var\(\s*(--[\w-]+)\s*(?:,(.*))?\)$/s);
     if (m) {

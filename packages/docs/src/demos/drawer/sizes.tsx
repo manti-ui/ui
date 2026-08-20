@@ -1,4 +1,4 @@
-import { Button, Drawer } from '@manti-ui/react';
+import { Button, Drawer, Text } from '@manti-ui/react';
 
 const sizes = ['sm', 'md', 'lg'] as const;
 
@@ -13,11 +13,11 @@ export default function DrawerSizes() {
           title={`Drawer — ${size}`}
           description="Size sets the panel's width, or its height when the drawer opens from the top or bottom."
         >
-          <p>
+          <Text>
             The panel is{' '}
             {size === 'sm' ? '18rem' : size === 'md' ? '24rem' : '32rem'}{' '}
             across.
-          </p>
+          </Text>
         </Drawer>
       ))}
     </>

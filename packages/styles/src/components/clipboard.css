@@ -44,6 +44,13 @@
       border-color: var(--variant-ring, var(--manti-focus-ring));
     }
 
+    /* The text input is the shell's primary surface. The copy trigger owns its
+       own ring below, so keep the shell selector narrow to avoid nesting. */
+    &:has([data-part='input']:focus-visible):not([data-focus-visible='false']) {
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+
     /* The copied confirmation tints the whole field with the variant — focus
        above stays neutral so plain clicks into the input don't read as
        "copied". */
@@ -89,7 +96,7 @@
       color: var(--variant-text);
     }
 
-    &:focus-visible {
+    &:focus-visible:not([data-focus-visible='false']) {
       outline: var(--manti-focus-ring-width) solid var(--variant-ring);
       outline-offset: calc(var(--manti-focus-ring-offset) * -1);
     }

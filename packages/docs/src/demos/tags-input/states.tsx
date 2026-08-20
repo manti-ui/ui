@@ -2,14 +2,7 @@ import { TagsInput } from '@manti-ui/react';
 
 export default function TagsInputStates() {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gap: 'var(--manti-space-4)',
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 7)',
-      }}
-    >
+    <div className="tags-input-grid">
       <TagsInput
         label="Default"
         defaultValue={['lamb', 'onion']}

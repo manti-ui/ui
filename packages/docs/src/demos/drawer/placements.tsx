@@ -4,13 +4,7 @@ const placements = ['left', 'right', 'top', 'bottom'] as const;
 
 export default function DrawerPlacements() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 'var(--manti-space-3)',
-      }}
-    >
+    <div className="drawer-options">
       {placements.map((placement) => (
         <Drawer
           key={placement}

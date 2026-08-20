@@ -12,6 +12,7 @@ import type {
   ReactNode,
   TextareaHTMLAttributes,
 } from 'react';
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx, dataBool } from '../../internal/props';
 
 export type TextareaVariant = 'default' | 'fill';
@@ -91,6 +92,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const describedBy =
       [errorId, helperId, ariaDescribedby].filter(Boolean).join(' ') ||
       undefined;
+    const focusVisibleProps = useFocusVisible<HTMLDivElement>();
 
     useImperativeHandle(ref, () => textareaRef.current!, []);
 
@@ -146,6 +148,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           data-part="control"
           data-size={size}
           data-multiline="true"
+          {...focusVisibleProps}
         >
           <textarea
             data-scope="field"

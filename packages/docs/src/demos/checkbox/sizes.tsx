@@ -2,13 +2,7 @@ import { Checkbox } from '@manti-ui/react';
 
 export default function CheckboxSizes() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        gap: 'var(--manti-space-6)',
-        alignItems: 'center',
-      }}
-    >
+    <div className="checkbox-row">
       <Checkbox defaultChecked size="sm">
         Small
       </Checkbox>

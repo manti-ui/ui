@@ -10,7 +10,7 @@ const regions = [
 
 export default function SelectMultiple() {
   return (
-    <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 5)' }}>
+    <div className="select-field">
       <Select
         items={regions}
         label="Regions"

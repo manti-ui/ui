@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Collapsible } from './Collapsible';
+import { Text } from '../Text/Text';
 
 const meta = {
   title: 'Components/Collapsible',
@@ -10,9 +11,12 @@ const meta = {
   args: {
     trigger: "Show chef's note",
     children: (
-      <p style={{ padding: '12px 4px 0', color: 'var(--manti-text-muted)' }}>
+      <Text
+        emphasis="muted"
+        style={{ padding: 'var(--manti-space-3) var(--manti-space-1) 0' }}
+      >
         Rest the dough for 30 minutes so it rolls out smooth and thin.
-      </p>
+      </Text>
     ),
   },
   decorators: [

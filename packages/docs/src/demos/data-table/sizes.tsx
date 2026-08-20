@@ -21,14 +21,7 @@ const columns: DataTableColumn<Member>[] = [
 
 export default function DataTableSizes() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--manti-space-6)',
-        width: '100%',
-      }}
-    >
+    <div className="data-table-stack">
       <DataTable size="sm" columns={columns} data={data} />
       <DataTable size="md" columns={columns} data={data} />
       <DataTable size="lg" columns={columns} data={data} />

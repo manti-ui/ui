@@ -17,9 +17,22 @@ export function ComponentStatusGrid() {
                 style={{ justifyContent: 'space-between' }}
               >
                 <strong>{item.name}</strong>
-                <Badge variant={item.documented ? 'primary' : 'secondary'}>
-                  {item.documented ? 'Docs' : 'Storybook'}
-                </Badge>
+                {item.documented ? (
+                  <span className="docs-card-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" focusable="false">
+                      <path
+                        d="M3 8h9M8 4l4 4-4 4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                      />
+                    </svg>
+                  </span>
+                ) : (
+                  <Badge variant="secondary">Storybook</Badge>
+                )}
               </div>
               <p
                 style={{

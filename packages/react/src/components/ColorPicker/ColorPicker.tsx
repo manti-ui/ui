@@ -1,14 +1,29 @@
 import { useId, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { colorPicker } from '@manti-ui/folds';
+import type { ColorSpaceId } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { Portal } from '../../internal/Portal';
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
 import { Button } from '../Button/Button';
 import { Input } from '../Input/Input';
 import { Tabs } from '../Tabs/Tabs';
+
+import {
+  COLOR_PICKER_FORMATS,
+  formatHexColor,
+  formatOklchColor,
+  parseOklchColor,
+  type ColorPickerFormat,
+  type RgbColor,
+} from './color-utils';
+import { NativeColorPicker } from './NativeColorPicker';
+
+export type { ColorPickerFormat } from './color-utils';
+export type { ColorSpaceId } from '@manti-ui/folds';
 
 export interface ColorPickerProps {
   /** Optional field label. */
@@ -19,7 +34,20 @@ export interface ColorPickerProps {
   value?: string;
   /** Initial value for uncontrolled usage. */
   defaultValue?: string;
-  /** Called whenever the value changes; emits a CSS color string. */
+  /**
+   * Format used for the trigger, editable field, and value-change callback.
+   * Defaults to `rgba`.
+   */
+  format?: ColorPickerFormat;
+  /** Initial output format when `format` is uncontrolled. */
+  defaultFormat?: ColorPickerFormat;
+  /** Color space used by the interactive palette. */
+  colorSpace?: ColorSpaceId;
+  /** Formats shown in the copy tabs. The selected format is shown by default. */
+  formats?: readonly ColorPickerFormat[];
+  /** Called whenever the selected format changes. */
+  onFormatChange?: (format: ColorPickerFormat) => void;
+  /** Called whenever the value changes; emits the selected format. */
   onValueChange?: (value: string) => void;
   /**
    * Show the formatted value text (e.g. `rgba(124, 58, 237, 1)`) next to the
@@ -36,19 +64,91 @@ export interface ColorPickerProps {
   className?: string;
 }
 
-/** String formats the copy tabs expose. */
-const COPY_FORMATS = ['hex', 'rgba', 'hsla'] as const;
+const DEFAULT_FORMAT: ColorPickerFormat = 'rgba';
+const DEFAULT_COPY_FORMATS: readonly ColorPickerFormat[] = [
+  'hex',
+  'rgba',
+  'hsla',
+];
 
-type CopyFormat = (typeof COPY_FORMATS)[number];
+type MachineColorFormat = 'rgba' | 'hsla' | 'hsba';
 
-/** The tabs only drive the format selection — the full-width Clipboard below
+const toMachineFormat = (format: ColorPickerFormat): MachineColorFormat =>
+  format === 'hsla' || format === 'hsba' ? format : 'rgba';
+
+type ZagColor = ReturnType<typeof colorPicker.parse>;
+
+const toRgbColor = (color: ZagColor): RgbColor => {
+  const rgba = color.toFormat('rgba');
+  return {
+    red: rgba.getChannelValue('red'),
+    green: rgba.getChannelValue('green'),
+    blue: rgba.getChannelValue('blue'),
+    alpha: rgba.getChannelValue('alpha'),
+  };
+};
+
+const toZagColor = (color: RgbColor): ZagColor => {
+  let result = colorPicker.parse('rgba(0, 0, 0, 1)');
+  result = result.withChannelValue('red', color.red) as ZagColor;
+  result = result.withChannelValue('green', color.green) as ZagColor;
+  result = result.withChannelValue('blue', color.blue) as ZagColor;
+  return result.withChannelValue('alpha', color.alpha) as ZagColor;
+};
+
+const formatColor = (color: ZagColor, format: ColorPickerFormat) => {
+  switch (format) {
+    case 'hex':
+      return formatHexColor(toRgbColor(color));
+    case 'oklch':
+      return formatOklchColor(toRgbColor(color));
+    case 'rgba':
+    case 'hsla':
+    case 'hsba':
+      return color.toString(format);
+  }
+};
+
+const numberToken = '[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)';
+const hexPattern = /^#(?:[\da-f]{3}|[\da-f]{4}|[\da-f]{6}|[\da-f]{8})$/i;
+const rgbPattern = new RegExp(
+  `^rgba?\\(\\s*${numberToken}\\s*,\\s*${numberToken}\\s*,\\s*${numberToken}(?:\\s*,\\s*${numberToken})?\\s*\\)$`,
+  'i',
+);
+const hslPattern = new RegExp(
+  `^hsla?\\(\\s*${numberToken}\\s*,\\s*${numberToken}%\\s*,\\s*${numberToken}%(?:\\s*,\\s*${numberToken})?\\s*\\)$`,
+  'i',
+);
+const hsbPattern = new RegExp(
+  `^hsba?\\(\\s*${numberToken}\\s*,\\s*${numberToken}%\\s*,\\s*${numberToken}%(?:\\s*,\\s*${numberToken})?\\s*\\)$`,
+  'i',
+);
+
+const isZagColorSyntax = (value: string) =>
+  hexPattern.test(value) ||
+  rgbPattern.test(value) ||
+  hslPattern.test(value) ||
+  hsbPattern.test(value) ||
+  /^[a-z]+$/i.test(value);
+
+const assertFiniteColor = (color: ZagColor) => {
+  if (Object.values(color.toJSON()).some((value) => !Number.isFinite(value))) {
+    throw new Error('Invalid color value');
+  }
+  return color;
+};
+
+/** Parse every public input format while rejecting incomplete CSS strings. */
+const parseColor = (value: string): ZagColor => {
+  const text = value.trim();
+  const oklch = parseOklchColor(text);
+  if (oklch) return toZagColor(oklch);
+  if (!isZagColorSyntax(text)) throw new Error('Invalid color value');
+  return assertFiniteColor(colorPicker.parse(text));
+};
+
+/** The tabs only drive the format selection — the editable value field below
  * the row shows the value, so the tab panels stay empty (hidden via CSS). */
-const COPY_FORMAT_TABS = COPY_FORMATS.map((format) => ({
-  value: format,
-  label: format.toUpperCase(),
-  content: null,
-}));
-
 const eyeDropperIcon = (
   <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
     <g
@@ -90,12 +190,16 @@ const checkIcon = (
   </svg>
 );
 
-/** A color picker backed by the Zag.js color-picker machine. */
-export function ColorPicker({
+/** The legacy path backed by the Zag.js color-picker machine. */
+function LegacyColorPicker({
   label,
   size = 'md',
   value,
   defaultValue = '#7c3aed',
+  format,
+  defaultFormat,
+  formats,
+  onFormatChange,
   onValueChange,
   showValueText = true,
   placement = 'bottom-start',
@@ -105,45 +209,74 @@ export function ColorPicker({
   className,
 }: ColorPickerProps) {
   const autoId = useId();
-  const parsedValue = useMemo(
-    () => (value ? colorPicker.parse(value) : undefined),
-    [value],
-  );
-  const parsedDefault = useMemo(
-    () => colorPicker.parse(defaultValue),
-    [defaultValue],
-  );
+  const [uncontrolledFormat, setUncontrolledFormat] =
+    useState<ColorPickerFormat>(format ?? defaultFormat ?? DEFAULT_FORMAT);
+  const selectedFormat = format ?? uncontrolledFormat;
+  const machineFormat = toMachineFormat(selectedFormat);
+  const parsedValue = useMemo(() => {
+    if (!value?.trim()) return undefined;
+    try {
+      return parseColor(value);
+    } catch {
+      return undefined;
+    }
+  }, [value]);
+  const parsedDefault = useMemo(() => {
+    try {
+      return parseColor(defaultValue);
+    } catch {
+      return colorPicker.parse('#7c3aed');
+    }
+  }, [defaultValue]);
   const service = useMachine(colorPicker.machine, {
     id: id ?? autoId,
     value: parsedValue,
     defaultValue: parsedDefault,
+    format: machineFormat,
     disabled,
     name,
     positioning: { placement },
     onValueChange: onValueChange
-      ? (details) => onValueChange(details.valueAsString)
+      ? (details) => onValueChange(formatColor(details.value, selectedFormat))
       : undefined,
   });
   const api = colorPicker.connect(service, normalizeProps);
-
-  const [copyFormat, setCopyFormat] = useState<CopyFormat>('hex');
+  const focusVisibleProps = useFocusVisible<HTMLButtonElement>();
 
   // Editable value field. `draft` is null unless the input is being edited, so
   // the field otherwise mirrors the live color (drag the area, move a slider).
   const [draft, setDraft] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const formatted = api.value.toString(copyFormat);
+  const formatted = formatColor(api.value, selectedFormat);
+  const swatchColor = formatColor(api.value, 'rgba');
+  const copyFormats = formats ?? DEFAULT_COPY_FORMATS;
+  const copyFormatTabs = (
+    copyFormats.includes(selectedFormat)
+      ? copyFormats
+      : [selectedFormat, ...copyFormats]
+  ).map((copyFormat) => ({
+    value: copyFormat,
+    label: copyFormat.toUpperCase(),
+    content: null,
+  }));
 
-  // Apply a typed/pasted CSS color of any format (hex, rgb(a), hsl(a), …). Zag's
-  // parser throws on an incomplete string mid-typing, so invalid input is a no-op.
+  // Apply a typed/pasted CSS color of any supported format. Invalid and
+  // half-typed values stay in the draft and never change the live color.
   const commitValue = (raw: string) => {
     const text = raw.trim();
     if (!text) return;
     try {
-      api.setValue(colorPicker.parse(text));
+      api.setValue(parseColor(text));
     } catch {
       /* not a valid color yet — keep the draft, don't touch the color */
     }
+  };
+
+  const handleFormatChange = (next: string) => {
+    if (!(COLOR_PICKER_FORMATS as readonly string[]).includes(next)) return;
+    const nextFormat = next as ColorPickerFormat;
+    setUncontrolledFormat(nextFormat);
+    onFormatChange?.(nextFormat);
   };
 
   const copyValue = () => {
@@ -163,17 +296,20 @@ export function ColorPicker({
       {...api.getRootProps()}
       data-variant="primary"
       data-size={size}
+      data-format={selectedFormat}
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
       <div {...api.getControlProps()}>
-        <button {...api.getTriggerProps()} data-value-text={showValueText}>
-          <span
-            data-part="value-swatch"
-            style={{ background: api.valueAsString }}
-          />
+        <button
+          {...api.getTriggerProps()}
+          {...focusVisibleProps}
+          aria-label={`Select color. Current color is ${formatted}`}
+          data-value-text={showValueText}
+        >
+          <span data-part="value-swatch" style={{ background: swatchColor }} />
           {showValueText && (
-            <span {...api.getValueTextProps()}>{api.valueAsString}</span>
+            <span {...api.getValueTextProps()}>{formatted}</span>
           )}
         </button>
       </div>
@@ -205,9 +341,9 @@ export function ColorPicker({
               <Tabs
                 variant="soft"
                 size="sm"
-                items={COPY_FORMAT_TABS}
-                value={copyFormat}
-                onValueChange={(next) => setCopyFormat(next as CopyFormat)}
+                items={copyFormatTabs}
+                value={selectedFormat}
+                onValueChange={handleFormatChange}
               />
               <Button
                 variant="outline"
@@ -222,7 +358,7 @@ export function ColorPicker({
               <Input
                 size="sm"
                 aria-label="Color value"
-                placeholder="#hex · rgb() · hsl()"
+                placeholder="#hex · rgb() · hsl() · oklch()"
                 autoComplete="off"
                 autoCapitalize="off"
                 spellCheck={false}
@@ -254,4 +390,16 @@ export function ColorPicker({
       <input {...api.getHiddenInputProps()} />
     </div>
   );
+}
+
+/**
+ * ColorPicker selects a native color-space implementation when requested. The
+ * OKLCH path keeps palette interaction in OKLCH; legacy formats retain the
+ * original Zag behavior for backwards compatibility.
+ */
+export function ColorPicker(props: ColorPickerProps) {
+  if (props.colorSpace === 'oklch' || props.format === 'oklch') {
+    return <NativeColorPicker {...props} />;
+  }
+  return <LegacyColorPicker {...props} />;
 }

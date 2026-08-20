@@ -2,14 +2,7 @@ import { Textarea } from '@manti-ui/react';
 
 export default function TextareaStates() {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gap: 'var(--manti-space-4)',
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 6)',
-      }}
-    >
+    <div className="textarea-grid">
       <Textarea label="Small" size="sm" placeholder="Add a short note" />
       <Textarea label="Medium" size="md" placeholder="Add a note" />
       <Textarea label="Large" size="lg" placeholder="Add a longer note" />

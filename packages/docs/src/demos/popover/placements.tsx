@@ -17,14 +17,7 @@ const placements = [
 
 export default function PopoverPlacements() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        gap: 'var(--manti-space-3)',
-      }}
-    >
+    <div className="popover-options">
       {placements.map((placement) => (
         <Popover
           key={placement}

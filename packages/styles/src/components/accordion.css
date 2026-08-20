@@ -29,6 +29,15 @@
     border-top: 1px solid var(--manti-panel-border);
   }
 
+  /* The trigger's <h3> wrapper is structural chrome, not a document heading:
+     strip UA/prose heading styles so the trigger alone sets the type. */
+  [data-scope='accordion'][data-part='item-heading'] {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+
   [data-scope='accordion'][data-part='item-trigger'] {
     display: flex;
     align-items: center;

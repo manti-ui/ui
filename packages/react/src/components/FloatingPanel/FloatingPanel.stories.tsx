@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { FloatingPanel } from './FloatingPanel';
 import { Button } from '../Button/Button';
+import { Text } from '../Text/Text';
 
 const meta = {
   title: 'Components/FloatingPanel',
@@ -12,9 +13,9 @@ const meta = {
     trigger: <Button>Open panel</Button>,
     title: 'Layers',
     children: (
-      <p style={{ margin: 0, color: 'var(--manti-text-muted)' }}>
+      <Text emphasis="muted">
         Drag me by the header, or resize from any edge.
-      </p>
+      </Text>
     ),
     draggable: true,
     resizable: true,

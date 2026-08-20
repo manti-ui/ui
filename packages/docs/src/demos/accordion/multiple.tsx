@@ -20,7 +20,7 @@ const items = [
 
 export default function AccordionMultiple() {
   return (
-    <div style={{ width: '100%', maxWidth: 'calc(var(--manti-space-16) * 7)' }}>
+    <div className="accordion">
       <Accordion items={items} multiple defaultValue={['shape', 'serve']} />
     </div>
   );
