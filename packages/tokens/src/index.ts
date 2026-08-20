@@ -329,7 +329,7 @@ export type MantiPresetDefinition = {
   label: string;
   description: string;
   /** The shipped theme. It needs no stylesheet, so none is generated. */
-  default?: boolean;
+  default: boolean;
   colors: Partial<Record<'primary' | 'success' | 'info' | 'danger', string>>;
   coolHue: number;
   radiusFactor: string;
@@ -357,6 +357,7 @@ export const presets = {
   violet: {
     label: 'Violet',
     description: 'Electric violet with generous corners.',
+    default: false,
     colors: { primary: '#7c3aed' },
     coolHue: 300,
     radiusFactor: '1.2',
@@ -365,6 +366,7 @@ export const presets = {
   ocean: {
     label: 'Ocean',
     description: 'Bright sky blue on a cold neutral, rounded.',
+    default: false,
     // Info is a stop darker than the studio swatch: no ink clears AA on
     // #0284c7 (4.45:1), and the preset gate refuses to ship that.
     colors: { primary: '#0ea5e9', info: '#0369a1' },
@@ -375,6 +377,7 @@ export const presets = {
   forest: {
     label: 'Forest',
     description: 'Deep green with tight, sober corners.',
+    default: false,
     colors: { primary: '#15803d', success: '#16a34a' },
     coolHue: 150,
     radiusFactor: '0.6',
@@ -383,6 +386,7 @@ export const presets = {
   rose: {
     label: 'Rose',
     description: 'Hot rose over a warm neutral, rounded.',
+    default: false,
     colors: { primary: '#e11d48', danger: '#be123c' },
     coolHue: 350,
     radiusFactor: '1.4',
@@ -391,6 +395,7 @@ export const presets = {
   graphite: {
     label: 'Graphite',
     description: 'Monochrome, square, and compact.',
+    default: false,
     colors: { primary: '#4b5563' },
     coolHue: 250,
     radiusFactor: '0',

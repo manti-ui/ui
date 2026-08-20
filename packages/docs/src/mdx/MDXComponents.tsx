@@ -13,6 +13,7 @@ import { LandingPage } from '../doc/LandingPage';
 import { LinkButton } from '../doc/LinkButton';
 import { PropsTable } from '../doc/PropsTable';
 import { ReleasesList } from '../doc/ReleasesList';
+import { ThemePresets } from '../doc/ThemePresets';
 import { TokenTable } from '../doc/TokenTable';
 import { TypeScale, WeightScale } from '../doc/TypeScale';
 import { CodeBlock } from './CodeBlock';
@@ -65,6 +66,7 @@ export const mdxComponents = {
   LinkButton,
   PropsTable,
   Anatomy,
+  ThemePresets,
   TokenTable,
   ColorRamps,
   VariantGallery,
