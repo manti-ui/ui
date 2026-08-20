@@ -20,6 +20,7 @@ export interface NavGroup {
  */
 const GROUP_ORDER = [
   'Getting Started',
+  'Foundations',
   'Guides',
   'Typography',
   // Framework-agnostic primitives that aren't visual components (hooks like
@@ -29,6 +30,9 @@ const GROUP_ORDER = [
   'Reference',
   'Changelog',
 ] as const;
+
+/** Hub routes stay addressable, but the sidebar starts at the first real page. */
+const OVERVIEW_SLUGS = new Set(['/foundations', '/changelog']);
 
 export const navGroups: NavGroup[] = GROUP_ORDER.map((label) => {
   if (label === 'Typography') {
@@ -68,7 +72,7 @@ export const navGroups: NavGroup[] = GROUP_ORDER.map((label) => {
   }
 
   const items: NavItem[] = pages
-    .filter((page) => page.group === label)
+    .filter((page) => page.group === label && !OVERVIEW_SLUGS.has(page.slug))
     .map((page) => ({
       slug: page.slug,
       title: page.title,
@@ -87,19 +91,31 @@ export const flatNav: NavItem[] = navGroups.flatMap((group) => group.items);
  */
 export const STUDIO_URL = 'https://studio.manti.design';
 
-/** Condensed primary links shown in the top navigation bar. */
-export const primaryNav: NavItem[] = [
-  { slug: '/getting-started', title: 'Getting Started' },
-  { slug: '/foundations', title: 'Foundations' },
-  { slug: '/components', title: 'Components' },
-  { slug: '/guides/plain-css', title: 'Guides' },
-  { slug: '/changelog', title: 'Changelog' },
-];
-
 /** Published Manti version (injected at build time — see vite.config.ts). */
 export const MANTI_VERSION = __MANTI_VERSION__;
 /** Release-notes page for the current version (target of the header badge). */
 export const LATEST_CHANGELOG_SLUG = `/changelog/v${MANTI_VERSION}`;
+
+function firstPageInGroup(label: string, fallback: string): string {
+  return (
+    navGroups.find((group) => group.label === label)?.items[0]?.slug ?? fallback
+  );
+}
+
+/** Condensed primary links shown in the top navigation bar. */
+export const primaryNav: NavItem[] = [
+  { slug: '/getting-started', title: 'Getting Started' },
+  { slug: '/guides/plain-css', title: 'Guides' },
+  { slug: '/components', title: 'Components' },
+  {
+    slug: firstPageInGroup('Foundations', '/foundations'),
+    title: 'Foundations',
+  },
+  {
+    slug: firstPageInGroup('Changelog', LATEST_CHANGELOG_SLUG),
+    title: 'Changelog',
+  },
+];
 
 /** `owner/name` of the public repository. */
 export const GITHUB_REPO = 'manti-ui/ui';

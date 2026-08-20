@@ -8,14 +8,7 @@ const items = [
 
 export default function SegmentedControlSizes() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--manti-space-4)',
-        alignItems: 'flex-start',
-      }}
-    >
+    <div className="segmented-control-options">
       <SegmentedControl size="sm" items={items} defaultValue="boiled" />
       <SegmentedControl size="md" items={items} defaultValue="boiled" />
       <SegmentedControl size="lg" items={items} defaultValue="boiled" />

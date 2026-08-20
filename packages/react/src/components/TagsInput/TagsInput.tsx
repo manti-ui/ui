@@ -4,6 +4,7 @@ import { tagsInput } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx } from '../../internal/props';
 
 export interface TagsInputProps {
@@ -71,11 +72,12 @@ export function TagsInput({
       : undefined,
   });
   const api = tagsInput.connect(service, normalizeProps);
+  const focusVisibleProps = useFocusVisible<HTMLDivElement>();
 
   return (
     <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
-      <div {...api.getControlProps()}>
+      <div {...api.getControlProps()} {...focusVisibleProps}>
         {api.value.map((tag, index) => (
             <span key={`${tag}-${index}`} {...api.getItemPreviewProps({ index, value: tag })}>
               <span {...api.getItemTextProps({ index, value: tag })}>

@@ -2,7 +2,7 @@ import { Heading, Text } from '@manti-ui/react';
 
 export default function HeadingLevelVsSizeDemo() {
   return (
-    <div style={{ display: 'grid', gap: 'var(--manti-space-4)' }}>
+    <div className="heading-list">
       <Heading level={1} size="4xl">
         h1 at 4xl
       </Heading>

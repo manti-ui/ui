@@ -1,4 +1,4 @@
-import { HoverCard } from '@manti-ui/react';
+import { HoverCard, Text } from '@manti-ui/react';
 
 export default function HoverCardBasic() {
   return (
@@ -13,11 +13,11 @@ export default function HoverCardBasic() {
         </a>
       }
     >
-      <div style={{ display: 'grid', gap: 'var(--manti-space-1)' }}>
+      <div className="hover-card-content">
         <strong>Mantı</strong>
-        <span style={{ color: 'var(--manti-text-muted)' }}>
+        <Text as="span" emphasis="muted">
           Tiny Turkish dumplings served under garlicky yogurt and chili butter.
-        </span>
+        </Text>
       </div>
     </HoverCard>
   );

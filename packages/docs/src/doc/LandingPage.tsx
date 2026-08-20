@@ -31,6 +31,7 @@ const radiusOptions: Array<{ value: MantiRadiusMode; label: string }> = [
   { value: 'sharp', label: 'Sharp' },
   { value: 'default', label: 'Default' },
   { value: 'round', label: 'Round' },
+  { value: 'pill', label: 'Pill' },
 ];
 
 const teamMembers = [

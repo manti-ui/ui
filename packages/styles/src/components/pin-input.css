@@ -29,7 +29,7 @@
     padding: 0;
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-size-control-radius, var(--manti-radius-md));
     outline: none;
     text-align: center;
     color: var(--manti-text);
@@ -53,6 +53,14 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
+  }
+
+  [data-scope='pin-input'][data-part='root']:not([data-focus-visible='false'])
+    [data-part='input']:focus-visible,
+  [data-scope='pin-input'][data-part='root'][data-focus-visible='true']
+    [data-part='input']:focus {
+    outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+    outline-offset: var(--manti-focus-ring-offset);
   }
 
   [data-scope='pin-input'][data-part='root'][data-size='sm']

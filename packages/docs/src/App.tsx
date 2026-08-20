@@ -11,6 +11,7 @@ import { SearchDialog } from './shell/SearchDialog';
 import { Sidebar } from './shell/Sidebar';
 import { TableOfContents } from './shell/TableOfContents';
 import { TopNav } from './shell/TopNav';
+import Clarity from '@microsoft/clarity';
 
 export function App() {
   const { pathname, hash } = useLocation();
@@ -20,7 +21,7 @@ export function App() {
 
   // Sync per-route <title>/description/canonical/OG tags on client navigation.
   useDocumentHead(page);
-
+  Clarity.init("y5gqk1fv09");
   // The page scrolls on the window (sidebar/TOC are sticky), and react-router
   // keeps the old scroll offset across client navigations. Reset to the top on
   // every route change so a sidebar click starts the new page from its heading —
@@ -33,16 +34,27 @@ export function App() {
     <MDXProvider components={mdxComponents}>
       <SearchProvider>
         <div className="docs-root">
+          <a
+            className="docs-skip-link"
+            href="#main-content"
+            onClick={() => document.getElementById('main-content')?.focus()}
+          >
+            Skip to main content
+          </a>
           <TopNav />
           {isLanding ? (
-            <main>
+            <main id="main-content" className="docs-main" tabIndex={-1}>
               <Outlet />
               <Footer />
             </main>
           ) : (
             <div className="docs-layout">
               <Sidebar />
-              <main className="docs-content">
+              <main
+                id="main-content"
+                className="docs-main docs-content"
+                tabIndex={-1}
+              >
                 <article className="docs-prose">
                   <Outlet />
                 </article>

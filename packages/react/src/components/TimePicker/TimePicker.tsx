@@ -5,6 +5,7 @@ import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { Portal } from '../../internal/Portal';
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx } from '../../internal/props';
 import type { Placement } from '../../internal/floating';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
@@ -76,6 +77,7 @@ export function TimePicker({
     } as never,
   );
   const api = timePicker.connect(service as never, normalizeProps as never);
+  const focusVisibleProps = useFocusVisible<HTMLDivElement>();
 
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -130,7 +132,7 @@ export function TimePicker({
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
-      <div {...api.getControlProps()}>
+      <div {...api.getControlProps()} {...focusVisibleProps}>
         <input {...api.getInputProps()} />
         <button {...api.getTriggerProps()} aria-label="Open time picker">
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">

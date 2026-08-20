@@ -9,15 +9,7 @@ const regions = [
 
 export default function SelectSizes() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--manti-space-4)',
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 5)',
-      }}
-    >
+    <div className="select-stack">
       <Select size="sm" items={regions} label="Small" placeholder="Pick one…" />
       <Select
         size="md"

@@ -4,7 +4,7 @@ import type { Decorator, Preview } from '@storybook/react-vite';
 import '@manti-ui/styles/index.css';
 import './preview.css';
 
-const RADIUS_MODES = ['none', 'sharp', 'default', 'round'] as const;
+const RADIUS_MODES = ['none', 'sharp', 'default', 'round', 'pill'] as const;
 
 /** Drive the Manti UI theme from a Storybook toolbar toggle. */
 const withTheme: Decorator = (Story, context) => {

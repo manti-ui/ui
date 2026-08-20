@@ -4,6 +4,7 @@ import { numberInput } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx } from '../../internal/props';
 import type { WithDataAttributes } from '../../internal/props';
 
@@ -104,6 +105,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const api = numberInput.connect(service, normalizeProps);
     const mergedRootProps = mergeProps(rootProps ?? {}, api.getRootProps());
     const mergedInputProps = mergeProps(inputProps ?? {}, api.getInputProps());
+    const focusVisibleProps = useFocusVisible<HTMLDivElement>();
 
     return (
       <div
@@ -113,7 +115,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         className={cx(mergedRootProps.className, className)}
       >
         {label != null && <label {...api.getLabelProps()}>{label}</label>}
-        <div {...api.getControlProps()}>
+        <div {...api.getControlProps()} {...focusVisibleProps}>
           <button {...api.getDecrementTriggerProps()} aria-label="Decrement">
             <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
               <path

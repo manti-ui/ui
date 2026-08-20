@@ -4,6 +4,7 @@ import { clipboard } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx } from '../../internal/props';
 
 export interface ClipboardProps {
@@ -117,6 +118,8 @@ export function Clipboard({
     timeout,
   });
   const api = clipboard.connect(service, normalizeProps);
+  const focusVisibleProps = useFocusVisible<HTMLDivElement>();
+  const triggerFocusVisibleProps = useFocusVisible<HTMLButtonElement>();
 
   return (
     <div
@@ -125,9 +128,13 @@ export function Clipboard({
       className={cx(className)}
     >
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
-      <div {...api.getControlProps()}>
+      <div {...api.getControlProps()} {...focusVisibleProps}>
         <input {...api.getInputProps()} />
-        <button {...api.getTriggerProps()} aria-label="Copy">
+        <button
+          {...api.getTriggerProps()}
+          {...triggerFocusVisibleProps}
+          aria-label="Copy"
+        >
           <span {...api.getIndicatorProps({ copied: true })}>{checkIcon}</span>
           <span {...api.getIndicatorProps({ copied: false })}>{copyIcon}</span>
         </button>

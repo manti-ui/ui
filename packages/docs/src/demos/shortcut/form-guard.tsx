@@ -12,18 +12,14 @@ export default function ShortcutFormGuard() {
   });
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gap: 'var(--manti-space-3)',
-        width: 'calc(var(--manti-space-16) * 4)',
-      }}
-    >
+    <div className="shortcut-grid">
       <Input
         label="Comment"
         placeholder="Type, then press ⌘/Ctrl+Enter to submit"
       />
-      <Badge variant={count > 0 ? 'primary' : 'secondary'}>Submitted ×{count}</Badge>
+      <Badge variant={count > 0 ? 'primary' : 'secondary'}>
+        Submitted ×{count}
+      </Badge>
     </div>
   );
 }

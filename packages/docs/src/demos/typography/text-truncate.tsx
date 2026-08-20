@@ -2,7 +2,7 @@ import { Card, Text } from '@manti-ui/react';
 
 export default function TextTruncateDemo() {
   return (
-    <div style={{ maxWidth: 'calc(var(--manti-space-16) * 5)' }}>
+    <div className="text-block">
       <Card>
         <Text size="base/semibold" truncate>
           A single-line title that runs well past the width of its card

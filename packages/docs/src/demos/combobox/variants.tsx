@@ -8,14 +8,7 @@ const spices = [
 
 export default function ComboboxVariants() {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gap: 'var(--manti-space-4)',
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 5)',
-      }}
-    >
+    <div className="combobox-grid">
       <Combobox items={spices} label="Default" placeholder="Search spices…" />
       <Combobox
         items={spices}

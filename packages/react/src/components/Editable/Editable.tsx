@@ -4,6 +4,7 @@ import { editable } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx } from '../../internal/props';
 
 export interface EditableProps {
@@ -75,11 +76,12 @@ export function Editable({
       : undefined,
   });
   const api = editable.connect(service, normalizeProps);
+  const focusVisibleProps = useFocusVisible<HTMLDivElement>();
 
   return (
     <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
       {label != null && <label {...api.getLabelProps()}>{label}</label>}
-      <div {...api.getAreaProps()}>
+      <div {...api.getAreaProps()} {...focusVisibleProps}>
         <input {...api.getInputProps()} />
         <span {...api.getPreviewProps()} />
       </div>

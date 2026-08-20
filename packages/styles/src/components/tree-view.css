@@ -6,14 +6,27 @@
  */
 @layer manti.components {
   [data-scope='tree-view'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-tree-view-gap: var(--manti-space-2);
+    --manti-tree-view-tree-gap: calc(var(--manti-space-1) / 2);
+    --manti-tree-view-label-font-size: var(--manti-text-sm);
+    --manti-tree-view-item-gap: var(--manti-space-2);
+    --manti-tree-view-item-padding-y: var(--manti-space-1);
+    --manti-tree-view-item-padding-x: var(--manti-space-3);
+    --manti-tree-view-item-radius: var(--manti-radius-sm);
+    --manti-tree-view-item-font-size: var(--manti-text-sm);
+    --manti-tree-view-branch-indent: var(--manti-space-4);
+    --manti-tree-view-leaf-indent: calc(
+      var(--manti-space-3) + var(--manti-space-5)
+    );
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-2);
+    gap: var(--manti-tree-view-gap);
   }
 
   [data-scope='tree-view'][data-part='label'] {
     margin: 0;
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-tree-view-label-font-size);
     font-weight: var(--manti-weight-semibold);
     color: var(--manti-text);
   }
@@ -21,7 +34,7 @@
   [data-scope='tree-view'][data-part='tree'] {
     display: flex;
     flex-direction: column;
-    gap: 0.125rem;
+    gap: var(--manti-tree-view-tree-gap);
 
     &:focus-visible {
       outline: none;
@@ -32,11 +45,12 @@
   [data-scope='tree-view'][data-part='branch-control'] {
     display: flex;
     align-items: center;
-    gap: var(--manti-space-2);
-    padding: var(--manti-space-1) var(--manti-space-3);
-    border-radius: var(--manti-radius-sm);
+    gap: var(--manti-tree-view-item-gap);
+    padding: var(--manti-tree-view-item-padding-y)
+      var(--manti-tree-view-item-padding-x);
+    border-radius: var(--manti-tree-view-item-radius);
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-tree-view-item-font-size);
     cursor: pointer;
     user-select: none;
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
@@ -109,10 +123,10 @@
   /* Indent each nested level. Leaf items align with their branch text by adding
      the indicator's width to the inset. */
   [data-scope='tree-view'][data-part='branch-content'] {
-    padding-inline-start: var(--manti-space-4);
+    padding-inline-start: var(--manti-tree-view-branch-indent);
   }
 
   [data-scope='tree-view'][data-part='branch-content'] [data-part='item'] {
-    padding-inline-start: calc(var(--manti-space-3) + var(--manti-space-5));
+    padding-inline-start: var(--manti-tree-view-leaf-indent);
   }
 }

@@ -23,16 +23,35 @@
  */
 @layer manti.components {
   [data-scope='tabs'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-tabs-gap: var(--manti-space-4);
+    --manti-tabs-list-gap: var(--manti-space-1);
+    --manti-tabs-track-padding: var(--manti-space-1);
+    --manti-tabs-track-radius: var(--manti-radius-full);
+    --manti-tabs-track-radius-vertical: var(--manti-radius-xl);
+    --manti-tabs-trigger-gap: var(--manti-space-2);
+    --manti-tabs-trigger-padding-y: calc(var(--manti-space-1) * 1.5);
+    --manti-tabs-trigger-padding-x: var(--manti-space-4);
+    --manti-tabs-trigger-font-size: var(
+      --manti-size-text,
+      var(--manti-text-base)
+    );
+    --manti-tabs-trigger-radius: var(
+      --manti-size-control-radius,
+      var(--manti-radius-md)
+    );
+    --manti-tabs-indicator-size: calc(var(--manti-space-1) / 2);
+    --manti-tabs-content-radius: var(--manti-radius-sm);
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-4);
+    gap: var(--manti-tabs-gap);
   }
 
   /* List ---------------------------------------------------------------- */
   [data-scope='tabs'][data-part='list'] {
     position: relative;
     display: flex;
-    gap: var(--manti-space-1);
+    gap: var(--manti-tabs-list-gap);
 
     &[data-orientation='vertical'] {
       flex-direction: column;
@@ -58,13 +77,13 @@
     [data-part='list'] {
     align-self: flex-start;
     max-width: 100%;
-    padding: var(--manti-space-1);
+    padding: var(--manti-tabs-track-padding);
     background: var(--manti-fill-subtle);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-full);
+    border-radius: var(--manti-tabs-track-radius);
 
     &[data-orientation='vertical'] {
-      border-radius: var(--manti-radius-xl);
+      border-radius: var(--manti-tabs-track-radius-vertical);
     }
   }
 
@@ -90,12 +109,14 @@
     z-index: 1;
     display: inline-flex;
     align-items: center;
-    gap: var(--manti-space-2);
-    padding: 0.375rem var(--manti-space-4);
+    gap: var(--manti-tabs-trigger-gap);
+    padding: var(--manti-tabs-trigger-padding-y)
+      var(--manti-tabs-trigger-padding-x);
     background: none;
     border: none;
     color: var(--manti-text-muted);
     font: inherit;
+    font-size: var(--manti-tabs-trigger-font-size);
     font-weight: var(--manti-weight-semibold);
     white-space: nowrap;
     transition: color var(--manti-duration-base) var(--manti-ease-smooth);
@@ -110,7 +131,7 @@
 
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
-      outline-offset: -2px;
+      outline-offset: calc(-1 * var(--manti-focus-ring-offset));
     }
 
     &[data-disabled] {
@@ -121,14 +142,19 @@
 
   /* Size variants ------------------------------------------------------- */
   [data-scope='tabs'][data-part='root'][data-size='sm'] {
-    gap: var(--manti-space-2);
+    --manti-tabs-gap: var(--manti-space-2);
+    --manti-tabs-trigger-gap: var(--manti-space-1);
+    --manti-tabs-trigger-padding-y: var(--manti-space-1);
+    --manti-tabs-trigger-padding-x: var(--manti-space-3);
+    --manti-tabs-trigger-font-size: var(--manti-text-sm);
 
     /* Direct list > trigger only — tab *content* may embed other components
        (e.g. a Clipboard) whose own `trigger` part must not inherit this. */
     & > [data-part='list'] > [data-part='trigger'] {
-      gap: var(--manti-space-1);
-      padding: var(--manti-space-1) var(--manti-space-3);
-      font-size: var(--manti-text-sm);
+      gap: var(--manti-tabs-trigger-gap);
+      padding: var(--manti-tabs-trigger-padding-y)
+        var(--manti-tabs-trigger-padding-x);
+      font-size: var(--manti-tabs-trigger-font-size);
     }
   }
 
@@ -143,7 +169,7 @@
   [data-scope='tabs'][data-part='root'][data-variant='soft']
     > [data-part='list']
     > [data-part='trigger'] {
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-tabs-trigger-radius);
   }
 
   /* Indicator ----------------------------------------------------------- *
@@ -166,8 +192,8 @@
   [data-scope='tabs'][data-part='root']:not([data-variant])
     > [data-part='list']
     > [data-part='indicator'] {
-    height: 2px;
-    top: calc(var(--top) + var(--height) - 2px);
+    height: var(--manti-tabs-indicator-size);
+    top: calc(var(--top) + var(--height) - var(--manti-tabs-indicator-size));
     background: var(--manti-text);
     border-radius: var(--manti-radius-full);
   }
@@ -175,10 +201,10 @@
   [data-scope='tabs'][data-part='root'][data-variant='line']
     > [data-part='list'][data-orientation='vertical']
     > [data-part='indicator'] {
-    width: 2px;
+    width: var(--manti-tabs-indicator-size);
     height: var(--height);
     top: var(--top);
-    left: calc(var(--left) + var(--width) - 2px);
+    left: calc(var(--left) + var(--width) - var(--manti-tabs-indicator-size));
   }
 
   /* pill & soft: a translucent thumb that lifts above the track. A light
@@ -203,7 +229,7 @@
   [data-scope='tabs'][data-part='root'][data-variant='soft']
     > [data-part='list']
     > [data-part='indicator'] {
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-tabs-trigger-radius);
   }
 
   @supports not (
@@ -226,8 +252,8 @@
 
     &:focus-visible {
       outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
-      outline-offset: 2px;
-      border-radius: var(--manti-radius-sm);
+      outline-offset: var(--manti-focus-ring-offset);
+      border-radius: var(--manti-tabs-content-radius);
     }
   }
 }

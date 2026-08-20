@@ -34,7 +34,7 @@
     padding-inline: var(--manti-time-picker-padding-x);
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-size-control-radius, var(--manti-radius-md));
 
     &:hover {
       border-color: var(--manti-border-strong);
@@ -45,6 +45,13 @@
     &:focus-within,
     &:has([data-part='trigger'][data-state='open']) {
       border-color: var(--variant-ring, var(--manti-focus-ring));
+    }
+
+    /* The control owns the keyboard ring for the editable time and picker
+       trigger; the child controls stay ringless to avoid nesting. */
+    &:has(:focus-visible):not([data-focus-visible='false']) {
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+      outline-offset: var(--manti-focus-ring-offset);
     }
   }
 
@@ -66,6 +73,7 @@
     justify-content: center;
     color: var(--manti-text-muted);
     cursor: pointer;
+    outline: none;
 
     &:hover {
       color: var(--manti-text);
@@ -102,7 +110,7 @@
     padding: var(--manti-time-picker-content-padding);
     background: var(--manti-surface-raised);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-size-panel-radius, var(--manti-radius-md));
 
     &:focus-visible {
       outline: none;

@@ -5,6 +5,7 @@ import type {
   KeyboardEvent,
   ReactNode,
 } from 'react';
+import { useFocusVisible } from '../../internal/focusVisible';
 import { cx, dataBool } from '../../internal/props';
 import { CapsLockIcon, EyeIcon, EyeOffIcon } from '../../internal/icons';
 
@@ -142,6 +143,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const describedBy =
     [errorId, hintId, capsId, ariaDescribedby].filter(Boolean).join(' ') ||
     undefined;
+  const focusVisibleProps = useFocusVisible<HTMLDivElement>();
 
   const toggleVisibility = () => {
     const next = !revealed;
@@ -194,7 +196,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           )}
         </label>
       )}
-      <div data-scope="field" data-part="control" data-size={size}>
+      <div
+        data-scope="field"
+        data-part="control"
+        data-size={size}
+        {...focusVisibleProps}
+      >
         {leftContent != null && (
           <span
             data-scope="field"

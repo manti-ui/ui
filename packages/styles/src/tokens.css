@@ -144,6 +144,7 @@
     --manti-text-3xl: calc(var(--manti-text-base) * 1.875);
     --manti-text-4xl: calc(var(--manti-text-base) * 2.25);
     --manti-text-5xl: calc(var(--manti-text-base) * 3);
+    --manti-leading-none: 1;
     --manti-leading-tight: 1.15;
     --manti-leading-snug: 1.3;
     --manti-leading-normal: 1.5;
@@ -214,9 +215,9 @@
      * is structurally incapable of collapsing into a circle. Keep small parts
      * out of `pill`; that is the whole point of the split.
      *
-     * No `[data-radius]` preset raises `pill` — binding pill controls to a
-     * preset would bind them to that preset's factor too. Raise it yourself and
-     * it composes with any factor: `:root { --manti-radius-pill: 9999px }`.    */
+     * The `pill` preset raises the channel together with the round factor. Raise
+     * it yourself for a custom profile and it composes with any factor:
+     * `:root { --manti-radius-pill: 9999px }`.                         */
     --manti-radius-pill: 0px; /* control-class parts that may become pill */
     --manti-radius-thumb: 9999px; /* draggable handles — round by default */
 
@@ -377,17 +378,16 @@
    * Radius presets.
    *
    * Set `data-radius` on any container to retune the roundness of everything
-   * inside it. One mode per distinct factor — a mode that differed from its
-   * neighbour only by a channel would be a picker row most pages cannot show a
-   * difference for.
+   * inside it. `none` is the explicit square mode; `sharp`, `default`, `round`,
+   * and `pill` are the four positive shape profiles. `pill` intentionally
+   * shares the round factor but also raises the control-class channel, so
+   * controls visibly become lozenges.
    *
    * Each generated mode re-declares every ramp step against its local factor
    * and assigns every channel, so an inherited root value cannot bypass the
-   * subtree preset. Modes still *lower* `pill` even though none raises it: a
-   * consumer who opted into pill controls globally can square a subtree with
-   * `data-radius="none"`. `none` is likewise the only mode that lowers `full`,
-   * so squaring the system also squares the by-design-round parts instead of
-   * leaving stray pills behind.
+   * subtree preset. `none` lowers both `pill` and `full`, so squaring the system
+   * also squares the by-design-round parts instead of leaving stray pills
+   * behind.
    */
   /* @radius-modes:generated:start */
   [data-radius='none'] {
@@ -439,6 +439,19 @@
     --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
     --manti-radius-full: 9999px;
     --manti-radius-pill: 0px;
+    --manti-radius-thumb: 9999px;
+  }
+
+  [data-radius='pill'] {
+    --manti-radius-factor: 1.4;
+    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
+    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
+    --manti-radius-md: calc(14px * var(--manti-radius-factor));
+    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
+    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
+    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
+    --manti-radius-full: 9999px;
+    --manti-radius-pill: 9999px;
     --manti-radius-thumb: 9999px;
   }
   /* @radius-modes:generated:end */

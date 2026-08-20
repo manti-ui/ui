@@ -21,3 +21,40 @@ if (!globalThis.PointerEvent) {
 if (!Element.prototype.scrollIntoView) {
   Element.prototype.scrollIntoView = () => {};
 }
+
+if (!Element.prototype.scrollTo) {
+  Element.prototype.scrollTo = () => {};
+}
+
+if (!globalThis.IntersectionObserver) {
+  class IntersectionObserverMock implements IntersectionObserver {
+    readonly root = null;
+    readonly rootMargin = '';
+    readonly scrollMargin = '';
+    readonly thresholds: readonly number[] = [];
+
+    constructor(private readonly callback: IntersectionObserverCallback) {
+      void this.callback;
+    }
+
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+    takeRecords(): IntersectionObserverEntry[] {
+      return [];
+    }
+  }
+
+  globalThis.IntersectionObserver = IntersectionObserverMock;
+}
+
+if (!globalThis.visualViewport) {
+  const viewport = {
+    addEventListener() {},
+    removeEventListener() {},
+  } as unknown as VisualViewport;
+  Object.defineProperty(globalThis, 'visualViewport', {
+    configurable: true,
+    value: viewport,
+  });
+}

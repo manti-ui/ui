@@ -282,10 +282,9 @@ export const radiusFactor = '1';
  * references a channel and is structurally incapable of going round.
  *
  * - `pill`  — control-class parts that *may* become pill: button, input, select
- *   and combobox triggers, number-input, toggle, segmented control. No preset
- *   raises it, deliberately: pill controls are a strong stylistic choice, and
- *   binding them to a preset would also bind them to that preset's factor.
- *   Raising the channel yourself composes with *any* factor:
+ *   and combobox triggers, number-input, toggle, segmented control. The
+ *   `data-radius="pill"` preset raises it together with the round factor;
+ *   raising the channel yourself still composes with *any* factor:
  *   `:root { --manti-radius-pill: 9999px }`.
  * - `thumb` — draggable handles (switch thumb, slider thumb), round by default
  *   because a square handle reads as broken at every size but `none`.
@@ -297,22 +296,22 @@ export const radiusChannel = {
 
 /**
  * `[data-radius]` presets — set the attribute on any container to retune the
- * radius of everything inside it. One mode per distinct factor; a mode that only
- * differed from its neighbour by a channel would be a picker row most pages
- * cannot show a difference for.
+ * radius of everything inside it. `none` is the explicit square mode; `sharp`,
+ * `default`, `round`, and `pill` are the four positive shape profiles. `pill`
+ * intentionally shares the round factor but also raises the control-class
+ * channel, so controls visibly become lozenges.
  *
  * Each generated mode re-declares the ramp against its local factor and assigns
- * every channel, so modes never leak into one another. A mode still *lowers*
- * `pill` even though none raises it, so a consumer who opted into pill controls
- * globally can square a subtree with `data-radius="none"`. `none` is likewise
- * the only mode that lowers `full`, so squaring the system also squares the
- * by-design-round parts instead of leaving stray lozenges behind.
+ * every channel, so modes never leak into one another. `none` lowers both
+ * `pill` and `full`, so squaring the system also squares the by-design-round
+ * parts instead of leaving stray lozenges behind.
  */
 export const radiusModes = {
   none: { factor: '0', full: '0px', pill: '0px', thumb: '0.5px' },
   sharp: { factor: '0.6', full: '9999px', pill: '0px', thumb: '9999px' },
   default: { factor: '1', full: '9999px', pill: '0px', thumb: '9999px' },
   round: { factor: '1.4', full: '9999px', pill: '0px', thumb: '9999px' },
+  pill: { factor: '1.4', full: '9999px', pill: '9999px', thumb: '9999px' },
 } as const;
 
 /** The `data-radius` values Manti UI ships presets for. */
@@ -465,6 +464,7 @@ export const fontSize = {
 } as const;
 
 export const lineHeight = {
+  none: '1',
   tight: '1.15',
   snug: '1.3',
   normal: '1.5',
@@ -647,6 +647,27 @@ export const componentTokens = {
   drawer: ['size'],
   editable: ['height'],
   field: ['height', 'padding-x', 'padding-y', 'font-size', 'addon-padding-x'],
+  'file-upload': [
+    'gap',
+    'label-font-size',
+    'dropzone-gap',
+    'dropzone-padding',
+    'dropzone-radius',
+    'dropzone-font-size',
+    'trigger-height',
+    'trigger-padding-x',
+    'trigger-radius',
+    'trigger-font-size',
+    'item-gap',
+    'item-group-gap',
+    'item-padding-x',
+    'item-padding-y',
+    'item-radius',
+    'item-font-size',
+    'item-size-font-size',
+    'delete-trigger-size',
+    'delete-trigger-radius',
+  ],
   'floating-panel': ['min-width', 'min-height'],
   heading: ['font-size', 'line-height', 'weight', 'tracking'],
   'hover-card': ['max-width'],
@@ -680,14 +701,23 @@ export const componentTokens = {
     'z-index',
   ],
   'navigation-menu': ['content-min-width'],
-  'number-input': ['height', 'stepper-width'],
+  'number-input': ['height', 'stepper-width', 'radius'],
   pagination: ['size'],
   'pin-input': ['size'],
   popover: ['max-width', 'z-index'],
   progress: ['track-height', 'circle-size', 'circle-thickness'],
+  'radio-group': [
+    'gap',
+    'horizontal-gap',
+    'item-gap',
+    'control-size',
+    'dot-size',
+    'label-font-size',
+    'item-font-size',
+  ],
   'rating-group': ['size'],
   'scroll-area': ['size'],
-  'segmented-control': ['height', 'padding-x'],
+  'segmented-control': ['height', 'padding-x', 'radius'],
   select: [
     'height',
     'padding-x',
@@ -708,6 +738,20 @@ export const componentTokens = {
   splitter: ['handle-size', 'line-size', 'line-size-active'],
   steps: ['indicator-size'],
   switch: ['track-width', 'track-height', 'track-padding'],
+  tabs: [
+    'gap',
+    'list-gap',
+    'track-padding',
+    'track-radius',
+    'track-radius-vertical',
+    'trigger-gap',
+    'trigger-padding-y',
+    'trigger-padding-x',
+    'trigger-font-size',
+    'trigger-radius',
+    'indicator-size',
+    'content-radius',
+  ],
   'tags-input': ['height'],
   text: ['font-size', 'line-height', 'weight', 'tracking'],
   'time-picker': [
@@ -723,9 +767,21 @@ export const componentTokens = {
   ],
   toast: ['width', 'radius'],
   toggle: ['size'],
-  'toggle-group': ['height', 'padding-x'],
+  'toggle-group': ['height', 'padding-x', 'radius'],
   tooltip: ['max-width', 'z-index'],
   tour: ['width', 'overlay-extent'],
+  'tree-view': [
+    'gap',
+    'tree-gap',
+    'label-font-size',
+    'item-gap',
+    'item-padding-y',
+    'item-padding-x',
+    'item-radius',
+    'item-font-size',
+    'branch-indent',
+    'leaf-indent',
+  ],
 } as const;
 
 export type MantiComponentTokens = typeof componentTokens;

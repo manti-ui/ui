@@ -60,7 +60,10 @@
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
     /* Control class — joins the opt-in pill channel alongside button/select. */
-    border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
+    border-radius: max(
+      var(--manti-size-control-radius, var(--manti-radius-md)),
+      var(--manti-radius-pill)
+    );
     color: var(--manti-text-muted);
     transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
@@ -79,6 +82,14 @@
     &:focus-within {
       border-color: var(--variant-ring);
     }
+
+    /* The shell owns the keyboard ring for the primary input. Password and
+       other node slots own their own rings, so the selector stays narrow to
+       avoid painting two nested indicators. */
+    &:has([data-part='input']:focus-visible):not([data-focus-visible='false']) {
+      outline: var(--manti-focus-ring-width) solid var(--variant-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
   }
 
   [data-scope='field'][data-part='root'][data-invalid='true']
@@ -91,6 +102,11 @@
     )
     [data-part='control']:is(:active, :focus-within) {
     border-color: var(--manti-border);
+  }
+
+  [data-scope='field'][data-part='root'][data-focus-ring='none']
+    [data-part='control']:has([data-part='input']:focus-visible) {
+    outline: none;
   }
 
   [data-scope='field'][data-part='root'][data-focus-ring='none'][data-appearance='fill']:not(

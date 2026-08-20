@@ -1,7 +1,32 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Collapsible, ScrollArea } from '@manti-ui/react';
 
 import { navGroups } from '../data/navigation';
+
+const CONTEXTUAL_GROUPS = new Map([
+  ['/foundations', 'Foundations'],
+  ['/changelog', 'Changelog'],
+]);
+
+function groupForPath(pathname: string): string | undefined {
+  for (const [prefix, label] of CONTEXTUAL_GROUPS) {
+    if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
+      return label;
+    }
+  }
+  return undefined;
+}
+
+function visibleGroups(pathname: string) {
+  const contextualGroup = groupForPath(pathname);
+  if (contextualGroup) {
+    return navGroups.filter((group) => group.label === contextualGroup);
+  }
+
+  return navGroups.filter(
+    (group) => !CONTEXTUAL_GROUPS.has(`/${group.label.toLowerCase()}`),
+  );
+}
 
 /**
  * The grouped page list. Shared by the desktop sidebar and the mobile menu.
@@ -10,9 +35,11 @@ import { navGroups } from '../data/navigation';
  * sidebar lives in the persistent layout shell).
  */
 export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
+  const { pathname } = useLocation();
+
   return (
     <nav aria-label="Documentation" className="docs-sidebar-nav">
-      {navGroups.map((group) => (
+      {visibleGroups(pathname).map((group) => (
         <Collapsible
           key={group.label}
           className="docs-nav-group"

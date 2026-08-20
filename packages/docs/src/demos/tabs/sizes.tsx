@@ -20,15 +20,7 @@ const items = [
 
 export default function TabsSizes() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--manti-space-6)',
-        width: '100%',
-        maxWidth: 'calc(var(--manti-space-16) * 8)',
-      }}
-    >
+    <div className="tabs-stack">
       <Tabs size="sm" items={items} />
       <Tabs size="md" items={items} />
     </div>

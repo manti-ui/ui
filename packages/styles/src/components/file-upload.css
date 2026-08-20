@@ -5,14 +5,34 @@
  */
 @layer manti.components {
   [data-scope='file-upload'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-file-upload-gap: var(--manti-space-3);
+    --manti-file-upload-label-font-size: var(--manti-text-sm);
+    --manti-file-upload-dropzone-gap: var(--manti-space-3);
+    --manti-file-upload-dropzone-padding: var(--manti-space-6);
+    --manti-file-upload-dropzone-radius: var(--manti-radius-md);
+    --manti-file-upload-dropzone-font-size: var(--manti-text-sm);
+    --manti-file-upload-trigger-height: var(--manti-control-height-sm);
+    --manti-file-upload-trigger-padding-x: var(--manti-space-4);
+    --manti-file-upload-trigger-radius: var(--manti-radius-sm);
+    --manti-file-upload-trigger-font-size: var(--manti-text-sm);
+    --manti-file-upload-item-gap: var(--manti-space-3);
+    --manti-file-upload-item-group-gap: var(--manti-space-2);
+    --manti-file-upload-item-padding-x: var(--manti-space-3);
+    --manti-file-upload-item-padding-y: var(--manti-space-2);
+    --manti-file-upload-item-radius: var(--manti-radius-sm);
+    --manti-file-upload-item-font-size: var(--manti-text-sm);
+    --manti-file-upload-item-size-font-size: var(--manti-text-xs);
+    --manti-file-upload-delete-trigger-size: var(--manti-space-6);
+    --manti-file-upload-delete-trigger-radius: var(--manti-radius-sm);
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-3);
+    gap: var(--manti-file-upload-gap);
     min-width: 0;
   }
 
   [data-scope='file-upload'][data-part='label'] {
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-file-upload-label-font-size);
     font-weight: var(--manti-weight-medium);
     color: var(--manti-text);
   }
@@ -22,13 +42,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--manti-space-3);
-    padding: var(--manti-space-6);
+    gap: var(--manti-file-upload-dropzone-gap);
+    padding: var(--manti-file-upload-dropzone-padding);
     background: var(--manti-surface);
     border: 1px dashed var(--manti-border-strong);
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-file-upload-dropzone-radius);
     color: var(--manti-text-muted);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-file-upload-dropzone-font-size);
     text-align: center;
     cursor: pointer;
     transition:
@@ -57,13 +77,13 @@
     display: inline-flex;
     align-items: center;
     /* Browse action button — shares the Tier-2 control-height scale. */
-    min-height: var(--manti-control-height-sm);
-    padding-inline: var(--manti-space-4);
+    min-height: var(--manti-file-upload-trigger-height);
+    padding-inline: var(--manti-file-upload-trigger-padding-x);
     background: var(--variant-solid);
     border: 1px solid transparent;
-    border-radius: var(--manti-radius-sm);
+    border-radius: var(--manti-file-upload-trigger-radius);
     color: var(--variant-on-solid);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-file-upload-trigger-font-size);
     font-weight: var(--manti-weight-semibold);
     cursor: pointer;
     transition: background-color var(--manti-duration-fast)
@@ -85,18 +105,19 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-2);
+    gap: var(--manti-file-upload-item-group-gap);
   }
 
   [data-scope='file-upload'][data-part='item'] {
     display: flex;
     align-items: center;
-    gap: var(--manti-space-3);
-    padding: var(--manti-space-2) var(--manti-space-3);
+    gap: var(--manti-file-upload-item-gap);
+    padding: var(--manti-file-upload-item-padding-y)
+      var(--manti-file-upload-item-padding-x);
     background: var(--manti-surface-raised);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-sm);
-    font-size: var(--manti-text-sm);
+    border-radius: var(--manti-file-upload-item-radius);
+    font-size: var(--manti-file-upload-item-font-size);
   }
 
   [data-scope='file-upload'][data-part='item-name'] {
@@ -110,7 +131,7 @@
   [data-scope='file-upload'][data-part='item-size-text'] {
     flex: none;
     color: var(--manti-text-subtle);
-    font-size: var(--manti-text-xs);
+    font-size: var(--manti-file-upload-item-size-font-size);
     font-variant-numeric: tabular-nums;
   }
 
@@ -122,13 +143,13 @@
     flex: none;
     align-items: center;
     justify-content: center;
-    width: var(--manti-space-6);
-    height: var(--manti-space-6);
+    width: var(--manti-file-upload-delete-trigger-size);
+    height: var(--manti-file-upload-delete-trigger-size);
     padding: 0;
     color: var(--manti-text-muted);
     background: transparent;
     border: 0;
-    border-radius: var(--manti-radius-sm);
+    border-radius: var(--manti-file-upload-delete-trigger-radius);
     cursor: pointer;
     transition:
       background var(--manti-duration-fast) var(--manti-ease-soft),
