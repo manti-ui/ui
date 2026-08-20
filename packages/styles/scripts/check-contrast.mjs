@@ -25,16 +25,21 @@
  *
  * `--variant-on-solid` is not audited as a taste call: `gen-variant-ink.mjs`
  * picks it by measurement and this script re-checks the result independently.
+ *
+ * The shipped presets (`src/themes/*.css`) are audited too, each overlaid on the
+ * tokens it moves, so a preset cannot ship below the contrast floor.
  */
 import { dirname, resolve as presolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { apca, readTokensCss, toSrgb, wcag } from './lib/tokens-css.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const CSS = presolve(here, '../src/tokens.css');
+const TOKENS_TS = presolve(here, '../../tokens/src/index.ts');
 const gate = process.argv.includes('--gate');
 
+const { presets } = await import(pathToFileURL(TOKENS_TS).href);
 const { root, variantScopes, color, resolveToken } = await readTokensCss(CSS);
 
 // ── pairs to check ───────────────────────────────────────────────────────────
@@ -96,11 +101,11 @@ const unresolved = [];
 /** Gated pairs whose sRGB-mapped rendering lands on the other side of the bar. */
 const srgbDrift = [];
 
-function row(label, fg, bg, kind, gated, scope, group) {
+function row(label, fg, bg, kind, gated, scope, group, resolve = resolveToken) {
   const out = [];
   for (const theme of ['light', 'dark']) {
-    const a = resolveToken(fg, theme, scope),
-      b = resolveToken(bg, theme, scope);
+    const a = resolve(fg, theme, scope),
+      b = resolve(bg, theme, scope);
     if (a.err || b.err) {
       unresolved.push(`${label} (${theme}): ${a.err ?? b.err}`);
       if (gated) failures++;
@@ -136,6 +141,33 @@ for (const [name, scope] of variantScopes) {
   console.log(`\nVARIANT '${name}'`);
   for (const [l, fg, bg, k, g] of perVariant)
     row(l, fg, bg, k, g, scope, `variant '${name}'`);
+}
+
+// ── the shipped presets ──────────────────────────────────────────────────────
+// A preset overlays the tokens it moves, so each one is re-read on top of
+// `tokens.css` and its own variants are audited against the same bars. Only the
+// variants a preset actually recolors are listed; the rest are the shipped ones
+// already covered above, re-tinted by the preset's neutral hue.
+for (const [id, preset] of Object.entries(presets)) {
+  if (preset.default) continue;
+  const theme = presolve(here, `../src/themes/${id}.css`);
+  const { variantScopes: scopes, resolveToken: resolve } = await readTokensCss([
+    CSS,
+    theme,
+  ]);
+  console.log(`\nPRESET '${id}'`);
+  for (const name of Object.keys(preset.colors))
+    for (const [l, fg, bg, k, g] of perVariant)
+      row(
+        `${name} · ${l}`,
+        fg,
+        bg,
+        k,
+        g,
+        scopes.get(name),
+        `preset '${id}'`,
+        resolve,
+      );
 }
 
 // ── gamut audit of the primitive ramps ───────────────────────────────────────
