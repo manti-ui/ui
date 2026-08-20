@@ -365,7 +365,9 @@ export const presets = {
   ocean: {
     label: 'Ocean',
     description: 'Bright sky blue on a cold neutral, rounded.',
-    colors: { primary: '#0ea5e9', info: '#0284c7' },
+    // Info is a stop darker than the studio swatch: no ink clears AA on
+    // #0284c7 (4.45:1), and the preset gate refuses to ship that.
+    colors: { primary: '#0ea5e9', info: '#0369a1' },
     coolHue: 235,
     radiusFactor: '1.4',
     density: 1,
