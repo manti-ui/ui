@@ -44,6 +44,14 @@
     "./tailwind-theme.css": {
       "development": "./src/tailwind-theme.css",
       "default": "./dist/tailwind-theme.css"
+    },
+    "./themes.css": {
+      "development": "./src/themes.css",
+      "default": "./dist/themes.css"
+    },
+    "./themes/*.css": {
+      "development": "./src/themes/*.css",
+      "default": "./dist/themes/*.css"
     }
   },
   "main": "./dist/index.js",
@@ -59,7 +67,9 @@
       "./index.css": "./dist/index.css",
       "./tokens.css": "./dist/tokens.css",
       "./tailwind.css": "./dist/tailwind.css",
-      "./tailwind-theme.css": "./dist/tailwind-theme.css"
+      "./tailwind-theme.css": "./dist/tailwind-theme.css",
+      "./themes.css": "./dist/themes.css",
+      "./themes/*.css": "./dist/themes/*.css"
     },
     "main": "./dist/index.js",
     "module": "./dist/index.js",
