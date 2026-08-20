@@ -1,0 +1,48 @@
+---
+title: v0.11.0
+slug: /changelog/v0.11.0
+group: Changelog
+order: 1
+date: '2026-08-21'
+description: Theme Studio presets become importable token and stylesheet packages, with per-preset contrast and interaction audits.
+---
+
+# v0.11.0
+
+_Released 2026-08-21._
+
+## Theme Studio presets are importable
+
+Theme Studio's starting points used to exist only as objects inside the studio.
+They are now part of the published packages, so a project can adopt a complete
+preset with imports instead of copying generated CSS:
+
+```css
+@import '@manti-ui/styles/index.css';
+@import '@manti-ui/styles/themes/ocean.css';
+```
+
+`@manti-ui/tokens` exposes the preset definitions, while `@manti-ui/styles`
+ships `violet`, `ocean`, `forest`, `rose`, and `graphite` theme stylesheets. The
+default theme remains the no-op baseline and needs no additional stylesheet.
+Each preset carries its full visual contract: variant ramps, hue and radius
+settings, density where applicable, accent fill, and selection roles.
+
+## Multiple presets on one page
+
+Projects that render more than one theme at a time can import
+`@manti-ui/styles/themes.css` and scope a preset with
+`data-manti-theme`:
+
+```html
+<section data-manti-theme="ocean">...</section>
+```
+
+The theme layer is ordered after the token layer, so a preset wins over token
+defaults while consumer CSS outside the layers can still override it.
+
+## Presets are audited like the base theme
+
+The styles build now generates and validates every preset. Contrast checks and
+the interaction-progression gate run per theme, catching a preset that loses
+the rest → hover → active or solid → solid-hover progression before it ships.
