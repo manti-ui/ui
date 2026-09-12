@@ -95,7 +95,9 @@
     --manti-size-item-padding-x: var(--manti-space-3);
     --manti-size-item-gap: var(--manti-space-2);
     --manti-size-item-radius: var(--manti-radius-sm);
-    --manti-size-control-radius: var(--manti-radius-md);
+    /* Controls stay one radius step tighter than panels at the base size;
+       otherwise a 2.2rem button reads as a pill in the default profile. */
+    --manti-size-control-radius: var(--manti-radius-sm);
     --manti-size-panel-radius: var(--manti-radius-md);
     --manti-size-cell: var(--manti-control-height-md);
   }
@@ -133,7 +135,7 @@
     --manti-size-item-padding-x: var(--manti-space-4);
     --manti-size-item-gap: var(--manti-space-2);
     --manti-size-item-radius: var(--manti-radius-md);
-    --manti-size-control-radius: var(--manti-radius-lg);
+    --manti-size-control-radius: var(--manti-radius-md);
     --manti-size-panel-radius: var(--manti-radius-lg);
     --manti-size-cell: var(--manti-control-height-lg);
   }

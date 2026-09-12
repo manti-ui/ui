@@ -11,6 +11,7 @@ import { SearchDialog } from './shell/SearchDialog';
 import { Sidebar } from './shell/Sidebar';
 import { TableOfContents } from './shell/TableOfContents';
 import { TopNav } from './shell/TopNav';
+import { CopyPageButton } from './shell/CopyPageButton';
 import Clarity from '@microsoft/clarity';
 
 export function App() {
@@ -55,6 +56,13 @@ export function App() {
                 className="docs-main docs-content"
                 tabIndex={-1}
               >
+                {page &&
+                  (page.slug.startsWith('/components/') ||
+                    page.slug.startsWith('/typography/')) && (
+                    <div className="docs-page-actions">
+                      <CopyPageButton source={page.source} />
+                    </div>
+                  )}
                 <article className="docs-prose">
                   <Outlet />
                 </article>
