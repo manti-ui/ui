@@ -310,7 +310,7 @@ export const radiusModes = {
   none: { factor: '0', full: '0px', pill: '0px', thumb: '0.5px' },
   sharp: { factor: '0.6', full: '9999px', pill: '0px', thumb: '9999px' },
   default: { factor: '1', full: '9999px', pill: '0px', thumb: '9999px' },
-  round: { factor: '1.4', full: '9999px', pill: '0px', thumb: '9999px' },
+  round: { factor: '1.2', full: '9999px', pill: '0px', thumb: '9999px' },
   pill: { factor: '1.4', full: '9999px', pill: '9999px', thumb: '9999px' },
 } as const;
 
@@ -468,6 +468,8 @@ export const lineHeight = {
   tight: '1.15',
   snug: '1.3',
   normal: '1.5',
+  /** Shared baseline for single-line controls; independently configurable. */
+  control: '1.5',
   relaxed: '1.7',
 } as const;
 

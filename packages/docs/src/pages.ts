@@ -13,6 +13,11 @@ interface MdxModule {
 const modules = import.meta.glob<MdxModule>('./content/**/*.mdx', {
   eager: true,
 });
+const sources = import.meta.glob<string>('./content/**/*.mdx', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+});
 
 export interface DocPage {
   slug: string;
@@ -23,12 +28,14 @@ export interface DocPage {
   date?: string;
   /** Small sidebar tag, e.g. `New`. */
   badge?: string;
+  /** Raw MDX copied by the page assistant action. */
+  source: string;
   Component: ComponentType;
   toc: TocEntry[];
 }
 
-export const pages: DocPage[] = Object.values(modules)
-  .map((mod) => ({
+export const pages: DocPage[] = Object.entries(modules)
+  .map(([path, mod]) => ({
     slug: mod.frontmatter.slug,
     title: mod.frontmatter.title,
     group: mod.frontmatter.group ?? '',
@@ -36,6 +43,7 @@ export const pages: DocPage[] = Object.values(modules)
     description: mod.frontmatter.description,
     date: mod.frontmatter.date,
     badge: mod.frontmatter.badge,
+    source: sources[path] ?? '',
     Component: mod.default,
     toc: mod.tableOfContents ?? [],
   }))

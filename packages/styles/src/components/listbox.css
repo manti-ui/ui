@@ -79,28 +79,32 @@
     border-radius: var(--manti-listbox-item-radius);
     color: var(--manti-text);
     font-size: var(--manti-listbox-item-font-size);
-    cursor: pointer;
+    cursor: default;
     user-select: none;
     transition: background var(--manti-duration-fast) var(--manti-ease-soft);
 
     &[data-highlighted] {
-      background: var(--manti-fill);
+      background: var(--variant-soft-bg-hover);
     }
 
-    /* Pressed — the `active` rung of the neutral wash ladder. */
+    &:hover:not([data-disabled]) {
+      background: var(--variant-soft-bg-hover);
+    }
+
+    /* Pressed — the active rung of the item's own variant ladder. */
     &:active {
-      background: var(--manti-fill-strong);
+      background: var(--variant-soft-bg-active);
     }
 
     &[data-state='checked'] {
-      background: var(--variant-soft-bg);
+      background: var(--variant-soft-bg-active);
       color: var(--variant-soft-text);
       font-weight: var(--manti-weight-medium);
     }
 
-    /* A selected row that's also under roving focus keeps reading as focused. */
+    /* A selected row keeps its stronger selected surface while highlighted. */
     &[data-state='checked'][data-highlighted] {
-      background: var(--variant-soft-bg-hover);
+      background: var(--variant-soft-bg-active);
     }
 
     /* Pressing a selected row takes the soft ladder's `active` rung, so the

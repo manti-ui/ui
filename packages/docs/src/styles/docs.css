@@ -406,6 +406,12 @@
     padding-top: var(--manti-space-5);
     border-top: 1px solid var(--manti-border);
   }
+
+  .docs-page-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--manti-space-4);
+  }
   /* First rail block on TOC-less pages: drop the divider/offset. */
   .docs-toc > .docs-theme-playground:first-child {
     margin-top: 0;

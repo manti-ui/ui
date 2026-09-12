@@ -10,6 +10,13 @@
   [data-scope='combobox']:is([data-part='root'], [data-part='positioner']) {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-combobox-icon-size: var(--manti-size-icon, var(--manti-text-base));
+    --_combobox-connected-radius: min(
+      max(
+        var(--manti-size-control-radius, var(--manti-radius-md)),
+        var(--manti-radius-pill)
+      ),
+      calc(var(--manti-size-control-height, var(--manti-control-height-md)) / 2)
+    );
   }
 
   [data-scope='combobox'][data-part='root'] {
@@ -72,6 +79,7 @@
 
     &[data-state='open'] {
       border-color: var(--manti-border);
+      border-bottom-width: 0;
     }
 
     /* Keep the neutral border visible as the control joins its panel. */
@@ -83,13 +91,13 @@
     &[data-connected='bottom'] {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
-      border-bottom-color: transparent;
+      border-bottom-width: 0;
     }
 
     &[data-connected='top'] {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
-      border-top-color: transparent;
+      border-top-width: 0;
     }
   }
 
@@ -124,16 +132,9 @@
 
     &[data-connected] {
       background: var(--manti-panel-tint-strong);
-      border-color: transparent;
+      border-color: var(--manti-border);
     }
 
-    &[data-connected='bottom'] {
-      border-bottom-color: transparent;
-    }
-
-    &[data-connected='top'] {
-      border-top-color: transparent;
-    }
   }
 
   [data-scope='combobox'][data-part='root'][data-appearance='fill'][data-invalid]
@@ -258,7 +259,8 @@
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-border);
-    border-radius: var(--manti-size-panel-radius, var(--manti-radius-md));
+    border-top-width: 0;
+    border-radius: var(--_combobox-connected-radius);
   }
 
   /* Join the panel on the side chosen by Floating UI, including when collision
@@ -270,7 +272,7 @@
     margin-top: calc(-1 * var(--manti-space-2));
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-top-color: transparent;
+    border-top-width: 0;
   }
 
   [data-scope='combobox'][data-part='positioner']
@@ -280,7 +282,7 @@
     margin-bottom: calc(-1 * var(--manti-space-2));
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    border-bottom-color: transparent;
+    border-bottom-width: 0;
   }
 
   [data-scope='combobox'][data-part='positioner']

@@ -14,11 +14,10 @@
  */
 
 /**
- * Every demo import is one line ending in `from '…'` — true of all 110 demo files, and
- * of anything a reader is likely to type. A multi-line import would survive this and
- * then fail to evaluate; the error surfaces in the editor rather than silently.
+ * Imports may span lines (Calendar's board demo is one example), so match through the
+ * first `from '…'` clause instead of assuming the declaration fits on one line.
  */
-const IMPORT_LINE = /^import\s[^;\n]*?from\s*['"][^'"]+['"];?[ \t]*\r?\n?/gm;
+const IMPORT_LINE = /^import\s[\s\S]*?\sfrom\s*['"][^'"]+['"];?[ \t]*\r?\n?/gm;
 
 const DEFAULT_EXPORT = /export\s+default\s+function\s+([A-Za-z_$][\w$]*)/;
 
