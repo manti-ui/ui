@@ -79,7 +79,6 @@
 
     &[data-state='open'] {
       border-color: var(--manti-border);
-      border-bottom-width: 0;
     }
 
     /* Keep the neutral border visible as the control joins its panel. */
@@ -127,12 +126,14 @@
     }
 
     &[data-state='open'] {
-      border-color: transparent;
+      border-color: var(--manti-border);
+      border-bottom-width: 0;
     }
 
     &[data-connected] {
       background: var(--manti-panel-tint-strong);
       border-color: var(--manti-border);
+      border-bottom-width: 0;
     }
 
   }

@@ -89,7 +89,6 @@
 
     &[data-state='open'] {
       border-color: var(--manti-border);
-      border-bottom-width: 0;
     }
 
     &[data-connected] {
@@ -102,6 +101,7 @@
     &[data-state='open'][data-side='bottom'] {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
+      border-bottom-color: var(--manti-panel-tint-strong);
       border-bottom-width: 0;
     }
 
@@ -109,6 +109,7 @@
     &[data-state='open'][data-side='top'] {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
+      border-top-color: var(--manti-panel-tint-strong);
       border-top-width: 0;
     }
 
@@ -141,12 +142,14 @@
     }
 
     &[data-state='open'] {
-      border-color: transparent;
+      border-color: var(--manti-border);
+      border-bottom-width: 0;
     }
 
     &[data-connected] {
       background: var(--manti-panel-tint-strong);
       border-color: var(--manti-border);
+      border-bottom-width: 0;
     }
 
   }
@@ -201,6 +204,8 @@
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-border);
+    /* The popup overlaps the trigger by one spacing unit; its top edge is
+       the shared seam and must not paint a second line. */
     border-top-width: 0;
     border-radius: var(--_select-connected-radius);
   }
@@ -214,6 +219,7 @@
     margin-top: calc(-1 * var(--manti-space-2));
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    border-top-color: var(--manti-panel-tint-strong);
     border-top-width: 0;
   }
 
@@ -224,6 +230,7 @@
     margin-bottom: calc(-1 * var(--manti-space-2));
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+    border-bottom-color: var(--manti-panel-tint-strong);
     border-bottom-width: 0;
   }
 

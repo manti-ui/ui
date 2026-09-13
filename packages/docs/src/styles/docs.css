@@ -275,6 +275,7 @@
   }
 
   .docs-content {
+    position: relative;
     min-width: 0;
     padding-block: var(--manti-space-8);
   }
@@ -410,7 +411,10 @@
   .docs-page-actions {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: var(--manti-space-4);
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    z-index: var(--manti-z-raised);
   }
   /* First rail block on TOC-less pages: drop the divider/offset. */
   .docs-toc > .docs-theme-playground:first-child {
@@ -562,6 +566,7 @@
      below do. Descendants are left alone on purpose: a plain <h3> written inside
      a <Card> in MDX is still prose. */
   .docs-prose {
+    position: relative;
     max-width: var(--docs-prose-max);
     margin-inline: auto;
     color: var(--manti-text);
@@ -1940,6 +1945,11 @@
     .docs-landing-hero-copy {
       align-items: center;
       text-align: center;
+    }
+    .docs-page-actions {
+      position: static;
+      justify-content: flex-start;
+      margin-bottom: var(--manti-space-4);
     }
     .docs-landing-hero h1 {
       max-width: 13ch;
