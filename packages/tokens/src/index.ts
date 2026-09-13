@@ -318,11 +318,14 @@ export const radiusModes = {
 export type MantiRadiusMode = keyof typeof radiusModes;
 
 /**
- * A theme preset — one opinionated starting point over the shipped defaults.
+ * A theme preset — one opinionated palette over the shipped defaults.
  *
- * `colors` names a base color per variant; the generator expands each into the
- * full `--variant-*` vocabulary. `density` scales the spacing unit and the
- * control heights.
+ * A preset is color and nothing else. `colors` names a base color per variant,
+ * which the generator expands into the full `--variant-*` vocabulary, and
+ * `coolHue` retints the neutral ramp behind every gray, surface, border and
+ * text role. Shape, density, and type are deliberately left out: those are
+ * product decisions that a palette must not silently make, so a preset can be
+ * swapped at any point without moving a control's size or corner.
  */
 export type MantiPresetDefinition = {
   label: string;
@@ -331,8 +334,6 @@ export type MantiPresetDefinition = {
   default: boolean;
   colors: Partial<Record<'primary' | 'success' | 'info' | 'danger', string>>;
   coolHue: number;
-  radiusFactor: string;
-  density: number;
 };
 
 /**
@@ -350,55 +351,43 @@ export const presets = {
     default: true,
     colors: {},
     coolHue: 280,
-    radiusFactor: '1',
-    density: 1,
   },
   violet: {
     label: 'Violet',
-    description: 'Electric violet with generous corners.',
+    description: 'Electric violet over a violet-leaning neutral.',
     default: false,
     colors: { primary: '#7c3aed' },
     coolHue: 300,
-    radiusFactor: '1.2',
-    density: 1,
   },
   ocean: {
     label: 'Ocean',
-    description: 'Bright sky blue on a cold neutral, rounded.',
+    description: 'Bright sky blue on a cold neutral.',
     default: false,
     // Info is a stop darker than the studio swatch: no ink clears AA on
     // #0284c7 (4.45:1), and the preset gate refuses to ship that.
     colors: { primary: '#0ea5e9', info: '#0369a1' },
     coolHue: 235,
-    radiusFactor: '1.4',
-    density: 1,
   },
   forest: {
     label: 'Forest',
-    description: 'Deep green with tight, sober corners.',
+    description: 'Deep green over a green-tinted neutral.',
     default: false,
     colors: { primary: '#15803d', success: '#16a34a' },
     coolHue: 150,
-    radiusFactor: '0.6',
-    density: 1,
   },
   rose: {
     label: 'Rose',
-    description: 'Hot rose over a warm neutral, rounded.',
+    description: 'Hot rose over a warm neutral.',
     default: false,
     colors: { primary: '#e11d48', danger: '#be123c' },
     coolHue: 350,
-    radiusFactor: '1.4',
-    density: 1,
   },
   graphite: {
     label: 'Graphite',
-    description: 'Monochrome, square, and compact.',
+    description: 'Monochrome: a gray brand over a cool neutral.',
     default: false,
     colors: { primary: '#4b5563' },
     coolHue: 250,
-    radiusFactor: '0',
-    density: 0.9,
   },
 } as const satisfies Record<string, MantiPresetDefinition>;
 
