@@ -1,5 +1,15 @@
 # @manti-ui/docs
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`5928baf`](https://github.com/manti-ui/ui/commit/5928bafa5caf7fc1959d2ac71df9bbed0e70a669)]:
+  - @manti-ui/tokens@0.11.1
+  - @manti-ui/styles@0.11.1
+  - @manti-ui/folds@0.11.1
+  - @manti-ui/react@0.11.1
+
 ## 0.0.3
 
 ### Patch Changes
