@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 
 import docDates from 'virtual:manti-doc-dates';
-import docSources from 'virtual:manti-doc-sources';
 
 import { pageBySlug, pages } from './pages';
 import { routes } from './routes';
@@ -113,7 +112,7 @@ function renderLlmsFull(): string {
   ].join('\n');
 
   const body = pages.map((page) => {
-    const source = docSources[page.slug] ?? '';
+    const source = page.source;
     const lines = ['---', ''];
     // Most pages open with their own `# Title`; only add one where the body
     // has none, so no section is introduced by two identical headings.
