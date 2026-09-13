@@ -3,7 +3,7 @@ title: Working with AI
 slug: /working-with-ai
 group: Guides
 order: 33
-description: Give coding agents the context and rules they need to use Manti UI correctly.
+description: 'Give coding agents what they need to write correct Manti UI code: the llms.txt project guide, a ready prompt, and the rules agents get wrong.'
 ---
 
 <AiPageHeader />
@@ -11,6 +11,10 @@ description: Give coding agents the context and rules they need to use Manti UI 
 Manti UI publishes a machine-readable project guide at
 [manti.design/llms.txt](https://manti.design/llms.txt). It covers installation,
 public APIs, components, tokens, styling rules, accessibility, and verification.
+When an agent needs the prose rather than the map, the whole documentation
+corpus is served as one plain-text file at
+[manti.design/llms-full.txt](https://manti.design/llms-full.txt), so it can be
+read in a single fetch instead of by crawling 93 pages.
 
 Give the following prompt to a coding agent. Replace the final task placeholder
 with what you want it to build.

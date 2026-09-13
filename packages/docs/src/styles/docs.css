@@ -2116,4 +2116,26 @@
     padding-inline: var(--manti-space-1);
     border-inline-start: none;
   }
+
+  /* ---- FAQ + page freshness ----
+     The FAQ is authored once in frontmatter (see doc/Faq.tsx): the same array
+     renders here and feeds the FAQPage JSON-LD, so the visible answers and the
+     structured ones are the same text. Headings come from Manti's Heading, so
+     they carry [data-scope] and the prose heading rules above skip them. */
+  .docs-faq {
+    margin-block-start: var(--manti-space-10);
+    padding-block-start: var(--manti-space-8);
+    border-block-start: 1px solid var(--manti-border);
+  }
+  .docs-faq-item {
+    margin-block-start: var(--manti-space-6);
+  }
+  .docs-faq-item > [data-scope='heading'] {
+    margin-block-end: var(--manti-space-2);
+  }
+  .docs-last-updated {
+    margin-block-start: var(--manti-space-10);
+    padding-block-start: var(--manti-space-4);
+    border-block-start: 1px solid var(--manti-border);
+  }
 }

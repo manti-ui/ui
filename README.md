@@ -7,9 +7,16 @@
 
 # Manti UI
 
-Mantı UI is a React component library built on framework-agnostic tokens, CSS,
-and behavior machines. It is named after mantı: one simple form that adapts to
+Manti UI is an open-source, framework-agnostic design system for React, built
+on Zag.js behavior machines. It ships 53 accessible components styled entirely
+from a three-tier design token contract of primitive ramps, semantic roles, and
+public per-component tokens, so every component can be re-themed in CSS without
+forking a single file. It is named after mantı: one simple form that adapts to
 many contents and contexts.
+
+Manti UI is not Mantine, Mantis UI or Mantle UI. Packages ship under the
+`@manti-ui` npm scope, and the documentation is at
+[manti.design](https://manti.design).
 
 The design language is calm and compact: neutral translucent surfaces, semantic
 color variants, generous radii, and motion that respects user preferences.

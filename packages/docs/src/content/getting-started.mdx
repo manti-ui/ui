@@ -3,10 +3,50 @@ title: Getting Started
 slug: /getting-started
 group: Getting Started
 order: 1
-description: Install Manti UI, import its CSS, and render a React component.
+description: 'Install Manti UI in a React app: add @manti-ui/react and @manti-ui/styles, import the stylesheet once, and render your first accessible component.'
+howto:
+  name: How to install Manti UI in a React project
+  description: Add the Manti UI packages, import the stylesheet once, render a component, and set theme preferences.
+  totalTime: PT5M
+  tool:
+    - Node.js 22.12 or newer
+    - npm, pnpm, or yarn
+  supply:
+    - An existing React 18 or React 19 application
+  step:
+    - name: Install the packages
+      text: Add @manti-ui/react and @manti-ui/styles with your package manager. @manti-ui/react carries the tokens and the Zag.js behavior layer; @manti-ui/styles is a peer dependency so your application controls when the CSS loads.
+      anchor: install
+    - name: Import the stylesheet
+      text: Import '@manti-ui/styles/index.css' once at your application entry point. The React package ships no CSS side effects, so nothing is styled until this import runs.
+      anchor: import-css
+    - name: Render a component
+      text: Import any component from @manti-ui/react and render it. Components are typed, keyboard accessible, and carry screen-reader semantics without extra configuration.
+      anchor: render-a-component
+    - name: Set theme preferences
+      text: Put data-theme, data-motion, and data-radius on the html element or any container. Theme resolution is token-driven, so no per-component theming is required.
+      anchor: set-theme-preferences
+faq:
+  - q: What is Manti UI?
+    a: Manti UI is an open-source, framework-agnostic design system for React. Its 53 components get their keyboard and ARIA behavior from Zag.js state machines, and every visual value resolves from a three-tier design token contract, so the same behavior layer can be rendered by other framework adapters later.
+  - q: Does Manti UI require Tailwind CSS?
+    a: No. Manti UI ships plain CSS built on custom properties and works with no utility framework at all. Tailwind CSS v4 is supported through an optional theme bridge that maps the --manti-* tokens onto Tailwind theme variables, so both draw from one palette.
+  - q: How is Manti UI different from Radix UI or shadcn/ui?
+    a: Radix ships unstyled React primitives and shadcn/ui ships source you copy into your repository. Manti UI ships versioned, styled components whose behavior comes from framework-agnostic Zag.js machines, and whose appearance is owned by a public token contract named --manti-{component}-{property}, so an upgrade keeps your customizations instead of overwriting them.
+  - q: Is Manti UI accessible?
+    a: Every component targets WCAG 2.2 AA. Keyboard interaction and ARIA semantics come from the Zag.js machines rather than being hand-rolled per component, and the color ramps pass an automated contrast gate in both the light and dark themes before a release ships.
+  - q: Do I need to install Zag.js separately?
+    a: No. @manti-ui/react bundles the behavior layer. The only peer dependency you install yourself is @manti-ui/styles, which exists as a separate package so your application decides when the CSS loads.
+  - q: Can I use Manti UI with Next.js or another React framework?
+    a: Yes. Manti UI is a standard React package with no bundler requirements, and its components render on the server. Import '@manti-ui/styles/index.css' in the root layout, and set data-theme on the html element so the theme is correct before first paint.
 ---
 
 # Getting Started
+
+Manti UI is an open-source, framework-agnostic design system for React: 53
+accessible components whose behavior comes from Zag.js state machines and whose
+appearance comes entirely from a three-tier design token contract. This page
+takes you from an empty project to a rendered component in four steps.
 
 ## Install
 
@@ -44,6 +84,8 @@ Put preferences on `<html>` or any container:
 - `data-theme`: `light` or `dark`; omit it to follow the OS.
 - `data-motion`: `default`, `none`, or `full`.
 - `data-radius`: `none`, `sharp`, `default`, `round`, or `pill`.
+
+<Faq />
 
 ## Next
 

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Outlet, useLocation } from 'react-router-dom';
 
+import { LastUpdated } from './doc/LastUpdated';
 import { mdxComponents } from './mdx/MDXComponents';
 import { pageBySlug, slugFromPath } from './pages';
 import { SearchProvider } from './search/SearchProvider';
@@ -65,6 +66,7 @@ export function App() {
                   )}
                 <article className="docs-prose">
                   <Outlet />
+                  {page && <LastUpdated slug={page.slug} />}
                 </article>
                 <Footer />
               </main>
