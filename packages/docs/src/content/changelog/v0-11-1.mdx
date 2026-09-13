@@ -1,0 +1,63 @@
+---
+title: v0.11.1
+slug: /changelog/v0.11.1
+group: Changelog
+order: 1
+date: '2026-09-13'
+description: A patch for single-line controls, with one shared leading token, a tighter control radius, honest Select and Combobox seams, and a steadier Checkbox.
+---
+
+# v0.11.1
+
+_Released 2026-09-13._
+
+## Select and Combobox seams stop painting twice
+
+A connected popup used to hide the shared edge by painting it `transparent`,
+which let the panel behind show through as a pale line and still reserved the
+border's width. Both components now zero the width on the seam side only: the
+trigger keeps the neutral resting border while open, the popup drops its own
+seam edge, and neither draws a second line along the join. The popup's outside
+corners resolve from the same clamped radius as the trigger, so the `round` and
+`pill` radius profiles can no longer produce a mismatched pair.
+
+## One leading for single-line controls
+
+Controls that render a single line of text now share one vertical rhythm
+through a new token:
+
+```css
+--manti-leading-control: 1.5;
+```
+
+It is declared once for Button, Badge, Tabs, Segmented Control, Select,
+Combobox, Field controls, Number Input, Pin Input, Date Picker, Time Picker and
+Color Picker, so no component invents its own value. Override it to retune every
+single-line control at once; `Text` and `Heading` keep their own type scale, and
+intentionally multiline surfaces are untouched.
+
+## Checkbox no longer moves the row around it
+
+The checkbox indicator is hidden while unchecked, which emptied the control's
+box and moved the baseline the surrounding line was measured against. Checking
+the box therefore re-measured that line. It was visible in Data Table: ticking
+the select-all box shortened the header row by about a pixel and shifted every
+body row with it. The control is now centered against the parent's x-height, so
+checking is purely a repaint.
+
+## Tighter control radius
+
+`--manti-size-control-radius` steps one stop tighter than the panel radius at
+`md` and `lg`, and the `round` radius profile's factor moves from `1.4` to
+`1.2`. Together they stop a default-size button from reading as a pill. Projects
+that preferred the looser curve can set the token or the radius factor back.
+
+## Listbox follows its own variant
+
+Listbox items highlight and press on their variant's soft ladder instead of the
+neutral wash, pointer hover and keyboard roving focus land on the same surface,
+and a checked row holds the stronger rung so selection stays legible while the
+keyboard moves through the list. The cursor is now `default`, matching a listbox
+rather than a link.
+
+Date Picker's trigger also drops the browser's default button padding.
