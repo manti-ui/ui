@@ -6,7 +6,6 @@
 @layer manti.theme {
   [data-manti-theme='violet'] {
     --manti-cool-hue: 300;
-    --manti-radius-factor: 1.2;
     --manti-gray-1: oklch(0.985 0.004 var(--manti-cool-hue));
     --manti-gray-2: oklch(0.97 0.005 var(--manti-cool-hue));
     --manti-gray-3: oklch(0.941 0.007 var(--manti-cool-hue));
@@ -19,12 +18,6 @@
     --manti-gray-10: oklch(0.336 0.009 var(--manti-cool-hue));
     --manti-gray-11: oklch(0.261 0.008 var(--manti-cool-hue));
     --manti-gray-12: oklch(0.196 0.008 var(--manti-cool-hue));
-    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
-    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
-    --manti-radius-md: calc(14px * var(--manti-radius-factor));
-    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
-    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
-    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
     --manti-bg: light-dark(
       oklch(0.965 0.003 var(--manti-cool-hue)),
       oklch(0.145 0.006 var(--manti-cool-hue))
@@ -148,7 +141,6 @@
 
   [data-manti-theme='ocean'] {
     --manti-cool-hue: 235;
-    --manti-radius-factor: 1.4;
     --manti-gray-1: oklch(0.985 0.004 var(--manti-cool-hue));
     --manti-gray-2: oklch(0.97 0.005 var(--manti-cool-hue));
     --manti-gray-3: oklch(0.941 0.007 var(--manti-cool-hue));
@@ -161,12 +153,6 @@
     --manti-gray-10: oklch(0.336 0.009 var(--manti-cool-hue));
     --manti-gray-11: oklch(0.261 0.008 var(--manti-cool-hue));
     --manti-gray-12: oklch(0.196 0.008 var(--manti-cool-hue));
-    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
-    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
-    --manti-radius-md: calc(14px * var(--manti-radius-factor));
-    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
-    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
-    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
     --manti-bg: light-dark(
       oklch(0.965 0.003 var(--manti-cool-hue)),
       oklch(0.145 0.006 var(--manti-cool-hue))
@@ -329,7 +315,6 @@
 
   [data-manti-theme='forest'] {
     --manti-cool-hue: 150;
-    --manti-radius-factor: 0.6;
     --manti-gray-1: oklch(0.985 0.004 var(--manti-cool-hue));
     --manti-gray-2: oklch(0.97 0.005 var(--manti-cool-hue));
     --manti-gray-3: oklch(0.941 0.007 var(--manti-cool-hue));
@@ -342,12 +327,6 @@
     --manti-gray-10: oklch(0.336 0.009 var(--manti-cool-hue));
     --manti-gray-11: oklch(0.261 0.008 var(--manti-cool-hue));
     --manti-gray-12: oklch(0.196 0.008 var(--manti-cool-hue));
-    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
-    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
-    --manti-radius-md: calc(14px * var(--manti-radius-factor));
-    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
-    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
-    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
     --manti-bg: light-dark(
       oklch(0.965 0.003 var(--manti-cool-hue)),
       oklch(0.145 0.006 var(--manti-cool-hue))
@@ -510,7 +489,6 @@
 
   [data-manti-theme='rose'] {
     --manti-cool-hue: 350;
-    --manti-radius-factor: 1.4;
     --manti-gray-1: oklch(0.985 0.004 var(--manti-cool-hue));
     --manti-gray-2: oklch(0.97 0.005 var(--manti-cool-hue));
     --manti-gray-3: oklch(0.941 0.007 var(--manti-cool-hue));
@@ -523,12 +501,6 @@
     --manti-gray-10: oklch(0.336 0.009 var(--manti-cool-hue));
     --manti-gray-11: oklch(0.261 0.008 var(--manti-cool-hue));
     --manti-gray-12: oklch(0.196 0.008 var(--manti-cool-hue));
-    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
-    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
-    --manti-radius-md: calc(14px * var(--manti-radius-factor));
-    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
-    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
-    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
     --manti-bg: light-dark(
       oklch(0.965 0.003 var(--manti-cool-hue)),
       oklch(0.145 0.006 var(--manti-cool-hue))
@@ -691,11 +663,6 @@
 
   [data-manti-theme='graphite'] {
     --manti-cool-hue: 250;
-    --manti-radius-factor: 0;
-    --manti-space-1: 0.225rem;
-    --manti-control-height-sm: 1.62rem;
-    --manti-control-height-md: 1.98rem;
-    --manti-control-height-lg: 2.43rem;
     --manti-gray-1: oklch(0.985 0.004 var(--manti-cool-hue));
     --manti-gray-2: oklch(0.97 0.005 var(--manti-cool-hue));
     --manti-gray-3: oklch(0.941 0.007 var(--manti-cool-hue));
@@ -708,21 +675,6 @@
     --manti-gray-10: oklch(0.336 0.009 var(--manti-cool-hue));
     --manti-gray-11: oklch(0.261 0.008 var(--manti-cool-hue));
     --manti-gray-12: oklch(0.196 0.008 var(--manti-cool-hue));
-    --manti-radius-xs: calc(4px * var(--manti-radius-factor));
-    --manti-radius-sm: calc(8px * var(--manti-radius-factor));
-    --manti-radius-md: calc(14px * var(--manti-radius-factor));
-    --manti-radius-lg: calc(18px * var(--manti-radius-factor));
-    --manti-radius-xl: calc(20px * var(--manti-radius-factor));
-    --manti-radius-2xl: calc(26px * var(--manti-radius-factor));
-    --manti-space-2: calc(var(--manti-space-1) * 2);
-    --manti-space-3: calc(var(--manti-space-1) * 3);
-    --manti-space-4: calc(var(--manti-space-1) * 4);
-    --manti-space-5: calc(var(--manti-space-1) * 5);
-    --manti-space-6: calc(var(--manti-space-1) * 6);
-    --manti-space-8: calc(var(--manti-space-1) * 8);
-    --manti-space-10: calc(var(--manti-space-1) * 10);
-    --manti-space-12: calc(var(--manti-space-1) * 12);
-    --manti-space-16: calc(var(--manti-space-1) * 16);
     --manti-bg: light-dark(
       oklch(0.965 0.003 var(--manti-cool-hue)),
       oklch(0.145 0.006 var(--manti-cool-hue))

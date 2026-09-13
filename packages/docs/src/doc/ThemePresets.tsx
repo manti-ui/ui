@@ -7,8 +7,9 @@ import { STUDIO_URL } from '../data/navigation';
  * The shipped presets, each previewed under its own `data-manti-theme` scope.
  *
  * The scoped file is the same generated source as `themes/<id>.css`, so what a
- * card shows is what the one-line import gives an app — including the neutral
- * re-tint, the radius factor, and Graphite's density.
+ * card shows is what the one-line import gives an app: the variant palette plus
+ * the neutral re-tint, and nothing else. Shape, density and type stay wherever
+ * the app already had them.
  */
 export function ThemePresets() {
   return (
