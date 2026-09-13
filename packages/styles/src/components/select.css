@@ -14,7 +14,10 @@
        shared outside corners in sync and cap them at the trigger's half-height
        so `round` and `pill` cannot produce different clamped radii. */
     --_select-connected-radius: min(
-      var(--manti-size-panel-radius, var(--manti-radius-md)),
+      max(
+        var(--manti-size-control-radius, var(--manti-radius-md)),
+        var(--manti-radius-pill)
+      ),
       calc(var(--manti-size-control-height, var(--manti-control-height-md)) / 2)
     );
   }
@@ -90,7 +93,7 @@
 
     &[data-connected] {
       background: var(--manti-panel-tint-strong);
-      border-color: transparent;
+      border-color: var(--manti-border);
       border-radius: var(--_select-connected-radius);
     }
 
@@ -98,14 +101,16 @@
     &[data-state='open'][data-side='bottom'] {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
-      border-bottom-color: transparent;
+      border-bottom-color: var(--manti-panel-tint-strong);
+      border-bottom-width: 0;
     }
 
     &[data-connected='top'],
     &[data-state='open'][data-side='top'] {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
-      border-top-color: transparent;
+      border-top-color: var(--manti-panel-tint-strong);
+      border-top-width: 0;
     }
 
     &[data-disabled] {
@@ -137,23 +142,16 @@
     }
 
     &[data-state='open'] {
-      border-color: transparent;
+      border-color: var(--manti-border);
+      border-bottom-width: 0;
     }
 
     &[data-connected] {
       background: var(--manti-panel-tint-strong);
-      border-color: transparent;
+      border-color: var(--manti-border);
+      border-bottom-width: 0;
     }
 
-    &[data-connected='bottom'],
-    &[data-state='open'][data-side='bottom'] {
-      border-bottom-color: transparent;
-    }
-
-    &[data-connected='top'],
-    &[data-state='open'][data-side='top'] {
-      border-top-color: transparent;
-    }
   }
 
   [data-scope='select'][data-part='root'][data-appearance='fill'][data-invalid]
@@ -206,6 +204,9 @@
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-border);
+    /* The popup overlaps the trigger by one spacing unit; its top edge is
+       the shared seam and must not paint a second line. */
+    border-top-width: 0;
     border-radius: var(--_select-connected-radius);
   }
 
@@ -218,7 +219,8 @@
     margin-top: calc(-1 * var(--manti-space-2));
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-color: transparent;
+    border-top-color: var(--manti-panel-tint-strong);
+    border-top-width: 0;
   }
 
   [data-scope='select'][data-part='positioner']
@@ -228,7 +230,8 @@
     margin-bottom: calc(-1 * var(--manti-space-2));
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    border-color: transparent;
+    border-bottom-color: var(--manti-panel-tint-strong);
+    border-bottom-width: 0;
   }
 
   [data-scope='select'][data-part='positioner']

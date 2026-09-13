@@ -126,7 +126,7 @@
     font-family: var(--manti-font-sans);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-medium);
-    line-height: var(--manti-leading-none);
+    line-height: inherit;
   }
 
   [data-scope='segmented-control'][data-part='root'][data-size='lg']

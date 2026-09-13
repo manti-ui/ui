@@ -275,6 +275,7 @@
   }
 
   .docs-content {
+    position: relative;
     min-width: 0;
     padding-block: var(--manti-space-8);
   }
@@ -405,6 +406,15 @@
     margin-top: var(--manti-space-6);
     padding-top: var(--manti-space-5);
     border-top: 1px solid var(--manti-border);
+  }
+
+  .docs-page-actions {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    z-index: var(--manti-z-raised);
   }
   /* First rail block on TOC-less pages: drop the divider/offset. */
   .docs-toc > .docs-theme-playground:first-child {
@@ -556,6 +566,7 @@
      below do. Descendants are left alone on purpose: a plain <h3> written inside
      a <Card> in MDX is still prose. */
   .docs-prose {
+    position: relative;
     max-width: var(--docs-prose-max);
     margin-inline: auto;
     color: var(--manti-text);
@@ -1935,6 +1946,11 @@
       align-items: center;
       text-align: center;
     }
+    .docs-page-actions {
+      position: static;
+      justify-content: flex-start;
+      margin-bottom: var(--manti-space-4);
+    }
     .docs-landing-hero h1 {
       max-width: 13ch;
     }
@@ -2109,5 +2125,27 @@
     width: auto;
     padding-inline: var(--manti-space-1);
     border-inline-start: none;
+  }
+
+  /* ---- FAQ + page freshness ----
+     The FAQ is authored once in frontmatter (see doc/Faq.tsx): the same array
+     renders here and feeds the FAQPage JSON-LD, so the visible answers and the
+     structured ones are the same text. Headings come from Manti's Heading, so
+     they carry [data-scope] and the prose heading rules above skip them. */
+  .docs-faq {
+    margin-block-start: var(--manti-space-10);
+    padding-block-start: var(--manti-space-8);
+    border-block-start: 1px solid var(--manti-border);
+  }
+  .docs-faq-item {
+    margin-block-start: var(--manti-space-6);
+  }
+  .docs-faq-item > [data-scope='heading'] {
+    margin-block-end: var(--manti-space-2);
+  }
+  .docs-last-updated {
+    margin-block-start: var(--manti-space-10);
+    padding-block-start: var(--manti-space-4);
+    border-block-start: 1px solid var(--manti-border);
   }
 }

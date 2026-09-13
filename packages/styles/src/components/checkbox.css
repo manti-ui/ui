@@ -19,6 +19,13 @@
     display: inline-flex;
     align-items: center;
     gap: var(--manti-checkbox-gap);
+    /* The machine marks the indicator `hidden` while unchecked, which empties the
+       control's grid and moves the inline-flex root's synthesized baseline by
+       the indicator's inset. Under baseline alignment that re-measures the line
+       box on every toggle and nudges whatever surrounds the box (a table header
+       row, a list item) by ~1px. Middle alignment reads the parent's x-height
+       instead, so checking is purely a paint. */
+    vertical-align: middle;
     cursor: pointer;
 
     &[data-size='sm'] {

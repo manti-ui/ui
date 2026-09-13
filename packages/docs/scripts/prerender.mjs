@@ -78,7 +78,7 @@ async function main() {
 
   const indexPath = join(clientOutDir, 'index.html');
   const template = await readFile(indexPath, 'utf8');
-  const { pages, sitemap } = await prerender();
+  const { pages, notFound, sitemap, llmsFull } = await prerender();
 
   for (const page of pages) {
     const html = injectApp(injectHead(template, page.head), page.html);
@@ -92,11 +92,23 @@ async function main() {
     await writeFile(target, html);
   }
 
+  // The 404 document. Netlify serves it for every unmatched path with a real
+  // 404 status (see netlify.toml). Without it the SPA fallback answered 200
+  // for any URL, so crawlers could index unlimited non-existent pages.
+  await writeFile(
+    join(clientOutDir, '404.html'),
+    injectApp(injectHead(template, notFound.head), notFound.html),
+  );
+
   await writeFile(join(clientOutDir, 'sitemap.xml'), sitemap);
+  // The long form of llms.txt: the whole corpus in one fetch, for agents that
+  // would otherwise crawl every route.
+  await writeFile(join(clientOutDir, 'llms-full.txt'), llmsFull);
   await rm(ssrOutDir, { recursive: true, force: true });
 
   console.log(
-    `\nprerendered ${pages.length} route(s) + sitemap.xml -> ${clientOutDir}`,
+    `\nprerendered ${pages.length} route(s) + 404.html + sitemap.xml + ` +
+      `llms-full.txt -> ${clientOutDir}`,
   );
 }
 

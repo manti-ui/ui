@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Outlet, useLocation } from 'react-router-dom';
 
+import { LastUpdated } from './doc/LastUpdated';
 import { mdxComponents } from './mdx/MDXComponents';
 import { pageBySlug, slugFromPath } from './pages';
 import { SearchProvider } from './search/SearchProvider';
@@ -11,6 +12,7 @@ import { SearchDialog } from './shell/SearchDialog';
 import { Sidebar } from './shell/Sidebar';
 import { TableOfContents } from './shell/TableOfContents';
 import { TopNav } from './shell/TopNav';
+import { CopyPageButton } from './shell/CopyPageButton';
 import Clarity from '@microsoft/clarity';
 
 export function App() {
@@ -21,7 +23,7 @@ export function App() {
 
   // Sync per-route <title>/description/canonical/OG tags on client navigation.
   useDocumentHead(page);
-  Clarity.init("y5gqk1fv09");
+  Clarity.init('y5gqk1fv09');
   // The page scrolls on the window (sidebar/TOC are sticky), and react-router
   // keeps the old scroll offset across client navigations. Reset to the top on
   // every route change so a sidebar click starts the new page from its heading —
@@ -56,7 +58,15 @@ export function App() {
                 tabIndex={-1}
               >
                 <article className="docs-prose">
+                  {page &&
+                    (page.slug.startsWith('/components/') ||
+                      page.slug.startsWith('/typography/')) && (
+                      <div className="docs-page-actions">
+                        <CopyPageButton page={page} />
+                      </div>
+                    )}
                   <Outlet />
+                  {page && <LastUpdated slug={page.slug} />}
                 </article>
                 <Footer />
               </main>

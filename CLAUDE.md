@@ -42,8 +42,14 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    `--manti-border-strong` on hover, and use `--variant-ring` while active,
    focused, or open. The primary color must begin at active/focus/open for this
    control family; never use a variant color for its resting or hover border.
-   Select is the deliberate open-state exception: once its popup is connected,
-   both trigger and popup borders become transparent.
+   Select and Combobox are the deliberate open-state exception: a connected
+   trigger and its popup are one surface with one outline, so the trigger keeps
+   the neutral `--manti-border` while open instead of taking `--variant-ring`,
+   and only the edge it shares with the popup is dropped. Zero the width on
+   that seam side alone and tint it to the panel, so neither element paints a
+   second line along the join; the popup does the same on its own seam edge.
+   Which edge is the seam depends on `data-side`, so never zero a border width
+   unconditionally on open.
    Semantic mappings must be theme-aware: interaction strength increases in the
    direction that gains contrast in each theme.
    Filled and selected surfaces follow rest `3` → hover `4` → active `5`; solid

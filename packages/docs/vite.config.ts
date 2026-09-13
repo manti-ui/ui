@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 
 import mdx from '@mdx-js/rollup';
 import rehypeShiki from '@shikijs/rehype';
@@ -16,6 +16,7 @@ import type { Plugin } from 'vite';
 
 import { searchIndexPlugin } from './src/search/vite-plugin-search';
 import { docDatesPlugin } from './src/seo/vite-plugin-doc-dates';
+import { docSourcesPlugin } from './src/seo/vite-plugin-doc-sources';
 
 interface MdxNode {
   type?: string;
@@ -141,6 +142,7 @@ export default defineConfig({
     react(),
     searchIndexPlugin(),
     docDatesPlugin(),
+    docSourcesPlugin(),
     previewPrettyUrls(),
   ],
   // One React instance, always. The docs resolve `@manti-ui/react` to its source
@@ -148,6 +150,12 @@ export default defineConfig({
   // package's node_modules as well as the docs' own.
   resolve: {
     dedupe: ['react', 'react-dom'],
+    // Keep docs CSS on the workspace source during development. Resolving the
+    // package export to dist makes Select/Combobox edits invisible until a
+    // package rebuild, which defeats the docs HMR loop.
+    alias: {
+      '@manti-ui/styles': resolve(import.meta.dirname, '../styles/src'),
+    },
   },
   optimizeDeps: {
     // react-live is only reachable through the lazy `import('./DemoLive')`. If the
