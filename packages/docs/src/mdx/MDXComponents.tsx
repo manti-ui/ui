@@ -7,6 +7,7 @@ import { Anatomy } from '../doc/Anatomy';
 import { ColorRamps, VariantGallery } from '../doc/ColorRamps';
 import { ComponentStatusGrid } from '../doc/ComponentStatusGrid';
 import { Demo } from '../doc/Demo';
+import { Faq } from '../doc/Faq';
 import { FoundationsGrid } from '../doc/FoundationsGrid';
 import { InstallTabs } from '../doc/InstallTabs';
 import { LandingPage } from '../doc/LandingPage';
@@ -60,6 +61,7 @@ export const mdxComponents = {
   a: Anchor,
   pre: CodeBlock,
   Demo,
+  Faq,
   AiPageHeader,
   InstallTabs,
   LandingPage,

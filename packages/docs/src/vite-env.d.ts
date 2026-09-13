@@ -19,6 +19,12 @@ declare module 'virtual:manti-doc-dates' {
   export default dates;
 }
 
+declare module 'virtual:manti-doc-sources' {
+  /** Raw Markdown body (frontmatter stripped) for every content page, by slug. */
+  const sources: Record<string, string | undefined>;
+  export default sources;
+}
+
 declare module 'virtual:manti-search' {
   const docs: {
     slug: string;

@@ -16,6 +16,7 @@ import type { Plugin } from 'vite';
 
 import { searchIndexPlugin } from './src/search/vite-plugin-search';
 import { docDatesPlugin } from './src/seo/vite-plugin-doc-dates';
+import { docSourcesPlugin } from './src/seo/vite-plugin-doc-sources';
 
 interface MdxNode {
   type?: string;
@@ -141,6 +142,7 @@ export default defineConfig({
     react(),
     searchIndexPlugin(),
     docDatesPlugin(),
+    docSourcesPlugin(),
     previewPrettyUrls(),
   ],
   // One React instance, always. The docs resolve `@manti-ui/react` to its source
