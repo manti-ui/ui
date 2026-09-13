@@ -17,17 +17,23 @@ import '@manti-ui/styles/themes/ocean.css';
 ```
 
 That is the whole adoption cost. Every component re-skins: the variant palettes,
-the neutral hue, the corner radius, the progress fill, and the text selection.
+the neutral hue, the progress fill, and the text selection.
 
 <ThemePresets />
 
 ## What a preset moves
 
-A preset is not colors-only. Each one sets `--manti-cool-hue` and
-`--manti-radius-factor`, expands its base colors into the full `--variant-*`
-vocabulary, and re-points `--manti-accent-fill` and `--manti-selection-*` —
-the two branded roles no `[data-variant]` block can reach. Graphite also carries
-a density, so its spacing unit and control heights come in tighter.
+A preset is a palette and nothing else. Each one expands its base colors into
+the full `--variant-*` vocabulary, re-points `--manti-accent-fill` and
+`--manti-selection-*` (the two branded roles no `[data-variant]` block can
+reach), and sets `--manti-cool-hue`, the single hue behind every gray, surface,
+border and text role.
+
+Shape, density and type are deliberately out. Those are product decisions, and a
+theme you adopt for its color must not quietly resize your controls or round
+your corners: swap Ocean for Forest and only the color changes. Retune the
+radius ramp with `--manti-radius-factor`, or the whole shape profile with
+`data-radius`, as its own decision.
 
 The definitions live in `presets` in `@manti-ui/tokens`, and
 `packages/styles/scripts/gen-preset-css.mjs` generates the stylesheets from
@@ -44,7 +50,7 @@ anything unlayered. Adopt a preset and retune a role on top of it:
 @import '@manti-ui/styles/themes/forest.css';
 
 :root {
-  --manti-radius-factor: 1;
+  --manti-cool-hue: 280;
 }
 ```
 
@@ -63,8 +69,8 @@ import '@manti-ui/styles/themes.css';
 <section data-manti-theme="rose">…</section>
 ```
 
-Nested scopes re-resolve the neutral ramp, the surfaces, the radius steps, and
-the spacing locally, so a scoped preset looks the same as its `:root` twin.
+Nested scopes re-resolve the neutral ramp and every surface, border and text
+role locally, so a scoped preset looks the same as its `:root` twin.
 `data-manti-theme` is independent of `data-theme` — light and dark still follow
 the OS or whatever you force.
 
