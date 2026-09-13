@@ -307,8 +307,11 @@ export function LandingPage() {
             <span>built to adapt.</span>
           </h1>
           <p>
-            Accessible components powered by framework-agnostic tokens, CSS, and
-            state machines. Familiar to use, unmistakably yours.
+            Manti UI is an open-source, framework-agnostic design system for
+            React. It ships 53 accessible components whose behavior comes from
+            Zag.js state machines, styled entirely from a three-tier design
+            token contract, so you can re-theme every component in CSS without
+            forking a single file.
           </p>
           <div className="docs-landing-actions">
             <LinkButton to="/getting-started" size="lg">
@@ -356,8 +359,8 @@ export function LandingPage() {
           <span>Tokens to renderers</span>
         </div>
         <div>
-          <strong>0 forks</strong>
-          <span>Stable styling anatomy</span>
+          <strong>0 ejects</strong>
+          <span>Restyle without forking</span>
         </div>
       </section>
 

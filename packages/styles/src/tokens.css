@@ -148,6 +148,7 @@
     --manti-leading-tight: 1.15;
     --manti-leading-snug: 1.3;
     --manti-leading-normal: 1.5;
+    --manti-leading-control: 1.5;
     --manti-leading-relaxed: 1.7;
     --manti-weight-regular: 400;
     --manti-weight-medium: 500;
@@ -430,7 +431,7 @@
   }
 
   [data-radius='round'] {
-    --manti-radius-factor: 1.4;
+    --manti-radius-factor: 1.2;
     --manti-radius-xs: calc(4px * var(--manti-radius-factor));
     --manti-radius-sm: calc(8px * var(--manti-radius-factor));
     --manti-radius-md: calc(14px * var(--manti-radius-factor));

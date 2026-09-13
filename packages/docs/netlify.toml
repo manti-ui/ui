@@ -31,10 +31,15 @@
 # serves existing static files before applying redirects — so this catch-all is
 # reached only by URLs that match no page, and everything under /storybook (real
 # files) is unaffected by it.
+#
+# It answers 404, not 200. A 200 SPA fallback makes every mistyped or invented
+# URL look like a real page to a crawler, which lets search engines and AI
+# agents index unlimited duplicate, content-less URLs. There is no SPA to
+# fall back to here, since each route is a real prerendered document.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404
 
 # Security headers for every response (docs + Storybook).
 #

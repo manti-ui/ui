@@ -1,6 +1,8 @@
 import type { ComponentType } from 'react';
 
-import type { DocFrontmatter, TocEntry } from './types';
+import docSources from 'virtual:manti-doc-sources';
+
+import type { DocFrontmatter, FaqEntry, HowTo, TocEntry } from './types';
 
 interface MdxModule {
   default: ComponentType;
@@ -23,6 +25,12 @@ export interface DocPage {
   date?: string;
   /** Small sidebar tag, e.g. `New`. */
   badge?: string;
+  /** Q&A pairs rendered by `<Faq />` and emitted as `FAQPage` JSON-LD. */
+  faq?: FaqEntry[];
+  /** Step-by-step instructions emitted as `HowTo` JSON-LD. */
+  howto?: HowTo;
+  /** The page's Markdown body, frontmatter stripped (`virtual:manti-doc-sources`). */
+  source: string;
   Component: ComponentType;
   toc: TocEntry[];
 }
@@ -36,6 +44,9 @@ export const pages: DocPage[] = Object.values(modules)
     description: mod.frontmatter.description,
     date: mod.frontmatter.date,
     badge: mod.frontmatter.badge,
+    faq: mod.frontmatter.faq,
+    howto: mod.frontmatter.howto,
+    source: docSources[mod.frontmatter.slug] ?? '',
     Component: mod.default,
     toc: mod.tableOfContents ?? [],
   }))

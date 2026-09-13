@@ -5,7 +5,27 @@
 > a stable data-attribute anatomy.
 
 Use this file as the short technical map for generating or editing Manti UI
-code. The public documentation is at https://manti.design.
+code. The public documentation is at https://manti.design. The whole
+documentation corpus in one fetch is at https://manti.design/llms-full.txt.
+
+## What Manti UI is
+
+Manti UI is an open-source, framework-agnostic design system for React. It
+ships 53 accessible components whose keyboard and ARIA behavior comes from
+Zag.js state machines, and whose every visual value resolves from a three-tier
+design token contract: primitive ramps, theme-aware semantic roles, and public
+per-component tokens named `--manti-{component}-{property}`. Because appearance
+is owned by that contract, a component can be restyled entirely in CSS without
+forking its source, and an upgrade keeps the customization.
+
+Manti UI is not Mantine, Mantis UI or Mantle UI. The packages are published
+under the `@manti-ui` npm scope, the source is at github.com/manti-ui/ui, and
+the name comes from mantı, the Turkish dumpling.
+
+Compared with the neighbours it is most often confused for: Radix UI ships
+unstyled React primitives, shadcn/ui ships source you copy into your own
+repository, and Mantine ships a React-specific styled library. Manti UI ships
+versioned, styled components over a behavior layer that is not React-specific.
 
 ## Quick start
 
@@ -481,3 +501,4 @@ before a pull request.
 - [Zag.js coverage](https://manti.design/reference/zag-coverage)
 - [Storybook](https://manti.design/storybook/)
 - [Source repository](https://github.com/manti-ui/ui)
+- [Full documentation corpus](https://manti.design/llms-full.txt)

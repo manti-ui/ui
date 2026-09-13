@@ -1,10 +1,36 @@
-# Manti UI docs — https://manti.design
-# Public open-source documentation: everything is crawlable.
+# Manti UI docs - https://manti.design
+# Public open-source documentation: everything is crawlable, by search engines
+# and by AI crawlers alike.
 User-agent: *
 Allow: /
 
-# Storybook's raw iframe host pages carry no standalone SEO value — keep them
+# Storybook's raw iframe host pages carry no standalone SEO value - keep them
 # out of the index to avoid duplicate, content-less URLs.
 Disallow: /storybook/iframe.html
 
+# Named AI crawlers. The wildcard above already allows them; naming each one
+# makes the permission explicit, so a bot that looks for its own group (and
+# several do) finds an Allow rather than falling through to a default.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: Google-Extended
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: cohere-ai
+User-agent: Amazonbot
+User-agent: Bytespider
+User-agent: FacebookBot
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /storybook/iframe.html
+
+# Machine-readable project guides for coding agents:
+#   https://manti.design/llms.txt       short map
+#   https://manti.design/llms-full.txt  the whole corpus in one fetch
 Sitemap: https://manti.design/sitemap.xml
