@@ -1,0 +1,53 @@
+---
+title: v0.12.0
+slug: /changelog/v0.12.0
+group: Changelog
+order: 1
+date: '2026-09-14'
+description: Theme presets become palette-only, so adopting a theme for its color no longer resizes controls or rounds corners.
+---
+
+# v0.12.0
+
+_Released 2026-09-14._
+
+## Presets are a palette, and nothing else
+
+A shipped preset used to move more than color. Every one set
+`--manti-radius-factor` alongside `--manti-cool-hue`, and Graphite also carried a
+density: `--manti-space-1` plus the three control heights. Importing
+`themes/ocean.css` for its blue therefore rounded every corner in the app, and
+Graphite squared and compacted the layout on the way in.
+
+Shape and density are product decisions. A palette must not make them, so a
+preset now sets only the colors:
+
+- each base color expanded into the full `--variant-*` vocabulary,
+- the two branded roles no `[data-variant]` block can reach,
+  `--manti-accent-fill` and `--manti-selection-*`,
+- and `--manti-cool-hue`, the single hue behind every gray, surface, border and
+  text role.
+
+Swap Ocean for Forest and only the color changes.
+
+## Breaking
+
+`MantiPresetDefinition` drops `radiusFactor` and `density`, and the generated
+stylesheets in `@manti-ui/styles/themes` no longer declare them. An app that
+liked the corner or the spacing its preset came with gets the shipped values
+back, and the fix is the one declaration that always owned the decision:
+
+```css
+@import '@manti-ui/styles/index.css';
+@import '@manti-ui/styles/themes/ocean.css';
+
+:root {
+  --manti-radius-factor: 1.4;
+}
+```
+
+The `data-radius` modes (`none`, `sharp`, `default`, `round`, `pill`) are
+unchanged and still retune a whole subtree.
+
+TypeScript code that read `presets.ocean.radiusFactor` or `presets.graphite.density`
+no longer compiles; those values are a theme's own choice now.
