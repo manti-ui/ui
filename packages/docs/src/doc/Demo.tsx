@@ -1,8 +1,8 @@
 import { lazy, Suspense, useId, useState } from 'react';
-import type { ComponentType } from 'react';
 import { Button, Select, Tabs, Text } from '@manti-ui/react';
 
 import demoCssSource from '../demos/demo.css?raw';
+import { demoComponent, demoSource } from './demo-registry';
 import {
   toCssSource,
   toTailwindSource,
@@ -14,18 +14,6 @@ import { ReactIcon, SolidIcon, SvelteIcon, VueIcon } from './framework-icons';
 // react-live carries a transpiler (sucrase) and a highlighter (Prism). Most readers
 // never open the code, so it is split out and fetched on the first "Show code".
 const DemoLive = lazy(() => import('./DemoLive'));
-
-// Each demo file is loaded two ways: as a component for the closed preview, and as its
-// raw source for the editor — from the same file, so the two can never drift.
-const demoModules = import.meta.glob<{ default: ComponentType }>(
-  '../demos/**/*.tsx',
-  { eager: true },
-);
-const demoSources = import.meta.glob<string>('../demos/**/*.tsx', {
-  eager: true,
-  query: '?raw',
-  import: 'default',
-});
 
 // The renderers Manti targets. Only React ships today; the rest preview the
 // framework roadmap and remain disabled until their renderers land.
@@ -49,11 +37,7 @@ const styleItems = [
 ];
 
 function resolve(name: string) {
-  const key = `../demos/${name}.tsx`;
-  return {
-    Component: demoModules[key]?.default,
-    source: demoSources[key],
-  };
+  return { Component: demoComponent(name), source: demoSource(name) };
 }
 
 export interface DemoProps {

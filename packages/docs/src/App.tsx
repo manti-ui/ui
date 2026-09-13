@@ -61,7 +61,7 @@ export function App() {
                   (page.slug.startsWith('/components/') ||
                     page.slug.startsWith('/typography/')) && (
                     <div className="docs-page-actions">
-                      <CopyPageButton source={page.source} />
+                      <CopyPageButton page={page} />
                     </div>
                   )}
                 <article className="docs-prose">

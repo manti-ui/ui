@@ -1,5 +1,7 @@
 import type { ComponentType } from 'react';
 
+import docSources from 'virtual:manti-doc-sources';
+
 import type { DocFrontmatter, FaqEntry, HowTo, TocEntry } from './types';
 
 interface MdxModule {
@@ -13,23 +15,6 @@ interface MdxModule {
 const modules = import.meta.glob<MdxModule>('./content/**/*.mdx', {
   eager: true,
 });
-const sources = import.meta.glob<string | { default: string }>(
-  './content/**/*.mdx',
-  { eager: true, query: '?raw', import: 'default' },
-);
-
-/**
- * The raw MDX for one file.
- *
- * The client build hands back the string directly; the SSR build used by the
- * prerenderer hands back the module namespace instead, so both shapes are
- * normalized here rather than at each call site.
- */
-function rawSource(path: string): string {
-  const source = sources[path];
-  if (typeof source === 'string') return source;
-  return source?.default ?? '';
-}
 
 export interface DocPage {
   slug: string;
@@ -44,14 +29,14 @@ export interface DocPage {
   faq?: FaqEntry[];
   /** Step-by-step instructions emitted as `HowTo` JSON-LD. */
   howto?: HowTo;
-  /** Raw MDX copied by the page assistant action. */
+  /** The page's Markdown body, frontmatter stripped (`virtual:manti-doc-sources`). */
   source: string;
   Component: ComponentType;
   toc: TocEntry[];
 }
 
-export const pages: DocPage[] = Object.entries(modules)
-  .map(([path, mod]) => ({
+export const pages: DocPage[] = Object.values(modules)
+  .map((mod) => ({
     slug: mod.frontmatter.slug,
     title: mod.frontmatter.title,
     group: mod.frontmatter.group ?? '',
@@ -61,7 +46,7 @@ export const pages: DocPage[] = Object.entries(modules)
     badge: mod.frontmatter.badge,
     faq: mod.frontmatter.faq,
     howto: mod.frontmatter.howto,
-    source: rawSource(path),
+    source: docSources[mod.frontmatter.slug] ?? '',
     Component: mod.default,
     toc: mod.tableOfContents ?? [],
   }))
