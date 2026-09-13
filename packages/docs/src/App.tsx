@@ -23,7 +23,7 @@ export function App() {
 
   // Sync per-route <title>/description/canonical/OG tags on client navigation.
   useDocumentHead(page);
-  Clarity.init("y5gqk1fv09");
+  Clarity.init('y5gqk1fv09');
   // The page scrolls on the window (sidebar/TOC are sticky), and react-router
   // keeps the old scroll offset across client navigations. Reset to the top on
   // every route change so a sidebar click starts the new page from its heading —
@@ -57,14 +57,14 @@ export function App() {
                 className="docs-main docs-content"
                 tabIndex={-1}
               >
-                {page &&
-                  (page.slug.startsWith('/components/') ||
-                    page.slug.startsWith('/typography/')) && (
-                    <div className="docs-page-actions">
-                      <CopyPageButton page={page} />
-                    </div>
-                  )}
                 <article className="docs-prose">
+                  {page &&
+                    (page.slug.startsWith('/components/') ||
+                      page.slug.startsWith('/typography/')) && (
+                      <div className="docs-page-actions">
+                        <CopyPageButton page={page} />
+                      </div>
+                    )}
                   <Outlet />
                   {page && <LastUpdated slug={page.slug} />}
                 </article>

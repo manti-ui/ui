@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 
 import mdx from '@mdx-js/rollup';
 import rehypeShiki from '@shikijs/rehype';
@@ -150,6 +150,12 @@ export default defineConfig({
   // package's node_modules as well as the docs' own.
   resolve: {
     dedupe: ['react', 'react-dom'],
+    // Keep docs CSS on the workspace source during development. Resolving the
+    // package export to dist makes Select/Combobox edits invisible until a
+    // package rebuild, which defeats the docs HMR loop.
+    alias: {
+      '@manti-ui/styles': resolve(import.meta.dirname, '../styles/src'),
+    },
   },
   optimizeDeps: {
     // react-live is only reachable through the lazy `import('./DemoLive')`. If the
