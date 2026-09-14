@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "pnpm build:packages && pnpm build:storybook",
-    "build:packages": "pnpm --filter @manti-ui/tokens build && pnpm --filter @manti-ui/styles build && pnpm --filter @manti-ui/folds build && pnpm --filter @manti-ui/react build",
+    "build:packages": "pnpm --filter @manti-ui/tokens build && pnpm --filter @manti-ui/styles build && pnpm --filter @manti-ui/folds build && pnpm --filter @manti-ui/react build && pnpm --filter @manti-ui/oklava build",
     "build:storybook": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 storybook build",
     "dev": "pnpm build:packages && pnpm storybook",
     "docs:dev": "pnpm build:packages && vite packages/docs",
