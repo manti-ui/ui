@@ -33,6 +33,13 @@ export const meta: ComponentMeta = {
       description: 'Control size.',
     },
     {
+      name: 'maxVisibleItems',
+      type: 'number',
+      default: '200',
+      description:
+        'How many matching rows the listbox renders at once. Typing filters the whole item set; a line under the rows says how many matches are still hidden.',
+    },
+    {
       name: 'multiple',
       type: 'boolean',
       description: 'Allow selecting more than one option.',
@@ -97,6 +104,11 @@ export const meta: ComponentMeta = {
     {
       part: 'item-indicator',
       description: 'The check mark shown on selected items.',
+    },
+    {
+      part: 'overflow-hint',
+      description:
+        'The line under the rows when more matches exist than maxVisibleItems.',
     },
   ],
 };
