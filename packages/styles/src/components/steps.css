@@ -20,7 +20,10 @@
     display: flex;
     gap: var(--manti-space-2);
 
-    [data-orientation='vertical'] & {
+    /* The list is the one part the machine does not stamp `data-orientation`
+       on, so this reads the root's - scoped to the steps root, never a bare
+       ancestor attribute that any wrapper could carry. */
+    [data-scope='steps'][data-part='root'][data-orientation='vertical'] & {
       flex-direction: column;
     }
   }
@@ -31,7 +34,7 @@
     align-items: center;
     gap: var(--manti-space-2);
 
-    [data-orientation='vertical'] & {
+    &[data-orientation='vertical'] {
       flex: none;
     }
   }
@@ -136,7 +139,7 @@
     min-width: var(--manti-space-4);
     background: var(--manti-border-strong);
 
-    [data-orientation='vertical'] & {
+    &[data-orientation='vertical'] {
       width: 1px;
       min-height: var(--manti-space-4);
       flex: none;
