@@ -54,6 +54,7 @@ Set theme, motion, or radius on `<html>` or any container:
 | `@manti-ui/styles` | Tokens, base styles, and component CSS       |
 | `@manti-ui/tokens` | Typed design-token contract                  |
 | `@manti-ui/folds`  | Framework-agnostic behavior and Zag adapters |
+| `@manti-ui/oklava` | Drop-in theme devtools panel                 |
 
 React is the only renderer today. The lower layers are framework-agnostic so
 future renderers can reuse the same behavior, anatomy, and styles.

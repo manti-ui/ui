@@ -1,0 +1,91 @@
+---
+title: Oklava devtools
+slug: /guides/oklava
+group: Guides
+order: 36
+description: Drop a live theme panel into your own app, tune every Manti token against your real screens, then take the result away as CSS or as a brief for a coding agent.
+---
+
+# Oklava devtools
+
+The [Theme Studio](https://studio.manti.design) lets you tune a Manti theme
+against its own preview. Oklava is the same panel, in your app, against your
+screens.
+
+```bash
+pnpm add -D @manti-ui/oklava
+```
+
+```tsx
+import { Oklava } from '@manti-ui/oklava';
+
+export function App() {
+  return (
+    <>
+      <YourApp />
+      {import.meta.env.DEV && <Oklava />}
+    </>
+  );
+}
+```
+
+That is the whole setup. There is no stylesheet to import: the panel writes its
+own chrome into the document on mount. The package is side-effect free and
+single-entry, so the `DEV` branch tree-shakes all of it, catalogue included, out
+of a production build.
+
+## What it changes
+
+Every knob writes a **token override**, injected as one unlayered `<style>` in
+`<head>`. Manti's own defaults ship inside `@layer manti.tokens`, so an unlayered
+declaration wins without `!important`. That is the same escape hatch you would
+reach for by hand, which is why what you see with the panel open is what you get
+once the CSS is pasted in.
+
+The panel is built from Manti components, so it re-skins along with everything
+else. That is deliberate: it is part of the preview. The one exception is the
+focus ring, which the panel pins to the width your app shipped, so choosing a
+width of `0` cannot leave the devtool unusable by keyboard.
+
+## Taking the theme with you
+
+"Take it" opens three tabs:
+
+- **CSS tokens.** The `:root` block the app is running. Save it next to your
+  entry point and import it after `@manti-ui/styles/index.css`, outside any
+  cascade layer.
+- **AI prompt.** The same theme as a brief a coding agent can act on. Paste it
+  into Claude Code, Cursor, or anything else working in the repo and it will
+  write the file and wire up the import. Point it at a different path with
+  `themeFile`.
+- **JSON.** The raw panel state, for storing a theme in your own tooling. The
+  same tab takes a pasted theme back, which is how a theme travels between two
+  people.
+
+## Presets
+
+Preset palettes normally arrive as a stylesheet:
+
+```js
+import '@manti-ui/styles/themes.css';
+```
+
+Oklava works either way. With that import present, picking a preset sets
+`data-manti-theme` and the shipped stylesheet supplies the palette, so the CSS
+you copy stays small and references the preset by name. Without it, the panel
+folds the preset's own palette into the override it already writes, so the chips
+still work on a cold install.
+
+## Props
+
+| Prop                                  | Default                 | What it does                                                                                                                    |
+| ------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultOpen`                         | `false`                 | Open the panel on first mount.                                                                                                  |
+| `storageKey`                          | `'manti-oklava'`        | Where the theme is remembered. `false` keeps it ephemeral.                                                                      |
+| `colorScheme` / `onColorSchemeChange` | reads `data-theme`      | Wire the Appearance control to your own light/dark state. With neither, and no `data-theme` on `<html>`, the control is hidden. |
+| `themeFile`                           | `'src/manti-theme.css'` | Path the AI prompt tells an agent to write.                                                                                     |
+| `googleFonts`                         | `true`                  | Offer the Google Fonts catalogue. Loads a ~90KB chunk on first open.                                                            |
+
+The engine is exported too, so you can build a surface of your own on the same
+overrides: `useOklavaTheme`, `buildThemeCss`, `buildThemeStylesheet`,
+`buildAgentPrompt`, and the named stops each control offers.
