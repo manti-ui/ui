@@ -214,13 +214,8 @@ export function ThemePanel({
     VARIANTS.find((item) => item.key === editing) ?? VARIANTS[0];
   // Built-in stacks first, then the catalogue. The list is rebuilt only when the
   // catalogue chunk lands.
-  const all = useGoogleFonts(googleFonts);
+  const catalogue = useGoogleFonts(googleFonts);
   const fontItems = useMemo(() => {
-    // Interim cap. Combobox renders every match, so handing it the whole
-    // catalogue freezes the page on open; `maxVisibleItems` lands with
-    // manti-ui/ui#110, and this slice comes out with it. The catalogue is
-    // sorted by popularity, so the head is the useful part meanwhile.
-    const catalogue = all.slice(0, 200);
     const items = [
       ...FONT_STACKS.map((font) => ({ value: font.value, label: font.label })),
       ...catalogue.map((font) => ({
@@ -238,7 +233,7 @@ export function ThemePanel({
       });
     }
     return items;
-  }, [all, config.font]);
+  }, [catalogue, config.font]);
   // What the app is actually running for a variant: an override, else the
   // preset's own color, else the shipped default. Without the last fallback the
   // default theme shows a grid with nothing selected.
