@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
+import { Oklava } from '@manti-ui/oklava';
 import { Outlet, useLocation } from 'react-router-dom';
 
 import { LastUpdated } from './doc/LastUpdated';
@@ -74,6 +75,10 @@ export function App() {
             </div>
           )}
           <SearchDialog />
+          {/* The devtools panel, running against the docs site itself. It is
+              the honest demo: every knob rewrites the same public tokens these
+              pages document, on the very components they document. */}
+          <Oklava themeFile="src/manti-theme.css" />
         </div>
       </SearchProvider>
     </MDXProvider>

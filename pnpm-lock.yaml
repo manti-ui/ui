@@ -89,6 +89,9 @@ importers:
       '@manti-ui/folds':
         specifier: workspace:*
         version: link:../folds
+      '@manti-ui/oklava':
+        specifier: workspace:*
+        version: link:../oklava
       '@manti-ui/react':
         specifier: workspace:*
         version: link:../react

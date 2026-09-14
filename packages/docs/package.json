@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@manti-ui/folds": "workspace:*",
+    "@manti-ui/oklava": "workspace:*",
     "@manti-ui/react": "workspace:*",
     "@manti-ui/styles": "workspace:*",
     "@manti-ui/tokens": "workspace:*",

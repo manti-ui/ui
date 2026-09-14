@@ -233,7 +233,17 @@ export function ThemePlayground() {
     applyCss(buildCss(state.colors, state.active));
     // `data-radius` is the shipped preset API: set the attribute and every
     // component inside re-rounds itself; no override stylesheet involved.
-    document.documentElement.dataset.radius = state.radius;
+    //
+    // Only once a visitor has picked a mode, though. Each mode re-declares
+    // every ramp step against its own factor, deliberately so an inherited root
+    // value cannot bypass a subtree preset, so stamping `default` on every load
+    // would pin the radius and leave the Oklava panel's radius control with
+    // nothing to do.
+    if (state.radius === 'default') {
+      delete document.documentElement.dataset.radius;
+    } else {
+      document.documentElement.dataset.radius = state.radius;
+    }
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {
