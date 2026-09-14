@@ -18,6 +18,17 @@ export interface FloatingPanelProps {
   draggable?: boolean;
   /** Allow edge/corner resizing. */
   resizable?: boolean;
+  /**
+   * Starting size, in pixels. The machine writes the panel's size as an inline
+   * style, so this is the only way to size it: a stylesheet rule would lose.
+   */
+  defaultSize?: { width: number; height: number };
+  /** Smallest size a resize may reach, in pixels. */
+  minSize?: { width: number; height: number };
+  /** Largest size a resize may reach, in pixels. */
+  maxSize?: { width: number; height: number };
+  /** Starting position, in pixels from the top-left of the viewport. */
+  defaultPosition?: { x: number; y: number };
   /** Controlled open state. */
   open?: boolean;
   /** Initial open state for uncontrolled usage. */
@@ -76,6 +87,10 @@ export function FloatingPanel({
   children,
   draggable = true,
   resizable = true,
+  defaultSize,
+  minSize,
+  maxSize,
+  defaultPosition,
   open,
   defaultOpen,
   onOpenChange,
@@ -93,6 +108,10 @@ export function FloatingPanel({
     id: id ?? autoId,
     draggable,
     resizable,
+    defaultSize,
+    minSize,
+    maxSize,
+    defaultPosition,
     open,
     defaultOpen,
     onOpenChange: onOpenChange
