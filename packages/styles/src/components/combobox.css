@@ -135,7 +135,6 @@
       border-color: var(--manti-border);
       border-bottom-width: 0;
     }
-
   }
 
   [data-scope='combobox'][data-part='root'][data-appearance='fill'][data-invalid]
@@ -318,6 +317,18 @@
     &:focus-visible {
       outline: none;
     }
+  }
+
+  /* Sits under the rows when the match set is longer than `maxVisibleItems`.
+     A quiet line, not an item: it is not selectable and never takes focus. */
+  [data-scope='combobox'][data-part='overflow-hint'] {
+    margin: 0;
+    padding: var(--manti-size-item-padding-y, var(--manti-space-2))
+      var(--manti-size-item-padding-x, var(--manti-space-3));
+    border-top: 1px solid var(--manti-border);
+    color: var(--manti-text-subtle);
+    font-size: var(--manti-text-xs);
+    line-height: var(--manti-leading-normal);
   }
 
   [data-scope='combobox'][data-part='item'] {
