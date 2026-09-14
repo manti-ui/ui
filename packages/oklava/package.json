@@ -1,0 +1,66 @@
+{
+  "name": "@manti-ui/oklava",
+  "version": "0.13.0",
+  "description": "A drop-in theme devtools panel for apps built with Manti UI.",
+  "license": "MIT",
+  "homepage": "https://manti.design",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manti-ui/ui.git",
+    "directory": "packages/oklava"
+  },
+  "author": "Tutku Ucan <tutku.dev@gmail.com>",
+  "keywords": [
+    "manti-ui",
+    "design-system",
+    "devtools",
+    "theming",
+    "design-tokens",
+    "react"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "gen:fonts": "node scripts/gen-google-fonts.mjs"
+  },
+  "dependencies": {
+    "@manti-ui/tokens": "workspace:^"
+  },
+  "peerDependencies": {
+    "@manti-ui/react": "workspace:^",
+    "@manti-ui/styles": "workspace:^",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  }
+}

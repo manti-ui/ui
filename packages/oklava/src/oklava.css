@@ -1,0 +1,401 @@
+/**
+ * Oklava — the devtools panel's own chrome.
+ *
+ * Injected at runtime by `styles.ts`, so a consumer never imports it. The first
+ * statement re-declares the order `@manti-ui/styles` establishes and appends one
+ * name to it: the panel sits above the component defaults it is built from, and
+ * below anything unlayered, including the theme overrides Oklava injects. Every
+ * value is a `--manti-*` or `--variant-*` token; the only literals are the
+ * hairline borders and the launcher's viewport offsets.
+ */
+@layer manti.reset, manti.tokens, manti.theme, manti.base, manti.components,
+  manti.motion, manti.oklava;
+
+@layer manti.oklava {
+  /* ---- Launcher ---- */
+  .oklava-launcher {
+    position: fixed;
+    inset-block-end: var(--manti-space-4);
+    inset-inline-end: var(--manti-space-4);
+    z-index: var(--manti-z-modal);
+  }
+
+  /* ---- Panel shell ---- */
+  /* Size and position are inline styles written by the machine, so they are
+     passed as props rather than set here. */
+  .oklava-panel {
+    /* The panel is the preview, so every knob reaches it. Focus width is the
+       one place that backfires: `0` strips the panel's own focus rings and
+       leaves the devtool unusable by keyboard. The shell reads the host's value
+       before the first override and sets `--manti-oklava-focus-ring-width`. */
+    --manti-focus-ring-width: var(--manti-oklava-focus-ring-width);
+  }
+
+  /* The machine sizes the content; the body is what has to give the ScrollArea
+     a bounded box to scroll inside. */
+  .oklava-panel [data-scope='floating-panel'][data-part='body'] {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .oklava-body {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+  }
+
+  .oklava-scroll {
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* The cap has to sit on the viewport, not on the ScrollArea root. The
+     viewport is `height: 100%`, and a percentage height against a root that is
+     only max-height-capped resolves to auto: the viewport grows to its content,
+     the root clips it, and nothing ever scrolls. */
+  .oklava-scroll [data-scope='scroll-area'][data-part='viewport'] {
+    height: 100%;
+  }
+
+  /* ---- Structure ---- */
+  .oklava-controls {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .oklava-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+    padding: var(--manti-space-4);
+  }
+
+  .oklava-group + .oklava-group {
+    border-top: 1px solid var(--manti-border);
+  }
+
+  .oklava-group-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-1);
+  }
+
+  /* ---- Fields ---- */
+  .oklava-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-2);
+  }
+
+  .oklava-field-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--manti-space-2);
+  }
+
+  .oklava-field-value {
+    font-family: var(--manti-font-mono);
+  }
+
+  /* The slider carries its own label header; the field already names it. */
+  .oklava-field [data-scope='slider'] [data-part='header'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    clip-path: inset(50%);
+  }
+
+  /* ---- Presets ---- */
+  .oklava-presets {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--manti-space-2);
+  }
+
+  .oklava-preset {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+    padding: var(--manti-space-2);
+    border: 1px solid var(--manti-border);
+    border-radius: var(--manti-radius-sm);
+    background: transparent;
+    color: var(--manti-text-muted);
+    font: inherit;
+    font-size: var(--manti-text-xs);
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--manti-border-strong);
+      background: var(--manti-fill-subtle);
+      color: var(--manti-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+
+    &[aria-pressed='true'] {
+      border-color: var(--variant-ring, var(--manti-border-strong));
+      background: var(--manti-fill);
+      color: var(--manti-text);
+    }
+  }
+
+  .oklava-preset-dots {
+    display: flex;
+    flex: none;
+  }
+
+  .oklava-preset-dots i {
+    width: var(--manti-space-3);
+    height: var(--manti-space-3);
+    border-radius: var(--manti-radius-full);
+  }
+
+  .oklava-preset-dots i + i {
+    margin-inline-start: calc(var(--manti-space-2) * -1);
+  }
+
+  /* ---- Variant chips ---- */
+  .oklava-variants {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--manti-space-2);
+  }
+
+  .oklava-variant {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+    padding: var(--manti-space-1) var(--manti-space-2);
+    border: 1px solid var(--manti-border);
+    border-radius: var(--manti-radius-sm);
+    background: transparent;
+    color: var(--manti-text-muted);
+    font: inherit;
+    font-size: var(--manti-text-xs);
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--manti-border-strong);
+      background: var(--manti-fill-subtle);
+      color: var(--manti-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+
+    &[aria-checked='true'] {
+      border-color: var(--variant-ring, var(--manti-border-strong));
+      background: var(--manti-fill);
+      color: var(--manti-text);
+    }
+  }
+
+  .oklava-variant i {
+    flex: none;
+    width: var(--manti-space-3);
+    height: var(--manti-space-3);
+    border-radius: var(--manti-radius-full);
+  }
+
+  /* ---- Color dots ---- */
+  .oklava-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--manti-space-2);
+  }
+
+  /* Each dot is wrapped in a tooltip trigger, so the row's flex children are
+     the trigger spans rather than the buttons. */
+  .oklava-dots > span {
+    display: flex;
+  }
+
+  .oklava-dot {
+    width: var(--manti-space-6);
+    height: var(--manti-space-6);
+    padding: 0;
+    border: 1px solid var(--manti-border);
+    border-radius: var(--manti-radius-full);
+    cursor: pointer;
+    transition: transform var(--manti-duration-fast) var(--manti-ease-soft);
+
+    &:hover {
+      transform: scale(1.12);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+
+    /* The check is a ring drawn in the panel color, so it reads on any hue
+       without painting an icon over the color the dot is there to show. */
+    &[aria-checked='true'] {
+      border-color: var(--manti-text);
+      outline: 2px solid var(--manti-surface);
+      outline-offset: -4px;
+    }
+  }
+
+  .oklava-dots-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--manti-space-2);
+  }
+
+  /* The picker sits inline in the footer row: label beside the swatch, and the
+     swatch-only trigger hugging the swatch instead of taking a control's full
+     height. */
+  .oklava-dots-footer [data-scope='color-picker'][data-part='root'] {
+    flex: none;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--manti-space-2);
+  }
+
+  .oklava-dots-footer [data-scope='color-picker'][data-part='label'] {
+    margin: 0;
+    white-space: nowrap;
+    font-size: var(--manti-text-sm);
+    font-weight: var(--manti-weight-medium);
+    color: var(--manti-text);
+  }
+
+  .oklava-dots-footer [data-scope='color-picker'][data-part='trigger'] {
+    flex: none;
+    min-height: 0;
+    width: auto;
+    padding: var(--manti-space-1);
+  }
+
+  .oklava-dots-footer [data-scope='color-picker'] [data-part='value-swatch'] {
+    width: var(--manti-space-5);
+    height: var(--manti-space-5);
+  }
+
+  .oklava-swatch-value {
+    margin-inline-start: auto;
+    font-family: var(--manti-font-mono);
+  }
+
+  /* ---- Radius tiles ---- */
+  .oklava-tiles {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--manti-space-2);
+  }
+
+  .oklava-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--manti-space-1);
+    padding: var(--manti-space-2) var(--manti-space-1);
+    border: 1px solid var(--manti-border);
+    border-radius: var(--manti-radius-sm);
+    background: transparent;
+    color: var(--manti-text-muted);
+    font: inherit;
+    font-size: var(--manti-text-xs);
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--manti-border-strong);
+      background: var(--manti-fill-subtle);
+      color: var(--manti-text);
+    }
+
+    &:focus-visible {
+      outline: var(--manti-focus-ring-width) solid var(--manti-focus-ring);
+      outline-offset: var(--manti-focus-ring-offset);
+    }
+
+    &[aria-checked='true'] {
+      border-color: var(--variant-ring, var(--manti-border-strong));
+      background: var(--manti-fill);
+      color: var(--manti-text);
+    }
+  }
+
+  /* The corner sample: one quadrant of a box, so only the rounded edge shows. */
+  .oklava-tile-art {
+    width: var(--manti-space-6);
+    height: var(--manti-space-6);
+    border: 2px solid currentColor;
+    border-right: 0;
+    border-bottom: 0;
+    opacity: 0.75;
+  }
+
+  /* ---- Footer ---- */
+  .oklava-footer {
+    display: flex;
+    gap: var(--manti-space-2);
+    padding: var(--manti-space-4);
+    border-top: 1px solid var(--manti-border);
+  }
+
+  .oklava-footer [data-scope='button'][data-part='root'] {
+    flex: 1;
+  }
+
+  /* ---- Export dialog ---- */
+  .oklava-export-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--manti-space-3);
+  }
+
+  .oklava-export-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--manti-space-4);
+  }
+
+  .oklava-export-code {
+    margin: 0;
+    max-height: 22rem;
+    overflow: auto;
+    padding: var(--manti-space-4);
+    border: 1px solid var(--manti-border);
+    border-radius: var(--manti-radius-md);
+    background: var(--manti-surface-sunken);
+    color: var(--manti-text);
+    font-family: var(--manti-font-mono);
+    font-size: var(--manti-text-xs);
+    line-height: var(--manti-leading-normal);
+    white-space: pre;
+    tab-size: 2;
+  }
+
+  .oklava-export-note {
+    margin-inline-end: auto;
+  }
+
+  .oklava-import {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--manti-space-3);
+  }
+
+  .oklava-import [data-scope='textarea'][data-part='root'] {
+    flex: 1;
+  }
+}
