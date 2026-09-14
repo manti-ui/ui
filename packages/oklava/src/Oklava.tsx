@@ -29,7 +29,8 @@ import { ensureStyles, setHostFocusRingWidth } from './styles';
  */
 
 /**
- * Where the panel opens: docked to the right edge, full height, like a rail.
+ * Where the panel opens: docked to the right edge, like a rail, stopping just
+ * above its own launcher.
  *
  * Size and position are inline styles written by the machine, so neither can
  * live in the stylesheet. Both are only a starting point, since the panel stays
@@ -43,12 +44,33 @@ const PANEL_WIDTH = 352;
 const EDGE_GAP = 16;
 const MIN_SIZE = { width: 288, height: 240 };
 
+/**
+ * How tall the launcher will be, asked of the layout engine rather than assumed.
+ *
+ * The panel has to reserve this space before it opens, and the launcher is not
+ * in the DOM yet at that point, so a probe resolves the same control-height
+ * token the button sizes itself from. That keeps the reservation correct when a
+ * host app has retuned the control scale, or when the density knob moves it.
+ */
+function launcherHeight(): number {
+  const probe = document.createElement('div');
+  probe.style.cssText =
+    'position:absolute;visibility:hidden;height:var(--manti-control-height-lg)';
+  document.body.appendChild(probe);
+  const height = probe.offsetHeight;
+  probe.remove();
+  return height;
+}
+
 function dockedLayout() {
   const root = document.documentElement;
   const width = Math.min(PANEL_WIDTH, root.clientWidth - EDGE_GAP * 2);
-  const height = root.clientHeight - EDGE_GAP * 2;
+  // Top gap, then the panel, then a gap, then the launcher on its own bottom
+  // gap. Covering the launcher would hide the only way to close and reopen the
+  // panel from the page.
+  const height = root.clientHeight - launcherHeight() - EDGE_GAP * 3;
   return {
-    size: { width, height },
+    size: { width, height: Math.max(height, MIN_SIZE.height) },
     position: { x: root.clientWidth - width - EDGE_GAP, y: EDGE_GAP },
   };
 }
