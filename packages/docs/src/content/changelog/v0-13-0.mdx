@@ -1,0 +1,98 @@
+---
+title: v0.13.0
+slug: /changelog/v0.13.0
+group: Changelog
+order: 1
+date: '2026-09-14'
+description: Oklava, a drop-in theme devtools panel for apps built on Manti UI, plus a Combobox that survives thousands of options and a controlled value.
+---
+
+---
+
+# v0.13.0
+
+_Released 2026-09-14._
+
+## Oklava: the Theme Studio, in your app
+
+The [Theme Studio](https://studio.manti.design) lets you tune a theme against
+its own preview. `@manti-ui/oklava` is the same control rail as a devtool you
+drop into your own project, so the screens you are tuning are yours.
+
+```bash
+pnpm add -D @manti-ui/oklava
+```
+
+```tsx
+import { Oklava } from '@manti-ui/oklava';
+
+{
+  import.meta.env.DEV && <Oklava />;
+}
+```
+
+That is the whole setup. There is no stylesheet to import: the panel writes its
+own chrome into the document on mount. The package is side-effect free and
+single-entry, so that `DEV` branch tree-shakes all of it, font catalogue
+included, out of a production build.
+
+Every knob writes a **token override**, injected as one unlayered `<style>` in
+`<head>`. Manti's defaults ship inside `@layer manti.tokens`, so an unlayered
+declaration wins without `!important` — the same escape hatch you would reach
+for by hand. What the app looks like with the panel open is what it looks like
+once the CSS is pasted in, because one builder feeds both.
+
+The panel hands the theme back three ways: the `:root` CSS block, a brief a
+coding agent can act on in your repo, or JSON that can be pasted back in. Full
+detail in the [Oklava guide](/guides/oklava).
+
+The docs site runs it too, so any page here can be rethemed from the launcher in
+the corner.
+
+## Combobox holds a long list
+
+A Combobox rendered every match. Handing it a catalogue of a few thousand
+options — fonts, countries, icons — put thousands of list items into the DOM on
+open, each with a set of machine props, and blocked the main thread for as long
+as that took.
+
+`maxVisibleItems` now caps what reaches the DOM at 200 by default. Filtering
+still runs over the whole list, and a line under the rows says how many matches
+are still hidden:
+
+```tsx
+<Combobox items={twoThousandFonts} maxVisibleItems={50} />
+```
+
+The collection is built from the same slice, so keyboard navigation never walks
+onto a row that is not there.
+
+## Combobox stops fighting a controlled value
+
+The effect that keeps the check indicator in step with the typed text cleared
+the selection whenever the text stopped matching it. Against a controlled
+`value` that could never settle: `setValue([])` was undone by the prop,
+`setInputValue` re-fired the query, the effect saw a selection again, and the
+render loop spun until the tab was wedged. Typing a single character into a
+controlled Combobox froze the page.
+
+A controlled owner decides what is selected, so the effect now stands down
+there, the same way it already did for multi-select.
+
+## Floating Panel can be sized and placed
+
+The machine accepts a starting size and position, but the adapter dropped them,
+and the panel writes its own width and height as inline styles — so a stylesheet
+rule could not size it either. `defaultSize`, `minSize`, `maxSize` and
+`defaultPosition` are now props:
+
+```tsx
+<FloatingPanel
+  defaultSize={{ width: 352, height: 560 }}
+  defaultPosition={{ x: 24, y: 24 }}
+  minSize={{ width: 288, height: 240 }}
+  trigger={<Button>Open</Button>}
+>
+  …
+</FloatingPanel>
+```

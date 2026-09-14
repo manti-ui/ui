@@ -101,6 +101,7 @@ export function Combobox({
 }: ComboboxProps) {
   const autoId = useId();
   const [query, setQuery] = useState('');
+  const controlled = value !== undefined;
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return q
@@ -158,8 +159,14 @@ export function Combobox({
   // when nothing matches — Zag otherwise keeps the old selection until the next
   // pick, leaving a stale check. Multi-select empties the input after every pick
   // by design, so it's skipped.
+  //
+  // So is a controlled `value`, and that one is load-bearing: there, the owner
+  // decides what is selected, and the machine cannot clear a value the prop
+  // writes straight back. Running this against a controlled value spins —
+  // `setValue([])` is undone by the prop, `setInputValue` re-fires the query,
+  // the effect sees a selection again, and the render loop never settles.
   useEffect(() => {
-    if (multiple) return;
+    if (multiple || controlled) return;
     const typed = api.inputValue.trim().toLowerCase();
     const match = typed
       ? items.find((item) => item.label.trim().toLowerCase() === typed)
@@ -173,7 +180,7 @@ export function Combobox({
       api.setValue([]);
       api.setInputValue(text);
     }
-  }, [api, items, multiple]);
+  }, [api, items, multiple, controlled]);
 
   const contentProps = api.getContentProps();
   const contentSide = (
