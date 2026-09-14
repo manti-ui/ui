@@ -100,6 +100,7 @@ Zag.js behavior machines.
 - `packages/styles/`: shared CSS and state selectors.
 - `packages/folds/`: framework-agnostic Zag.js behavior.
 - `packages/react/`: React renderer and Storybook stories.
+- `packages/oklava/`: the drop-in theme devtools panel.
 - `.storybook/`: Storybook (react-vite) configuration — the single dev surface and visual gallery.
 - `design/logo-explorations/`: non-production brand exploration assets.
 - `docs/`: architecture and product vision.
