@@ -27,6 +27,13 @@ export interface ComboboxProps {
   variant?: ComboboxVariant;
   /** Control size. */
   size?: 'sm' | 'md' | 'lg';
+  /**
+   * How many matching rows the listbox renders at once. The rest stay one
+   * keystroke away: the input filters the whole `items` set, this only caps
+   * what is put in the DOM, and a line under the list says how many are left.
+   * Set it higher for a short, scannable catalogue; lower on a slow device.
+   */
+  maxVisibleItems?: number;
   /** Allow selecting more than one option. */
   multiple?: boolean;
   /** Controlled selected values. */
@@ -79,6 +86,7 @@ export function Combobox({
   placeholder = 'Search…',
   variant = 'default',
   size = 'md',
+  maxVisibleItems = 200,
   multiple,
   value,
   defaultValue,
@@ -93,21 +101,33 @@ export function Combobox({
 }: ComboboxProps) {
   const autoId = useId();
   const [query, setQuery] = useState('');
+  const controlled = value !== undefined;
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return q
       ? items.filter((item) => item.label.toLowerCase().includes(q))
       : items;
   }, [items, query]);
+  // What actually reaches the DOM. A combobox over a few thousand options (a
+  // font catalogue, a country list, an icon set) otherwise renders every row on
+  // open: thousands of list items, each with a set of machine props, which
+  // blocks the main thread for as long as it takes. The collection is built
+  // from the same slice, so keyboard navigation never walks onto a row that is
+  // not there.
+  const visible = useMemo(
+    () => filtered.slice(0, maxVisibleItems),
+    [filtered, maxVisibleItems],
+  );
+  const hidden = filtered.length - visible.length;
   const collection = useMemo(
     () =>
       combobox.collection({
-        items: filtered,
+        items: visible,
         itemToString: (item) => item.label,
         itemToValue: (item) => item.value,
         isItemDisabled: (item) => Boolean(item.disabled),
       }),
-    [filtered],
+    [visible],
   );
   const service = useMachine(combobox.machine, {
     id: id ?? autoId,
@@ -139,8 +159,14 @@ export function Combobox({
   // when nothing matches — Zag otherwise keeps the old selection until the next
   // pick, leaving a stale check. Multi-select empties the input after every pick
   // by design, so it's skipped.
+  //
+  // So is a controlled `value`, and that one is load-bearing: there, the owner
+  // decides what is selected, and the machine cannot clear a value the prop
+  // writes straight back. Running this against a controlled value spins —
+  // `setValue([])` is undone by the prop, `setInputValue` re-fires the query,
+  // the effect sees a selection again, and the render loop never settles.
   useEffect(() => {
-    if (multiple) return;
+    if (multiple || controlled) return;
     const typed = api.inputValue.trim().toLowerCase();
     const match = typed
       ? items.find((item) => item.label.trim().toLowerCase() === typed)
@@ -154,7 +180,7 @@ export function Combobox({
       api.setValue([]);
       api.setInputValue(text);
     }
-  }, [api, items, multiple]);
+  }, [api, items, multiple, controlled]);
 
   const contentProps = api.getContentProps();
   const contentSide = (
@@ -166,9 +192,7 @@ export function Combobox({
       ? 'bottom'
       : undefined;
   const connectedSide =
-    api.open && filtered.length > 0
-      ? (contentSide ?? placementSide)
-      : undefined;
+    api.open && visible.length > 0 ? (contentSide ?? placementSide) : undefined;
 
   return (
     <div
@@ -235,7 +259,7 @@ export function Combobox({
           >
             <ScrollArea focusable={false}>
               <ul {...contentProps}>
-                {filtered.map((item) => (
+                {visible.map((item) => (
                   <li key={item.value} {...api.getItemProps({ item })}>
                     <span {...api.getItemTextProps({ item })}>
                       {item.label}
@@ -246,6 +270,11 @@ export function Combobox({
                   </li>
                 ))}
               </ul>
+              {hidden > 0 && (
+                <p data-scope="combobox" data-part="overflow-hint">
+                  {hidden} more. Keep typing to narrow the list.
+                </p>
+              )}
             </ScrollArea>
           </div>
         </Portal>
