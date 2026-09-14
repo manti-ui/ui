@@ -6,6 +6,7 @@
   "include": [
     ".storybook/**/*.ts",
     ".storybook/**/*.tsx",
-    "packages/react/src/**/*.stories.tsx"
+    "packages/react/src/**/*.stories.tsx",
+    "packages/oklava/src/**/*.stories.tsx"
   ]
 }

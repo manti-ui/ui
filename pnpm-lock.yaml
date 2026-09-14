@@ -89,6 +89,9 @@ importers:
       '@manti-ui/folds':
         specifier: workspace:*
         version: link:../folds
+      '@manti-ui/oklava':
+        specifier: workspace:*
+        version: link:../oklava
       '@manti-ui/react':
         specifier: workspace:*
         version: link:../react
@@ -294,6 +297,25 @@ importers:
       '@zag-js/tree-view':
         specifier: ^1.43.0
         version: 1.43.0
+
+  packages/oklava:
+    dependencies:
+      '@manti-ui/react':
+        specifier: workspace:^
+        version: link:../react
+      '@manti-ui/styles':
+        specifier: workspace:^
+        version: link:../styles
+      '@manti-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+    devDependencies:
+      react:
+        specifier: ^19.2.7
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.7
+        version: 19.2.7(react@19.2.7)
 
   packages/react:
     dependencies:
