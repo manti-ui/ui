@@ -69,12 +69,17 @@
     background: var(--manti-border-strong);
     border-radius: var(--manti-radius-full);
 
-    [data-orientation='horizontal'] & {
+    /* Read the part's *own* orientation, never an ancestor's. The machine
+       stamps `data-orientation` on every part, and an ancestor form matches any
+       wrapper carrying the attribute for its own reasons: a vertical Scroll
+       Area, Splitter or Tabs would silently turn a horizontal slider inside it
+       into a 6px column. */
+    &[data-orientation='horizontal'] {
       height: var(--manti-slider-track-size);
       width: 100%;
     }
 
-    [data-orientation='vertical'] & {
+    &[data-orientation='vertical'] {
       width: var(--manti-slider-track-size);
       height: 100%;
     }
@@ -84,11 +89,11 @@
     background: var(--variant-solid);
     border-radius: var(--manti-radius-full);
 
-    [data-orientation='horizontal'] & {
+    &[data-orientation='horizontal'] {
       height: 100%;
     }
 
-    [data-orientation='vertical'] & {
+    &[data-orientation='vertical'] {
       width: 100%;
     }
   }
