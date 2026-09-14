@@ -11,6 +11,7 @@
     "noEmit": true,
     "paths": {
       "@manti-ui/folds": ["./packages/folds/src/index.ts"],
+      "@manti-ui/oklava": ["./packages/oklava/src/index.ts"],
       "@manti-ui/react": ["./packages/react/src/index.ts"],
       "@manti-ui/react/shortcut": ["./packages/react/src/shortcut/index.ts"],
       "@manti-ui/styles": ["./packages/styles/src/index.ts"],
