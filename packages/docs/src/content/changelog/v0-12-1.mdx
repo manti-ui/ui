@@ -1,0 +1,39 @@
+---
+title: v0.12.1
+slug: /changelog/v0.12.1
+group: Changelog
+order: 1
+date: '2026-09-14'
+description: A patch for Slider and Steps, which took their axis from an ancestor's data-orientation instead of their own.
+---
+
+# v0.12.1
+
+_Released 2026-09-14._
+
+## A part reads its own orientation
+
+Slider's track and range, and Steps' item and separator, sized themselves with a
+nested ancestor selector:
+
+```css
+[data-orientation='vertical'] & {
+  width: var(--manti-slider-track-size);
+  height: 100%;
+}
+```
+
+That matches the part under _any_ ancestor carrying the attribute, not just its
+own machine's root, and plenty of components stamp it for their own reasons:
+Scroll Area, Splitter, Tabs, Toggle Group, Segmented Control. A horizontal
+slider placed inside a vertical Scroll Area therefore took the vertical
+geometry, and its track collapsed into a narrow column at the left of the
+control while the range and thumb stayed on the horizontal axis.
+
+Every one of these parts is stamped with its own `data-orientation`, so they now
+read that instead. Steps' list is the one exception, since the machine does not
+stamp it there: that rule keeps an ancestor form, qualified to the steps root
+rather than to a bare attribute any wrapper could satisfy.
+
+Nothing changes for a component that was already laid out correctly: the two
+axes resolve exactly as before when no outer element carries the attribute.
