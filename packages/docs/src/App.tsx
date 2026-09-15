@@ -75,10 +75,15 @@ export function App() {
             </div>
           )}
           <SearchDialog />
-          {/* The devtools panel, running against the docs site itself. It is
-              the honest demo: every knob rewrites the same public tokens these
-              pages document, on the very components they document. */}
-          <Oklava themeFile="src/manti-theme.css" />
+          {/* The devtools panel, running against the docs site itself: every
+              knob rewrites the same public tokens these pages document, on the
+              very components they document.
+
+              Development only, which is the guard this site's own Oklava guide
+              tells readers to write. It is a devtool, not a feature of the
+              published docs, and the branch tree-shakes the package, font
+              catalogue included, out of the production bundle. */}
+          {import.meta.env.DEV && <Oklava themeFile="src/manti-theme.css" />}
         </div>
       </SearchProvider>
     </MDXProvider>
