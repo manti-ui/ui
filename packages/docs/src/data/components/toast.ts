@@ -39,10 +39,10 @@ export const meta: ComponentMeta = {
     },
     {
       name: 'translations',
-      type: '{ closeTriggerLabel?: string }',
+      type: '{ closeTriggerLabel?: string; regionLabel?: string }',
       default: `{ closeTriggerLabel: 'Close' }`,
       description:
-        'Factory-level accessible wording, overridable by per-toast options.',
+        'Factory-level accessible wording. `closeTriggerLabel` is overridable by per-toast options; `regionLabel` replaces the whole region name, which otherwise reads `Notifications, <placement> (alt+T)`.',
     },
   ],
   anatomy: [
