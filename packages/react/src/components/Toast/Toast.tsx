@@ -25,6 +25,12 @@ export type ToastPlacement =
 export interface ToastTranslations {
   /** Accessible label for each toast close button. */
   closeTriggerLabel?: string;
+  /**
+   * The complete accessible name of the toast region, used verbatim. When
+   * unset, Zag composes an English name from the placement and the focus
+   * hotkey (`Notifications, bottom-end (alt+T)`).
+   */
+  regionLabel?: string;
 }
 
 export interface CreateToasterOptions {
@@ -268,9 +274,13 @@ export function createToaster(
 ): ToasterInstance {
   const {
     swipe: swipeEnabled = true,
-    translations = { closeTriggerLabel: 'Close' },
+    translations: translationOverrides,
     ...storeOptions
   } = options;
+  const { regionLabel, ...translations }: ToastTranslations = {
+    closeTriggerLabel: 'Close',
+    ...translationOverrides,
+  };
   const store = toast.createStore<ReactNode>({
     placement: 'bottom-end',
     overlap: true,
@@ -281,10 +291,15 @@ export function createToaster(
     const id = useId();
     const service = useMachine(toast.group.machine, { id, store });
     const api = toast.group.connect(service, normalizeProps);
+    const groupProps = api.getGroupProps();
 
     return (
       <Portal>
-        <div {...api.getGroupProps()} className={cx(className)}>
+        <div
+          {...groupProps}
+          aria-label={regionLabel ?? groupProps['aria-label']}
+          className={cx(className)}
+        >
           {api.getToasts().map((item, index) => (
             <ToastItem
               key={item.id}
