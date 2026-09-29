@@ -1,5 +1,12 @@
 # @manti-ui/styles
 
+## 0.13.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @manti-ui/tokens@0.13.1
+
 ## 0.11.1
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @manti-ui/react
 
+## 0.13.1
+
+### Patch Changes
+
+- [#125](https://github.com/manti-ui/ui/pull/125) [`de13761`](https://github.com/manti-ui/ui/commit/de13761b57e449ce2379855fc67953a44e141a42) Thanks [@tutkuofnight](https://github.com/tutkuofnight)! - Toast: add `translations.regionLabel` to `createToaster`, so the toast region's accessible name can be localized. When set it is used verbatim, replacing Zag's composed `Notifications, <placement> (alt+T)`. Partial `translations` now merge with the defaults instead of dropping `closeTriggerLabel`.
+
+- Updated dependencies []:
+  - @manti-ui/tokens@0.13.1
+  - @manti-ui/styles@0.13.1
+  - @manti-ui/folds@0.13.1
+
 ## 0.11.1
 
 ### Patch Changes
