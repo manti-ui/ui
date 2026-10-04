@@ -12,3 +12,7 @@ storybook-static
 .idea
 .vscode
 public/logo-explorations
+
+# fabrika's local machine state — the per-lane ledger `fabrika lane` writes under
+# `.fabrika/lanes/<n>/`. One machine's run log; never committed.
+/.fabrika/

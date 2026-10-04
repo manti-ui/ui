@@ -1,0 +1,5 @@
+# Control-plane owners: fabrika's governed roots. `plan approve` and `ship cp-approval`
+# read these rows to decide who may approve changes to the pipeline itself.
+/.github/ @tutkuofnight
+/.claude/ @tutkuofnight
+/.fabrika.jsonc @tutkuofnight

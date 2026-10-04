@@ -1,0 +1,55 @@
+{
+  // Manti UI's fabrika configuration. `fabrika status settings` lists every key with its resolved
+  // value; a key left out here falls to the shipped default.
+
+  // Manti runs no standing lanes: every issue homes on a milestone pinned in ROADMAP.md.
+  "boardVocabulary": {
+    "standingLanes": []
+  },
+
+  // The commands that compile and lint the code. `fabrika build check --surface code` and
+  // `lane integrate` run each one. Typecheck resolves workspace packages from source through
+  // tsconfig paths, so no package build is needed first.
+  "codeValidators": [
+    { "command": ["pnpm", "lint"] },
+    { "command": ["pnpm", "typecheck"] },
+    { "command": ["pnpm", "check:exports"] },
+    { "command": ["pnpm", "test"] }
+  ],
+
+  // Reconciles a merged tree with its lockfile before the validators run; fails closed.
+  "dependencyReconciler": {
+    "command": ["pnpm", "install", "--frozen-lockfile"]
+  },
+
+  // The rendered surfaces. Storybook is the component gallery and serves workspace packages from
+  // source, so a change under react or styles raises the `ui` class. The docs site imports the
+  // built packages, so its command builds them first. Mounts must be unique, so each row names its
+  // own mount and serves from `basePath` "/".
+  "uiSurfaces": [
+    {
+      "name": "storybook-react",
+      "prefix": "packages/react/src/",
+      "mount": "/storybook/react",
+      "basePath": "/",
+      "command": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 pnpm exec storybook dev -p {{port}} --ci --no-open 1>&2",
+      "readyPath": "/"
+    },
+    {
+      "name": "storybook-styles",
+      "prefix": "packages/styles/src/",
+      "mount": "/storybook/styles",
+      "basePath": "/",
+      "command": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 pnpm exec storybook dev -p {{port}} --ci --no-open 1>&2",
+      "readyPath": "/"
+    },
+    {
+      "name": "docs",
+      "prefix": "packages/docs/src/",
+      "mount": "/docs",
+      "basePath": "/",
+      "command": "pnpm build:packages 1>&2 && pnpm exec vite packages/docs --port {{port}} --strictPort 1>&2",
+      "readyPath": "/"
+    }
+  ]
+}

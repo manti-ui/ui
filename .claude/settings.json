@@ -1,0 +1,14 @@
+{
+  "extraKnownMarketplaces": {
+    "kampus": {
+      "source": {
+        "source": "github",
+        "repo": "kamp-us/phoenix"
+      },
+      "autoUpdate": true
+    }
+  },
+  "enabledPlugins": {
+    "fabrika@kampus": true
+  }
+}
