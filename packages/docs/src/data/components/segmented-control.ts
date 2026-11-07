@@ -51,6 +51,12 @@ export const meta: ComponentMeta = {
       type: 'boolean',
       description: 'Disable the entire control.',
     },
+    {
+      name: 'rootProps',
+      type: 'HTMLAttributes<HTMLDivElement>',
+      description:
+        'ARIA, data, style, class, and native props for the group root.',
+    },
   ],
   anatomy: [
     { part: 'root', description: 'The segmented container.' },
