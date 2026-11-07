@@ -426,6 +426,7 @@ export const space = {
   6: '1.5rem',
   8: '2rem',
   10: '2.5rem',
+  11: '2.75rem',
   12: '3rem',
   16: '4rem',
 } as const;
@@ -634,8 +635,16 @@ export const componentTokens = {
     'cell-size',
     'nav-size',
   ],
-  dialog: ['max-width', 'radius', 'padding-x', 'padding-y', 'gap', 'z-index'],
-  drawer: ['size'],
+  dialog: [
+    'max-width',
+    'radius',
+    'padding-x',
+    'padding-y',
+    'gap',
+    'z-index',
+    'close-size',
+  ],
+  drawer: ['size', 'close-size'],
   editable: ['height'],
   field: ['height', 'padding-x', 'padding-y', 'font-size', 'addon-padding-x'],
   'file-upload': [

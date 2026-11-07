@@ -47,6 +47,17 @@ export const meta: ComponentMeta = {
       description: 'Show the corner close button.',
     },
     {
+      name: 'closeLabel',
+      type: 'string',
+      default: `'Close'`,
+      description: 'Accessible name of the corner close button.',
+    },
+    {
+      name: 'initialFocusEl / finalFocusEl',
+      type: '() => HTMLElement | null',
+      description: 'Element focused when the drawer opens / closes.',
+    },
+    {
       name: 'open / defaultOpen',
       type: 'boolean',
       description: 'Controlled / uncontrolled open state.',
