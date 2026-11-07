@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { TreeView } from './TreeView';
+import { TreeView } from './TreeView.js';
 
 const tree = [
   {

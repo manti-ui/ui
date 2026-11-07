@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 import type { ElementType, HTMLAttributes, ReactElement } from 'react';
 
-import { cx, dataBool } from '../../internal/props';
+import { cx, dataBool } from '../../internal/props.js';
 import type {
   PolymorphicProps,
   PolymorphicRef,
-} from '../../internal/polymorphic';
+} from '../../internal/polymorphic.js';
 
 interface CardOwnProps {
   /** Strengthen the card's surface tint. */

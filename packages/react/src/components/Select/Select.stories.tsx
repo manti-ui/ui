@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Select } from './Select';
+import { Select } from './Select.js';
 
 const regions = [
   { value: 'kayseri', label: 'Kayseri' },

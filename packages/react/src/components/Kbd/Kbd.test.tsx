@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { Kbd } from './Kbd';
+import { Kbd } from './Kbd.js';
 
 afterEach(() => {
   vi.unstubAllGlobals();

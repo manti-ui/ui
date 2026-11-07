@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { FloatingPanel } from './FloatingPanel';
-import { Button } from '../Button/Button';
-import { Text } from '../Text/Text';
+import { FloatingPanel } from './FloatingPanel.js';
+import { Button } from '../Button/Button.js';
+import { Text } from '../Text/Text.js';
 
 const meta = {
   title: 'Components/FloatingPanel',

@@ -35,8 +35,8 @@ export * as steps from '@zag-js/steps';
 export * as tour from '@zag-js/tour';
 export * as splitter from '@zag-js/splitter';
 export * as colorPicker from '@zag-js/color-picker';
-export * as nativeColorPicker from './color-picker';
-export * from './color-picker';
+export * as nativeColorPicker from './color-picker/index.js';
+export * from './color-picker/index.js';
 export * as navigationMenu from '@zag-js/navigation-menu';
 export * as floatingPanel from '@zag-js/floating-panel';
 
@@ -44,14 +44,14 @@ export * as floatingPanel from '@zag-js/floating-panel';
  * Manti-original behaviors. Not from Zag.js — these are framework-agnostic
  * primitives Manti UI authors directly to fill gaps in the Zag catalog.
  */
-export * as swipe from './swipe';
+export * as swipe from './swipe/index.js';
 
 /**
  * Keyboard-shortcut engine. Also a Manti-original (Zag has no shortcut machine):
  * a pure-DOM controller that binds key combos/sequences to handlers, reusable by
  * any renderer or plain JS consumer. The React layer wraps it in `useShortcut`.
  */
-export * as shortcut from './shortcut';
+export * as shortcut from './shortcut/index.js';
 
 /**
  * Headless data behaviors. Not from Zag.js — Zag has no table machine, so the
@@ -59,7 +59,7 @@ export * as shortcut from './shortcut';
  * (logic-only brain + per-framework adapter). The shared column/types contract
  * lives here; renderers add their framework adapter (`@tanstack/react-table`, …).
  */
-export * as table from './table';
+export * as table from './table/index.js';
 
 export const mantiBehaviorContract = {
   packageName: '@manti-ui/folds',

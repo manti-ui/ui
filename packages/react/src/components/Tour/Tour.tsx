@@ -3,9 +3,9 @@ import type { ReactElement } from 'react';
 import { tour } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { cx } from '../../internal/props';
-import { renderTrigger } from '../../internal/floating';
+import { Portal } from '../../internal/Portal.js';
+import { cx } from '../../internal/props.js';
+import { renderTrigger } from '../../internal/floating.js';
 
 /** Built-in navigation action a step button performs. */
 export type TourStepActionType = 'next' | 'prev' | 'dismiss' | 'skip';

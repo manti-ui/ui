@@ -3,7 +3,7 @@ import { normalizeProps, useMachine } from '@zag-js/react';
 import type { ReactNode } from 'react';
 import type { MantiVariant } from '@manti-ui/tokens';
 
-import { cx, dataBool } from '../../internal/props';
+import { cx, dataBool } from '../../internal/props.js';
 
 export interface ToggleProps {
   /** Active variant when pressed. */

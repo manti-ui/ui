@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Editable } from './Editable';
+import { Editable } from './Editable.js';
 
 describe('Editable', () => {
   it('enters edit mode and commits the edited value', async () => {

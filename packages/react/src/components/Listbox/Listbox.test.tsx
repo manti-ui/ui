@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Listbox } from './Listbox';
+import { Listbox } from './Listbox.js';
 
 describe('Listbox', () => {
   it('selects an option and forwards the selected values', async () => {

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { createToaster } from './Toast';
-import type { ToastPlacement } from './Toast';
-import { Button } from '../Button/Button';
+import { createToaster } from './Toast.js';
+import type { ToastPlacement } from './Toast.js';
+import { Button } from '../Button/Button.js';
 
 interface ToastDemoProps {
   /** Allow swiping a toast toward its anchored edge to dismiss it. */

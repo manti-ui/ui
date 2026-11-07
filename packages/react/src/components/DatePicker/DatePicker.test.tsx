@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { DatePicker } from './DatePicker';
+import { DatePicker } from './DatePicker.js';
 
 describe('DatePicker', () => {
   it('connects its labelled input to a portalled calendar', async () => {

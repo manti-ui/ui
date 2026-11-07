@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Badge } from '../Badge/Badge';
-import { Button } from '../Button/Button';
-import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
-import { Calendar } from './Calendar';
+import { Badge } from '../Badge/Badge.js';
+import { Button } from '../Button/Button.js';
+import { SegmentedControl } from '../SegmentedControl/SegmentedControl.js';
+import { Calendar } from './Calendar.js';
 
 const meta = {
   title: 'Components/Calendar',

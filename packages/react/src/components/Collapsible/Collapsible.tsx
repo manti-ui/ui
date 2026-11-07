@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { collapsible } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
+import { cx } from '../../internal/props.js';
 
 const CollapseChevron = (
   <svg viewBox="0 0 24 24" aria-hidden>

@@ -1,10 +1,10 @@
 import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Badge } from '../components/Badge/Badge';
-import { Button } from '../components/Button/Button';
-import { Switch } from '../components/Switch/Switch';
-import { Input } from '../components/Input/Input';
+import { Badge } from '../components/Badge/Badge.js';
+import { Button } from '../components/Button/Button.js';
+import { Switch } from '../components/Switch/Switch.js';
+import { Input } from '../components/Input/Input.js';
 
 /**
  * Token override demo. Manti tokens form three tiers, each defaulting into the

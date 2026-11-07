@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Marquee } from './Marquee';
-import { Badge } from '../Badge/Badge';
+import { Marquee } from './Marquee.js';
+import { Badge } from '../Badge/Badge.js';
 
 const tags = [
   'Framework-agnostic',

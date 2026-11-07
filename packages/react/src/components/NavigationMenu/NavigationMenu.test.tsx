@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { NavigationMenu } from './NavigationMenu';
+import { NavigationMenu } from './NavigationMenu.js';
 
 describe('NavigationMenu', () => {
   it('opens a menu and exposes its links', async () => {

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Drawer } from './Drawer';
+import { Drawer } from './Drawer.js';
 
 describe('Drawer', () => {
   it('renders the selected placement and closes through its slot action', async () => {

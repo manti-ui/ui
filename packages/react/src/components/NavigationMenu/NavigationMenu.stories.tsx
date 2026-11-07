@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { NavigationMenu } from './NavigationMenu';
+import { NavigationMenu } from './NavigationMenu.js';
 
 const items = [
   {

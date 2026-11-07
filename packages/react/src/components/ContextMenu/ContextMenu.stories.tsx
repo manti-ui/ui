@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { ContextMenu } from './ContextMenu';
-import type { MenuItem } from '../Menu/Menu';
+import { ContextMenu } from './ContextMenu.js';
+import type { MenuItem } from '../Menu/Menu.js';
 
 const items: MenuItem[] = [
   { value: 'back', label: 'Back', shortcut: '⌘[' },

@@ -1,2 +1,2 @@
-export * from './shortcut.types';
-export * from './shortcut.core';
+export * from './shortcut.types.js';
+export * from './shortcut.core.js';

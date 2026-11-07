@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { ColorPicker } from './ColorPicker';
+import { ColorPicker } from './ColorPicker.js';
 
 describe('ColorPicker formats', () => {
   it('keeps the existing rgba output as the default format', () => {

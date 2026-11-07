@@ -3,15 +3,15 @@ import type { HTMLAttributes, ReactElement } from 'react';
 import { menu } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
-import { renderTrigger } from '../../internal/floating';
-import type { Placement } from '../../internal/floating';
-import { MenuProvider, menuParts, useMenuSelection } from './MenuParts';
-import type { MenuSize } from './MenuParts';
-import { MenuItems } from './MenuItems';
-import type { MenuGetItemProps, MenuItem } from './MenuItems';
+import { cx } from '../../internal/props.js';
+import { renderTrigger } from '../../internal/floating.js';
+import type { Placement } from '../../internal/floating.js';
+import { MenuProvider, menuParts, useMenuSelection } from './MenuParts.js';
+import type { MenuSize } from './MenuParts.js';
+import { MenuItems } from './MenuItems.js';
+import type { MenuGetItemProps, MenuItem } from './MenuItems.js';
 
-export type { MenuItemRootProps, MenuSize, MenuTone } from './MenuParts';
+export type { MenuItemRootProps, MenuSize, MenuTone } from './MenuParts.js';
 export type {
   MenuActionCommand,
   MenuCheckboxCommand,
@@ -21,7 +21,7 @@ export type {
   MenuRadioCommand,
   MenuSeparator,
   MenuSubmenu,
-} from './MenuItems';
+} from './MenuItems.js';
 
 export type MenuPlacement = Placement | 'bottom-center';
 

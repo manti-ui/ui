@@ -2,7 +2,7 @@ import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Switch } from './Switch';
+import { Switch } from './Switch.js';
 
 describe('Switch', () => {
   it('uses switch semantics and forwards input accessibility props', () => {

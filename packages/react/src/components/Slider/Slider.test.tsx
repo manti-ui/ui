@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Slider } from './Slider';
+import { Slider } from './Slider.js';
 
 describe('Slider', () => {
   it('renders marks and updates its value from the keyboard', async () => {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Tabs } from './Tabs';
+import { Tabs } from './Tabs.js';
 
 const items = [
   {

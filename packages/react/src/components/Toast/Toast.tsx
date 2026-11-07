@@ -8,10 +8,10 @@ import { swipe as swipeBehavior, toast } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { cx } from '../../internal/props';
-import { CloseIcon } from '../../internal/icons';
-import { Spinner } from '../Spinner/Spinner';
+import { Portal } from '../../internal/Portal.js';
+import { cx } from '../../internal/props.js';
+import { CloseIcon } from '../../internal/icons.js';
+import { Spinner } from '../Spinner/Spinner.js';
 
 /** Where the toast stack sits in the viewport. */
 export type ToastPlacement =

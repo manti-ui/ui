@@ -10,9 +10,9 @@ import {
   isBrowser,
   load,
   save,
-} from './apply';
-import { DEFAULT_THEME, type ThemeConfig, type VariantKey } from './config';
-import { buildThemeCss, isDefaultTheme } from './css';
+} from './apply.js';
+import { DEFAULT_THEME, type ThemeConfig, type VariantKey } from './config.js';
+import { buildThemeCss, isDefaultTheme } from './css.js';
 
 /**
  * The live theme.

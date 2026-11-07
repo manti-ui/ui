@@ -3,10 +3,10 @@ import type { ReactElement, ReactNode } from 'react';
 import { dialog } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { cx } from '../../internal/props';
-import { renderTrigger } from '../../internal/floating';
-import { CloseIcon } from '../../internal/icons';
+import { Portal } from '../../internal/Portal.js';
+import { cx } from '../../internal/props.js';
+import { renderTrigger } from '../../internal/floating.js';
+import { CloseIcon } from '../../internal/icons.js';
 
 export type DialogSize = 'sm' | 'md' | 'lg';
 

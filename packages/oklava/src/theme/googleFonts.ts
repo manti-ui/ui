@@ -19,7 +19,7 @@ export interface GoogleFont {
 let pending: Promise<GoogleFont[]> | null = null;
 
 export function loadGoogleFonts(): Promise<GoogleFont[]> {
-  pending ??= import('../data/google-fonts').then((module) =>
+  pending ??= import('../data/google-fonts.js').then((module) =>
     module.default.split('\n').map((row) => {
       const [name, generic] = row.split('|');
       return { name, generic };

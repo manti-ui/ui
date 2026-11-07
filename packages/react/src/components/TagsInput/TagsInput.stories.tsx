@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { TagsInput } from './TagsInput';
+import { TagsInput } from './TagsInput.js';
 
 const meta = {
   title: 'Components/TagsInput',

@@ -8,10 +8,10 @@ import {
   useClipboard,
 } from '@manti-ui/react';
 
-import { buildAgentPrompt } from './theme/agentPrompt';
-import { coerce } from './theme/apply';
-import { buildThemeStylesheet } from './theme/css';
-import { useOklavaTheme } from './theme/store';
+import { buildAgentPrompt } from './theme/agentPrompt.js';
+import { coerce } from './theme/apply.js';
+import { buildThemeStylesheet } from './theme/css.js';
+import { useOklavaTheme } from './theme/store.js';
 
 /**
  * The hand-off surface: the theme as CSS, as an agent brief, or as JSON.

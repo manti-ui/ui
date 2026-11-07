@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Carousel } from './Carousel';
-import { Text } from '../Text/Text';
+import { Carousel } from './Carousel.js';
+import { Text } from '../Text/Text.js';
 
 const palette = [
   'var(--manti-surface)',

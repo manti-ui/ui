@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Button } from './Button';
+import { Button } from './Button.js';
 
 const variants = [
   'primary',

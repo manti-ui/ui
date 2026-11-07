@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Splitter } from './Splitter';
+import { Splitter } from './Splitter.js';
 
 const pane = (label: string) => (
   <div

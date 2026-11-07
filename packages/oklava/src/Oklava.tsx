@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Button, FloatingPanel, ScrollArea } from '@manti-ui/react';
 
-import { ExportDialog } from './ExportDialog';
-import { ThemePanel, type ColorScheme } from './ThemePanel';
-import { DEFAULT_STORAGE_KEY, readHostFocusRingWidth } from './theme/apply';
-import { randomTheme } from './theme/config';
-import { initTheme, useOklavaTheme } from './theme/store';
-import { ensureStyles, setHostFocusRingWidth } from './styles';
+import { ExportDialog } from './ExportDialog.js';
+import { ThemePanel, type ColorScheme } from './ThemePanel.js';
+import { DEFAULT_STORAGE_KEY, readHostFocusRingWidth } from './theme/apply.js';
+import { randomTheme } from './theme/config.js';
+import { initTheme, useOklavaTheme } from './theme/store.js';
+import { ensureStyles, setHostFocusRingWidth } from './styles.js';
 
 /**
  * The Oklava devtools panel.

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Calendar } from './Calendar';
+import { Calendar } from './Calendar.js';
 
 describe('Calendar', () => {
   it('renders a labelled month grid with custom day content', () => {

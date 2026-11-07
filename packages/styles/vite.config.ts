@@ -65,7 +65,7 @@ export default defineConfig({
     cssMinify: 'lightningcss',
     lib: {
       cssFileName: 'index',
-      entry: 'src/index.ts',
+      entry: 'src/lib-entry.ts',
       fileName: 'index',
       formats: ['es'],
     },
