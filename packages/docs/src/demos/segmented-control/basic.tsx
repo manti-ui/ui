@@ -7,5 +7,11 @@ const items = [
 ];
 
 export default function SegmentedControlBasic() {
-  return <SegmentedControl items={items} defaultValue="grid" />;
+  return (
+    <SegmentedControl
+      items={items}
+      defaultValue="grid"
+      rootProps={{ 'aria-label': 'Layout' }}
+    />
+  );
 }

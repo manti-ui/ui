@@ -17,6 +17,7 @@ const meta = {
     size: 'md',
     variant: 'primary',
     orientation: 'horizontal',
+    rootProps: { 'aria-label': 'Cooking method' },
   },
   argTypes: {
     size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
@@ -44,6 +45,7 @@ export const Sizes: Story = {
           key={size}
           size={size}
           defaultValue="grid"
+          rootProps={{ 'aria-label': `Layout (${size})` }}
           items={[
             { value: 'list', label: 'List' },
             { value: 'grid', label: 'Grid' },

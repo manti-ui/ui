@@ -1,10 +1,11 @@
 import { useId } from 'react';
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { radioGroup } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
-import { normalizeProps, useMachine } from '@zag-js/react';
+import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props.js';
+import type { WithDataAttributes } from '../../internal/props.js';
 
 export interface SegmentedControlItem {
   value: string;
@@ -32,6 +33,13 @@ export interface SegmentedControlProps {
   disabled?: boolean;
   id?: string;
   className?: string;
+  /**
+   * ARIA, data, style, class, and native props for the group root. Name the
+   * group here with `aria-label` or `aria-labelledby`.
+   */
+  rootProps?: WithDataAttributes<
+    Omit<HTMLAttributes<HTMLDivElement>, 'children'>
+  >;
 }
 
 /**
@@ -52,6 +60,7 @@ export function SegmentedControl({
   disabled,
   id,
   className,
+  rootProps,
 }: SegmentedControlProps) {
   const autoId = useId();
   const service = useMachine(radioGroup.machine, {
@@ -66,14 +75,20 @@ export function SegmentedControl({
       : undefined,
   });
   const api = radioGroup.connect(service, normalizeProps);
+  // The machine always points `aria-labelledby` at a label part this control
+  // never renders. Drop that dangling reference so a consumer `aria-label` is
+  // not shadowed, and let a consumer `aria-labelledby` take its place.
+  const machineRootProps = { ...api.getRootProps() };
+  delete machineRootProps['aria-labelledby'];
+  const mergedRootProps = mergeProps(rootProps ?? {}, machineRootProps);
 
   return (
     <div
-      {...api.getRootProps()}
+      {...mergedRootProps}
       data-scope="segmented-control"
       data-size={size}
       data-variant={variant}
-      className={cx(className)}
+      className={cx(mergedRootProps.className, className)}
     >
       <span {...api.getIndicatorProps()} data-scope="segmented-control" />
       {items.map((item) => {
