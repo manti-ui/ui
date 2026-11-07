@@ -126,6 +126,7 @@
     --manti-space-6: calc(var(--manti-space-1) * 6);
     --manti-space-8: calc(var(--manti-space-1) * 8);
     --manti-space-10: calc(var(--manti-space-1) * 10);
+    --manti-space-11: calc(var(--manti-space-1) * 11);
     --manti-space-12: calc(var(--manti-space-1) * 12);
     --manti-space-16: calc(var(--manti-space-1) * 16);
 

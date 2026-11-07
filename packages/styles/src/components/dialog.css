@@ -38,6 +38,7 @@
     --manti-dialog-padding-x: var(--manti-space-6);
     --manti-dialog-padding-y: var(--manti-space-6);
     --manti-dialog-gap: var(--manti-space-3);
+    --manti-dialog-close-size: var(--manti-space-8);
 
     position: relative;
     display: flex;
@@ -98,14 +99,18 @@
   }
 
   [data-scope='dialog'][data-part='close-trigger'] {
+    /* The hit area never drops below the 44px touch target, even when the
+       visual size is smaller; a larger visual size simply covers it. */
+    --_hit-size: max(var(--manti-dialog-close-size), var(--manti-space-11));
+
     position: absolute;
     top: var(--manti-space-4);
     inset-inline-end: var(--manti-space-4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--manti-space-8);
-    height: var(--manti-space-8);
+    width: var(--manti-dialog-close-size);
+    height: var(--manti-dialog-close-size);
     padding: 0;
     color: var(--manti-text-muted);
     background: transparent;
@@ -126,6 +131,17 @@
     &:active {
       background: var(--manti-fill-strong);
       color: var(--manti-text);
+    }
+
+    /* Invisible touch target, centered on the visual button. */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--_hit-size);
+      height: var(--_hit-size);
+      translate: -50% -50%;
     }
 
     &:focus-visible {

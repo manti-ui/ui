@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Drawer } from './Drawer.js';
@@ -71,4 +72,61 @@ export const Placements: Story = {
       ))}
     </div>
   ),
+};
+
+/** `closeLabel` names the corner close button for screen readers. */
+export const CustomCloseLabel: Story = {
+  args: {
+    title: 'Pantry',
+    description: 'Flour, lamb, onions, yogurt and dried mint.',
+    closeLabel: 'Close pantry',
+    trigger: <Button variant="primary">Open pantry</Button>,
+  },
+};
+
+function FocusTargetsExample() {
+  const fillingRef = useRef<HTMLInputElement>(null);
+  const doneRef = useRef<HTMLButtonElement>(null);
+  return (
+    <div style={{ display: 'flex', gap: 'var(--manti-space-3)' }}>
+      <Drawer
+        trigger={<Button variant="primary">Edit filling</Button>}
+        title="Edit filling"
+        description="Focus starts in the filling field and moves to Done when the drawer closes."
+        initialFocusEl={() => fillingRef.current}
+        finalFocusEl={() => doneRef.current}
+        footer={({ close }) => (
+          <>
+            <Button variant="tertiary" onClick={close}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={close}>
+              Save
+            </Button>
+          </>
+        )}
+      >
+        <div style={{ display: 'grid', gap: 'var(--manti-space-4)' }}>
+          <Input label="Name" defaultValue="Kayseri mantı" fullWidth />
+          <Input
+            ref={fillingRef}
+            label="Filling"
+            defaultValue="Spiced lamb"
+            fullWidth
+          />
+        </div>
+      </Drawer>
+      <Button ref={doneRef} variant="tertiary">
+        Done
+      </Button>
+    </div>
+  );
+}
+
+/**
+ * `initialFocusEl` picks the element focused on open and `finalFocusEl` the
+ * one focused on close, instead of the first field and the trigger.
+ */
+export const FocusTargets: Story = {
+  render: () => <FocusTargetsExample />,
 };
