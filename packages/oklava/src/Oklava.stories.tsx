@@ -12,7 +12,7 @@ import {
   Text,
 } from '@manti-ui/react';
 
-import { Oklava } from './Oklava';
+import { Oklava } from './Oklava.js';
 
 /**
  * The devtools panel, over a page of ordinary Manti components.

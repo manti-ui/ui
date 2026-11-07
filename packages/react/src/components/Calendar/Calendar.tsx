@@ -4,7 +4,7 @@ import { datePicker } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
+import { cx } from '../../internal/props.js';
 
 /**
  * A single day-cell value from the underlying date-picker machine. Exposed so

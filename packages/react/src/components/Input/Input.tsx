@@ -5,9 +5,9 @@ import type {
   KeyboardEvent,
   ReactNode,
 } from 'react';
-import { useFocusVisible } from '../../internal/focusVisible';
-import { cx, dataBool } from '../../internal/props';
-import { CapsLockIcon, EyeIcon, EyeOffIcon } from '../../internal/icons';
+import { useFocusVisible } from '../../internal/focusVisible.js';
+import { cx, dataBool } from '../../internal/props.js';
+import { CapsLockIcon, EyeIcon, EyeOffIcon } from '../../internal/icons.js';
 
 export type InputVariant = 'default' | 'fill';
 

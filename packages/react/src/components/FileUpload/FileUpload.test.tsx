@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { FileUpload } from './FileUpload';
+import { FileUpload } from './FileUpload.js';
 
 describe('FileUpload', () => {
   it('accepts a selected file and renders it in the list', async () => {

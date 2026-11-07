@@ -2,12 +2,12 @@ import { forwardRef } from 'react';
 import type { ElementType, MouseEvent, ReactElement, ReactNode } from 'react';
 import type { MantiVariant } from '@manti-ui/tokens';
 
-import { cx, dataBool } from '../../internal/props';
+import { cx, dataBool } from '../../internal/props.js';
 import type {
   PolymorphicProps,
   PolymorphicRef,
-} from '../../internal/polymorphic';
-import { Spinner } from '../Spinner/Spinner';
+} from '../../internal/polymorphic.js';
+import { Spinner } from '../Spinner/Spinner.js';
 
 export type ButtonSize = 'sm' | 'md' | 'lg';
 

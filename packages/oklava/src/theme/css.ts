@@ -1,4 +1,4 @@
-import { readableOn, toHex } from './color';
+import { readableOn, toHex } from './color.js';
 import {
   BASE_CONTROL_HEIGHT_REM,
   BASE_SPACE_REM,
@@ -10,7 +10,7 @@ import {
   googleFontHref,
   type ThemeConfig,
   type VariantKey,
-} from './config';
+} from './config.js';
 
 /**
  * The CSS the panel writes, and the copyable stylesheet it hands back.

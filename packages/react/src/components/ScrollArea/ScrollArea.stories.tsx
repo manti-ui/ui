@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { ScrollArea } from './ScrollArea';
-import { Badge } from '../Badge/Badge';
-import { Card } from '../Card/Card';
-import { Heading } from '../Heading/Heading';
-import { Text } from '../Text/Text';
+import { ScrollArea } from './ScrollArea.js';
+import { Badge } from '../Badge/Badge.js';
+import { Card } from '../Card/Card.js';
+import { Heading } from '../Heading/Heading.js';
+import { Text } from '../Text/Text.js';
 
 const paragraphs = [
   'Mantı is a family of dumplings found from Central Asia to Anatolia. The Turkish kind is tiny — squares of thin dough pinched around a pinch of spiced lamb or beef, then boiled.',

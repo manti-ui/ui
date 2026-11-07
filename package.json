@@ -21,6 +21,7 @@
     "gen:variant-ink": "pnpm --filter @manti-ui/styles gen:variant-ink",
     "check:color-scale": "pnpm --filter @manti-ui/styles check:color-scale",
     "check:exports": "node scripts/check-react-exports.mjs",
+    "check:types": "node scripts/check-consumer-types.mjs",
     "report:variant-ink": "pnpm --filter @manti-ui/styles report:variant-ink",
     "changeset": "changeset",
     "version-packages": "changeset version",
@@ -31,7 +32,7 @@
     "test": "vitest run",
     "storybook": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p 6006",
     "typecheck": "pnpm -r --if-present typecheck && tsc -p tsconfig.storybook.json --noEmit",
-    "verify": "pnpm lint && pnpm typecheck && pnpm check:exports && pnpm test && pnpm build"
+    "verify": "pnpm lint && pnpm typecheck && pnpm check:exports && pnpm test && pnpm build && pnpm check:types"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",

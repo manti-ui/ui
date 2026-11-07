@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Badge } from '../Badge/Badge';
-import { Button } from '../Button/Button';
-import { Card } from './Card';
-import { Text } from '../Text/Text';
+import { Badge } from '../Badge/Badge.js';
+import { Button } from '../Button/Button.js';
+import { Card } from './Card.js';
+import { Text } from '../Text/Text.js';
 
 const meta = {
   title: 'Components/Card',

@@ -4,9 +4,9 @@ import { numberInput } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
-import { useFocusVisible } from '../../internal/focusVisible';
-import { cx } from '../../internal/props';
-import type { WithDataAttributes } from '../../internal/props';
+import { useFocusVisible } from '../../internal/focusVisible.js';
+import { cx } from '../../internal/props.js';
+import type { WithDataAttributes } from '../../internal/props.js';
 
 export interface NumberInputProps {
   /** Optional field label. */

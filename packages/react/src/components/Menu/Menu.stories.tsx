@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
-import { Menu } from './Menu';
-import { Button } from '../Button/Button';
+import { Menu } from './Menu.js';
+import { Button } from '../Button/Button.js';
 
 const meta = {
   title: 'Components/Menu',

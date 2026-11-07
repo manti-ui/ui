@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { TimePicker } from './TimePicker';
+import { TimePicker } from './TimePicker.js';
 
 describe('TimePicker', () => {
   it('opens a sized time panel from its labelled input', async () => {

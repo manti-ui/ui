@@ -5,7 +5,7 @@ import type {
   ReactNode,
 } from 'react';
 
-import { cx, dataBool } from '../../internal/props';
+import { cx, dataBool } from '../../internal/props.js';
 
 const MIN_THUMB = 24;
 /** How long the scrollbar lingers after the last activity, in `type="auto"`. */

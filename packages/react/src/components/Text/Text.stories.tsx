@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Card } from '../Card/Card';
-import { Text } from './Text';
+import { Card } from '../Card/Card.js';
+import { Text } from './Text.js';
 
 const SCALE = [
   'xs',

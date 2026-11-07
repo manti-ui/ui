@@ -2,10 +2,10 @@ import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Badge } from './Badge/Badge';
-import { Card } from './Card/Card';
-import { Heading } from './Heading/Heading';
-import { Text } from './Text/Text';
+import { Badge } from './Badge/Badge.js';
+import { Card } from './Card/Card.js';
+import { Heading } from './Heading/Heading.js';
+import { Text } from './Text/Text.js';
 
 describe('polymorphic primitives', () => {
   it('forwards Badge props and ref to the selected root', () => {

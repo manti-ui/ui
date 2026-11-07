@@ -1,6 +1,6 @@
-export { useShortcut, useShortcuts } from './useShortcut';
+export { useShortcut, useShortcuts } from './useShortcut.js';
 export type {
   ShortcutMap,
   ShortcutOptions,
   ShortcutScope,
-} from './useShortcut';
+} from './useShortcut.js';

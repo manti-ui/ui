@@ -2,12 +2,12 @@ import { forwardRef } from 'react';
 import type { CSSProperties, ElementType, ReactElement } from 'react';
 import type { MantiVariant } from '@manti-ui/tokens';
 
-import { cx, dataBool } from '../../internal/props';
-import { parseTypeSize } from '../../internal/typeSize';
+import { cx, dataBool } from '../../internal/props.js';
+import { parseTypeSize } from '../../internal/typeSize.js';
 import type {
   PolymorphicProps,
   PolymorphicRef,
-} from '../../internal/polymorphic';
+} from '../../internal/polymorphic.js';
 
 /** A stop on the shared type scale. */
 export type TextScale =

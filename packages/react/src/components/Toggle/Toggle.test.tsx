@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Toggle } from './Toggle';
+import { Toggle } from './Toggle.js';
 
 describe('Toggle', () => {
   it('toggles pressed state and supports a pressed render function', async () => {

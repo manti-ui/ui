@@ -3,11 +3,11 @@ import type { ReactElement, ReactNode } from 'react';
 import { popover } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { cx } from '../../internal/props';
-import { renderTrigger } from '../../internal/floating';
-import type { Placement } from '../../internal/floating';
-import { CloseIcon } from '../../internal/icons';
+import { Portal } from '../../internal/Portal.js';
+import { cx } from '../../internal/props.js';
+import { renderTrigger } from '../../internal/floating.js';
+import type { Placement } from '../../internal/floating.js';
+import { CloseIcon } from '../../internal/icons.js';
 
 export interface PopoverProps {
   /** Element that toggles the popover. Cloned with the machine's trigger props. */

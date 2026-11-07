@@ -4,13 +4,13 @@ import { colorPicker } from '@manti-ui/folds';
 import type { ColorSpaceId } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { useFocusVisible } from '../../internal/focusVisible';
-import { cx } from '../../internal/props';
-import type { Placement } from '../../internal/floating';
-import { Button } from '../Button/Button';
-import { Input } from '../Input/Input';
-import { Tabs } from '../Tabs/Tabs';
+import { Portal } from '../../internal/Portal.js';
+import { useFocusVisible } from '../../internal/focusVisible.js';
+import { cx } from '../../internal/props.js';
+import type { Placement } from '../../internal/floating.js';
+import { Button } from '../Button/Button.js';
+import { Input } from '../Input/Input.js';
+import { Tabs } from '../Tabs/Tabs.js';
 
 import {
   COLOR_PICKER_FORMATS,
@@ -19,10 +19,10 @@ import {
   parseOklchColor,
   type ColorPickerFormat,
   type RgbColor,
-} from './color-utils';
-import { NativeColorPicker } from './NativeColorPicker';
+} from './color-utils.js';
+import { NativeColorPicker } from './NativeColorPicker.js';
 
-export type { ColorPickerFormat } from './color-utils';
+export type { ColorPickerFormat } from './color-utils.js';
 export type { ColorSpaceId } from '@manti-ui/folds';
 
 export interface ColorPickerProps {

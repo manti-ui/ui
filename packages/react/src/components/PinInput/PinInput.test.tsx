@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import { PinInput } from './PinInput';
+import { PinInput } from './PinInput.js';
 
 describe('PinInput', () => {
   it('renders the requested cells and completes a numeric code', async () => {

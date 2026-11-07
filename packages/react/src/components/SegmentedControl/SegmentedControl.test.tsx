@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { SegmentedControl } from './SegmentedControl';
+import { SegmentedControl } from './SegmentedControl.js';
 
 const items = [
   { value: 'day', label: 'Day' },

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { HoverCard } from './HoverCard';
+import { HoverCard } from './HoverCard.js';
 
 describe('HoverCard', () => {
   it('renders controlled content and its optional arrow', () => {

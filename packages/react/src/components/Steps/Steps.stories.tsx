@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Steps } from './Steps';
+import { Steps } from './Steps.js';
 
 const items = [
   { title: 'Dough', description: 'Knead & rest', content: 'Make the dough.' },

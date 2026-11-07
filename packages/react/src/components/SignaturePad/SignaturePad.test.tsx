@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { SignaturePad } from './SignaturePad';
+import { SignaturePad } from './SignaturePad.js';
 
 describe('SignaturePad', () => {
   it('renders initial paths and clears them through its action', async () => {

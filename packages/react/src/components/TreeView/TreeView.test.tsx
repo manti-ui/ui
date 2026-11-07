@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { TreeView } from './TreeView';
+import { TreeView } from './TreeView.js';
 
 describe('TreeView', () => {
   it('expands branches, renders icon state, and reports selection', async () => {

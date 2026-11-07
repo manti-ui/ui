@@ -3,11 +3,11 @@ import type { ReactNode } from 'react';
 import { combobox } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { useFocusVisible } from '../../internal/focusVisible';
-import { cx } from '../../internal/props';
-import type { Placement } from '../../internal/floating';
-import { ScrollArea } from '../ScrollArea/ScrollArea';
+import { Portal } from '../../internal/Portal.js';
+import { useFocusVisible } from '../../internal/focusVisible.js';
+import { cx } from '../../internal/props.js';
+import type { Placement } from '../../internal/floating.js';
+import { ScrollArea } from '../ScrollArea/ScrollArea.js';
 
 export interface ComboboxItem {
   value: string;

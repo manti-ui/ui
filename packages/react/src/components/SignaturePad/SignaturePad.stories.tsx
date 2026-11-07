@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { SignaturePad } from './SignaturePad';
+import { SignaturePad } from './SignaturePad.js';
 
 const meta = {
   title: 'Components/SignaturePad',

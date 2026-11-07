@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Tooltip } from './Tooltip';
+import { Tooltip } from './Tooltip.js';
 
 describe('Tooltip', () => {
   it('supports controlled state and portal rendering', () => {

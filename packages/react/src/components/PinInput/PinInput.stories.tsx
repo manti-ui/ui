@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { PinInput } from './PinInput';
+import { PinInput } from './PinInput.js';
 
 const meta = {
   title: 'Components/PinInput',

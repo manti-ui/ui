@@ -2,7 +2,7 @@ import { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Button } from './Button';
+import { Button } from './Button.js';
 
 describe('Button', () => {
   it('forwards a button ref and exposes icon anatomy', () => {

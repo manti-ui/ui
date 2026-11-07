@@ -16,14 +16,14 @@ import {
 } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { useFocusVisible } from '../../internal/focusVisible';
-import { cx } from '../../internal/props';
-import { Button } from '../Button/Button';
-import { Input } from '../Input/Input';
-import { Tabs } from '../Tabs/Tabs';
+import { Portal } from '../../internal/Portal.js';
+import { useFocusVisible } from '../../internal/focusVisible.js';
+import { cx } from '../../internal/props.js';
+import { Button } from '../Button/Button.js';
+import { Input } from '../Input/Input.js';
+import { Tabs } from '../Tabs/Tabs.js';
 
-import type { ColorPickerProps } from './ColorPicker';
+import type { ColorPickerProps } from './ColorPicker.js';
 
 type DragTarget = 'area' | 'hue' | 'alpha';
 type SliderChannel = 'hue' | 'alpha';

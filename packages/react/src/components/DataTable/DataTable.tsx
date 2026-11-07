@@ -15,11 +15,11 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { cx, dataBool } from '../../internal/props';
-import type { WithDataAttributes } from '../../internal/props';
-import { Checkbox } from '../Checkbox/Checkbox';
-import { Pagination } from '../Pagination/Pagination';
-import { Input } from '../Input/Input';
+import { cx, dataBool } from '../../internal/props.js';
+import type { WithDataAttributes } from '../../internal/props.js';
+import { Checkbox } from '../Checkbox/Checkbox.js';
+import { Pagination } from '../Pagination/Pagination.js';
+import { Input } from '../Input/Input.js';
 
 /**
  * A column definition — TanStack's `ColumnDef`, re-exported so consumers type

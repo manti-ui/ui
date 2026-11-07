@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Dialog } from './Dialog';
+import { Dialog } from './Dialog.js';
 
 describe('Dialog', () => {
   it('renders render-prop slots and lets a footer action close it', async () => {

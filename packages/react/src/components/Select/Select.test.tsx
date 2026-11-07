@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Select } from './Select';
+import { Select } from './Select.js';
 
 describe('Select', () => {
   it('opens its portalled listbox and selects an item', async () => {

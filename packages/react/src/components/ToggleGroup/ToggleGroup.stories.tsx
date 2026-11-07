@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { ToggleGroup } from './ToggleGroup';
+import { ToggleGroup } from './ToggleGroup.js';
 
 const alignItems = [
   { value: 'left', label: 'Left' },

@@ -3,8 +3,8 @@ import type { HTMLAttributes, ReactNode, Ref, SVGAttributes } from 'react';
 import { progress } from '@manti-ui/folds';
 import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
-import type { WithDataAttributes } from '../../internal/props';
+import { cx } from '../../internal/props.js';
+import type { WithDataAttributes } from '../../internal/props.js';
 
 export interface ProgressProps {
   /** Linear bar or circular ring. */

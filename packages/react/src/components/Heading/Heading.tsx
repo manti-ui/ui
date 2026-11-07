@@ -2,18 +2,18 @@ import { forwardRef } from 'react';
 import type { ElementType, ReactElement } from 'react';
 import type { MantiVariant } from '@manti-ui/tokens';
 
-import { cx, dataBool } from '../../internal/props';
-import { parseTypeSize } from '../../internal/typeSize';
+import { cx, dataBool } from '../../internal/props.js';
+import { parseTypeSize } from '../../internal/typeSize.js';
 import type {
   PolymorphicProps,
   PolymorphicRef,
-} from '../../internal/polymorphic';
+} from '../../internal/polymorphic.js';
 import type {
   TextAlign,
   TextEmphasis,
   TextScale,
   TextSize,
-} from '../Text/Text';
+} from '../Text/Text.js';
 
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 

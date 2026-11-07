@@ -3,7 +3,7 @@ import type {
   SwipeDirection,
   SwipeOptions,
   SwipeVector,
-} from './swipe.types';
+} from './swipe.types.js';
 
 const DEFAULTS = {
   axis: 'both' as SwipeAxis,
