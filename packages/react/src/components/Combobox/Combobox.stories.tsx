@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Combobox } from './Combobox';
+import { Combobox } from './Combobox.js';
 
 const spices = [
   { value: 'sumac', label: 'Sumac' },

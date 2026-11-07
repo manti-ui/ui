@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { DataTable } from './DataTable';
-import type { DataTableColumn, DataTableRowComponentProps } from './DataTable';
+import { DataTable } from './DataTable.js';
+import type {
+  DataTableColumn,
+  DataTableRowComponentProps,
+} from './DataTable.js';
 
 interface RowValue {
   id: string;

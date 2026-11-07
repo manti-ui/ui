@@ -1,6 +1,6 @@
 import { presets as SHIPPED_PRESETS } from '@manti-ui/tokens';
 
-import { hslToHex } from './color';
+import { hslToHex } from './color.js';
 
 /**
  * The theme contract: everything Oklava can tune, plus the named stops the

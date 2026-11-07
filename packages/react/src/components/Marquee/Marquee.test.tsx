@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Marquee } from './Marquee';
+import { Marquee } from './Marquee.js';
 
 describe('Marquee', () => {
   it('duplicates its content and exposes motion configuration', () => {

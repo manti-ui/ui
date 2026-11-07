@@ -2,7 +2,7 @@ import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Blockquote } from './Blockquote';
+import { Blockquote } from './Blockquote.js';
 
 describe('Blockquote', () => {
   it('keeps native quotation semantics and forwards its ref', () => {

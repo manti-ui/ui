@@ -2,12 +2,12 @@ import { useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { useShortcut, useShortcuts } from './useShortcut';
-import { Badge } from '../components/Badge/Badge';
-import { Button } from '../components/Button/Button';
-import { Card } from '../components/Card/Card';
-import { Dialog } from '../components/Dialog/Dialog';
-import { Input } from '../components/Input/Input';
+import { useShortcut, useShortcuts } from './useShortcut.js';
+import { Badge } from '../components/Badge/Badge.js';
+import { Button } from '../components/Button/Button.js';
+import { Card } from '../components/Card/Card.js';
+import { Dialog } from '../components/Dialog/Dialog.js';
+import { Input } from '../components/Input/Input.js';
 
 const meta = {
   title: 'Primitives/useShortcut',

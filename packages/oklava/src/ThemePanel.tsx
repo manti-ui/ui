@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from '@manti-ui/react';
 
-import { toHex } from './theme/color';
+import { toHex } from './theme/color.js';
 import {
   ACCENT_COLORS,
   DENSITIES,
@@ -27,10 +27,10 @@ import {
   googleFontKey,
   type ThemeConfig,
   type VariantKey,
-} from './theme/config';
-import { buildThemeCss } from './theme/css';
-import { useGoogleFonts } from './theme/googleFonts';
-import { useOklavaTheme } from './theme/store';
+} from './theme/config.js';
+import { buildThemeCss } from './theme/css.js';
+import { useGoogleFonts } from './theme/googleFonts.js';
+import { useOklavaTheme } from './theme/store.js';
 
 /**
  * The control rail: every knob writes a token override through the

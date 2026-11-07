@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Alert } from './Alert';
-import { Button } from '../Button/Button';
-import { Text } from '../Text/Text';
+import { Alert } from './Alert.js';
+import { Button } from '../Button/Button.js';
+import { Text } from '../Text/Text.js';
 
 const variants = ['primary', 'secondary', 'success', 'info', 'danger'] as const;
 

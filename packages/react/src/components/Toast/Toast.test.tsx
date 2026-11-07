@@ -1,7 +1,7 @@
 import { act, render, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { createToaster } from './Toast';
+import { createToaster } from './Toast.js';
 
 describe('createToaster', () => {
   it('localizes the close button at factory level', async () => {

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { ScrollArea } from './ScrollArea';
+import { ScrollArea } from './ScrollArea.js';
 
 describe('ScrollArea', () => {
   it('renders a focusable viewport and wakes auto scrollbars on activity', () => {

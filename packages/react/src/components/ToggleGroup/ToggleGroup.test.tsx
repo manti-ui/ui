@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { ToggleGroup } from './ToggleGroup';
+import { ToggleGroup } from './ToggleGroup.js';
 
 describe('ToggleGroup', () => {
   it('supports scalar single selection and an accessible group name', async () => {

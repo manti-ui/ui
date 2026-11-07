@@ -4,11 +4,11 @@ import { timePicker } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { useFocusVisible } from '../../internal/focusVisible';
-import { cx } from '../../internal/props';
-import type { Placement } from '../../internal/floating';
-import { ScrollArea } from '../ScrollArea/ScrollArea';
+import { Portal } from '../../internal/Portal.js';
+import { useFocusVisible } from '../../internal/focusVisible.js';
+import { cx } from '../../internal/props.js';
+import type { Placement } from '../../internal/floating.js';
+import { ScrollArea } from '../ScrollArea/ScrollArea.js';
 
 type TimeUnit = 'hour' | 'minute' | 'period';
 

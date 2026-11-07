@@ -3,11 +3,15 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import { menu } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
-import { MenuProvider, menuParts, useMenuSelection } from '../Menu/MenuParts';
-import type { MenuSize } from '../Menu/MenuParts';
-import { MenuItems } from '../Menu/MenuItems';
-import type { MenuGetItemProps, MenuItem } from '../Menu/MenuItems';
+import { cx } from '../../internal/props.js';
+import {
+  MenuProvider,
+  menuParts,
+  useMenuSelection,
+} from '../Menu/MenuParts.js';
+import type { MenuSize } from '../Menu/MenuParts.js';
+import { MenuItems } from '../Menu/MenuItems.js';
+import type { MenuGetItemProps, MenuItem } from '../Menu/MenuItems.js';
 
 export interface ContextMenuProps {
   /** Region that opens the menu on right-click or long-press. */

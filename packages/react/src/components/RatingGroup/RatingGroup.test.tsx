@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { RatingGroup } from './RatingGroup';
+import { RatingGroup } from './RatingGroup.js';
 
 describe('RatingGroup', () => {
   it('renders the requested number of ratings and emits the selection', async () => {

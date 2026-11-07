@@ -7,8 +7,8 @@ import type {
 import { switchMachine } from '@manti-ui/folds';
 import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
-import type { WithDataAttributes } from '../../internal/props';
+import { cx } from '../../internal/props.js';
+import type { WithDataAttributes } from '../../internal/props.js';
 
 export type SwitchRootProps = WithDataAttributes<
   Omit<LabelHTMLAttributes<HTMLLabelElement>, 'children'>

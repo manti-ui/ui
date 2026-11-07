@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Tour } from './Tour';
-import { Button } from '../Button/Button';
+import { Tour } from './Tour.js';
+import { Button } from '../Button/Button.js';
 
 const steps = [
   {

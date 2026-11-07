@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Kbd } from './Kbd';
+import { Kbd } from './Kbd.js';
 
 const meta = {
   title: 'Typography/Kbd',

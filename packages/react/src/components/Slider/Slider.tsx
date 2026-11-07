@@ -4,7 +4,7 @@ import { slider } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
+import { cx } from '../../internal/props.js';
 
 const toArray = (value: number | number[] | undefined): number[] | undefined =>
   value == null ? undefined : Array.isArray(value) ? value : [value];

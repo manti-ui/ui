@@ -4,7 +4,7 @@ import type {
   ShortcutOptions,
   ShortcutStep,
   ShortcutTarget,
-} from './shortcut.types';
+} from './shortcut.types.js';
 
 const DEFAULT_SEQUENCE_TIMEOUT = 1000;
 

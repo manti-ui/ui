@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Clipboard } from './Clipboard';
+import { Clipboard } from './Clipboard.js';
 
 const meta = {
   title: 'Components/Clipboard',

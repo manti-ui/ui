@@ -70,7 +70,7 @@ const failures = [];
 
 for (const directory of readdirSync(componentsDir, { withFileTypes: true })) {
   if (!directory.isDirectory()) continue;
-  const moduleName = `./${directory.name}/${directory.name}`;
+  const moduleName = `./${directory.name}/${directory.name}.js`;
   const path = join(componentsDir, directory.name, `${directory.name}.tsx`);
   let expected;
   try {

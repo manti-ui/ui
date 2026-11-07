@@ -120,7 +120,8 @@ pnpm build            # Build the packages and Storybook (storybook-static/)
 pnpm build:storybook  # Generate storybook-static/
 pnpm lint             # Run ESLint
 pnpm typecheck        # Check packages and stories
-pnpm verify           # Run lint, typecheck, and all production builds
+pnpm check:types      # After a package build, type check a consumer under NodeNext and Bundler
+pnpm verify           # Run lint, typecheck, all production builds, and check:types
 pnpm gen:tokens       # Regenerate --manti-* CSS vars from the token contract
 pnpm gen:presets      # Regenerate the shipped theme presets in styles/src/themes
 ```
@@ -137,6 +138,10 @@ Use:
 - `camelCase` for functions and variables.
 - `*.stories.tsx` for Storybook stories.
 - semantic CSS names and tokens rather than raw product-specific colors.
+- full relative import paths ending in `.js` (`./meta.js`,
+  `./components/index.js`), never an extensionless path or a bare folder. The
+  emitted `.d.ts` files keep these paths, and a consumer on `NodeNext`
+  resolution cannot follow anything shorter.
 
 Keep Zag.js machines framework-agnostic and adapters thin. Public components
 require typed exports, keyboard support, visible focus states, and meaningful

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Menu } from './Menu';
+import { Menu } from './Menu.js';
 
 describe('Menu', () => {
   it('selects the clicked item without prior pointer events', () => {

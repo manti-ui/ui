@@ -4,9 +4,9 @@ import {
   configForPreset,
   fontLabel,
   type ThemeConfig,
-} from './config';
-import { toHex } from './color';
-import { buildThemeCss, num, stylesheetImports } from './css';
+} from './config.js';
+import { toHex } from './color.js';
+import { buildThemeCss, num, stylesheetImports } from './css.js';
 
 /** Where the agent prompt tells an agent to put the generated stylesheet. */
 export const DEFAULT_THEME_FILE = 'src/manti-theme.css';

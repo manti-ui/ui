@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Combobox } from './Combobox';
+import { Combobox } from './Combobox.js';
 
 describe('Combobox', () => {
   it('filters options and reports the selected value', async () => {

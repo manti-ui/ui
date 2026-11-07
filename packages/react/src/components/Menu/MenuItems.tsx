@@ -8,10 +8,10 @@ import type { ReactNode } from 'react';
 import { menu } from '@manti-ui/folds';
 import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
-import { SubmenuIcon } from '../../internal/icons';
-import { MenuProvider, menuParts, useMenuContext } from './MenuParts';
-import type { MenuItemRootProps, MenuTone } from './MenuParts';
+import { cx } from '../../internal/props.js';
+import { SubmenuIcon } from '../../internal/icons.js';
+import { MenuProvider, menuParts, useMenuContext } from './MenuParts.js';
+import type { MenuItemRootProps, MenuTone } from './MenuParts.js';
 
 interface MenuEntryBase {
   /** Unique value reported to `onSelect`. */

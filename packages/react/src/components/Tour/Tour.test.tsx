@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Tour } from './Tour';
+import { Tour } from './Tour.js';
 
 describe('Tour', () => {
   it('starts a targetless tour and advances to the next step', async () => {

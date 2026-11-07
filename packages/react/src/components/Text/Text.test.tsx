@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Text } from './Text';
+import { Text } from './Text.js';
 
 describe('Text', () => {
   it('maps compound type size and line clamp to data and custom properties', () => {

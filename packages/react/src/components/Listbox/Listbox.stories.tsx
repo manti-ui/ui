@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Listbox } from './Listbox';
+import { Listbox } from './Listbox.js';
 
 const fillings = [
   { value: 'lamb', label: 'Lamb & onion' },

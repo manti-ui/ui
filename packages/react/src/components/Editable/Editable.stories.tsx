@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Editable } from './Editable';
+import { Editable } from './Editable.js';
 
 const meta = {
   title: 'Components/Editable',

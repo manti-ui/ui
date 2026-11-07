@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { SegmentedControl } from './SegmentedControl';
+import { SegmentedControl } from './SegmentedControl.js';
 
 describe('SegmentedControl', () => {
   it('uses single-selection radio semantics for its segments', async () => {

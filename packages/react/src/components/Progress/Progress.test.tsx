@@ -2,7 +2,7 @@ import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Progress } from './Progress';
+import { Progress } from './Progress.js';
 
 describe('Progress', () => {
   it('forwards native and ARIA props to the progressbar root', () => {

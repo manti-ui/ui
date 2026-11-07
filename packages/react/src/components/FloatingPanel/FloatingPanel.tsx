@@ -3,9 +3,9 @@ import type { ReactElement, ReactNode } from 'react';
 import { floatingPanel } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { cx } from '../../internal/props';
-import { renderTrigger } from '../../internal/floating';
+import { Portal } from '../../internal/Portal.js';
+import { cx } from '../../internal/props.js';
+import { renderTrigger } from '../../internal/floating.js';
 
 export interface FloatingPanelProps {
   /** Element that opens the panel. Cloned with the machine's trigger props. */

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { RadioGroup } from './RadioGroup';
+import { RadioGroup } from './RadioGroup.js';
 
 describe('RadioGroup', () => {
   it('selects one option and reports its value', async () => {

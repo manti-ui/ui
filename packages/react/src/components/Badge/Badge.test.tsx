@@ -2,7 +2,7 @@ import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Badge } from './Badge';
+import { Badge } from './Badge.js';
 
 describe('Badge', () => {
   it('renders its variant, size, and optional status dot', () => {

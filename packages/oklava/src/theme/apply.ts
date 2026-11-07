@@ -8,7 +8,7 @@ import {
   type PresetId,
   type ThemeConfig,
   type VariantKey,
-} from './config';
+} from './config.js';
 
 /**
  * Everything that touches the document: the two singleton elements the theme

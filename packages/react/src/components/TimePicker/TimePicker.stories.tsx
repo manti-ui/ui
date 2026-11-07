@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { TimePicker } from './TimePicker';
+import { TimePicker } from './TimePicker.js';
 
 const meta = {
   title: 'Components/TimePicker',

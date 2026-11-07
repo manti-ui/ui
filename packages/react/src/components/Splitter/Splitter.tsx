@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { splitter } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
+import { cx } from '../../internal/props.js';
 
 export interface SplitterPanel {
   id: string;

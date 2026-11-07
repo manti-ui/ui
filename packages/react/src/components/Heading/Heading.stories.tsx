@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Text } from '../Text/Text';
-import { Heading } from './Heading';
+import { Text } from '../Text/Text.js';
+import { Heading } from './Heading.js';
 
 const SIZES = [
   'xs',

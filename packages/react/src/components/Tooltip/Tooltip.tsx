@@ -3,9 +3,9 @@ import type { ReactNode, RefObject } from 'react';
 import { tooltip } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { cx } from '../../internal/props';
-import type { Placement } from '../../internal/floating';
+import { Portal } from '../../internal/Portal.js';
+import { cx } from '../../internal/props.js';
+import type { Placement } from '../../internal/floating.js';
 
 export interface TooltipProps {
   /** The tooltip content. */

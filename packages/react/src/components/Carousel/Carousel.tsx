@@ -4,7 +4,7 @@ import { carousel } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
+import { cx } from '../../internal/props.js';
 
 export interface CarouselProps {
   /** Slides to render. */

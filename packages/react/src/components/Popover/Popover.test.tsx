@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Popover } from './Popover';
+import { Popover } from './Popover.js';
 
 describe('Popover', () => {
   it('renders a controlled panel and closes with its close trigger', async () => {

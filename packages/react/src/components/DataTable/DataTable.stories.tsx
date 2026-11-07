@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Badge } from '../Badge/Badge';
-import { DataTable } from './DataTable';
-import type { DataTableColumn } from './DataTable';
-import type { DataTableRowComponentProps } from './DataTable';
+import { Badge } from '../Badge/Badge.js';
+import { DataTable } from './DataTable.js';
+import type { DataTableColumn } from './DataTable.js';
+import type { DataTableRowComponentProps } from './DataTable.js';
 
 interface Invoice {
   id: string;

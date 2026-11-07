@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Clipboard } from '../components/Clipboard/Clipboard';
-import { ColorPicker } from '../components/ColorPicker/ColorPicker';
-import { Combobox } from '../components/Combobox/Combobox';
-import { DatePicker } from '../components/DatePicker/DatePicker';
-import { Editable } from '../components/Editable/Editable';
-import { Heading } from '../components/Heading/Heading';
-import { Input } from '../components/Input/Input';
-import { NumberInput } from '../components/NumberInput/NumberInput';
-import { PinInput } from '../components/PinInput/PinInput';
-import { Select } from '../components/Select/Select';
-import { TagsInput } from '../components/TagsInput/TagsInput';
-import { Text } from '../components/Text/Text';
-import { Textarea } from '../components/Textarea/Textarea';
-import { TimePicker } from '../components/TimePicker/TimePicker';
+import { Clipboard } from '../components/Clipboard/Clipboard.js';
+import { ColorPicker } from '../components/ColorPicker/ColorPicker.js';
+import { Combobox } from '../components/Combobox/Combobox.js';
+import { DatePicker } from '../components/DatePicker/DatePicker.js';
+import { Editable } from '../components/Editable/Editable.js';
+import { Heading } from '../components/Heading/Heading.js';
+import { Input } from '../components/Input/Input.js';
+import { NumberInput } from '../components/NumberInput/NumberInput.js';
+import { PinInput } from '../components/PinInput/PinInput.js';
+import { Select } from '../components/Select/Select.js';
+import { TagsInput } from '../components/TagsInput/TagsInput.js';
+import { Text } from '../components/Text/Text.js';
+import { Textarea } from '../components/Textarea/Textarea.js';
+import { TimePicker } from '../components/TimePicker/TimePicker.js';
 
 const regions = [
   { value: 'kayseri', label: 'Kayseri' },
