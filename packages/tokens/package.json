@@ -44,5 +44,8 @@
   "scripts": {
     "build": "vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@radix-ui/colors": "3.0.0"
   }
 }

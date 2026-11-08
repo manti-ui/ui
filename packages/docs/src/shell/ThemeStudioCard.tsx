@@ -1,28 +1,31 @@
+import { Text } from '@manti-ui/react';
+
 import { STUDIO_URL } from '../data/navigation';
 import { ExternalIcon } from './icons';
 
 /**
  * Right-rail doorway to the Theme Studio, sitting under the palette playground
- * that shares its "Make it yours" heading: the playground is the two-color
- * quick pass, the studio is the full instrument.
+ * that shares its "Make it yours" heading: the playground is the quick pass
+ * over a primary scale and a neutral gray, the studio is the full instrument.
  *
  * The studio itself is a separate app on its own subdomain (see
  * `manti-ui/studio`), so this is a plain outbound link: the docs carry no copy
- * of the theming machinery. The swatches are the shipped variants, not the
- * visitor's: a theme built over there does not follow them back here.
+ * of the theming machinery. The swatches are the shipped variants' solid fills,
+ * step 9 of each Radix scale, not the visitor's: a theme built over there does
+ * not follow them back here.
  */
 
 const SWATCHES = [
-  'var(--manti-orange-7)',
-  'var(--manti-gray-7)',
-  'var(--manti-green-7)',
-  'var(--manti-blue-7)',
+  'var(--manti-orange-9)',
+  'var(--manti-gray-9)',
+  'var(--manti-green-9)',
+  'var(--manti-blue-9)',
 ];
 
 export function ThemeStudioCard() {
   return (
     <section className="docs-theme-cta" aria-label="Theme studio">
-      <p className="docs-theme-group-label">Advanced</p>
+      <Text className="docs-theme-group-label">Advanced</Text>
       <a
         href={STUDIO_URL}
         target="_blank"

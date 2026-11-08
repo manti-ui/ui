@@ -355,7 +355,11 @@ importers:
         specifier: ^0.7.1
         version: 0.7.1
 
-  packages/tokens: {}
+  packages/tokens:
+    dependencies:
+      '@radix-ui/colors':
+        specifier: 3.0.0
+        version: 3.0.0
 
 packages:
 
@@ -1191,6 +1195,9 @@ packages:
     resolution: {integrity: sha512-iGURLGuKDLakSEl7Pgfv8h7f+XLT+V861Wfhz0zlEl5nyFuKUopdkFBPKqTllTUp06aOwPuH8iuUEb3yp3MpbQ==}
     engines: {node: '>=20'}
     hasBin: true
+
+  '@radix-ui/colors@3.0.0':
+    resolution: {integrity: sha512-FUOsGBkHrYJwCSEtWRCIfQbZG7q1e6DgxCIOe1SUQzDe/7rXXeA47s8yCn6fuTNQAj1Zq4oTFi9Yjp3wzElcxg==}
 
   '@redis/bloom@6.3.1':
     resolution: {integrity: sha512-dpF9j2yJDoPzSCaZn0MSB3xzmnXQVJeTSAWJcQVcgbmluwhpFeemmII0cF1t+WYfoVS+shEFq79+MmUItgzJLg==}
@@ -4713,6 +4720,8 @@ snapshots:
   '@playwright/test@1.65.0':
     dependencies:
       playwright: 1.65.0
+
+  '@radix-ui/colors@3.0.0': {}
 
   '@redis/bloom@6.3.1(@redis/client@6.3.1)':
     dependencies:

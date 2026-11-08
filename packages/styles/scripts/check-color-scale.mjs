@@ -6,7 +6,7 @@
  * contrast decisions stay centralized in tokens.css.
  *
  * The shipped presets are checked on the other half of the contract: their
- * ladders are generated from one base color, so what matters is that each rung
+ * ladders are generated from one Radix scale, so what matters is that each rung
  * still moves in the direction that gains contrast for its theme.
  */
 import { readdir, readFile } from 'node:fs/promises';
@@ -91,10 +91,10 @@ for (const match of tokens.matchAll(variantBlock)) {
 
 // ── preset interaction progression ───────────────────────────────────────────
 // Rest → hover → active must keep moving one way, and the way the shipped
-// variants move: a soft surface deepens into the page (darker on light, lighter
-// on dark), a solid fill lifts off it (lighter on light, darker on dark). A
-// preset that inverts a rung would read as a control lighting up on press in one
-// theme and dimming in the other.
+// variants move. On Radix steps both ladders gain contrast against the page:
+// soft 3 → 4 → 5 and solid 9 → 10 → a press toward the text color each get
+// darker on light and lighter on dark. A preset that inverts a rung would read
+// as a control lighting up on press in one theme and dimming in the other.
 const { presets } = await import(pathToFileURL(tokensTs).href);
 const ladders = [
   {
@@ -108,7 +108,7 @@ const ladders = [
   },
   {
     name: 'solid',
-    lightens: true,
+    lightens: false,
     rungs: [
       '--variant-solid',
       '--variant-solid-hover',

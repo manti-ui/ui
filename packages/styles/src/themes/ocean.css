@@ -4,86 +4,41 @@
 
 @layer manti.theme {
   :root {
-    --manti-cool-hue: 235;
-    --manti-accent-fill: light-dark(
-      color-mix(in oklab, #0ea5e9 88%, black),
-      #0ea5e9
-    );
-    --manti-selection-bg: #0ea5e9;
-    --manti-selection-text: var(--manti-gray-12);
+    --manti-accent-fill: light-dark(#7ce2fe, #7ce2fe);
+    --manti-selection-bg: light-dark(#bee7f5, #154467);
   }
   [data-variant='primary'] {
-    --variant-solid: #0ea5e9;
-    --variant-solid-hover: light-dark(
-      color-mix(in oklab, #0ea5e9 88%, white),
-      color-mix(in oklab, #0ea5e9 88%, black)
+    --variant-solid: light-dark(#7ce2fe, #7ce2fe);
+    --variant-solid-hover: light-dark(#74daf8, #a8eeff);
+    --variant-solid-active: color-mix(
+      in oklab,
+      light-dark(#74daf8, #a8eeff) 88%,
+      var(--manti-gray-12)
     );
-    --variant-solid-active: light-dark(
-      color-mix(in oklab, #0ea5e9 78%, white),
-      color-mix(in oklab, #0ea5e9 78%, black)
-    );
-    --variant-on-solid: var(--manti-gray-12);
-    --variant-soft-bg: light-dark(
-      color-mix(in oklab, #0ea5e9 14%, white),
-      color-mix(in oklab, #0ea5e9 22%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-hover: light-dark(
-      color-mix(in oklab, #0ea5e9 22%, white),
-      color-mix(in oklab, #0ea5e9 32%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-active: light-dark(
-      color-mix(in oklab, #0ea5e9 30%, white),
-      color-mix(in oklab, #0ea5e9 42%, var(--manti-gray-12))
-    );
-    --variant-soft-text: light-dark(
-      color-mix(in oklab, #0ea5e9 75%, black),
-      color-mix(in oklab, #0ea5e9 42%, white)
-    );
-    --variant-border: light-dark(
-      color-mix(in oklab, #0ea5e9 32%, white),
-      color-mix(in oklab, #0ea5e9 42%, var(--manti-gray-11))
-    );
-    --variant-text: light-dark(
-      color-mix(in oklab, #0ea5e9 78%, black),
-      color-mix(in oklab, #0ea5e9 45%, white)
-    );
-    --variant-ring: #0ea5e9;
+    --variant-on-solid: var(--manti-text-on-bright);
+    --variant-soft-bg: light-dark(#e1f6fd, #112840);
+    --variant-soft-bg-hover: light-dark(#d1f0fa, #113555);
+    --variant-soft-bg-active: light-dark(#bee7f5, #154467);
+    --variant-soft-text: light-dark(#1d3e56, #c2f3ff);
+    --variant-border: light-dark(#8dcae3, #1f6692);
+    --variant-text: light-dark(#00749e, #75c7f0);
+    --variant-ring: light-dark(#60b3d7, #197cae);
   }
   [data-variant='info'] {
-    --variant-solid: #0369a1;
-    --variant-solid-hover: light-dark(
-      color-mix(in oklab, #0369a1 88%, white),
-      color-mix(in oklab, #0369a1 88%, black)
+    --variant-solid: light-dark(#00a2c7, #00a2c7);
+    --variant-solid-hover: light-dark(#0797b9, #23afd0);
+    --variant-solid-active: color-mix(
+      in oklab,
+      light-dark(#0797b9, #23afd0) 88%,
+      var(--manti-gray-12)
     );
-    --variant-solid-active: light-dark(
-      color-mix(in oklab, #0369a1 78%, white),
-      color-mix(in oklab, #0369a1 78%, black)
-    );
-    --variant-on-solid: var(--manti-text-on-accent);
-    --variant-soft-bg: light-dark(
-      color-mix(in oklab, #0369a1 14%, white),
-      color-mix(in oklab, #0369a1 22%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-hover: light-dark(
-      color-mix(in oklab, #0369a1 22%, white),
-      color-mix(in oklab, #0369a1 32%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-active: light-dark(
-      color-mix(in oklab, #0369a1 30%, white),
-      color-mix(in oklab, #0369a1 42%, var(--manti-gray-12))
-    );
-    --variant-soft-text: light-dark(
-      color-mix(in oklab, #0369a1 75%, black),
-      color-mix(in oklab, #0369a1 42%, white)
-    );
-    --variant-border: light-dark(
-      color-mix(in oklab, #0369a1 32%, white),
-      color-mix(in oklab, #0369a1 42%, var(--manti-gray-11))
-    );
-    --variant-text: light-dark(
-      color-mix(in oklab, #0369a1 78%, black),
-      color-mix(in oklab, #0369a1 45%, white)
-    );
-    --variant-ring: #0369a1;
+    --variant-on-solid: var(--manti-text-on-bright);
+    --variant-soft-bg: light-dark(#def7f9, #082c36);
+    --variant-soft-bg-hover: light-dark(#caf1f6, #003848);
+    --variant-soft-bg-active: light-dark(#b5e9f0, #004558);
+    --variant-soft-text: light-dark(#0d3c48, #b6ecf7);
+    --variant-border: light-dark(#7dcedc, #12677e);
+    --variant-text: light-dark(#107d98, #4ccce6);
+    --variant-ring: light-dark(#3db9cf, #11809c);
   }
 }

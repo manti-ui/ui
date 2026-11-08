@@ -4,49 +4,48 @@
 
 @layer manti.theme {
   :root {
-    --manti-cool-hue: 300;
-    --manti-accent-fill: light-dark(
-      color-mix(in oklab, #7c3aed 88%, black),
-      #7c3aed
-    );
-    --manti-selection-bg: #7c3aed;
-    --manti-selection-text: var(--manti-text-on-accent);
+    --manti-gray-1: light-dark(#fdfcfd, #121113);
+    --manti-gray-2: light-dark(#faf9fb, #1a191b);
+    --manti-gray-3: light-dark(#f2eff3, #232225);
+    --manti-gray-4: light-dark(#eae7ec, #2b292d);
+    --manti-gray-5: light-dark(#e3dfe6, #323035);
+    --manti-gray-6: light-dark(#dbd8e0, #3c393f);
+    --manti-gray-7: light-dark(#d0cdd7, #49474e);
+    --manti-gray-8: light-dark(#bcbac7, #625f69);
+    --manti-gray-9: light-dark(#8e8c99, #6f6d78);
+    --manti-gray-10: light-dark(#84828e, #7c7a85);
+    --manti-gray-11: light-dark(#65636d, #b5b2bc);
+    --manti-gray-12: light-dark(#211f26, #eeeef0);
+    --manti-gray-a1: light-dark(#55005503, #00000000);
+    --manti-gray-a2: light-dark(#2b005506, #f5f4f609);
+    --manti-gray-a3: light-dark(#30004010, #ebeaf814);
+    --manti-gray-a4: light-dark(#20003618, #eee5f81d);
+    --manti-gray-a5: light-dark(#20003820, #efe6fe25);
+    --manti-gray-a6: light-dark(#14003527, #f1e6fd30);
+    --manti-gray-a7: light-dark(#10003332, #eee9ff40);
+    --manti-gray-a8: light-dark(#08003145, #eee7ff5d);
+    --manti-gray-a9: light-dark(#05001d73, #eae6fd6e);
+    --manti-gray-a10: light-dark(#0500197d, #ece9fd7c);
+    --manti-gray-a11: light-dark(#0400119c, #f5f1ffb7);
+    --manti-gray-a12: light-dark(#020008e0, #fdfdffef);
+    --manti-accent-fill: light-dark(#6e56cf, #6e56cf);
+    --manti-selection-bg: light-dark(#e1d9ff, #3c2e69);
   }
   [data-variant='primary'] {
-    --variant-solid: #7c3aed;
-    --variant-solid-hover: light-dark(
-      color-mix(in oklab, #7c3aed 88%, white),
-      color-mix(in oklab, #7c3aed 88%, black)
-    );
-    --variant-solid-active: light-dark(
-      color-mix(in oklab, #7c3aed 78%, white),
-      color-mix(in oklab, #7c3aed 78%, black)
+    --variant-solid: light-dark(#6e56cf, #6e56cf);
+    --variant-solid-hover: light-dark(#654dc4, #7d66d9);
+    --variant-solid-active: color-mix(
+      in oklab,
+      light-dark(#654dc4, #7d66d9) 88%,
+      var(--manti-gray-12)
     );
     --variant-on-solid: var(--manti-text-on-accent);
-    --variant-soft-bg: light-dark(
-      color-mix(in oklab, #7c3aed 14%, white),
-      color-mix(in oklab, #7c3aed 22%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-hover: light-dark(
-      color-mix(in oklab, #7c3aed 22%, white),
-      color-mix(in oklab, #7c3aed 32%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-active: light-dark(
-      color-mix(in oklab, #7c3aed 30%, white),
-      color-mix(in oklab, #7c3aed 42%, var(--manti-gray-12))
-    );
-    --variant-soft-text: light-dark(
-      color-mix(in oklab, #7c3aed 75%, black),
-      color-mix(in oklab, #7c3aed 42%, white)
-    );
-    --variant-border: light-dark(
-      color-mix(in oklab, #7c3aed 32%, white),
-      color-mix(in oklab, #7c3aed 42%, var(--manti-gray-11))
-    );
-    --variant-text: light-dark(
-      color-mix(in oklab, #7c3aed 78%, black),
-      color-mix(in oklab, #7c3aed 45%, white)
-    );
-    --variant-ring: #7c3aed;
+    --variant-soft-bg: light-dark(#f4f0fe, #291f43);
+    --variant-soft-bg-hover: light-dark(#ebe4ff, #33255b);
+    --variant-soft-bg-active: light-dark(#e1d9ff, #3c2e69);
+    --variant-soft-text: light-dark(#2f265f, #e2ddfe);
+    --variant-border: light-dark(#c2b5f5, #56468b);
+    --variant-text: light-dark(#6550b9, #baa7ff);
+    --variant-ring: light-dark(#aa99ec, #6958ad);
   }
 }

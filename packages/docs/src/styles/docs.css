@@ -440,37 +440,17 @@
     font-weight: var(--manti-weight-medium);
     color: var(--manti-text-muted);
   }
-  .docs-theme-swatches {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  /* The two scale pickers (primary, neutral), one Select per row. */
+  .docs-theme-scales {
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-2);
+    gap: var(--manti-space-3);
   }
-  .docs-theme-swatch [data-scope='color-picker'][data-part='root'] {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--manti-space-2);
-  }
-  .docs-theme-swatch [data-scope='color-picker'][data-part='label'],
   .docs-theme-radius-label {
     margin: 0;
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-medium);
     color: var(--manti-text);
-  }
-  /* Compact the swatch-only trigger for the narrow rail: hug the swatch instead
-     of the full control height. */
-  .docs-theme-swatch [data-scope='color-picker'][data-part='trigger'] {
-    min-height: 0;
-    padding: var(--manti-space-1);
-  }
-  .docs-theme-swatch [data-scope='color-picker'] [data-part='value-swatch'] {
-    width: var(--manti-space-5);
-    height: var(--manti-space-5);
   }
   /* ---- Radius picker (right rail) ---- */
   .docs-theme-radius {

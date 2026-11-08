@@ -14,14 +14,20 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    tokens (`@manti-ui/tokens` / token-backed `--manti-*` and `--variant-*` CSS
    variables). Never hard-code raw values (hex colors, px sizes, magic numbers);
    if a token is missing, add it to `@manti-ui/tokens` first, then consume it.
-   `@manti-ui/tokens` is the single source of truth: its primitive ramps and
-   scale values are **generated** into the `--manti-*` custom properties in
-   `packages/styles/src/tokens.css` (the `@tokens:generated` region) by
-   `pnpm gen:tokens`. Never hand-edit that region; after changing the contract,
-   regenerate it — the styles build fails if it is stale. The theme-aware roles
-   (`light-dark()` surfaces/text/elevation/panel) and the `--variant-*`
-   vocabulary below the region stay hand-authored. Tokens form three tiers:
-   primitive ramps → semantic roles/variants → **component tokens**
+   `@manti-ui/tokens` is the single source of truth. Its primitive ramps are
+   the 12-step scales of `@radix-ui/colors`, taken verbatim: the neutral `gray`
+   is Radix `slate`, and `orange`, `green`, `amber`, `red` and `blue` are the
+   Radix scales of the same name. `pnpm gen:tokens` emits each stop as one
+   `light-dark()` pair of Radix's light and dark step (`--manti-orange-9` holds
+   Radix `orange9` and `orangeDark9`), together with the scale values, into the
+   `--manti-*` custom properties in `packages/styles/src/tokens.css` (the
+   `@tokens:generated` region). Never hand-edit that region; after changing the
+   contract, regenerate it; the styles build fails if it is stale. A theme
+   names Radix scales from the `radixScales` catalog, never a free color, and
+   there is no generated ramp and no neutral hue knob. The semantic roles
+   (surfaces/text/panel) and the `--variant-*` vocabulary below the region stay
+   hand-authored. Tokens form three tiers: primitive ramps → semantic
+   roles/variants → **component tokens**
    (`--manti-{component}-{property}`, public and semver-stable, each defaulting
    to a semantic token). When a component needs an _independent_ structural value
    (radius, padding, sizing, gap, typography), expose it as a component token
@@ -29,15 +35,26 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    values as private `--_*`. Register every component token in the
    `componentTokens` map of `@manti-ui/tokens`.
 3. **Color-scale roles and interaction progression are mandatory.** Primitive
-   ramps are ordered `1`–`12`, but components must consume semantic roles or the
-   `--variant-*` vocabulary rather than picking primitive stops directly. Use
-   `1`–`2` for canvas/subtle surfaces; `3` for component rest, `4` for hover and
-   keyboard highlight, `5` for pressed/selected/checked; `6` for quiet chrome,
-   `7` for interactive borders and low-emphasis controls, `8` for focus rings
-   and strong interactive chrome; `9` for solid fills, `10` for solid hover;
-   `11` for supporting text and `12` for high-contrast text. Input-like controls
-   (including Input, Textarea, Select, Combobox, NumberInput, PinInput,
-   TagsInput, Editable, DatePicker, TimePicker, ColorPicker, and Clipboard) use
+   ramps are ordered `1`–`12` with Radix step semantics, and a step means the
+   same job in both schemes because each stop is a light/dark pair. Components
+   must consume semantic roles or the `--variant-*` vocabulary rather than
+   picking primitive stops directly. Use `1`–`2` for app and subtle backgrounds;
+   `3` for component rest, `4` for hover and keyboard highlight, `5` for
+   pressed/selected/checked; `6` for quiet chrome and separators, `7` for
+   interactive borders and low-emphasis controls, `8` for strong interactive
+   chrome and the variant focus ring (`--variant-ring`); `9` for solid fills,
+   `10` for solid hover; `11` for supporting text and `12` for high-contrast
+   text. Where a step misses the contrast gate, the role moves one step up
+   rather than the step being retuned: the neutral `--manti-focus-ring` sits on
+   `gray-9` (slate 8 misses 3:1 on the page in light), warning text and every
+   variant's `--variant-soft-text` take step `12` (step 11 misses AA on the soft
+   background), and `--manti-text-subtle` shares step `11` with
+   `--manti-text-muted` (step 10 misses AA). Labels on a solid fill use the
+   fixed inks (`--manti-ink-light` / `--manti-ink-dark`, consumed as
+   `--manti-text-on-accent` / `--manti-text-on-bright`), never a scale step.
+   Input-like controls (including Input, Textarea, Select, Combobox,
+   NumberInput, PinInput, TagsInput, Editable, DatePicker, TimePicker,
+   ColorPicker, and Clipboard) use
    `--manti-border` at rest, strengthen to the neutral
    `--manti-border-strong` on hover, and use `--variant-ring` while active,
    focused, or open. The primary color must begin at active/focus/open for this

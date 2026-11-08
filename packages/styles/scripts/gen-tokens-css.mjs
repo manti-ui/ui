@@ -4,7 +4,8 @@
  * `@manti-ui/tokens`.
  *
  * The token contract (`packages/tokens/src/index.ts`) is the single source of
- * truth for primitive ramps and plain scale values. This script mirrors those
+ * truth for the primitive color scales (Radix Colors, via `@radix-ui/colors`)
+ * and plain scale values. This script mirrors those
  * values into the CSS custom-property regions delimited by the
  * `@tokens:generated` and `@radius-modes:generated` markers, so they can never
  * drift by hand.
@@ -53,24 +54,31 @@ const ratio = (value, base) => {
 };
 
 /**
- * The neutral ramp is the panel-signature cool hue: its per-stop lightness and
- * chroma stay authored in the contract, but the hue is centralized on the
- * hand-authored `--manti-cool-hue` token so the whole neutral (ramp + chrome)
- * can be re-tinted from one place.
+ * A theme-aware step: Radix's light value and its dark value, so one custom
+ * property carries the same step meaning in both schemes. Every opaque step is
+ * a `light-dark()` pair, even where Radix gives both schemes one value (orange
+ * 9), so the shape never depends on the data. An alpha scale Radix ships once
+ * for both schemes (`blackA`) is emitted as its plain value.
  */
-const coolHued = (value) => {
-  const m = value.match(/^oklch\(([^)]+)\)$/);
-  if (!m) return value;
-  const [l, c] = m[1].trim().split(/\s+/);
-  return `oklch(${l} ${c} var(--manti-cool-hue))`;
-};
+const themed = (light, dark) => `light-dark(${light}, ${dark})`;
+const themedAlpha = (light, dark) =>
+  light === dark ? light : themed(light, dark);
 
 lines.push(
-  '    /* Primitive ramps — fixed OKLCH scales, identical in light and dark. */',
+  '    /* Primitive scales: Radix Colors, light and dark step N per stop. */',
 );
-for (const [ramp, stops] of Object.entries(t.colorPrimitives))
-  for (const [stop, value] of Object.entries(stops))
-    decl(`manti-${ramp}-${stop}`, ramp === 'gray' ? coolHued(value) : value);
+for (const [name, scale] of Object.entries(t.colorScales))
+  for (const [step, light] of Object.entries(scale.light))
+    decl(`manti-${name}-${step}`, themed(light, scale.dark[step]));
+
+head('Alpha scales: Radix Colors, light and dark step N per stop');
+for (const [name, scale] of Object.entries(t.alphaScales))
+  for (const [step, light] of Object.entries(scale.light))
+    decl(`manti-${name}-a${step}`, themedAlpha(light, scale.dark[step]));
+
+head('Inks: one Radix step each, fixed across schemes');
+for (const [name, value] of Object.entries(t.colorInks))
+  decl(`manti-ink-${name}`, value);
 
 head('Radius');
 /* Anchored on `--manti-radius-factor`: every step is a multiple of it, so the

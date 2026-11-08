@@ -11,8 +11,11 @@ import {
   Switch,
   Text,
 } from '@manti-ui/react';
+import violetPreset from '@manti-ui/styles/themes/violet.css?inline';
 
 import { Oklava } from './Oklava.js';
+import { DEFAULT_THEME } from './theme/config.js';
+import { setTheme } from './theme/store.js';
 
 /**
  * The devtools panel, over a page of ordinary Manti components.
@@ -121,4 +124,38 @@ export const Launcher: Story = {
 /** Without the Google Fonts catalogue: the five built-in stacks alone. */
 export const BuiltInFontsOnly: Story = {
   args: { googleFonts: false },
+};
+
+/**
+ * The panel with `violet` picked for the primary and `mauve` for the neutral,
+ * on top of the default Manti preset. The CSS it writes is the Violet preset's
+ * own declarations, so this page should read exactly like
+ * {@link ShippedVioletPreset}.
+ */
+export const VioletOnMauve: Story = {
+  beforeEach: () => {
+    setTheme({
+      ...DEFAULT_THEME,
+      colors: { primary: 'violet' },
+      neutral: 'mauve',
+    });
+    return () => setTheme(DEFAULT_THEME);
+  },
+};
+
+/**
+ * The same page under the shipped Violet preset stylesheet
+ * (`@manti-ui/styles/themes/violet.css`), with Oklava left untouched: the
+ * reference {@link VioletOnMauve} is compared against.
+ */
+export const ShippedVioletPreset: Story = {
+  args: { defaultOpen: false },
+  decorators: [
+    (Story) => (
+      <>
+        <style>{violetPreset}</style>
+        <Story />
+      </>
+    ),
+  ],
 };
