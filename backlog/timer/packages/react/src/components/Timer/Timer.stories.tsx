@@ -1,24 +1,23 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Timer } from './Timer';
+import type { TimerProps } from './Timer';
 
-const meta = {
+export default {
   title: 'Components/Timer',
-  component: Timer,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     parts: ['hours', 'minutes', 'seconds'],
     autoStart: true,
     controls: true,
   },
-} satisfies Meta<typeof Timer>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<TimerProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<TimerProps> = (args) => <Timer {...args} />;
 
-export const Playground: Story = {};
-
-export const Countdown: Story = {
-  args: { countdown: true, startMs: 90_000, parts: ['minutes', 'seconds'] },
+export const Countdown: Story<TimerProps> = (args) => <Timer {...args} />;
+Countdown.args = {
+  countdown: true,
+  startMs: 90_000,
+  parts: ['minutes', 'seconds'],
 };

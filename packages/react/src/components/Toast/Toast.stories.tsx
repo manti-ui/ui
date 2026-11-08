@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { createToaster } from './Toast.js';
 import type { ToastPlacement } from './Toast.js';
@@ -14,7 +14,7 @@ interface ToastDemoProps {
 
 /**
  * Story harness: rebuilds the toaster whenever the `swipe` / `placement`
- * controls change so both can be exercised from the Storybook Controls panel.
+ * controls change so both can be exercised from the controls panel.
  */
 function ToastDemo({ swipe, placement }: ToastDemoProps) {
   const { toaster, Toaster } = useMemo(
@@ -88,19 +88,16 @@ function ToastDemo({ swipe, placement }: ToastDemoProps) {
   );
 }
 
-const meta = {
+export default {
   title: 'Components/Toast',
-  component: ToastDemo,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     swipe: true,
     placement: 'bottom-end',
   },
   argTypes: {
-    swipe: { control: 'boolean' },
+    swipe: { control: { type: 'boolean' } },
     placement: {
-      control: 'select',
+      control: { type: 'select' },
       options: [
         'top-start',
         'top',
@@ -111,10 +108,10 @@ const meta = {
       ],
     },
   },
-} satisfies Meta<typeof ToastDemo>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<ToastDemoProps>;
 
 /** Toggle `swipe` and change `placement` from the Controls panel to test. */
-export const Playground: Story = {};
+export const Playground: Story<ToastDemoProps> = (args) => (
+  <ToastDemo {...args} />
+);

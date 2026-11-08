@@ -1,23 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { QrCode } from './QrCode';
+import type { QrCodeProps } from './QrCode';
 
-const meta = {
+export default {
   title: 'Components/QrCode',
-  component: QrCode,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     value: 'https://manti.design',
     size: 160,
   },
-} satisfies Meta<typeof QrCode>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<QrCodeProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<QrCodeProps> = (args) => <QrCode {...args} />;
 
-export const Playground: Story = {};
-
-export const Large: Story = {
-  args: { size: 240, value: 'One dough, countless fillings.' },
-};
+export const Large: Story<QrCodeProps> = (args) => <QrCode {...args} />;
+Large.args = { size: 240, value: 'One dough, countless fillings.' };

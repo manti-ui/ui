@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Textarea } from './Textarea.js';
+import type { TextareaProps } from './Textarea.js';
 
-const meta = {
+export default {
   title: 'Components/Textarea',
-  component: Textarea,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     label: 'Notes',
     placeholder: 'Add preparation notes',
@@ -15,12 +13,15 @@ const meta = {
     rows: 4,
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['default', 'fill'],
     },
-    resize: { control: 'inline-radio', options: ['none', 'vertical'] },
+    resize: {
+      control: { type: 'inline-radio' },
+      options: ['none', 'vertical'],
+    },
   },
   decorators: [
     (Story) => (
@@ -29,61 +30,59 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Textarea>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<TextareaProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<TextareaProps> = (args) => (
+  <Textarea {...args} />
+);
 
-export const Playground: Story = {};
-
-export const Filled: Story = {
-  args: {
-    variant: 'fill',
-    label: undefined,
-    placeholder: 'Message',
-    resize: 'none',
-  },
+export const Filled: Story<TextareaProps> = (args) => <Textarea {...args} />;
+Filled.args = {
+  variant: 'fill',
+  label: undefined,
+  placeholder: 'Message',
+  resize: 'none',
 };
 
-export const WithDescription: Story = {
-  args: {
-    description: 'Shown below the field while there is no error.',
-  },
+export const WithDescription: Story<TextareaProps> = (args) => (
+  <Textarea {...args} />
+);
+WithDescription.args = {
+  description: 'Shown below the field while there is no error.',
 };
 
-export const Invalid: Story = {
-  args: {
-    defaultValue: 'Too short',
-    error: 'Please add at least three sentences.',
-  },
+export const Invalid: Story<TextareaProps> = (args) => <Textarea {...args} />;
+Invalid.args = {
+  defaultValue: 'Too short',
+  error: 'Please add at least three sentences.',
 };
 
-export const AutoResize: Story = {
-  args: {
-    autoResize: true,
-    maxHeight: 'calc(var(--manti-space-16) * 2)',
-    defaultValue:
-      'This textarea grows with content until it reaches its maximum height.',
-  },
+export const AutoResize: Story<TextareaProps> = (args) => (
+  <Textarea {...args} />
+);
+AutoResize.args = {
+  autoResize: true,
+  maxHeight: 'calc(var(--manti-space-16) * 2)',
+  defaultValue:
+    'This textarea grows with content until it reaches its maximum height.',
 };
 
-export const ResizeNone: Story = {
-  args: {
-    resize: 'none',
-    defaultValue: 'Manual resizing is disabled for this field.',
-  },
+export const ResizeNone: Story<TextareaProps> = (args) => (
+  <Textarea {...args} />
+);
+ResizeNone.args = {
+  resize: 'none',
+  defaultValue: 'Manual resizing is disabled for this field.',
 };
 
-export const Sizes: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: 'var(--manti-space-4)' }}>
-      <Textarea {...args} size="sm" label="Small" />
-      <Textarea {...args} size="md" label="Medium" />
-      <Textarea {...args} size="lg" label="Large" />
-    </div>
-  ),
-};
+export const Sizes: Story<TextareaProps> = (args) => (
+  <div style={{ display: 'grid', gap: 'var(--manti-space-4)' }}>
+    <Textarea {...args} size="sm" label="Small" />
+    <Textarea {...args} size="md" label="Medium" />
+    <Textarea {...args} size="lg" label="Large" />
+  </div>
+);
 
-export const Disabled: Story = {
-  args: { defaultValue: 'Locked notes', disabled: true },
-};
+export const Disabled: Story<TextareaProps> = (args) => <Textarea {...args} />;
+Disabled.args = { defaultValue: 'Locked notes', disabled: true };

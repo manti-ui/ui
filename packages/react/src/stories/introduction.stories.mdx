@@ -1,0 +1,63 @@
+import { Meta } from '@ladle/react';
+import { Button } from '../components/Button/Button.tsx';
+import { Heading } from '../components/Heading/Heading.tsx';
+import { Text } from '../components/Text/Text.tsx';
+import mantiAnimated from '../../../../public/manti-animated.svg';
+
+<Meta title="Getting Started/Introduction" />
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '2rem',
+  }}
+>
+  <img
+    src={mantiAnimated}
+    alt="Manti mascot"
+    width={132}
+    height={132}
+    style={{ display: 'block' }}
+  />
+</div>
+
+<div
+  style={{
+    display: 'grid',
+    gap: 'var(--manti-space-4)',
+    maxWidth: 'calc(var(--manti-space-16) * 12)',
+    margin: '0 auto',
+  }}
+>
+
+<Heading level={1}>Manti UI</Heading>
+
+{/* prettier-ignore */}
+<Text>Manti UI is a React component library built on framework-agnostic tokens, CSS, and behavior.</Text>
+
+<Heading level={2}>Start</Heading>
+
+```tsx
+import '@manti-ui/styles/index.css';
+import { Button } from '@manti-ui/react';
+
+export function Example() {
+  return <Button variant="primary">Save</Button>;
+}
+```
+
+{/* prettier-ignore */}
+<Text>Use the toolbar to switch themes. Component stories cover variants, states, sizes, and interactions.</Text>
+
+<Heading level={2}>Packages</Heading>
+
+- `@manti-ui/tokens` — typed token contract
+- `@manti-ui/styles` — shared CSS
+- `@manti-ui/folds` — Zag.js and Manti-authored behavior
+- `@manti-ui/react` — React renderers and hooks
+
+{/* prettier-ignore */}
+<Text>The full guides and component API reference live at <Button as="a" variant="link" href="https://manti.design">manti.design</Button>.</Text>
+
+</div>

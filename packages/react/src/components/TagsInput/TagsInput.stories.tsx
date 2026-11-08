@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { TagsInput } from './TagsInput.js';
+import type { TagsInputProps } from './TagsInput.js';
 
-const meta = {
+export default {
   title: 'Components/TagsInput',
-  component: TagsInput,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     label: 'Fillings',
     variant: 'primary',
@@ -16,27 +14,30 @@ const meta = {
   },
   argTypes: {
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof TagsInput>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<TagsInputProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<TagsInputProps> = (args) => (
+  <TagsInput {...args} />
+);
 
-export const Playground: Story = {};
+export const States: Story<TagsInputProps> = (args) => (
+  <div style={{ display: 'grid', gap: '1rem', maxWidth: 420 }}>
+    <TagsInput {...args} label="Default" />
+    <TagsInput {...args} label="Invalid" invalid />
+    <TagsInput {...args} label="Disabled" disabled />
+  </div>
+);
 
-export const States: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '1rem', maxWidth: 420 }}>
-      <TagsInput {...args} label="Default" />
-      <TagsInput {...args} label="Invalid" invalid />
-      <TagsInput {...args} label="Disabled" disabled />
-    </div>
-  ),
-};
-
-export const MaxThree: Story = {
-  args: { label: 'Up to 3 tags', max: 3, defaultValue: ['lamb', 'onion'] },
+export const MaxThree: Story<TagsInputProps> = (args) => (
+  <TagsInput {...args} />
+);
+MaxThree.args = {
+  label: 'Up to 3 tags',
+  max: 3,
+  defaultValue: ['lamb', 'onion'],
 };

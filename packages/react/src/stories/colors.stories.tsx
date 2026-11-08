@@ -8,7 +8,7 @@ import {
   variants,
   type MantiRadixScale,
 } from '@manti-ui/tokens';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Heading } from '../components/Heading/Heading.js';
 import { Text } from '../components/Text/Text.js';
@@ -17,16 +17,12 @@ import { Text } from '../components/Text/Text.js';
  * The color foundations: the six ramps Manti ships, the Radix scale catalog a
  * theme picks from, and the semantic variants every component reads. Every
  * chip is a `light-dark()` pair of Radix steps, so the page follows the
- * Storybook theme toggle.
+ * gallery's theme toggle.
  */
-const meta = {
+export default {
   title: 'Foundations/Colors',
-  parameters: { layout: 'fullscreen' },
-  tags: ['autodocs'],
-} satisfies Meta;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
+  meta: { layout: 'fullscreen' },
+} satisfies StoryDefault;
 
 const page: CSSProperties = {
   padding: 'var(--manti-space-10)',
@@ -90,33 +86,31 @@ function catalogSteps(name: MantiRadixScale): Record<string, string> {
   );
 }
 
-export const Primitives: Story = {
-  render: () => (
-    <div style={page}>
-      <div style={intro}>
-        <Heading level={1} size="3xl">
-          Color ramps
-        </Heading>
-        <Text emphasis="muted">
-          Six Radix Colors scales under plain color names: gray (Radix slate),
-          orange, green, amber, red, and blue. Each step follows the theme.
-        </Text>
-      </div>
-      <div style={stack}>
-        {Object.entries(colorPrimitives).map(([name, steps]) => {
-          const radix = colorScales[name as keyof typeof colorScales].radix;
-          return (
-            <Ramp
-              key={name}
-              title={radix === name ? name : `${name} (Radix ${radix})`}
-              steps={steps as Record<string, string>}
-            />
-          );
-        })}
-      </div>
+export const Primitives: Story = () => (
+  <div style={page}>
+    <div style={intro}>
+      <Heading level={1} size="3xl">
+        Color ramps
+      </Heading>
+      <Text emphasis="muted">
+        Six Radix Colors scales under plain color names: gray (Radix slate),
+        orange, green, amber, red, and blue. Each step follows the theme.
+      </Text>
     </div>
-  ),
-};
+    <div style={stack}>
+      {Object.entries(colorPrimitives).map(([name, steps]) => {
+        const radix = colorScales[name as keyof typeof colorScales].radix;
+        return (
+          <Ramp
+            key={name}
+            title={radix === name ? name : `${name} (Radix ${radix})`}
+            steps={steps as Record<string, string>}
+          />
+        );
+      })}
+    </div>
+  </div>
+);
 
 /**
  * The `radixScales` catalog in `@manti-ui/tokens`: every scale a theme may
@@ -124,109 +118,104 @@ export const Primitives: Story = {
  * variant (any accent or gray) and for the neutral (a gray). There is no free
  * color input anywhere.
  */
-export const RadixCatalog: Story = {
-  render: () => (
-    <div style={page}>
-      <div style={intro}>
-        <Heading level={1} size="3xl">
-          Radix scale catalog
-        </Heading>
-        <Text emphasis="muted">
-          The scales a theme picks from, by name. An accent names the gray Radix
-          pairs it with; a gray is a theme&apos;s neutral.
-        </Text>
-      </div>
-      <section style={stack}>
-        <Heading level={2} size="lg">
-          Accents
-        </Heading>
-        {radixAccentScaleNames.map((name) => (
-          <Ramp
-            key={name}
-            title={`${name} (pairs with ${radixScales[name].gray})`}
-            steps={catalogSteps(name)}
-          />
-        ))}
-      </section>
-      <section style={stack}>
-        <Heading level={2} size="lg">
-          Grays
-        </Heading>
-        {radixGrayScaleNames.map((name) => (
-          <Ramp key={name} title={name} steps={catalogSteps(name)} />
-        ))}
-      </section>
+export const RadixCatalog: Story = () => (
+  <div style={page}>
+    <div style={intro}>
+      <Heading level={1} size="3xl">
+        Radix scale catalog
+      </Heading>
+      <Text emphasis="muted">
+        The scales a theme picks from, by name. An accent names the gray Radix
+        pairs it with; a gray is a theme&apos;s neutral.
+      </Text>
     </div>
-  ),
-};
+    <section style={stack}>
+      <Heading level={2} size="lg">
+        Accents
+      </Heading>
+      {radixAccentScaleNames.map((name) => (
+        <Ramp
+          key={name}
+          title={`${name} (pairs with ${radixScales[name].gray})`}
+          steps={catalogSteps(name)}
+        />
+      ))}
+    </section>
+    <section style={stack}>
+      <Heading level={2} size="lg">
+        Grays
+      </Heading>
+      {radixGrayScaleNames.map((name) => (
+        <Ramp key={name} title={name} steps={catalogSteps(name)} />
+      ))}
+    </section>
+  </div>
+);
 
-export const Variants: Story = {
-  render: () => (
-    <div style={page}>
-      <div style={intro}>
-        <Heading level={1} size="3xl">
-          Semantic variants
-        </Heading>
-        <Text emphasis="muted">
-          Every variant-driven component reads the same <code>--variant-*</code>{' '}
-          roles. Toggle the Storybook theme to see them adapt via{' '}
-          <code>light-dark()</code>.
-        </Text>
-      </div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns:
-            'repeat(auto-fill, minmax(calc(var(--manti-space-12) * 3), 1fr))',
-          gap: 'var(--manti-space-4)',
-        }}
-      >
-        {variants.map((variant) => (
+export const Variants: Story = () => (
+  <div style={page}>
+    <div style={intro}>
+      <Heading level={1} size="3xl">
+        Semantic variants
+      </Heading>
+      <Text emphasis="muted">
+        Every variant-driven component reads the same <code>--variant-*</code>{' '}
+        roles. Toggle the theme to see them adapt via <code>light-dark()</code>.
+      </Text>
+    </div>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns:
+          'repeat(auto-fill, minmax(calc(var(--manti-space-12) * 3), 1fr))',
+        gap: 'var(--manti-space-4)',
+      }}
+    >
+      {variants.map((variant) => (
+        <div
+          key={variant}
+          data-variant={variant}
+          style={{
+            border: '1px solid var(--manti-border)',
+            borderRadius: 'var(--manti-radius-lg)',
+            overflow: 'hidden',
+            background: 'var(--manti-surface)',
+          }}
+        >
           <div
-            key={variant}
-            data-variant={variant}
             style={{
-              border: '1px solid var(--manti-border)',
-              borderRadius: 'var(--manti-radius-lg)',
-              overflow: 'hidden',
-              background: 'var(--manti-surface)',
+              height: 'var(--manti-space-16)',
+              background: 'var(--variant-solid)',
+              display: 'grid',
+              placeItems: 'center',
             }}
           >
-            <div
-              style={{
-                height: 'var(--manti-space-16)',
-                background: 'var(--variant-solid)',
-                display: 'grid',
-                placeItems: 'center',
-              }}
+            <Text
+              as="span"
+              size="sm/semibold"
+              style={{ color: 'var(--variant-on-solid)' }}
             >
-              <Text
-                as="span"
-                size="sm/semibold"
-                style={{ color: 'var(--variant-on-solid)' }}
-              >
-                {variant}
-              </Text>
-            </div>
-            <div
-              style={{
-                height: 'var(--manti-space-10)',
-                background: 'var(--variant-soft-bg)',
-                display: 'grid',
-                placeItems: 'center',
-              }}
-            >
-              <Text
-                as="span"
-                size="xs"
-                style={{ color: 'var(--variant-soft-text)' }}
-              >
-                soft
-              </Text>
-            </div>
+              {variant}
+            </Text>
           </div>
-        ))}
-      </div>
+          <div
+            style={{
+              height: 'var(--manti-space-10)',
+              background: 'var(--variant-soft-bg)',
+              display: 'grid',
+              placeItems: 'center',
+            }}
+          >
+            <Text
+              as="span"
+              size="xs"
+              style={{ color: 'var(--variant-soft-text)' }}
+            >
+              soft
+            </Text>
+          </div>
+        </div>
+      ))}
     </div>
-  ),
-};
+  </div>
+);

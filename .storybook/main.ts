@@ -56,7 +56,8 @@ function narrowDocgen(viteConfig: { plugins?: unknown[] }): void {
 
 const config: StorybookConfig = {
   stories: [
-    '../packages/react/src/**/*.mdx',
+    // `*.stories.mdx` is Ladle's MDX format, which Storybook cannot index.
+    '../packages/react/src/**/!(*.stories).mdx',
     '../packages/react/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
     '../packages/oklava/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
