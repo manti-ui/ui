@@ -4,86 +4,65 @@
 
 @layer manti.theme {
   :root {
-    --manti-cool-hue: 350;
-    --manti-accent-fill: light-dark(
-      color-mix(in oklab, #e11d48 88%, black),
-      #e11d48
-    );
-    --manti-selection-bg: #e11d48;
-    --manti-selection-text: var(--manti-text-on-accent);
+    --manti-gray-1: light-dark(#fdfcfd, #121113);
+    --manti-gray-2: light-dark(#faf9fb, #1a191b);
+    --manti-gray-3: light-dark(#f2eff3, #232225);
+    --manti-gray-4: light-dark(#eae7ec, #2b292d);
+    --manti-gray-5: light-dark(#e3dfe6, #323035);
+    --manti-gray-6: light-dark(#dbd8e0, #3c393f);
+    --manti-gray-7: light-dark(#d0cdd7, #49474e);
+    --manti-gray-8: light-dark(#bcbac7, #625f69);
+    --manti-gray-9: light-dark(#8e8c99, #6f6d78);
+    --manti-gray-10: light-dark(#84828e, #7c7a85);
+    --manti-gray-11: light-dark(#65636d, #b5b2bc);
+    --manti-gray-12: light-dark(#211f26, #eeeef0);
+    --manti-gray-a1: light-dark(#55005503, #00000000);
+    --manti-gray-a2: light-dark(#2b005506, #f5f4f609);
+    --manti-gray-a3: light-dark(#30004010, #ebeaf814);
+    --manti-gray-a4: light-dark(#20003618, #eee5f81d);
+    --manti-gray-a5: light-dark(#20003820, #efe6fe25);
+    --manti-gray-a6: light-dark(#14003527, #f1e6fd30);
+    --manti-gray-a7: light-dark(#10003332, #eee9ff40);
+    --manti-gray-a8: light-dark(#08003145, #eee7ff5d);
+    --manti-gray-a9: light-dark(#05001d73, #eae6fd6e);
+    --manti-gray-a10: light-dark(#0500197d, #ece9fd7c);
+    --manti-gray-a11: light-dark(#0400119c, #f5f1ffb7);
+    --manti-gray-a12: light-dark(#020008e0, #fdfdffef);
+    --manti-accent-fill: light-dark(#e54666, #e54666);
+    --manti-selection-bg: light-dark(#ffced6, #5e1a2e);
   }
   [data-variant='primary'] {
-    --variant-solid: #e11d48;
-    --variant-solid-hover: light-dark(
-      color-mix(in oklab, #e11d48 88%, white),
-      color-mix(in oklab, #e11d48 88%, black)
+    --variant-solid: light-dark(#e54666, #e54666);
+    --variant-solid-hover: light-dark(#dc3b5d, #ec5a72);
+    --variant-solid-active: color-mix(
+      in oklab,
+      light-dark(#dc3b5d, #ec5a72) 88%,
+      var(--manti-gray-12)
     );
-    --variant-solid-active: light-dark(
-      color-mix(in oklab, #e11d48 78%, white),
-      color-mix(in oklab, #e11d48 78%, black)
-    );
-    --variant-on-solid: var(--manti-text-on-accent);
-    --variant-soft-bg: light-dark(
-      color-mix(in oklab, #e11d48 14%, white),
-      color-mix(in oklab, #e11d48 22%, var(--manti-gray-1))
-    );
-    --variant-soft-bg-hover: light-dark(
-      color-mix(in oklab, #e11d48 22%, white),
-      color-mix(in oklab, #e11d48 32%, var(--manti-gray-1))
-    );
-    --variant-soft-bg-active: light-dark(
-      color-mix(in oklab, #e11d48 30%, white),
-      color-mix(in oklab, #e11d48 42%, var(--manti-gray-1))
-    );
-    --variant-soft-text: light-dark(
-      color-mix(in oklab, #e11d48 75%, black),
-      color-mix(in oklab, #e11d48 42%, white)
-    );
-    --variant-border: light-dark(
-      color-mix(in oklab, #e11d48 32%, white),
-      color-mix(in oklab, #e11d48 42%, var(--manti-gray-2))
-    );
-    --variant-text: light-dark(
-      color-mix(in oklab, #e11d48 78%, black),
-      color-mix(in oklab, #e11d48 45%, white)
-    );
-    --variant-ring: #e11d48;
+    --variant-on-solid: var(--manti-text-on-bright);
+    --variant-soft-bg: light-dark(#feeaed, #3a141e);
+    --variant-soft-bg-hover: light-dark(#ffdce1, #4e1325);
+    --variant-soft-bg-active: light-dark(#ffced6, #5e1a2e);
+    --variant-soft-text: light-dark(#64172b, #fed2e1);
+    --variant-border: light-dark(#efacb8, #883447);
+    --variant-text: light-dark(#ca244d, #ff949d);
+    --variant-ring: light-dark(#e592a3, #b3445a);
   }
   [data-variant='danger'] {
-    --variant-solid: #be123c;
-    --variant-solid-hover: light-dark(
-      color-mix(in oklab, #be123c 88%, white),
-      color-mix(in oklab, #be123c 88%, black)
+    --variant-solid: light-dark(#e54d2e, #e54d2e);
+    --variant-solid-hover: light-dark(#dd4425, #ec6142);
+    --variant-solid-active: color-mix(
+      in oklab,
+      light-dark(#dd4425, #ec6142) 88%,
+      var(--manti-gray-12)
     );
-    --variant-solid-active: light-dark(
-      color-mix(in oklab, #be123c 78%, white),
-      color-mix(in oklab, #be123c 78%, black)
-    );
-    --variant-on-solid: var(--manti-text-on-accent);
-    --variant-soft-bg: light-dark(
-      color-mix(in oklab, #be123c 14%, white),
-      color-mix(in oklab, #be123c 22%, var(--manti-gray-1))
-    );
-    --variant-soft-bg-hover: light-dark(
-      color-mix(in oklab, #be123c 22%, white),
-      color-mix(in oklab, #be123c 32%, var(--manti-gray-1))
-    );
-    --variant-soft-bg-active: light-dark(
-      color-mix(in oklab, #be123c 30%, white),
-      color-mix(in oklab, #be123c 42%, var(--manti-gray-1))
-    );
-    --variant-soft-text: light-dark(
-      color-mix(in oklab, #be123c 75%, black),
-      color-mix(in oklab, #be123c 42%, white)
-    );
-    --variant-border: light-dark(
-      color-mix(in oklab, #be123c 32%, white),
-      color-mix(in oklab, #be123c 42%, var(--manti-gray-2))
-    );
-    --variant-text: light-dark(
-      color-mix(in oklab, #be123c 78%, black),
-      color-mix(in oklab, #be123c 45%, white)
-    );
-    --variant-ring: #be123c;
+    --variant-on-solid: var(--manti-text-on-bright);
+    --variant-soft-bg: light-dark(#feebe7, #391714);
+    --variant-soft-bg-hover: light-dark(#ffdcd3, #4e1511);
+    --variant-soft-bg-active: light-dark(#ffcdc2, #5e1c16);
+    --variant-soft-text: light-dark(#5c271f, #fbd3cb);
+    --variant-border: light-dark(#f5a898, #853a2d);
+    --variant-text: light-dark(#d13415, #ff977d);
+    --variant-ring: light-dark(#ec8e7b, #ac4d39);
   }
 }
