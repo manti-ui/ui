@@ -3,7 +3,7 @@ title: Theming with tokens
 slug: /guides/theming-tokens
 group: Guides
 order: 31
-description: 'Which Manti UI token to override: primitive ramps, semantic roles, the variant vocabulary, or a public per-component token - and when each applies.'
+description: 'Which Manti UI token to override: a Radix scale, a semantic role, the variant vocabulary, or a public per-component token, and when each applies.'
 ---
 
 # Theming with tokens
@@ -21,27 +21,30 @@ as a shareable link.
 
 | Need                                    | Use             |
 | --------------------------------------- | --------------- |
-| Replace a palette or scale              | Primitive token |
+| Swap a palette or the neutral           | A Radix scale   |
 | Change a system-wide purpose            | Semantic token  |
 | Change color and emphasis               | Variant roles   |
 | Make one component intentionally differ | Component token |
 
 ## Start with semantic roles
 
+A color role reads one step of a scale. Point it at another step:
+
 ```css
 :root {
-  --manti-bg: light-dark(#fafafb, #0c0c10);
-  --manti-surface: light-dark(#ffffff, #15151b);
-  --manti-surface-raised: light-dark(#ffffff, #1b1b22);
-  --manti-text: light-dark(#16161a, #f4f4f6);
-  --manti-text-muted: light-dark(#5c5c66, #b6b6c0);
-  --manti-border: light-dark(#e6e6ea, #2a2a33);
+  --manti-bg: var(--manti-gray-2);
+  --manti-surface: var(--manti-gray-1);
+  --manti-surface-raised: var(--manti-gray-2);
+  --manti-border: var(--manti-gray-7);
   --manti-radius-factor: 0.8;
   --manti-duration-base: 180ms;
 }
 ```
 
-Keep theme-aware colors in `light-dark(light, dark)` form.
+Each `--manti-{scale}-{step}` is a `light-dark()` pair of the Radix light and
+dark step, so a role that reads a step follows the scheme on its own. Keep each
+role on the step whose [Radix job](/foundations/color-and-tones#step-contract)
+matches it: backgrounds on `1`–`2`, text on `11`–`12`.
 
 ## Use variants for color
 
@@ -56,6 +59,44 @@ Remap a built-in variant on the whole app or within a subtree:
 ```
 
 See [Color & variants](/foundations/color-and-tones) for the full role list.
+
+## Pick a Radix scale
+
+The stylesheet ships six scales: `gray` (Radix `slate`), `orange`, `green`,
+`amber`, `red` and `blue`. Any other color is a Radix scale picked by name.
+There is no free color input and no generated ramp, so every theme stays on
+steps whose contrast Radix designed. Pick in this order:
+
+1. A [theme preset](/guides/themes), when one of its pairs fits.
+2. [Oklava](/guides/oklava) or the [Theme Studio](https://studio.manti.design),
+   which pick each variant and the neutral by Radix name and export the CSS.
+3. The catalog itself. `radixScales` in `@manti-ui/tokens` holds every scale a
+   theme may name, 25 accents and 6 grays, with the light and dark steps of each.
+
+```ts
+import { radixScales } from '@manti-ui/tokens';
+
+const { light, dark } = radixScales.teal;
+const step = (n: keyof typeof light) => `light-dark(${light[n]}, ${dark[n]})`;
+
+export const tealPrimary = `[data-variant='primary'] {
+  --variant-solid: ${step(9)};
+  --variant-solid-hover: ${step(10)};
+  --variant-soft-bg: ${step(3)};
+  --variant-soft-bg-hover: ${step(4)};
+  --variant-soft-bg-active: ${step(5)};
+  --variant-soft-text: ${step(12)};
+  --variant-border: ${step(7)};
+  --variant-text: ${step(11)};
+  --variant-ring: ${step(8)};
+}`;
+```
+
+Each accent entry also names `gray`, the neutral Radix pairs it with. To move
+the neutral, re-declare `--manti-gray-1` to `--manti-gray-12` from a gray entry,
+and `--manti-gray-a1` to `--manti-gray-a12` from its `alpha` scale; every
+surface, border and text role follows. The neutral hue property of earlier
+versions no longer exists, so a stylesheet that still sets it changes nothing.
 
 ## Use component tokens for exceptions
 
