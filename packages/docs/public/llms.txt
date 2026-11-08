@@ -183,8 +183,10 @@ variant color begins at focus or open.
 
 Variants follow the steps: solid `9` -> hover `10`, soft `3` -> `4` -> `5`,
 border `7`, text `11`, ring `8`. The neutral variants (secondary, tertiary,
-outline) use a `gray-12` solid and the neutral focus ring. The pressed solid
-mixes the hover step toward `gray-12`.
+outline) use a `gray-12` solid and the neutral focus ring. For the accent
+variants the pressed solid mixes the hover step toward `gray-12`. The neutral
+variants ease toward `gray-11` instead: hover is an even mix of `gray-12` and
+`gray-11`, and the pressed solid is `gray-11`.
 
 Where a Radix step misses the contrast gate, the role moves one step up: the
 neutral `--manti-focus-ring` uses `gray-9`, `--manti-warning-text` and every
