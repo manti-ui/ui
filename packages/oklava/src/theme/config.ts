@@ -1,4 +1,9 @@
-import { presets as SHIPPED_PRESETS } from '@manti-ui/tokens';
+import {
+  type MantiPresetNeutral,
+  type MantiPresetScale,
+  presetScales,
+  presets as SHIPPED_PRESETS,
+} from '@manti-ui/tokens';
 
 import { hslToHex } from './color.js';
 
@@ -286,6 +291,29 @@ export interface ThemePreset {
 }
 
 /**
+ * A bridge until the panel picks Radix scales by name: each preset scale
+ * stands in as its light-scheme solid step, the base color the panel's
+ * generator expands.
+ */
+function presetBaseColors(
+  colors: Partial<Record<VariantKey, MantiPresetScale>>,
+): Partial<Record<VariantKey, string>> {
+  return Object.fromEntries(
+    Object.entries(colors).map(([variant, name]) => [
+      variant,
+      presetScales[name as MantiPresetScale].light[9],
+    ]),
+  );
+}
+
+/** The {@link NEUTRAL_HUES} stop closest to each Radix gray a preset names. */
+const PRESET_NEUTRAL_HUES: Record<MantiPresetNeutral, number> = {
+  slate: 280,
+  mauve: 300,
+  sage: 150,
+};
+
+/**
  * The presets, read straight off the `presets` map in `@manti-ui/tokens`.
  *
  * The same map generates the stylesheets in `@manti-ui/styles/themes`, so the
@@ -299,8 +327,8 @@ export const PRESETS: ThemePreset[] = Object.entries(SHIPPED_PRESETS).map(
   ([id, preset]) => ({
     id: id as PresetId,
     label: preset.label,
-    colors: { ...preset.colors },
-    neutralHue: preset.coolHue,
+    colors: preset.default ? {} : presetBaseColors(preset.colors),
+    neutralHue: PRESET_NEUTRAL_HUES[preset.neutral],
   }),
 );
 

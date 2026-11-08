@@ -21,8 +21,18 @@ import {
   blackA,
   blue,
   blueDark,
+  cyan,
+  cyanDark,
+  grass,
+  grassDark,
   green,
   greenDark,
+  jade,
+  jadeDark,
+  mauve,
+  mauveA,
+  mauveDark,
+  mauveDarkA,
   orange,
   orangeA,
   orangeDark,
@@ -31,11 +41,23 @@ import {
   pinkDarkA,
   red,
   redDark,
+  ruby,
+  rubyDark,
+  sage,
+  sageA,
+  sageDark,
+  sageDarkA,
+  sky,
+  skyDark,
   slate,
   slateA,
   slateDark,
   slateDarkA,
+  tomato,
+  tomatoDark,
+  violet,
   violetA,
+  violetDark,
   violetDarkA,
 } from '@radix-ui/colors';
 
@@ -284,22 +306,61 @@ export const radiusModes = {
 export type MantiRadiusMode = keyof typeof radiusModes;
 
 /**
- * A theme preset — one opinionated palette over the shipped defaults.
+ * The Radix Colors scales a theme preset may name, each with its light and
+ * dark twelve steps (the same shape as {@link colorScales}).
+ */
+export const presetScales = {
+  slate: scale('slate', slate, slateDark),
+  mauve: scale('mauve', mauve, mauveDark),
+  sage: scale('sage', sage, sageDark),
+  orange: scale('orange', orange, orangeDark),
+  violet: scale('violet', violet, violetDark),
+  sky: scale('sky', sky, skyDark),
+  cyan: scale('cyan', cyan, cyanDark),
+  grass: scale('grass', grass, grassDark),
+  jade: scale('jade', jade, jadeDark),
+  ruby: scale('ruby', ruby, rubyDark),
+  tomato: scale('tomato', tomato, tomatoDark),
+} as const satisfies Record<string, MantiColorScale>;
+
+/** A Radix scale name a preset may name: `'slate' | 'mauve' | …`. */
+export type MantiPresetScale = keyof typeof presetScales;
+
+/**
+ * The Radix grays a preset may set as its neutral, each with its translucent
+ * twin. A preset that moves the neutral re-declares `--manti-gray-{step}` from
+ * the opaque scale and `--manti-gray-a{step}` from this one, since the panel
+ * hairline reads the neutral's alpha steps.
+ */
+export const presetNeutralAlphaScales = {
+  slate: scale('slateA', slateA, slateDarkA),
+  mauve: scale('mauveA', mauveA, mauveDarkA),
+  sage: scale('sageA', sageA, sageDarkA),
+} as const satisfies Partial<Record<MantiPresetScale, MantiColorScale>>;
+
+/** A Radix gray a preset may set as its neutral. */
+export type MantiPresetNeutral = keyof typeof presetNeutralAlphaScales;
+
+/**
+ * A theme preset: one opinionated palette over the shipped defaults.
  *
- * A preset is color and nothing else. `colors` names a base color per variant,
- * which the generator expands into the full `--variant-*` vocabulary, and
- * `coolHue` retints the neutral ramp behind every gray, surface, border and
- * text role. Shape, density, and type are deliberately left out: those are
- * product decisions that a palette must not silently make, so a preset can be
- * swapped at any point without moving a control's size or corner.
+ * A preset is color and nothing else, and every color it names is a Radix
+ * scale. `colors` names a scale per variant, which the generator expands into
+ * the full `--variant-*` vocabulary from that scale's twelve steps, and
+ * `neutral` names the Radix gray behind every surface, border and text role.
+ * Shape, density, and type are deliberately left out: those are product
+ * decisions that a palette must not silently make, so a preset can be swapped
+ * at any point without moving a control's size or corner.
  */
 export type MantiPresetDefinition = {
   label: string;
   description: string;
   /** The shipped theme. It needs no stylesheet, so none is generated. */
   default: boolean;
-  colors: Partial<Record<'primary' | 'success' | 'info' | 'danger', string>>;
-  coolHue: number;
+  colors: { primary: MantiPresetScale } & Partial<
+    Record<'success' | 'info' | 'danger', MantiPresetScale>
+  >;
+  neutral: MantiPresetNeutral;
 };
 
 /**
@@ -315,45 +376,46 @@ export const presets = {
     label: 'Manti',
     description: 'The shipped default — warm orange over a cool neutral.',
     default: true,
-    colors: {},
-    coolHue: 280,
+    colors: { primary: 'orange' },
+    neutral: 'slate',
   },
   violet: {
     label: 'Violet',
     description: 'Electric violet over a violet-leaning neutral.',
     default: false,
-    colors: { primary: '#7c3aed' },
-    coolHue: 300,
+    colors: { primary: 'violet' },
+    neutral: 'mauve',
   },
   ocean: {
     label: 'Ocean',
     description: 'Bright sky blue on a cold neutral.',
     default: false,
-    // Info is a stop darker than the studio swatch: no ink clears AA on
-    // #0284c7 (4.45:1), and the preset gate refuses to ship that.
-    colors: { primary: '#0ea5e9', info: '#0369a1' },
-    coolHue: 235,
+    // Info moves to cyan so it reads apart from the sky primary.
+    colors: { primary: 'sky', info: 'cyan' },
+    neutral: 'slate',
   },
   forest: {
     label: 'Forest',
     description: 'Deep green over a green-tinted neutral.',
     default: false,
-    colors: { primary: '#15803d', success: '#16a34a' },
-    coolHue: 150,
+    // Success moves to jade so it reads apart from the grass primary.
+    colors: { primary: 'grass', success: 'jade' },
+    neutral: 'sage',
   },
   rose: {
     label: 'Rose',
     description: 'Hot rose over a warm neutral.',
     default: false,
-    colors: { primary: '#e11d48', danger: '#be123c' },
-    coolHue: 350,
+    // Danger moves to tomato so it reads apart from the ruby primary.
+    colors: { primary: 'ruby', danger: 'tomato' },
+    neutral: 'mauve',
   },
   graphite: {
     label: 'Graphite',
     description: 'Monochrome: a gray brand over a cool neutral.',
     default: false,
-    colors: { primary: '#4b5563' },
-    coolHue: 250,
+    colors: { primary: 'slate' },
+    neutral: 'slate',
   },
 } as const satisfies Record<string, MantiPresetDefinition>;
 
@@ -782,6 +844,8 @@ export const mantiTokens = {
   radiusChannel,
   radiusModes,
   presets,
+  presetScales,
+  presetNeutralAlphaScales,
   controlHeight,
   space,
   fontSize,
