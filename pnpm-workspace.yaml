@@ -3,3 +3,4 @@ packages:
 
 onlyBuiltDependencies:
   - esbuild
+  - "@kampus/fabrika-cli"
