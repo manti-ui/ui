@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Combobox } from './Combobox.js';
+import type { ComboboxProps } from './Combobox.js';
 
 const spices = [
   { value: 'sumac', label: 'Sumac' },
@@ -12,11 +13,8 @@ const spices = [
   { value: 'coriander', label: 'Coriander' },
 ];
 
-const meta = {
+export default {
   title: 'Components/Combobox',
-  component: Combobox,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     items: spices,
     label: 'Spice',
@@ -26,25 +24,27 @@ const meta = {
     multiple: false,
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['default', 'fill'],
     },
   },
-} satisfies Meta<typeof Combobox>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<ComboboxProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<ComboboxProps> = (args) => (
+  <Combobox {...args} />
+);
 
-export const Playground: Story = {};
+export const Filled: Story<ComboboxProps> = (args) => <Combobox {...args} />;
+Filled.args = { variant: 'fill', label: undefined };
 
-export const Filled: Story = {
-  args: { variant: 'fill', label: undefined },
-};
-
-export const Multiple: Story = {
-  args: { multiple: true, label: 'Spices', defaultValue: ['sumac', 'mint'] },
+export const Multiple: Story<ComboboxProps> = (args) => <Combobox {...args} />;
+Multiple.args = {
+  multiple: true,
+  label: 'Spices',
+  defaultValue: ['sumac', 'mint'],
 };
 
 /**
@@ -53,14 +53,15 @@ export const Multiple: Story = {
  * filters the whole set, and the line under the rows says how many matches are
  * still hidden.
  */
-export const LongCatalogue: Story = {
-  args: {
-    label: 'Entry',
-    placeholder: 'Search 2,000 entries…',
-    maxVisibleItems: 25,
-    items: Array.from({ length: 2000 }, (_, index) => ({
-      value: `entry-${index}`,
-      label: `Entry ${String(index + 1).padStart(4, '0')}`,
-    })),
-  },
+export const LongCatalogue: Story<ComboboxProps> = (args) => (
+  <Combobox {...args} />
+);
+LongCatalogue.args = {
+  label: 'Entry',
+  placeholder: 'Search 2,000 entries…',
+  maxVisibleItems: 25,
+  items: Array.from({ length: 2000 }, (_, index) => ({
+    value: `entry-${index}`,
+    label: `Entry ${String(index + 1).padStart(4, '0')}`,
+  })),
 };
