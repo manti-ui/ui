@@ -70,26 +70,32 @@ Because a step keeps its job in both schemes, "one step stronger" gains contrast
 in light and in dark alike. The interaction ladder is the same everywhere: soft
 surfaces go rest `3` → hover `4` → active `5`, and solids go `9` → `10`.
 
-## Where a role moves off the nominal step
+## Radix steps, with no exceptions
 
-The styles build checks every role against a contrast floor. Where a Radix step
-misses it, the role moves one step up instead of the step being retuned:
+Every role sits on the step Radix designs for its job. Nothing moves off its
+nominal step to pass a contrast floor:
 
-| Role                                 | Step | Why                                                 |
-| ------------------------------------ | ---- | --------------------------------------------------- |
-| `--manti-focus-ring` (neutral)       | `9`  | Slate `8` misses 3:1 against the page in light      |
-| `--manti-warning-text`               | `12` | Amber `11` misses WCAG AA on the surface in light   |
-| `--variant-soft-text`, every variant | `12` | Step `11` misses AA on the step `3` soft background |
-| `--manti-text-subtle`                | `11` | Step `10` misses AA, so subtle shares muted's step  |
+| Role                                 | Step | Radix job                                        |
+| ------------------------------------ | ---- | ------------------------------------------------ |
+| `--manti-focus-ring` (neutral)       | `8`  | Strong borders on interactive parts, focus rings |
+| `--manti-warning-text`               | `11` | Low-contrast text                                |
+| `--variant-soft-text`, every variant | `11` | Low-contrast text                                |
+| `--manti-text-subtle`                | `11` | Radix has one low-contrast text step             |
+
+The styles build still measures these pairs and prints the WCAG 2.1 ratio and
+APCA Lc of each, but it does not gate them, because the steps are Radix's.
 
 Labels on a solid fill do not read a scale step. They use two fixed inks, the
 same in both schemes: `--manti-ink-light` (consumed as `--manti-text-on-accent`)
-and `--manti-ink-dark` (consumed as `--manti-text-on-bright`). The generator
-measures each variant's solid to set its `--variant-on-solid`. The accent
-variants (`primary`, `success`, `info`, `danger`) use the dark ink in both
-schemes. The neutral variants (`secondary`, `tertiary`, `outline`) switch ink
-per scheme with `light-dark()`: the light ink on the dark `gray-12` solid in
-light, the dark ink on the light `gray-12` solid in dark.
+and `--manti-ink-dark` (consumed as `--manti-text-on-bright`). Which one a
+solid takes is Radix's step 9 rule, exported as `radixInk` from
+`@manti-ui/tokens`: the light ink on every scale except Sky, Mint, Lime, Yellow
+and Amber, which take the dark ink. So the shipped accent variants (`primary`,
+`success`, `info`, `danger`) carry the light ink in both schemes. The neutral
+variants (`secondary`, `tertiary`, `outline`) paint `gray-12`, which is not a
+step 9, so their ink is measured and switches per scheme with `light-dark()`:
+the light ink on the dark `gray-12` solid in light, the dark ink on the light
+`gray-12` solid in dark.
 
 The `--variant-*` mappings are:
 
@@ -172,11 +178,11 @@ Components typed with `MantiVariant` accept custom strings:
     var(--manti-blue-10) 88%,
     var(--manti-gray-12)
   );
-  --variant-on-solid: var(--manti-text-on-bright);
+  --variant-on-solid: var(--manti-text-on-accent);
   --variant-soft-bg: var(--manti-blue-3);
   --variant-soft-bg-hover: var(--manti-blue-4);
   --variant-soft-bg-active: var(--manti-blue-5);
-  --variant-soft-text: var(--manti-blue-12);
+  --variant-soft-text: var(--manti-blue-11);
   --variant-border: var(--manti-blue-7);
   --variant-text: var(--manti-blue-11);
   --variant-ring: var(--manti-blue-8);

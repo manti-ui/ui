@@ -39,11 +39,11 @@
       light-dark(#dc3b5d, #ec5a72) 88%,
       var(--manti-gray-12)
     );
-    --variant-on-solid: var(--manti-text-on-bright);
+    --variant-on-solid: var(--manti-text-on-accent);
     --variant-soft-bg: light-dark(#feeaed, #3a141e);
     --variant-soft-bg-hover: light-dark(#ffdce1, #4e1325);
     --variant-soft-bg-active: light-dark(#ffced6, #5e1a2e);
-    --variant-soft-text: light-dark(#64172b, #fed2e1);
+    --variant-soft-text: light-dark(#ca244d, #ff949d);
     --variant-border: light-dark(#efacb8, #883447);
     --variant-text: light-dark(#ca244d, #ff949d);
     --variant-ring: light-dark(#e592a3, #b3445a);
@@ -56,11 +56,11 @@
       light-dark(#dd4425, #ec6142) 88%,
       var(--manti-gray-12)
     );
-    --variant-on-solid: var(--manti-text-on-bright);
+    --variant-on-solid: var(--manti-text-on-accent);
     --variant-soft-bg: light-dark(#feebe7, #391714);
     --variant-soft-bg-hover: light-dark(#ffdcd3, #4e1511);
     --variant-soft-bg-active: light-dark(#ffcdc2, #5e1c16);
-    --variant-soft-text: light-dark(#5c271f, #fbd3cb);
+    --variant-soft-text: light-dark(#d13415, #ff977d);
     --variant-border: light-dark(#f5a898, #853a2d);
     --variant-text: light-dark(#d13415, #ff977d);
     --variant-ring: light-dark(#ec8e7b, #ac4d39);

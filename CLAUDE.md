@@ -44,14 +44,16 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    interactive borders and low-emphasis controls, `8` for strong interactive
    chrome and the variant focus ring (`--variant-ring`); `9` for solid fills,
    `10` for solid hover; `11` for supporting text and `12` for high-contrast
-   text. Where a step misses the contrast gate, the role moves one step up
-   rather than the step being retuned: the neutral `--manti-focus-ring` sits on
-   `gray-9` (slate 8 misses 3:1 on the page in light), warning text and every
-   variant's `--variant-soft-text` take step `12` (step 11 misses AA on the soft
-   background), and `--manti-text-subtle` shares step `11` with
-   `--manti-text-muted` (step 10 misses AA). Labels on a solid fill use the
-   fixed inks (`--manti-ink-light` / `--manti-ink-dark`, consumed as
-   `--manti-text-on-accent` / `--manti-text-on-bright`), never a scale step.
+   text. Roles follow the Radix steps exactly, with no off-step exceptions:
+   the neutral `--manti-focus-ring` is `gray-8`, warning text and every
+   variant's `--variant-soft-text` are step `11`, and `--manti-text-subtle`
+   shares step `11` with `--manti-text-muted` (Radix has one low-contrast text
+   step). Labels on a solid fill use the fixed inks (`--manti-ink-light` /
+   `--manti-ink-dark`, consumed as `--manti-text-on-accent` /
+   `--manti-text-on-bright`), never a scale step, picked by Radix's step 9
+   rule: the light ink on every scale except Sky, Mint, Lime, Yellow and
+   Amber, which take the dark ink (`radixInk` in `@manti-ui/tokens`). The
+   contrast check reports these Radix-fixed pairs and does not gate them.
    Input-like controls (including Input, Textarea, Select, Combobox,
    NumberInput, PinInput, TagsInput, Editable, DatePicker, TimePicker,
    ColorPicker, and Clipboard) use

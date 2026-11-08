@@ -15,14 +15,11 @@
       light-dark(#80838d, #777b84) 88%,
       var(--manti-gray-12)
     );
-    --variant-on-solid: light-dark(
-      var(--manti-text-on-bright),
-      var(--manti-text-on-accent)
-    );
+    --variant-on-solid: var(--manti-text-on-accent);
     --variant-soft-bg: light-dark(#f0f0f3, #212225);
     --variant-soft-bg-hover: light-dark(#e8e8ec, #272a2d);
     --variant-soft-bg-active: light-dark(#e0e1e6, #2e3135);
-    --variant-soft-text: light-dark(#1c2024, #edeef0);
+    --variant-soft-text: light-dark(#60646c, #b0b4ba);
     --variant-border: light-dark(#cdced6, #43484e);
     --variant-text: light-dark(#60646c, #b0b4ba);
     --variant-ring: light-dark(#b9bbc6, #5a6169);

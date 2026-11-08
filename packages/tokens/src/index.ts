@@ -217,6 +217,30 @@ export const colorInks = {
 } as const;
 
 /**
+ * The Radix scales whose step 9 is designed for dark foreground text. Radix:
+ * "Most step 9 colors are designed for white foreground text. Sky, Mint, Lime,
+ * Yellow, and Amber are designed for dark foreground text." Every other scale
+ * carries the light ink on its solid, in both schemes.
+ */
+export const radixDarkInkScales = [
+  'sky',
+  'mint',
+  'lime',
+  'yellow',
+  'amber',
+] as const;
+
+/**
+ * Which of the {@link colorInks} a label on a Radix scale's step 9 takes,
+ * following Radix's own rule rather than a measurement.
+ */
+export function radixInk(scale: string): 'light' | 'dark' {
+  return (radixDarkInkScales as readonly string[]).includes(scale)
+    ? 'dark'
+    : 'light';
+}
+
+/**
  * Primitive color ramps as the CSS values `--manti-{hue}-{step}` carries, for
  * swatches and docs: `colorPrimitives.gray[1]` is
  * `light-dark(#fcfcfd, #111113)`, so a swatch painted with it follows the

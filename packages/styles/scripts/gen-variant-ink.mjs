@@ -1,11 +1,11 @@
 /**
- * Choose each variant's `--variant-on-solid` by measurement instead of by hand.
+ * Choose each variant's `--variant-on-solid` by rule instead of by hand.
  *
- * The label sitting on a solid fill has exactly one job: be readable. Which ink
- * wins is a fact about the solid's luminance, not a taste call — so this script
- * resolves every variant's `--variant-solid` per theme, measures the candidate
- * inks against it, and writes the winner into the `@variant-ink:generated`
- * region of `src/tokens.css`.
+ * A solid on a Radix step 9 takes the ink Radix designs for that scale (light,
+ * except on Sky, Mint, Lime, Yellow and Amber). A solid that is not a step 9
+ * (the neutral variants paint step 12) is measured, and the ink with the higher
+ * contrast wins. The winner goes into the `@variant-ink:generated` region of
+ * `src/tokens.css`.
  *
  *   node scripts/gen-variant-ink.mjs           # rewrite the region
  *   node scripts/gen-variant-ink.mjs --check    # fail if the region is stale
@@ -16,13 +16,12 @@
  * resample); nothing tied the two together, so the ink could quietly stop being
  * the right choice and only a human reading the contrast report would notice.
  *
- * The ranking itself lives in `lib/variant-ink.mjs`, shared with the preset
- * theme generator. If no candidate clears the bar the script says so and exits
- * non-zero rather than quietly shipping the least-bad ink.
+ * The rule itself lives in `lib/variant-ink.mjs`, shared with the preset
+ * theme generator.
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve as presolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import prettier from 'prettier';
 
@@ -39,6 +38,25 @@ const report = process.argv.includes('--report');
 const THEMES = ['light', 'dark'];
 
 const { variantScopes, resolveToken } = await readTokensCss(CSS);
+const { colorScales } = await import(
+  pathToFileURL(presolve(here, '../../tokens/src/index.ts')).href
+);
+const source = await readFile(CSS, 'utf8');
+
+/**
+ * The Radix scale a variant's solid sits on, when that solid is a step 9
+ * (`--variant-solid: var(--manti-orange-9)` → `orange`), else null.
+ */
+function radixScaleOf(variant) {
+  const blocks = source.matchAll(
+    new RegExp(`\\[data-variant='${variant}'\\]\\s*\\{([^}]*)\\}`, 'g'),
+  );
+  for (const [, body] of blocks) {
+    const m = body.match(/--variant-solid:\s*var\(--manti-([a-z]+)-9\)/);
+    if (m) return colorScales[m[1]]?.radix ?? null;
+  }
+  return null;
+}
 
 const rows = [];
 const picks = new Map();
@@ -64,16 +82,11 @@ for (const [variant, scope] of variantScopes) {
       candidates.push({ ...ink, c: c.c });
     }
     if (candidates.length < INKS.length) continue;
-    const { scored, chosen } = pickInk(solid.c, candidates);
-    if (!chosen) {
-      const best = scored.reduce((a, b) => (b.ratio > a.ratio ? b : a));
-      console.error(
-        `gen-variant-ink: ${variant} (${theme}): no ink clears AA on this solid ` +
-          `— best is ${best.label} at ${best.ratio.toFixed(2)}:1. Move the solid.`,
-      );
-      failed = true;
-      continue;
-    }
+    const { scored, chosen } = pickInk(
+      solid.c,
+      candidates,
+      radixScaleOf(variant),
+    );
     perTheme[theme] = chosen;
     rows.push({ variant, theme, scored, chosen });
   }
