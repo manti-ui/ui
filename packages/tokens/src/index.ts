@@ -21,24 +21,54 @@ import {
   blackA,
   blue,
   blueDark,
+  bronze,
+  bronzeDark,
+  brown,
+  brownDark,
+  crimson,
+  crimsonDark,
   cyan,
   cyanDark,
+  gold,
+  goldDark,
   grass,
   grassDark,
+  gray,
+  grayA,
+  grayDark,
+  grayDarkA,
   green,
   greenDark,
+  indigo,
+  indigoDark,
+  iris,
+  irisDark,
   jade,
   jadeDark,
+  lime,
+  limeDark,
   mauve,
   mauveA,
   mauveDark,
   mauveDarkA,
+  mint,
+  mintDark,
+  olive,
+  oliveA,
+  oliveDark,
+  oliveDarkA,
   orange,
   orangeA,
   orangeDark,
   orangeDarkA,
+  pink,
   pinkA,
+  pinkDark,
   pinkDarkA,
+  plum,
+  plumDark,
+  purple,
+  purpleDark,
   red,
   redDark,
   ruby,
@@ -47,18 +77,26 @@ import {
   sageA,
   sageDark,
   sageDarkA,
+  sand,
+  sandA,
+  sandDark,
+  sandDarkA,
   sky,
   skyDark,
   slate,
   slateA,
   slateDark,
   slateDarkA,
+  teal,
+  tealDark,
   tomato,
   tomatoDark,
   violet,
   violetA,
   violetDark,
   violetDarkA,
+  yellow,
+  yellowDark,
 } from '@radix-ui/colors';
 
 /**
@@ -305,47 +343,151 @@ export const radiusModes = {
 /** The `data-radius` values Manti UI ships presets for. */
 export type MantiRadiusMode = keyof typeof radiusModes;
 
+/** The Radix accent scales Manti offers as a variant color, in Radix order. */
+export const radixAccentScaleNames = [
+  'tomato',
+  'red',
+  'ruby',
+  'crimson',
+  'pink',
+  'plum',
+  'purple',
+  'violet',
+  'iris',
+  'indigo',
+  'blue',
+  'cyan',
+  'teal',
+  'jade',
+  'green',
+  'grass',
+  'bronze',
+  'gold',
+  'brown',
+  'orange',
+  'amber',
+  'yellow',
+  'lime',
+  'mint',
+  'sky',
+] as const;
+
+/** The Radix gray scales Manti offers as a theme's neutral. */
+export const radixGrayScaleNames = [
+  'gray',
+  'mauve',
+  'slate',
+  'sage',
+  'olive',
+  'sand',
+] as const;
+
+/** A Radix accent scale name: `'tomato' | 'red' | … | 'sky'`. */
+export type MantiRadixAccentScale = (typeof radixAccentScaleNames)[number];
+
+/** A Radix gray scale name: `'gray' | 'mauve' | 'slate' | 'sage' | 'olive' | 'sand'`. */
+export type MantiRadixGrayScale = (typeof radixGrayScaleNames)[number];
+
+/** Any Radix scale name Manti offers, accent or gray. */
+export type MantiRadixScale = MantiRadixAccentScale | MantiRadixGrayScale;
+
 /**
- * The Radix Colors scales a theme preset may name, each with its light and
- * dark twelve steps (the same shape as {@link colorScales}).
+ * An accent in the catalog: its light and dark twelve steps, plus `gray`, the
+ * Radix gray it pairs with naturally (Radix's own pairing guide).
  */
-export const presetScales = {
-  slate: scale('slate', slate, slateDark),
-  mauve: scale('mauve', mauve, mauveDark),
-  sage: scale('sage', sage, sageDark),
-  orange: scale('orange', orange, orangeDark),
-  violet: scale('violet', violet, violetDark),
-  sky: scale('sky', sky, skyDark),
-  cyan: scale('cyan', cyan, cyanDark),
-  grass: scale('grass', grass, grassDark),
-  jade: scale('jade', jade, jadeDark),
-  ruby: scale('ruby', ruby, rubyDark),
-  tomato: scale('tomato', tomato, tomatoDark),
-} as const satisfies Record<string, MantiColorScale>;
-
-/** A Radix scale name a preset may name: `'slate' | 'mauve' | …`. */
-export type MantiPresetScale = keyof typeof presetScales;
+export type MantiRadixAccentEntry = MantiColorScale & {
+  kind: 'accent';
+  gray: MantiRadixGrayScale;
+};
 
 /**
- * The Radix grays a preset may set as its neutral, each with its translucent
- * twin. A preset that moves the neutral re-declares `--manti-gray-{step}` from
- * the opaque scale and `--manti-gray-a{step}` from this one, since the panel
- * hairline reads the neutral's alpha steps.
+ * A gray in the catalog: its light and dark twelve steps and its translucent
+ * twin, which a theme on that neutral needs for the panel hairline. A gray
+ * pairs with itself.
  */
-export const presetNeutralAlphaScales = {
-  slate: scale('slateA', slateA, slateDarkA),
-  mauve: scale('mauveA', mauveA, mauveDarkA),
-  sage: scale('sageA', sageA, sageDarkA),
-} as const satisfies Partial<Record<MantiPresetScale, MantiColorScale>>;
+export type MantiRadixGrayEntry = MantiColorScale & {
+  kind: 'gray';
+  gray: MantiRadixGrayScale;
+  alpha: MantiColorScale;
+};
 
-/** A Radix gray a preset may set as its neutral. */
-export type MantiPresetNeutral = keyof typeof presetNeutralAlphaScales;
+/** One entry of {@link radixScales}. */
+export type MantiRadixScaleEntry = MantiRadixAccentEntry | MantiRadixGrayEntry;
+
+function accent(
+  radix: MantiRadixAccentScale,
+  light: Record<string, string>,
+  dark: Record<string, string>,
+  gray: MantiRadixGrayScale,
+): MantiRadixAccentEntry {
+  return { ...scale(radix, light, dark), kind: 'accent', gray };
+}
+
+function neutral(
+  radix: MantiRadixGrayScale,
+  light: Record<string, string>,
+  dark: Record<string, string>,
+  lightAlpha: Record<string, string>,
+  darkAlpha: Record<string, string>,
+): MantiRadixGrayEntry {
+  return {
+    ...scale(radix, light, dark),
+    kind: 'gray',
+    gray: radix,
+    alpha: scale(`${radix}A`, lightAlpha, darkAlpha),
+  };
+}
+
+/**
+ * The Radix scale catalog: every scale a Manti theme may pick, keyed by its
+ * Radix name. A theme names an accent per variant and a gray as its neutral,
+ * and never a free color, so every theme stays on Radix steps whose contrast
+ * Radix designed for.
+ *
+ * Theme Studio and Oklava read their pickers from here, and `presets` may name
+ * only these keys, which the type checker enforces.
+ */
+export const radixScales: {
+  readonly [K in MantiRadixAccentScale]: MantiRadixAccentEntry;
+} & { readonly [K in MantiRadixGrayScale]: MantiRadixGrayEntry } = {
+  tomato: accent('tomato', tomato, tomatoDark, 'mauve'),
+  red: accent('red', red, redDark, 'mauve'),
+  ruby: accent('ruby', ruby, rubyDark, 'mauve'),
+  crimson: accent('crimson', crimson, crimsonDark, 'mauve'),
+  pink: accent('pink', pink, pinkDark, 'mauve'),
+  plum: accent('plum', plum, plumDark, 'mauve'),
+  purple: accent('purple', purple, purpleDark, 'mauve'),
+  violet: accent('violet', violet, violetDark, 'mauve'),
+  iris: accent('iris', iris, irisDark, 'slate'),
+  indigo: accent('indigo', indigo, indigoDark, 'slate'),
+  blue: accent('blue', blue, blueDark, 'slate'),
+  cyan: accent('cyan', cyan, cyanDark, 'slate'),
+  teal: accent('teal', teal, tealDark, 'sage'),
+  jade: accent('jade', jade, jadeDark, 'sage'),
+  green: accent('green', green, greenDark, 'sage'),
+  grass: accent('grass', grass, grassDark, 'olive'),
+  bronze: accent('bronze', bronze, bronzeDark, 'sand'),
+  gold: accent('gold', gold, goldDark, 'sand'),
+  brown: accent('brown', brown, brownDark, 'sand'),
+  orange: accent('orange', orange, orangeDark, 'sand'),
+  amber: accent('amber', amber, amberDark, 'sand'),
+  yellow: accent('yellow', yellow, yellowDark, 'sand'),
+  lime: accent('lime', lime, limeDark, 'olive'),
+  mint: accent('mint', mint, mintDark, 'sage'),
+  sky: accent('sky', sky, skyDark, 'slate'),
+  gray: neutral('gray', gray, grayDark, grayA, grayDarkA),
+  mauve: neutral('mauve', mauve, mauveDark, mauveA, mauveDarkA),
+  slate: neutral('slate', slate, slateDark, slateA, slateDarkA),
+  sage: neutral('sage', sage, sageDark, sageA, sageDarkA),
+  olive: neutral('olive', olive, oliveDark, oliveA, oliveDarkA),
+  sand: neutral('sand', sand, sandDark, sandA, sandDarkA),
+};
 
 /**
  * A theme preset: one opinionated palette over the shipped defaults.
  *
- * A preset is color and nothing else, and every color it names is a Radix
- * scale. `colors` names a scale per variant, which the generator expands into
+ * A preset is color and nothing else, and every color it names is a key of
+ * {@link radixScales}. `colors` names a scale per variant, which the generator expands into
  * the full `--variant-*` vocabulary from that scale's twelve steps, and
  * `neutral` names the Radix gray behind every surface, border and text role.
  * Shape, density, and type are deliberately left out: those are product
@@ -357,10 +499,10 @@ export type MantiPresetDefinition = {
   description: string;
   /** The shipped theme. It needs no stylesheet, so none is generated. */
   default: boolean;
-  colors: { primary: MantiPresetScale } & Partial<
-    Record<'success' | 'info' | 'danger', MantiPresetScale>
+  colors: { primary: MantiRadixScale } & Partial<
+    Record<'success' | 'info' | 'danger', MantiRadixScale>
   >;
-  neutral: MantiPresetNeutral;
+  neutral: MantiRadixGrayScale;
 };
 
 /**
@@ -844,8 +986,7 @@ export const mantiTokens = {
   radiusChannel,
   radiusModes,
   presets,
-  presetScales,
-  presetNeutralAlphaScales,
+  radixScales,
   controlHeight,
   space,
   fontSize,

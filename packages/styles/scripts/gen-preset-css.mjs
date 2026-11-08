@@ -71,8 +71,8 @@ const step = (scale, n) => ld(scale.light[n], scale.dark[n]);
 
 /** The Radix scale a preset names, or a failure naming the unknown name. */
 function scaleFor(name, label) {
-  const scale = t.presetScales[name];
-  if (!scale) fail(`${label}: '${name}' is not a scale in presetScales`);
+  const scale = t.radixScales[name];
+  if (!scale) fail(`${label}: '${name}' is not a scale in radixScales`);
   return scale;
 }
 
@@ -145,8 +145,8 @@ function variantRoles(scale, ink) {
 function anchors(preset) {
   if (preset.neutral === t.colorScales.gray.radix) return [];
   const opaque = scaleFor(preset.neutral, `${preset.label} neutral`);
-  const alpha = t.presetNeutralAlphaScales[preset.neutral];
-  if (!alpha) fail(`${preset.label}: '${preset.neutral}' has no alpha scale`);
+  const alpha = opaque.alpha;
+  if (!alpha) fail(`${preset.label}: '${preset.neutral}' is not a Radix gray`);
   const steps = Object.keys(opaque.light);
   return [
     ...steps.map((n) => [`--manti-gray-${n}`, step(opaque, n)]),
