@@ -1,53 +1,45 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Kbd } from './Kbd.js';
+import type { KbdProps } from './Kbd.js';
 
-const meta = {
+export default {
   title: 'Typography/Kbd',
-  component: Kbd,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     children: '⌘ K',
     size: 'sm',
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md'] },
   },
-} satisfies Meta<typeof Kbd>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<KbdProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<KbdProps> = (args) => <Kbd {...args} />;
 
-export const Playground: Story = {};
+export const Sizes: Story<KbdProps> = () => (
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'var(--manti-space-3)',
+    }}
+  >
+    <Kbd size="sm">Esc</Kbd>
+    <Kbd size="md">Enter</Kbd>
+  </div>
+);
 
-export const Sizes: Story = {
-  render: () => (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--manti-space-3)',
-      }}
-    >
-      <Kbd size="sm">Esc</Kbd>
-      <Kbd size="md">Enter</Kbd>
-    </div>
-  ),
-};
-
-export const Shortcut: Story = {
-  render: () => (
-    <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 'var(--manti-space-2)',
-      }}
-    >
-      <Kbd>⌘</Kbd>
-      <span>+</span>
-      <Kbd>K</Kbd>
-    </span>
-  ),
-};
+export const Shortcut: Story<KbdProps> = () => (
+  <span
+    style={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 'var(--manti-space-2)',
+    }}
+  >
+    <Kbd>⌘</Kbd>
+    <span>+</span>
+    <Kbd>K</Kbd>
+  </span>
+);

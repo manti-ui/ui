@@ -1,13 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Popover } from './Popover.js';
+import type { PopoverProps } from './Popover.js';
 import { Button } from '../Button/Button.js';
 
-const meta = {
+export default {
   title: 'Components/Popover',
-  component: Popover,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     title: 'Dough resting',
     placement: 'bottom',
@@ -15,16 +13,15 @@ const meta = {
     children:
       'Let the dough rest, covered, for 30 minutes. It relaxes the gluten so you can roll it paper-thin without it springing back.',
   },
-} satisfies Meta<typeof Popover>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<PopoverProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<PopoverProps> = (args) => <Popover {...args} />;
 
-export const Playground: Story = {};
-
-export const WithCloseButton: Story = {
-  args: { showCloseButton: true },
-};
+export const WithCloseButton: Story<PopoverProps> = (args) => (
+  <Popover {...args} />
+);
+WithCloseButton.args = { showCloseButton: true };
 
 const placements = [
   'top',
@@ -41,27 +38,25 @@ const placements = [
   'left-end',
 ] as const;
 
-export const Placements: Story = {
-  parameters: { layout: 'padded' },
-  render: (args) => (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 'var(--manti-space-3)',
-      }}
-    >
-      {placements.map((placement) => (
-        <Popover
-          {...args}
-          key={placement}
-          placement={placement}
-          title={placement}
-          trigger={<Button variant="tertiary">{placement}</Button>}
-        >
-          The panel is anchored to the {placement} of its trigger.
-        </Popover>
-      ))}
-    </div>
-  ),
-};
+export const Placements: Story<PopoverProps> = (args) => (
+  <div
+    style={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 'var(--manti-space-3)',
+    }}
+  >
+    {placements.map((placement) => (
+      <Popover
+        {...args}
+        key={placement}
+        placement={placement}
+        title={placement}
+        trigger={<Button variant="tertiary">{placement}</Button>}
+      >
+        The panel is anchored to the {placement} of its trigger.
+      </Popover>
+    ))}
+  </div>
+);
+Placements.meta = { layout: 'padded' };

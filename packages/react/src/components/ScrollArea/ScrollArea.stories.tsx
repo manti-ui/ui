@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { ScrollArea } from './ScrollArea.js';
+import type { ScrollAreaProps } from './ScrollArea.js';
 import { Badge } from '../Badge/Badge.js';
 import { Card } from '../Card/Card.js';
 import { Heading } from '../Heading/Heading.js';
@@ -32,11 +33,8 @@ const Prose = () => (
   </div>
 );
 
-const meta = {
+export default {
   title: 'Components/ScrollArea',
-  component: ScrollArea,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     orientation: 'vertical',
     type: 'auto',
@@ -46,58 +44,57 @@ const meta = {
   },
   argTypes: {
     orientation: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['vertical', 'horizontal', 'both'],
     },
-    type: { control: 'inline-radio', options: ['auto', 'hover', 'always'] },
+    type: {
+      control: { type: 'inline-radio' },
+      options: ['auto', 'hover', 'always'],
+    },
   },
-} satisfies Meta<typeof ScrollArea>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<ScrollAreaProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<ScrollAreaProps> = (args) => (
+  <ScrollArea {...args} />
+);
 
-export const Playground: Story = {};
-
-export const InsideCard: Story = {
-  render: () => (
-    <Card style={{ width: '24rem' }}>
-      <Heading
-        level={3}
-        size="lg"
-        style={{ marginBottom: 'var(--manti-space-2)' }}
+export const InsideCard: Story<ScrollAreaProps> = () => (
+  <Card style={{ width: '24rem' }}>
+    <Heading
+      level={3}
+      size="lg"
+      style={{ marginBottom: 'var(--manti-space-2)' }}
+    >
+      About mantı
+    </Heading>
+    <ScrollArea style={{ height: '10rem' }}>
+      <div
+        style={{
+          display: 'grid',
+          gap: '0.75rem',
+          paddingRight: '0.75rem',
+          color: 'var(--manti-text-muted)',
+          fontSize: 'var(--manti-text-sm)',
+          lineHeight: 'var(--manti-leading-normal)',
+        }}
       >
-        About mantı
-      </Heading>
-      <ScrollArea style={{ height: '10rem' }}>
-        <div
-          style={{
-            display: 'grid',
-            gap: '0.75rem',
-            paddingRight: '0.75rem',
-            color: 'var(--manti-text-muted)',
-            fontSize: 'var(--manti-text-sm)',
-            lineHeight: 'var(--manti-leading-normal)',
-          }}
-        >
-          {paragraphs.map((p, i) => (
-            <Text key={i}>{p}</Text>
-          ))}
-        </div>
-      </ScrollArea>
-    </Card>
-  ),
-};
-
-export const Horizontal: Story = {
-  render: () => (
-    <ScrollArea orientation="horizontal" style={{ width: '22rem' }}>
-      <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem' }}>
-        {Array.from({ length: 16 }, (_, i) => (
-          <Badge key={i} variant="secondary">
-            Tag {i + 1}
-          </Badge>
+        {paragraphs.map((p, i) => (
+          <Text key={i}>{p}</Text>
         ))}
       </div>
     </ScrollArea>
-  ),
-};
+  </Card>
+);
+
+export const Horizontal: Story<ScrollAreaProps> = () => (
+  <ScrollArea orientation="horizontal" style={{ width: '22rem' }}>
+    <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem' }}>
+      {Array.from({ length: 16 }, (_, i) => (
+        <Badge key={i} variant="secondary">
+          Tag {i + 1}
+        </Badge>
+      ))}
+    </div>
+  </ScrollArea>
+);

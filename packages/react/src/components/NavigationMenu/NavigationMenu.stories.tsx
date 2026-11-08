@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { NavigationMenu } from './NavigationMenu.js';
+import type { NavigationMenuProps } from './NavigationMenu.js';
 
 const items = [
   {
@@ -21,15 +22,12 @@ const items = [
   },
 ];
 
-const meta = {
+export default {
   title: 'Components/NavigationMenu',
-  component: NavigationMenu,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: { items },
-} satisfies Meta<typeof NavigationMenu>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<NavigationMenuProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {};
+export const Playground: Story<NavigationMenuProps> = (args) => (
+  <NavigationMenu {...args} />
+);

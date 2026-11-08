@@ -1,51 +1,43 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Spinner } from './Spinner.js';
+import type { SpinnerProps } from './Spinner.js';
 
-const meta = {
+export default {
   title: 'Components/Spinner',
-  component: Spinner,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: { size: 'md' },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
   },
-} satisfies Meta<typeof Spinner>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<SpinnerProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<SpinnerProps> = (args) => <Spinner {...args} />;
 
-export const Playground: Story = {};
+export const Sizes: Story<SpinnerProps> = () => (
+  <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+    <Spinner size="sm" />
+    <Spinner size="md" />
+    <Spinner size="lg" />
+  </div>
+);
 
-export const Sizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-      <Spinner size="sm" />
-      <Spinner size="md" />
-      <Spinner size="lg" />
-    </div>
-  ),
-};
-
-export const OnTone: Story = {
-  render: () => (
-    <div
-      style={{
-        display: 'flex',
-        gap: '1.5rem',
-        padding: '1.5rem',
-        borderRadius: '14px',
-        color: 'var(--manti-orange-7)',
-      }}
-    >
+export const OnTone: Story<SpinnerProps> = () => (
+  <div
+    style={{
+      display: 'flex',
+      gap: '1.5rem',
+      padding: '1.5rem',
+      borderRadius: '14px',
+      color: 'var(--manti-orange-7)',
+    }}
+  >
+    <Spinner />
+    <span style={{ color: 'var(--manti-green-7)' }}>
       <Spinner />
-      <span style={{ color: 'var(--manti-green-7)' }}>
-        <Spinner />
-      </span>
-      <span style={{ color: 'var(--manti-blue-7)' }}>
-        <Spinner />
-      </span>
-    </div>
-  ),
-};
+    </span>
+    <span style={{ color: 'var(--manti-blue-7)' }}>
+      <Spinner />
+    </span>
+  </div>
+);
