@@ -25,12 +25,12 @@ export {
 } from './theme/agentPrompt.js';
 export { coerce, DEFAULT_STORAGE_KEY } from './theme/apply.js';
 export {
-  ACCENT_COLORS,
+  COLOR_SCALES,
   DEFAULT_THEME,
   DENSITIES,
   FOCUS_WIDTHS,
   FONT_STACKS,
-  NEUTRAL_HUES,
+  NEUTRAL_SCALES,
   PRESETS,
   RADIUS_STEPS,
   TEXT_SIZES,
@@ -38,11 +38,14 @@ export {
   applyPreset,
   configForPreset,
   randomTheme,
+  scaleLabel,
+  scaleOf,
   type FontStack,
+  type NeutralName,
   type PresetId,
+  type ScaleName,
   type ThemeConfig,
   type ThemePreset,
   type VariantKey,
   type VariantMeta,
 } from './theme/config.js';
-export { toHex } from './theme/color.js';

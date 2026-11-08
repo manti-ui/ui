@@ -5,7 +5,6 @@ import {
   fontLabel,
   type ThemeConfig,
 } from './config.js';
-import { toHex } from './color.js';
 import { buildThemeCss, num, stylesheetImports } from './css.js';
 
 /** Where the agent prompt tells an agent to put the generated stylesheet. */
@@ -30,13 +29,13 @@ export function buildAgentPrompt(
     summary.push(`- base palette: ${config.preset} (from @manti-ui/styles)`);
   }
   for (const variant of VARIANTS) {
-    const color = config.colors[variant.key];
-    if (color && color !== d.colors[variant.key]) {
-      summary.push(`- \`${variant.key}\` variant: ${toHex(color)}`);
+    const name = config.colors[variant.key];
+    if (name && name !== d.colors[variant.key]) {
+      summary.push(`- \`${variant.key}\` variant: Radix \`${name}\``);
     }
   }
-  if (config.neutralHue !== d.neutralHue) {
-    summary.push(`- neutral hue: ${num(config.neutralHue)}`);
+  if (config.neutral !== d.neutral) {
+    summary.push(`- neutral: Radix \`${config.neutral}\``);
   }
   if (config.radiusFactor !== d.radiusFactor) {
     summary.push(`- radius factor: ${num(config.radiusFactor)}`);
@@ -86,13 +85,18 @@ ${[imports, css].filter(Boolean).join('\n\n') || '/* no overrides */'}
 Notes for you, the agent:
 - \`--variant-*\` is the per-variant vocabulary each component consumes
   (\`solid\`, \`solid-hover\`, \`solid-active\`, \`on-solid\`, \`soft-bg\`,
-  \`soft-bg-hover\`, \`soft-text\`, \`border\`, \`text\`, \`ring\`).
-- \`--manti-cool-hue\` drives the entire neutral ramp plus every surface, border
-  and text role, so changing it retints the whole UI at once.
-- \`--manti-accent-fill\` and \`--manti-selection-*\` are branded roles that no
+  \`soft-bg-hover\`, \`soft-bg-active\`, \`soft-text\`, \`border\`, \`text\`,
+  \`ring\`).
+- Every color is a Radix Colors step written as \`light-dark(<light>, <dark>)\`,
+  taken from the scale catalog in \`@manti-ui/tokens\` (\`radixScales\`). Keep it
+  that way: do not swap a step for a free hex or a generated color.
+- \`--manti-gray-1\` … \`--manti-gray-12\` and \`--manti-gray-a1\` …
+  \`--manti-gray-a12\` carry the neutral. Every surface, border and text role
+  reads them, so re-declaring them retints the whole UI at once.
+- \`--manti-accent-fill\` and \`--manti-selection-bg\` are branded roles that no
   \`[data-variant]\` block can reach (Progress spends its \`data-variant\` on
-  linear/circular; \`::selection\` has its own pair). Keep them in sync with the
-  primary color or a themed app keeps a stray default-orange progress bar.
+  linear/circular; \`::selection\` has its own pair). Keep them on the primary
+  scale or a themed app keeps a stray default-orange progress bar.
 - The radius ramp (\`--manti-radius-xs\` … \`--manti-radius-2xl\`) derives from
   \`--manti-radius-factor\`; override the factor rather than each step.
 - Spacing and type scales derive from \`--manti-space-1\` and

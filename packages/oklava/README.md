@@ -3,7 +3,8 @@
 A drop-in theme devtools panel for apps built with [Manti UI](https://manti.design).
 
 Render it in development and every Manti design token becomes live: the variant
-palettes, the neutral hue, radius, font, base text size, density and focus ring,
+palettes and the neutral gray (each a Radix Colors scale, picked by name),
+radius, font, base text size, density and focus ring,
 tuned against your own screens rather than a preview canvas. Take the result away
 as a `:root` CSS block, or as a brief a coding agent can act on in your repo.
 

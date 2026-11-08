@@ -1,22 +1,20 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import {
   Button,
-  ColorPicker,
   Combobox,
   Heading,
   SegmentedControl,
-  Slider,
   Text,
   Tooltip,
 } from '@manti-ui/react';
+import { radixScales, type MantiScaleStep } from '@manti-ui/tokens';
 
-import { toHex } from './theme/color.js';
 import {
-  ACCENT_COLORS,
+  COLOR_SCALES,
   DENSITIES,
   FOCUS_WIDTHS,
   FONT_STACKS,
-  NEUTRAL_HUES,
+  NEUTRAL_SCALES,
   PRESETS,
   RADIUS_STEPS,
   TEXT_SIZES,
@@ -25,6 +23,9 @@ import {
   configForPreset,
   googleFamily,
   googleFontKey,
+  scaleLabel,
+  scaleOf,
+  type ScaleName,
   type ThemeConfig,
   type VariantKey,
 } from './theme/config.js';
@@ -151,13 +152,15 @@ function Section({
 }
 
 /**
- * The rail speaks one color space. The picker ships tabs for hex, rgba, hsla and
- * hsba as well; every knob here writes an oklch token, so the extra tabs only
- * offer a format the export will not use, and five of them overflow a 20rem
- * rail. Pinning `format` too keeps the value text and the change callback in
- * the same space as the tab.
+ * A swatch for one step of a Radix scale, as the theme-aware pair the CSS
+ * writes: the dot shows the step the current color scheme would paint. The
+ * values are the catalog's own, so a swatch can never show a color the
+ * exported theme does not use.
  */
-const OKLCH_ONLY = ['oklch'] as const;
+function swatch(name: ScaleName, n: MantiScaleStep): string {
+  const scale = radixScales[name];
+  return `light-dark(${scale.light[n]}, ${scale.dark[n]})`;
+}
 
 const ClearIcon = (
   <svg
@@ -176,14 +179,13 @@ const ClearIcon = (
 
 /** A preset chip previews its palette with three dots of the target color. */
 function presetDots(config: ThemeConfig) {
-  const primary = config.colors.primary;
   return (
     <span className="oklava-preset-dots" aria-hidden="true">
-      <i style={{ background: primary ?? 'var(--manti-orange-7)' }} />
-      <i style={{ background: `oklch(0.62 0.012 ${config.neutralHue})` }} />
+      <i style={{ background: swatch(scaleOf(config, 'primary'), 9) }} />
+      <i style={{ background: swatch(config.neutral, 9) }} />
       <i
         style={{
-          background: `oklch(0.34 0.01 ${config.neutralHue})`,
+          background: swatch(config.neutral, 12),
           borderRadius: `calc(var(--manti-radius-xs) * ${config.radiusFactor || 0.01})`,
         }}
       />
@@ -198,7 +200,6 @@ export function ThemePanel({
   footer,
 }: ThemePanelProps) {
   const { config, set, patch, setColor } = useOklavaTheme();
-  const baseConfig = configForPreset(config.preset);
   // A chip reads as selected while the palette on the page is still the one it
   // installs. The other knobs are not part of that comparison: a preset never
   // touches them, so tuning the radius must not un-select the palette.
@@ -234,19 +235,20 @@ export function ThemePanel({
     }
     return items;
   }, [catalogue, config.font]);
-  // What the app is actually running for a variant: an override, else the
-  // preset's own color, else the shipped default. Without the last fallback the
-  // default theme shows a grid with nothing selected.
-  const colorOf = (key: VariantKey) =>
-    config.colors[key] ??
-    baseConfig.colors[key] ??
-    (VARIANTS.find((item) => item.key === key)?.fallback as string);
+  // The scale the app is actually running for a variant: an override, else the
+  // preset's own scale, else the shipped one, else (secondary, tertiary) the
+  // neutral. Without the fallbacks the default theme shows a grid with nothing
+  // selected.
+  const presetColors = configForPreset(config.preset).colors;
+  const scaleFor = (key: VariantKey) =>
+    scaleOf({ ...config, colors: { ...presetColors, ...config.colors } }, key);
+  const editingScale = scaleFor(editing);
 
   return (
     <div className="oklava-controls">
       <Section
         title="Presets"
-        description="A palette: colors and the neutral hue. Shape, type and density stay where you left them."
+        description="A palette: Radix scales and a neutral gray. Shape, type and density stay where you left them."
       >
         <div className="oklava-presets">
           {PRESETS.map((preset) => {
@@ -269,7 +271,7 @@ export function ThemePanel({
 
       <Section
         title="Colors"
-        description="Each base color is expanded into the full --variant-* vocabulary."
+        description="Each Radix scale is expanded into the full --variant-* vocabulary."
       >
         {/* One grid, one variant at a time: the chips retarget the grid rather
             than putting the same decision behind a second set of pickers. */}
@@ -287,59 +289,54 @@ export function ThemePanel({
               aria-checked={variant.key === editing}
               onClick={() => setEditing(variant.key)}
             >
-              <i style={{ background: colorOf(variant.key) }} aria-hidden />
+              <i
+                style={{ background: swatch(scaleFor(variant.key), 9) }}
+                aria-hidden
+              />
               <span>{variant.label}</span>
             </button>
           ))}
         </div>
 
+        {/* Radix scale names are the only choice: a free color would bring
+            back the hand-tuned contrast the catalog exists to remove. */}
         <div
           className="oklava-dots"
           role="radiogroup"
-          aria-label={`${editingMeta.label} color`}
+          aria-label={`${editingMeta.label} scale`}
         >
-          {ACCENT_COLORS.map((option) => (
-            <Tooltip
-              key={option.value}
-              content={`${option.label} · ${option.value}`}
-              placement="top"
-            >
+          {COLOR_SCALES.map((name) => (
+            <Tooltip key={name} content={scaleLabel(name)} placement="top">
               <button
                 type="button"
                 role="radio"
                 className="oklava-dot"
-                aria-checked={toHex(colorOf(editing)) === option.value}
-                aria-label={option.label}
-                style={{ background: option.value }}
-                onClick={() => setColor(editing, option.value)}
+                aria-checked={editingScale === name}
+                aria-label={scaleLabel(name)}
+                style={{ background: swatch(name, 9) }}
+                onClick={() => setColor(editing, name)}
               />
             </Tooltip>
           ))}
         </div>
         <div className="oklava-dots-footer">
-          <ColorPicker
-            label={`Custom ${editingMeta.label.toLowerCase()}`}
-            value={colorOf(editing)}
-            colorSpace="oklch"
-            format="oklch"
-            formats={OKLCH_ONLY}
-            showValueText={false}
-            onValueChange={(value) => setColor(editing, value)}
-          />
+          <Text as="span" size="sm/medium">
+            {editingMeta.label}
+          </Text>
           <Text
             as="span"
             size="xs"
             emphasis="subtle"
             className="oklava-swatch-value"
           >
-            {config.colors[editing] ? toHex(config.colors[editing]) : 'default'}
+            {config.colors[editing] ?? 'default'}
           </Text>
           <Button
             variant="tertiary"
             size="sm"
             iconOnly
-            aria-label={`Reset the ${editingMeta.label} color`}
-            title={`Reset the ${editingMeta.label} color`}
+            aria-label={`Reset the ${editingMeta.label} scale`}
+            title={`Reset the ${editingMeta.label} scale`}
             disabled={!config.colors[editing]}
             onClick={() => setColor(editing, null)}
           >
@@ -353,42 +350,27 @@ export function ThemePanel({
 
       <Section
         title="Neutral"
-        description="One hue drives every gray, surface, border and text role."
+        description="One Radix gray drives every surface, border and text role."
       >
-        <div className="oklava-dots" role="radiogroup" aria-label="Neutral hue">
-          {NEUTRAL_HUES.map((option) => (
-            <Tooltip
-              key={option.value}
-              content={`${option.label} · ${option.value}°`}
-              placement="top"
-            >
+        <div
+          className="oklava-dots"
+          role="radiogroup"
+          aria-label="Neutral scale"
+        >
+          {NEUTRAL_SCALES.map((name) => (
+            <Tooltip key={name} content={scaleLabel(name)} placement="top">
               <button
                 type="button"
                 role="radio"
                 className="oklava-dot"
-                aria-checked={config.neutralHue === option.value}
-                aria-label={`${option.label}, ${option.value} degrees`}
-                style={{ background: `oklch(0.62 0.013 ${option.value})` }}
-                onClick={() => patch({ neutralHue: option.value })}
+                aria-checked={config.neutral === name}
+                aria-label={scaleLabel(name)}
+                style={{ background: swatch(name, 9) }}
+                onClick={() => patch({ neutral: name })}
               />
             </Tooltip>
           ))}
         </div>
-        {/* The dots pick a named neutral; this trims the same value by the
-            degree, for a tint that sits between two of them. Both write
-            `--manti-cool-hue`, so a dot lights up again whenever the slider
-            lands back on one. */}
-        <Field label="Hue" value={`${Math.round(config.neutralHue)}°`}>
-          <Slider
-            label="Neutral hue"
-            variant="primary"
-            value={config.neutralHue}
-            min={0}
-            max={360}
-            step={1}
-            onValueChange={([next]) => patch({ neutralHue: next })}
-          />
-        </Field>
         {colorScheme && (
           <Field label="Appearance">
             <SegmentedControl

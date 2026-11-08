@@ -1,4 +1,10 @@
-import { readableOn, toHex } from './color.js';
+import {
+  radixScales,
+  type MantiColorScale,
+  type MantiScaleStep,
+} from '@manti-ui/tokens';
+
+import { inkFor } from './color.js';
 import {
   BASE_CONTROL_HEIGHT_REM,
   BASE_SPACE_REM,
@@ -8,6 +14,7 @@ import {
   fontStack,
   googleFamily,
   googleFontHref,
+  type ScaleName,
   type ThemeConfig,
   type VariantKey,
 } from './config.js';
@@ -21,6 +28,11 @@ import {
  * `!important` anywhere. That is also the escape hatch a real consumer uses, so
  * the CSS shown in the export dialog is byte-for-byte the CSS the page is
  * running.
+ *
+ * Every color it writes is a Radix step as a `light-dark()` pair, expanded with
+ * the step mapping `packages/styles/scripts/gen-preset-css.mjs` uses for the
+ * shipped presets. So a theme picked here declares what the matching preset
+ * stylesheet declares: `violet` on `mauve` is the Violet preset.
  */
 
 /** Trim float noise: 0.30000000000000004 -> 0.3. */
@@ -28,31 +40,56 @@ export function num(value: number): string {
   return String(Math.round(value * 1000) / 1000);
 }
 
-/** Expand one base color into the full `--variant-*` role vocabulary. */
-function variantBlock(key: VariantKey, base: string): string {
-  const mix = (pct: number, other: string) =>
-    `color-mix(in oklab, ${base} ${pct}%, ${other})`;
-  const ld = (light: string, dark: string) => `light-dark(${light}, ${dark})`;
+const ld = (light: string, dark: string) => `light-dark(${light}, ${dark})`;
+
+/** One step of a Radix scale as a theme-aware value: its light and dark twin. */
+const step = (scale: MantiColorScale, n: MantiScaleStep) =>
+  ld(scale.light[n], scale.dark[n]);
+
+/** The twelve step numbers, read off the catalog rather than restated. */
+const STEPS = Object.keys(radixScales.slate.light).map(
+  Number,
+) as MantiScaleStep[];
+
+/**
+ * One Radix scale expanded into the full `--variant-*` vocabulary: solid 9 →
+ * hover 10, soft 3 → 4 → 5, soft text 12, border 7, text 11, ring 8. The press
+ * darkens the hover toward the scheme's text color, the direction that gains
+ * contrast in each theme, exactly as the shipped primary does.
+ */
+function variantBlock(key: VariantKey, name: ScaleName): string {
+  const scale = radixScales[name];
   const decls: [string, string][] = [
-    ['--variant-solid', base],
-    ['--variant-solid-hover', ld(mix(88, 'white'), mix(88, 'black'))],
-    ['--variant-solid-active', ld(mix(78, 'white'), mix(78, 'black'))],
-    ['--variant-on-solid', readableOn(base)],
+    ['--variant-solid', step(scale, 9)],
+    ['--variant-solid-hover', step(scale, 10)],
     [
-      '--variant-soft-bg',
-      ld(mix(14, 'white'), mix(22, 'var(--manti-gray-12)')),
+      '--variant-solid-active',
+      `color-mix(in oklab, ${step(scale, 10)} 88%, var(--manti-gray-12))`,
     ],
-    [
-      '--variant-soft-bg-hover',
-      ld(mix(22, 'white'), mix(32, 'var(--manti-gray-12)')),
-    ],
-    ['--variant-soft-text', ld(mix(75, 'black'), mix(42, 'white'))],
-    ['--variant-border', ld(mix(32, 'white'), mix(42, 'var(--manti-gray-11)'))],
-    ['--variant-text', ld(mix(78, 'black'), mix(45, 'white'))],
-    ['--variant-ring', base],
+    ['--variant-on-solid', inkFor(scale.light[9], scale.dark[9])],
+    ['--variant-soft-bg', step(scale, 3)],
+    ['--variant-soft-bg-hover', step(scale, 4)],
+    ['--variant-soft-bg-active', step(scale, 5)],
+    ['--variant-soft-text', step(scale, 12)],
+    ['--variant-border', step(scale, 7)],
+    ['--variant-text', step(scale, 11)],
+    ['--variant-ring', step(scale, 8)],
   ];
   const body = decls.map(([prop, value]) => `  ${prop}: ${value};`).join('\n');
   return `[data-variant='${key}'] {\n${body}\n}`;
+}
+
+/**
+ * The scale a variant runs under `base` when the config names none: the base's
+ * own pick, else the shipped one. The neutral rungs ship no scale of their own,
+ * so any pick for them is an override.
+ */
+function baseScale(base: ThemeConfig, key: VariantKey): ScaleName | null {
+  return (
+    base.colors[key] ??
+    VARIANTS.find((item) => item.key === key)?.fallback ??
+    null
+  );
 }
 
 /**
@@ -72,26 +109,27 @@ export function buildThemeCss(
   const d = base;
   const root: string[] = [];
 
-  if (config.neutralHue !== d.neutralHue) {
+  if (config.neutral !== d.neutral) {
+    // The neutral is an anchor: every surface, border and text role reads a
+    // `--manti-gray-*` step, so re-declaring the steps retints all of them.
+    const gray = radixScales[config.neutral];
     root.push(
-      '  /* The single neutral hue: retints every gray, surface and border. */',
-      `  --manti-cool-hue: ${num(config.neutralHue)};`,
+      ...STEPS.map((n) => `  --manti-gray-${n}: ${step(gray, n)};`),
+      ...STEPS.map((n) => `  --manti-gray-a${n}: ${step(gray.alpha, n)};`),
     );
   }
-  // A handful of roles are branded but NOT variant-driven, so `[data-variant]`
-  // never reaches them: Progress spends its `data-variant` slot on
-  // linear/circular and pins `--manti-accent-fill` instead, and `::selection`
-  // reads its own pair. Retint them from the primary color, or a themed app
-  // keeps a stray orange progress bar and text selection.
+  // Two branded roles are NOT variant-driven, so `[data-variant]` never
+  // reaches them: Progress spends its `data-variant` slot on linear/circular
+  // and reads `--manti-accent-fill` instead, and `::selection` reads its own
+  // background. Retint them from the primary scale, on the steps the shipped
+  // roles read (fill 9, selection 5), or a themed app keeps a stray orange
+  // progress bar and text selection.
   const primary = config.colors.primary;
-  if (primary && primary !== d.colors.primary) {
-    const accent = toHex(primary);
+  if (primary && primary !== baseScale(d, 'primary')) {
+    const scale = radixScales[primary];
     root.push(
-      '  /* Branded roles that no [data-variant] block can reach: the Progress',
-      '     fill (its data-variant carries linear/circular) and ::selection. */',
-      `  --manti-accent-fill: ${accent};`,
-      `  --manti-selection-bg: ${accent};`,
-      `  --manti-selection-text: ${readableOn(accent)};`,
+      `  --manti-accent-fill: ${step(scale, 9)};`,
+      `  --manti-selection-bg: ${step(scale, 5)};`,
     );
   }
   if (config.radiusFactor !== d.radiusFactor) {
@@ -126,9 +164,9 @@ export function buildThemeCss(
   const blocks: string[] = [];
   if (root.length > 0) blocks.push(`:root {\n${root.join('\n')}\n}`);
   for (const variant of VARIANTS) {
-    const color = config.colors[variant.key];
-    if (color && color !== d.colors[variant.key]) {
-      blocks.push(variantBlock(variant.key, toHex(color)));
+    const name = config.colors[variant.key];
+    if (name && name !== baseScale(d, variant.key)) {
+      blocks.push(variantBlock(variant.key, name));
     }
   }
   return blocks.join('\n\n');
