@@ -19,7 +19,7 @@
     --variant-soft-bg: light-dark(#e1f6fd, #112840);
     --variant-soft-bg-hover: light-dark(#d1f0fa, #113555);
     --variant-soft-bg-active: light-dark(#bee7f5, #154467);
-    --variant-soft-text: light-dark(#1d3e56, #c2f3ff);
+    --variant-soft-text: light-dark(#00749e, #75c7f0);
     --variant-border: light-dark(#8dcae3, #1f6692);
     --variant-text: light-dark(#00749e, #75c7f0);
     --variant-ring: light-dark(#60b3d7, #197cae);
@@ -32,11 +32,11 @@
       light-dark(#0797b9, #23afd0) 88%,
       var(--manti-gray-12)
     );
-    --variant-on-solid: var(--manti-text-on-bright);
+    --variant-on-solid: var(--manti-text-on-accent);
     --variant-soft-bg: light-dark(#def7f9, #082c36);
     --variant-soft-bg-hover: light-dark(#caf1f6, #003848);
     --variant-soft-bg-active: light-dark(#b5e9f0, #004558);
-    --variant-soft-text: light-dark(#0d3c48, #b6ecf7);
+    --variant-soft-text: light-dark(#107d98, #4ccce6);
     --variant-border: light-dark(#7dcedc, #12677e);
     --variant-text: light-dark(#107d98, #4ccce6);
     --variant-ring: light-dark(#3db9cf, #11809c);

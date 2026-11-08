@@ -314,12 +314,12 @@
     --manti-text-on-bright: var(--manti-ink-dark);
 
     /* Semantic status/accent roles. Components consume these roles instead of
-       reaching into a primitive scale; the step mapping stays here. Amber 11
-       misses AA over the surface in light, so warning text takes step 12. */
+       reaching into a primitive scale; the step mapping stays here. Status
+       text sits on Radix step 11, the low-contrast text step. */
     --manti-danger-icon: var(--manti-red-9);
     --manti-danger-border: var(--manti-red-8);
     --manti-danger-text: var(--manti-red-11);
-    --manti-warning-text: var(--manti-amber-12);
+    --manti-warning-text: var(--manti-amber-11);
     --manti-accent-fill: var(--manti-orange-9);
     /* A light mark in both schemes (the color-picker thumb ring). */
     --manti-contrast-light: var(--manti-ink-light);
@@ -341,9 +341,8 @@
 
     /* Focus ring — neutral. The system is monochrome: no gradients and no
        colored brand accent; color comes only from the semantic variants.
-       Slate 8 misses the 3:1 non-text bar over the page in light, so the
-       ring takes step 9. ----------------------------------------------- */
-    --manti-focus-ring: var(--manti-gray-9);
+       Radix step 8 is the step designed for focus rings. ---------------- */
+    --manti-focus-ring: var(--manti-gray-8);
     --manti-focus-ring-width: 3px;
     --manti-focus-ring-offset: 2px;
 
@@ -522,7 +521,7 @@
 
   [data-variant='primary'] {
     /* Radix orange: solid 9 → hover 10, soft 3 → 4 → 5, border 7, ring 8.
-       Step 12 carries soft text: step 11 misses WCAG AA on step 3 in light.
+       Soft text sits on step 11, Radix's low-contrast text step.
        The press darkens the hover toward the scheme's text color, which is
        the direction that gains contrast in each theme. */
     --variant-solid: var(--manti-orange-9);
@@ -535,7 +534,7 @@
     --variant-soft-bg: var(--manti-orange-3);
     --variant-soft-bg-hover: var(--manti-orange-4);
     --variant-soft-bg-active: var(--manti-orange-5);
-    --variant-soft-text: var(--manti-orange-12);
+    --variant-soft-text: var(--manti-orange-11);
     --variant-border: var(--manti-orange-7);
     --variant-text: var(--manti-orange-11);
     --variant-ring: var(--manti-orange-8);
@@ -543,7 +542,7 @@
 
   [data-variant='secondary'] {
     /* Neutral soft treatment on slate: component rest/hover/pressed on
-       3/4/5 and step 12 for the soft label. The solid is the high-contrast
+       3/4/5 and step 11 for the soft label. The solid is the high-contrast
        neutral (step 12) and eases toward step 11 on hover and press. Solid
        values remain available to selection-driven components, while Button,
        Badge, and Alert consume the softer roles below. */
@@ -557,7 +556,7 @@
     --variant-soft-bg: var(--manti-gray-3);
     --variant-soft-bg-hover: var(--manti-gray-4);
     --variant-soft-bg-active: var(--manti-gray-5);
-    --variant-soft-text: var(--manti-gray-12);
+    --variant-soft-text: var(--manti-gray-11);
     --variant-border: var(--manti-gray-7);
     --variant-text: var(--manti-gray-12);
     --variant-ring: var(--manti-focus-ring);
@@ -574,7 +573,7 @@
     --variant-soft-bg: var(--manti-green-3);
     --variant-soft-bg-hover: var(--manti-green-4);
     --variant-soft-bg-active: var(--manti-green-5);
-    --variant-soft-text: var(--manti-green-12);
+    --variant-soft-text: var(--manti-green-11);
     --variant-border: var(--manti-green-7);
     --variant-text: var(--manti-green-11);
     --variant-ring: var(--manti-green-8);
@@ -591,7 +590,7 @@
     --variant-soft-bg: var(--manti-blue-3);
     --variant-soft-bg-hover: var(--manti-blue-4);
     --variant-soft-bg-active: var(--manti-blue-5);
-    --variant-soft-text: var(--manti-blue-12);
+    --variant-soft-text: var(--manti-blue-11);
     --variant-border: var(--manti-blue-7);
     --variant-text: var(--manti-blue-11);
     --variant-ring: var(--manti-blue-8);
@@ -610,7 +609,7 @@
     --variant-soft-bg: var(--manti-gray-3);
     --variant-soft-bg-hover: var(--manti-gray-4);
     --variant-soft-bg-active: var(--manti-gray-5);
-    --variant-soft-text: var(--manti-gray-12);
+    --variant-soft-text: var(--manti-gray-11);
     --variant-border: var(--manti-border-strong);
     --variant-text: var(--manti-text);
     --variant-ring: var(--manti-focus-ring);
@@ -627,7 +626,7 @@
     --variant-soft-bg: var(--manti-red-3);
     --variant-soft-bg-hover: var(--manti-red-4);
     --variant-soft-bg-active: var(--manti-red-5);
-    --variant-soft-text: var(--manti-red-12);
+    --variant-soft-text: var(--manti-red-11);
     --variant-border: var(--manti-red-7);
     --variant-text: var(--manti-red-11);
     --variant-ring: var(--manti-red-8);
@@ -646,21 +645,21 @@
     --variant-soft-bg: var(--manti-gray-3);
     --variant-soft-bg-hover: var(--manti-gray-4);
     --variant-soft-bg-active: var(--manti-gray-5);
-    --variant-soft-text: var(--manti-gray-12);
+    --variant-soft-text: var(--manti-gray-11);
     --variant-border: var(--manti-border-strong);
     --variant-text: var(--manti-text);
     --variant-ring: var(--manti-focus-ring);
   }
   /* ───────────────────────────────────────────────────────────────────────
-   * Label ink, chosen by measuring each solid above — DO NOT EDIT BY HAND.
+   * Label ink, chosen by Radix's step 9 rule — DO NOT EDIT BY HAND.
    * Run `pnpm gen:variant-ink` after changing any `--variant-solid`.
    * Declared last so it wins at equal specificity; the blocks above
    * deliberately do not set `--variant-on-solid`.
    * ─────────────────────────────────────────────────────────────────────── */
   /* @variant-ink:generated:start */
   [data-variant='primary'] {
-    /* dark ink, Lc 48+ in both themes */
-    --variant-on-solid: var(--manti-text-on-bright);
+    /* light ink, Lc 59+ in both themes */
+    --variant-on-solid: var(--manti-text-on-accent);
   }
   [data-variant='secondary'] {
     /* light on light, dark on dark */
@@ -670,12 +669,12 @@
     );
   }
   [data-variant='success'] {
-    /* dark ink, Lc 45+ in both themes */
-    --variant-on-solid: var(--manti-text-on-bright);
+    /* light ink, Lc 62+ in both themes */
+    --variant-on-solid: var(--manti-text-on-accent);
   }
   [data-variant='info'] {
-    /* dark ink, Lc 44+ in both themes */
-    --variant-on-solid: var(--manti-text-on-bright);
+    /* light ink, Lc 63+ in both themes */
+    --variant-on-solid: var(--manti-text-on-accent);
   }
   [data-variant='tertiary'] {
     /* light on light, dark on dark */
@@ -685,8 +684,8 @@
     );
   }
   [data-variant='danger'] {
-    /* dark ink, Lc 38+ in both themes */
-    --variant-on-solid: var(--manti-text-on-bright);
+    /* light ink, Lc 69+ in both themes */
+    --variant-on-solid: var(--manti-text-on-accent);
   }
   [data-variant='outline'] {
     /* light on light, dark on dark */

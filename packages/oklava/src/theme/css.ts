@@ -53,7 +53,7 @@ const STEPS = Object.keys(radixScales.slate.light).map(
 
 /**
  * One Radix scale expanded into the full `--variant-*` vocabulary: solid 9 →
- * hover 10, soft 3 → 4 → 5, soft text 12, border 7, text 11, ring 8. The press
+ * hover 10, soft 3 → 4 → 5, soft text 11, border 7, text 11, ring 8. The press
  * darkens the hover toward the scheme's text color, the direction that gains
  * contrast in each theme, exactly as the shipped primary does.
  */
@@ -66,11 +66,11 @@ function variantBlock(key: VariantKey, name: ScaleName): string {
       '--variant-solid-active',
       `color-mix(in oklab, ${step(scale, 10)} 88%, var(--manti-gray-12))`,
     ],
-    ['--variant-on-solid', inkFor(scale.light[9], scale.dark[9])],
+    ['--variant-on-solid', inkFor(name)],
     ['--variant-soft-bg', step(scale, 3)],
     ['--variant-soft-bg-hover', step(scale, 4)],
     ['--variant-soft-bg-active', step(scale, 5)],
-    ['--variant-soft-text', step(scale, 12)],
+    ['--variant-soft-text', step(scale, 11)],
     ['--variant-border', step(scale, 7)],
     ['--variant-text', step(scale, 11)],
     ['--variant-ring', step(scale, 8)],
