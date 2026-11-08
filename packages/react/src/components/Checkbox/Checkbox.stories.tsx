@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Checkbox } from './Checkbox.js';
+import type { CheckboxProps } from './Checkbox.js';
 
-const meta = {
+export default {
   title: 'Components/Checkbox',
-  component: Checkbox,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     children: 'Extra sumac',
     size: 'md',
@@ -16,50 +14,46 @@ const meta = {
     disabled: false,
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof Checkbox>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<CheckboxProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<CheckboxProps> = (args) => (
+  <Checkbox {...args} />
+);
 
-export const Playground: Story = {};
+export const States: Story<CheckboxProps> = (args) => (
+  <div style={{ display: 'grid', gap: '0.75rem' }}>
+    <Checkbox {...args} defaultChecked={false}>
+      Unchecked
+    </Checkbox>
+    <Checkbox {...args} defaultChecked>
+      Checked
+    </Checkbox>
+    <Checkbox {...args} indeterminate>
+      Indeterminate
+    </Checkbox>
+    <Checkbox {...args} defaultChecked={false} disabled>
+      Disabled
+    </Checkbox>
+  </div>
+);
 
-export const States: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '0.75rem' }}>
-      <Checkbox {...args} defaultChecked={false}>
-        Unchecked
-      </Checkbox>
-      <Checkbox {...args} defaultChecked>
-        Checked
-      </Checkbox>
-      <Checkbox {...args} indeterminate>
-        Indeterminate
-      </Checkbox>
-      <Checkbox {...args} defaultChecked={false} disabled>
-        Disabled
-      </Checkbox>
-    </div>
-  ),
-};
-
-export const Sizes: Story = {
-  render: (args) => (
-    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-      <Checkbox {...args} size="sm">
-        Small
-      </Checkbox>
-      <Checkbox {...args} size="md">
-        Medium
-      </Checkbox>
-      <Checkbox {...args} size="lg">
-        Large
-      </Checkbox>
-    </div>
-  ),
-};
+export const Sizes: Story<CheckboxProps> = (args) => (
+  <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+    <Checkbox {...args} size="sm">
+      Small
+    </Checkbox>
+    <Checkbox {...args} size="md">
+      Medium
+    </Checkbox>
+    <Checkbox {...args} size="lg">
+      Large
+    </Checkbox>
+  </div>
+);

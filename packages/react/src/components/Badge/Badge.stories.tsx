@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Badge } from './Badge.js';
+import type { BadgeProps } from './Badge.js';
 
 const variants = ['primary', 'secondary', 'danger', 'outline'] as const;
 
@@ -12,11 +13,8 @@ const row: CSSProperties = {
   alignItems: 'center',
 };
 
-const meta = {
+export default {
   title: 'Components/Badge',
-  component: Badge,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     children: 'Fresh',
     variant: 'secondary',
@@ -24,40 +22,34 @@ const meta = {
     dot: false,
   },
   argTypes: {
-    variant: { control: 'select', options: variants },
-    size: { control: 'inline-radio', options: ['sm', 'md'] },
+    variant: { control: { type: 'select' }, options: variants },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md'] },
   },
-} satisfies Meta<typeof Badge>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<BadgeProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<BadgeProps> = (args) => <Badge {...args} />;
 
-export const Playground: Story = {};
-
-export const Variants: Story = {
-  render: (args) => (
-    <div style={row}>
-      {variants.map((variant) => (
-        <Badge {...args} key={variant} variant={variant}>
-          {variant}
-        </Badge>
-      ))}
-    </div>
-  ),
-};
-
-export const WithDot: Story = {
-  render: (args) => (
-    <div style={row}>
-      <Badge {...args} variant="primary" dot>
-        Ready
+export const Variants: Story<BadgeProps> = (args) => (
+  <div style={row}>
+    {variants.map((variant) => (
+      <Badge {...args} key={variant} variant={variant}>
+        {variant}
       </Badge>
-      <Badge {...args} variant="outline" dot>
-        Resting
-      </Badge>
-      <Badge {...args} variant="danger" dot>
-        Burnt
-      </Badge>
-    </div>
-  ),
-};
+    ))}
+  </div>
+);
+
+export const WithDot: Story<BadgeProps> = (args) => (
+  <div style={row}>
+    <Badge {...args} variant="primary" dot>
+      Ready
+    </Badge>
+    <Badge {...args} variant="outline" dot>
+      Resting
+    </Badge>
+    <Badge {...args} variant="danger" dot>
+      Burnt
+    </Badge>
+  </div>
+);

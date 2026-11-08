@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Accordion } from './Accordion.js';
+import type { AccordionProps } from './Accordion.js';
 
 const items = [
   {
@@ -20,26 +21,24 @@ const items = [
   },
 ];
 
-const meta = {
+export default {
   title: 'Components/Accordion',
-  component: Accordion,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: { items, defaultValue: ['shape'], multiple: false, collapsible: true },
   decorators: [
-    (Story) => (
+    (Component) => (
       <div style={{ width: 460 }}>
-        <Story />
+        <Component />
       </div>
     ),
   ],
-} satisfies Meta<typeof Accordion>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<AccordionProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<AccordionProps> = (args) => (
+  <Accordion {...args} />
+);
 
-export const Playground: Story = {};
-
-export const Multiple: Story = {
-  args: { multiple: true, defaultValue: ['shape', 'serve'] },
-};
+export const Multiple: Story<AccordionProps> = (args) => (
+  <Accordion {...args} />
+);
+Multiple.args = { multiple: true, defaultValue: ['shape', 'serve'] };

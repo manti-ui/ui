@@ -1,15 +1,13 @@
 import { useRef } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Drawer } from './Drawer.js';
+import type { DrawerProps } from './Drawer.js';
 import { Button } from '../Button/Button.js';
 import { Input } from '../Input/Input.js';
 
-const meta = {
+export default {
   title: 'Components/Drawer',
-  component: Drawer,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     title: 'Edit recipe',
     description: 'Adjust the filling and the finish, then save.',
@@ -20,68 +18,64 @@ const meta = {
   },
   argTypes: {
     placement: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['left', 'right', 'top', 'bottom'],
     },
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
   },
-} satisfies Meta<typeof Drawer>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<DrawerProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {
-  args: {
-    children: (
-      <div style={{ display: 'grid', gap: '1rem' }}>
-        <Input label="Name" defaultValue="Kayseri mantı" fullWidth />
-        <Input label="Filling" defaultValue="Spiced lamb" fullWidth />
-        <Input
-          label="Finish"
-          defaultValue="Garlic yogurt, mint butter"
-          fullWidth
-        />
-      </div>
-    ),
-    footer: ({ close }) => (
-      <>
-        <Button variant="tertiary" onClick={close}>
-          Cancel
-        </Button>
-        <Button variant="$1" onClick={close}>
-          Save
-        </Button>
-      </>
-    ),
-  },
-};
-
-export const Placements: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-      {(['left', 'right', 'top', 'bottom'] as const).map((placement) => (
-        <Drawer
-          key={placement}
-          placement={placement}
-          title={`From the ${placement}`}
-          description={`This drawer slides in from the ${placement} edge.`}
-          trigger={<Button variant="tertiary">{placement}</Button>}
-        >
-          A panel anchored to the {placement} edge of the viewport.
-        </Drawer>
-      ))}
+export const Playground: Story<DrawerProps> = (args) => <Drawer {...args} />;
+Playground.args = {
+  children: (
+    <div style={{ display: 'grid', gap: '1rem' }}>
+      <Input label="Name" defaultValue="Kayseri mantı" fullWidth />
+      <Input label="Filling" defaultValue="Spiced lamb" fullWidth />
+      <Input
+        label="Finish"
+        defaultValue="Garlic yogurt, mint butter"
+        fullWidth
+      />
     </div>
+  ),
+  footer: ({ close }) => (
+    <>
+      <Button variant="tertiary" onClick={close}>
+        Cancel
+      </Button>
+      <Button variant="$1" onClick={close}>
+        Save
+      </Button>
+    </>
   ),
 };
 
+export const Placements: Story<DrawerProps> = () => (
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+    {(['left', 'right', 'top', 'bottom'] as const).map((placement) => (
+      <Drawer
+        key={placement}
+        placement={placement}
+        title={`From the ${placement}`}
+        description={`This drawer slides in from the ${placement} edge.`}
+        trigger={<Button variant="tertiary">{placement}</Button>}
+      >
+        A panel anchored to the {placement} edge of the viewport.
+      </Drawer>
+    ))}
+  </div>
+);
+
 /** `closeLabel` names the corner close button for screen readers. */
-export const CustomCloseLabel: Story = {
-  args: {
-    title: 'Pantry',
-    description: 'Flour, lamb, onions, yogurt and dried mint.',
-    closeLabel: 'Close pantry',
-    trigger: <Button variant="primary">Open pantry</Button>,
-  },
+export const CustomCloseLabel: Story<DrawerProps> = (args) => (
+  <Drawer {...args} />
+);
+CustomCloseLabel.args = {
+  title: 'Pantry',
+  description: 'Flour, lamb, onions, yogurt and dried mint.',
+  closeLabel: 'Close pantry',
+  trigger: <Button variant="primary">Open pantry</Button>,
 };
 
 function FocusTargetsExample() {
@@ -127,6 +121,4 @@ function FocusTargetsExample() {
  * `initialFocusEl` picks the element focused on open and `finalFocusEl` the
  * one focused on close, instead of the first field and the trigger.
  */
-export const FocusTargets: Story = {
-  render: () => <FocusTargetsExample />,
-};
+export const FocusTargets: Story<DrawerProps> = () => <FocusTargetsExample />;
