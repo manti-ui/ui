@@ -21,17 +21,23 @@
  *   utilities — that is the intent.
  * - Colors are exposed twice: by plain color name (`bg-orange-500`) and by
  *   semantic role (`bg-primary-500`). Both point at the same ramp.
- * - Stop naming is deliberately asymmetric. Manti's own ramps are indexed
- *   `1…12`; Tailwind's utility names stay on the conventional `50…950` and are
- *   mapped onto them here (`--color-orange-500: var(--manti-orange-7)`). If the
- *   utility keys were renamed to match, `bg-orange-500` would silently fall
- *   back to Tailwind's built-in orange instead of Manti's — a wrong color with
- *   no error. Keep this mapping in step when a ramp gains or loses a stop.
+ * - Stop naming is deliberately asymmetric. Manti's own scales are the Radix
+ *   Colors steps `1…12`; Tailwind's utility names stay on the conventional
+ *   `50…950` and are mapped onto them here
+ *   (`--color-orange-500: var(--manti-orange-7)`). If the utility keys were
+ *   renamed to match, `bg-orange-500` would silently fall back to Tailwind's
+ *   built-in orange instead of Manti's — a wrong color with no error. Keep this
+ *   mapping in step when a scale gains or loses a step.
+ * - Every step is theme-aware (Radix light step N in light, dark step N in
+ *   dark), so a utility follows the color scheme and grows in contrast with
+ *   its number in both: `-50`…`-400` are the backgrounds (steps 1–5), `-500`
+ *   and `-600` the borders (7–8), `-700`/`-800` the solid fill and its hover
+ *   (9–10), `-900`/`-950` the text (11–12).
  * - Tailwind has eleven stop names against Manti's twelve, so the mapping is
- *   positional and stop 6 ends up without a utility alias. Nothing is lost — the
- *   stop is a real custom property in every setup that loads this file, so
+ *   positional and step 6 ends up without a utility alias. Nothing is lost — the
+ *   step is a real custom property in every setup that loads this file, so
  *   `bg-[var(--manti-orange-6)]` works. Do not "fix" the gap by shifting the
- *   mapping; positional is what keeps each utility on its old color.
+ *   mapping; positional keeps every utility on the step it named before.
  * - Control height keeps a Manti-only key (`h-control-md`) — there is no
  *   Tailwind equivalent to override.
  * - Not bound: Tailwind v4 has no theme namespace for named transition

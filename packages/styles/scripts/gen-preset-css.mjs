@@ -101,7 +101,11 @@ function fail(message) {
   process.exit(1);
 }
 
-/** One base color expanded into the full `--variant-*` vocabulary. */
+/**
+ * One base color expanded into the full `--variant-*` vocabulary. In dark the
+ * soft surfaces and the border mix the base into the darkest slate steps
+ * (`--manti-gray-1`/`-2`), which hold the page background in that scheme.
+ */
 function variantRoles(base, ink) {
   return [
     ['--variant-solid', base],
@@ -116,20 +120,20 @@ function variantRoles(base, ink) {
     ['--variant-on-solid', ink],
     [
       '--variant-soft-bg',
-      ld(mix(base, 14, 'white'), mix(base, 22, 'var(--manti-gray-12)')),
+      ld(mix(base, 14, 'white'), mix(base, 22, 'var(--manti-gray-1)')),
     ],
     [
       '--variant-soft-bg-hover',
-      ld(mix(base, 22, 'white'), mix(base, 32, 'var(--manti-gray-12)')),
+      ld(mix(base, 22, 'white'), mix(base, 32, 'var(--manti-gray-1)')),
     ],
     [
       '--variant-soft-bg-active',
-      ld(mix(base, 30, 'white'), mix(base, 42, 'var(--manti-gray-12)')),
+      ld(mix(base, 30, 'white'), mix(base, 42, 'var(--manti-gray-1)')),
     ],
     ['--variant-soft-text', ld(mix(base, 75, 'black'), mix(base, 42, 'white'))],
     [
       '--variant-border',
-      ld(mix(base, 32, 'white'), mix(base, 42, 'var(--manti-gray-11)')),
+      ld(mix(base, 32, 'white'), mix(base, 42, 'var(--manti-gray-2)')),
     ],
     ['--variant-text', ld(mix(base, 78, 'black'), mix(base, 45, 'white'))],
     ['--variant-ring', base],

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { oklchToRgb, parseOklchValue } from '@manti-ui/folds';
 import { Button, ColorPicker, SegmentedControl } from '@manti-ui/react';
-import { colorPrimitives } from '@manti-ui/tokens';
+import { colorScales } from '@manti-ui/tokens';
 
 /**
  * Right-rail playground: pick a color for a variant, or a radius preset, and the
@@ -36,8 +36,8 @@ const SWATCHES: { key: VariantKey; label: string }[] = [
 ];
 
 const DEFAULTS: Record<VariantKey, string> = {
-  primary: colorPrimitives.orange[7],
-  secondary: colorPrimitives.gray[7],
+  primary: colorScales.orange.light[9],
+  secondary: colorScales.gray.light[9],
 };
 
 const STORAGE_KEY = 'manti-docs-palette';

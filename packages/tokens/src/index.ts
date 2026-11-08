@@ -4,53 +4,64 @@
  * Framework-agnostic design token contract for Manti UI.
  *
  * The metaphor is mantı: a dish that appears in many regions and forms. The
- * palette pairs a cool neutral `gray` (the panel-signature hue, 280) with warm
- * `orange`, `green`, `amber`, `red`, and `blue` accents — all expressed as
- * perceptually-smooth OKLCH ramps under plain, universally understood color
- * names.
+ * palette pairs a cool neutral `gray` (Radix `slate`) with `orange`, `green`,
+ * `amber`, `red`, and `blue` accents, all taken verbatim from the Radix Colors
+ * 12-step scales (`@radix-ui/colors`) under plain, universally understood
+ * color names.
  *
- * This module is the typed source of truth. Its primitive ramps and scale
+ * This module is the typed source of truth. Its primitive scales and scale
  * values are generated into the `--manti-*` custom properties of
  * `@manti-ui/styles` (`packages/styles/scripts/gen-tokens-css.mjs`, run via
- * `pnpm gen:tokens`); the theme-aware roles there layer light/dark resolution on
- * top with the CSS `light-dark()` function.
+ * `pnpm gen:tokens`); the semantic roles there pick a single step of each
+ * scale.
  */
+import {
+  amber,
+  amberDark,
+  blackA,
+  blue,
+  blueDark,
+  green,
+  greenDark,
+  orange,
+  orangeA,
+  orangeDark,
+  orangeDarkA,
+  pinkA,
+  pinkDarkA,
+  red,
+  redDark,
+  slate,
+  slateA,
+  slateDark,
+  slateDarkA,
+  violetA,
+  violetDarkA,
+} from '@radix-ui/colors';
 
 /**
- * Ramp generation.
+ * Scale step names. Radix numbers its steps `1…12`, and so does Manti: an
+ * unbroken sequence makes "one step stronger" arithmetic instead of a lookup.
+ * The Tailwind bridge (`packages/styles/src/tailwind-theme.css`) keeps the
+ * 50…950 utility names and maps them onto these, so `bg-orange-500` keeps
+ * resolving to Manti.
  *
- * Each primitive ramp is produced from a compact spec instead of 36 hand-tuned
- * numbers. The per-stop *lightness* is the perceptual backbone and stays
- * explicit; *hue* drifts linearly across the ramp; *chroma* follows a smooth
- * "bell" — edges plus a mid peak shaped by a rise/fall bias.
- *
- * The backbones started as a fit to the original hand-tuned 11-stop ramps, then
- * were resampled to 12 stops with monotone cubic (PCHIP) interpolation: the
- * endpoints and the shape of each curve are preserved, the steps are re-spaced,
- * and monotonicity is guaranteed so no stop can come out lighter than the one
- * before it. Hue and chroma need no re-fit — they are expressed as endpoints
- * plus a peak *position*, so they re-space themselves with the backbone.
+ * Every step is theme-aware: `--manti-orange-3` is Radix `orange3` in light and
+ * `orangeDark3` in dark, so a step means the same job in both schemes. 1–2
+ * page/panel backgrounds, 3–5 component backgrounds, 6–8 borders and focus
+ * rings, 9–10 the solid fills, 11–12 text.
  */
-/**
- * Ramp stop names, lightest → darkest. A plain 1…12 index rather than the
- * Tailwind-style 50…950 weights: the stops are perceptual positions on an OKLCH
- * lightness backbone, not font-weight-like magnitudes, and an unbroken sequence
- * makes "one stop darker" arithmetic instead of a lookup. The Tailwind bridge
- * (`packages/styles/src/tailwind-theme.css`) keeps the 50…950 utility names and
- * maps them onto these, so `bg-orange-500` is unaffected.
- *
- * Twelve stops, which is what the semantic roles want: 1–2 page/panel
- * backgrounds, 3–5 component backgrounds, 6–8 borders and separators, 9–10 the
- * solid fills, 11–12 text. Eleven forced borders and solids to share a stop.
- */
-const RAMP_STOPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const SCALE_STEPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
+
+/** One step number of a 12-step scale. */
+export type MantiScaleStep = (typeof SCALE_STEPS)[number];
 
 /**
- * The palette-role contract shared by every Manti color ramp.
+ * The palette-role contract shared by every Manti color scale.
  *
  * These names describe intent, not a component-specific implementation. The
- * semantic layer maps them to theme-aware values; component CSS should consume
- * semantic roles or `--variant-*`, not raw ramp stops. Keeping the map typed
+ * semantic layer maps them to single steps; component CSS should consume
+ * semantic roles or `--variant-*`, not raw scale steps. Keeping the map typed
  * makes the scale legible to generators, docs, and future lint rules.
  */
 export const colorScaleRoles = {
@@ -61,152 +72,107 @@ export const colorScaleRoles = {
   text: { lowContrast: 11, highContrast: 12 },
 } as const;
 
-type RampSpec = {
-  /** Per-stop lightness, lightest → darkest (the backbone). */
-  lightness: number[];
-  /** Hue at the lightest / darkest stop; drifts linearly between. */
-  hueStart: number;
-  hueEnd: number;
-  /** Chroma bell: value at the edges, the peak, and which stop carries it. */
-  chromaStart: number;
-  chromaPeak: number;
-  chromaEnd: number;
-  peakIndex: number;
-  /** Shape of the bell's climb / descent (0 = S-curve, 1 = ease-out). */
-  chromaRiseBias: number;
-  chromaFallBias: number;
+/** A scale's twelve steps, keyed `1…12`. */
+export type MantiScaleSteps = Record<MantiScaleStep, string>;
+
+/**
+ * One Radix scale as Manti ships it: the light and the dark scale side by
+ * side. `radix` names the scale in `@radix-ui/colors`, so a reader can find
+ * the source of every value.
+ */
+export type MantiColorScale = {
+  radix: string;
+  light: MantiScaleSteps;
+  dark: MantiScaleSteps;
 };
 
-const cosEase = (t: number) => (1 - Math.cos(Math.PI * t)) / 2;
-const outEase = (t: number) => Math.sin((t * Math.PI) / 2);
-const easeBias = (t: number, b: number) =>
-  (1 - b) * cosEase(t) + b * outEase(t);
-const round = (n: number, p: number) => Number(n.toFixed(p));
-
-/** Expand a {@link RampSpec} into `{ 1: 'oklch(…)', …, 12: 'oklch(…)' }`. */
-function rampFrom(spec: RampSpec): Record<number, string> {
-  const n = spec.lightness.length;
-  const out: Record<number, string> = {};
-  spec.lightness.forEach((l, i) => {
-    const h = round(
-      spec.hueStart + (spec.hueEnd - spec.hueStart) * (i / (n - 1)),
-      1,
-    );
-    const c =
-      i <= spec.peakIndex
-        ? spec.chromaStart +
-          (spec.chromaPeak - spec.chromaStart) *
-            easeBias(i / spec.peakIndex, spec.chromaRiseBias)
-        : spec.chromaPeak +
-          (spec.chromaEnd - spec.chromaPeak) *
-            easeBias(
-              (i - spec.peakIndex) / (n - 1 - spec.peakIndex),
-              spec.chromaFallBias,
-            );
-    out[RAMP_STOPS[i]] = `oklch(${round(l, 3)} ${round(c, 3)} ${h})`;
-  });
+/**
+ * Re-key a Radix scale object (`{ slate1: …, slate12: … }`) onto `1…12`.
+ * Radix keys alpha scales with an `A` before the step (`slateA3`), which the
+ * prefix covers.
+ */
+function steps(source: Record<string, string>, prefix: string) {
+  const out = {} as MantiScaleSteps;
+  for (const step of SCALE_STEPS) {
+    const value = source[`${prefix}${step}`];
+    if (value === undefined)
+      throw new Error(`@radix-ui/colors has no ${prefix}${step}`);
+    out[step] = value;
+  }
   return out;
 }
 
-/** Primitive color ramps, generated from specs (see {@link rampFrom}). */
-export const colorPrimitives = {
-  /**
-   * Cool neutral — the panel-signature hue (280), the single backbone of every
-   * surface, text, and border color. The hue is centralized on `--manti-cool-hue`
-   * in the CSS (the token generator rewrites these stops to
-   * `oklch(l c var(--manti-cool-hue))`), so the whole neutral re-tints from one
-   * custom property. Chroma stays near-zero (a faint cool cast, no color).
-   */
-  gray: rampFrom({
-    lightness: [
-      0.985, 0.97, 0.941, 0.903, 0.83, 0.727, 0.618, 0.517, 0.424, 0.336, 0.261,
-      0.196,
-    ],
-    hueStart: 280,
-    hueEnd: 280,
-    chromaStart: 0.004,
-    chromaPeak: 0.013,
-    chromaEnd: 0.008,
-    peakIndex: 6,
-    chromaRiseBias: 0.5,
-    chromaFallBias: 0.4,
-  }),
-  /** Primary. Warm orange — the signature Manti UI accent. */
-  orange: rampFrom({
-    lightness: [
-      0.972, 0.943, 0.899, 0.84, 0.772, 0.708, 0.648, 0.579, 0.495, 0.415,
-      0.342, 0.262,
-    ],
-    hueStart: 50,
-    hueEnd: 33,
-    chromaStart: 0.018,
-    chromaPeak: 0.172,
-    chromaEnd: 0.064,
-    peakIndex: 7,
-    chromaRiseBias: 0.5,
-    chromaFallBias: 0,
-  }),
-  /** Success. Fresh green. */
-  green: rampFrom({
-    lightness: [
-      0.972, 0.943, 0.9, 0.84, 0.769, 0.701, 0.63, 0.546, 0.461, 0.383, 0.313,
-      0.238,
-    ],
-    hueStart: 150,
-    hueEnd: 160,
-    chromaStart: 0.022,
-    chromaPeak: 0.128,
-    chromaEnd: 0.044,
-    peakIndex: 6,
-    chromaRiseBias: 0.5,
-    chromaFallBias: 0.2,
-  }),
-  /** Secondary. Golden amber — the same ramp warning semantics draw on. */
-  amber: rampFrom({
-    lightness: [
-      0.978, 0.955, 0.917, 0.873, 0.83, 0.785, 0.728, 0.641, 0.536, 0.446,
-      0.374, 0.286,
-    ],
-    hueStart: 85,
-    hueEnd: 60,
-    chromaStart: 0.022,
-    chromaPeak: 0.15,
-    chromaEnd: 0.054,
-    peakIndex: 6,
-    chromaRiseBias: 0.5,
-    chromaFallBias: 0.2,
-  }),
-  /** Danger. Hot red. */
-  red: rampFrom({
-    lightness: [
-      0.971, 0.94, 0.893, 0.831, 0.756, 0.685, 0.622, 0.557, 0.479, 0.407,
-      0.345, 0.262,
-    ],
-    hueStart: 25,
-    hueEnd: 26,
-    chromaStart: 0.018,
-    chromaPeak: 0.21,
-    chromaEnd: 0.085,
-    peakIndex: 7,
-    chromaRiseBias: 0.3,
-    chromaFallBias: -0.15,
-  }),
-  /** Info. Smooth, calm blue. */
-  blue: rampFrom({
-    lightness: [
-      0.974, 0.944, 0.9, 0.841, 0.763, 0.686, 0.612, 0.535, 0.459, 0.389, 0.329,
-      0.252,
-    ],
-    hueStart: 235,
-    hueEnd: 249,
-    chromaStart: 0.014,
-    chromaPeak: 0.14,
-    chromaEnd: 0.056,
-    peakIndex: 7,
-    chromaRiseBias: 0.5,
-    chromaFallBias: 0.1,
-  }),
-};
+function scale(
+  radix: string,
+  light: Record<string, string>,
+  dark: Record<string, string>,
+): MantiColorScale {
+  return { radix, light: steps(light, radix), dark: steps(dark, radix) };
+}
+
+/**
+ * The opaque color scales, taken verbatim from Radix Colors. The neutral is
+ * Radix `slate`, the cool blue-gray closest to Manti's cool-dark signature.
+ */
+export const colorScales = {
+  /** Cool neutral: every surface, text, and border color. */
+  gray: scale('slate', slate, slateDark),
+  /** Primary. Warm orange, the signature Manti UI accent. */
+  orange: scale('orange', orange, orangeDark),
+  /** Success. */
+  green: scale('green', green, greenDark),
+  /** Warning text. */
+  amber: scale('amber', amber, amberDark),
+  /** Danger. */
+  red: scale('red', red, redDark),
+  /** Info. */
+  blue: scale('blue', blue, blueDark),
+} as const satisfies Record<string, MantiColorScale>;
+
+/**
+ * The translucent Radix scales the semantic roles read, emitted as
+ * `--manti-{name}-a{step}`. Only what a role consumes ships: `gray` (`slateA`)
+ * for the panel hairline, `black` (`blackA`, one scale for both schemes) for
+ * the modal overlay, and `violet`, `pink` and `orange` for the three ambient
+ * glows behind the app.
+ */
+export const alphaScales = {
+  gray: scale('slateA', slateA, slateDarkA),
+  black: scale('blackA', blackA, blackA),
+  violet: scale('violetA', violetA, violetDarkA),
+  pink: scale('pinkA', pinkA, pinkDarkA),
+  orange: scale('orangeA', orangeA, orangeDarkA),
+} as const satisfies Record<string, MantiColorScale>;
+
+/**
+ * The two inks a solid fill may carry, each one Radix step held fixed across
+ * schemes: the lightest light-scheme slate and the darkest dark-scheme slate.
+ * A theme-aware step cannot do this job, because `--manti-gray-12` is dark in
+ * light and light in dark, while a label on an orange fill needs the same ink
+ * in both. Emitted as `--manti-ink-light` / `--manti-ink-dark`.
+ */
+export const colorInks = {
+  light: slate.slate1,
+  dark: slateDark.slate1,
+} as const;
+
+/**
+ * Primitive color ramps as the CSS values `--manti-{hue}-{step}` carries, for
+ * swatches and docs: `colorPrimitives.gray[1]` is
+ * `light-dark(#fcfcfd, #111113)`, so a swatch painted with it follows the
+ * color scheme. Read {@link colorScales} for the per-scheme values.
+ */
+export const colorPrimitives = Object.fromEntries(
+  Object.entries(colorScales).map(([name, s]) => [
+    name,
+    Object.fromEntries(
+      SCALE_STEPS.map((step) => [
+        step,
+        `light-dark(${s.light[step]}, ${s.dark[step]})`,
+      ]),
+    ),
+  ]),
+) as Record<keyof typeof colorScales, MantiScaleSteps>;
 
 /**
  * Color variants available to variant-driven components (button, badge,
@@ -802,7 +768,13 @@ export type MantiComponentToken = {
 export const mantiTokens = {
   packageName: '@manti-ui/tokens',
   status: 'designed',
-  color: { primitives: colorPrimitives, scaleRoles: colorScaleRoles },
+  color: {
+    primitives: colorPrimitives,
+    scales: colorScales,
+    alphaScales,
+    inks: colorInks,
+    scaleRoles: colorScaleRoles,
+  },
   variants,
   componentTokens,
   radius,

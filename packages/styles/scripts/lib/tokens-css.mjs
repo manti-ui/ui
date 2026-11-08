@@ -96,8 +96,10 @@ export async function readTokensCss(path) {
   function color(v, theme, scope) {
     v = v.trim();
     if (v === 'white' || v === 'black') return new Color(v);
-    // Preset themes carry their base colors as plain hex.
+    // Radix steps are plain hex (alpha scales add a fourth byte); `blackA` is
+    // `rgba()`. Preset themes carry their base colors as plain hex too.
     if (/^#[0-9a-f]{3,8}$/i.test(v)) return new Color(v);
+    if (/^rgba?\([^)]*\)$/.test(v)) return new Color(v);
 
     let m = v.match(/^var\(\s*(--[\w-]+)\s*(?:,(.*))?\)$/s);
     if (m) {

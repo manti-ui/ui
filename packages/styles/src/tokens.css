@@ -2,9 +2,10 @@
  * Manti UI tokens.
  *
  * Three layers of meaning:
- *   1. Primitive ramps — fixed OKLCH scales (`--manti-orange-7`, ...).
- *   2. Semantic roles — surfaces, text, motion, radius, space. Color roles use
- *      `light-dark()` so the theme follows `color-scheme` automatically.
+ *   1. Primitive scales — Radix Colors steps (`--manti-orange-9`, ...), each
+ *      a `light-dark()` of Radix's light and dark step N.
+ *   2. Semantic roles — surfaces, text, motion, radius, space. Color roles read
+ *      a single step, so the theme follows `color-scheme` automatically.
  *   3. Variant roles — selected per component via `[data-variant]`, exposing a
  *      small, uniform `--variant-*` vocabulary that every variant-driven
  *      component consumes.
@@ -16,90 +17,150 @@
   :root {
     color-scheme: light dark;
 
-    /* The single neutral hue. Drives the `gray` primitive ramp (via the token
-     * generator) and every neutral chrome role below — surfaces, text, borders,
-     * overlay, elevation, panel. Re-tint the whole system's neutral from here;
-     * the semantic variants (orange/red/…) keep their own hues. */
-    --manti-cool-hue: 280;
-
     /* ─────────────────────────────────────────────────────────────────────
      * Generated from the @manti-ui/tokens contract — DO NOT EDIT BY HAND.
      * Run `pnpm gen:tokens` after editing packages/tokens/src/index.ts.
      * ───────────────────────────────────────────────────────────────────── */
     /* @tokens:generated:start */
-    /* Primitive ramps — fixed OKLCH scales, identical in light and dark. */
-    --manti-gray-1: oklch(0.985 0.004 var(--manti-cool-hue));
-    --manti-gray-2: oklch(0.97 0.005 var(--manti-cool-hue));
-    --manti-gray-3: oklch(0.941 0.007 var(--manti-cool-hue));
-    --manti-gray-4: oklch(0.903 0.009 var(--manti-cool-hue));
-    --manti-gray-5: oklch(0.83 0.011 var(--manti-cool-hue));
-    --manti-gray-6: oklch(0.727 0.013 var(--manti-cool-hue));
-    --manti-gray-7: oklch(0.618 0.013 var(--manti-cool-hue));
-    --manti-gray-8: oklch(0.517 0.012 var(--manti-cool-hue));
-    --manti-gray-9: oklch(0.424 0.011 var(--manti-cool-hue));
-    --manti-gray-10: oklch(0.336 0.009 var(--manti-cool-hue));
-    --manti-gray-11: oklch(0.261 0.008 var(--manti-cool-hue));
-    --manti-gray-12: oklch(0.196 0.008 var(--manti-cool-hue));
-    --manti-orange-1: oklch(0.972 0.018 50);
-    --manti-orange-2: oklch(0.943 0.039 48.5);
-    --manti-orange-3: oklch(0.899 0.066 46.9);
-    --manti-orange-4: oklch(0.84 0.096 45.4);
-    --manti-orange-5: oklch(0.772 0.125 43.8);
-    --manti-orange-6: oklch(0.708 0.15 42.3);
-    --manti-orange-7: oklch(0.648 0.166 40.7);
-    --manti-orange-8: oklch(0.579 0.172 39.2);
-    --manti-orange-9: oklch(0.495 0.156 37.6);
-    --manti-orange-10: oklch(0.415 0.118 36.1);
-    --manti-orange-11: oklch(0.342 0.08 34.5);
-    --manti-orange-12: oklch(0.262 0.064 33);
-    --manti-green-1: oklch(0.972 0.022 150);
-    --manti-green-2: oklch(0.943 0.039 150.9);
-    --manti-green-3: oklch(0.9 0.062 151.8);
-    --manti-green-4: oklch(0.84 0.086 152.7);
-    --manti-green-5: oklch(0.769 0.108 153.6);
-    --manti-green-6: oklch(0.701 0.123 154.5);
-    --manti-green-7: oklch(0.63 0.128 155.5);
-    --manti-green-8: oklch(0.546 0.116 156.4);
-    --manti-green-9: oklch(0.461 0.095 157.3);
-    --manti-green-10: oklch(0.383 0.07 158.2);
-    --manti-green-11: oklch(0.313 0.051 159.1);
-    --manti-green-12: oklch(0.238 0.044 160);
-    --manti-amber-1: oklch(0.978 0.022 85);
-    --manti-amber-2: oklch(0.955 0.043 82.7);
-    --manti-amber-3: oklch(0.917 0.07 80.5);
-    --manti-amber-4: oklch(0.873 0.099 78.2);
-    --manti-amber-5: oklch(0.83 0.125 75.9);
-    --manti-amber-6: oklch(0.785 0.144 73.6);
-    --manti-amber-7: oklch(0.728 0.15 71.4);
-    --manti-amber-8: oklch(0.641 0.137 69.1);
-    --manti-amber-9: oklch(0.536 0.112 66.8);
-    --manti-amber-10: oklch(0.446 0.084 64.5);
-    --manti-amber-11: oklch(0.374 0.062 62.3);
-    --manti-amber-12: oklch(0.286 0.054 60);
-    --manti-red-1: oklch(0.971 0.018 25);
-    --manti-red-2: oklch(0.94 0.037 25.1);
-    --manti-red-3: oklch(0.893 0.068 25.2);
-    --manti-red-4: oklch(0.831 0.106 25.3);
-    --manti-red-5: oklch(0.756 0.145 25.4);
-    --manti-red-6: oklch(0.685 0.179 25.5);
-    --manti-red-7: oklch(0.622 0.202 25.5);
-    --manti-red-8: oklch(0.557 0.21 25.6);
-    --manti-red-9: oklch(0.479 0.196 25.7);
-    --manti-red-10: oklch(0.407 0.151 25.8);
-    --manti-red-11: oklch(0.345 0.105 25.9);
-    --manti-red-12: oklch(0.262 0.085 26);
-    --manti-blue-1: oklch(0.974 0.014 235);
-    --manti-blue-2: oklch(0.944 0.031 236.3);
-    --manti-blue-3: oklch(0.9 0.053 237.5);
-    --manti-blue-4: oklch(0.841 0.078 238.8);
-    --manti-blue-5: oklch(0.763 0.102 240.1);
-    --manti-blue-6: oklch(0.686 0.122 241.4);
-    --manti-blue-7: oklch(0.612 0.135 242.6);
-    --manti-blue-8: oklch(0.535 0.14 243.9);
-    --manti-blue-9: oklch(0.459 0.126 245.2);
-    --manti-blue-10: oklch(0.389 0.096 246.5);
-    --manti-blue-11: oklch(0.329 0.068 247.7);
-    --manti-blue-12: oklch(0.252 0.056 249);
+    /* Primitive scales — Radix Colors, light and dark step N per stop. */
+    --manti-gray-1: light-dark(#fcfcfd, #111113);
+    --manti-gray-2: light-dark(#f9f9fb, #18191b);
+    --manti-gray-3: light-dark(#f0f0f3, #212225);
+    --manti-gray-4: light-dark(#e8e8ec, #272a2d);
+    --manti-gray-5: light-dark(#e0e1e6, #2e3135);
+    --manti-gray-6: light-dark(#d9d9e0, #363a3f);
+    --manti-gray-7: light-dark(#cdced6, #43484e);
+    --manti-gray-8: light-dark(#b9bbc6, #5a6169);
+    --manti-gray-9: light-dark(#8b8d98, #696e77);
+    --manti-gray-10: light-dark(#80838d, #777b84);
+    --manti-gray-11: light-dark(#60646c, #b0b4ba);
+    --manti-gray-12: light-dark(#1c2024, #edeef0);
+    --manti-orange-1: light-dark(#fefcfb, #17120e);
+    --manti-orange-2: light-dark(#fff7ed, #1e160f);
+    --manti-orange-3: light-dark(#ffefd6, #331e0b);
+    --manti-orange-4: light-dark(#ffdfb5, #462100);
+    --manti-orange-5: light-dark(#ffd19a, #562800);
+    --manti-orange-6: light-dark(#ffc182, #66350c);
+    --manti-orange-7: light-dark(#f5ae73, #7e451d);
+    --manti-orange-8: light-dark(#ec9455, #a35829);
+    --manti-orange-9: light-dark(#f76b15, #f76b15);
+    --manti-orange-10: light-dark(#ef5f00, #ff801f);
+    --manti-orange-11: light-dark(#cc4e00, #ffa057);
+    --manti-orange-12: light-dark(#582d1d, #ffe0c2);
+    --manti-green-1: light-dark(#fbfefc, #0e1512);
+    --manti-green-2: light-dark(#f4fbf6, #121b17);
+    --manti-green-3: light-dark(#e6f6eb, #132d21);
+    --manti-green-4: light-dark(#d6f1df, #113b29);
+    --manti-green-5: light-dark(#c4e8d1, #174933);
+    --manti-green-6: light-dark(#adddc0, #20573e);
+    --manti-green-7: light-dark(#8eceaa, #28684a);
+    --manti-green-8: light-dark(#5bb98b, #2f7c57);
+    --manti-green-9: light-dark(#30a46c, #30a46c);
+    --manti-green-10: light-dark(#2b9a66, #33b074);
+    --manti-green-11: light-dark(#218358, #3dd68c);
+    --manti-green-12: light-dark(#193b2d, #b1f1cb);
+    --manti-amber-1: light-dark(#fefdfb, #16120c);
+    --manti-amber-2: light-dark(#fefbe9, #1d180f);
+    --manti-amber-3: light-dark(#fff7c2, #302008);
+    --manti-amber-4: light-dark(#ffee9c, #3f2700);
+    --manti-amber-5: light-dark(#fbe577, #4d3000);
+    --manti-amber-6: light-dark(#f3d673, #5c3d05);
+    --manti-amber-7: light-dark(#e9c162, #714f19);
+    --manti-amber-8: light-dark(#e2a336, #8f6424);
+    --manti-amber-9: light-dark(#ffc53d, #ffc53d);
+    --manti-amber-10: light-dark(#ffba18, #ffd60a);
+    --manti-amber-11: light-dark(#ab6400, #ffca16);
+    --manti-amber-12: light-dark(#4f3422, #ffe7b3);
+    --manti-red-1: light-dark(#fffcfc, #191111);
+    --manti-red-2: light-dark(#fff7f7, #201314);
+    --manti-red-3: light-dark(#feebec, #3b1219);
+    --manti-red-4: light-dark(#ffdbdc, #500f1c);
+    --manti-red-5: light-dark(#ffcdce, #611623);
+    --manti-red-6: light-dark(#fdbdbe, #72232d);
+    --manti-red-7: light-dark(#f4a9aa, #8c333a);
+    --manti-red-8: light-dark(#eb8e90, #b54548);
+    --manti-red-9: light-dark(#e5484d, #e5484d);
+    --manti-red-10: light-dark(#dc3e42, #ec5d5e);
+    --manti-red-11: light-dark(#ce2c31, #ff9592);
+    --manti-red-12: light-dark(#641723, #ffd1d9);
+    --manti-blue-1: light-dark(#fbfdff, #0d1520);
+    --manti-blue-2: light-dark(#f4faff, #111927);
+    --manti-blue-3: light-dark(#e6f4fe, #0d2847);
+    --manti-blue-4: light-dark(#d5efff, #003362);
+    --manti-blue-5: light-dark(#c2e5ff, #004074);
+    --manti-blue-6: light-dark(#acd8fc, #104d87);
+    --manti-blue-7: light-dark(#8ec8f6, #205d9e);
+    --manti-blue-8: light-dark(#5eb1ef, #2870bd);
+    --manti-blue-9: light-dark(#0090ff, #0090ff);
+    --manti-blue-10: light-dark(#0588f0, #3b9eff);
+    --manti-blue-11: light-dark(#0d74ce, #70b8ff);
+    --manti-blue-12: light-dark(#113264, #c2e6ff);
+
+    /* Alpha scales — Radix Colors, light and dark step N per stop */
+    --manti-gray-a1: light-dark(#00005503, #00000000);
+    --manti-gray-a2: light-dark(#00005506, #d8f4f609);
+    --manti-gray-a3: light-dark(#0000330f, #ddeaf814);
+    --manti-gray-a4: light-dark(#00002d17, #d3edf81d);
+    --manti-gray-a5: light-dark(#0009321f, #d9edfe25);
+    --manti-gray-a6: light-dark(#00002f26, #d6ebfd30);
+    --manti-gray-a7: light-dark(#00062e32, #d9edff40);
+    --manti-gray-a8: light-dark(#00083046, #d9edff5d);
+    --manti-gray-a9: light-dark(#00051d74, #dfebfd6d);
+    --manti-gray-a10: light-dark(#00071b7f, #e5edfd7b);
+    --manti-gray-a11: light-dark(#0007149f, #f1f7feb5);
+    --manti-gray-a12: light-dark(#000509e3, #fcfdffef);
+    --manti-black-a1: rgba(0, 0, 0, 0.05);
+    --manti-black-a2: rgba(0, 0, 0, 0.1);
+    --manti-black-a3: rgba(0, 0, 0, 0.15);
+    --manti-black-a4: rgba(0, 0, 0, 0.2);
+    --manti-black-a5: rgba(0, 0, 0, 0.3);
+    --manti-black-a6: rgba(0, 0, 0, 0.4);
+    --manti-black-a7: rgba(0, 0, 0, 0.5);
+    --manti-black-a8: rgba(0, 0, 0, 0.6);
+    --manti-black-a9: rgba(0, 0, 0, 0.7);
+    --manti-black-a10: rgba(0, 0, 0, 0.8);
+    --manti-black-a11: rgba(0, 0, 0, 0.9);
+    --manti-black-a12: rgba(0, 0, 0, 0.95);
+    --manti-violet-a1: light-dark(#5500aa03, #4422ff0f);
+    --manti-violet-a2: light-dark(#4900ff07, #853ff916);
+    --manti-violet-a3: light-dark(#4400ee0f, #8354fe36);
+    --manti-violet-a4: light-dark(#4300ff1b, #7d51fd50);
+    --manti-violet-a5: light-dark(#3600ff26, #845ffd5f);
+    --manti-violet-a6: light-dark(#3100fb35, #8f6cfd6d);
+    --manti-violet-a7: light-dark(#2d01dd4a, #9879ff83);
+    --manti-violet-a8: light-dark(#2b00d066, #977dfea8);
+    --manti-violet-a9: light-dark(#2400b7a9, #8668ffcc);
+    --manti-violet-a10: light-dark(#2300abb2, #9176fed7);
+    --manti-violet-a11: light-dark(#1f0099af, #baa7ff);
+    --manti-violet-a12: light-dark(#0b0043d9, #e3defffe);
+    --manti-pink-a1: light-dark(#ff00aa03, #f412bc09);
+    --manti-pink-a2: light-dark(#e0008008, #f420bb12);
+    --manti-pink-a3: light-dark(#f4008c16, #fe37cc29);
+    --manti-pink-a4: light-dark(#e2008b23, #fc1ec43f);
+    --manti-pink-a5: light-dark(#d1008331, #fd35c24e);
+    --manti-pink-a6: light-dark(#c0007840, #fd51c75f);
+    --manti-pink-a7: light-dark(#b6006f53, #fd62c87b);
+    --manti-pink-a8: light-dark(#af006f6c, #ff68c8a2);
+    --manti-pink-a9: light-dark(#c8007fbf, #fe49bcd4);
+    --manti-pink-a10: light-dark(#c2007ac7, #ff5cc0dc);
+    --manti-pink-a11: light-dark(#b60074d6, #ff8dcc);
+    --manti-pink-a12: light-dark(#59003bed, #ffd3ecfd);
+    --manti-orange-a1: light-dark(#c0400004, #ec360007);
+    --manti-orange-a2: light-dark(#ff8e0012, #fe6d000e);
+    --manti-orange-a3: light-dark(#ff9c0029, #fb6a0025);
+    --manti-orange-a4: light-dark(#ff91014a, #ff590039);
+    --manti-orange-a5: light-dark(#ff8b0065, #ff61004a);
+    --manti-orange-a6: light-dark(#ff81007d, #fd75045c);
+    --manti-orange-a7: light-dark(#ed6c008c, #ff832c75);
+    --manti-orange-a8: light-dark(#e35f00aa, #fe84389d);
+    --manti-orange-a9: light-dark(#f65e00ea, #fe6d15f7);
+    --manti-orange-a10: light-dark(#ef5f00, #ff801f);
+    --manti-orange-a11: light-dark(#cc4e00, #ffa057);
+    --manti-orange-a12: light-dark(#431200e2, #ffe0c2);
+
+    /* Inks — one Radix step each, fixed across schemes */
+    --manti-ink-light: #fcfcfd;
+    --manti-ink-dark: #111113;
 
     /* Radius */
     --manti-radius-factor: 1;
@@ -224,73 +285,44 @@
     --manti-radius-thumb: 9999px; /* draggable handles — round by default */
 
     /* Semantic surfaces & text ------------------------------------------- *
-     * Cool and near-neutral. Dark is the hero — a deep near-black with a faint
-     * cool cast. Light is a soft, slightly-deep daylight, never stark white.   */
-    --manti-bg: light-dark(
-      oklch(0.965 0.003 var(--manti-cool-hue)),
-      oklch(0.145 0.006 var(--manti-cool-hue))
-    );
-    --manti-bg-subtle: light-dark(
-      oklch(0.94 0.004 var(--manti-cool-hue)),
-      oklch(0.172 0.007 var(--manti-cool-hue))
-    );
-    --manti-surface: light-dark(
-      oklch(0.985 0.0025 var(--manti-cool-hue)),
-      oklch(0.188 0.008 var(--manti-cool-hue))
-    );
-    --manti-surface-raised: light-dark(
-      oklch(0.998 0.0015 var(--manti-cool-hue)),
-      oklch(0.216 0.009 var(--manti-cool-hue))
-    );
-    --manti-surface-sunken: light-dark(
-      oklch(0.93 0.004 var(--manti-cool-hue)),
-      oklch(0.125 0.006 var(--manti-cool-hue))
-    );
-    --manti-overlay: light-dark(
-      oklch(0.18 0.02 var(--manti-cool-hue) / 0.4),
-      oklch(0.02 0.01 var(--manti-cool-hue) / 0.66)
-    );
+     * Every role reads one step of the Radix `slate` scale behind
+     * `--manti-gray-*`. A step is theme-aware on its own (Radix light step N
+     * in light, dark step N in dark), so a role needs no `light-dark()` pick:
+     * 1–2 canvas, 3–5 component states, 6–8 borders and rings, 9–10 solids,
+     * 11–12 text.                                                            */
+    --manti-bg: var(--manti-gray-1);
+    --manti-bg-subtle: var(--manti-gray-2);
+    --manti-surface: var(--manti-gray-2);
+    --manti-surface-raised: var(--manti-gray-3);
+    --manti-surface-sunken: var(--manti-gray-1);
+    /* Radix ships one `blackA` scale for both schemes, so the scrim takes
+       the step Radix Themes uses in each: a6 over light, a8 over dark. */
+    --manti-overlay: light-dark(var(--manti-black-a6), var(--manti-black-a8));
 
-    --manti-border: light-dark(
-      oklch(0.9 0.004 var(--manti-cool-hue)),
-      oklch(0.285 0.008 var(--manti-cool-hue))
-    );
-    --manti-border-strong: light-dark(
-      oklch(0.83 0.006 var(--manti-cool-hue)),
-      oklch(0.36 0.009 var(--manti-cool-hue))
-    );
+    --manti-border: var(--manti-gray-6);
+    --manti-border-strong: var(--manti-gray-7);
 
-    --manti-text: light-dark(
-      oklch(0.24 0.01 var(--manti-cool-hue)),
-      oklch(0.96 0.004 var(--manti-cool-hue))
-    );
-    --manti-text-muted: light-dark(
-      oklch(0.46 0.01 var(--manti-cool-hue)),
-      oklch(0.72 0.006 var(--manti-cool-hue))
-    );
-    /* Lowest-emphasis text — nudged to clear WCAG AA (4.5) over bg/surface in
-       both themes while staying below text-muted in emphasis. See
-       scripts/check-contrast.mjs. */
-    --manti-text-subtle: light-dark(
-      oklch(0.54 0.01 var(--manti-cool-hue)),
-      oklch(0.6 0.007 var(--manti-cool-hue))
-    );
-    --manti-text-on-accent: oklch(0.99 0.003 var(--manti-cool-hue));
+    --manti-text: var(--manti-gray-12);
+    --manti-text-muted: var(--manti-gray-11);
+    /* Lowest-emphasis text. Radix has one low-contrast text step: step 10
+       misses WCAG AA (4.5) over the surfaces, so subtle shares step 11 with
+       muted. See scripts/check-contrast.mjs. */
+    --manti-text-subtle: var(--manti-gray-11);
+    /* Label inks for a solid fill, the same in both schemes: `on-accent` is
+       the near-white ink, `on-bright` its near-black twin. */
+    --manti-text-on-accent: var(--manti-ink-light);
+    --manti-text-on-bright: var(--manti-ink-dark);
 
     /* Semantic status/accent roles. Components consume these roles instead of
-       reaching into a primitive ramp; the light/dark step mapping stays here. */
-    --manti-danger-icon: light-dark(var(--manti-red-8), var(--manti-red-5));
-    --manti-danger-border: light-dark(var(--manti-red-7), var(--manti-red-5));
-    --manti-danger-text: light-dark(var(--manti-red-9), var(--manti-red-4));
-    --manti-warning-text: light-dark(
-      var(--manti-amber-10),
-      var(--manti-amber-4)
-    );
-    --manti-accent-fill: light-dark(
-      var(--manti-orange-8),
-      var(--manti-orange-7)
-    );
-    --manti-contrast-light: var(--manti-gray-1);
+       reaching into a primitive scale; the step mapping stays here. Amber 11
+       misses AA over the surface in light, so warning text takes step 12. */
+    --manti-danger-icon: var(--manti-red-9);
+    --manti-danger-border: var(--manti-red-8);
+    --manti-danger-text: var(--manti-red-11);
+    --manti-warning-text: var(--manti-amber-12);
+    --manti-accent-fill: var(--manti-orange-9);
+    /* A light mark in both schemes (the color-picker thumb ring). */
+    --manti-contrast-light: var(--manti-ink-light);
 
     --manti-link: var(--manti-text);
 
@@ -308,63 +340,55 @@
     );
 
     /* Focus ring — neutral. The system is monochrome: no gradients and no
-       colored brand accent; color comes only from the semantic variants. ----- */
-    --manti-focus-ring: light-dark(
-      oklch(0.5 0.02 var(--manti-cool-hue)),
-      oklch(0.78 0.02 var(--manti-cool-hue))
-    );
+       colored brand accent; color comes only from the semantic variants.
+       Slate 8 misses the 3:1 non-text bar over the page in light, so the
+       ring takes step 9. ----------------------------------------------- */
+    --manti-focus-ring: var(--manti-gray-9);
     --manti-focus-ring-width: 3px;
     --manti-focus-ring-offset: 2px;
 
     /* Text selection — the one deliberate brand-coloured accent (consumed by
        `::selection` in base.css). Hand-authored, not part of the generated
        region above. */
-    --manti-selection-bg: var(--manti-orange-7);
+    --manti-selection-bg: var(--manti-orange-5);
     --manti-selection-text: var(--manti-gray-12);
 
     /* Material — sleek translucent panel --------------------------------------- *
      * The Manti UI signature: floating surfaces are a translucent panel over
      * the ambient mesh with a light backdrop blur and a hairline border.
-     * Cards carry an accent gradient lit along the top edge (see card.css).
+     * The tints are the opaque slate surface steps let partly through, so a
+     * panel reads as the surface it stands for; the hairline is `slateA`.
      * Retune the whole material from here.                                    */
-    --manti-panel-tint: light-dark(
-      oklch(0.99 0.002 var(--manti-cool-hue) / 0.62),
-      oklch(0.2 0.008 var(--manti-cool-hue) / 0.55)
+    --manti-panel-tint: color-mix(
+      in oklab,
+      var(--manti-gray-2) 60%,
+      transparent
     );
-    --manti-panel-tint-strong: light-dark(
-      oklch(0.995 0.0015 var(--manti-cool-hue) / 0.94),
-      oklch(0.22 0.009 var(--manti-cool-hue) / 0.93)
+    --manti-panel-tint-strong: color-mix(
+      in oklab,
+      var(--manti-gray-2) 94%,
+      transparent
     );
     /* Pressed rung of the panel material — the `active` stop of the surface
        ladder for chrome built out of the tint (collapsible/carousel/calendar
        triggers, interactive cards). Like every interaction role it moves in the
-       direction that gains contrast per theme: darker in light, lighter in
-       dark. Ladder: tint (rest) → tint-strong (hover) → tint-pressed (active). */
-    --manti-panel-tint-pressed: light-dark(
-      oklch(0.945 0.004 var(--manti-cool-hue) / 0.97),
-      oklch(0.27 0.011 var(--manti-cool-hue) / 0.96)
+       direction that gains contrast per theme, which a Radix step does on its
+       own. Ladder: tint (rest) → tint-strong (hover) → tint-pressed (active). */
+    --manti-panel-tint-pressed: color-mix(
+      in oklab,
+      var(--manti-gray-4) 96%,
+      transparent
     );
     --manti-panel-blur: blur(12px) saturate(140%);
-    --manti-panel-border: light-dark(
-      oklch(0.2 0.02 var(--manti-cool-hue) / 0.1),
-      oklch(1 0 0 / 0.09)
-    );
+    --manti-panel-border: var(--manti-gray-a4);
     /* Ambient — the color the dark refracts ------------------------------ *
      * Three soft glows behind every `.manti-app`/`body`: a faint violet,
-     * magenta, and warm ember. Pure scene lighting (not a gradient element),
-     * so near-black reads deep rather than flat — and light gets a faint wash. */
-    --manti-ambient-1: light-dark(
-      oklch(0.62 0.2 285 / 0.1),
-      oklch(0.6 0.2 285 / 0.16)
-    );
-    --manti-ambient-2: light-dark(
-      oklch(0.66 0.24 352 / 0.07),
-      oklch(0.64 0.24 352 / 0.12)
-    );
-    --manti-ambient-3: light-dark(
-      oklch(0.78 0.16 55 / 0.06),
-      oklch(0.74 0.16 55 / 0.1)
-    );
+     * magenta, and warm ember, each one step of a Radix alpha scale. Pure
+     * scene lighting (not a gradient element), so near-black reads deep
+     * rather than flat — and light gets a faint wash.                      */
+    --manti-ambient-1: var(--manti-violet-a3);
+    --manti-ambient-2: var(--manti-pink-a3);
+    --manti-ambient-3: var(--manti-orange-a2);
   }
 
   /* Explicit theme overrides of the system color-scheme. */
@@ -497,233 +521,132 @@
   }
 
   [data-variant='primary'] {
-    /* Bright orange with dark ink text. The mid-ramp orange sits in a luminance
-       dead zone where neither white nor black text clears WCAG AA, so the solid
-       is the vivid orange-7 (same in both themes) and the label is near-black
-       ink — 5.24:1, well past AA. See scripts/check-contrast.mjs. */
-    --variant-solid: var(--manti-orange-7);
-    /* Hover/active lighten in light, darken in dark (consistent with neutral):
-       mix toward white / black off the resolved solid. */
-    --variant-solid-hover: light-dark(
-      color-mix(in oklab, var(--variant-solid) 88%, white),
-      color-mix(in oklab, var(--variant-solid) 88%, black)
+    /* Radix orange: solid 9 → hover 10, soft 3 → 4 → 5, border 7, ring 8.
+       Step 12 carries soft text: step 11 misses WCAG AA on step 3 in light.
+       The press darkens the hover toward the scheme's text color, which is
+       the direction that gains contrast in each theme. */
+    --variant-solid: var(--manti-orange-9);
+    --variant-solid-hover: var(--manti-orange-10);
+    --variant-solid-active: color-mix(
+      in oklab,
+      var(--manti-orange-10) 88%,
+      var(--manti-gray-12)
     );
-    --variant-solid-active: light-dark(
-      color-mix(in oklab, var(--variant-solid) 78%, white),
-      color-mix(in oklab, var(--variant-solid) 78%, black)
-    );
-    --variant-soft-bg: light-dark(
-      var(--manti-orange-2),
-      color-mix(in oklab, var(--manti-orange-7) 20%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-hover: light-dark(
-      var(--manti-orange-3),
-      color-mix(in oklab, var(--manti-orange-7) 30%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-active: light-dark(
-      var(--manti-orange-4),
-      color-mix(in oklab, var(--manti-orange-7) 42%, var(--manti-gray-12))
-    );
-    --variant-soft-text: light-dark(
-      var(--manti-orange-9),
-      var(--manti-orange-3)
-    );
-    --variant-border: light-dark(var(--manti-orange-7), var(--manti-orange-8));
-    --variant-text: light-dark(var(--manti-orange-9), var(--manti-orange-4));
-    --variant-ring: light-dark(var(--manti-orange-8), var(--manti-orange-7));
+    --variant-soft-bg: var(--manti-orange-3);
+    --variant-soft-bg-hover: var(--manti-orange-4);
+    --variant-soft-bg-active: var(--manti-orange-5);
+    --variant-soft-text: var(--manti-orange-12);
+    --variant-border: var(--manti-orange-7);
+    --variant-text: var(--manti-orange-11);
+    --variant-ring: var(--manti-orange-8);
   }
 
   [data-variant='secondary'] {
-    /* Neutral soft treatment. The scale follows the shared role contract:
-       gray-3/4 for component rest/hover and gray-11 for readable soft text.
-       Solid values remain available to selection-driven components, while
-       Button, Badge, and Alert consume the softer roles below. */
-    --variant-solid: light-dark(var(--manti-gray-11), var(--manti-gray-3));
-    --variant-solid-hover: light-dark(
-      var(--manti-gray-10),
-      var(--manti-gray-4)
+    /* Neutral soft treatment on slate: component rest/hover/pressed on
+       3/4/5 and step 12 for the soft label. The solid is the high-contrast
+       neutral (step 12) and eases toward step 11 on hover and press. Solid
+       values remain available to selection-driven components, while Button,
+       Badge, and Alert consume the softer roles below. */
+    --variant-solid: var(--manti-gray-12);
+    --variant-solid-hover: color-mix(
+      in oklab,
+      var(--manti-gray-12) 50%,
+      var(--manti-gray-11)
     );
-    --variant-solid-active: light-dark(
-      var(--manti-gray-9),
-      var(--manti-gray-5)
-    );
-    --variant-soft-bg: light-dark(var(--manti-gray-3), var(--manti-gray-11));
-    --variant-soft-bg-hover: light-dark(
-      var(--manti-gray-4),
-      var(--manti-gray-10)
-    );
-    --variant-soft-bg-active: light-dark(
-      var(--manti-gray-5),
-      var(--manti-gray-9)
-    );
-    --variant-soft-text: light-dark(var(--manti-gray-11), var(--manti-gray-3));
-    --variant-border: light-dark(var(--manti-gray-6), var(--manti-gray-7));
-    --variant-text: light-dark(var(--manti-gray-11), var(--manti-gray-3));
+    --variant-solid-active: var(--manti-gray-11);
+    --variant-soft-bg: var(--manti-gray-3);
+    --variant-soft-bg-hover: var(--manti-gray-4);
+    --variant-soft-bg-active: var(--manti-gray-5);
+    --variant-soft-text: var(--manti-gray-12);
+    --variant-border: var(--manti-gray-7);
+    --variant-text: var(--manti-gray-12);
     --variant-ring: var(--manti-focus-ring);
   }
 
   [data-variant='success'] {
-    --variant-solid: var(--manti-green-8);
-    --variant-solid-hover: light-dark(
-      color-mix(in oklab, var(--variant-solid) 88%, white),
-      color-mix(in oklab, var(--variant-solid) 88%, black)
+    --variant-solid: var(--manti-green-9);
+    --variant-solid-hover: var(--manti-green-10);
+    --variant-solid-active: color-mix(
+      in oklab,
+      var(--manti-green-10) 88%,
+      var(--manti-gray-12)
     );
-    --variant-solid-active: light-dark(
-      color-mix(in oklab, var(--variant-solid) 78%, white),
-      color-mix(in oklab, var(--variant-solid) 78%, black)
-    );
-    --variant-soft-bg: light-dark(
-      var(--manti-green-2),
-      color-mix(in oklab, var(--manti-green-7) 20%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-hover: light-dark(
-      var(--manti-green-3),
-      color-mix(in oklab, var(--manti-green-7) 30%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-active: light-dark(
-      var(--manti-green-4),
-      color-mix(in oklab, var(--manti-green-7) 42%, var(--manti-gray-12))
-    );
-    --variant-soft-text: light-dark(var(--manti-green-9), var(--manti-green-3));
-    --variant-border: light-dark(
-      var(--manti-green-6),
-      color-mix(in oklab, var(--manti-green-7) 38%, var(--manti-gray-11))
-    );
-    --variant-text: light-dark(var(--manti-green-9), var(--manti-green-4));
-    --variant-ring: var(--manti-green-7);
+    --variant-soft-bg: var(--manti-green-3);
+    --variant-soft-bg-hover: var(--manti-green-4);
+    --variant-soft-bg-active: var(--manti-green-5);
+    --variant-soft-text: var(--manti-green-12);
+    --variant-border: var(--manti-green-7);
+    --variant-text: var(--manti-green-11);
+    --variant-ring: var(--manti-green-8);
   }
 
   [data-variant='info'] {
-    --variant-solid: var(--manti-blue-8);
-    --variant-solid-hover: light-dark(
-      color-mix(in oklab, var(--variant-solid) 88%, white),
-      color-mix(in oklab, var(--variant-solid) 88%, black)
+    --variant-solid: var(--manti-blue-9);
+    --variant-solid-hover: var(--manti-blue-10);
+    --variant-solid-active: color-mix(
+      in oklab,
+      var(--manti-blue-10) 88%,
+      var(--manti-gray-12)
     );
-    --variant-solid-active: light-dark(
-      color-mix(in oklab, var(--variant-solid) 78%, white),
-      color-mix(in oklab, var(--variant-solid) 78%, black)
-    );
-    --variant-soft-bg: light-dark(
-      var(--manti-blue-2),
-      color-mix(in oklab, var(--manti-blue-7) 20%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-hover: light-dark(
-      var(--manti-blue-3),
-      color-mix(in oklab, var(--manti-blue-7) 30%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-active: light-dark(
-      var(--manti-blue-4),
-      color-mix(in oklab, var(--manti-blue-7) 42%, var(--manti-gray-12))
-    );
-    --variant-soft-text: light-dark(var(--manti-blue-9), var(--manti-blue-3));
-    --variant-border: light-dark(
-      var(--manti-blue-6),
-      color-mix(in oklab, var(--manti-blue-7) 38%, var(--manti-gray-11))
-    );
-    --variant-text: light-dark(var(--manti-blue-9), var(--manti-blue-4));
-    --variant-ring: var(--manti-blue-7);
+    --variant-soft-bg: var(--manti-blue-3);
+    --variant-soft-bg-hover: var(--manti-blue-4);
+    --variant-soft-bg-active: var(--manti-blue-5);
+    --variant-soft-text: var(--manti-blue-12);
+    --variant-border: var(--manti-blue-7);
+    --variant-text: var(--manti-blue-11);
+    --variant-ring: var(--manti-blue-8);
   }
 
   [data-variant='tertiary'] {
-    /* The lowest-emphasis neutral rung. It shares the gray family with
+    /* The lowest-emphasis neutral rung. It shares the slate steps with
        secondary, but the consumer applies a ghost treatment with no container. */
-    --variant-solid: light-dark(
-      oklch(0.22 0.01 var(--manti-cool-hue)),
-      oklch(0.96 0.004 var(--manti-cool-hue))
+    --variant-solid: var(--manti-gray-12);
+    --variant-solid-hover: color-mix(
+      in oklab,
+      var(--manti-gray-12) 50%,
+      var(--manti-gray-11)
     );
-    --variant-solid-hover: light-dark(
-      oklch(0.3 0.012 var(--manti-cool-hue)),
-      oklch(0.88 0.005 var(--manti-cool-hue))
-    );
-    --variant-solid-active: light-dark(
-      oklch(0.36 0.012 var(--manti-cool-hue)),
-      oklch(0.8 0.006 var(--manti-cool-hue))
-    );
-    --variant-soft-bg: light-dark(
-      oklch(0.94 0.004 var(--manti-cool-hue)),
-      oklch(0.26 0.009 var(--manti-cool-hue))
-    );
-    --variant-soft-bg-hover: light-dark(
-      oklch(0.9 0.005 var(--manti-cool-hue)),
-      oklch(0.31 0.01 var(--manti-cool-hue))
-    );
-    --variant-soft-bg-active: light-dark(
-      oklch(0.855 0.006 var(--manti-cool-hue)),
-      oklch(0.365 0.011 var(--manti-cool-hue))
-    );
-    --variant-soft-text: light-dark(
-      oklch(0.3 0.01 var(--manti-cool-hue)),
-      oklch(0.92 0.005 var(--manti-cool-hue))
-    );
+    --variant-solid-active: var(--manti-gray-11);
+    --variant-soft-bg: var(--manti-gray-3);
+    --variant-soft-bg-hover: var(--manti-gray-4);
+    --variant-soft-bg-active: var(--manti-gray-5);
+    --variant-soft-text: var(--manti-gray-12);
     --variant-border: var(--manti-border-strong);
     --variant-text: var(--manti-text);
     --variant-ring: var(--manti-focus-ring);
   }
 
   [data-variant='danger'] {
-    /* Solid darkened one stop past the chroma peak so the white label clears
-       WCAG AA (4.5:1) in both themes — 5.10:1. See scripts/check-contrast.mjs. */
-    --variant-solid: var(--manti-red-8);
-    --variant-solid-hover: light-dark(
-      color-mix(in oklab, var(--variant-solid) 88%, white),
-      color-mix(in oklab, var(--variant-solid) 88%, black)
+    --variant-solid: var(--manti-red-9);
+    --variant-solid-hover: var(--manti-red-10);
+    --variant-solid-active: color-mix(
+      in oklab,
+      var(--manti-red-10) 88%,
+      var(--manti-gray-12)
     );
-    --variant-solid-active: light-dark(
-      color-mix(in oklab, var(--variant-solid) 78%, white),
-      color-mix(in oklab, var(--variant-solid) 78%, black)
-    );
-    --variant-soft-bg: light-dark(
-      var(--manti-red-2),
-      color-mix(in oklab, var(--manti-red-7) 20%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-hover: light-dark(
-      var(--manti-red-3),
-      color-mix(in oklab, var(--manti-red-7) 30%, var(--manti-gray-12))
-    );
-    --variant-soft-bg-active: light-dark(
-      var(--manti-red-4),
-      color-mix(in oklab, var(--manti-red-7) 42%, var(--manti-gray-12))
-    );
-    --variant-soft-text: light-dark(var(--manti-red-9), var(--manti-red-3));
-    --variant-border: light-dark(
-      var(--manti-red-6),
-      color-mix(in oklab, var(--manti-red-7) 38%, var(--manti-gray-11))
-    );
-    --variant-text: light-dark(var(--manti-red-9), var(--manti-red-4));
-    --variant-ring: var(--manti-red-7);
+    --variant-soft-bg: var(--manti-red-3);
+    --variant-soft-bg-hover: var(--manti-red-4);
+    --variant-soft-bg-active: var(--manti-red-5);
+    --variant-soft-text: var(--manti-red-12);
+    --variant-border: var(--manti-red-7);
+    --variant-text: var(--manti-red-11);
+    --variant-ring: var(--manti-red-8);
   }
 
   [data-variant='outline'] {
     /* Neutral hue like tertiary; the bordered treatment (visible
        border, transparent surface) is applied by the consuming component. */
-    --variant-solid: light-dark(
-      oklch(0.22 0.01 var(--manti-cool-hue)),
-      oklch(0.96 0.004 var(--manti-cool-hue))
+    --variant-solid: var(--manti-gray-12);
+    --variant-solid-hover: color-mix(
+      in oklab,
+      var(--manti-gray-12) 50%,
+      var(--manti-gray-11)
     );
-    --variant-solid-hover: light-dark(
-      oklch(0.3 0.012 var(--manti-cool-hue)),
-      oklch(0.88 0.005 var(--manti-cool-hue))
-    );
-    --variant-solid-active: light-dark(
-      oklch(0.36 0.012 var(--manti-cool-hue)),
-      oklch(0.8 0.006 var(--manti-cool-hue))
-    );
-    --variant-soft-bg: light-dark(
-      oklch(0.94 0.004 var(--manti-cool-hue)),
-      oklch(0.26 0.009 var(--manti-cool-hue))
-    );
-    --variant-soft-bg-hover: light-dark(
-      oklch(0.9 0.005 var(--manti-cool-hue)),
-      oklch(0.31 0.01 var(--manti-cool-hue))
-    );
-    --variant-soft-bg-active: light-dark(
-      oklch(0.855 0.006 var(--manti-cool-hue)),
-      oklch(0.365 0.011 var(--manti-cool-hue))
-    );
-    --variant-soft-text: light-dark(
-      oklch(0.3 0.01 var(--manti-cool-hue)),
-      oklch(0.92 0.005 var(--manti-cool-hue))
-    );
+    --variant-solid-active: var(--manti-gray-11);
+    --variant-soft-bg: var(--manti-gray-3);
+    --variant-soft-bg-hover: var(--manti-gray-4);
+    --variant-soft-bg-active: var(--manti-gray-5);
+    --variant-soft-text: var(--manti-gray-12);
     --variant-border: var(--manti-border-strong);
     --variant-text: var(--manti-text);
     --variant-ring: var(--manti-focus-ring);
@@ -736,40 +659,40 @@
    * ─────────────────────────────────────────────────────────────────────── */
   /* @variant-ink:generated:start */
   [data-variant='primary'] {
-    /* dark ink, Lc 41+ in both themes */
-    --variant-on-solid: var(--manti-gray-12);
+    /* dark ink, Lc 48+ in both themes */
+    --variant-on-solid: var(--manti-text-on-bright);
   }
   [data-variant='secondary'] {
     /* light on light, dark on dark */
     --variant-on-solid: light-dark(
       var(--manti-text-on-accent),
-      var(--manti-gray-12)
+      var(--manti-text-on-bright)
     );
   }
   [data-variant='success'] {
-    /* light ink, Lc 75+ in both themes */
-    --variant-on-solid: var(--manti-text-on-accent);
+    /* dark ink, Lc 45+ in both themes */
+    --variant-on-solid: var(--manti-text-on-bright);
   }
   [data-variant='info'] {
-    /* light ink, Lc 78+ in both themes */
-    --variant-on-solid: var(--manti-text-on-accent);
+    /* dark ink, Lc 44+ in both themes */
+    --variant-on-solid: var(--manti-text-on-bright);
   }
   [data-variant='tertiary'] {
     /* light on light, dark on dark */
     --variant-on-solid: light-dark(
       var(--manti-text-on-accent),
-      var(--manti-gray-12)
+      var(--manti-text-on-bright)
     );
   }
   [data-variant='danger'] {
-    /* light ink, Lc 77+ in both themes */
-    --variant-on-solid: var(--manti-text-on-accent);
+    /* dark ink, Lc 38+ in both themes */
+    --variant-on-solid: var(--manti-text-on-bright);
   }
   [data-variant='outline'] {
     /* light on light, dark on dark */
     --variant-on-solid: light-dark(
       var(--manti-text-on-accent),
-      var(--manti-gray-12)
+      var(--manti-text-on-bright)
     );
   }
   /* @variant-ink:generated:end */

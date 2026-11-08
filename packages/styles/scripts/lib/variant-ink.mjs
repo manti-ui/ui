@@ -16,11 +16,13 @@ import { apca, wcag } from './tokens-css.mjs';
 /**
  * The inks a solid may carry. Both are existing tokens, so a generated region
  * never introduces a bespoke literal: `--manti-text-on-accent` is the near-white
- * used across accent surfaces, `--manti-gray-12` the darkest neutral.
+ * used across accent surfaces, `--manti-text-on-bright` its near-black twin.
+ * Both hold one Radix step across schemes (`--manti-ink-*`), which a bare
+ * slate step does not: `--manti-gray-12` is dark in light and light in dark.
  */
 export const INKS = [
   { token: '--manti-text-on-accent', label: 'light' },
-  { token: '--manti-gray-12', label: 'dark' },
+  { token: '--manti-text-on-bright', label: 'dark' },
 ];
 
 /** WCAG 2.1 AA for normal text — the bar `check-contrast.mjs` gates on. */

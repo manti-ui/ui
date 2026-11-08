@@ -25,15 +25,15 @@
     --variant-on-solid: var(--manti-text-on-accent);
     --variant-soft-bg: light-dark(
       color-mix(in oklab, #4b5563 14%, white),
-      color-mix(in oklab, #4b5563 22%, var(--manti-gray-12))
+      color-mix(in oklab, #4b5563 22%, var(--manti-gray-1))
     );
     --variant-soft-bg-hover: light-dark(
       color-mix(in oklab, #4b5563 22%, white),
-      color-mix(in oklab, #4b5563 32%, var(--manti-gray-12))
+      color-mix(in oklab, #4b5563 32%, var(--manti-gray-1))
     );
     --variant-soft-bg-active: light-dark(
       color-mix(in oklab, #4b5563 30%, white),
-      color-mix(in oklab, #4b5563 42%, var(--manti-gray-12))
+      color-mix(in oklab, #4b5563 42%, var(--manti-gray-1))
     );
     --variant-soft-text: light-dark(
       color-mix(in oklab, #4b5563 75%, black),
@@ -41,7 +41,7 @@
     );
     --variant-border: light-dark(
       color-mix(in oklab, #4b5563 32%, white),
-      color-mix(in oklab, #4b5563 42%, var(--manti-gray-11))
+      color-mix(in oklab, #4b5563 42%, var(--manti-gray-2))
     );
     --variant-text: light-dark(
       color-mix(in oklab, #4b5563 78%, black),

@@ -2,9 +2,9 @@
  * Contrast and gamut audit of the resolved Manti palette.
  *
  * Reads the REAL token values out of `src/tokens.css` via the shared reader in
- * `lib/tokens-css.mjs` (resolving `var()`, `light-dark()`, `color-mix(in oklab, …)`
- * and the `--manti-cool-hue` indirection) so the check can never drift from the
- * tokens it guards. All colorimetry is delegated to `colorjs.io`.
+ * `lib/tokens-css.mjs` (resolving `var()`, `light-dark()` and
+ * `color-mix(in oklab, …)`) so the check can never drift from the tokens it
+ * guards. All colorimetry is delegated to `colorjs.io`.
  *
  *   node scripts/check-contrast.mjs           # report (exit 0)
  *   node scripts/check-contrast.mjs --gate     # exit 1 if a GATE pair fails AA
@@ -16,12 +16,11 @@
  * A pair whose tokens cannot be resolved fails the gate too — an unchecked pair
  * is a hole in the audit, not a pass.
  *
- * The ramps are authored in OKLCH and are wider than sRGB in places, so the
- * numbers describe the *specified* color. The GAMUT section reports which stops
+ * The scales are Radix sRGB hex, so they should sit inside sRGB; a color-mix
+ * or a preset color could still leave it. The GAMUT section reports which stops
  * overflow sRGB / Display-P3, and the sRGB DISPLAY section re-runs the gated
  * pairs through CSS Color 4 gamut mapping to show what an sRGB screen actually
- * resolves. Neither is gated yet — measuring first is deliberate; whether to
- * narrow the ramps is a design decision.
+ * resolves. Neither is gated.
  *
  * `--variant-on-solid` is not audited as a taste call: `gen-variant-ink.mjs`
  * picks it by measurement and this script re-checks the result independently.
@@ -171,16 +170,17 @@ for (const [id, preset] of Object.entries(presets)) {
 }
 
 // ── gamut audit of the primitive ramps ───────────────────────────────────────
-// The ramps are authored in OKLCH from a chroma curve that has no gamut
-// guarantee, so a stop can specify more chroma than a display can show. Report
-// the overflow and how far gamut mapping moves each offender (ΔE OK).
+// Report any stop that leaves sRGB and how far gamut mapping moves it (ΔE OK).
+// Each stop is measured in both schemes, since it carries two values.
 console.log('\nGAMUT (primitive ramps)');
 const stops = [];
 for (const [name, value] of root) {
   const m = name.match(/^--manti-(gray|orange|green|amber|red|blue)-(\d+)$/);
   if (!m) continue;
-  const c = color(value, 'light', root);
-  if (c) stops.push({ id: `${m[1]}-${m[2]}`, c });
+  for (const theme of ['light', 'dark']) {
+    const c = color(value, theme, root);
+    if (c) stops.push({ id: `${m[1]}-${m[2]} ${theme}`, c });
+  }
 }
 const outside = stops.filter((s) => !s.c.inGamut('srgb'));
 for (const s of outside) {

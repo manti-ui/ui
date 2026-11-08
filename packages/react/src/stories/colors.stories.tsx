@@ -64,8 +64,8 @@ export const Primitives: Story = {
       <div>
         <h1 style={{ fontSize: 32, letterSpacing: '-0.03em' }}>Color ramps</h1>
         <p style={{ color: 'var(--manti-text-muted)', maxWidth: '60ch' }}>
-          Six warm-tinted, perceptually-smooth OKLCH scales under plain color
-          names: gray, orange, green, amber, red, and blue.
+          Six Radix Colors scales under plain color names: gray (Radix slate),
+          orange, green, amber, red, and blue. Each step follows the theme.
         </p>
       </div>
       <div style={{ display: 'grid', gap: '1.5rem' }}>
