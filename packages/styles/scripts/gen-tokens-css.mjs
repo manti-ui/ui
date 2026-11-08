@@ -65,18 +65,18 @@ const themedAlpha = (light, dark) =>
   light === dark ? light : themed(light, dark);
 
 lines.push(
-  '    /* Primitive scales — Radix Colors, light and dark step N per stop. */',
+  '    /* Primitive scales: Radix Colors, light and dark step N per stop. */',
 );
 for (const [name, scale] of Object.entries(t.colorScales))
   for (const [step, light] of Object.entries(scale.light))
     decl(`manti-${name}-${step}`, themed(light, scale.dark[step]));
 
-head('Alpha scales — Radix Colors, light and dark step N per stop');
+head('Alpha scales: Radix Colors, light and dark step N per stop');
 for (const [name, scale] of Object.entries(t.alphaScales))
   for (const [step, light] of Object.entries(scale.light))
     decl(`manti-${name}-a${step}`, themedAlpha(light, scale.dark[step]));
 
-head('Inks — one Radix step each, fixed across schemes');
+head('Inks: one Radix step each, fixed across schemes');
 for (const [name, value] of Object.entries(t.colorInks))
   decl(`manti-ink-${name}`, value);
 

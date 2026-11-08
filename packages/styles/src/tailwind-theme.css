@@ -26,7 +26,7 @@
  *   `50…950` and are mapped onto them here
  *   (`--color-orange-500: var(--manti-orange-7)`). If the utility keys were
  *   renamed to match, `bg-orange-500` would silently fall back to Tailwind's
- *   built-in orange instead of Manti's — a wrong color with no error. Keep this
+ *   built-in orange instead of Manti's, a wrong color with no error. Keep this
  *   mapping in step when a scale gains or loses a step.
  * - Every step is theme-aware (Radix light step N in light, dark step N in
  *   dark), so a utility follows the color scheme and grows in contrast with
@@ -34,7 +34,7 @@
  *   and `-600` the borders (7–8), `-700`/`-800` the solid fill and its hover
  *   (9–10), `-900`/`-950` the text (11–12).
  * - Tailwind has eleven stop names against Manti's twelve, so the mapping is
- *   positional and step 6 ends up without a utility alias. Nothing is lost — the
+ *   positional and step 6 ends up without a utility alias. Nothing is lost: the
  *   step is a real custom property in every setup that loads this file, so
  *   `bg-[var(--manti-orange-6)]` works. Do not "fix" the gap by shifting the
  *   mapping; positional keeps every utility on the step it named before.

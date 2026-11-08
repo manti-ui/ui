@@ -2,9 +2,9 @@
  * Manti UI tokens.
  *
  * Three layers of meaning:
- *   1. Primitive scales — Radix Colors steps (`--manti-orange-9`, ...), each
+ *   1. Primitive scales: Radix Colors steps (`--manti-orange-9`, ...), each
  *      a `light-dark()` of Radix's light and dark step N.
- *   2. Semantic roles — surfaces, text, motion, radius, space. Color roles read
+ *   2. Semantic roles: surfaces, text, motion, radius, space. Color roles read
  *      a single step, so the theme follows `color-scheme` automatically.
  *   3. Variant roles — selected per component via `[data-variant]`, exposing a
  *      small, uniform `--variant-*` vocabulary that every variant-driven
@@ -22,7 +22,7 @@
      * Run `pnpm gen:tokens` after editing packages/tokens/src/index.ts.
      * ───────────────────────────────────────────────────────────────────── */
     /* @tokens:generated:start */
-    /* Primitive scales — Radix Colors, light and dark step N per stop. */
+    /* Primitive scales: Radix Colors, light and dark step N per stop. */
     --manti-gray-1: light-dark(#fcfcfd, #111113);
     --manti-gray-2: light-dark(#f9f9fb, #18191b);
     --manti-gray-3: light-dark(#f0f0f3, #212225);
@@ -96,7 +96,7 @@
     --manti-blue-11: light-dark(#0d74ce, #70b8ff);
     --manti-blue-12: light-dark(#113264, #c2e6ff);
 
-    /* Alpha scales — Radix Colors, light and dark step N per stop */
+    /* Alpha scales: Radix Colors, light and dark step N per stop */
     --manti-gray-a1: light-dark(#00005503, #00000000);
     --manti-gray-a2: light-dark(#00005506, #d8f4f609);
     --manti-gray-a3: light-dark(#0000330f, #ddeaf814);
@@ -158,7 +158,7 @@
     --manti-orange-a11: light-dark(#cc4e00, #ffa057);
     --manti-orange-a12: light-dark(#431200e2, #ffe0c2);
 
-    /* Inks — one Radix step each, fixed across schemes */
+    /* Inks: one Radix step each, fixed across schemes */
     --manti-ink-light: #fcfcfd;
     --manti-ink-dark: #111113;
 
@@ -385,7 +385,7 @@
      * Three soft glows behind every `.manti-app`/`body`: a faint violet,
      * magenta, and warm ember, each one step of a Radix alpha scale. Pure
      * scene lighting (not a gradient element), so near-black reads deep
-     * rather than flat — and light gets a faint wash.                      */
+     * rather than flat, and light gets a faint wash.                       */
     --manti-ambient-1: var(--manti-violet-a3);
     --manti-ambient-2: var(--manti-pink-a3);
     --manti-ambient-3: var(--manti-orange-a2);
