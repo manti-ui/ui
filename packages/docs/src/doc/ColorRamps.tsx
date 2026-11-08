@@ -1,31 +1,38 @@
-import { Button, Card } from '@manti-ui/react';
-import { colorPrimitives, variants } from '@manti-ui/tokens';
+import { Button, Card, Text } from '@manti-ui/react';
+import { colorPrimitives, colorScales, variants } from '@manti-ui/tokens';
 
-/** Renders every primitive ramp (gray, orange, green, amber, red, blue). */
+/**
+ * Renders every primitive ramp (gray, orange, green, amber, red, blue), each
+ * labelled with the Radix Colors scale it is taken from. Every chip is the
+ * step's `light-dark()` pair, so the ramp follows the page's color scheme.
+ */
 export function ColorRamps() {
   return (
     <div>
-      {Object.entries(colorPrimitives).map(([name, steps]) => (
-        <div key={name} style={{ marginBottom: 'var(--manti-space-6)' }}>
-          <p
-            className="docs-swatch-label"
-            style={{ marginBottom: 'var(--manti-space-2)' }}
-          >
-            {name}
-          </p>
-          <div className="docs-swatch-grid">
-            {Object.entries(steps).map(([step, value]) => (
-              <div key={step} className="docs-swatch">
-                <div
-                  className="docs-swatch-chip"
-                  style={{ background: value as string }}
-                />
-                <span className="docs-swatch-label">{step}</span>
-              </div>
-            ))}
+      {Object.entries(colorPrimitives).map(([name, steps]) => {
+        const radix = colorScales[name as keyof typeof colorScales].radix;
+        return (
+          <div key={name} style={{ marginBottom: 'var(--manti-space-6)' }}>
+            <Text
+              className="docs-swatch-label"
+              style={{ marginBottom: 'var(--manti-space-2)' }}
+            >
+              {radix === name ? name : `${name} (Radix ${radix})`}
+            </Text>
+            <div className="docs-swatch-grid">
+              {Object.entries(steps).map(([step, value]) => (
+                <div key={step} className="docs-swatch">
+                  <div
+                    className="docs-swatch-chip"
+                    style={{ background: value as string }}
+                  />
+                  <span className="docs-swatch-label">{step}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

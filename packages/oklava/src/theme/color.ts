@@ -1,92 +1,97 @@
+import { colorInks } from '@manti-ui/tokens';
+
 /**
- * Color helpers for the theme engine.
+ * Label-ink selection for a Radix solid step.
  *
- * `toRgb` parses with a canvas 2d context, which is what lets the panel accept
- * the `oklch()` strings the ColorPicker emits without shipping a color parser.
- * The context is created lazily, so importing this module on a server is inert.
+ * Every color Oklava writes is a Radix step from `@manti-ui/tokens`, always a
+ * `#rrggbb` literal, so the measurement here is plain arithmetic over hex: no
+ * canvas, no DOM, and the same answer on a server render as in the browser.
+ *
+ * The rule is the one `packages/styles/scripts/lib/variant-ink.mjs` applies to
+ * the shipped variants and presets: clear WCAG 2.1 AA (4.5:1) first, then keep
+ * the candidate with the higher APCA Lc. So a theme built here gets the ink the
+ * build would have generated for the same scale.
  */
 
-let parseCtx: CanvasRenderingContext2D | null | undefined;
+type Rgb = [number, number, number];
 
-function toRgb(color: string): [number, number, number] {
-  const hex = /^#([0-9a-f]{6})$/i.exec(color.trim());
-  if (hex) {
-    const n = parseInt(hex[1], 16);
-    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-  }
-  if (typeof document === 'undefined') return [0, 0, 0];
-  if (parseCtx === undefined) {
-    parseCtx = document.createElement('canvas').getContext('2d');
-  }
-  if (!parseCtx) return [0, 0, 0];
-  // Setting an invalid value is ignored, so seed a known one first; the canvas
-  // then normalizes any valid CSS color to `#rrggbb` or `rgba(...)`.
-  parseCtx.fillStyle = '#000';
-  parseCtx.fillStyle = color;
-  const normalized = parseCtx.fillStyle;
-  if (normalized.startsWith('#')) return toRgb(normalized);
-  const parts = normalized.match(/[\d.]+/g);
-  return parts
-    ? [Number(parts[0]), Number(parts[1]), Number(parts[2])]
-    : [0, 0, 0];
+/** `#rrggbb` (an alpha pair, if any, is ignored) to 0-255 channels. */
+function hexToRgb(hex: string): Rgb {
+  const n = parseInt(hex.trim().replace(/^#/, '').slice(0, 6), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 }
 
-/**
- * The two inks a solid may carry, with their measured sRGB relative luminance.
- * Same pair `scripts/gen-variant-ink.mjs` chooses between for the shipped
- * variants, so a studio theme picks its label ink by the same rule the library
- * does, never a bespoke literal.
- */
-const INKS = [
-  { css: 'var(--manti-text-on-accent)', luminance: 0.97 }, // oklch(0.99 …)
-  { css: 'var(--manti-gray-12)', luminance: 0.0075 }, // oklch(0.196 …)
-];
-
-function relativeLuminance(color: string): number {
-  const [r, g, b] = toRgb(color);
+/** WCAG 2.1 relative luminance. */
+function luminance([r, g, b]: Rgb): number {
   const lin = (c: number) => {
     const s = c / 255;
-    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+    return s <= 0.04045 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
   };
   return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
 }
 
-function contrastRatio(a: number, b: number): number {
-  const [hi, lo] = a > b ? [a, b] : [b, a];
+function wcag(a: Rgb, b: Rgb): number {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
   return (hi + 0.05) / (lo + 0.05);
 }
 
-/**
- * Pick the legible label ink for a solid fill, by WCAG contrast rather than a
- * luminance midpoint. The naive `L > 0.5 ? dark : light` split is wrong for a
- * whole band of mid colors: a vivid sky blue sits at L≈0.33 yet reaches 7.6:1
- * against dark ink and only 2.8:1 against white.
- */
-export function readableOn(color: string): string {
-  const L = relativeLuminance(color);
-  const best = INKS.reduce((a, b) =>
-    contrastRatio(L, b.luminance) > contrastRatio(L, a.luminance) ? b : a,
-  );
-  return best.css;
-}
-
-/** Normalize whatever the color picker emits down to `#rrggbb`. */
-export function toHex(color: string): string {
-  const [r, g, b] = toRgb(color);
-  const hex = (n: number) => n.toString(16).padStart(2, '0');
-  return `#${hex(r)}${hex(g)}${hex(b)}`;
-}
-
-/** `h` in degrees, `s`/`l` in percent. */
-export function hslToHex(h: number, s: number, l: number): string {
-  const lightness = l / 100;
-  const a = (s / 100) * Math.min(lightness, 1 - lightness);
-  const channel = (n: number) => {
-    const k = (n + h / 30) % 12;
-    const value = lightness - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
-    return Math.round(255 * value)
-      .toString(16)
-      .padStart(2, '0');
+/** APCA-W3 Lc magnitude (0.0.98G 4g constants), as colorjs.io computes it. */
+function apca(text: Rgb, bg: Rgb): number {
+  const y = ([r, g, b]: Rgb) => {
+    let Y =
+      0.2126729 * Math.pow(r / 255, 2.4) +
+      0.7151522 * Math.pow(g / 255, 2.4) +
+      0.072175 * Math.pow(b / 255, 2.4);
+    if (Y < 0.022) Y += Math.pow(0.022 - Y, 1.414);
+    return Y;
   };
-  return `#${channel(0)}${channel(8)}${channel(4)}`;
+  const Ytxt = y(text);
+  const Ybg = y(bg);
+  const sapc =
+    Ybg > Ytxt
+      ? (Math.pow(Ybg, 0.56) - Math.pow(Ytxt, 0.57)) * 1.14
+      : (Math.pow(Ybg, 0.65) - Math.pow(Ytxt, 0.62)) * 1.14;
+  if (Math.abs(sapc) < 0.1) return 0;
+  return (Math.abs(sapc) - 0.027) * 100;
+}
+
+/**
+ * The two inks a solid may carry: the tokens `variant-ink.mjs` chooses
+ * between, each holding one Radix step in both schemes (`--manti-ink-*`).
+ */
+const INKS = [
+  { css: 'var(--manti-text-on-accent)', rgb: hexToRgb(colorInks.light) },
+  { css: 'var(--manti-text-on-bright)', rgb: hexToRgb(colorInks.dark) },
+];
+
+const AA = 4.5;
+
+/**
+ * The legible ink for one solid color. The build refuses a solid that no ink
+ * clears AA on; a theme tool cannot refuse a pick, so it falls back to the
+ * higher WCAG ratio there.
+ */
+function inkOn(solid: string): string {
+  const bg = hexToRgb(solid);
+  const scored = INKS.map((ink) => ({
+    css: ink.css,
+    ratio: wcag(ink.rgb, bg),
+    lc: apca(ink.rgb, bg),
+  }));
+  const passing = scored.filter((s) => s.ratio >= AA);
+  if (passing.length > 0) {
+    return passing.reduce((a, b) => (b.lc > a.lc ? b : a)).css;
+  }
+  return scored.reduce((a, b) => (b.ratio > a.ratio ? b : a)).css;
+}
+
+/**
+ * `--variant-on-solid` for a solid that is `light` in the light scheme and
+ * `dark` in the dark one: a single ink when both schemes agree, otherwise a
+ * `light-dark()` pair of the two.
+ */
+export function inkFor(light: string, dark: string): string {
+  const onLight = inkOn(light);
+  const onDark = inkOn(dark);
+  return onLight === onDark ? onLight : `light-dark(${onLight}, ${onDark})`;
 }

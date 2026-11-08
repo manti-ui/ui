@@ -2,10 +2,14 @@ import {
   DEFAULT_THEME,
   PRESETS,
   VARIANTS,
+  configForPreset,
   fontStack,
   googleFamily,
   googleFontHref,
+  isNeutralName,
+  isScaleName,
   type PresetId,
+  type ScaleName,
   type ThemeConfig,
   type VariantKey,
 } from './config.js';
@@ -29,20 +33,25 @@ export const isBrowser = typeof document !== 'undefined';
 /** Validate anything that arrives from storage or a pasted JSON theme. */
 export function coerce(raw: unknown): ThemeConfig {
   const saved = (raw ?? {}) as Partial<ThemeConfig>;
-  const colors: Partial<Record<VariantKey, string>> = {};
+  const colors: Partial<Record<VariantKey, ScaleName>> = {};
   const preset = PRESETS.some((item) => item.id === saved.preset)
     ? (saved.preset as PresetId)
     : DEFAULT_THEME.preset;
+  // Only Radix scale names survive. A theme stored before the panel picked
+  // scales carries hex colors and a neutral hue; those have no Radix twin to
+  // map onto, so they fall back to the preset rather than painting a guess.
   for (const variant of VARIANTS) {
-    const value = saved.colors?.[variant.key];
-    if (typeof value === 'string' && value) colors[variant.key] = value;
+    const value: unknown = saved.colors?.[variant.key];
+    if (isScaleName(value)) colors[variant.key] = value;
   }
   const numberOr = (value: unknown, fallback: number) =>
     typeof value === 'number' && Number.isFinite(value) ? value : fallback;
   return {
     preset,
     colors,
-    neutralHue: numberOr(saved.neutralHue, DEFAULT_THEME.neutralHue),
+    neutral: isNeutralName(saved.neutral)
+      ? saved.neutral
+      : configForPreset(preset).neutral,
     radiusFactor: numberOr(saved.radiusFactor, DEFAULT_THEME.radiusFactor),
     font:
       typeof saved.font === 'string' && fontStack(saved.font)
