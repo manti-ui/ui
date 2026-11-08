@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Tabs } from './Tabs.js';
+import type { TabsProps } from './Tabs.js';
 
 const items = [
   {
@@ -20,23 +21,20 @@ const items = [
   },
 ];
 
-const meta = {
+export default {
   title: 'Components/Tabs',
-  component: Tabs,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: { items },
   argTypes: {
     variant: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['line', 'pill', 'soft'],
     },
     size: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['sm', 'md'],
     },
     orientation: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['horizontal', 'vertical'],
     },
   },
@@ -47,28 +45,22 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Tabs>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<TabsProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {};
+export const Playground: Story<TabsProps> = (args) => <Tabs {...args} />;
 
 /** Translucent segmented control: a translucent track with a sliding translucent thumb. */
-export const Pill: Story = {
-  args: { variant: 'pill' },
-};
+export const Pill: Story<TabsProps> = (args) => <Tabs {...args} />;
+Pill.args = { variant: 'pill' };
 
 /** A translucent pill on the active tab, with no enclosing track. */
-export const Soft: Story = {
-  args: { variant: 'soft' },
-};
+export const Soft: Story<TabsProps> = (args) => <Tabs {...args} />;
+Soft.args = { variant: 'soft' };
 
-export const Vertical: Story = {
-  args: { orientation: 'vertical' },
-};
+export const Vertical: Story<TabsProps> = (args) => <Tabs {...args} />;
+Vertical.args = { orientation: 'vertical' };
 
 /** Compact triggers for embedded, secondary UI. */
-export const Small: Story = {
-  args: { size: 'sm', variant: 'soft' },
-};
+export const Small: Story<TabsProps> = (args) => <Tabs {...args} />;
+Small.args = { size: 'sm', variant: 'soft' };

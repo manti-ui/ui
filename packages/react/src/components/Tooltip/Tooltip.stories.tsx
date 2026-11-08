@@ -1,32 +1,28 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Button } from '../Button/Button.js';
 import { Tooltip } from './Tooltip.js';
+import type { TooltipProps } from './Tooltip.js';
 
-const meta = {
+export default {
   title: 'Components/Tooltip',
-  component: Tooltip,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     content: 'Backed by a Zag.js machine',
     children: <Button variant="secondary">Hover or focus me</Button>,
   },
-} satisfies Meta<typeof Tooltip>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<TooltipProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<TooltipProps> = (args) => <Tooltip {...args} />;
 
-export const Playground: Story = {};
+export const Delayed: Story<TooltipProps> = (args) => <Tooltip {...args} />;
+Delayed.args = { openDelay: 0, closeDelay: 0 };
 
-export const Delayed: Story = {
-  args: { openDelay: 0, closeDelay: 0 },
-};
-
-export const PortalledAndControlled: Story = {
-  args: {
-    portalled: true,
-    defaultOpen: true,
-    placement: 'top',
-  },
+export const PortalledAndControlled: Story<TooltipProps> = (args) => (
+  <Tooltip {...args} />
+);
+PortalledAndControlled.args = {
+  portalled: true,
+  defaultOpen: true,
+  placement: 'top',
 };

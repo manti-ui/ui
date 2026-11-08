@@ -56,7 +56,15 @@ function narrowDocgen(viteConfig: { plugins?: unknown[] }): void {
 
 const config: StorybookConfig = {
   stories: [
-    '../packages/react/src/**/*.mdx',
+    // `*.stories.mdx` is Ladle's MDX format, which Storybook cannot index. The
+    // introduction's content lives in a plain MDX file that both read: Ladle
+    // through `introduction.stories.mdx`, Storybook as an unattached docs page
+    // titled from its file name under this prefix.
+    {
+      directory: '../packages/react/src/stories',
+      files: 'Introduction.mdx',
+      titlePrefix: 'Getting Started',
+    },
     '../packages/react/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
     '../packages/oklava/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],

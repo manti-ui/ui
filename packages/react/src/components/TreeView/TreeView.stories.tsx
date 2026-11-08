@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { TreeView } from './TreeView.js';
+import type { TreeViewProps } from './TreeView.js';
 
 const tree = [
   {
@@ -65,11 +66,8 @@ const file = (
   </svg>
 );
 
-const meta = {
+export default {
   title: 'Components/TreeView',
-  component: TreeView,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     items: tree,
     label: 'Cookbook',
@@ -78,25 +76,31 @@ const meta = {
     defaultExpandedValue: ['recipes', 'steamed'],
   },
   argTypes: {
-    selectionMode: { control: 'inline-radio', options: ['single', 'multiple'] },
+    selectionMode: {
+      control: { type: 'inline-radio' },
+      options: ['single', 'multiple'],
+    },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof TreeView>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<TreeViewProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<TreeViewProps> = (args) => (
+  <TreeView {...args} />
+);
 
-export const Playground: Story = {};
-
-export const MultiSelect: Story = {
-  args: { selectionMode: 'multiple', defaultSelectedValue: ['manti', 'momo'] },
+export const MultiSelect: Story<TreeViewProps> = (args) => (
+  <TreeView {...args} />
+);
+MultiSelect.args = {
+  selectionMode: 'multiple',
+  defaultSelectedValue: ['manti', 'momo'],
 };
 
-export const WithIcons: Story = {
-  args: {
-    icon: (_node, { isBranch }) => (isBranch ? folder : file),
-  },
+export const WithIcons: Story<TreeViewProps> = (args) => <TreeView {...args} />;
+WithIcons.args = {
+  icon: (_node, { isBranch }) => (isBranch ? folder : file),
 };
