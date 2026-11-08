@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Progress } from './Progress.js';
+import type { ProgressProps } from './Progress.js';
 
-const meta = {
+export default {
   title: 'Components/Progress',
-  component: Progress,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     variant: 'linear',
     label: 'Steaming',
@@ -15,20 +13,23 @@ const meta = {
     showValue: true,
   },
   argTypes: {
-    variant: { control: 'inline-radio', options: ['linear', 'circular'] },
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    variant: {
+      control: { type: 'inline-radio' },
+      options: ['linear', 'circular'],
+    },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
   },
-} satisfies Meta<typeof Progress>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<ProgressProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<ProgressProps> = (args) => (
+  <Progress {...args} />
+);
 
-export const Playground: Story = {};
+export const Circular: Story<ProgressProps> = (args) => <Progress {...args} />;
+Circular.args = { variant: 'circular' };
 
-export const Circular: Story = {
-  args: { variant: 'circular' },
-};
-
-export const Indeterminate: Story = {
-  args: { defaultValue: null, showValue: false },
-};
+export const Indeterminate: Story<ProgressProps> = (args) => (
+  <Progress {...args} />
+);
+Indeterminate.args = { defaultValue: null, showValue: false };
