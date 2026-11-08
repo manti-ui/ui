@@ -22,26 +22,28 @@
     "command": ["pnpm", "install", "--frozen-lockfile"]
   },
 
-  // The rendered surfaces. Storybook is the component gallery and serves workspace packages from
-  // source, so a change under react or styles raises the `ui` class. The docs site imports the
-  // built packages, so its command builds them first. Mounts must be unique, so each row names its
-  // own mount and serves from `basePath` "/".
+  // The rendered surfaces. Ladle is the component gallery and serves workspace packages from
+  // source, so a change under react or styles raises the `ui` class. `.ladle/config.mjs` sets
+  // `base: '/ladle/'`, which `ladle serve` honours too, so both Ladle rows serve and poll at
+  // `/ladle/`; `BROWSER=none` keeps Ladle from opening a browser. The docs site imports the built
+  // packages, so its command builds them first. Mounts must be unique, so each row names its own
+  // mount.
   "uiSurfaces": [
     {
-      "name": "storybook-react",
+      "name": "ladle-react",
       "prefix": "packages/react/src/",
-      "mount": "/storybook/react",
-      "basePath": "/",
-      "command": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 pnpm exec storybook dev -p {{port}} --ci --no-open 1>&2",
-      "readyPath": "/"
+      "mount": "/ladle/react",
+      "basePath": "/ladle/",
+      "command": "BROWSER=none pnpm exec ladle serve -p {{port}} 1>&2",
+      "readyPath": "/ladle/"
     },
     {
-      "name": "storybook-styles",
+      "name": "ladle-styles",
       "prefix": "packages/styles/src/",
-      "mount": "/storybook/styles",
-      "basePath": "/",
-      "command": "HOME=$PWD/.cache STORYBOOK_DISABLE_TELEMETRY=1 pnpm exec storybook dev -p {{port}} --ci --no-open 1>&2",
-      "readyPath": "/"
+      "mount": "/ladle/styles",
+      "basePath": "/ladle/",
+      "command": "BROWSER=none pnpm exec ladle serve -p {{port}} 1>&2",
+      "readyPath": "/ladle/"
     },
     {
       "name": "docs",
