@@ -4,6 +4,8 @@
     "types": ["node", "vite/client"]
   },
   "include": [
+    ".ladle/**/*.ts",
+    ".ladle/**/*.tsx",
     ".storybook/**/*.ts",
     ".storybook/**/*.tsx",
     "packages/react/src/**/*.stories.tsx",
