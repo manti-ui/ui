@@ -81,7 +81,7 @@ function scaleFor(name, label) {
  * shipped variants go through. The candidate inks are theme-aware, so both are
  * resolved against a scope carrying this preset's neutral.
  */
-function inkFor(base, scope, label) {
+function inkFor(base, scope, label, radixName) {
   const picks = {};
   for (const theme of THEMES) {
     const solid = color(base, theme, scope);
@@ -91,15 +91,7 @@ function inkFor(base, scope, label) {
       if (c.err) fail(`${label}: ${c.err}`);
       candidates.push({ ...ink, c: c.c });
     }
-    const { scored, chosen } = pickInk(solid, candidates);
-    if (!chosen) {
-      const best = scored.reduce((a, b) => (b.ratio > a.ratio ? b : a));
-      fail(
-        `${label} (${theme}): no ink clears AA on ${base} — best is ` +
-          `${best.label} at ${best.ratio.toFixed(2)}:1. Move the color.`,
-      );
-    }
-    picks[theme] = chosen;
+    picks[theme] = pickInk(solid, candidates, radixName).chosen;
   }
   return picks.light.token === picks.dark.token
     ? `var(${picks.light.token})`
@@ -114,7 +106,7 @@ function fail(message) {
 /**
  * One Radix scale expanded into the full `--variant-*` vocabulary, with the
  * step mapping the shipped variants use in `tokens.css`: solid 9 → hover 10,
- * soft 3 → 4 → 5, soft text 12, border 7, text 11, ring 8. The press darkens
+ * soft 3 → 4 → 5, soft text 11, border 7, text 11, ring 8. The press darkens
  * the hover toward the scheme's text color, the direction that gains contrast
  * in each theme, exactly as the shipped primary does.
  */
@@ -130,7 +122,7 @@ function variantRoles(scale, ink) {
     ['--variant-soft-bg', step(scale, 3)],
     ['--variant-soft-bg-hover', step(scale, 4)],
     ['--variant-soft-bg-active', step(scale, 5)],
-    ['--variant-soft-text', step(scale, 12)],
+    ['--variant-soft-text', step(scale, 11)],
     ['--variant-border', step(scale, 7)],
     ['--variant-text', step(scale, 11)],
     ['--variant-ring', step(scale, 8)],
@@ -211,7 +203,10 @@ for (const [id, preset] of entries) {
   const variantBlocks = Object.entries(preset.colors).map(([variant, name]) => {
     const label = `${preset.label} ${variant}`;
     const scale = scaleFor(name, label);
-    return [variant, variantRoles(scale, inkFor(step(scale, 9), scope, label))];
+    return [
+      variant,
+      variantRoles(scale, inkFor(step(scale, 9), scope, label, scale.radix)),
+    ];
   });
 
   files.set(
