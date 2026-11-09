@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Steps } from './Steps.js';
+import type { StepsProps } from './Steps.js';
 
 const items = [
   { title: 'Dough', description: 'Knead & rest', content: 'Make the dough.' },
@@ -8,11 +9,8 @@ const items = [
   { title: 'Steam', description: 'Cook through', content: 'Steam until done.' },
 ];
 
-const meta = {
+export default {
   title: 'Components/Steps',
-  component: Steps,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     items,
     variant: 'primary',
@@ -22,21 +20,18 @@ const meta = {
   },
   argTypes: {
     orientation: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['horizontal', 'vertical'],
     },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof Steps>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<StepsProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<StepsProps> = (args) => <Steps {...args} />;
 
-export const Playground: Story = {};
-
-export const Vertical: Story = {
-  args: { orientation: 'vertical' },
-};
+export const Vertical: Story<StepsProps> = (args) => <Steps {...args} />;
+Vertical.args = { orientation: 'vertical' };

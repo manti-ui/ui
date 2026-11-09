@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { ContextMenu } from './ContextMenu.js';
+import type { ContextMenuProps } from './ContextMenu.js';
 import type { MenuItem } from '../Menu/Menu.js';
 
 const items: MenuItem[] = [
@@ -37,21 +38,18 @@ const Region = () => (
   </div>
 );
 
-const meta = {
+export default {
   title: 'Components/ContextMenu',
-  component: ContextMenu,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     items,
     children: <Region />,
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
   },
-} satisfies Meta<typeof ContextMenu>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<ContextMenuProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {};
+export const Playground: Story<ContextMenuProps> = (args) => (
+  <ContextMenu {...args} />
+);

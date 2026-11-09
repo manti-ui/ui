@@ -4,6 +4,7 @@ dist
 # behind when one fails (packages/docs/scripts/prerender.mjs).
 dist-ssr
 storybook-static
+ladle-static
 .vite
 .cache
 *.tsbuildinfo

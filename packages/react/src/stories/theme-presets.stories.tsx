@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import { presets, variants } from '@manti-ui/tokens';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import '@manti-ui/styles/themes.css';
 
@@ -15,14 +15,10 @@ import { Text } from '../components/Text/Text.js';
  * Each scheme panel is a `data-theme` container, so the page shows the light
  * and the dark Radix steps of one preset at once, whatever the toolbar says.
  */
-const meta = {
+export default {
   title: 'Foundations/Theme presets',
-  parameters: { layout: 'fullscreen' },
-  tags: ['autodocs'],
-} satisfies Meta;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
+  meta: { layout: 'fullscreen' },
+} satisfies StoryDefault;
 
 const SCHEMES = ['light', 'dark'] as const;
 const BADGE_VARIANTS = variants.filter(
@@ -86,28 +82,26 @@ function SchemePanel({ scheme }: { scheme: (typeof SCHEMES)[number] }) {
   );
 }
 
-export const AllPresets: Story = {
-  render: () => (
-    <div style={page}>
-      {Object.entries(presets).map(([id, preset]) => (
-        <section
-          key={id}
-          data-manti-theme={preset.default ? undefined : id}
-          style={presetRow}
-        >
-          <Heading level={2} size="lg">
-            {preset.label}
-          </Heading>
-          <Text size="sm" emphasis="muted">
-            {preset.colors.primary} on {preset.neutral}
-          </Text>
-          <div style={schemes}>
-            {SCHEMES.map((scheme) => (
-              <SchemePanel key={scheme} scheme={scheme} />
-            ))}
-          </div>
-        </section>
-      ))}
-    </div>
-  ),
-};
+export const AllPresets: Story = () => (
+  <div style={page}>
+    {Object.entries(presets).map(([id, preset]) => (
+      <section
+        key={id}
+        data-manti-theme={preset.default ? undefined : id}
+        style={presetRow}
+      >
+        <Heading level={2} size="lg">
+          {preset.label}
+        </Heading>
+        <Text size="sm" emphasis="muted">
+          {preset.colors.primary} on {preset.neutral}
+        </Text>
+        <div style={schemes}>
+          {SCHEMES.map((scheme) => (
+            <SchemePanel key={scheme} scheme={scheme} />
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+);

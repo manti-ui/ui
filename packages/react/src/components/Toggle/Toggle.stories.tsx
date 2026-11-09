@@ -1,55 +1,46 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Toggle } from './Toggle.js';
+import type { ToggleProps } from './Toggle.js';
 
-const meta = {
+export default {
   title: 'Components/Toggle',
-  component: Toggle,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: { variant: 'primary', defaultPressed: false, disabled: false },
   argTypes: {
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof Toggle>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<ToggleProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<ToggleProps> = (args) => <Toggle {...args} />;
+Playground.args = { children: 'Spicy' };
 
-export const Playground: Story = {
-  args: { children: 'Spicy' },
+export const IconOnly: Story<ToggleProps> = (args) => <Toggle {...args} />;
+IconOnly.args = {
+  iconOnly: true,
+  'aria-label': 'Toggle bold',
+  children: <strong>B</strong>,
 };
 
-export const IconOnly: Story = {
-  args: {
-    iconOnly: true,
-    'aria-label': 'Toggle bold',
-    children: <strong>B</strong>,
-  },
+export const Controlled: Story<ToggleProps> = (args) => {
+  const [pressed, setPressed] = useState(true);
+  return (
+    <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+      <Toggle {...args} pressed={pressed} onPressedChange={setPressed}>
+        Notifications
+      </Toggle>
+      <span style={{ color: 'var(--manti-text-muted)' }}>
+        {pressed ? 'on' : 'off'}
+      </span>
+    </div>
+  );
 };
 
-export const Controlled: Story = {
-  render: (args) => {
-    const [pressed, setPressed] = useState(true);
-    return (
-      <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-        <Toggle {...args} pressed={pressed} onPressedChange={setPressed}>
-          Notifications
-        </Toggle>
-        <span style={{ color: 'var(--manti-text-muted)' }}>
-          {pressed ? 'on' : 'off'}
-        </span>
-      </div>
-    );
-  },
-};
-
-export const RenderProp: Story = {
-  args: {
-    children: (pressed: boolean) => (pressed ? '🔔 On' : '🔕 Off'),
-  },
+export const RenderProp: Story<ToggleProps> = (args) => <Toggle {...args} />;
+RenderProp.args = {
+  children: (pressed: boolean) => (pressed ? '🔔 On' : '🔕 Off'),
 };

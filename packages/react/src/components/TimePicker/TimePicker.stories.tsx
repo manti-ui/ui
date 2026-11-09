@@ -1,27 +1,25 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { TimePicker } from './TimePicker.js';
+import type { TimePickerProps } from './TimePicker.js';
 
-const meta = {
+export default {
   title: 'Components/TimePicker',
-  component: TimePicker,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     label: 'Pickup time',
     variant: 'primary',
     defaultValue: '12:30',
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof TimePicker>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<TimePickerProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {};
+export const Playground: Story<TimePickerProps> = (args) => (
+  <TimePicker {...args} />
+);

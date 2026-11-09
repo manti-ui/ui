@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { DatePicker } from './DatePicker.js';
+import type { DatePickerProps } from './DatePicker.js';
 
-const meta = {
+export default {
   title: 'Components/DatePicker',
-  component: DatePicker,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     label: 'Reservation date',
     variant: 'primary',
@@ -14,27 +12,26 @@ const meta = {
     defaultValue: ['2026-06-15'],
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     selectionMode: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['single', 'multiple', 'range'],
     },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof DatePicker>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<DatePickerProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<DatePickerProps> = (args) => (
+  <DatePicker {...args} />
+);
 
-export const Playground: Story = {};
-
-export const Range: Story = {
-  args: {
-    label: 'Stay',
-    selectionMode: 'range',
-    defaultValue: ['2026-06-15', '2026-06-20'],
-  },
+export const Range: Story<DatePickerProps> = (args) => <DatePicker {...args} />;
+Range.args = {
+  label: 'Stay',
+  selectionMode: 'range',
+  defaultValue: ['2026-06-15', '2026-06-20'],
 };

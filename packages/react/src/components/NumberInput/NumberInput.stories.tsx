@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { NumberInput } from './NumberInput.js';
+import type { NumberInputProps } from './NumberInput.js';
 
-const meta = {
+export default {
   title: 'Components/NumberInput',
-  component: NumberInput,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     label: 'Servings',
     size: 'md',
@@ -18,35 +16,31 @@ const meta = {
     disabled: false,
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof NumberInput>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<NumberInputProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<NumberInputProps> = (args) => (
+  <NumberInput {...args} />
+);
 
-export const Playground: Story = {};
+export const Sizes: Story<NumberInputProps> = (args) => (
+  <div style={{ display: 'grid', gap: '1rem' }}>
+    <NumberInput {...args} size="sm" label="Small" />
+    <NumberInput {...args} size="md" label="Medium" />
+    <NumberInput {...args} size="lg" label="Large" />
+  </div>
+);
 
-export const Sizes: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '1rem' }}>
-      <NumberInput {...args} size="sm" label="Small" />
-      <NumberInput {...args} size="md" label="Medium" />
-      <NumberInput {...args} size="lg" label="Large" />
-    </div>
-  ),
-};
-
-export const States: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '1rem' }}>
-      <NumberInput {...args} label="Default" />
-      <NumberInput {...args} label="Invalid" invalid />
-      <NumberInput {...args} label="Disabled" disabled />
-    </div>
-  ),
-};
+export const States: Story<NumberInputProps> = (args) => (
+  <div style={{ display: 'grid', gap: '1rem' }}>
+    <NumberInput {...args} label="Default" />
+    <NumberInput {...args} label="Invalid" invalid />
+    <NumberInput {...args} label="Disabled" disabled />
+  </div>
+);

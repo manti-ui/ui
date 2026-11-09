@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Clipboard } from './Clipboard.js';
+import type { ClipboardProps } from './Clipboard.js';
 
-const meta = {
+export default {
   title: 'Components/Clipboard',
-  component: Clipboard,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     value: 'npm install @manti-ui/react',
     label: 'Install command',
@@ -14,13 +12,13 @@ const meta = {
   },
   argTypes: {
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof Clipboard>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<ClipboardProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {};
+export const Playground: Story<ClipboardProps> = (args) => (
+  <Clipboard {...args} />
+);

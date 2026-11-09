@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Marquee } from './Marquee.js';
+import type { MarqueeProps } from './Marquee.js';
 import { Badge } from '../Badge/Badge.js';
 
 const tags = [
@@ -22,11 +23,8 @@ const Tags = () => (
   </>
 );
 
-const meta = {
+export default {
   title: 'Components/Marquee',
-  component: Marquee,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     children: <Tags />,
     direction: 'left',
@@ -36,60 +34,51 @@ const meta = {
   },
   argTypes: {
     direction: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['left', 'right', 'up', 'down'],
     },
     speed: { control: { type: 'number', min: 2, max: 60 } },
-    gap: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    gap: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
   },
-} satisfies Meta<typeof Marquee>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<MarqueeProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<MarqueeProps> = (args) => <Marquee {...args} />;
 
-export const Playground: Story = {};
-
-export const Directions: Story = {
-  args: {
-    direction: 'left',
-    gap: 'md',
-  },
-
-  render: () => (
-    <div style={{ display: 'grid', gap: '1.5rem' }}>
-      <Marquee direction="left">
-        <Tags />
-      </Marquee>
-      <Marquee direction="right">
-        <Tags />
-      </Marquee>
-    </div>
-  ),
-};
-
-export const Text: Story = {
-  render: () => (
-    <Marquee speed={28}>
-      <span style={{ color: 'var(--manti-text-muted)' }}>
-        Manti UI — a framework-agnostic design system built on Zag.js behavior
-        machines.
-      </span>
+export const Directions: Story<MarqueeProps> = () => (
+  <div style={{ display: 'grid', gap: '1.5rem' }}>
+    <Marquee direction="left">
+      <Tags />
     </Marquee>
-  ),
+    <Marquee direction="right">
+      <Tags />
+    </Marquee>
+  </div>
+);
+Directions.args = {
+  direction: 'left',
+  gap: 'md',
 };
 
-export const Vertical: Story = {
-  render: () => (
-    <div style={{ height: '12rem' }}>
-      <Marquee direction="up" speed={12}>
-        <div style={{ display: 'grid', gap: '0.5rem' }}>
-          {tags.map((t) => (
-            <Badge key={t} variant="secondary">
-              {t}
-            </Badge>
-          ))}
-        </div>
-      </Marquee>
-    </div>
-  ),
-};
+export const Text: Story<MarqueeProps> = () => (
+  <Marquee speed={28}>
+    <span style={{ color: 'var(--manti-text-muted)' }}>
+      Manti UI — a framework-agnostic design system built on Zag.js behavior
+      machines.
+    </span>
+  </Marquee>
+);
+
+export const Vertical: Story<MarqueeProps> = () => (
+  <div style={{ height: '12rem' }}>
+    <Marquee direction="up" speed={12}>
+      <div style={{ display: 'grid', gap: '0.5rem' }}>
+        {tags.map((t) => (
+          <Badge key={t} variant="secondary">
+            {t}
+          </Badge>
+        ))}
+      </div>
+    </Marquee>
+  </div>
+);

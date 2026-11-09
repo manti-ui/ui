@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
 import { Clipboard } from '../components/Clipboard/Clipboard.js';
 import { ColorPicker } from '../components/ColorPicker/ColorPicker.js';
@@ -27,65 +27,56 @@ const spices = [
   { value: 'cumin', label: 'Cumin' },
 ];
 
-const meta = {
+export default {
   title: 'Accessibility/Keyboard focus',
-  tags: ['autodocs'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      description: {
-        story:
-          'Press Tab to move through the family. Composite controls keep one focus ring on their primary surface; popup cells and direct triggers own their own ring.',
-      },
-    },
-  },
-} satisfies Meta;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault;
 
 /** Tab through every input-like component to review the focus order and rings. */
-export const InputFamily: Story = {
-  render: () => (
+export const InputFamily: Story = () => (
+  <div
+    style={{
+      display: 'grid',
+      gap: 'var(--manti-space-6)',
+      maxWidth: 'calc(var(--manti-space-16) * 8)',
+    }}
+  >
+    <div>
+      <Heading level={1} size="2xl">
+        Keyboard focus rings
+      </Heading>
+      <Text size="sm" emphasis="muted">
+        Use Tab and Shift+Tab to inspect the focus order in both themes.
+      </Text>
+      <Text size="sm" emphasis="muted">
+        Press Tab to move through the family. Composite controls keep one focus
+        ring on their primary surface; popup cells and direct triggers own their
+        own ring.
+      </Text>
+    </div>
+
     <div
       style={{
         display: 'grid',
-        gap: 'var(--manti-space-6)',
-        maxWidth: 'calc(var(--manti-space-16) * 8)',
+        gap: 'var(--manti-space-4)',
       }}
     >
-      <div>
-        <Heading level={1} size="2xl">
-          Keyboard focus rings
-        </Heading>
-        <Text size="sm" emphasis="muted">
-          Use Tab and Shift+Tab to inspect the focus order in both themes.
-        </Text>
-      </div>
-
-      <div
-        style={{
-          display: 'grid',
-          gap: 'var(--manti-space-4)',
-        }}
-      >
-        <Input label="Input" placeholder="Recipe name" />
-        <Textarea label="Textarea" placeholder="Preparation notes" rows={2} />
-        <Select label="Select" items={regions} placeholder="Choose a region" />
-        <Combobox label="Combobox" items={spices} placeholder="Search spices" />
-        <NumberInput label="Number input" defaultValue="2" min={0} max={9} />
-        <PinInput label="Pin input" length={4} />
-        <TagsInput
-          label="Tags input"
-          defaultValue={['lamb', 'onion']}
-          placeholder="Add a tag"
-        />
-        <Editable label="Editable" defaultValue="Recipe name" />
-        <DatePicker label="Date picker" defaultValue={['2026-08-20']} />
-        <TimePicker label="Time picker" defaultValue="12:30" />
-        <ColorPicker label="Color picker" defaultValue="#7c3aed" />
-        <Clipboard label="Clipboard" value="pnpm add @manti-ui/react" />
-      </div>
+      <Input label="Input" placeholder="Recipe name" />
+      <Textarea label="Textarea" placeholder="Preparation notes" rows={2} />
+      <Select label="Select" items={regions} placeholder="Choose a region" />
+      <Combobox label="Combobox" items={spices} placeholder="Search spices" />
+      <NumberInput label="Number input" defaultValue="2" min={0} max={9} />
+      <PinInput label="Pin input" length={4} />
+      <TagsInput
+        label="Tags input"
+        defaultValue={['lamb', 'onion']}
+        placeholder="Add a tag"
+      />
+      <Editable label="Editable" defaultValue="Recipe name" />
+      <DatePicker label="Date picker" defaultValue={['2026-08-20']} />
+      <TimePicker label="Time picker" defaultValue="12:30" />
+      <ColorPicker label="Color picker" defaultValue="#7c3aed" />
+      <Clipboard label="Clipboard" value="pnpm add @manti-ui/react" />
     </div>
-  ),
-};
+  </div>
+);
