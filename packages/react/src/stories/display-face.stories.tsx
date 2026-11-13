@@ -9,6 +9,7 @@ import { Card } from '../components/Card/Card.js';
 import { Code } from '../components/Code/Code.js';
 import { DataTable } from '../components/DataTable/DataTable.js';
 import type { DataTableColumn } from '../components/DataTable/DataTable.js';
+import { Dialog } from '../components/Dialog/Dialog.js';
 import { Heading } from '../components/Heading/Heading.js';
 import { Popover } from '../components/Popover/Popover.js';
 import { Steps } from '../components/Steps/Steps.js';
@@ -22,6 +23,9 @@ import { Text } from '../components/Text/Text.js';
 const FACES = {
   text: null,
   serif: "ui-serif, Georgia, 'Times New Roman', serif",
+  // A sans that differs from the text face on macOS, Windows and Linux
+  // (Adwaita) hosts alike, so a capture shows the switch wherever it renders.
+  grotesk: "'Helvetica Neue', Helvetica, Arial, 'Adwaita Sans', sans-serif",
   mono: 'var(--manti-font-mono)',
 } as const;
 
@@ -145,5 +149,24 @@ export const Showcase: Story<DisplayFaceProps> = ({ face }) => {
         </Popover>
       </div>
     </div>
+  );
+};
+
+/**
+ * A modal title: the Dialog portals out of the story, so its title follows
+ * `--manti-font-display` only because the token is set on the document root.
+ */
+export const DialogTitle: Story<DisplayFaceProps> = ({ face }) => {
+  useDisplayFace(face);
+  return (
+    <Dialog
+      defaultOpen
+      title="Steam the dumplings"
+      description="The title reads the display face; this copy stays on the text face."
+      trigger={<Button>Open dialog</Button>}
+      footer={({ close }) => <Button onClick={close}>Done</Button>}
+    >
+      <Text>Twelve minutes over a rolling boil, lid on.</Text>
+    </Dialog>
   );
 };
