@@ -20,6 +20,10 @@
   [data-scope='editable'][data-part='area'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-editable-height: var(--manti-control-height-md);
+    --manti-editable-radius: var(--manti-radius-md);
+    --manti-editable-padding-x: var(--manti-space-3);
+    --manti-editable-padding-y: var(--manti-space-2);
+    --manti-editable-font-size: var(--manti-text-sm);
 
     display: inline-flex;
     align-items: center;
@@ -27,11 +31,11 @@
   }
 
   [data-scope='editable'][data-part='preview'] {
-    padding: var(--manti-space-2) var(--manti-space-3);
+    padding: var(--manti-editable-padding-y) var(--manti-editable-padding-x);
     border: 1px solid transparent;
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-editable-radius);
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-editable-font-size);
     cursor: text;
     transition: background-color var(--manti-duration-fast)
       var(--manti-ease-smooth);
@@ -55,13 +59,13 @@
 
   [data-scope='editable'][data-part='input'] {
     min-width: 0;
-    padding: var(--manti-space-2) var(--manti-space-3);
+    padding: var(--manti-editable-padding-y) var(--manti-editable-padding-x);
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-editable-radius);
     outline: none;
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-editable-font-size);
     transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:hover {

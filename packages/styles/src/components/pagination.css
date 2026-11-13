@@ -5,9 +5,12 @@
  */
 @layer manti.components {
   [data-scope='pagination'][data-part='root'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-pagination-gap: var(--manti-space-1);
+
     display: inline-flex;
     align-items: center;
-    gap: var(--manti-space-1);
+    gap: var(--manti-pagination-gap);
   }
 
   [data-scope='pagination'][data-part='item'],
@@ -16,6 +19,10 @@
   [data-scope='pagination'][data-part='ellipsis'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-pagination-size: 2.25rem;
+    --manti-pagination-radius: var(
+      --manti-size-control-radius,
+      var(--manti-radius-md)
+    );
 
     display: inline-flex;
     align-items: center;
@@ -24,8 +31,10 @@
     height: var(--manti-pagination-size);
     padding-inline: var(--manti-space-2);
     border: 1px solid transparent;
+    /* `max(…, pill)` joins the opt-in roundness channel at the use site, so
+       the public token stays the plain radius it replaced. */
     border-radius: max(
-      var(--manti-size-control-radius, var(--manti-radius-md)),
+      var(--manti-pagination-radius),
       var(--manti-radius-pill)
     );
     color: var(--manti-text-muted);

@@ -16,24 +16,32 @@
   }
 
   [data-scope='pin-input'][data-part='control'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-pin-input-gap: var(--manti-space-2);
+
     display: flex;
-    gap: var(--manti-space-2);
+    gap: var(--manti-pin-input-gap);
   }
 
   [data-scope='pin-input'][data-part='input'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-pin-input-size: 2.75rem;
+    --manti-pin-input-radius: var(
+      --manti-size-control-radius,
+      var(--manti-radius-md)
+    );
+    --manti-pin-input-font-size: var(--manti-text-lg);
 
     width: var(--manti-pin-input-size);
     height: var(--manti-pin-input-size);
     padding: 0;
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
-    border-radius: var(--manti-size-control-radius, var(--manti-radius-md));
+    border-radius: var(--manti-pin-input-radius);
     outline: none;
     text-align: center;
     color: var(--manti-text);
-    font-size: var(--manti-text-lg);
+    font-size: var(--manti-pin-input-font-size);
     font-weight: var(--manti-weight-semibold);
     font-variant-numeric: tabular-nums;
     transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
@@ -66,13 +74,13 @@
   [data-scope='pin-input'][data-part='root'][data-size='sm']
     [data-part='input'] {
     --manti-pin-input-size: 2.25rem;
-    font-size: var(--manti-text-base);
+    --manti-pin-input-font-size: var(--manti-text-base);
   }
 
   [data-scope='pin-input'][data-part='root'][data-size='lg']
     [data-part='input'] {
     --manti-pin-input-size: 3.25rem;
-    font-size: var(--manti-text-xl);
+    --manti-pin-input-font-size: var(--manti-text-xl);
   }
 
   [data-scope='pin-input'][data-part='root'][data-invalid] [data-part='input'] {

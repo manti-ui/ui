@@ -11,16 +11,19 @@
   [data-scope='hover-card'][data-part='content'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-hover-card-max-width: 20rem;
+    --manti-hover-card-padding: var(--manti-space-4);
+    --manti-hover-card-radius: var(--manti-radius-md);
+    --manti-hover-card-font-size: var(--manti-text-sm);
 
     position: relative;
     width: max-content;
     max-width: var(--manti-hover-card-max-width);
-    padding: var(--manti-space-4);
+    padding: var(--manti-hover-card-padding);
     background: var(--manti-panel-tint-strong);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-hover-card-radius);
     color: var(--manti-text);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-hover-card-font-size);
     line-height: var(--manti-leading-normal);
     transform-origin: var(--transform-origin);
 

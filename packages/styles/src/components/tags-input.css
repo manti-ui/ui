@@ -20,16 +20,21 @@
   [data-scope='tags-input'][data-part='control'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-tags-input-height: var(--manti-control-height-md);
+    --manti-tags-input-radius: var(--manti-radius-md);
+    --manti-tags-input-padding: var(--manti-space-1);
+    --manti-tags-input-gap: var(--manti-space-2);
+    --manti-tags-input-tag-height: 1.625rem;
+    --manti-tags-input-tag-radius: var(--manti-radius-sm);
 
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--manti-space-2);
+    gap: var(--manti-tags-input-gap);
     min-height: var(--manti-tags-input-height);
-    padding: var(--manti-space-1) var(--manti-space-1);
+    padding: var(--manti-tags-input-padding);
     background: var(--manti-surface);
     border: 1px solid var(--manti-border);
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-tags-input-radius);
     transition: border-color var(--manti-duration-base) var(--manti-ease-smooth);
 
     &:hover {
@@ -64,11 +69,11 @@
     display: inline-flex;
     align-items: center;
     gap: var(--manti-space-2);
-    height: 1.625rem;
+    height: var(--manti-tags-input-tag-height);
     padding-inline: var(--manti-space-2);
     background: color-mix(in oklab, var(--variant-soft-bg) 80%, transparent);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-sm);
+    border-radius: var(--manti-tags-input-tag-radius);
     color: var(--variant-soft-text);
     font-size: var(--manti-text-xs);
     font-weight: var(--manti-weight-medium);

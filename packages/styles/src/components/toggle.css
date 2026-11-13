@@ -8,21 +8,26 @@
   [data-scope='toggle'][data-part='root'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-toggle-size: 2.5rem;
+    --manti-toggle-radius: var(--manti-radius-md);
+    --manti-toggle-padding-x: var(--manti-space-3);
+    --manti-toggle-gap: var(--manti-space-2);
+    --manti-toggle-font-size: var(--manti-text-sm);
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--manti-space-2);
+    gap: var(--manti-toggle-gap);
     min-width: var(--manti-toggle-size);
     min-height: var(--manti-toggle-size);
-    padding-inline: var(--manti-space-3);
+    padding-inline: var(--manti-toggle-padding-x);
     background: var(--manti-surface);
     border: 1px solid var(--manti-border-strong);
-    /* Control class — joins the opt-in pill channel. */
-    border-radius: max(var(--manti-radius-md), var(--manti-radius-pill));
+    /* Control class — joins the opt-in pill channel at the use site, so the
+       public token stays the plain radius. */
+    border-radius: max(var(--manti-toggle-radius), var(--manti-radius-pill));
     color: var(--manti-text-muted);
     font-family: var(--manti-font-sans);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-toggle-font-size);
     font-weight: var(--manti-weight-semibold);
     cursor: pointer;
     transition:
