@@ -122,6 +122,6 @@ export const GITHUB_REPO = 'manti-ui/ui';
 export const GITHUB_URL = `https://github.com/${GITHUB_REPO}`;
 /** Unauthenticated repo endpoint — read client-side for the star count. */
 export const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}`;
-// Storybook ships in the same Netlify deploy, served at the /storybook subpath.
-// Trailing slash is required so Storybook's relative asset URLs resolve under it.
-export const STORYBOOK_URL = '/storybook/';
+// The Ladle gallery ships in the same Netlify deploy, served at the /ladle
+// subpath. Keep the trailing slash: it is the base Ladle is built with.
+export const LADLE_URL = '/ladle/';

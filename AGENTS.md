@@ -118,9 +118,9 @@ Zag.js behavior machines.
 - `packages/tokens/`: shared design-token contract.
 - `packages/styles/`: shared CSS and state selectors.
 - `packages/folds/`: framework-agnostic Zag.js behavior.
-- `packages/react/`: React renderer and Storybook stories.
+- `packages/react/`: React renderer and Ladle stories.
 - `packages/oklava/`: the drop-in theme devtools panel.
-- `.storybook/`: Storybook (react-vite) configuration — the single dev surface and visual gallery.
+- `.ladle/`: Ladle configuration — the single dev surface and visual gallery.
 - `design/logo-explorations/`: non-production brand exploration assets.
 - `docs/`: architecture and product vision.
 
@@ -133,10 +133,11 @@ Use Node `>=22.12.0` and `pnpm 10`.
 
 ```bash
 pnpm install          # Install all workspace dependencies
-pnpm dev              # build packages, then run Storybook at localhost:6006
-pnpm storybook        # Run Storybook only, no rebuild (use after a pnpm dev build)
-pnpm build            # Build the packages and Storybook (storybook-static/)
-pnpm build:storybook  # Generate storybook-static/
+pnpm dev              # build packages, then run Ladle at localhost:61000/ladle/
+pnpm ladle            # Run Ladle only, no rebuild (use after a pnpm dev build)
+pnpm build            # Build the packages and Ladle (ladle-static/)
+pnpm build:ladle      # Generate ladle-static/
+pnpm build:site       # Build the docs site with Ladle copied under dist/ladle
 pnpm lint             # Run ESLint
 pnpm typecheck        # Check packages and stories
 pnpm check:types      # After a package build, type check a consumer under NodeNext and Bundler
@@ -155,7 +156,8 @@ Use:
 
 - `PascalCase.tsx` for React components.
 - `camelCase` for functions and variables.
-- `*.stories.tsx` for Storybook stories.
+- `*.stories.tsx` for Ladle stories, in the format set by
+  `packages/react/src/components/README.md`.
 - semantic CSS names and tokens rather than raw product-specific colors.
 - full relative import paths ending in `.js` (`./meta.js`,
   `./components/index.js`), never an extensionless path or a bare folder. The
@@ -168,7 +170,7 @@ screen-reader semantics.
 
 ## Testing Guidelines
 
-No unit-test framework or coverage threshold is configured yet. Every public component must include Storybook coverage for variants, disabled/error states, and meaningful interactions. Use the Storybook accessibility panel for WCAG checks and verify integration behavior through the component's stories.
+No unit-test framework or coverage threshold is configured yet. Every public component must include Ladle story coverage for variants, disabled/error states, and meaningful interactions. Use Ladle's a11y (axe) panel for WCAG checks and verify integration behavior through the component's stories.
 
 When automated tests are introduced, colocate them as `ComponentName.test.tsx`.
 
@@ -177,7 +179,7 @@ When automated tests are introduced, colocate them as `ComponentName.test.tsx`.
 `backlog/` holds frozen source for components that were built, then shelved
 (QrCode, Timer, Swipe). Each entry mirrors the component's original repo paths
 and carries a `README.md` with the reason plus a re-registration checklist. It is
-outside every build, tsconfig, ESLint, Prettier, and Storybook glob — nothing
+outside every build, tsconfig, ESLint, Prettier, and Ladle glob — nothing
 there is checked by `pnpm verify`, and it is expected to drift. `docs/zag-coverage.md`
 marks these 📦 (done, then shelved), never ⬜ (todo). Read `backlog/README.md`
 before re-adapting any of them, and shelve rather than delete a component.
@@ -191,4 +193,4 @@ consumers first.
 
 This workspace currently has no readable Git history. Until a project convention is established, use concise Conventional Commit messages, for example `feat(button): add loading state` or `docs: clarify token naming`.
 
-Pull requests should explain the behavioral change, list verification commands, link relevant issues, and include Storybook screenshots for visual changes. Avoid committing generated `dist/`, `storybook-static/`, or cache directories.
+Pull requests should explain the behavioral change, list verification commands, link relevant issues, and include Ladle screenshots for visual changes. Avoid committing generated `dist/`, `ladle-static/`, or cache directories.

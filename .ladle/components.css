@@ -1,4 +1,4 @@
-/* Ladle's story canvas, ported from `.storybook/preview.css`. */
+/* Ladle's story canvas. */
 
 :root {
   /* The layout box below owns the story padding, so Ladle's own is zeroed. */
@@ -19,7 +19,7 @@ body {
   color: var(--manti-text);
 }
 
-/* Storybook's three layouts, picked by a story file's `meta.layout`. */
+/* The three story layouts, picked by a story file's `meta.layout`. */
 .manti-ladle-layout {
   box-sizing: border-box;
 }

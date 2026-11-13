@@ -41,8 +41,8 @@ const resolveTheme = (theme: string): 'light' | 'dark' => {
 
 /**
  * Drive `[data-theme]` and `[data-radius]` on the story document's root, and
- * lay the story out the way Storybook's `layout` parameter did: a story file
- * picks `centered`, `padded` or `fullscreen` through `meta.layout`.
+ * lay the story out: a story file picks `centered`, `padded` or `fullscreen`
+ * through `meta.layout`.
  */
 export const Provider: GlobalProvider = ({
   children,

@@ -1,27 +1,17 @@
-import { readFileSync, readdirSync } from 'node:fs';
+import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 /**
- * The same sources Storybook reads (`.storybook/main.ts`): stories under
- * `packages/react/src` and `packages/oklava/src`. Ladle only recognises MDX
- * stories named `*.stories.mdx`.
+ * Stories live under `packages/react/src` and `packages/oklava/src`. Ladle
+ * only recognises MDX stories named `*.stories.mdx`.
  */
 const STORY_ROOTS = ['packages/react/src', 'packages/oklava/src'];
 const STORY_FILE = /\.stories\.(tsx|mdx)$/;
 
-/**
- * While both galleries run, a story file joins Ladle once it is in the shared
- * format (see `packages/react/src/components/README.md`). A file that still
- * imports `@storybook/*` is Storybook's CSF3, which Ladle cannot parse: one
- * such file stops Ladle's story discovery for the whole gallery.
- */
-const isConverted = (file) =>
-  !readFileSync(file, 'utf8').includes('@storybook/');
-
 const stories = STORY_ROOTS.flatMap((root) =>
   readdirSync(root, { recursive: true })
     .map((file) => join(root, String(file)))
-    .filter((file) => STORY_FILE.test(file) && isConverted(file)),
+    .filter((file) => STORY_FILE.test(file)),
 ).sort();
 
 /** @type {import('@ladle/react').UserConfig} */
@@ -30,8 +20,8 @@ export default {
   // it as a string.
   stories,
   /**
-   * Sidebar groups in Storybook's order (`storySort` in
-   * `.storybook/preview.tsx`). Ladle hands this the story ids sorted
+   * Sidebar groups in reading order: Getting Started, Foundations, then
+   * Components. Ladle hands this the story ids sorted
    * alphabetically, so a stable sort on the group alone keeps that order
    * inside each group. Ladle serializes the function into the browser bundle,
    * so it must not reach anything outside its own body.

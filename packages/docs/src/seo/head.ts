@@ -342,17 +342,17 @@ export function renderSitemap(pages: BuildPage[]): string {
         '  </url>',
       ].join('\n');
     });
-  // Storybook ships in the same deploy at /storybook/ (see netlify.toml); list
-  // it so it isn't a crawled-but-unlisted page.
-  const storybookLastmod = pages
+  // The Ladle gallery ships in the same deploy at /ladle/ (see netlify.toml);
+  // list it so it isn't a crawled-but-unlisted page.
+  const ladleLastmod = pages
     .map((p) => p.dateModified)
     .sort()
     .at(-1);
   urls.push(
     [
       '  <url>',
-      `    <loc>${SITE_URL}/storybook/</loc>`,
-      `    <lastmod>${storybookLastmod}</lastmod>`,
+      `    <loc>${SITE_URL}/ladle/</loc>`,
+      `    <lastmod>${ladleLastmod}</lastmod>`,
       `    <changefreq>weekly</changefreq>`,
       `    <priority>0.5</priority>`,
       '  </url>',

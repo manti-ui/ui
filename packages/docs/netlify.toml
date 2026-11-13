@@ -2,21 +2,20 @@
 #
 # ONE Netlify site serves everything from this repo:
 #   - docs at the root (/)      -> manti.design
-#   - Storybook at /storybook   -> manti.design/storybook
+#   - Ladle at /ladle           -> manti.design/ladle
 #
 # The site's "Base directory" is `packages/docs`, so Netlify reads this file.
 # `pnpm install` here installs the whole pnpm workspace (pnpm walks up to the
 # root pnpm-workspace.yaml). The root `build:site` script then builds the
-# libraries, the docs site (-> packages/docs/dist), and Storybook
-# (-> storybook-static), and copies Storybook into packages/docs/dist/storybook
-# so both ship in a single deploy.
+# libraries, the docs site (-> packages/docs/dist), and the Ladle gallery
+# (-> ladle-static, built with base /ladle/), and copies Ladle into
+# packages/docs/dist/ladle so both ship in a single deploy.
 [build]
   command = "pnpm -w run build:site"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
-  STORYBOOK_DISABLE_TELEMETRY = "1"
 
 # Canonical host: collapse www onto the apex so the two never serve duplicate
 # content. Domain-level rules run before path rules.
@@ -26,10 +25,30 @@
   status = 301
   force = true
 
+# The component gallery moved to /ladle. Every URL under its old path (the
+# `from` below) answers 301 to the gallery root: the old `?path=/story/…` ids do
+# not map onto Ladle's story ids, so a deep link lands on /ladle/ instead of a
+# 404. The first rule matches those `?path=` links and drops the query (a plain
+# rule passes it through); the second catches everything else, the bare old
+# path included. `force` keeps them in charge even if a stale build of the old
+# gallery is ever deployed. Both must stay above the /* 404 catch-all below.
+[[redirects]]
+  from = "/storybook/*"
+  to = "/ladle/"
+  status = 301
+  force = true
+  query = {path = ":path"}
+
+[[redirects]]
+  from = "/storybook/*"
+  to = "/ladle/"
+  status = 301
+  force = true
+
 # Last-resort fallback only. Every real route is prerendered to its own
 # dist/<slug>/index.html (see packages/docs/scripts/prerender.mjs) and Netlify
 # serves existing static files before applying redirects — so this catch-all is
-# reached only by URLs that match no page, and everything under /storybook (real
+# reached only by URLs that match no page, and everything under /ladle (real
 # files) is unaffected by it.
 #
 # It answers 404, not 200. A 200 SPA fallback makes every mistyped or invented
@@ -41,12 +60,13 @@
   to = "/404.html"
   status = 404
 
-# Security headers for every response (docs + Storybook).
+# Security headers for every response (docs + Ladle).
 #
 # The CSP is deliberately pragmatic for a fully static site:
-#   - 'unsafe-inline' script-src: the no-flash theme init in index.html and
-#     Storybook's manager bootstrap are inline scripts.
-#   - 'unsafe-eval': Storybook's runtime needs it for some addon panels.
+#   - 'unsafe-inline' script-src: the no-flash theme init in index.html is an
+#     inline script.
+#   - 'unsafe-eval': Ladle rebuilds `storyOrder` from .ladle/config.mjs with
+#     `new Function`; without it the gallery renders blank.
 #   - style-src 'unsafe-inline': React inline styles + Shiki token colors.
 #   - img-src allows https://avatars.githubusercontent.com (Avatar demo and
 #     landing team portraits) and data:/blob: (QrCode data URIs, SignaturePad

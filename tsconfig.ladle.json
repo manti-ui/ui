@@ -6,8 +6,6 @@
   "include": [
     ".ladle/**/*.ts",
     ".ladle/**/*.tsx",
-    ".storybook/**/*.ts",
-    ".storybook/**/*.tsx",
     "packages/react/src/**/*.stories.tsx",
     "packages/oklava/src/**/*.stories.tsx"
   ]
