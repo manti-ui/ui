@@ -54,7 +54,13 @@
       "readyPath": "/"
     }
   ],
+  // Screen review opens each pull request's Netlify deploy preview. `.github/workflows/
+  // preview-announce.yml` posts the preview comment the reviewer reads, and the deploy-preview
+  // build in `packages/docs/netlify.toml` rewrites the surface paths above onto the real ones. A
+  // pull request with no preview (the deploy failed or has not finished) falls back to an owner
+  // hand-check.
   "reviewUi": {
-    "mode": "hand-check"
+    "mode": "preview",
+    "whenNoPreview": [{ "paths": ["**"], "mode": "hand-check" }]
   }
 }
