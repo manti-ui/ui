@@ -7,7 +7,7 @@ export const meta: ComponentMeta = {
       name: 'trigger',
       type: 'ReactElement',
       description:
-        "Element that toggles the popover. Cloned with the machine's trigger props.",
+        "Optional element that toggles the popover. Cloned with the machine's trigger props. Without it, open the popover with `open` and place it with `getAnchorRect`.",
     },
     {
       name: 'title',
@@ -23,7 +23,39 @@ export const meta: ComponentMeta = {
       name: 'placement',
       type: 'Placement',
       default: `'bottom'`,
-      description: 'Placement relative to the trigger.',
+      description:
+        'Placement relative to the trigger, or to the `getAnchorRect` rect.',
+    },
+    {
+      name: 'getAnchorRect',
+      type: '() => { x: number; y: number; width: number; height: number } | null',
+      description:
+        'Place the panel at this rect (viewport coordinates) instead of the trigger. Return `null` to fall back to the trigger.',
+    },
+    {
+      name: 'initialFocusEl',
+      type: '() => HTMLElement | null',
+      description:
+        'Element to focus when the popover opens. Defaults to the first focusable element in the panel.',
+    },
+    {
+      name: 'finalFocusEl',
+      type: '() => HTMLElement | null',
+      description:
+        'Element to focus when the popover closes. Defaults to the trigger, or, with no trigger, to the element that had focus when the popover opened.',
+    },
+    {
+      name: 'restoreFocus',
+      type: 'boolean',
+      default: 'true',
+      description:
+        'Move focus back on close, to `finalFocusEl` or its default.',
+    },
+    {
+      name: 'persistentElements',
+      type: 'Array<() => Element | null>',
+      description:
+        'Elements outside the panel that count as inside it, so interacting with them does not dismiss the popover.',
     },
     {
       name: 'showCloseButton',

@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useId, useRef } from 'react';
 import type {
   CSSProperties,
   HTMLAttributes,
@@ -10,19 +10,42 @@ import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
 import { Portal } from '../../internal/Portal.js';
 import { cx } from '../../internal/props.js';
-import { renderTrigger } from '../../internal/floating.js';
-import type { Placement } from '../../internal/floating.js';
+import { renderTrigger, useFocusOrigin } from '../../internal/floating.js';
+import type { GetAnchorRect, Placement } from '../../internal/floating.js';
 import { CloseIcon } from '../../internal/icons.js';
 
 export interface PopoverProps {
-  /** Element that toggles the popover. Cloned with the machine's trigger props. */
-  trigger: ReactElement;
+  /**
+   * Element that toggles the popover. Cloned with the machine's trigger props.
+   * Optional: without it, open the popover with `open` and place it with
+   * `getAnchorRect`.
+   */
+  trigger?: ReactElement;
   /** Optional heading rendered at the top of the panel. */
   title?: ReactNode;
   /** Panel content. */
   children?: ReactNode;
-  /** Placement relative to the trigger. */
+  /** Placement relative to the trigger, or to the `getAnchorRect` rect. */
   placement?: Placement;
+  /**
+   * Place the panel at this rect (viewport coordinates) instead of the
+   * trigger. Return `null` to fall back to the trigger.
+   */
+  getAnchorRect?: GetAnchorRect;
+  /** Element to focus when the popover opens. Defaults to the first focusable element in the panel. */
+  initialFocusEl?: () => HTMLElement | null;
+  /**
+   * Element to focus when the popover closes. Defaults to the trigger, or,
+   * with no trigger, to the element that had focus when the popover opened.
+   */
+  finalFocusEl?: () => HTMLElement | null;
+  /** Move focus back on close (to `finalFocusEl` or its default). @default true */
+  restoreFocus?: boolean;
+  /**
+   * Elements outside the panel that count as inside it, so interacting with
+   * them does not dismiss the popover.
+   */
+  persistentElements?: Array<() => Element | null>;
   /** Show the corner close button. */
   showCloseButton?: boolean;
   /** Make the popover modal (trap focus, block outside interaction). */
@@ -81,6 +104,11 @@ export function Popover({
   title,
   children,
   placement = 'bottom',
+  getAnchorRect,
+  initialFocusEl,
+  finalFocusEl,
+  restoreFocus,
+  persistentElements,
   showCloseButton = false,
   modal,
   open,
@@ -95,9 +123,19 @@ export function Popover({
   className,
 }: PopoverProps) {
   const autoId = useId();
+  // The machine refocuses its trigger on close; with no trigger it has none,
+  // so it defaults to the element focused before the popover opened.
+  const focusOrigin = useRef<HTMLElement | null>(null);
   const service = useMachine(popover.machine, {
     id: id ?? autoId,
-    positioning: { placement },
+    positioning: { placement, getAnchorRect },
+    // `useMachine` drops undefined keys, so each unset option keeps the
+    // machine's own default (notably `restoreFocus: true`).
+    initialFocusEl,
+    finalFocusEl:
+      finalFocusEl ?? (trigger ? undefined : () => focusOrigin.current),
+    restoreFocus,
+    persistentElements,
     modal,
     open,
     defaultOpen,
@@ -108,6 +146,7 @@ export function Popover({
       : undefined,
   });
   const api = popover.connect(service, normalizeProps);
+  useFocusOrigin(focusOrigin, api.open);
   const sizeStyle: Record<string, string> = {};
   const widthValue = toLength(width);
   const maxWidthValue = toLength(maxWidth);
