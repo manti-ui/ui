@@ -3,6 +3,9 @@ export type { MantiUiMetadata } from './meta.js';
 
 export * from './components/index.js';
 
+export { PortalContainerProvider } from './internal/Portal.js';
+export type { PortalContainerProviderProps } from './internal/Portal.js';
+
 // Also available standalone at `@manti-ui/react/shortcut` (no component deps).
 export { useShortcut, useShortcuts } from './shortcut/index.js';
 export type {

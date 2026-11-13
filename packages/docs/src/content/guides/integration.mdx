@@ -3,7 +3,7 @@ title: Application integration
 slug: /guides/integration
 group: Guides
 order: 35
-description: 'Integrate Manti UI with an existing codebase: global resets, focus shells, dense layouts, native form submission, and testing against the anatomy.'
+description: 'Integrate Manti UI with an existing codebase: global resets, focus shells, overlays inside native dialogs, dense layouts, native form submission, and testing against the anatomy.'
 ---
 
 # Application integration
@@ -51,6 +51,49 @@ visible owner:
 
 Do not remove both focus indicators. Global `input:focus-visible` rules should
 either exclude Manti field inputs or be placed in a controlled layer.
+
+## Overlays inside a native dialog
+
+Manti overlays (Menu, Select, Combobox, Popover, HoverCard, Dialog, Drawer, the
+pickers, FloatingPanel, Tour, Toast) portal to `document.body`. Inside an app's
+own top-layer element, such as a `<dialog>` opened with `showModal()` or an
+element with the `popover` attribute, that is the wrong place: the overlay
+paints under the top layer, and under `showModal()` it is inert, so it takes no
+focus, clicks, or keys.
+
+Wrap the region in `PortalContainerProvider` and point it at that element.
+Every overlay rendered below the provider portals into it instead:
+
+```tsx
+import { useRef } from 'react';
+import { Menu, PortalContainerProvider } from '@manti-ui/react';
+
+function OrderDialog() {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  return (
+    <dialog ref={dialogRef}>
+      <PortalContainerProvider container={dialogRef}>
+        <Menu
+          trigger={<button type="button">Serve as…</button>}
+          items={items}
+        />
+      </PortalContainerProvider>
+    </dialog>
+  );
+}
+```
+
+Use it only when an overlay opens inside a top-layer element you render
+yourself; without a provider, overlays keep portalling to `document.body`. The
+container must be mounted before an overlay opens, and an overlay's own
+container, such as Tooltip's `portalContainer`, still wins over the provider.
+The container's own `overflow` applies to overlays mounted inside it, so let it
+overflow or pick an element that does not clip.
+
+A `Toaster` rendered outside the provider stays on `document.body`, so while a
+`showModal()` dialog is open its toasts are inert like the rest of the page.
+That is expected: the dialog makes everything outside it inert, and the
+provider only moves overlays rendered below it.
 
 ## Inline SVG
 

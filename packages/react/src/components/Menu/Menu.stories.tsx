@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Menu } from './Menu.js';
 import type { MenuProps } from './Menu.js';
+import { PortalContainerProvider } from '../../internal/Portal.js';
 import { Button } from '../Button/Button.js';
 import { Card } from '../Card/Card.js';
 import { Kbd } from '../Kbd/Kbd.js';
@@ -181,3 +182,61 @@ export const WithoutTrigger: Story<MenuProps> = (args) => {
 };
 WithoutTrigger.args = { defaultOpen: true };
 WithoutTrigger.meta = { layout: 'padded' };
+
+/**
+ * A Menu inside the app's own native `<dialog>`, opened with `showModal()`.
+ * The dialog sits in the top layer and makes everything outside it inert, so a
+ * menu portalled to `document.body` would paint under it and ignore input.
+ * `PortalContainerProvider` points every Manti overlay below it at the dialog,
+ * so the menu mounts inside the top layer and takes pointer and keyboard input.
+ */
+export const InsideNativeDialog: Story<MenuProps> = (args) => {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  return (
+    <div>
+      <Button
+        variant="secondary"
+        onClick={() => dialogRef.current?.showModal()}
+      >
+        Open native dialog
+      </Button>
+      <dialog
+        ref={dialogRef}
+        aria-label="Order"
+        style={{
+          padding: 0,
+          border: 'none',
+          background: 'transparent',
+          color: 'var(--manti-text)',
+          // The menu positions inside the dialog; let it overflow the box.
+          overflow: 'visible',
+        }}
+      >
+        <PortalContainerProvider container={dialogRef}>
+          <Card>
+            <Card.Body
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                gap: 'var(--manti-space-3)',
+              }}
+            >
+              <Text size="sm" emphasis="muted">
+                This dialog is in the top layer. The menu mounts inside it.
+              </Text>
+              <Menu {...args} />
+              <Button
+                variant="tertiary"
+                onClick={() => dialogRef.current?.close()}
+              >
+                Close
+              </Button>
+            </Card.Body>
+          </Card>
+        </PortalContainerProvider>
+      </dialog>
+    </div>
+  );
+};
