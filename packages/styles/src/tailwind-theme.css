@@ -50,6 +50,7 @@
   /* Typography ------------------------------------------------------------ */
   --font-sans: var(--manti-font-sans);
   --font-mono: var(--manti-font-mono);
+  --font-display: var(--manti-font-display);
 
   --text-xs: var(--manti-text-xs);
   --text-sm: var(--manti-text-sm);

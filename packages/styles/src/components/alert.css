@@ -43,6 +43,7 @@
   }
 
   [data-scope='alert'][data-part='title'] {
+    font-family: var(--manti-font-display);
     font-size: var(--manti-alert-font-size);
     font-weight: var(--manti-weight-semibold);
     line-height: var(--manti-leading-snug);

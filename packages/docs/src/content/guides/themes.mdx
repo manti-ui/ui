@@ -77,6 +77,26 @@ sets it changes nothing. To move the neutral, adopt a preset on another gray or
 
 Import order between the two stylesheets does not matter — the layer decides.
 
+### Display and text faces
+
+A preset never changes type, so a brand that pairs a display face for headings
+with a text face for body copy sets both itself. `--manti-font-sans` is the
+text face. `--manti-font-display` is the face of Heading and every component
+title, and it follows the text face until you set it:
+
+```css
+@import '@manti-ui/styles/index.css';
+@import '@manti-ui/styles/themes/forest.css';
+
+:root {
+  --manti-font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --manti-font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+}
+```
+
+Load both fonts in the application; Manti bundles neither. See
+[Typography](/typography#families) for the full family list.
+
 ## More than one theme on a page
 
 For a gallery, a themed section, or a preview pane, import the scoped file once

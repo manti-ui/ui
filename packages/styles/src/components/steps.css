@@ -121,6 +121,7 @@
   [data-scope='steps'][data-part='root']
     [data-part='item']
     [data-part='item-title'] {
+    font-family: var(--manti-font-display);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-medium);
     color: inherit;
