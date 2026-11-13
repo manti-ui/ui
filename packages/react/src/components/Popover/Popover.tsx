@@ -1,7 +1,12 @@
 import { useId } from 'react';
-import type { ReactElement, ReactNode } from 'react';
+import type {
+  CSSProperties,
+  HTMLAttributes,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import { popover } from '@manti-ui/folds';
-import { normalizeProps, useMachine } from '@zag-js/react';
+import { mergeProps, normalizeProps, useMachine } from '@zag-js/react';
 
 import { Portal } from '../../internal/Portal.js';
 import { cx } from '../../internal/props.js';
@@ -32,8 +37,29 @@ export interface PopoverProps {
   closeOnInteractOutside?: boolean;
   /** Close when pressing Escape. @default true */
   closeOnEscape?: boolean;
+  /**
+   * Panel width, written to `--manti-popover-width` on the content part.
+   * @default 'max-content'
+   */
+  width?: CSSProperties['width'];
+  /**
+   * Largest panel width, written to `--manti-popover-max-width` on the content
+   * part. The panel never grows past the viewport less its gutter.
+   * @default '20rem'
+   */
+  maxWidth?: CSSProperties['maxWidth'];
+  /**
+   * Attributes merged onto the content part. The machine's props win;
+   * `className` and `style` compose with `className`, `width` and `maxWidth`.
+   */
+  contentProps?: Omit<HTMLAttributes<HTMLDivElement>, 'children'>;
   id?: string;
   className?: string;
+}
+
+/** A number is a px length, as React reads it for `width`; a custom property is not. */
+function toLength(value: string | number | undefined): string | undefined {
+  return typeof value === 'number' ? `${value}px` : value;
 }
 
 /**
@@ -54,6 +80,9 @@ export function Popover({
   onOpenChange,
   closeOnInteractOutside,
   closeOnEscape,
+  width,
+  maxWidth,
+  contentProps,
   id,
   className,
 }: PopoverProps) {
@@ -71,6 +100,14 @@ export function Popover({
       : undefined,
   });
   const api = popover.connect(service, normalizeProps);
+  const sizeStyle: Record<string, string> = {};
+  const widthValue = toLength(width);
+  const maxWidthValue = toLength(maxWidth);
+  if (widthValue != null) sizeStyle['--manti-popover-width'] = widthValue;
+  if (maxWidthValue != null) {
+    sizeStyle['--manti-popover-max-width'] = maxWidthValue;
+  }
+  const content = mergeProps(contentProps ?? {}, api.getContentProps());
 
   return (
     <>
@@ -78,7 +115,11 @@ export function Popover({
       {api.open && (
         <Portal>
           <div {...api.getPositionerProps()}>
-            <div {...api.getContentProps()} className={cx(className)}>
+            <div
+              {...content}
+              className={cx(contentProps?.className, className)}
+              style={{ ...content.style, ...sizeStyle }}
+            >
               {title != null && <div {...api.getTitleProps()}>{title}</div>}
               {children != null && (
                 <div {...api.getDescriptionProps()}>{children}</div>

@@ -26,4 +26,56 @@ describe('Popover', () => {
 
     await waitFor(() => expect(onOpenChange).toHaveBeenCalledWith(false));
   });
+
+  it('writes width and maxWidth to the content tokens', () => {
+    render(
+      <Popover
+        open
+        title="Notifications"
+        width="24rem"
+        maxWidth={480}
+        trigger={<button type="button">Inbox</button>}
+      >
+        Rows
+      </Popover>,
+    );
+
+    const content = screen.getByRole('dialog', { name: 'Notifications' });
+    expect(content.style.getPropertyValue('--manti-popover-width')).toBe(
+      '24rem',
+    );
+    expect(content.style.getPropertyValue('--manti-popover-max-width')).toBe(
+      '480px',
+    );
+  });
+
+  it('merges contentProps onto the content part without overriding the machine', () => {
+    render(
+      <Popover
+        open
+        title="Filters"
+        className="from-prop"
+        maxWidth="30rem"
+        contentProps={{
+          id: 'consumer-id',
+          role: 'region',
+          className: 'from-content-props',
+          style: { inlineSize: '12rem' },
+          'aria-roledescription': 'filter panel',
+        }}
+        trigger={<button type="button">Filter</button>}
+      >
+        Body
+      </Popover>,
+    );
+
+    const content = screen.getByRole('dialog', { name: 'Filters' });
+    expect(content).not.toHaveAttribute('id', 'consumer-id');
+    expect(content).toHaveAttribute('aria-roledescription', 'filter panel');
+    expect(content).toHaveClass('from-content-props', 'from-prop');
+    expect(content.style.inlineSize).toBe('12rem');
+    expect(content.style.getPropertyValue('--manti-popover-max-width')).toBe(
+      '30rem',
+    );
+  });
 });

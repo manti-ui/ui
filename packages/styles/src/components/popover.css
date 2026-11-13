@@ -10,14 +10,20 @@
 
   [data-scope='popover'][data-part='content'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-popover-width: max-content;
     --manti-popover-max-width: 20rem;
+    /* Derived: the panel never outgrows the viewport less the overlay gutter. */
+    --_popover-viewport-max: calc(100vw - var(--manti-space-8));
 
     position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--manti-space-2);
-    width: max-content;
-    max-width: var(--manti-popover-max-width);
+    width: var(--manti-popover-width);
+    max-width: min(
+      var(--manti-popover-max-width),
+      var(--_popover-viewport-max)
+    );
     padding: var(--manti-space-4);
     background: var(--manti-panel-tint-strong);
     border: 1px solid var(--manti-panel-border);
@@ -48,6 +54,13 @@
     [data-scope='popover'][data-part='content'] {
       background: var(--manti-surface-raised);
     }
+  }
+
+  /* Text and flexible content wrap inside the panel rather than spilling past it. */
+  [data-scope='popover'][data-part='title'],
+  [data-scope='popover'][data-part='description'] {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   [data-scope='popover'][data-part='title'] {
