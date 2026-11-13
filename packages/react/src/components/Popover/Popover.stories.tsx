@@ -1,9 +1,12 @@
 import type { Story, StoryDefault } from '@ladle/react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Popover } from './Popover.js';
 import type { PopoverProps } from './Popover.js';
 import { Badge } from '../Badge/Badge.js';
 import { Button } from '../Button/Button.js';
+import { Card } from '../Card/Card.js';
+import { Kbd } from '../Kbd/Kbd.js';
 import { Text } from '../Text/Text.js';
 
 export default {
@@ -133,3 +136,62 @@ export const DefaultWidthWrapping: Story<PopoverProps> = (args) => (
   </Popover>
 );
 DefaultWidthWrapping.args = { defaultOpen: true };
+
+/**
+ * No `trigger`: the panel opens from the `?` key or the external button, sits
+ * under the status bar through `getAnchorRect`, and Escape hands focus back
+ * to whatever had it before it opened.
+ */
+export const WithoutTrigger: Story<PopoverProps> = (args) => {
+  const [open, setOpen] = useState(Boolean(args.defaultOpen));
+  const barRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('input, textarea, [contenteditable]')) return;
+      if (event.key === '?') {
+        event.preventDefault();
+        setOpen(true);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  return (
+    <div>
+      <Card ref={barRef}>
+        <Card.Body
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 'var(--manti-space-3)',
+          }}
+        >
+          <Text as="span" size="sm" emphasis="muted">
+            <Text as="span" size="sm/medium">
+              Kitchen
+            </Text>{' '}
+            · press <Kbd>?</Kbd> anywhere, or use the button.
+          </Text>
+          <Button variant="secondary" onClick={() => setOpen(true)}>
+            Show tips
+          </Button>
+        </Card.Body>
+      </Card>
+      <Popover
+        {...args}
+        trigger={undefined}
+        placement="bottom-start"
+        showCloseButton
+        open={open}
+        onOpenChange={setOpen}
+        getAnchorRect={() => barRef.current?.getBoundingClientRect() ?? null}
+      />
+    </div>
+  );
+};
+WithoutTrigger.args = { defaultOpen: true };
+WithoutTrigger.meta = { layout: 'padded' };

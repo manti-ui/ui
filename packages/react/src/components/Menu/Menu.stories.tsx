@@ -1,9 +1,12 @@
 import type { Story, StoryDefault } from '@ladle/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Menu } from './Menu.js';
 import type { MenuProps } from './Menu.js';
 import { Button } from '../Button/Button.js';
+import { Card } from '../Card/Card.js';
+import { Kbd } from '../Kbd/Kbd.js';
+import { Text } from '../Text/Text.js';
 
 export default {
   title: 'Components/Menu',
@@ -120,3 +123,61 @@ export const OptionsAndDanger: Story<MenuProps> = (args) => {
     />
   );
 };
+
+/**
+ * No `trigger`: the menu opens from the `J` key or the external button, sits
+ * under the status bar through `getAnchorRect`, and Escape hands focus back
+ * to whatever had it before it opened.
+ */
+export const WithoutTrigger: Story<MenuProps> = (args) => {
+  const [open, setOpen] = useState(Boolean(args.defaultOpen));
+  const barRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('input, textarea, [contenteditable]')) return;
+      if (event.key.toLowerCase() === 'j' && !event.metaKey && !event.ctrlKey) {
+        event.preventDefault();
+        setOpen(true);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  return (
+    <div>
+      <Card ref={barRef}>
+        <Card.Body
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 'var(--manti-space-3)',
+          }}
+        >
+          <Text as="span" size="sm" emphasis="muted">
+            <Text as="span" size="sm/medium">
+              Jobs
+            </Text>{' '}
+            · press <Kbd>J</Kbd> anywhere, or use the button.
+          </Text>
+          <Button variant="secondary" onClick={() => setOpen(true)}>
+            Open jobs menu
+          </Button>
+        </Card.Body>
+      </Card>
+      <Menu
+        {...args}
+        trigger={undefined}
+        ariaLabel="Jobs"
+        open={open}
+        onOpenChange={setOpen}
+        getAnchorRect={() => barRef.current?.getBoundingClientRect() ?? null}
+      />
+    </div>
+  );
+};
+WithoutTrigger.args = { defaultOpen: true };
+WithoutTrigger.meta = { layout: 'padded' };

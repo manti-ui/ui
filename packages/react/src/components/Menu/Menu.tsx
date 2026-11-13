@@ -1,11 +1,11 @@
-import { useId } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import type { HTMLAttributes, ReactElement } from 'react';
 import { menu } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
 import { cx } from '../../internal/props.js';
-import { renderTrigger } from '../../internal/floating.js';
-import type { Placement } from '../../internal/floating.js';
+import { renderTrigger, useFocusOrigin } from '../../internal/floating.js';
+import type { GetAnchorRect, Placement } from '../../internal/floating.js';
 import { MenuProvider, menuParts, useMenuSelection } from './MenuParts.js';
 import type { MenuSize } from './MenuParts.js';
 import { MenuItems } from './MenuItems.js';
@@ -26,12 +26,34 @@ export type {
 export type MenuPlacement = Placement | 'bottom-center';
 
 export interface MenuProps {
-  /** Element that opens the menu. Cloned with the machine trigger props. */
-  trigger: ReactElement;
+  /**
+   * Element that opens the menu. Cloned with the machine trigger props.
+   * Optional: without it, open the menu with `open` and place it with
+   * `getAnchorRect`.
+   */
+  trigger?: ReactElement;
   /** Declarative commands, groups, separators, options, and submenus. */
   items: MenuItem[];
-  /** Placement relative to the trigger. `bottom-center` aliases `bottom`. */
+  /**
+   * Placement relative to the trigger, or to the `getAnchorRect` rect.
+   * `bottom-center` aliases `bottom`.
+   */
   placement?: MenuPlacement;
+  /**
+   * Place the panel at this rect (viewport coordinates) instead of the
+   * trigger. Return `null` to fall back to the trigger.
+   */
+  getAnchorRect?: GetAnchorRect;
+  /**
+   * Element to focus when the menu closes. Defaults to the trigger, or, with
+   * no trigger, to the element that had focus when the menu opened.
+   */
+  finalFocusEl?: () => HTMLElement | null;
+  /**
+   * Move focus back on close (to `finalFocusEl` or its default). With
+   * `false` the adapter leaves focus where the machine put it. @default true
+   */
+  restoreFocus?: boolean;
   /** Row rhythm of the panel. Submenus inherit it. */
   size?: MenuSize;
   /** Called with the value of the selected command. */
@@ -72,6 +94,9 @@ export function Menu({
   trigger,
   items,
   placement = 'bottom-start',
+  getAnchorRect,
+  finalFocusEl,
+  restoreFocus = true,
   size = 'md',
   onSelect,
   open,
@@ -90,7 +115,7 @@ export function Menu({
   const selection = useMenuSelection();
   const service = useMachine(menu.machine, {
     id: baseId,
-    positioning: { placement: floatingPlacement },
+    positioning: { placement: floatingPlacement, getAnchorRect },
     'aria-label': ariaLabel,
     open,
     defaultOpen,
@@ -99,6 +124,35 @@ export function Menu({
       : undefined,
   });
   const api = menu.connect(service, normalizeProps);
+  const triggerId = api.getTriggerProps().id;
+  const hasTrigger = trigger != null;
+
+  // `@zag-js/menu` has no `finalFocusEl` or `restoreFocus`: it refocuses its
+  // trigger on close, and with no trigger focus falls to the body. So the
+  // adapter does the rest, after the machine's own refocus has run.
+  const focusOrigin = useRef<HTMLElement | null>(null);
+  useFocusOrigin(focusOrigin, api.open);
+  const wasOpen = useRef(api.open);
+  useEffect(() => {
+    const closed = wasOpen.current && !api.open;
+    wasOpen.current = api.open;
+    if (!closed || !restoreFocus || (hasTrigger && !finalFocusEl)) return;
+    queueMicrotask(() => {
+      // Focus the user moved on purpose (a click into another field) stays.
+      const active = document.activeElement;
+      const dropped =
+        active == null ||
+        active === document.body ||
+        (active instanceof HTMLElement && active.id === triggerId);
+      if (!dropped) return;
+      const target = finalFocusEl
+        ? finalFocusEl()
+        : hasTrigger
+          ? null
+          : focusOrigin.current;
+      target?.focus({ preventScroll: true });
+    });
+  }, [api.open, restoreFocus, hasTrigger, finalFocusEl, triggerId]);
 
   return (
     <MenuProvider
