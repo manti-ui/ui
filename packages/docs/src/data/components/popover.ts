@@ -69,7 +69,7 @@ export const meta: ComponentMeta = {
       type: "CSSProperties['width']",
       default: `'max-content'`,
       description:
-        'Panel width, written to `--manti-popover-width` on the content part.',
+        'Panel width, written to `--manti-popover-width` on the content part. A length set without `maxWidth` also lifts the default `20rem` cap to itself (still clamped to the viewport); a keyword such as `fit-content` keeps the default cap.',
     },
     {
       name: 'maxWidth',

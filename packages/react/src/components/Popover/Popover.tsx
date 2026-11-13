@@ -38,7 +38,10 @@ export interface PopoverProps {
   /** Close when pressing Escape. @default true */
   closeOnEscape?: boolean;
   /**
-   * Panel width, written to `--manti-popover-width` on the content part.
+   * Panel width, written to `--manti-popover-width` on the content part. A
+   * length set without `maxWidth` also lifts the default `20rem` cap to itself,
+   * so `width="24rem"` renders 24rem wide (still clamped to the viewport). A
+   * keyword such as `'fit-content'` keeps the default cap.
    * @default 'max-content'
    */
   width?: CSSProperties['width'];
@@ -60,6 +63,11 @@ export interface PopoverProps {
 /** A number is a px length, as React reads it for `width`; a custom property is not. */
 function toLength(value: string | number | undefined): string | undefined {
   return typeof value === 'number' ? `${value}px` : value;
+}
+
+/** A bare keyword (`auto`, `max-content`, `inherit`, …) names no length to lift the cap to. */
+function isKeyword(value: string): boolean {
+  return /^[a-z-]+$/i.test(value.trim());
 }
 
 /**
@@ -104,9 +112,12 @@ export function Popover({
   const widthValue = toLength(width);
   const maxWidthValue = toLength(maxWidth);
   if (widthValue != null) sizeStyle['--manti-popover-width'] = widthValue;
-  if (maxWidthValue != null) {
-    sizeStyle['--manti-popover-max-width'] = maxWidthValue;
-  }
+  // An explicit length `width` with no `maxWidth` must not be silently capped
+  // at the default 20rem, so it becomes the cap too.
+  const capValue =
+    maxWidthValue ??
+    (widthValue != null && !isKeyword(widthValue) ? widthValue : undefined);
+  if (capValue != null) sizeStyle['--manti-popover-max-width'] = capValue;
   const content = mergeProps(contentProps ?? {}, api.getContentProps());
 
   return (

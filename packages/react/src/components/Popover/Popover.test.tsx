@@ -49,6 +49,38 @@ describe('Popover', () => {
     );
   });
 
+  it('lifts the default cap to a length width set without maxWidth', () => {
+    const { rerender } = render(
+      <Popover
+        open
+        title="Wide"
+        width="24rem"
+        trigger={<button type="button">Open</button>}
+      >
+        Rows
+      </Popover>,
+    );
+
+    const content = screen.getByRole('dialog', { name: 'Wide' });
+    expect(content.style.getPropertyValue('--manti-popover-max-width')).toBe(
+      '24rem',
+    );
+
+    rerender(
+      <Popover
+        open
+        title="Wide"
+        width="fit-content"
+        trigger={<button type="button">Open</button>}
+      >
+        Rows
+      </Popover>,
+    );
+    expect(content.style.getPropertyValue('--manti-popover-max-width')).toBe(
+      '',
+    );
+  });
+
   it('merges contentProps onto the content part without overriding the machine', () => {
     render(
       <Popover

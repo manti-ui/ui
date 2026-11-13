@@ -29,7 +29,9 @@ default max width of `20rem`. It never grows past the viewport less a
 default width, text and long words wrap inside the panel.
 
 For wider content, raise the cap with the `maxWidth` prop, or set a fixed
-`width`:
+`width`. A length `width` set without `maxWidth` becomes the cap too, so
+`width="24rem"` renders 24rem wide; a keyword such as `fit-content` keeps the
+default cap. Both stay clamped to the viewport.
 
 ```tsx
 <Popover trigger={<Button>Notifications</Button>} maxWidth="28rem">
