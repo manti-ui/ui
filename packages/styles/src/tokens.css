@@ -197,6 +197,7 @@
       'Segoe UI', sans-serif;
     --manti-font-mono:
       ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    --manti-font-display: var(--manti-font-sans);
     --manti-text-xs: calc(var(--manti-text-base) * 0.75);
     --manti-text-sm: calc(var(--manti-text-base) * 0.875);
     --manti-text-base: 1rem;

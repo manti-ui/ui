@@ -667,6 +667,11 @@ export const fontWeight = {
 export const fontFamily = {
   sans: "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
   mono: "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace",
+  /**
+   * The display face of `Heading` and every component title part. It defaults
+   * to the text face, so nothing changes until a theme sets it.
+   */
+  display: 'var(--manti-font-sans)',
 } as const;
 
 /**

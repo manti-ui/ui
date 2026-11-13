@@ -61,6 +61,25 @@ lands on. Text and Heading step through them automatically as `size` grows.
 
 - `--manti-font-sans` — Inter with system fallbacks
 - `--manti-font-mono` — system monospace stack
+- `--manti-font-display` — the face of [Heading](/typography/heading) and of
+  every component title (Card, Dialog, Drawer, Popover, Alert, Toast, Tour,
+  FloatingPanel, DataTable and the Steps item title). It defaults to
+  `var(--manti-font-sans)`, so headings and body copy share one face until you
+  set it.
 
 Inter is not bundled. Load it in the application or override
 `--manti-font-sans`.
+
+To give headings and titles their own face, set `--manti-font-display` once:
+
+```css
+:root {
+  --manti-font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --manti-font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+}
+```
+
+The default resolves on `:root`, so set `--manti-font-display` wherever you
+set `--manti-font-sans`. A text face overridden on a narrower scope does not
+reach the display face unless you set both there. With Tailwind, the token is
+the `font-display` utility.

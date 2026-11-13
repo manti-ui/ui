@@ -128,6 +128,7 @@
   [data-scope='drawer'][data-part='title'] {
     margin: 0;
     padding-inline-end: var(--manti-space-6);
+    font-family: var(--manti-font-display);
     font-size: var(--manti-text-lg);
     font-weight: var(--manti-weight-semibold);
     line-height: var(--manti-leading-snug);

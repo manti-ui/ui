@@ -64,6 +64,7 @@
   }
 
   [data-scope='popover'][data-part='title'] {
+    font-family: var(--manti-font-display);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-semibold);
     line-height: var(--manti-leading-snug);

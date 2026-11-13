@@ -50,6 +50,7 @@
   [data-scope='data-table'][data-part='title'] {
     margin: 0;
     color: var(--manti-text);
+    font-family: var(--manti-font-display);
     font-size: var(--manti-text-base);
     font-weight: var(--manti-weight-semibold);
     line-height: var(--manti-leading-snug);
