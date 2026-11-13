@@ -17,8 +17,11 @@
   }
 
   [data-scope='rating-group'][data-part='control'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-rating-group-gap: var(--manti-space-1);
+
     display: inline-flex;
-    gap: var(--manti-space-1);
+    gap: var(--manti-rating-group-gap);
   }
 
   [data-scope='rating-group'][data-part='item'] {

@@ -17,8 +17,11 @@
   }
 
   [data-scope='steps'][data-part='list'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-steps-gap: var(--manti-space-2);
+
     display: flex;
-    gap: var(--manti-space-2);
+    gap: var(--manti-steps-gap);
 
     /* The list is the one part the machine does not stamp `data-orientation`
        on, so this reads the root's - scoped to the steps root, never a bare
@@ -60,6 +63,7 @@
   [data-scope='steps'][data-part='indicator'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-steps-indicator-size: 2rem;
+    --manti-steps-indicator-font-size: var(--manti-text-sm);
 
     display: inline-flex;
     flex: none;
@@ -71,7 +75,7 @@
     border: 1px solid var(--manti-panel-border);
     border-radius: var(--manti-radius-full);
     color: var(--manti-text-muted);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-steps-indicator-font-size);
     font-weight: var(--manti-weight-semibold);
     font-variant-numeric: tabular-nums;
     transition:
