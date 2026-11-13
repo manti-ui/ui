@@ -39,67 +39,15 @@ const CSS = presolve(here, '../src/tokens.css');
 const TOKENS_TS = presolve(here, '../../tokens/src/index.ts');
 const gate = process.argv.includes('--gate');
 
-const { presets } = await import(pathToFileURL(TOKENS_TS).href);
+const { contrastPairs, presets } = await import(pathToFileURL(TOKENS_TS).href);
 const { root, variantScopes, color, resolveToken } = await readTokensCss(CSS);
 
 // ── pairs to check ───────────────────────────────────────────────────────────
-// kind: 'text' → AA 4.5 | 'ui' → 3.0.  gate: counts toward exit code.
-const chrome = [
-  ['text / bg', '--manti-text', '--manti-bg', 'text', true],
-  ['text / surface', '--manti-text', '--manti-surface', 'text', true],
-  [
-    'danger-text / surface',
-    '--manti-danger-text',
-    '--manti-surface',
-    'text',
-    true,
-  ],
-  [
-    'warning-text / surface',
-    '--manti-warning-text',
-    '--manti-surface',
-    'text',
-    false,
-  ],
-  [
-    'text-muted / surface',
-    '--manti-text-muted',
-    '--manti-surface',
-    'text',
-    true,
-  ],
-  [
-    'text-subtle / surface',
-    '--manti-text-subtle',
-    '--manti-surface',
-    'text',
-    true,
-  ],
-  ['focus-ring / bg', '--manti-focus-ring', '--manti-bg', 'ui', false],
-  [
-    'border-strong / surface',
-    '--manti-border-strong',
-    '--manti-surface',
-    'ui',
-    false,
-  ],
-  ['border / surface', '--manti-border', '--manti-surface', 'ui', false],
-];
-// Pairs whose steps are fixed by Radix's own scale design are reported, not
-// gated: warning text (amber 11), the focus ring (slate 8), the ink on a solid
-// (Radix's step 9 rule) and soft text (step 11). Manti takes Radix verbatim, so
-// these follow Radix even where a WCAG 2.1 ratio lands under the bar; the
-// report keeps the numbers, and APCA Lc beside them.
-const perVariant = [
-  ['on-solid / solid', '--variant-on-solid', '--variant-solid', 'text', false],
-  [
-    'soft-text / soft-bg',
-    '--variant-soft-text',
-    '--variant-soft-bg',
-    'text',
-    false,
-  ],
-];
+// The pairs are the `contrastPairs` export of `@manti-ui/tokens`, so an app that
+// themes Manti checks the same list. kind: 'text' → AA 4.5 | 'ui' → 3.0.
+// gate: counts toward exit code. scope: 'root' | 'variant' (every variant).
+const chrome = contrastPairs.filter((p) => p.scope === 'root');
+const perVariant = contrastPairs.filter((p) => p.scope === 'variant');
 
 let failures = 0;
 const unresolved = [];
@@ -141,11 +89,12 @@ function row(label, fg, bg, kind, gated, scope, group, resolve = resolveToken) {
 }
 
 console.log('\nCHROME (root)');
-for (const [l, fg, bg, k, g] of chrome) row(l, fg, bg, k, g, root, 'chrome');
+for (const { label, fg, bg, kind, gate: g } of chrome)
+  row(label, fg, bg, kind, g, root, 'chrome');
 for (const [name, scope] of variantScopes) {
   console.log(`\nVARIANT '${name}'`);
-  for (const [l, fg, bg, k, g] of perVariant)
-    row(l, fg, bg, k, g, scope, `variant '${name}'`);
+  for (const { label, fg, bg, kind, gate: g } of perVariant)
+    row(label, fg, bg, kind, g, scope, `variant '${name}'`);
 }
 
 // ── the shipped presets ──────────────────────────────────────────────────────
@@ -162,12 +111,12 @@ for (const [id, preset] of Object.entries(presets)) {
   ]);
   console.log(`\nPRESET '${id}'`);
   for (const name of Object.keys(preset.colors))
-    for (const [l, fg, bg, k, g] of perVariant)
+    for (const { label, fg, bg, kind, gate: g } of perVariant)
       row(
-        `${name} · ${l}`,
+        `${name} · ${label}`,
         fg,
         bg,
-        k,
+        kind,
         g,
         scopes.get(name),
         `preset '${id}'`,
