@@ -4,9 +4,9 @@
 User-agent: *
 Allow: /
 
-# Storybook's raw iframe host pages carry no standalone SEO value - keep them
-# out of the index to avoid duplicate, content-less URLs.
-Disallow: /storybook/iframe.html
+# Ladle's chrome-less story previews (?mode=preview) carry no standalone SEO
+# value - keep them out of the index to avoid duplicate, content-less URLs.
+Disallow: /ladle/*mode=preview
 
 # Named AI crawlers. The wildcard above already allows them; naming each one
 # makes the permission explicit, so a bot that looks for its own group (and
@@ -28,7 +28,7 @@ User-agent: Bytespider
 User-agent: FacebookBot
 User-agent: Meta-ExternalAgent
 Allow: /
-Disallow: /storybook/iframe.html
+Disallow: /ladle/*mode=preview
 
 # Machine-readable project guides for coding agents:
 #   https://manti.design/llms.txt       short map

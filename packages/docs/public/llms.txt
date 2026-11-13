@@ -491,7 +491,7 @@ packages/docs/src/data/components/*.ts
 8. Register public independent component dimensions in `componentTokens`.
    Keep derived `calc()` values private as `--_*`.
 9. Preserve the public `data-scope`, `data-part`, and state anatomy.
-10. Add or update Storybook coverage, docs metadata, component docs, and demos
+10. Add or update Ladle story coverage, docs metadata, component docs, and demos
     with every public component change.
 11. Respect controlled/uncontrolled behavior, keyboard use, visible focus, and
     screen-reader semantics.
@@ -524,6 +524,6 @@ before a pull request.
 - [Plain CSS](https://manti.design/guides/plain-css)
 - [Tailwind v4](https://manti.design/guides/tailwind)
 - [Zag.js coverage](https://manti.design/reference/zag-coverage)
-- [Storybook](https://manti.design/storybook/)
+- [Ladle gallery](https://manti.design/ladle/)
 - [Source repository](https://github.com/manti-ui/ui)
 - [Full documentation corpus](https://manti.design/llms-full.txt)

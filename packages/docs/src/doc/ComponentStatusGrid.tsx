@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { Badge, Card } from '@manti-ui/react';
 
 import { componentCatalog } from '../data/componentMeta';
-import { STORYBOOK_URL } from '../data/navigation';
+import { LADLE_URL } from '../data/navigation';
 
-/** The whole-library overview grid, with a docs/Storybook status per component. */
+/** The whole-library overview grid, with a docs/Ladle status per component. */
 export function ComponentStatusGrid() {
   return (
     <div className="docs-card-grid">
@@ -31,7 +31,7 @@ export function ComponentStatusGrid() {
                     </svg>
                   </span>
                 ) : (
-                  <Badge variant="secondary">Storybook</Badge>
+                  <Badge variant="secondary">Ladle</Badge>
                 )}
               </div>
               <p
@@ -54,7 +54,7 @@ export function ComponentStatusGrid() {
         ) : (
           <a
             key={item.key}
-            href={STORYBOOK_URL}
+            href={LADLE_URL}
             target="_blank"
             rel="noreferrer"
             className="docs-plain"
