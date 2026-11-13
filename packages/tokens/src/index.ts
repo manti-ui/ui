@@ -901,7 +901,7 @@ export const componentTokens = {
   'number-input': ['height', 'stepper-width', 'radius'],
   pagination: ['size'],
   'pin-input': ['size'],
-  popover: ['max-width', 'z-index'],
+  popover: ['width', 'max-width', 'z-index'],
   progress: ['track-height', 'circle-size', 'circle-thickness'],
   'radio-group': [
     'gap',

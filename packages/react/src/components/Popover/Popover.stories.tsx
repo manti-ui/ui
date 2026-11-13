@@ -2,7 +2,9 @@ import type { Story, StoryDefault } from '@ladle/react';
 
 import { Popover } from './Popover.js';
 import type { PopoverProps } from './Popover.js';
+import { Badge } from '../Badge/Badge.js';
 import { Button } from '../Button/Button.js';
+import { Text } from '../Text/Text.js';
 
 export default {
   title: 'Components/Popover',
@@ -60,3 +62,74 @@ export const Placements: Story<PopoverProps> = (args) => (
   </div>
 );
 Placements.meta = { layout: 'padded' };
+
+const notifications = [
+  {
+    title: 'Order #1042 shipped',
+    meta: 'Two trays of manti are on their way to Kayseri.',
+    tag: 'Orders',
+  },
+  {
+    title: 'Dough recipe updated',
+    meta: 'Resting time changed from 20 to 30 minutes.',
+    tag: 'Recipes',
+  },
+  {
+    title: 'New review on Yogurt sauce',
+    meta: 'Five stars: the garlic is exactly right.',
+    tag: 'Reviews',
+  },
+] as const;
+
+/**
+ * A list laid out at a fixed 24rem. The default 20rem cap would let every row
+ * run past the panel edge; `maxWidth` lets the panel grow to hold it.
+ */
+export const WideContent: Story<PopoverProps> = (args) => (
+  <Popover
+    {...args}
+    title="Notifications"
+    maxWidth="28rem"
+    trigger={<Button variant="secondary">Notifications</Button>}
+  >
+    <div
+      style={{
+        display: 'grid',
+        gap: 'var(--manti-space-3)',
+        width: '24rem',
+      }}
+    >
+      {notifications.map((item) => (
+        <div
+          key={item.title}
+          style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+            gap: 'var(--manti-space-3)',
+          }}
+        >
+          <div style={{ display: 'grid', gap: 'var(--manti-space-1)' }}>
+            <Text as="span" size="sm/medium">
+              {item.title}
+            </Text>
+            <Text as="span" size="xs" emphasis="muted">
+              {item.meta}
+            </Text>
+          </div>
+          <Badge>{item.tag}</Badge>
+        </div>
+      ))}
+    </div>
+  </Popover>
+);
+WideContent.args = { defaultOpen: true };
+
+/** At the default width, long words and links wrap inside the panel. */
+export const DefaultWidthWrapping: Story<PopoverProps> = (args) => (
+  <Popover {...args} title="Share this recipe">
+    Send the link to anyone who should see it:
+    https://manti.example/recipes/kayseri-mantisi-with-garlic-yogurt-and-pul-biber-butter
+  </Popover>
+);
+DefaultWidthWrapping.args = { defaultOpen: true };

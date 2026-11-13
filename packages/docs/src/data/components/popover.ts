@@ -64,6 +64,26 @@ export const meta: ComponentMeta = {
       default: 'true',
       description: 'Close when pressing Escape.',
     },
+    {
+      name: 'width',
+      type: "CSSProperties['width']",
+      default: `'max-content'`,
+      description:
+        'Panel width, written to `--manti-popover-width` on the content part. A length set without `maxWidth` also lifts the default `20rem` cap to itself (still clamped to the viewport); a keyword such as `fit-content` keeps the default cap.',
+    },
+    {
+      name: 'maxWidth',
+      type: "CSSProperties['maxWidth']",
+      default: `'20rem'`,
+      description:
+        'Largest panel width, written to `--manti-popover-max-width` on the content part. The panel never grows past the viewport less its gutter.',
+    },
+    {
+      name: 'contentProps',
+      type: "Omit<HTMLAttributes<HTMLDivElement>, 'children'>",
+      description:
+        "Attributes merged onto the content part. The machine's props win; `className` and `style` compose with `className`, `width` and `maxWidth`.",
+    },
   ],
   anatomy: [
     {
