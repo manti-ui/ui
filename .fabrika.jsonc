@@ -53,5 +53,8 @@
       "command": "pnpm build:packages 1>&2 && pnpm exec vite packages/docs --port {{port}} --strictPort 1>&2",
       "readyPath": "/"
     }
-  ]
+  ],
+  "reviewUi": {
+    "mode": "hand-check"
+  }
 }
