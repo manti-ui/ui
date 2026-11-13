@@ -53,6 +53,7 @@ export type {
 
 export { Combobox } from './Combobox/Combobox.js';
 export type {
+  ComboboxFilter,
   ComboboxItem,
   ComboboxProps,
   ComboboxVariant,

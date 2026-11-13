@@ -814,6 +814,9 @@ export const componentTokens = {
     'item-gap',
     'item-radius',
     'item-font-size',
+    'status-padding-y',
+    'status-padding-x',
+    'status-gap',
   ],
   'data-table': [
     'radius',

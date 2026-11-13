@@ -29,6 +29,16 @@ Set `multiple` to collect several values.
 
 <Demo name="combobox/multiple" center />
 
+## Remote search
+
+To search a server as the user types, control the text with `inputValue` and
+`onInputValueChange`, fetch from it, and pass the answer as `items` with
+`filter={false}` so it renders as given. Set `loading` while a request is out
+and `emptyContent` for an answer with nothing in it; `minChars` keeps the
+listbox closed until the query is long enough. Combobox does no fetching,
+debouncing or caching itself. A pick stays selected, and a chip keeps its
+label, when the next answer replaces `items`.
+
 ## API
 
 <PropsTable component="combobox" />
