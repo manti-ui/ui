@@ -17,6 +17,16 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Deploy previews (one per pull request) are what fabrika's rendered review opens. It asks for
+# surfaces in its own namespace from `.fabrika.jsonc` (`/ladle/react/…`, `/ladle/styles/…`,
+# `/docs/…`), so a preview also writes a `_redirects` file that maps those paths onto the real
+# ones. Ladle reads only its query string, so its two prefixes are rewritten in place (200). The
+# docs site routes on the browser path, so `/docs/…` must be a real redirect (302) or its router
+# renders its 404 page. Netlify reads `_redirects` before the rules below, and production never
+# gets it.
+[context.deploy-preview]
+  command = "pnpm -w run build:site && printf '%s\\n' '/ladle/react/*  /ladle/:splat  200' '/ladle/styles/*  /ladle/:splat  200' '/docs/*  /:splat  302' > dist/_redirects"
+
 # Canonical host: collapse www onto the apex so the two never serve duplicate
 # content. Domain-level rules run before path rules.
 [[redirects]]
