@@ -992,6 +992,129 @@ export type MantiComponentToken = {
   [C in MantiComponentTokenScope]: `--manti-${C & string}-${MantiComponentTokens[C][number] & string}`;
 }[MantiComponentTokenScope];
 
+/** How a contrast pair is graded: `text` against 4.5:1, `ui` against 3:1. */
+export type MantiContrastKind = 'text' | 'ui';
+
+/**
+ * Where a contrast pair is read: `root` resolves both tokens at `:root`;
+ * `variant` resolves them inside every `[data-variant]` scope, because the
+ * `--variant-*` roles only mean something there.
+ */
+export type MantiContrastScope = 'root' | 'variant';
+
+/** One foreground/background token pair the contrast floor is checked on. */
+export type MantiContrastPair = {
+  readonly label: string;
+  readonly fg: `--${string}`;
+  readonly bg: `--${string}`;
+  readonly kind: MantiContrastKind;
+  /** `true` fails the gate below the bar; `false` reports the ratio only. */
+  readonly gate: boolean;
+  readonly scope: MantiContrastScope;
+};
+
+/**
+ * The foreground/background pairs Manti checks its palette on, as data.
+ * `packages/styles/scripts/check-contrast.mjs` reads this list, and an app that
+ * themes Manti can run the same list over its own resolved token values.
+ *
+ * Pairs whose steps Radix fixes are reported, not gated: warning text (amber
+ * 11), the focus ring (slate 8), the ink on a solid (Radix's step 9 rule) and
+ * soft text (step 11). Manti takes Radix verbatim, so these follow Radix even
+ * where a WCAG 2.1 ratio lands under the bar. Decorative borders are reported
+ * only too.
+ */
+export const contrastPairs = [
+  {
+    label: 'text / bg',
+    fg: '--manti-text',
+    bg: '--manti-bg',
+    kind: 'text',
+    gate: true,
+    scope: 'root',
+  },
+  {
+    label: 'text / surface',
+    fg: '--manti-text',
+    bg: '--manti-surface',
+    kind: 'text',
+    gate: true,
+    scope: 'root',
+  },
+  {
+    label: 'danger-text / surface',
+    fg: '--manti-danger-text',
+    bg: '--manti-surface',
+    kind: 'text',
+    gate: true,
+    scope: 'root',
+  },
+  {
+    label: 'warning-text / surface',
+    fg: '--manti-warning-text',
+    bg: '--manti-surface',
+    kind: 'text',
+    gate: false,
+    scope: 'root',
+  },
+  {
+    label: 'text-muted / surface',
+    fg: '--manti-text-muted',
+    bg: '--manti-surface',
+    kind: 'text',
+    gate: true,
+    scope: 'root',
+  },
+  {
+    label: 'text-subtle / surface',
+    fg: '--manti-text-subtle',
+    bg: '--manti-surface',
+    kind: 'text',
+    gate: true,
+    scope: 'root',
+  },
+  {
+    label: 'focus-ring / bg',
+    fg: '--manti-focus-ring',
+    bg: '--manti-bg',
+    kind: 'ui',
+    gate: false,
+    scope: 'root',
+  },
+  {
+    label: 'border-strong / surface',
+    fg: '--manti-border-strong',
+    bg: '--manti-surface',
+    kind: 'ui',
+    gate: false,
+    scope: 'root',
+  },
+  {
+    label: 'border / surface',
+    fg: '--manti-border',
+    bg: '--manti-surface',
+    kind: 'ui',
+    gate: false,
+    scope: 'root',
+  },
+  {
+    label: 'on-solid / solid',
+    fg: '--variant-on-solid',
+    bg: '--variant-solid',
+    kind: 'text',
+    gate: false,
+    scope: 'variant',
+  },
+  {
+    label: 'soft-text / soft-bg',
+    fg: '--variant-soft-text',
+    bg: '--variant-soft-bg',
+    kind: 'text',
+    gate: false,
+    scope: 'variant',
+  },
+] as const satisfies readonly MantiContrastPair[];
+
 /** The complete Manti UI token contract. */
 export const mantiTokens = {
   packageName: '@manti-ui/tokens',
@@ -1002,6 +1125,7 @@ export const mantiTokens = {
     alphaScales,
     inks: colorInks,
     scaleRoles: colorScaleRoles,
+    contrastPairs,
   },
   variants,
   componentTokens,
