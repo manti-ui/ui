@@ -2,7 +2,7 @@ import { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Input } from './Input';
+import { Input } from './Input.js';
 
 describe('Input', () => {
   it('forwards its ref to the real input', () => {

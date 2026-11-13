@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Switch } from './Switch';
+import { Switch } from './Switch.js';
+import type { SwitchProps } from './Switch.js';
 
-const meta = {
+export default {
   title: 'Components/Switch',
-  component: Switch,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     children: 'Garlic yogurt',
     size: 'md',
@@ -14,49 +12,42 @@ const meta = {
     disabled: false,
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md'] },
   },
-} satisfies Meta<typeof Switch>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<SwitchProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<SwitchProps> = (args) => <Switch {...args} />;
 
-export const Playground: Story = {};
+export const States: Story<SwitchProps> = (args) => (
+  <div style={{ display: 'grid', gap: 'var(--manti-space-3)' }}>
+    <Switch {...args} defaultChecked={false}>
+      Off
+    </Switch>
+    <Switch {...args} defaultChecked>
+      On
+    </Switch>
+    <Switch {...args} defaultChecked={false} disabled>
+      Disabled
+    </Switch>
+    <Switch {...args} defaultChecked disabled>
+      Disabled, on
+    </Switch>
+  </div>
+);
 
-export const States: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: 'var(--manti-space-3)' }}>
-      <Switch {...args} defaultChecked={false}>
-        Off
+export const Sizes: Story<SwitchProps> = (args) => (
+  <div style={{ display: 'grid', gap: 'var(--manti-space-3)' }}>
+    {(['sm', 'md'] as const).map((size) => (
+      <Switch {...args} key={size} size={size}>
+        {size}
       </Switch>
-      <Switch {...args} defaultChecked>
-        On
-      </Switch>
-      <Switch {...args} defaultChecked={false} disabled>
-        Disabled
-      </Switch>
-      <Switch {...args} defaultChecked disabled>
-        Disabled, on
-      </Switch>
-    </div>
-  ),
-};
+    ))}
+  </div>
+);
 
-export const Sizes: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: 'var(--manti-space-3)' }}>
-      {(['sm', 'md'] as const).map((size) => (
-        <Switch {...args} key={size} size={size}>
-          {size}
-        </Switch>
-      ))}
-    </div>
-  ),
-};
-
-export const AriaLabelOnly: Story = {
-  args: {
-    children: undefined,
-    inputProps: { 'aria-label': 'Notifications' },
-  },
+export const AriaLabelOnly: Story<SwitchProps> = (args) => <Switch {...args} />;
+AriaLabelOnly.args = {
+  children: undefined,
+  inputProps: { 'aria-label': 'Notifications' },
 };

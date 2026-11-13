@@ -1,6 +1,11 @@
-import { presets as SHIPPED_PRESETS } from '@manti-ui/tokens';
-
-import { hslToHex } from './color';
+import {
+  type MantiRadixGrayScale,
+  type MantiRadixScale,
+  presets as SHIPPED_PRESETS,
+  radixAccentScaleNames,
+  radixGrayScaleNames,
+  radixScales,
+} from '@manti-ui/tokens';
 
 /**
  * The theme contract: everything Oklava can tune, plus the named stops the
@@ -10,6 +15,11 @@ import { hslToHex } from './color';
  * document; `apply.ts` owns that, and `css.ts` turns a config into CSS. This
  * module is the leaf of that trio: it imports neither, so the vocabulary can be
  * read anywhere, a server render included.
+ *
+ * Colors are Radix scale *names*, never free colors: a variant names one scale
+ * of the `radixScales` catalog in `@manti-ui/tokens`, and the neutral names one
+ * of its grays. A name expands into Radix steps and nothing else, so every
+ * theme built here keeps the contrast Radix designed its scales for.
  */
 
 export type VariantKey =
@@ -23,13 +33,19 @@ export type VariantKey =
 /** The ids `@manti-ui/tokens` ships a preset for. */
 export type PresetId = keyof typeof SHIPPED_PRESETS;
 
+/** A scale a variant may name: any Radix accent, or a Radix gray. */
+export type ScaleName = MantiRadixScale;
+
+/** A scale the neutral may name: one of the Radix grays. */
+export type NeutralName = MantiRadixGrayScale;
+
 export interface ThemeConfig {
   /** The base theme supplied by `@manti-ui/styles`. */
   preset: PresetId;
-  /** Base color per variant. A missing key means "keep the preset default". */
-  colors: Partial<Record<VariantKey, string>>;
-  /** `--manti-cool-hue`: the single neutral hue driving every gray/surface. */
-  neutralHue: number;
+  /** Radix scale per variant. A missing key means "keep the preset default". */
+  colors: Partial<Record<VariantKey, ScaleName>>;
+  /** The Radix gray behind every `--manti-gray-*` step, surface and border. */
+  neutral: NeutralName;
   /** `--manti-radius-factor`: rescales the whole radius ramp. */
   radiusFactor: number;
   /** Key into `FONT_STACKS`. */
@@ -45,8 +61,13 @@ export interface ThemeConfig {
 export interface VariantMeta {
   key: VariantKey;
   label: string;
-  /** The stop the shipped theme resolves to, i.e. the picker's starting swatch. */
-  fallback: string;
+  /**
+   * The scale the shipped theme builds this variant from, i.e. the picker's
+   * starting selection. `null` for the neutral rungs: `secondary` and
+   * `tertiary` ship as a treatment of the theme's neutral, not as a scale of
+   * their own, so they start on whichever gray the neutral names.
+   */
+  fallback: ScaleName | null;
   hint: string;
 }
 
@@ -55,35 +76,50 @@ export const VARIANTS: VariantMeta[] = [
   {
     key: 'primary',
     label: 'Primary',
-    fallback: '#e2681c',
+    fallback: 'orange',
     hint: 'Solid actions, active states, focus rings',
   },
   {
     key: 'secondary',
     label: 'Secondary',
-    fallback: '#6b7280',
+    fallback: null,
     hint: 'Soft, second-rank actions',
   },
   {
     key: 'tertiary',
     label: 'Tertiary',
-    fallback: '#9ca3af',
+    fallback: null,
     hint: 'Ghost controls and quiet chrome',
   },
   {
     key: 'success',
     label: 'Success',
-    fallback: '#16a34a',
+    fallback: 'green',
     hint: 'Confirmations',
   },
-  { key: 'info', label: 'Info', fallback: '#2563eb', hint: 'Neutral notices' },
+  { key: 'info', label: 'Info', fallback: 'blue', hint: 'Neutral notices' },
   {
     key: 'danger',
     label: 'Danger',
-    fallback: '#dc2626',
+    fallback: 'red',
     hint: 'Destructive actions and errors',
   },
 ];
+
+/** True for a name the `radixScales` catalog carries. */
+export function isScaleName(value: unknown): value is ScaleName {
+  return typeof value === 'string' && Object.hasOwn(radixScales, value);
+}
+
+/** True for the name of one of the catalog's grays. */
+export function isNeutralName(value: unknown): value is NeutralName {
+  return (radixGrayScaleNames as readonly unknown[]).includes(value);
+}
+
+/** How the rail and the agent prompt name a scale: `violet` reads `Violet`. */
+export function scaleLabel(name: ScaleName): string {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
 
 export interface FontStack {
   value: string;
@@ -178,7 +214,7 @@ export function fontLabel(font: string): string {
 export const DEFAULT_THEME: ThemeConfig = {
   preset: 'manti',
   colors: {},
-  neutralHue: 280,
+  neutral: SHIPPED_PRESETS.manti.neutral,
   radiusFactor: 1,
   font: 'inter',
   textBase: 1,
@@ -189,53 +225,24 @@ export const DEFAULT_THEME: ThemeConfig = {
 /**
  * The rail's vocabularies.
  *
- * Every structural knob is a short list of named stops rather than a free
- * range. A visitor picks "Large" and knows what they will get; a slider asks
- * them to guess which of 40 positions is the one the system was designed
- * around. The stops are also what "Surprise me" and the preset chips land on,
- * so the controls always show a selection rather than an orphaned value.
+ * Every knob is a short list of named stops rather than a free range. A
+ * visitor picks "Large" and knows what they will get; a slider asks them to
+ * guess which of 40 positions is the one the system was designed around. The
+ * stops are also what "Surprise me" and the preset chips land on, so the
+ * controls always show a selection rather than an orphaned value.
  */
-
-/** Base colors the accent grid offers, in hue order. */
-export const ACCENT_COLORS: { label: string; value: string }[] = [
-  { label: 'Manti', value: '#e2681c' },
-  { label: 'Orange', value: '#ea580c' },
-  { label: 'Amber', value: '#d97706' },
-  { label: 'Yellow', value: '#ca8a04' },
-  { label: 'Lime', value: '#65a30d' },
-  { label: 'Green', value: '#16a34a' },
-  { label: 'Emerald', value: '#059669' },
-  { label: 'Teal', value: '#0d9488' },
-  { label: 'Cyan', value: '#0891b2' },
-  { label: 'Sky', value: '#0ea5e9' },
-  { label: 'Blue', value: '#2563eb' },
-  { label: 'Indigo', value: '#4f46e5' },
-  { label: 'Violet', value: '#7c3aed' },
-  { label: 'Purple', value: '#9333ea' },
-  { label: 'Fuchsia', value: '#c026d3' },
-  { label: 'Pink', value: '#db2777' },
-  { label: 'Rose', value: '#e11d48' },
-  { label: 'Red', value: '#dc2626' },
-  { label: 'Brown', value: '#92400e' },
-  { label: 'Stone', value: '#78716c' },
-  { label: 'Slate', value: '#475569' },
-  { label: 'Graphite', value: '#4b5563' },
-];
 
 /**
- * Neutral hues, named. Every shipped preset's `coolHue` is one of these, so
- * adopting a palette always leaves this row with a stop selected.
+ * The scales a variant may name, in Radix order: every accent, then the grays,
+ * which a monochrome brand (the Graphite preset) uses as its primary.
  */
-export const NEUTRAL_HUES: { label: string; value: number }[] = [
-  { label: 'Sand', value: 70 },
-  { label: 'Olive', value: 120 },
-  { label: 'Sage', value: 150 },
-  { label: 'Ocean', value: 235 },
-  { label: 'Steel', value: 250 },
-  { label: 'Gray', value: 280 },
-  { label: 'Mauve', value: 300 },
-  { label: 'Rose', value: 350 },
+export const COLOR_SCALES: readonly ScaleName[] = [
+  ...radixAccentScaleNames,
+  ...radixGrayScaleNames,
 ];
+
+/** The grays the neutral may name, in Radix order. */
+export const NEUTRAL_SCALES: readonly NeutralName[] = radixGrayScaleNames;
 
 /** Radius factors, from square to fully round. */
 export const RADIUS_STEPS: { label: string; value: number }[] = [
@@ -279,10 +286,10 @@ export const BASE_CONTROL_HEIGHT_REM = { sm: 1.8, md: 2.2, lg: 2.7 };
 export interface ThemePreset {
   id: PresetId;
   label: string;
-  /** The base color per variant. */
-  colors: Partial<Record<VariantKey, string>>;
-  /** `--manti-cool-hue`: the neutral tint the palette comes with. */
-  neutralHue: number;
+  /** The Radix scale per variant the preset names. */
+  colors: Partial<Record<VariantKey, ScaleName>>;
+  /** The Radix gray the palette comes with. */
+  neutral: NeutralName;
 }
 
 /**
@@ -292,15 +299,15 @@ export interface ThemePreset {
  * chips in the rail, the CSS this page runs, and the file a visitor imports can
  * never disagree about what Ocean is. Nothing is re-declared here.
  *
- * A preset is a palette: base colors plus the neutral hue, and nothing else.
- * Shape, type and density belong to the knobs below and survive a palette swap.
+ * A preset is a palette: Radix scales plus the neutral gray, and nothing else.
+ * Shape, type and density belong to the knobs above and survive a palette swap.
  */
 export const PRESETS: ThemePreset[] = Object.entries(SHIPPED_PRESETS).map(
   ([id, preset]) => ({
     id: id as PresetId,
     label: preset.label,
-    colors: { ...preset.colors },
-    neutralHue: preset.coolHue,
+    colors: preset.default ? {} : { ...preset.colors },
+    neutral: preset.neutral,
   }),
 );
 
@@ -313,7 +320,7 @@ export function applyPreset(
     ...base,
     preset: preset.id,
     colors: { ...preset.colors },
-    neutralHue: preset.neutralHue,
+    neutral: preset.neutral,
   };
 }
 
@@ -323,29 +330,29 @@ export function configForPreset(id: PresetId): ThemeConfig {
   return applyPreset(preset);
 }
 
-// --- color helpers (browser only) -------------------------------------------
+/**
+ * The scale a variant is built from under `config`: its own pick, else the
+ * shipped fallback, else (for the neutral rungs) the theme's neutral. The rail
+ * shows this as selected, and `css.ts` diffs on it.
+ */
+export function scaleOf(config: ThemeConfig, key: VariantKey): ScaleName {
+  return (
+    config.colors[key] ??
+    VARIANTS.find((item) => item.key === key)?.fallback ??
+    config.neutral
+  );
+}
 
 /** A playful-but-usable random theme for the "Surprise me" action. */
 export function randomTheme(): ThemeConfig {
-  const pick = <T>(list: T[]): T =>
+  const pick = <T>(list: readonly T[]): T =>
     list[Math.floor(Math.random() * list.length)];
-  const hue = Math.round(Math.random() * 360);
-  // The neutral lands on the named stop furthest from the accent, so the two
-  // never sit on top of each other and the rail still shows a selected chip.
-  const opposite = (hue + 180) % 360;
-  const neutral = NEUTRAL_HUES.reduce((a, b) => {
-    const d = (x: number) =>
-      Math.min(Math.abs(x - opposite), 360 - Math.abs(x - opposite));
-    return d(b.value) < d(a.value) ? b : a;
-  });
+  const primary = pick(radixAccentScaleNames);
   return {
     ...DEFAULT_THEME,
-    colors: {
-      primary: hslToHex(hue, 62 + Math.random() * 26, 44 + Math.random() * 12),
-    },
-    neutralHue: neutral.value,
+    colors: { primary },
+    // The gray Radix pairs with this accent, so the neutral always suits it.
+    neutral: radixScales[primary].gray,
     radiusFactor: pick(RADIUS_STEPS).value,
   };
 }
-
-// --- CSS generation ---------------------------------------------------------

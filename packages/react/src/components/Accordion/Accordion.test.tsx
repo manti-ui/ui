@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Accordion } from './Accordion';
+import { Accordion } from './Accordion.js';
 
 describe('Accordion', () => {
   it('opens an item and reports the open value', async () => {

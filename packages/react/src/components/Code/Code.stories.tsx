@@ -1,37 +1,31 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Code } from './Code';
+import { Code } from './Code.js';
+import type { CodeProps } from './Code.js';
 
-const meta = {
+export default {
   title: 'Typography/Code',
-  component: Code,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     children: 'pnpm add @manti-ui/react',
     size: 'sm',
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md'] },
   },
-} satisfies Meta<typeof Code>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<CodeProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<CodeProps> = (args) => <Code {...args} />;
 
-export const Playground: Story = {};
-
-export const Sizes: Story = {
-  render: () => (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--manti-space-3)',
-      }}
-    >
-      <Code size="sm">const manti = true</Code>
-      <Code size="md">const manti = true</Code>
-    </div>
-  ),
-};
+export const Sizes: Story<CodeProps> = () => (
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'var(--manti-space-3)',
+    }}
+  >
+    <Code size="sm">const manti = true</Code>
+    <Code size="md">const manti = true</Code>
+  </div>
+);

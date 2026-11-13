@@ -9,9 +9,24 @@ const items = [
 export default function SegmentedControlSizes() {
   return (
     <div className="segmented-control-options">
-      <SegmentedControl size="sm" items={items} defaultValue="boiled" />
-      <SegmentedControl size="md" items={items} defaultValue="boiled" />
-      <SegmentedControl size="lg" items={items} defaultValue="boiled" />
+      <SegmentedControl
+        size="sm"
+        items={items}
+        defaultValue="boiled"
+        rootProps={{ 'aria-label': 'Cooking method (sm)' }}
+      />
+      <SegmentedControl
+        size="md"
+        items={items}
+        defaultValue="boiled"
+        rootProps={{ 'aria-label': 'Cooking method (md)' }}
+      />
+      <SegmentedControl
+        size="lg"
+        items={items}
+        defaultValue="boiled"
+        rootProps={{ 'aria-label': 'Cooking method (lg)' }}
+      />
     </div>
   );
 }

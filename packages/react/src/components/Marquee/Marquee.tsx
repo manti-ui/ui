@@ -1,6 +1,6 @@
 import type { CSSProperties, ComponentPropsWithoutRef, ReactNode } from 'react';
 
-import { cx } from '../../internal/props';
+import { cx } from '../../internal/props.js';
 
 export interface MarqueeProps
   extends Omit<ComponentPropsWithoutRef<'div'>, 'children'> {

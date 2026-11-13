@@ -2,7 +2,7 @@ import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { NumberInput } from './NumberInput';
+import { NumberInput } from './NumberInput.js';
 
 describe('NumberInput', () => {
   it('forwards root/input props and the real input ref', () => {

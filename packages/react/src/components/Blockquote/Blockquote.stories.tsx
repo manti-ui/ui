@@ -1,42 +1,38 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Blockquote } from './Blockquote';
+import { Blockquote } from './Blockquote.js';
+import type { BlockquoteProps } from './Blockquote.js';
 
-const meta = {
+export default {
   title: 'Typography/Blockquote',
-  component: Blockquote,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     children:
       'The best interface is the one that makes the intended action feel inevitable.',
     size: 'md',
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['md', 'lg'] },
   },
-} satisfies Meta<typeof Blockquote>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<BlockquoteProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<BlockquoteProps> = (args) => (
+  <Blockquote {...args} />
+);
 
-export const Playground: Story = {};
-
-export const Sizes: Story = {
-  render: () => (
-    <div
-      style={{
-        display: 'grid',
-        gap: 'var(--manti-space-6)',
-        maxWidth: 'calc(var(--manti-space-16) * 10)',
-      }}
-    >
-      <Blockquote size="md">
-        Components should preserve the meaning of the HTML they render.
-      </Blockquote>
-      <Blockquote size="lg">
-        A shared token language makes every new primitive feel at home.
-      </Blockquote>
-    </div>
-  ),
-};
+export const Sizes: Story<BlockquoteProps> = () => (
+  <div
+    style={{
+      display: 'grid',
+      gap: 'var(--manti-space-6)',
+      maxWidth: 'calc(var(--manti-space-16) * 10)',
+    }}
+  >
+    <Blockquote size="md">
+      Components should preserve the meaning of the HTML they render.
+    </Blockquote>
+    <Blockquote size="lg">
+      A shared token language makes every new primitive feel at home.
+    </Blockquote>
+  </div>
+);

@@ -58,7 +58,7 @@ function remarkOpenPrimaryComponentDemo() {
 }
 
 // Evergreen browsers that support `light-dark()`, CSS nesting and `color-mix()`
-// natively. Mirrors packages/styles/vite.config.ts and .storybook/main.ts so the
+// natively. Mirrors packages/styles/vite.config.ts and .ladle/vite.config.mjs so the
 // imported Manti CSS keeps `data-theme` theming and the `-webkit-backdrop-filter`
 // translucent prefix instead of being lowered to a prefers-color-scheme polyfill.
 const evergreen = {

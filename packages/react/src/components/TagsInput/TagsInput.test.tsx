@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { TagsInput } from './TagsInput';
+import { TagsInput } from './TagsInput.js';
 
 describe('TagsInput', () => {
   it('renders tags and removes one through its delete trigger', async () => {

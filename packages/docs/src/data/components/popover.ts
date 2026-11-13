@@ -7,7 +7,7 @@ export const meta: ComponentMeta = {
       name: 'trigger',
       type: 'ReactElement',
       description:
-        "Element that toggles the popover. Cloned with the machine's trigger props.",
+        "Optional element that toggles the popover. Cloned with the machine's trigger props. Without it, open the popover with `open` and place it with `getAnchorRect`.",
     },
     {
       name: 'title',
@@ -23,7 +23,39 @@ export const meta: ComponentMeta = {
       name: 'placement',
       type: 'Placement',
       default: `'bottom'`,
-      description: 'Placement relative to the trigger.',
+      description:
+        'Placement relative to the trigger, or to the `getAnchorRect` rect.',
+    },
+    {
+      name: 'getAnchorRect',
+      type: '() => { x: number; y: number; width: number; height: number } | null',
+      description:
+        'Place the panel at this rect (viewport coordinates) instead of the trigger. Return `null` to fall back to the trigger.',
+    },
+    {
+      name: 'initialFocusEl',
+      type: '() => HTMLElement | null',
+      description:
+        'Element to focus when the popover opens. Defaults to the first focusable element in the panel.',
+    },
+    {
+      name: 'finalFocusEl',
+      type: '() => HTMLElement | null',
+      description:
+        'Element to focus when the popover closes. Defaults to the trigger, or, with no trigger, to the element that had focus when the popover opened.',
+    },
+    {
+      name: 'restoreFocus',
+      type: 'boolean',
+      default: 'true',
+      description:
+        'Move focus back on close, to `finalFocusEl` or its default.',
+    },
+    {
+      name: 'persistentElements',
+      type: 'Array<() => Element | null>',
+      description:
+        'Elements outside the panel that count as inside it, so interacting with them does not dismiss the popover.',
     },
     {
       name: 'showCloseButton',
@@ -63,6 +95,26 @@ export const meta: ComponentMeta = {
       type: 'boolean',
       default: 'true',
       description: 'Close when pressing Escape.',
+    },
+    {
+      name: 'width',
+      type: "CSSProperties['width']",
+      default: `'max-content'`,
+      description:
+        'Panel width, written to `--manti-popover-width` on the content part. A length set without `maxWidth` also lifts the default `20rem` cap to itself (still clamped to the viewport); a keyword such as `fit-content` keeps the default cap.',
+    },
+    {
+      name: 'maxWidth',
+      type: "CSSProperties['maxWidth']",
+      default: `'20rem'`,
+      description:
+        'Largest panel width, written to `--manti-popover-max-width` on the content part. The panel never grows past the viewport less its gutter.',
+    },
+    {
+      name: 'contentProps',
+      type: "Omit<HTMLAttributes<HTMLDivElement>, 'children'>",
+      description:
+        "Attributes merged onto the content part. The machine's props win; `className` and `style` compose with `className`, `width` and `maxWidth`.",
     },
   ],
   anatomy: [

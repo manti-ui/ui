@@ -21,17 +21,23 @@ Manti CSS is layered. Ordinary unlayered CSS wins without `!important`.
 
 ## Prefer tokens
 
-Use semantic tokens for changes that should affect the system:
+Use semantic tokens for changes that should affect the system. Point a color
+role at another step of a scale:
 
 ```css
 :root {
-  --manti-bg: light-dark(#fafafb, #0c0c10);
-  --manti-surface: light-dark(#ffffff, #15151b);
-  --manti-text: light-dark(#16161a, #f4f4f6);
-  --manti-border: light-dark(#e6e6ea, #2a2a33);
+  --manti-bg: var(--manti-gray-2);
+  --manti-surface: var(--manti-gray-1);
+  --manti-border: var(--manti-gray-7);
   --manti-radius-factor: 0.8;
 }
 ```
+
+Every step is already a `light-dark()` pair of the Radix light and dark step, so
+a role that reads a step stays theme-aware with no `light-dark()` of its own.
+Steps keep their [Radix job](/foundations/color-and-tones#step-contract) in both
+schemes: `1`–`2` backgrounds, `3`–`5` component states, `6`–`8` borders and
+rings, `9`–`10` solids, `11`–`12` text.
 
 Use a component token for one intentional exception:
 
@@ -66,18 +72,26 @@ Class names, private `--_*` variables, and undocumented DOM are not public API.
 
 ## Add a variant
 
+Build a variant from the steps of one scale: soft surfaces on `3` → `4` → `5`,
+solids on `9` → `10`, the border on `7`, the ring on `8`, and text on `11` and
+`12`.
+
 ```css
 [data-variant='brand'] {
   --variant-solid: var(--manti-blue-9);
   --variant-solid-hover: var(--manti-blue-10);
-  --variant-solid-active: color-mix(in oklab, var(--manti-blue-10) 88%, black);
+  --variant-solid-active: color-mix(
+    in oklab,
+    var(--manti-blue-10) 88%,
+    var(--manti-gray-12)
+  );
   --variant-on-solid: var(--manti-text-on-accent);
-  --variant-soft-bg: var(--manti-blue-2);
-  --variant-soft-bg-hover: var(--manti-blue-3);
-  --variant-soft-bg-active: var(--manti-blue-4);
-  --variant-soft-text: var(--manti-blue-9);
+  --variant-soft-bg: var(--manti-blue-3);
+  --variant-soft-bg-hover: var(--manti-blue-4);
+  --variant-soft-bg-active: var(--manti-blue-5);
+  --variant-soft-text: var(--manti-blue-11);
   --variant-border: var(--manti-blue-7);
-  --variant-text: var(--manti-blue-9);
+  --variant-text: var(--manti-blue-11);
   --variant-ring: var(--manti-blue-8);
 }
 ```

@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Pagination } from './Pagination';
+import { Pagination } from './Pagination.js';
+import type { PaginationProps } from './Pagination.js';
 
-const meta = {
+export default {
   title: 'Components/Pagination',
-  component: Pagination,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     count: 200,
     pageSize: 20,
@@ -16,23 +14,30 @@ const meta = {
     variant: 'primary',
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof Pagination>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<PaginationProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<PaginationProps> = (args) => (
+  <Pagination {...args} />
+);
 
-export const Playground: Story = {};
+export const FewPages: Story<PaginationProps> = (args) => (
+  <Pagination {...args} />
+);
+FewPages.args = { count: 60, pageSize: 20, defaultPage: 1 };
 
-export const FewPages: Story = {
-  args: { count: 60, pageSize: 20, defaultPage: 1 },
-};
-
-export const ManyPages: Story = {
-  args: { count: 1000, pageSize: 20, defaultPage: 12, siblingCount: 2 },
+export const ManyPages: Story<PaginationProps> = (args) => (
+  <Pagination {...args} />
+);
+ManyPages.args = {
+  count: 1000,
+  pageSize: 20,
+  defaultPage: 12,
+  siblingCount: 2,
 };

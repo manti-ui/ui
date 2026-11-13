@@ -1,13 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Collapsible } from './Collapsible';
-import { Text } from '../Text/Text';
+import { Collapsible } from './Collapsible.js';
+import type { CollapsibleProps } from './Collapsible.js';
+import { Text } from '../Text/Text.js';
 
-const meta = {
+export default {
   title: 'Components/Collapsible',
-  component: Collapsible,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     trigger: "Show chef's note",
     children: (
@@ -20,23 +18,25 @@ const meta = {
     ),
   },
   decorators: [
-    (Story) => (
+    (Component) => (
       <div style={{ width: 360 }}>
-        <Story />
+        <Component />
       </div>
     ),
   ],
-} satisfies Meta<typeof Collapsible>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<CollapsibleProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<CollapsibleProps> = (args) => (
+  <Collapsible {...args} />
+);
 
-export const Playground: Story = {};
+export const OpenByDefault: Story<CollapsibleProps> = (args) => (
+  <Collapsible {...args} />
+);
+OpenByDefault.args = { defaultOpen: true };
 
-export const OpenByDefault: Story = {
-  args: { defaultOpen: true },
-};
-
-export const WithoutIndicator: Story = {
-  args: { indicator: false },
-};
+export const WithoutIndicator: Story<CollapsibleProps> = (args) => (
+  <Collapsible {...args} />
+);
+WithoutIndicator.args = { indicator: false };

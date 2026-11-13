@@ -290,11 +290,12 @@
     max-height: var(--manti-combobox-content-max-height);
   }
 
-  /* No matches → the `ul` renders empty; hide the whole panel. */
+  /* No rows and nothing else to say (no loading or empty row) → hide the
+     whole panel. With one of those rows alone it stays, joined to the seam. */
   [data-scope='combobox'][data-part='positioner']
     [data-scope='scroll-area'][data-part='root']:has(
       [data-part='content']:empty
-    ) {
+    ):not(:has([data-part='loading'], [data-part='empty'])) {
     display: none;
   }
 
@@ -317,6 +318,55 @@
     &:focus-visible {
       outline: none;
     }
+
+    /* Kept in the DOM for the machine, but takes no room while a loading or
+       empty row speaks for the panel. */
+    &:empty {
+      padding: 0;
+    }
+  }
+
+  /* The loading row and the empty content: quiet status lines, not items. They
+     are never selectable and never take focus. */
+  [data-scope='combobox']:is([data-part='loading'], [data-part='empty']) {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
+    --manti-combobox-status-padding-y: var(
+      --manti-size-item-padding-y,
+      var(--manti-space-2)
+    );
+    --manti-combobox-status-padding-x: var(
+      --manti-size-item-padding-x,
+      var(--manti-space-3)
+    );
+    --manti-combobox-status-gap: var(
+      --manti-size-item-gap,
+      var(--manti-space-2)
+    );
+
+    display: flex;
+    align-items: center;
+    gap: var(--manti-combobox-status-gap);
+    margin: var(--manti-size-panel-padding, var(--manti-space-2));
+    padding: var(--manti-combobox-status-padding-y)
+      var(--manti-combobox-status-padding-x);
+    color: var(--manti-text-muted);
+    font-size: var(--manti-size-text, var(--manti-text-sm));
+    line-height: var(--manti-leading-snug);
+  }
+
+  /* Rows above it: the loading row sits under them, behind a separator. */
+  [data-scope='combobox'][data-part='content']:not(:empty)
+    ~ [data-scope='combobox'][data-part='loading'] {
+    margin-top: 0;
+    border-top: 1px solid var(--manti-border);
+  }
+
+  /* The spinner tracks the row's icon size instead of its own fixed stop. */
+  [data-scope='combobox'][data-part='loading']
+    [data-scope='spinner'][data-part='root'] {
+    --manti-spinner-size: var(--manti-combobox-icon-size);
+
+    flex: none;
   }
 
   /* Sits under the rows when the match set is longer than `maxVisibleItems`.

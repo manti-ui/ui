@@ -1,0 +1,42 @@
+/* Ladle's story canvas. */
+
+:root {
+  /* The layout box below owns the story padding, so Ladle's own is zeroed. */
+  --ladle-main-padding: 0;
+  --ladle-main-padding-mobile: 0;
+}
+
+html,
+body {
+  background: var(--manti-bg);
+  color: var(--manti-text);
+}
+
+.ladle-main {
+  position: relative;
+  isolation: isolate;
+  background: var(--manti-bg);
+  color: var(--manti-text);
+}
+
+/* The three story layouts, picked by a story file's `meta.layout`. */
+.manti-ladle-layout {
+  box-sizing: border-box;
+}
+
+.manti-ladle-layout[data-layout='padded'] {
+  padding: var(--manti-space-4);
+}
+
+.manti-ladle-layout[data-layout='centered'] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 100vh;
+  padding: var(--manti-space-4);
+}
+
+.manti-ladle-layout[data-layout='fullscreen'] {
+  min-block-size: 100vh;
+  padding: var(--manti-space-0);
+}

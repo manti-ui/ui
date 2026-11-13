@@ -1,8 +1,42 @@
-import { useSyncExternalStore } from 'react';
+import { createContext, useContext, useSyncExternalStore } from 'react';
 import { Portal as ZagPortal } from '@zag-js/react';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactNode, RefObject } from 'react';
 
 export type PortalProps = ComponentProps<typeof ZagPortal>;
+
+const PortalContainerContext = createContext<
+  RefObject<HTMLElement | null> | undefined
+>(undefined);
+
+export interface PortalContainerProviderProps {
+  /**
+   * The element every Manti overlay rendered below this provider portals
+   * into, instead of `document.body`. Point it at the app's own top-layer
+   * element (a native `<dialog>` opened with `showModal()`, or a `popover`
+   * element) so menus, popovers and pickers opened inside it paint above it
+   * and take input. The element must be mounted before an overlay opens;
+   * while `current` is `null` the overlay falls back to `document.body`.
+   */
+  container: RefObject<HTMLElement | null>;
+  children?: ReactNode;
+}
+
+/**
+ * Makes every Manti overlay below it (Menu, Select, Combobox, Popover,
+ * HoverCard, Dialog, Drawer, the pickers, FloatingPanel, Tour, Toast) mount
+ * inside `container` rather than on `document.body`. An overlay's own explicit
+ * container, such as Tooltip's `portalContainer`, still wins.
+ */
+export function PortalContainerProvider({
+  container,
+  children,
+}: PortalContainerProviderProps) {
+  return (
+    <PortalContainerContext.Provider value={container}>
+      {children}
+    </PortalContainerContext.Provider>
+  );
+}
 
 const subscribe = () => () => {};
 const getClientSnapshot = () => true;
@@ -31,8 +65,12 @@ const getServerSnapshot = () => false;
  * to attach floating-ui to — leaving the panel stuck, unpositioned, at the
  * top-left of the viewport. The store snapshot is only `false` while React is
  * hydrating; a portal mounted after that reads `true` on its very first render.
+ *
+ * The mount node is the `container` prop, else the nearest
+ * `PortalContainerProvider`'s element, else `document.body`.
  */
 export function Portal(props: PortalProps) {
+  const contextContainer = useContext(PortalContainerContext);
   const hydrated = useSyncExternalStore(
     subscribe,
     getClientSnapshot,
@@ -40,5 +78,13 @@ export function Portal(props: PortalProps) {
   );
 
   if (!hydrated) return null;
-  return <ZagPortal {...props} />;
+  return (
+    <ZagPortal
+      {...props}
+      container={
+        props.container ??
+        (contextContainer as RefObject<HTMLElement> | undefined)
+      }
+    />
+  );
 }

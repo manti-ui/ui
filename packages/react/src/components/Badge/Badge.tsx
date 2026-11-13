@@ -2,11 +2,11 @@ import { forwardRef } from 'react';
 import type { ElementType, ReactElement } from 'react';
 import type { MantiBuiltinVariant } from '@manti-ui/tokens';
 
-import { cx } from '../../internal/props';
+import { cx } from '../../internal/props.js';
 import type {
   PolymorphicProps,
   PolymorphicRef,
-} from '../../internal/polymorphic';
+} from '../../internal/polymorphic.js';
 
 export type BadgeVariant = Exclude<MantiBuiltinVariant, 'tertiary'>;
 

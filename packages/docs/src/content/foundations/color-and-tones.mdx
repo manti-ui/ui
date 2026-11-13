@@ -3,70 +3,133 @@ title: Color & variants
 slug: /foundations/color-and-tones
 group: Foundations
 order: 21
-description: 'Manti UI color: ordered 1-12 primitive ramps, theme-aware semantic roles, the rest/hover/active interaction ladder, and the seven semantic variants.'
+description: 'Manti UI color: Radix Colors 12-step scales emitted as light-dark() pairs, theme-aware semantic roles, the rest/hover/active interaction ladder, and the seven semantic variants.'
 ---
 
 # Color & variants
 
-Manti UI separates fixed color ramps from the semantic roles components use.
+Manti UI separates fixed color scales from the semantic roles components use.
 
-## Primitive ramps
+## Primitive scales
 
-Six OKLCH ramps run from `1` (lightest) to `12` (darkest):
+Every primitive is a 12-step scale from [Radix Colors](https://www.radix-ui.com/colors)
+(`@radix-ui/colors`), taken verbatim under a plain color name:
 
-| Ramp     | Purpose     | Use it for                                             |
-| -------- | ----------- | ------------------------------------------------------ |
-| `gray`   | Neutral UI  | Surfaces, borders, text, and secondary controls        |
-| `orange` | Primary     | Main actions, selected states, and the product accent  |
-| `green`  | Success     | Positive feedback, completed states, and confirmations |
-| `blue`   | Information | Informational feedback, notices, and helpful context   |
-| `amber`  | Warning     | Caution, attention, and states that need review        |
-| `red`    | Danger      | Errors, destructive actions, and critical feedback     |
+| Scale    | Radix scale | Purpose     | Use it for                                             |
+| -------- | ----------- | ----------- | ------------------------------------------------------ |
+| `gray`   | `slate`     | Neutral UI  | Surfaces, borders, text, and secondary controls        |
+| `orange` | `orange`    | Primary     | Main actions, selected states, and the product accent  |
+| `green`  | `green`     | Success     | Positive feedback, completed states, and confirmations |
+| `blue`   | `blue`      | Information | Informational feedback, notices, and helpful context   |
+| `amber`  | `amber`     | Warning     | Caution, attention, and states that need review        |
+| `red`    | `red`       | Danger      | Errors, destructive actions, and critical feedback     |
 
 <ColorRamps />
 
-Each stop is available as `--manti-{ramp}-{step}`. Component CSS should use
-semantic tokens or variants instead of choosing a stop directly.
+Each step is available as `--manti-{scale}-{step}`, and each one is a
+`light-dark()` pair of the Radix light and dark step with the same number:
 
-## Primitive scale contract
+```css
+--manti-orange-9: light-dark(#f76b15, #f76b15);
+--manti-gray-1: light-dark(#fcfcfd, #111113);
+```
 
-This mapping comes directly from `colorScaleRoles` in `@manti-ui/tokens`. Every
-color ramp uses the same contract:
+So a step is not a fixed lightness. `gray-1` is the app background in both
+schemes: near-white in light, near-black in dark. A step names a job, and the
+scheme picks the color. `pnpm gen:tokens` writes these pairs from
+`@manti-ui/tokens`. The surface, text, and border roles in `tokens.css` read a
+single step and follow `color-scheme` with no `light-dark()` of their own. The
+exception is `--manti-overlay`: Radix ships one `blackA` scale for both schemes,
+so the scrim picks its step with `light-dark()`, `black-a6` in light and
+`black-a8` in dark.
 
-| Stop | Source role                  | Exact purpose                                     |
+Component CSS should use semantic tokens or variants instead of choosing a step
+directly.
+
+## Step contract
+
+These are the Radix step semantics. The mapping comes from `colorScaleRoles` in
+`@manti-ui/tokens`, and every scale uses it:
+
+| Step | Source role                  | Purpose                                           |
 | ---- | ---------------------------- | ------------------------------------------------- |
-| `1`  | `appBackground[0]`           | Lighter page or panel background position         |
-| `2`  | `appBackground[1]`           | Next page or panel background position            |
+| `1`  | `appBackground[0]`           | App background                                    |
+| `2`  | `appBackground[1]`           | Subtle background: panels, sidebars, striping     |
 | `3`  | `componentBackground.rest`   | Resting component background                      |
 | `4`  | `componentBackground.hover`  | Hovered component background                      |
 | `5`  | `componentBackground.active` | Active, pressed, or selected component background |
 | `6`  | `border.subtle`              | Subtle borders and separators                     |
 | `7`  | `border.interactive`         | Interactive borders                               |
-| `8`  | `border.strong`              | Strong borders and focus chrome                   |
+| `8`  | `border.strong`              | Strong borders and the variant focus ring         |
 | `9`  | `solid.rest`                 | Resting solid fill                                |
 | `10` | `solid.hover`                | Hovered solid fill                                |
 | `11` | `text.lowContrast`           | Supporting or lower-contrast text                 |
 | `12` | `text.highContrast`          | Primary or highest-contrast text                  |
 
-This is the palette's intended role contract, not a promise that every component
-reads the primitive stop literally. Components consume semantic tokens or
-`--variant-*` roles, and `tokens.css` adapts them for theme and contrast.
+Because a step keeps its job in both schemes, "one step stronger" gains contrast
+in light and in dark alike. The interaction ladder is the same everywhere: soft
+surfaces go rest `3` → hover `4` → active `5`, and solids go `9` → `10`.
 
-The current `--variant-solid*` mappings are:
+## Radix steps, with no exceptions
 
-| Variant                         | Rest                     | Hover                     | Active                    |
-| ------------------------------- | ------------------------ | ------------------------- | ------------------------- |
-| `primary`                       | `orange-7`               | theme-aware `color-mix()` | theme-aware `color-mix()` |
-| `success`, `info`, and `danger` | matching hue at step `8` | theme-aware `color-mix()` | theme-aware `color-mix()` |
-| `secondary`                     | `gray-11` / `gray-3`     | `gray-10` / `gray-4`      | `gray-9` / `gray-5`       |
-| `tertiary` and `outline`        | semantic neutral value   | semantic neutral value    | semantic neutral value    |
+Every role sits on the step Radix designs for its job. Nothing moves off its
+nominal step to pass a contrast floor:
 
-Values separated by `/` mean light theme / dark theme. These mappings deliberately
-depart from the nominal `9 → 10` solid pair when contrast requires it.
+| Role                                 | Step | Radix job                                        |
+| ------------------------------------ | ---- | ------------------------------------------------ |
+| `--manti-focus-ring` (neutral)       | `8`  | Strong borders on interactive parts, focus rings |
+| `--manti-warning-text`               | `11` | Low-contrast text                                |
+| `--variant-soft-text`, every variant | `11` | Low-contrast text                                |
+| `--manti-text-subtle`                | `11` | Radix has one low-contrast text step             |
+
+The styles build still measures these pairs and prints the WCAG 2.1 ratio and
+APCA Lc of each, but it does not gate them, because the steps are Radix's.
+
+Labels on a solid fill do not read a scale step. They use two fixed inks, the
+same in both schemes: `--manti-ink-light` (consumed as `--manti-text-on-accent`)
+and `--manti-ink-dark` (consumed as `--manti-text-on-bright`). Which one a
+solid takes is Radix's step 9 rule, exported as `radixInk` from
+`@manti-ui/tokens`: the light ink on every scale except Sky, Mint, Lime, Yellow
+and Amber, which take the dark ink. So the shipped accent variants (`primary`,
+`success`, `info`, `danger`) carry the light ink in both schemes. The neutral
+variants (`secondary`, `tertiary`, `outline`) paint `gray-12`, which is not a
+step 9, so their ink is measured and switches per scheme with `light-dark()`:
+the light ink on the dark `gray-12` solid in light, the dark ink on the light
+`gray-12` solid in dark.
+
+The `--variant-*` mappings are:
+
+| Variant                                    | Solid      | Soft                 | Border  | Text      | Ring                 |
+| ------------------------------------------ | ---------- | -------------------- | ------- | --------- | -------------------- |
+| `primary`, `success`, `info`, and `danger` | `9` → `10` | `3` → `4` → `5`      | `7`     | `11`      | `8`                  |
+| `secondary`, `tertiary`, and `outline`     | `gray-12`  | `gray-3` → `4` → `5` | neutral | `gray-12` | `--manti-focus-ring` |
+
+For the accent variants, the pressed solid (`--variant-solid-active`) mixes the
+hover step toward `gray-12`, the direction that gains contrast in each scheme.
+The neutral variants already rest on `gray-12`, so they ease the other way: the
+hover is an even mix of `gray-12` and `gray-11`, and the pressed solid is
+`gray-11`.
 
 Input-like controls are the main exception to the colored-border progression.
 They use the neutral border at rest and hover, then introduce the variant color
 at focus or open.
+
+## Pick another scale
+
+There is no free color and no generated ramp. A theme names Radix scales: one
+accent per variant and one gray as the neutral. The catalog of names is
+`radixScales` in `@manti-ui/tokens` (25 accents and 6 grays), and each accent
+entry names the gray Radix pairs it with.
+
+- Adopt a [theme preset](/guides/themes): each one is a named pair, such as
+  `sky` on `slate` or `grass` on `sage`.
+- Pick scales by name in [Oklava](/guides/oklava) or the
+  [Theme Studio](https://studio.manti.design) and export the CSS.
+- Write the override yourself from `radixScales`, as the
+  [theming guide](/guides/theming-tokens#pick-a-radix-scale) shows.
+
+The single neutral hue property that used to tint every gray is gone, so there
+is no hue to set. To move the neutral, pick another Radix gray.
 
 ## Built-in variants
 
@@ -110,14 +173,18 @@ Components typed with `MantiVariant` accept custom strings:
 [data-variant='brand'] {
   --variant-solid: var(--manti-blue-9);
   --variant-solid-hover: var(--manti-blue-10);
-  --variant-solid-active: color-mix(in oklab, var(--manti-blue-10) 88%, black);
+  --variant-solid-active: color-mix(
+    in oklab,
+    var(--manti-blue-10) 88%,
+    var(--manti-gray-12)
+  );
   --variant-on-solid: var(--manti-text-on-accent);
-  --variant-soft-bg: var(--manti-blue-2);
-  --variant-soft-bg-hover: var(--manti-blue-3);
-  --variant-soft-bg-active: var(--manti-blue-4);
-  --variant-soft-text: var(--manti-blue-9);
+  --variant-soft-bg: var(--manti-blue-3);
+  --variant-soft-bg-hover: var(--manti-blue-4);
+  --variant-soft-bg-active: var(--manti-blue-5);
+  --variant-soft-text: var(--manti-blue-11);
   --variant-border: var(--manti-blue-7);
-  --variant-text: var(--manti-blue-9);
+  --variant-text: var(--manti-blue-11);
   --variant-ring: var(--manti-blue-8);
 }
 ```

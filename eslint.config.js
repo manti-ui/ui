@@ -9,7 +9,7 @@ export default tseslint.config(
     ignores: [
       '**/dist/**',
       '**/node_modules/**',
-      'storybook-static/**',
+      'ladle-static/**',
       'backlog/**',
     ],
   },

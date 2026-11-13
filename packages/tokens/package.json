@@ -1,6 +1,6 @@
 {
   "name": "@manti-ui/tokens",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Framework-agnostic design token contract for Manti UI.",
   "license": "MIT",
   "homepage": "https://manti.design",
@@ -44,5 +44,8 @@
   "scripts": {
     "build": "vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@radix-ui/colors": "3.0.0"
   }
 }

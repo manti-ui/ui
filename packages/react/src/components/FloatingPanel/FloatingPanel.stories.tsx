@@ -1,14 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { FloatingPanel } from './FloatingPanel';
-import { Button } from '../Button/Button';
-import { Text } from '../Text/Text';
+import { FloatingPanel } from './FloatingPanel.js';
+import type { FloatingPanelProps } from './FloatingPanel.js';
+import { Button } from '../Button/Button.js';
+import { Text } from '../Text/Text.js';
 
-const meta = {
+export default {
   title: 'Components/FloatingPanel',
-  component: FloatingPanel,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     trigger: <Button>Open panel</Button>,
     title: 'Layers',
@@ -20,9 +18,9 @@ const meta = {
     draggable: true,
     resizable: true,
   },
-} satisfies Meta<typeof FloatingPanel>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<FloatingPanelProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {};
+export const Playground: Story<FloatingPanelProps> = (args) => (
+  <FloatingPanel {...args} />
+);

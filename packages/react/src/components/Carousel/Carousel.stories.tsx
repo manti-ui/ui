@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Carousel } from './Carousel';
-import { Text } from '../Text/Text';
+import { Carousel } from './Carousel.js';
+import type { CarouselProps } from './Carousel.js';
+import { Text } from '../Text/Text.js';
 
 const palette = [
   'var(--manti-surface)',
@@ -28,11 +29,8 @@ const slide = (label: string, bg: string) => (
   </div>
 );
 
-const meta = {
+export default {
   title: 'Components/Carousel',
-  component: Carousel,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     slides: palette.map((bg, i) => slide(`Slide ${i + 1}`, bg)),
     slidesPerPage: 1,
@@ -41,21 +39,22 @@ const meta = {
   },
   argTypes: {
     orientation: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['horizontal', 'vertical'],
     },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof Carousel>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<CarouselProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<CarouselProps> = (args) => (
+  <Carousel {...args} />
+);
 
-export const Playground: Story = {};
-
-export const TwoPerPage: Story = {
-  args: { slidesPerPage: 2, loop: true },
-};
+export const TwoPerPage: Story<CarouselProps> = (args) => (
+  <Carousel {...args} />
+);
+TwoPerPage.args = { slidesPerPage: 2, loop: true };

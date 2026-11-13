@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Tabs } from './Tabs';
+import { Tabs } from './Tabs.js';
 
 describe('Tabs', () => {
   it('switches the selected tab and its visible panel', async () => {

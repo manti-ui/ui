@@ -13,8 +13,8 @@ documentation corpus in one fetch is at https://manti.design/llms-full.txt.
 Manti UI is an open-source, framework-agnostic design system for React. It
 ships 53 accessible components whose keyboard and ARIA behavior comes from
 Zag.js state machines, and whose every visual value resolves from a three-tier
-design token contract: primitive ramps, theme-aware semantic roles, and public
-per-component tokens named `--manti-{component}-{property}`. Because appearance
+design token contract: Radix Colors primitive scales, theme-aware semantic
+roles, and public per-component tokens named `--manti-{component}-{property}`. Because appearance
 is owned by that contract, a component can be restyled entirely in CSS without
 forking its source, and an upgrade keeps the customization.
 
@@ -141,30 +141,36 @@ Manti CSS is layered. Unlayered application CSS wins without `!important`.
 
 Tokens have three tiers:
 
-1. primitive color ramps and scale values;
+1. primitive color scales (Radix Colors) and scale values;
 2. semantic roles and variants;
 3. component tokens for deliberate per-component divergence.
 
 Use semantic tokens first. Use a component token only when one component should
 differ from the system.
 
-Color ramps:
+Color scales, each a 12-step scale from `@radix-ui/colors` taken verbatim:
 
 ```text
-gray orange green blue amber red
+gray (Radix slate) orange green blue amber red
 ```
 
-Color-scale roles:
+`pnpm gen:tokens` emits every step as one `light-dark()` pair of the Radix light
+and dark step with the same number, for example
+`--manti-orange-9: light-dark(#f76b15, #f76b15)`. A step is not a fixed
+lightness: `gray-1` is the app background in both schemes. A step names a job,
+and the scheme picks the color.
+
+Color-scale roles (Radix step semantics, the same in light and dark):
 
 ```text
-1   appBackground[0]: lighter page or panel background position
-2   appBackground[1]: next page or panel background position
+1   appBackground[0]: app background
+2   appBackground[1]: subtle background (panels, sidebars, striping)
 3   componentBackground.rest: resting component background
 4   componentBackground.hover: hovered component background
 5   componentBackground.active: active, pressed, or selected component background
 6   border.subtle: subtle borders and separators
 7   border.interactive: interactive borders
-8   border.strong: strong borders and focus chrome
+8   border.strong: strong borders and the variant focus ring
 9   solid.rest: resting solid fill
 10  solid.hover: hovered solid fill
 11  text.lowContrast: supporting or lower-contrast text
@@ -175,11 +181,27 @@ Component CSS must consume semantic or `--variant-*` color roles instead of raw
 ramp stops. Input-like controls use a neutral border at rest and hover; the
 variant color begins at focus or open.
 
-The scale above is an intent contract, not a literal component lookup table.
-`tokens.css` adapts roles for theme and contrast. Primary solid uses `orange-7`;
-success, info, and danger use step `8`; secondary uses `gray-11` / `gray-3` in
-light / dark mode; tertiary and outline use semantic neutral values. Interactive
-states may use `color-mix()` instead of another raw stop.
+Variants follow the steps: solid `9` -> hover `10`, soft `3` -> `4` -> `5`,
+border `7`, text `11`, ring `8`. The neutral variants (secondary, tertiary,
+outline) use a `gray-12` solid and the neutral focus ring. For the accent
+variants the pressed solid mixes the hover step toward `gray-12`. The neutral
+variants ease toward `gray-11` instead: hover is an even mix of `gray-12` and
+`gray-11`, and the pressed solid is `gray-11`.
+
+Where a Radix step misses the contrast gate, the role moves one step up: the
+neutral `--manti-focus-ring` uses `gray-9`, `--manti-warning-text` and every
+`--variant-soft-text` use step `12`, and `--manti-text-subtle` shares step `11`
+with `--manti-text-muted`. Labels on a solid fill use the fixed inks
+`--manti-ink-light` / `--manti-ink-dark` (as `--manti-text-on-accent` /
+`--manti-text-on-bright`), never a scale step.
+
+Other colors: there is no free color input and no generated ramp. A theme names
+Radix scales, one accent per variant and one gray as the neutral, from
+`radixScales` in `@manti-ui/tokens` (25 accents, 6 grays, light and dark steps
+each). Pick them with a preset, with Oklava or the Theme Studio, or by writing
+the `--variant-*` and `--manti-gray-*` overrides from that catalog.
+The neutral hue property of earlier versions is gone; move the neutral by
+picking another Radix gray.
 
 Key token families:
 
@@ -209,11 +231,14 @@ import '@manti-ui/styles/index.css';
 import '@manti-ui/styles/themes/ocean.css';
 ```
 
-`violet`, `ocean`, `forest`, `rose`, `graphite`. The default theme is a no-op
-and ships no file. A preset moves the `--variant-*` ramps, `--manti-cool-hue`,
-`--manti-radius-factor`, `--manti-accent-fill`, `--manti-selection-*`, and (for
-`graphite`) density. Files sit in `@layer manti.theme`, so unlayered application
-CSS still wins over them.
+Each preset names Radix scales: `violet` (violet on mauve), `ocean` (sky on
+slate, info on cyan), `forest` (grass on sage, success on jade), `rose` (ruby on
+mauve, danger on tomato), `graphite` (slate on slate). The default theme
+(orange on slate) is a no-op and ships no file. A preset moves the `--variant-*`
+roles, the `--manti-gray-*` steps when its neutral is not slate,
+`--manti-accent-fill` and `--manti-selection-*`, and nothing about shape or
+density. Files sit in `@layer manti.theme`, so unlayered application CSS still
+wins over them.
 
 For several themes on one page, import `@manti-ui/styles/themes.css` and set
 `data-manti-theme="ocean"` on a container. It is independent of `data-theme`,
@@ -466,7 +491,7 @@ packages/docs/src/data/components/*.ts
 8. Register public independent component dimensions in `componentTokens`.
    Keep derived `calc()` values private as `--_*`.
 9. Preserve the public `data-scope`, `data-part`, and state anatomy.
-10. Add or update Storybook coverage, docs metadata, component docs, and demos
+10. Add or update Ladle story coverage, docs metadata, component docs, and demos
     with every public component change.
 11. Respect controlled/uncontrolled behavior, keyboard use, visible focus, and
     screen-reader semantics.
@@ -499,6 +524,6 @@ before a pull request.
 - [Plain CSS](https://manti.design/guides/plain-css)
 - [Tailwind v4](https://manti.design/guides/tailwind)
 - [Zag.js coverage](https://manti.design/reference/zag-coverage)
-- [Storybook](https://manti.design/storybook/)
+- [Ladle gallery](https://manti.design/ladle/)
 - [Source repository](https://github.com/manti-ui/ui)
 - [Full documentation corpus](https://manti.design/llms-full.txt)

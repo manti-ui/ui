@@ -17,7 +17,7 @@ export {
   rgbToOklch,
   setOklchAreaPosition,
   setOklchChannel,
-} from './oklch';
+} from './oklch.js';
 export type {
   ColorChannelRange,
   ColorPickerFormat,
@@ -28,4 +28,4 @@ export type {
   OklchColorSpace,
   OklchGradients,
   RgbColor,
-} from './oklch';
+} from './oklch.js';

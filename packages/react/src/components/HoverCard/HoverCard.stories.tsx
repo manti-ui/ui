@@ -1,18 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { HoverCard } from './HoverCard';
+import { HoverCard } from './HoverCard.js';
+import type { HoverCardProps } from './HoverCard.js';
 
-const meta = {
+export default {
   title: 'Components/HoverCard',
-  component: HoverCard,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     placement: 'bottom',
     showArrow: true,
-    trigger: (
-      <a href="https://en.wikipedia.org/wiki/Manti_(food)">@manti</a>
-    ),
+    trigger: <a href="https://en.wikipedia.org/wiki/Manti_(food)">@manti</a>,
     children: (
       <div style={{ display: 'grid', gap: 4 }}>
         <strong>Mantı</strong>
@@ -22,9 +18,9 @@ const meta = {
       </div>
     ),
   },
-} satisfies Meta<typeof HoverCard>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<HoverCardProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {};
+export const Playground: Story<HoverCardProps> = (args) => (
+  <HoverCard {...args} />
+);

@@ -25,7 +25,7 @@ function subscribe(onChange: () => void) {
 }
 
 /**
- * Drives the Manti theme the same way `.storybook/preview.tsx` does — by setting
+ * Drives the Manti theme the same way `.ladle/components.tsx` does — by setting
  * `data-theme` on `<html>`. Every consumer sees the same value, whoever set it.
  */
 export function useTheme() {

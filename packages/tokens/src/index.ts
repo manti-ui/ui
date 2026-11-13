@@ -4,53 +4,124 @@
  * Framework-agnostic design token contract for Manti UI.
  *
  * The metaphor is mantı: a dish that appears in many regions and forms. The
- * palette pairs a cool neutral `gray` (the panel-signature hue, 280) with warm
- * `orange`, `green`, `amber`, `red`, and `blue` accents — all expressed as
- * perceptually-smooth OKLCH ramps under plain, universally understood color
- * names.
+ * palette pairs a cool neutral `gray` (Radix `slate`) with `orange`, `green`,
+ * `amber`, `red`, and `blue` accents, all taken verbatim from the Radix Colors
+ * 12-step scales (`@radix-ui/colors`) under plain, universally understood
+ * color names.
  *
- * This module is the typed source of truth. Its primitive ramps and scale
+ * This module is the typed source of truth. Its primitive scales and scale
  * values are generated into the `--manti-*` custom properties of
  * `@manti-ui/styles` (`packages/styles/scripts/gen-tokens-css.mjs`, run via
- * `pnpm gen:tokens`); the theme-aware roles there layer light/dark resolution on
- * top with the CSS `light-dark()` function.
+ * `pnpm gen:tokens`); the semantic roles there pick a single step of each
+ * scale.
  */
+import {
+  amber,
+  amberDark,
+  blackA,
+  blue,
+  blueDark,
+  bronze,
+  bronzeDark,
+  brown,
+  brownDark,
+  crimson,
+  crimsonDark,
+  cyan,
+  cyanDark,
+  gold,
+  goldDark,
+  grass,
+  grassDark,
+  gray,
+  grayA,
+  grayDark,
+  grayDarkA,
+  green,
+  greenDark,
+  indigo,
+  indigoDark,
+  iris,
+  irisDark,
+  jade,
+  jadeDark,
+  lime,
+  limeDark,
+  mauve,
+  mauveA,
+  mauveDark,
+  mauveDarkA,
+  mint,
+  mintDark,
+  olive,
+  oliveA,
+  oliveDark,
+  oliveDarkA,
+  orange,
+  orangeA,
+  orangeDark,
+  orangeDarkA,
+  pink,
+  pinkA,
+  pinkDark,
+  pinkDarkA,
+  plum,
+  plumDark,
+  purple,
+  purpleDark,
+  red,
+  redDark,
+  ruby,
+  rubyDark,
+  sage,
+  sageA,
+  sageDark,
+  sageDarkA,
+  sand,
+  sandA,
+  sandDark,
+  sandDarkA,
+  sky,
+  skyDark,
+  slate,
+  slateA,
+  slateDark,
+  slateDarkA,
+  teal,
+  tealDark,
+  tomato,
+  tomatoDark,
+  violet,
+  violetA,
+  violetDark,
+  violetDarkA,
+  yellow,
+  yellowDark,
+} from '@radix-ui/colors';
 
 /**
- * Ramp generation.
+ * Scale step names. Radix numbers its steps `1…12`, and so does Manti: an
+ * unbroken sequence makes "one step stronger" arithmetic instead of a lookup.
+ * The Tailwind bridge (`packages/styles/src/tailwind-theme.css`) keeps the
+ * 50…950 utility names and maps them onto these, so `bg-orange-500` keeps
+ * resolving to Manti.
  *
- * Each primitive ramp is produced from a compact spec instead of 36 hand-tuned
- * numbers. The per-stop *lightness* is the perceptual backbone and stays
- * explicit; *hue* drifts linearly across the ramp; *chroma* follows a smooth
- * "bell" — edges plus a mid peak shaped by a rise/fall bias.
- *
- * The backbones started as a fit to the original hand-tuned 11-stop ramps, then
- * were resampled to 12 stops with monotone cubic (PCHIP) interpolation: the
- * endpoints and the shape of each curve are preserved, the steps are re-spaced,
- * and monotonicity is guaranteed so no stop can come out lighter than the one
- * before it. Hue and chroma need no re-fit — they are expressed as endpoints
- * plus a peak *position*, so they re-space themselves with the backbone.
+ * Every step is theme-aware: `--manti-orange-3` is Radix `orange3` in light and
+ * `orangeDark3` in dark, so a step means the same job in both schemes. 1–2
+ * page/panel backgrounds, 3–5 component backgrounds, 6–8 borders and focus
+ * rings, 9–10 the solid fills, 11–12 text.
  */
-/**
- * Ramp stop names, lightest → darkest. A plain 1…12 index rather than the
- * Tailwind-style 50…950 weights: the stops are perceptual positions on an OKLCH
- * lightness backbone, not font-weight-like magnitudes, and an unbroken sequence
- * makes "one stop darker" arithmetic instead of a lookup. The Tailwind bridge
- * (`packages/styles/src/tailwind-theme.css`) keeps the 50…950 utility names and
- * maps them onto these, so `bg-orange-500` is unaffected.
- *
- * Twelve stops, which is what the semantic roles want: 1–2 page/panel
- * backgrounds, 3–5 component backgrounds, 6–8 borders and separators, 9–10 the
- * solid fills, 11–12 text. Eleven forced borders and solids to share a stop.
- */
-const RAMP_STOPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const SCALE_STEPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
+
+/** One step number of a 12-step scale. */
+export type MantiScaleStep = (typeof SCALE_STEPS)[number];
 
 /**
- * The palette-role contract shared by every Manti color ramp.
+ * The palette-role contract shared by every Manti color scale.
  *
  * These names describe intent, not a component-specific implementation. The
- * semantic layer maps them to theme-aware values; component CSS should consume
- * semantic roles or `--variant-*`, not raw ramp stops. Keeping the map typed
+ * semantic layer maps them to single steps; component CSS should consume
+ * semantic roles or `--variant-*`, not raw scale steps. Keeping the map typed
  * makes the scale legible to generators, docs, and future lint rules.
  */
 export const colorScaleRoles = {
@@ -61,152 +132,131 @@ export const colorScaleRoles = {
   text: { lowContrast: 11, highContrast: 12 },
 } as const;
 
-type RampSpec = {
-  /** Per-stop lightness, lightest → darkest (the backbone). */
-  lightness: number[];
-  /** Hue at the lightest / darkest stop; drifts linearly between. */
-  hueStart: number;
-  hueEnd: number;
-  /** Chroma bell: value at the edges, the peak, and which stop carries it. */
-  chromaStart: number;
-  chromaPeak: number;
-  chromaEnd: number;
-  peakIndex: number;
-  /** Shape of the bell's climb / descent (0 = S-curve, 1 = ease-out). */
-  chromaRiseBias: number;
-  chromaFallBias: number;
+/** A scale's twelve steps, keyed `1…12`. */
+export type MantiScaleSteps = Record<MantiScaleStep, string>;
+
+/**
+ * One Radix scale as Manti ships it: the light and the dark scale side by
+ * side. `radix` names the scale in `@radix-ui/colors`, so a reader can find
+ * the source of every value.
+ */
+export type MantiColorScale = {
+  radix: string;
+  light: MantiScaleSteps;
+  dark: MantiScaleSteps;
 };
 
-const cosEase = (t: number) => (1 - Math.cos(Math.PI * t)) / 2;
-const outEase = (t: number) => Math.sin((t * Math.PI) / 2);
-const easeBias = (t: number, b: number) =>
-  (1 - b) * cosEase(t) + b * outEase(t);
-const round = (n: number, p: number) => Number(n.toFixed(p));
-
-/** Expand a {@link RampSpec} into `{ 1: 'oklch(…)', …, 12: 'oklch(…)' }`. */
-function rampFrom(spec: RampSpec): Record<number, string> {
-  const n = spec.lightness.length;
-  const out: Record<number, string> = {};
-  spec.lightness.forEach((l, i) => {
-    const h = round(
-      spec.hueStart + (spec.hueEnd - spec.hueStart) * (i / (n - 1)),
-      1,
-    );
-    const c =
-      i <= spec.peakIndex
-        ? spec.chromaStart +
-          (spec.chromaPeak - spec.chromaStart) *
-            easeBias(i / spec.peakIndex, spec.chromaRiseBias)
-        : spec.chromaPeak +
-          (spec.chromaEnd - spec.chromaPeak) *
-            easeBias(
-              (i - spec.peakIndex) / (n - 1 - spec.peakIndex),
-              spec.chromaFallBias,
-            );
-    out[RAMP_STOPS[i]] = `oklch(${round(l, 3)} ${round(c, 3)} ${h})`;
-  });
+/**
+ * Re-key a Radix scale object (`{ slate1: …, slate12: … }`) onto `1…12`.
+ * Radix keys alpha scales with an `A` before the step (`slateA3`), which the
+ * prefix covers.
+ */
+function steps(source: Record<string, string>, prefix: string) {
+  const out = {} as MantiScaleSteps;
+  for (const step of SCALE_STEPS) {
+    const value = source[`${prefix}${step}`];
+    if (value === undefined)
+      throw new Error(`@radix-ui/colors has no ${prefix}${step}`);
+    out[step] = value;
+  }
   return out;
 }
 
-/** Primitive color ramps, generated from specs (see {@link rampFrom}). */
-export const colorPrimitives = {
-  /**
-   * Cool neutral — the panel-signature hue (280), the single backbone of every
-   * surface, text, and border color. The hue is centralized on `--manti-cool-hue`
-   * in the CSS (the token generator rewrites these stops to
-   * `oklch(l c var(--manti-cool-hue))`), so the whole neutral re-tints from one
-   * custom property. Chroma stays near-zero (a faint cool cast, no color).
-   */
-  gray: rampFrom({
-    lightness: [
-      0.985, 0.97, 0.941, 0.903, 0.83, 0.727, 0.618, 0.517, 0.424, 0.336, 0.261,
-      0.196,
-    ],
-    hueStart: 280,
-    hueEnd: 280,
-    chromaStart: 0.004,
-    chromaPeak: 0.013,
-    chromaEnd: 0.008,
-    peakIndex: 6,
-    chromaRiseBias: 0.5,
-    chromaFallBias: 0.4,
-  }),
-  /** Primary. Warm orange — the signature Manti UI accent. */
-  orange: rampFrom({
-    lightness: [
-      0.972, 0.943, 0.899, 0.84, 0.772, 0.708, 0.648, 0.579, 0.495, 0.415,
-      0.342, 0.262,
-    ],
-    hueStart: 50,
-    hueEnd: 33,
-    chromaStart: 0.018,
-    chromaPeak: 0.172,
-    chromaEnd: 0.064,
-    peakIndex: 7,
-    chromaRiseBias: 0.5,
-    chromaFallBias: 0,
-  }),
-  /** Success. Fresh green. */
-  green: rampFrom({
-    lightness: [
-      0.972, 0.943, 0.9, 0.84, 0.769, 0.701, 0.63, 0.546, 0.461, 0.383, 0.313,
-      0.238,
-    ],
-    hueStart: 150,
-    hueEnd: 160,
-    chromaStart: 0.022,
-    chromaPeak: 0.128,
-    chromaEnd: 0.044,
-    peakIndex: 6,
-    chromaRiseBias: 0.5,
-    chromaFallBias: 0.2,
-  }),
-  /** Secondary. Golden amber — the same ramp warning semantics draw on. */
-  amber: rampFrom({
-    lightness: [
-      0.978, 0.955, 0.917, 0.873, 0.83, 0.785, 0.728, 0.641, 0.536, 0.446,
-      0.374, 0.286,
-    ],
-    hueStart: 85,
-    hueEnd: 60,
-    chromaStart: 0.022,
-    chromaPeak: 0.15,
-    chromaEnd: 0.054,
-    peakIndex: 6,
-    chromaRiseBias: 0.5,
-    chromaFallBias: 0.2,
-  }),
-  /** Danger. Hot red. */
-  red: rampFrom({
-    lightness: [
-      0.971, 0.94, 0.893, 0.831, 0.756, 0.685, 0.622, 0.557, 0.479, 0.407,
-      0.345, 0.262,
-    ],
-    hueStart: 25,
-    hueEnd: 26,
-    chromaStart: 0.018,
-    chromaPeak: 0.21,
-    chromaEnd: 0.085,
-    peakIndex: 7,
-    chromaRiseBias: 0.3,
-    chromaFallBias: -0.15,
-  }),
-  /** Info. Smooth, calm blue. */
-  blue: rampFrom({
-    lightness: [
-      0.974, 0.944, 0.9, 0.841, 0.763, 0.686, 0.612, 0.535, 0.459, 0.389, 0.329,
-      0.252,
-    ],
-    hueStart: 235,
-    hueEnd: 249,
-    chromaStart: 0.014,
-    chromaPeak: 0.14,
-    chromaEnd: 0.056,
-    peakIndex: 7,
-    chromaRiseBias: 0.5,
-    chromaFallBias: 0.1,
-  }),
-};
+function scale(
+  radix: string,
+  light: Record<string, string>,
+  dark: Record<string, string>,
+): MantiColorScale {
+  return { radix, light: steps(light, radix), dark: steps(dark, radix) };
+}
+
+/**
+ * The opaque color scales, taken verbatim from Radix Colors. The neutral is
+ * Radix `slate`, the cool blue-gray closest to Manti's cool-dark signature.
+ */
+export const colorScales = {
+  /** Cool neutral: every surface, text, and border color. */
+  gray: scale('slate', slate, slateDark),
+  /** Primary. Warm orange, the signature Manti UI accent. */
+  orange: scale('orange', orange, orangeDark),
+  /** Success. */
+  green: scale('green', green, greenDark),
+  /** Warning text. */
+  amber: scale('amber', amber, amberDark),
+  /** Danger. */
+  red: scale('red', red, redDark),
+  /** Info. */
+  blue: scale('blue', blue, blueDark),
+} as const satisfies Record<string, MantiColorScale>;
+
+/**
+ * The translucent Radix scales the semantic roles read, emitted as
+ * `--manti-{name}-a{step}`. Only what a role consumes ships: `gray` (`slateA`)
+ * for the panel hairline, `black` (`blackA`, one scale for both schemes) for
+ * the modal overlay, and `violet`, `pink` and `orange` for the three ambient
+ * glows behind the app.
+ */
+export const alphaScales = {
+  gray: scale('slateA', slateA, slateDarkA),
+  black: scale('blackA', blackA, blackA),
+  violet: scale('violetA', violetA, violetDarkA),
+  pink: scale('pinkA', pinkA, pinkDarkA),
+  orange: scale('orangeA', orangeA, orangeDarkA),
+} as const satisfies Record<string, MantiColorScale>;
+
+/**
+ * The two inks a solid fill may carry, each one Radix step held fixed across
+ * schemes: the lightest light-scheme slate and the darkest dark-scheme slate.
+ * A theme-aware step cannot do this job, because `--manti-gray-12` is dark in
+ * light and light in dark, while a label on an orange fill needs the same ink
+ * in both. Emitted as `--manti-ink-light` / `--manti-ink-dark`.
+ */
+export const colorInks = {
+  light: slate.slate1,
+  dark: slateDark.slate1,
+} as const;
+
+/**
+ * The Radix scales whose step 9 is designed for dark foreground text. Radix:
+ * "Most step 9 colors are designed for white foreground text. Sky, Mint, Lime,
+ * Yellow, and Amber are designed for dark foreground text." Every other scale
+ * carries the light ink on its solid, in both schemes.
+ */
+export const radixDarkInkScales = [
+  'sky',
+  'mint',
+  'lime',
+  'yellow',
+  'amber',
+] as const;
+
+/**
+ * Which of the {@link colorInks} a label on a Radix scale's step 9 takes,
+ * following Radix's own rule rather than a measurement.
+ */
+export function radixInk(scale: string): 'light' | 'dark' {
+  return (radixDarkInkScales as readonly string[]).includes(scale)
+    ? 'dark'
+    : 'light';
+}
+
+/**
+ * Primitive color ramps as the CSS values `--manti-{hue}-{step}` carries, for
+ * swatches and docs: `colorPrimitives.gray[1]` is
+ * `light-dark(#fcfcfd, #111113)`, so a swatch painted with it follows the
+ * color scheme. Read {@link colorScales} for the per-scheme values.
+ */
+export const colorPrimitives = Object.fromEntries(
+  Object.entries(colorScales).map(([name, s]) => [
+    name,
+    Object.fromEntries(
+      SCALE_STEPS.map((step) => [
+        step,
+        `light-dark(${s.light[step]}, ${s.dark[step]})`,
+      ]),
+    ),
+  ]),
+) as Record<keyof typeof colorScales, MantiScaleSteps>;
 
 /**
  * Color variants available to variant-driven components (button, badge,
@@ -317,23 +367,166 @@ export const radiusModes = {
 /** The `data-radius` values Manti UI ships presets for. */
 export type MantiRadiusMode = keyof typeof radiusModes;
 
+/** The Radix accent scales Manti offers as a variant color, in Radix order. */
+export const radixAccentScaleNames = [
+  'tomato',
+  'red',
+  'ruby',
+  'crimson',
+  'pink',
+  'plum',
+  'purple',
+  'violet',
+  'iris',
+  'indigo',
+  'blue',
+  'cyan',
+  'teal',
+  'jade',
+  'green',
+  'grass',
+  'bronze',
+  'gold',
+  'brown',
+  'orange',
+  'amber',
+  'yellow',
+  'lime',
+  'mint',
+  'sky',
+] as const;
+
+/** The Radix gray scales Manti offers as a theme's neutral. */
+export const radixGrayScaleNames = [
+  'gray',
+  'mauve',
+  'slate',
+  'sage',
+  'olive',
+  'sand',
+] as const;
+
+/** A Radix accent scale name: `'tomato' | 'red' | … | 'sky'`. */
+export type MantiRadixAccentScale = (typeof radixAccentScaleNames)[number];
+
+/** A Radix gray scale name: `'gray' | 'mauve' | 'slate' | 'sage' | 'olive' | 'sand'`. */
+export type MantiRadixGrayScale = (typeof radixGrayScaleNames)[number];
+
+/** Any Radix scale name Manti offers, accent or gray. */
+export type MantiRadixScale = MantiRadixAccentScale | MantiRadixGrayScale;
+
 /**
- * A theme preset — one opinionated palette over the shipped defaults.
+ * An accent in the catalog: its light and dark twelve steps, plus `gray`, the
+ * Radix gray it pairs with naturally (Radix's own pairing guide).
+ */
+export type MantiRadixAccentEntry = MantiColorScale & {
+  kind: 'accent';
+  gray: MantiRadixGrayScale;
+};
+
+/**
+ * A gray in the catalog: its light and dark twelve steps and its translucent
+ * twin, which a theme on that neutral needs for the panel hairline. A gray
+ * pairs with itself.
+ */
+export type MantiRadixGrayEntry = MantiColorScale & {
+  kind: 'gray';
+  gray: MantiRadixGrayScale;
+  alpha: MantiColorScale;
+};
+
+/** One entry of {@link radixScales}. */
+export type MantiRadixScaleEntry = MantiRadixAccentEntry | MantiRadixGrayEntry;
+
+function accent(
+  radix: MantiRadixAccentScale,
+  light: Record<string, string>,
+  dark: Record<string, string>,
+  gray: MantiRadixGrayScale,
+): MantiRadixAccentEntry {
+  return { ...scale(radix, light, dark), kind: 'accent', gray };
+}
+
+function neutral(
+  radix: MantiRadixGrayScale,
+  light: Record<string, string>,
+  dark: Record<string, string>,
+  lightAlpha: Record<string, string>,
+  darkAlpha: Record<string, string>,
+): MantiRadixGrayEntry {
+  return {
+    ...scale(radix, light, dark),
+    kind: 'gray',
+    gray: radix,
+    alpha: scale(`${radix}A`, lightAlpha, darkAlpha),
+  };
+}
+
+/**
+ * The Radix scale catalog: every scale a Manti theme may pick, keyed by its
+ * Radix name. A theme names an accent per variant and a gray as its neutral,
+ * and never a free color, so every theme stays on Radix steps whose contrast
+ * Radix designed for.
  *
- * A preset is color and nothing else. `colors` names a base color per variant,
- * which the generator expands into the full `--variant-*` vocabulary, and
- * `coolHue` retints the neutral ramp behind every gray, surface, border and
- * text role. Shape, density, and type are deliberately left out: those are
- * product decisions that a palette must not silently make, so a preset can be
- * swapped at any point without moving a control's size or corner.
+ * Theme Studio and Oklava read their pickers from here, and `presets` may name
+ * only these keys, which the type checker enforces.
+ */
+export const radixScales: {
+  readonly [K in MantiRadixAccentScale]: MantiRadixAccentEntry;
+} & { readonly [K in MantiRadixGrayScale]: MantiRadixGrayEntry } = {
+  tomato: accent('tomato', tomato, tomatoDark, 'mauve'),
+  red: accent('red', red, redDark, 'mauve'),
+  ruby: accent('ruby', ruby, rubyDark, 'mauve'),
+  crimson: accent('crimson', crimson, crimsonDark, 'mauve'),
+  pink: accent('pink', pink, pinkDark, 'mauve'),
+  plum: accent('plum', plum, plumDark, 'mauve'),
+  purple: accent('purple', purple, purpleDark, 'mauve'),
+  violet: accent('violet', violet, violetDark, 'mauve'),
+  iris: accent('iris', iris, irisDark, 'slate'),
+  indigo: accent('indigo', indigo, indigoDark, 'slate'),
+  blue: accent('blue', blue, blueDark, 'slate'),
+  cyan: accent('cyan', cyan, cyanDark, 'slate'),
+  teal: accent('teal', teal, tealDark, 'sage'),
+  jade: accent('jade', jade, jadeDark, 'sage'),
+  green: accent('green', green, greenDark, 'sage'),
+  grass: accent('grass', grass, grassDark, 'olive'),
+  bronze: accent('bronze', bronze, bronzeDark, 'sand'),
+  gold: accent('gold', gold, goldDark, 'sand'),
+  brown: accent('brown', brown, brownDark, 'sand'),
+  orange: accent('orange', orange, orangeDark, 'sand'),
+  amber: accent('amber', amber, amberDark, 'sand'),
+  yellow: accent('yellow', yellow, yellowDark, 'sand'),
+  lime: accent('lime', lime, limeDark, 'olive'),
+  mint: accent('mint', mint, mintDark, 'sage'),
+  sky: accent('sky', sky, skyDark, 'slate'),
+  gray: neutral('gray', gray, grayDark, grayA, grayDarkA),
+  mauve: neutral('mauve', mauve, mauveDark, mauveA, mauveDarkA),
+  slate: neutral('slate', slate, slateDark, slateA, slateDarkA),
+  sage: neutral('sage', sage, sageDark, sageA, sageDarkA),
+  olive: neutral('olive', olive, oliveDark, oliveA, oliveDarkA),
+  sand: neutral('sand', sand, sandDark, sandA, sandDarkA),
+};
+
+/**
+ * A theme preset: one opinionated palette over the shipped defaults.
+ *
+ * A preset is color and nothing else, and every color it names is a key of
+ * {@link radixScales}. `colors` names a scale per variant, which the generator expands into
+ * the full `--variant-*` vocabulary from that scale's twelve steps, and
+ * `neutral` names the Radix gray behind every surface, border and text role.
+ * Shape, density, and type are deliberately left out: those are product
+ * decisions that a palette must not silently make, so a preset can be swapped
+ * at any point without moving a control's size or corner.
  */
 export type MantiPresetDefinition = {
   label: string;
   description: string;
   /** The shipped theme. It needs no stylesheet, so none is generated. */
   default: boolean;
-  colors: Partial<Record<'primary' | 'success' | 'info' | 'danger', string>>;
-  coolHue: number;
+  colors: { primary: MantiRadixScale } & Partial<
+    Record<'success' | 'info' | 'danger', MantiRadixScale>
+  >;
+  neutral: MantiRadixGrayScale;
 };
 
 /**
@@ -349,45 +542,46 @@ export const presets = {
     label: 'Manti',
     description: 'The shipped default — warm orange over a cool neutral.',
     default: true,
-    colors: {},
-    coolHue: 280,
+    colors: { primary: 'orange' },
+    neutral: 'slate',
   },
   violet: {
     label: 'Violet',
     description: 'Electric violet over a violet-leaning neutral.',
     default: false,
-    colors: { primary: '#7c3aed' },
-    coolHue: 300,
+    colors: { primary: 'violet' },
+    neutral: 'mauve',
   },
   ocean: {
     label: 'Ocean',
     description: 'Bright sky blue on a cold neutral.',
     default: false,
-    // Info is a stop darker than the studio swatch: no ink clears AA on
-    // #0284c7 (4.45:1), and the preset gate refuses to ship that.
-    colors: { primary: '#0ea5e9', info: '#0369a1' },
-    coolHue: 235,
+    // Info moves to cyan so it reads apart from the sky primary.
+    colors: { primary: 'sky', info: 'cyan' },
+    neutral: 'slate',
   },
   forest: {
     label: 'Forest',
     description: 'Deep green over a green-tinted neutral.',
     default: false,
-    colors: { primary: '#15803d', success: '#16a34a' },
-    coolHue: 150,
+    // Success moves to jade so it reads apart from the grass primary.
+    colors: { primary: 'grass', success: 'jade' },
+    neutral: 'sage',
   },
   rose: {
     label: 'Rose',
     description: 'Hot rose over a warm neutral.',
     default: false,
-    colors: { primary: '#e11d48', danger: '#be123c' },
-    coolHue: 350,
+    // Danger moves to tomato so it reads apart from the ruby primary.
+    colors: { primary: 'ruby', danger: 'tomato' },
+    neutral: 'mauve',
   },
   graphite: {
     label: 'Graphite',
     description: 'Monochrome: a gray brand over a cool neutral.',
     default: false,
-    colors: { primary: '#4b5563' },
-    coolHue: 250,
+    colors: { primary: 'slate' },
+    neutral: 'slate',
   },
 } as const satisfies Record<string, MantiPresetDefinition>;
 
@@ -426,6 +620,7 @@ export const space = {
   6: '1.5rem',
   8: '2rem',
   10: '2.5rem',
+  11: '2.75rem',
   12: '3rem',
   16: '4rem',
 } as const;
@@ -472,6 +667,11 @@ export const fontWeight = {
 export const fontFamily = {
   sans: "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
   mono: "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace",
+  /**
+   * The display face of `Heading` and every component title part. It defaults
+   * to the text face, so nothing changes until a theme sets it.
+   */
+  display: 'var(--manti-font-sans)',
 } as const;
 
 /**
@@ -619,6 +819,9 @@ export const componentTokens = {
     'item-gap',
     'item-radius',
     'item-font-size',
+    'status-padding-y',
+    'status-padding-x',
+    'status-gap',
   ],
   'data-table': [
     'radius',
@@ -634,9 +837,17 @@ export const componentTokens = {
     'cell-size',
     'nav-size',
   ],
-  dialog: ['max-width', 'radius', 'padding-x', 'padding-y', 'gap', 'z-index'],
-  drawer: ['size'],
-  editable: ['height'],
+  dialog: [
+    'max-width',
+    'radius',
+    'padding-x',
+    'padding-y',
+    'gap',
+    'z-index',
+    'close-size',
+  ],
+  drawer: ['size', 'close-size', 'gap', 'padding'],
+  editable: ['height', 'radius', 'padding-x', 'padding-y', 'font-size'],
   field: ['height', 'padding-x', 'padding-y', 'font-size', 'addon-padding-x'],
   'file-upload': [
     'gap',
@@ -661,7 +872,7 @@ export const componentTokens = {
   ],
   'floating-panel': ['min-width', 'min-height'],
   heading: ['font-size', 'line-height', 'weight', 'tracking'],
-  'hover-card': ['max-width'],
+  'hover-card': ['max-width', 'padding', 'radius', 'font-size'],
   kbd: ['radius', 'padding-x', 'padding-y', 'font-size', 'border-width'],
   listbox: [
     'min-width',
@@ -691,11 +902,19 @@ export const componentTokens = {
     'motion-offset',
     'z-index',
   ],
-  'navigation-menu': ['content-min-width'],
+  'navigation-menu': [
+    'content-min-width',
+    'radius',
+    'gap',
+    'trigger-radius',
+    'trigger-padding-x',
+    'trigger-padding-y',
+    'font-size',
+  ],
   'number-input': ['height', 'stepper-width', 'radius'],
-  pagination: ['size'],
-  'pin-input': ['size'],
-  popover: ['max-width', 'z-index'],
+  pagination: ['size', 'radius', 'gap'],
+  'pin-input': ['size', 'radius', 'font-size', 'gap'],
+  popover: ['width', 'max-width', 'z-index'],
   progress: ['track-height', 'circle-size', 'circle-thickness'],
   'radio-group': [
     'gap',
@@ -706,8 +925,8 @@ export const componentTokens = {
     'label-font-size',
     'item-font-size',
   ],
-  'rating-group': ['size'],
-  'scroll-area': ['size'],
+  'rating-group': ['size', 'gap'],
+  'scroll-area': ['size', 'radius'],
   'segmented-control': ['height', 'padding-x', 'radius'],
   select: [
     'height',
@@ -723,11 +942,11 @@ export const componentTokens = {
     'item-radius',
     'item-font-size',
   ],
-  'signature-pad': ['height'],
+  'signature-pad': ['height', 'radius'],
   slider: ['thumb-size', 'track-size', 'length', 'marker-size'],
   spinner: ['size', 'thickness'],
   splitter: ['handle-size', 'line-size', 'line-size-active'],
-  steps: ['indicator-size'],
+  steps: ['indicator-size', 'indicator-font-size', 'gap'],
   switch: ['track-width', 'track-height', 'track-padding'],
   tabs: [
     'gap',
@@ -743,7 +962,14 @@ export const componentTokens = {
     'indicator-size',
     'content-radius',
   ],
-  'tags-input': ['height'],
+  'tags-input': [
+    'height',
+    'radius',
+    'padding',
+    'gap',
+    'tag-height',
+    'tag-radius',
+  ],
   text: ['font-size', 'line-height', 'weight', 'tracking'],
   'time-picker': [
     'height',
@@ -757,7 +983,7 @@ export const componentTokens = {
     'cell-font-size',
   ],
   toast: ['width', 'radius'],
-  toggle: ['size'],
+  toggle: ['size', 'radius', 'padding-x', 'gap', 'font-size'],
   'toggle-group': ['height', 'padding-x', 'radius'],
   tooltip: ['max-width', 'z-index'],
   tour: ['width', 'overlay-extent'],
@@ -789,11 +1015,141 @@ export type MantiComponentToken = {
   [C in MantiComponentTokenScope]: `--manti-${C & string}-${MantiComponentTokens[C][number] & string}`;
 }[MantiComponentTokenScope];
 
+/** How a contrast pair is graded: `text` against 4.5:1, `ui` against 3:1. */
+export type MantiContrastKind = 'text' | 'ui';
+
+/**
+ * Where a contrast pair is read: `root` resolves both tokens at `:root`;
+ * `variant` resolves them inside every `[data-variant]` scope, because the
+ * `--variant-*` roles only mean something there.
+ */
+export type MantiContrastScope = 'root' | 'variant';
+
+/** One foreground/background token pair the contrast floor is checked on. */
+export type MantiContrastPair = {
+  readonly label: string;
+  readonly fg: `--${string}`;
+  readonly bg: `--${string}`;
+  readonly kind: MantiContrastKind;
+  /** `true` fails the gate below the bar; `false` reports the ratio only. */
+  readonly gate: boolean;
+  readonly scope: MantiContrastScope;
+};
+
+/**
+ * The foreground/background pairs Manti checks its palette on, as data.
+ * `packages/styles/scripts/check-contrast.mjs` reads this list, and an app that
+ * themes Manti can run the same list over its own resolved token values.
+ *
+ * Pairs whose steps Radix fixes are reported, not gated: warning text (amber
+ * 11), the focus ring (slate 8), the ink on a solid (Radix's step 9 rule) and
+ * soft text (step 11). Manti takes Radix verbatim, so these follow Radix even
+ * where a WCAG 2.1 ratio lands under the bar. Decorative borders are reported
+ * only too.
+ */
+export const contrastPairs = [
+  {
+    label: 'text / bg',
+    fg: '--manti-text',
+    bg: '--manti-bg',
+    kind: 'text',
+    gate: true,
+    scope: 'root',
+  },
+  {
+    label: 'text / surface',
+    fg: '--manti-text',
+    bg: '--manti-surface',
+    kind: 'text',
+    gate: true,
+    scope: 'root',
+  },
+  {
+    label: 'danger-text / surface',
+    fg: '--manti-danger-text',
+    bg: '--manti-surface',
+    kind: 'text',
+    gate: true,
+    scope: 'root',
+  },
+  {
+    label: 'warning-text / surface',
+    fg: '--manti-warning-text',
+    bg: '--manti-surface',
+    kind: 'text',
+    gate: false,
+    scope: 'root',
+  },
+  {
+    label: 'text-muted / surface',
+    fg: '--manti-text-muted',
+    bg: '--manti-surface',
+    kind: 'text',
+    gate: true,
+    scope: 'root',
+  },
+  {
+    label: 'text-subtle / surface',
+    fg: '--manti-text-subtle',
+    bg: '--manti-surface',
+    kind: 'text',
+    gate: true,
+    scope: 'root',
+  },
+  {
+    label: 'focus-ring / bg',
+    fg: '--manti-focus-ring',
+    bg: '--manti-bg',
+    kind: 'ui',
+    gate: false,
+    scope: 'root',
+  },
+  {
+    label: 'border-strong / surface',
+    fg: '--manti-border-strong',
+    bg: '--manti-surface',
+    kind: 'ui',
+    gate: false,
+    scope: 'root',
+  },
+  {
+    label: 'border / surface',
+    fg: '--manti-border',
+    bg: '--manti-surface',
+    kind: 'ui',
+    gate: false,
+    scope: 'root',
+  },
+  {
+    label: 'on-solid / solid',
+    fg: '--variant-on-solid',
+    bg: '--variant-solid',
+    kind: 'text',
+    gate: false,
+    scope: 'variant',
+  },
+  {
+    label: 'soft-text / soft-bg',
+    fg: '--variant-soft-text',
+    bg: '--variant-soft-bg',
+    kind: 'text',
+    gate: false,
+    scope: 'variant',
+  },
+] as const satisfies readonly MantiContrastPair[];
+
 /** The complete Manti UI token contract. */
 export const mantiTokens = {
   packageName: '@manti-ui/tokens',
   status: 'designed',
-  color: { primitives: colorPrimitives, scaleRoles: colorScaleRoles },
+  color: {
+    primitives: colorPrimitives,
+    scales: colorScales,
+    alphaScales,
+    inks: colorInks,
+    scaleRoles: colorScaleRoles,
+    contrastPairs,
+  },
   variants,
   componentTokens,
   radius,
@@ -801,6 +1157,7 @@ export const mantiTokens = {
   radiusChannel,
   radiusModes,
   presets,
+  radixScales,
   controlHeight,
   space,
   fontSize,

@@ -65,6 +65,7 @@
 
   [data-scope='tour'][data-part='title'] {
     margin: 0;
+    font-family: var(--manti-font-display);
     font-size: var(--manti-text-base);
     font-weight: var(--manti-weight-semibold);
     color: var(--manti-text);

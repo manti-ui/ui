@@ -3,10 +3,10 @@ import type { ReactElement, ReactNode } from 'react';
 import { dialog } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { cx } from '../../internal/props';
-import { renderTrigger } from '../../internal/floating';
-import { CloseIcon } from '../../internal/icons';
+import { Portal } from '../../internal/Portal.js';
+import { cx } from '../../internal/props.js';
+import { renderTrigger } from '../../internal/floating.js';
+import { CloseIcon } from '../../internal/icons.js';
 
 export type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
 export type DrawerSize = 'sm' | 'md' | 'lg';
@@ -51,6 +51,21 @@ export interface DrawerProps {
   closeOnInteractOutside?: boolean;
   /** Close when pressing Escape. @default true */
   closeOnEscape?: boolean;
+  /**
+   * Accessible name of the corner close button, announced by screen readers.
+   * @default 'Close'
+   */
+  closeLabel?: string;
+  /**
+   * Element to focus when the drawer opens. Defaults to the first focusable
+   * element inside the drawer.
+   */
+  initialFocusEl?: () => HTMLElement | null;
+  /**
+   * Element to focus when the drawer closes. Defaults to the trigger that
+   * opened it.
+   */
+  finalFocusEl?: () => HTMLElement | null;
   id?: string;
   className?: string;
 }
@@ -76,6 +91,9 @@ export function Drawer({
   modal,
   closeOnInteractOutside,
   closeOnEscape,
+  closeLabel = 'Close',
+  initialFocusEl,
+  finalFocusEl,
   id,
   className,
 }: DrawerProps) {
@@ -87,6 +105,10 @@ export function Drawer({
     modal,
     closeOnInteractOutside,
     closeOnEscape,
+    // `useMachine` drops undefined keys, so an unset focus prop keeps the
+    // machine's own default.
+    initialFocusEl,
+    finalFocusEl,
     onOpenChange: onOpenChange
       ? (details) => onOpenChange(details.open)
       : undefined,
@@ -115,7 +137,11 @@ export function Drawer({
               className={cx(className)}
             >
               {showCloseButton && (
-                <button {...api.getCloseTriggerProps()} data-scope="drawer">
+                <button
+                  {...api.getCloseTriggerProps()}
+                  data-scope="drawer"
+                  aria-label={closeLabel}
+                >
                   <CloseIcon />
                 </button>
               )}

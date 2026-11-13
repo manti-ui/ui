@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Carousel } from './Carousel';
+import { Carousel } from './Carousel.js';
 
 describe('Carousel', () => {
   it('renders slides and advances through its next control', async () => {

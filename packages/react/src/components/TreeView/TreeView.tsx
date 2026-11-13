@@ -4,7 +4,7 @@ import { treeView } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { cx } from '../../internal/props';
+import { cx } from '../../internal/props.js';
 
 export interface TreeNode {
   value: string;
@@ -40,9 +40,21 @@ export interface TreeViewProps {
   icon?: (node: TreeNode, state: TreeNodeState) => ReactNode;
   /** Single or multiple selection. */
   selectionMode?: 'single' | 'multiple';
-  /** Values of branches expanded by default. */
+  /**
+   * Controlled values of the expanded branches. Pair with `onExpandedChange`
+   * to let the parent own which rows are open.
+   */
+  expandedValue?: string[];
+  /** Values of branches expanded by default, for uncontrolled usage. */
   defaultExpandedValue?: string[];
-  /** Values selected by default. */
+  /** Called whenever a branch opens or closes, with the new expanded values. */
+  onExpandedChange?: (value: string[]) => void;
+  /**
+   * Controlled values of the selected nodes. Pair with `onSelectionChange` to
+   * let the parent own the selection.
+   */
+  selectedValue?: string[];
+  /** Values selected by default, for uncontrolled usage. */
   defaultSelectedValue?: string[];
   /** Called whenever the selection changes. */
   onSelectionChange?: (value: string[]) => void;
@@ -70,7 +82,10 @@ export function TreeView({
   variant = 'primary',
   icon,
   selectionMode = 'single',
+  expandedValue,
   defaultExpandedValue,
+  onExpandedChange,
+  selectedValue,
   defaultSelectedValue,
   onSelectionChange,
   id,
@@ -91,7 +106,12 @@ export function TreeView({
     id: id ?? autoId,
     collection,
     selectionMode,
+    expandedValue,
     defaultExpandedValue,
+    onExpandedChange: onExpandedChange
+      ? (details) => onExpandedChange(details.expandedValue)
+      : undefined,
+    selectedValue,
     defaultSelectedValue,
     onSelectionChange: onSelectionChange
       ? (details) => onSelectionChange(details.selectedValue)
@@ -99,7 +119,10 @@ export function TreeView({
   });
   const api = treeView.connect(service, normalizeProps);
 
-  const renderIcon = (node: TreeNode, nodeProps: { node: TreeNode; indexPath: number[] }): ReactNode => {
+  const renderIcon = (
+    node: TreeNode,
+    nodeProps: { node: TreeNode; indexPath: number[] },
+  ): ReactNode => {
     if (!icon) return null;
     const state = api.getNodeState(nodeProps);
     const rendered = icon(node, {
@@ -145,7 +168,11 @@ export function TreeView({
   };
 
   return (
-    <div {...api.getRootProps()} data-variant={variant} className={cx(className)}>
+    <div
+      {...api.getRootProps()}
+      data-variant={variant}
+      className={cx(className)}
+    >
       {label != null && <h3 {...api.getLabelProps()}>{label}</h3>}
       <div {...api.getTreeProps()}>
         {items.map((node, index) => renderNode(node, [index]))}

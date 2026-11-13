@@ -86,6 +86,7 @@
 
   [data-scope='toast'][data-part='title'] {
     grid-column: 2;
+    font-family: var(--manti-font-display);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-semibold);
     line-height: var(--manti-leading-snug);

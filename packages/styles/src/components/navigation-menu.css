@@ -10,15 +10,24 @@
   }
 
   [data-scope='navigation-menu'][data-part='list'] {
+    /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md.
+       Declared on the list so the triggers inside it inherit them. */
+    --manti-navigation-menu-radius: var(--manti-radius-md);
+    --manti-navigation-menu-gap: var(--manti-space-1);
+    --manti-navigation-menu-trigger-radius: var(--manti-radius-sm);
+    --manti-navigation-menu-trigger-padding-x: var(--manti-space-3);
+    --manti-navigation-menu-trigger-padding-y: var(--manti-space-2);
+    --manti-navigation-menu-font-size: var(--manti-text-sm);
+
     position: relative;
     display: inline-flex;
-    gap: var(--manti-space-1);
+    gap: var(--manti-navigation-menu-gap);
     padding: var(--manti-space-1);
     background: var(--manti-panel-tint);
     -webkit-backdrop-filter: var(--manti-panel-blur);
     backdrop-filter: var(--manti-panel-blur);
     border: 1px solid var(--manti-panel-border);
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-navigation-menu-radius);
   }
 
   @supports not (
@@ -33,13 +42,14 @@
     display: inline-flex;
     align-items: center;
     gap: var(--manti-space-1);
-    padding: var(--manti-space-2) var(--manti-space-3);
+    padding: var(--manti-navigation-menu-trigger-padding-y)
+      var(--manti-navigation-menu-trigger-padding-x);
     background: none;
     border: none;
-    border-radius: var(--manti-radius-sm);
+    border-radius: var(--manti-navigation-menu-trigger-radius);
     color: var(--manti-text-muted);
     font-family: var(--manti-font-sans);
-    font-size: var(--manti-text-sm);
+    font-size: var(--manti-navigation-menu-font-size);
     font-weight: var(--manti-weight-medium);
     cursor: pointer;
     transition:

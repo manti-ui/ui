@@ -9,10 +9,11 @@
   [data-scope='scroll-area'][data-part='root'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-scroll-area-size: var(--manti-space-2);
+    --manti-scroll-area-radius: var(--manti-radius-md);
 
     position: relative;
     overflow: hidden;
-    border-radius: var(--manti-radius-md);
+    border-radius: var(--manti-scroll-area-radius);
 
     &[data-dragging] {
       user-select: none;

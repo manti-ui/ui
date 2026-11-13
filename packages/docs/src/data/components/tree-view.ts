@@ -32,14 +32,33 @@ export const meta: ComponentMeta = {
       description: 'Single or multiple selection.',
     },
     {
+      name: 'expandedValue',
+      type: 'string[]',
+      description:
+        'Controlled values of the expanded branches. Pair with `onExpandedChange` to let the parent own which rows are open.',
+    },
+    {
       name: 'defaultExpandedValue',
       type: 'string[]',
-      description: 'Values of branches expanded by default.',
+      description:
+        'Values of branches expanded by default, for uncontrolled usage.',
+    },
+    {
+      name: 'onExpandedChange',
+      type: '(value: string[]) => void',
+      description:
+        'Called whenever a branch opens or closes, with the new expanded values.',
+    },
+    {
+      name: 'selectedValue',
+      type: 'string[]',
+      description:
+        'Controlled values of the selected nodes. Pair with `onSelectionChange` to let the parent own the selection.',
     },
     {
       name: 'defaultSelectedValue',
       type: 'string[]',
-      description: 'Values selected by default.',
+      description: 'Values selected by default, for uncontrolled usage.',
     },
     {
       name: 'onSelectionChange',

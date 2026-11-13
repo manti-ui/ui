@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { RadioGroup } from './RadioGroup';
+import { RadioGroup } from './RadioGroup.js';
+import type { RadioGroupProps } from './RadioGroup.js';
 
-const meta = {
+export default {
   title: 'Components/RadioGroup',
-  component: RadioGroup,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     label: 'Cooking method',
     variant: 'primary',
@@ -19,21 +17,22 @@ const meta = {
   },
   argTypes: {
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
     orientation: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['vertical', 'horizontal'],
     },
   },
-} satisfies Meta<typeof RadioGroup>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<RadioGroupProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<RadioGroupProps> = (args) => (
+  <RadioGroup {...args} />
+);
 
-export const Playground: Story = {};
-
-export const Horizontal: Story = {
-  args: { orientation: 'horizontal', label: 'Spice level' },
-};
+export const Horizontal: Story<RadioGroupProps> = (args) => (
+  <RadioGroup {...args} />
+);
+Horizontal.args = { orientation: 'horizontal', label: 'Spice level' };

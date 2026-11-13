@@ -20,10 +20,10 @@ import type { menu } from '@manti-ui/folds';
 import { mergeProps } from '@zag-js/react';
 import type { PropTypes } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { cx } from '../../internal/props';
-import type { WithDataAttributes } from '../../internal/props';
-import { CheckIcon } from '../../internal/icons';
+import { Portal } from '../../internal/Portal.js';
+import { cx } from '../../internal/props.js';
+import type { WithDataAttributes } from '../../internal/props.js';
+import { CheckIcon } from '../../internal/icons.js';
 
 export type MenuApi = menu.Api<PropTypes>;
 

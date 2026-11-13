@@ -4,8 +4,8 @@ import { tagsInput } from '@manti-ui/folds';
 import type { MantiVariant } from '@manti-ui/tokens';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { useFocusVisible } from '../../internal/focusVisible';
-import { cx } from '../../internal/props';
+import { useFocusVisible } from '../../internal/focusVisible.js';
+import { cx } from '../../internal/props.js';
 
 export interface TagsInputProps {
   /** Optional field label. */

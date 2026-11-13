@@ -1,0 +1,80 @@
+name: preview-announce
+
+# fabrika's rendered-review gate (`review-ui`) finds a pull request's preview through one sticky PR
+# comment: an outer `<!-- preview-deploy -->` marker with one `<!-- preview-deploy:<app> -->` block
+# per app, each naming the preview URL and the head SHA it deployed. The app names are the
+# `uiSurfaces` row names in `.fabrika.jsonc` up to their first `-`, so `ladle-react` and
+# `ladle-styles` read the `ladle` block and `docs` reads the `docs` block.
+#
+# Netlify builds a deploy preview for every pull request and reports it as a commit status whose
+# context is `netlify/<site>/deploy-preview`. When that status turns green, this workflow upserts
+# the announcement on each open pull request whose head is the deployed commit. Both apps ship in
+# the one Netlify deploy, so both blocks name the same origin.
+
+on:
+  status:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  announce:
+    if: >-
+      github.event.state == 'success' &&
+      startsWith(github.event.context, 'netlify/') &&
+      endsWith(github.event.context, '/deploy-preview')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Upsert the preview announcement
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const sha = context.payload.sha;
+            const origin = String(context.payload.target_url ?? '').replace(/\/+$/, '');
+            if (!/^https:\/\/[^/\s]+$/.test(origin)) {
+              core.setFailed(`The ${context.payload.context} status carries no preview origin: "${origin}"`);
+              return;
+            }
+
+            const { data: pulls } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              owner,
+              repo,
+              commit_sha: sha,
+            });
+            const open = pulls.filter((pr) => pr.state === 'open' && pr.head.sha === sha);
+            if (open.length === 0) {
+              core.info(`No open pull request has ${sha} as its head; nothing to announce.`);
+              return;
+            }
+
+            for (const pr of open) {
+              const body = [
+                '<!-- preview-deploy -->',
+                '**Preview deploy** (Netlify), read by the rendered review.',
+                '',
+                '<!-- preview-deploy:ladle -->',
+                `- **ladle** — Stage \`pr-${pr.number}\` → ${origin}/ladle/ @ \`${sha}\``,
+                '<!-- preview-deploy:docs -->',
+                `- **docs** — Stage \`pr-${pr.number}\` → ${origin}/ @ \`${sha}\``,
+              ].join('\n');
+
+              const comments = await github.paginate(github.rest.issues.listComments, {
+                owner,
+                repo,
+                issue_number: pr.number,
+                per_page: 100,
+              });
+              const sticky = comments.find(
+                (comment) =>
+                  comment.user?.type === 'Bot' && comment.body?.includes('<!-- preview-deploy -->'),
+              );
+              if (sticky) {
+                await github.rest.issues.updateComment({ owner, repo, comment_id: sticky.id, body });
+              } else {
+                await github.rest.issues.createComment({ owner, repo, issue_number: pr.number, body });
+              }
+              core.info(`Announced ${origin} @ ${sha} on #${pr.number}.`);
+            }

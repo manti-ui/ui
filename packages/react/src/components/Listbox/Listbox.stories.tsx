@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Listbox } from './Listbox';
+import { Listbox } from './Listbox.js';
+import type { ListboxProps } from './Listbox.js';
 
 const fillings = [
   { value: 'lamb', label: 'Lamb & onion' },
@@ -10,11 +11,8 @@ const fillings = [
   { value: 'spinach', label: 'Spinach & cheese' },
 ];
 
-const meta = {
+export default {
   title: 'Components/Listbox',
-  component: Listbox,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     items: fillings,
     label: 'Filling',
@@ -23,20 +21,23 @@ const meta = {
     defaultValue: ['beef'],
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    selectionMode: { control: 'inline-radio', options: ['single', 'multiple'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
+    selectionMode: {
+      control: { type: 'inline-radio' },
+      options: ['single', 'multiple'],
+    },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof Listbox>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<ListboxProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<ListboxProps> = (args) => <Listbox {...args} />;
 
-export const Playground: Story = {};
-
-export const Multiple: Story = {
-  args: { selectionMode: 'multiple', defaultValue: ['lamb', 'pumpkin'] },
+export const Multiple: Story<ListboxProps> = (args) => <Listbox {...args} />;
+Multiple.args = {
+  selectionMode: 'multiple',
+  defaultValue: ['lamb', 'pumpkin'],
 };

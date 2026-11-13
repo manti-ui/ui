@@ -1,4 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useEffect } from 'react';
+import type { Story, StoryDefault } from '@ladle/react';
 import {
   Badge,
   Button,
@@ -11,8 +12,12 @@ import {
   Switch,
   Text,
 } from '@manti-ui/react';
+import violetPreset from '@manti-ui/styles/themes/violet.css?inline';
 
-import { Oklava } from './Oklava';
+import { Oklava } from './Oklava.js';
+import type { OklavaProps } from './Oklava.js';
+import { DEFAULT_THEME } from './theme/config.js';
+import { setTheme } from './theme/store.js';
 
 /**
  * The devtools panel, over a page of ordinary Manti components.
@@ -21,15 +26,8 @@ import { Oklava } from './Oklava';
  * the panel, move a knob, and the surface re-skins because the override lands on
  * `:root`, not on anything the panel owns.
  */
-const meta = {
-  title: 'Devtools/Oklava',
-  component: Oklava,
-  parameters: { layout: 'fullscreen' },
-  args: { defaultOpen: true, storageKey: false },
-  argTypes: {
-    storageKey: { control: false },
-  },
-  render: (args) => (
+function OklavaPage(args: OklavaProps) {
+  return (
     <div
       style={{
         display: 'flex',
@@ -103,22 +101,67 @@ const meta = {
         </Card.Body>
       </Card>
 
-      <Oklava {...args} />
+      <Oklava {...args} storageKey={false} />
     </div>
-  ),
-} satisfies Meta<typeof Oklava>;
+  );
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+/**
+ * `storageKey` stays pinned to `false` in `OklavaPage` and has no control, so
+ * a story never persists its theme into the browser.
+ */
+export default {
+  title: 'Devtools/Oklava',
+  args: { defaultOpen: true },
+  meta: { layout: 'fullscreen' },
+} satisfies StoryDefault<OklavaProps>;
 
-export const Playground: Story = {};
+export const Playground: Story<OklavaProps> = (args) => (
+  <OklavaPage {...args} />
+);
 
 /** Closed on load, which is how a real app renders it. */
-export const Launcher: Story = {
-  args: { defaultOpen: false },
-};
+export const Launcher: Story<OklavaProps> = (args) => <OklavaPage {...args} />;
+Launcher.args = { defaultOpen: false };
 
 /** Without the Google Fonts catalogue: the five built-in stacks alone. */
-export const BuiltInFontsOnly: Story = {
-  args: { googleFonts: false },
+export const BuiltInFontsOnly: Story<OklavaProps> = (args) => (
+  <OklavaPage {...args} />
+);
+BuiltInFontsOnly.args = { googleFonts: false };
+
+/**
+ * The panel with `violet` picked for the primary and `mauve` for the neutral,
+ * on top of the default Manti preset. The CSS it writes is the Violet preset's
+ * own declarations, so this page should read exactly like
+ * {@link ShippedVioletPreset}.
+ */
+export const VioletOnMauve: Story<OklavaProps> = (args) => {
+  useEffect(() => {
+    setTheme({
+      ...DEFAULT_THEME,
+      colors: { primary: 'violet' },
+      neutral: 'mauve',
+    });
+    return () => setTheme(DEFAULT_THEME);
+  }, []);
+  return <OklavaPage {...args} />;
 };
+
+/**
+ * The same page under the shipped Violet preset stylesheet
+ * (`@manti-ui/styles/themes/violet.css`), with Oklava left untouched: the
+ * reference {@link VioletOnMauve} is compared against.
+ */
+export const ShippedVioletPreset: Story<OklavaProps> = (args) => (
+  <OklavaPage {...args} />
+);
+ShippedVioletPreset.args = { defaultOpen: false };
+ShippedVioletPreset.decorators = [
+  (Story) => (
+    <>
+      <style>{violetPreset}</style>
+      <Story />
+    </>
+  ),
+];

@@ -2,7 +2,7 @@ import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Code } from './Code';
+import { Code } from './Code.js';
 
 describe('Code', () => {
   it('renders semantic inline code with size and ref forwarding', () => {

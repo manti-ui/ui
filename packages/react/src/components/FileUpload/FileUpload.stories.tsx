@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { FileUpload } from './FileUpload';
+import { FileUpload } from './FileUpload.js';
+import type { FileUploadProps } from './FileUpload.js';
 
-const meta = {
+export default {
   title: 'Components/FileUpload',
-  component: FileUpload,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     label: 'Attachments',
     variant: 'primary',
@@ -15,17 +13,18 @@ const meta = {
   },
   argTypes: {
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof FileUpload>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<FileUploadProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<FileUploadProps> = (args) => (
+  <FileUpload {...args} />
+);
 
-export const Playground: Story = {};
-
-export const ImagesOnly: Story = {
-  args: { label: 'Photos', accept: 'image/*', maxFiles: 3 },
-};
+export const ImagesOnly: Story<FileUploadProps> = (args) => (
+  <FileUpload {...args} />
+);
+ImagesOnly.args = { label: 'Photos', accept: 'image/*', maxFiles: 3 };

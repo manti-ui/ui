@@ -101,18 +101,6 @@
     font-family: var(--manti-font-mono);
   }
 
-  /* The slider carries its own label header; the field already names it. */
-  .oklava-field [data-scope='slider'] [data-part='header'] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    clip-path: inset(50%);
-  }
-
   /* ---- Presets ---- */
   .oklava-presets {
     display: grid;
@@ -255,38 +243,6 @@
     display: flex;
     align-items: center;
     gap: var(--manti-space-2);
-  }
-
-  /* The picker sits inline in the footer row: label beside the swatch, and the
-     swatch-only trigger hugging the swatch instead of taking a control's full
-     height. */
-  .oklava-dots-footer [data-scope='color-picker'][data-part='root'] {
-    flex: none;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: flex-end;
-    gap: var(--manti-space-2);
-  }
-
-  .oklava-dots-footer [data-scope='color-picker'][data-part='label'] {
-    margin: 0;
-    white-space: nowrap;
-    font-size: var(--manti-text-sm);
-    font-weight: var(--manti-weight-medium);
-    color: var(--manti-text);
-  }
-
-  .oklava-dots-footer [data-scope='color-picker'][data-part='trigger'] {
-    flex: none;
-    min-height: 0;
-    width: auto;
-    padding: var(--manti-space-1);
-  }
-
-  .oklava-dots-footer [data-scope='color-picker'] [data-part='value-swatch'] {
-    width: var(--manti-space-5);
-    height: var(--manti-space-5);
   }
 
   .oklava-swatch-value {

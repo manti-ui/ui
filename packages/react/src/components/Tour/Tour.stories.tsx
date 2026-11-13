@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Tour } from './Tour';
-import { Button } from '../Button/Button';
+import { Tour } from './Tour.js';
+import type { TourProps } from './Tour.js';
+import { Button } from '../Button/Button.js';
 
 const steps = [
   {
@@ -24,31 +25,25 @@ const steps = [
   },
 ];
 
-const meta = {
+export default {
   title: 'Components/Tour',
-  component: Tour,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     steps,
     trigger: <Button>Start tour</Button>,
   },
-  render: (args) => (
-    <div style={{ display: 'grid', gap: 48 }}>
-      <Tour {...args} />
-      <div style={{ display: 'flex', gap: 24 }}>
-        <span id="tour-tokens" style={{ padding: 8 }}>
-          🎨 Tokens
-        </span>
-        <span id="tour-components" style={{ padding: 8 }}>
-          🧩 Components
-        </span>
-      </div>
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<TourProps>;
+
+export const Playground: Story<TourProps> = (args) => (
+  <div style={{ display: 'grid', gap: 48 }}>
+    <Tour {...args} />
+    <div style={{ display: 'flex', gap: 24 }}>
+      <span id="tour-tokens" style={{ padding: 8 }}>
+        🎨 Tokens
+      </span>
+      <span id="tour-components" style={{ padding: 8 }}>
+        🧩 Components
+      </span>
     </div>
-  ),
-} satisfies Meta<typeof Tour>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {};
+  </div>
+);

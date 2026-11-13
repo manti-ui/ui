@@ -7,7 +7,48 @@ export const meta: ComponentMeta = {
       name: 'items',
       type: 'ComboboxItem[]',
       description:
-        'The full option set; filtered client-side as the user types. Each item is { value, label, disabled? }.',
+        'The option set, filtered client-side by label as the user types unless filter says otherwise. Each item is { value, label, disabled? }.',
+    },
+    {
+      name: 'filter',
+      type: 'false | ((item: ComboboxItem, query: string) => boolean)',
+      description:
+        'How items are matched against the typed text. false renders items as given (a remote search); a function replaces the built-in label match.',
+    },
+    {
+      name: 'inputValue',
+      type: 'string',
+      description: 'Controlled text in the input.',
+    },
+    {
+      name: 'defaultInputValue',
+      type: 'string',
+      description: 'Initial text in the input for uncontrolled usage.',
+    },
+    {
+      name: 'onInputValueChange',
+      type: '(value: string) => void',
+      description:
+        'Called with the input text on every edit, and when a pick rewrites it.',
+    },
+    {
+      name: 'minChars',
+      type: 'number',
+      default: '0',
+      description:
+        'How many characters the typed text needs before typing opens the listbox. The toggle button still opens it at any length.',
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      description:
+        'Show a loading row in the open listbox, announced through role="status".',
+    },
+    {
+      name: 'emptyContent',
+      type: 'ReactNode',
+      description:
+        'Shown in the open listbox when it has no rows and is not loading.',
     },
     {
       name: 'label',
@@ -104,6 +145,15 @@ export const meta: ComponentMeta = {
     {
       part: 'item-indicator',
       description: 'The check mark shown on selected items.',
+    },
+    {
+      part: 'loading',
+      description: 'The status row shown while loading is set.',
+    },
+    {
+      part: 'empty',
+      description:
+        'The status row holding emptyContent when there are no rows.',
     },
     {
       part: 'overflow-hint',

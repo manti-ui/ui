@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Splitter } from './Splitter';
+import { Splitter } from './Splitter.js';
 
 describe('Splitter', () => {
   it('renders panels and a resize separator for each boundary', () => {

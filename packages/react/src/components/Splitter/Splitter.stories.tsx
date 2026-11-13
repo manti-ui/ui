@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Splitter } from './Splitter';
+import { Splitter } from './Splitter.js';
+import type { SplitterProps } from './Splitter.js';
 
 const pane = (label: string) => (
   <div
@@ -15,11 +16,8 @@ const pane = (label: string) => (
   </div>
 );
 
-const meta = {
+export default {
   title: 'Components/Splitter',
-  component: Splitter,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     orientation: 'horizontal',
     panels: [
@@ -30,24 +28,25 @@ const meta = {
   },
   argTypes: {
     orientation: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['horizontal', 'vertical'],
     },
   },
-} satisfies Meta<typeof Splitter>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<SplitterProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<SplitterProps> = (args) => (
+  <Splitter {...args} />
+);
 
-export const Playground: Story = {};
-
-export const ThreePanels: Story = {
-  args: {
-    panels: [
-      { id: 'a', content: pane('Left') },
-      { id: 'b', content: pane('Center') },
-      { id: 'c', content: pane('Right') },
-    ],
-    defaultSize: [25, 50, 25],
-  },
+export const ThreePanels: Story<SplitterProps> = (args) => (
+  <Splitter {...args} />
+);
+ThreePanels.args = {
+  panels: [
+    { id: 'a', content: pane('Left') },
+    { id: 'b', content: pane('Center') },
+    { id: 'c', content: pane('Right') },
+  ],
+  defaultSize: [25, 50, 25],
 };

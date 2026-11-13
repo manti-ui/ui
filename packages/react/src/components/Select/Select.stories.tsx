@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Select } from './Select';
+import { Select } from './Select.js';
+import type { SelectProps } from './Select.js';
 
 const regions = [
   { value: 'kayseri', label: 'Kayseri' },
@@ -10,11 +11,8 @@ const regions = [
   { value: 'sarajevo', label: 'Sarajevo' },
 ];
 
-const meta = {
+export default {
   title: 'Components/Select',
-  component: Select,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     items: regions,
     label: 'Region',
@@ -24,37 +22,31 @@ const meta = {
     multiple: false,
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['default', 'fill'],
     },
   },
-} satisfies Meta<typeof Select>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<SelectProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<SelectProps> = (args) => <Select {...args} />;
 
-export const Playground: Story = {};
+export const Filled: Story<SelectProps> = (args) => <Select {...args} />;
+Filled.args = { variant: 'fill', label: undefined, 'aria-label': 'Region' };
 
-export const Filled: Story = {
-  args: { variant: 'fill', label: undefined, 'aria-label': 'Region' },
+export const Multiple: Story<SelectProps> = (args) => <Select {...args} />;
+Multiple.args = {
+  multiple: true,
+  label: 'Regions',
+  defaultValue: ['kayseri', 'kashgar'],
 };
 
-export const Multiple: Story = {
-  args: {
-    multiple: true,
-    label: 'Regions',
-    defaultValue: ['kayseri', 'kashgar'],
-  },
-};
-
-export const States: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '1rem', width: 460 }}>
-      <Select {...args} label="Default" />
-      <Select {...args} label="Invalid" invalid />
-      <Select {...args} label="Disabled" disabled />
-    </div>
-  ),
-};
+export const States: Story<SelectProps> = (args) => (
+  <div style={{ display: 'grid', gap: '1rem', width: 460 }}>
+    <Select {...args} label="Default" />
+    <Select {...args} label="Invalid" invalid />
+    <Select {...args} label="Disabled" disabled />
+  </div>
+);

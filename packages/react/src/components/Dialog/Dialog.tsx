@@ -3,10 +3,10 @@ import type { ReactElement, ReactNode } from 'react';
 import { dialog } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { cx } from '../../internal/props';
-import { renderTrigger } from '../../internal/floating';
-import { CloseIcon } from '../../internal/icons';
+import { Portal } from '../../internal/Portal.js';
+import { cx } from '../../internal/props.js';
+import { renderTrigger } from '../../internal/floating.js';
+import { CloseIcon } from '../../internal/icons.js';
 
 export type DialogSize = 'sm' | 'md' | 'lg';
 
@@ -51,6 +51,21 @@ export interface DialogProps {
   closeOnInteractOutside?: boolean;
   /** Close when pressing Escape. @default true */
   closeOnEscape?: boolean;
+  /**
+   * Accessible name of the corner close button, announced by screen readers.
+   * @default 'Close'
+   */
+  closeLabel?: string;
+  /**
+   * Element to focus when the dialog opens. Defaults to the first focusable
+   * element (or the close button for an `alertdialog`).
+   */
+  initialFocusEl?: () => HTMLElement | null;
+  /**
+   * Element to focus when the dialog closes. Defaults to the trigger that
+   * opened it.
+   */
+  finalFocusEl?: () => HTMLElement | null;
   id?: string;
   className?: string;
 }
@@ -75,6 +90,9 @@ export function Dialog({
   modal,
   closeOnInteractOutside,
   closeOnEscape,
+  closeLabel = 'Close',
+  initialFocusEl,
+  finalFocusEl,
   id,
   className,
 }: DialogProps) {
@@ -87,6 +105,10 @@ export function Dialog({
     modal,
     closeOnInteractOutside,
     closeOnEscape,
+    // `useMachine` drops undefined keys, so an unset `initialFocusEl` keeps
+    // the machine's own default (the close trigger for an `alertdialog`).
+    initialFocusEl,
+    finalFocusEl,
     onOpenChange: onOpenChange
       ? (details) => onOpenChange(details.open)
       : undefined,
@@ -109,7 +131,7 @@ export function Dialog({
               className={cx(className)}
             >
               {showCloseButton && (
-                <button {...api.getCloseTriggerProps()}>
+                <button {...api.getCloseTriggerProps()} aria-label={closeLabel}>
                   <CloseIcon />
                 </button>
               )}

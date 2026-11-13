@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Alert } from './Alert';
-import { Button } from '../Button/Button';
-import { Text } from '../Text/Text';
+import type { Story, StoryDefault } from '@ladle/react';
+import { Alert } from './Alert.js';
+import type { AlertProps } from './Alert.js';
+import { Button } from '../Button/Button.js';
+import { Text } from '../Text/Text.js';
 
 const variants = ['primary', 'secondary', 'success', 'info', 'danger'] as const;
 
@@ -26,11 +27,8 @@ const InfoIcon = (
   </svg>
 );
 
-const meta = {
+export default {
   title: 'Components/Alert',
-  component: Alert,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     variant: 'secondary',
     title: 'Dough is resting',
@@ -38,56 +36,49 @@ const meta = {
     icon: InfoIcon,
   },
   argTypes: {
-    variant: { control: 'select', options: variants },
+    variant: { control: { type: 'select' }, options: variants },
   },
-} satisfies Meta<typeof Alert>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<AlertProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<AlertProps> = (args) => <Alert {...args} />;
 
-export const Playground: Story = {};
+export const Variants: Story<AlertProps> = (args) => (
+  <div style={{ display: 'grid', gap: '0.75rem', maxWidth: 520 }}>
+    {variants.map((variant) => (
+      <Alert
+        {...args}
+        key={variant}
+        variant={variant}
+        title={`${variant} message`}
+      >
+        A smooth status message with a calm icon.
+      </Alert>
+    ))}
+  </div>
+);
 
-export const Variants: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '0.75rem', maxWidth: 520 }}>
-      {variants.map((variant) => (
-        <Alert
-          {...args}
-          key={variant}
-          variant={variant}
-          title={`${variant} message`}
-        >
-          A smooth status message with a calm icon.
-        </Alert>
-      ))}
+export const Dismissible: Story<AlertProps> = (args) => {
+  const [open, setOpen] = useState(true);
+  if (!open) {
+    return <Text emphasis="muted">Dismissed.</Text>;
+  }
+  return (
+    <div style={{ maxWidth: 520 }}>
+      <Alert {...args} onDismiss={() => setOpen(false)} />
     </div>
+  );
+};
+
+export const WithActions: Story<AlertProps> = (args) => <Alert {...args} />;
+WithActions.args = {
+  title: 'Restore draft?',
+  actions: (
+    <>
+      <Button size="sm">Restore</Button>
+      <Button size="sm" variant="tertiary">
+        Discard
+      </Button>
+    </>
   ),
-};
-
-export const Dismissible: Story = {
-  render: (args) => {
-    const [open, setOpen] = useState(true);
-    if (!open) {
-      return <Text emphasis="muted">Dismissed.</Text>;
-    }
-    return (
-      <div style={{ maxWidth: 520 }}>
-        <Alert {...args} onDismiss={() => setOpen(false)} />
-      </div>
-    );
-  },
-};
-
-export const WithActions: Story = {
-  args: {
-    title: 'Restore draft?',
-    actions: (
-      <>
-        <Button size="sm">Restore</Button>
-        <Button size="sm" variant="tertiary">
-          Discard
-        </Button>
-      </>
-    ),
-  },
 };

@@ -3,10 +3,10 @@ import type { ReactElement, ReactNode } from 'react';
 import { hoverCard } from '@manti-ui/folds';
 import { normalizeProps, useMachine } from '@zag-js/react';
 
-import { Portal } from '../../internal/Portal';
-import { cx } from '../../internal/props';
-import { renderTrigger } from '../../internal/floating';
-import type { Placement } from '../../internal/floating';
+import { Portal } from '../../internal/Portal.js';
+import { cx } from '../../internal/props.js';
+import { renderTrigger } from '../../internal/floating.js';
+import type { Placement } from '../../internal/floating.js';
 
 export interface HoverCardProps {
   /** Element that reveals the card on hover/focus. Cloned with trigger props. */

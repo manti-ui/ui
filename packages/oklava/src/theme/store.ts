@@ -10,9 +10,14 @@ import {
   isBrowser,
   load,
   save,
-} from './apply';
-import { DEFAULT_THEME, type ThemeConfig, type VariantKey } from './config';
-import { buildThemeCss, isDefaultTheme } from './css';
+} from './apply.js';
+import {
+  DEFAULT_THEME,
+  type ScaleName,
+  type ThemeConfig,
+  type VariantKey,
+} from './config.js';
+import { buildThemeCss, isDefaultTheme } from './css.js';
 
 /**
  * The live theme.
@@ -84,8 +89,8 @@ export interface UseOklavaTheme {
   set: (next: ThemeConfig) => void;
   /** Merge a partial change (colors are merged key by key). */
   patch: (partial: Partial<ThemeConfig>) => void;
-  /** Set, or clear with `null`, one variant's base color. */
-  setColor: (key: VariantKey, value: string | null) => void;
+  /** Set, or clear with `null`, the Radix scale one variant is built from. */
+  setColor: (key: VariantKey, value: ScaleName | null) => void;
   /** Drop every override and forget the stored theme. */
   reset: () => void;
   /** True while the app is running its shipped theme. */
@@ -103,7 +108,7 @@ export function useOklavaTheme(): UseOklavaTheme {
     });
   }, []);
 
-  const setColor = useCallback((key: VariantKey, value: string | null) => {
+  const setColor = useCallback((key: VariantKey, value: ScaleName | null) => {
     const colors = { ...getTheme().colors };
     if (value) colors[key] = value;
     else delete colors[key];

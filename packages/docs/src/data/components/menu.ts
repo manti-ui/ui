@@ -7,7 +7,7 @@ export const meta: ComponentMeta = {
       name: 'trigger',
       type: 'ReactElement',
       description:
-        'Required element that opens the menu. Cloned with the machine trigger props.',
+        'Optional element that opens the menu. Cloned with the machine trigger props. Without it, open the menu with `open` and place it with `getAnchorRect`.',
     },
     {
       name: 'items',
@@ -31,7 +31,26 @@ export const meta: ComponentMeta = {
       type: `'top' | 'bottom' | 'bottom-center' | 'left' | 'right' | '…-start' | '…-end'`,
       default: `'bottom-start'`,
       description:
-        'Placement relative to the trigger. `bottom-center` is an explicit alias for the centered `bottom` placement.',
+        'Placement relative to the trigger, or to the `getAnchorRect` rect. `bottom-center` is an explicit alias for the centered `bottom` placement.',
+    },
+    {
+      name: 'getAnchorRect',
+      type: '() => { x: number; y: number; width: number; height: number } | null',
+      description:
+        'Place the panel at this rect (viewport coordinates) instead of the trigger. Return `null` to fall back to the trigger.',
+    },
+    {
+      name: 'finalFocusEl',
+      type: '() => HTMLElement | null',
+      description:
+        'Element to focus when the menu closes. Defaults to the trigger, or, with no trigger, to the element that had focus when the menu opened.',
+    },
+    {
+      name: 'restoreFocus',
+      type: 'boolean',
+      default: 'true',
+      description:
+        'Move focus back on close, to `finalFocusEl` or its default. With `false` the menu leaves focus where the machine put it.',
     },
     {
       name: 'size',

@@ -66,6 +66,7 @@
   }
 
   [data-scope='floating-panel'][data-part='title'] {
+    font-family: var(--manti-font-display);
     font-size: var(--manti-text-sm);
     font-weight: var(--manti-weight-semibold);
     color: var(--manti-text);

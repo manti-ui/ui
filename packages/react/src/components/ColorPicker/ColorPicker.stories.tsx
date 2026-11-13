@@ -1,53 +1,59 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { ColorPicker } from './ColorPicker';
+import { ColorPicker } from './ColorPicker.js';
+import type { ColorPickerProps } from './ColorPicker.js';
 
-const meta = {
+const formatOptions = ['hex', 'rgba', 'hsla', 'hsba', 'oklch'];
+
+export default {
   title: 'Components/ColorPicker',
-  component: ColorPicker,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     label: 'Accent color',
     defaultValue: '#7c3aed',
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     format: {
-      control: 'inline-radio',
-      options: ['hex', 'rgba', 'hsla', 'hsba', 'oklch'],
+      control: { type: 'inline-radio' },
+      options: formatOptions,
     },
+    // Ladle has no `object` control; the format list is a set of known
+    // strings, so a check control edits it.
     formats: {
-      control: 'object',
+      control: { type: 'check' },
+      options: formatOptions,
       description: 'Formats shown in the copy tabs.',
     },
   },
-} satisfies Meta<typeof ColorPicker>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<ColorPickerProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {};
+export const Playground: Story<ColorPickerProps> = (args) => (
+  <ColorPicker {...args} />
+);
 
 /** Trigger shows only the color swatch, hiding the formatted value text. */
-export const SwatchOnly: Story = {
-  args: { showValueText: false },
-};
+export const SwatchOnly: Story<ColorPickerProps> = (args) => (
+  <ColorPicker {...args} />
+);
+SwatchOnly.args = { showValueText: false };
 
 /** The palette and output stay in native OKLCH until another format is selected. */
-export const Oklch: Story = {
-  args: {
-    colorSpace: 'oklch',
-    format: 'oklch',
-    formats: ['hex', 'rgba', 'oklch'],
-  },
+export const Oklch: Story<ColorPickerProps> = (args) => (
+  <ColorPicker {...args} />
+);
+Oklch.args = {
+  colorSpace: 'oklch',
+  format: 'oklch',
+  formats: ['hex', 'rgba', 'oklch'],
 };
 
 /** Hex output includes alpha only while the selected color is translucent. */
-export const HexWithAlpha: Story = {
-  args: {
-    format: 'hex',
-    formats: ['hex', 'rgba'],
-    defaultValue: 'rgba(124, 58, 237, 0.5)',
-  },
+export const HexWithAlpha: Story<ColorPickerProps> = (args) => (
+  <ColorPicker {...args} />
+);
+HexWithAlpha.args = {
+  format: 'hex',
+  formats: ['hex', 'rgba'],
+  defaultValue: 'rgba(124, 58, 237, 0.5)',
 };

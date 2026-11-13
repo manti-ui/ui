@@ -1,6 +1,6 @@
 import type { ComponentPropsWithoutRef } from 'react';
 
-import { cx } from '../../internal/props';
+import { cx } from '../../internal/props.js';
 
 export interface SpinnerProps extends ComponentPropsWithoutRef<'span'> {
   /** Visual size of the spinner. */

@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { RatingGroup } from './RatingGroup';
+import { RatingGroup } from './RatingGroup.js';
+import type { RatingGroupProps } from './RatingGroup.js';
 
-const meta = {
+export default {
   title: 'Components/RatingGroup',
-  component: RatingGroup,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     label: 'Rate this recipe',
     count: 5,
@@ -18,23 +16,25 @@ const meta = {
     disabled: false,
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof RatingGroup>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<RatingGroupProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<RatingGroupProps> = (args) => (
+  <RatingGroup {...args} />
+);
 
-export const Playground: Story = {};
+export const HalfStars: Story<RatingGroupProps> = (args) => (
+  <RatingGroup {...args} />
+);
+HalfStars.args = { allowHalf: true, defaultValue: 3.5 };
 
-export const HalfStars: Story = {
-  args: { allowHalf: true, defaultValue: 3.5 },
-};
-
-export const ReadOnly: Story = {
-  args: { readOnly: true, defaultValue: 4 },
-};
+export const ReadOnly: Story<RatingGroupProps> = (args) => (
+  <RatingGroup {...args} />
+);
+ReadOnly.args = { readOnly: true, defaultValue: 4 };

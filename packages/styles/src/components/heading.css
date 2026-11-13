@@ -17,7 +17,7 @@
 
     margin: var(--manti-space-0);
     color: var(--manti-text);
-    font-family: var(--manti-font-sans);
+    font-family: var(--manti-font-display);
     font-size: var(--manti-heading-font-size);
     font-weight: var(--manti-heading-weight);
     line-height: var(--manti-heading-line-height);

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Badge } from '../Badge/Badge';
-import { DataTable } from './DataTable';
-import type { DataTableColumn } from './DataTable';
-import type { DataTableRowComponentProps } from './DataTable';
+import { Badge } from '../Badge/Badge.js';
+import { DataTable } from './DataTable.js';
+import type { DataTableColumn, DataTableProps } from './DataTable.js';
+import type { DataTableRowComponentProps } from './DataTable.js';
 
 interface Invoice {
   id: string;
@@ -12,6 +12,8 @@ interface Invoice {
   status: 'paid' | 'pending' | 'overdue';
   amount: number;
 }
+
+type InvoiceTableProps = DataTableProps<Invoice>;
 
 const data: Invoice[] = [
   { id: 'INV-001', customer: 'Acme Corp', status: 'paid', amount: 1200 },
@@ -60,62 +62,73 @@ const manyInvoices: Invoice[] = Array.from({ length: 24 }, (_, index) => ({
   amount: ((index * 137) % 900) + 40,
 }));
 
-const meta = {
+export default {
   title: 'Components/DataTable',
-  component: DataTable,
-  parameters: { layout: 'padded' },
   args: { columns, data },
-} satisfies Meta<typeof DataTable<Invoice>>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<InvoiceTableProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<InvoiceTableProps> = (args) => (
+  <DataTable<Invoice> {...args} />
+);
 
-export const Playground: Story = {};
+export const Sortable: Story<InvoiceTableProps> = (args) => (
+  <DataTable<Invoice> {...args} />
+);
+Sortable.args = { sortable: true };
 
-export const Sortable: Story = {
-  args: { sortable: true },
+export const ZebraSticky: Story<InvoiceTableProps> = (args) => (
+  <DataTable<Invoice> {...args} />
+);
+ZebraSticky.args = { zebra: true, interactive: true, sortable: true };
+
+export const Sizes: Story<InvoiceTableProps> = (args) => (
+  <DataTable<Invoice> {...args} />
+);
+Sizes.args = { size: 'sm', sortable: true, zebra: true };
+
+export const Filterable: Story<InvoiceTableProps> = (args) => (
+  <DataTable<Invoice> {...args} />
+);
+Filterable.args = { filterable: true, sortable: true };
+
+export const Selectable: Story<InvoiceTableProps> = (args) => (
+  <DataTable<Invoice> {...args} />
+);
+Selectable.args = {
+  selectable: true,
+  onSelectionChange: (rows) => console.log('selected', rows),
 };
 
-export const ZebraSticky: Story = {
-  args: { zebra: true, interactive: true, sortable: true },
+export const Paginated: Story<InvoiceTableProps> = (args) => (
+  <DataTable<Invoice> {...args} />
+);
+Paginated.args = {
+  data: manyInvoices,
+  paginated: true,
+  pageSize: 6,
+  sortable: true,
 };
 
-export const Sizes: Story = {
-  args: { size: 'sm', sortable: true, zebra: true },
+export const FullFeatured: Story<InvoiceTableProps> = (args) => (
+  <DataTable<Invoice> {...args} />
+);
+FullFeatured.args = {
+  data: manyInvoices,
+  title: 'Invoices',
+  sortable: true,
+  filterable: true,
+  paginated: true,
+  pageSize: 6,
+  selectable: true,
+  zebra: true,
+  interactive: true,
 };
 
-export const Filterable: Story = {
-  args: { filterable: true, sortable: true },
-};
-
-export const Selectable: Story = {
-  args: {
-    selectable: true,
-    onSelectionChange: (rows) => console.log('selected', rows),
-  },
-};
-
-export const Paginated: Story = {
-  args: { data: manyInvoices, paginated: true, pageSize: 6, sortable: true },
-};
-
-export const FullFeatured: Story = {
-  args: {
-    data: manyInvoices,
-    title: 'Invoices',
-    sortable: true,
-    filterable: true,
-    paginated: true,
-    pageSize: 6,
-    selectable: true,
-    zebra: true,
-    interactive: true,
-  },
-};
-
-export const Empty: Story = {
-  args: { data: [], emptyContent: 'No invoices yet.' },
-};
+export const Empty: Story<InvoiceTableProps> = (args) => (
+  <DataTable<Invoice> {...args} />
+);
+Empty.args = { data: [], emptyContent: 'No invoices yet.' };
 
 function LiveInvoiceRow({
   row,
@@ -130,14 +143,12 @@ function LiveInvoiceRow({
   );
 }
 
-export const CustomRowComponent: Story = {
-  render: () => (
-    <DataTable<Invoice>
-      columns={columns}
-      data={data}
-      rowComponent={LiveInvoiceRow}
-      getRowId={(row) => row.id}
-      getRowProps={(row) => ({ 'aria-label': `Invoice ${row.id}` })}
-    />
-  ),
-};
+export const CustomRowComponent: Story<InvoiceTableProps> = () => (
+  <DataTable<Invoice>
+    columns={columns}
+    data={data}
+    rowComponent={LiveInvoiceRow}
+    getRowId={(row) => row.id}
+    getRowProps={(row) => ({ 'aria-label': `Invoice ${row.id}` })}
+  />
+);

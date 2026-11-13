@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-// The single source of Manti's look — identical to .storybook/preview.tsx, so
+// The single source of Manti's look — identical to .ladle/components.tsx, so
 // the docs site renders with the exact same tokens, components and motion.
 import '@manti-ui/styles/index.css';
 // The scoped presets, so the theme gallery can preview each one in place.

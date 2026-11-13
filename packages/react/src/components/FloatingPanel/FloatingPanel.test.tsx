@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { FloatingPanel } from './FloatingPanel';
+import { FloatingPanel } from './FloatingPanel.js';
 
 describe('FloatingPanel', () => {
   it('renders its body and closes through the machine control', async () => {

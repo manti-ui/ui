@@ -2,11 +2,11 @@ import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Blockquote } from './Blockquote/Blockquote';
-import { Code } from './Code/Code';
-import { Heading } from './Heading/Heading';
-import { Kbd } from './Kbd/Kbd';
-import { Text } from './Text/Text';
+import { Blockquote } from './Blockquote/Blockquote.js';
+import { Code } from './Code/Code.js';
+import { Heading } from './Heading/Heading.js';
+import { Kbd } from './Kbd/Kbd.js';
+import { Text } from './Text/Text.js';
 
 describe('typography primitives', () => {
   it('renders Kbd with native semantics, props, and ref', () => {

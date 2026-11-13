@@ -17,17 +17,34 @@ import '@manti-ui/styles/themes/ocean.css';
 ```
 
 That is the whole adoption cost. Every component re-skins: the variant palettes,
-the neutral hue, the progress fill, and the text selection.
+the neutral gray, the progress fill, and the text selection.
 
 <ThemePresets />
 
 ## What a preset moves
 
-A preset is a palette and nothing else. Each one expands its base colors into
-the full `--variant-*` vocabulary, re-points `--manti-accent-fill` and
+A preset is a palette and nothing else, and every color in it is a named
+[Radix Colors](https://www.radix-ui.com/colors) scale. Each preset names one
+accent scale per variant it moves and one gray as its neutral:
+
+| Preset     | Primary  | Other variants       | Neutral |
+| ---------- | -------- | -------------------- | ------- |
+| `manti`    | `orange` | none                 | `slate` |
+| `violet`   | `violet` | none                 | `mauve` |
+| `ocean`    | `sky`    | `info` on `cyan`     | `slate` |
+| `forest`   | `grass`  | `success` on `jade`  | `sage`  |
+| `rose`     | `ruby`   | `danger` on `tomato` | `mauve` |
+| `graphite` | `slate`  | none                 | `slate` |
+
+The generator writes each named accent into the full `--variant-*` vocabulary
+on the Radix step jobs, re-points `--manti-accent-fill` and
 `--manti-selection-*` (the two branded roles no `[data-variant]` block can
-reach), and sets `--manti-cool-hue`, the single hue behind every gray, surface,
-border and text role.
+reach), and, when the neutral is not `slate`, re-declares the `--manti-gray-*`
+and `--manti-gray-a*` steps from that Radix gray. Every surface, border and text
+role reads those steps, so the whole neutral follows.
+
+There is no hue to type in. A preset that needs a color Radix does not ship is
+not a preset; pick the nearest Radix scale instead.
 
 Shape, density and type are deliberately out. Those are product decisions, and a
 theme you adopt for its color must not quietly resize your controls or round
@@ -50,11 +67,35 @@ anything unlayered. Adopt a preset and retune a role on top of it:
 @import '@manti-ui/styles/themes/forest.css';
 
 :root {
-  --manti-cool-hue: 280;
+  --manti-border: var(--manti-gray-7);
 }
 ```
 
+The neutral hue property of earlier versions is gone, and a stylesheet that still
+sets it changes nothing. To move the neutral, adopt a preset on another gray or
+[pick a Radix gray](/guides/theming-tokens#pick-a-radix-scale) yourself.
+
 Import order between the two stylesheets does not matter — the layer decides.
+
+### Display and text faces
+
+A preset never changes type, so a brand that pairs a display face for headings
+with a text face for body copy sets both itself. `--manti-font-sans` is the
+text face. `--manti-font-display` is the face of Heading and every component
+title, and it follows the text face until you set it:
+
+```css
+@import '@manti-ui/styles/index.css';
+@import '@manti-ui/styles/themes/forest.css';
+
+:root {
+  --manti-font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --manti-font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+}
+```
+
+Load both fonts in the application; Manti bundles neither. See
+[Typography](/typography#families) for the full family list.
 
 ## More than one theme on a page
 
@@ -69,13 +110,14 @@ import '@manti-ui/styles/themes.css';
 <section data-manti-theme="rose">…</section>
 ```
 
-Nested scopes re-resolve the neutral ramp and every surface, border and text
-role locally, so a scoped preset looks the same as its `:root` twin.
+Nested scopes re-declare the neutral gray steps and every surface, border and
+text role locally, so a scoped preset looks the same as its `:root` twin.
 `data-manti-theme` is independent of `data-theme` — light and dark still follow
 the OS or whatever you force.
 
 ## When a preset is not enough
 
-Reach for [theming with tokens](/guides/theming-tokens) for a targeted change,
+Reach for [theming with tokens](/guides/theming-tokens) for a targeted change
+or to [pick any Radix scale](/guides/theming-tokens#pick-a-radix-scale) by name,
 or the [Theme Studio](https://studio.manti.design) to tune every role on a live
 product surface and export the result.

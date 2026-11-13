@@ -4,7 +4,7 @@ Components that were built, then shelved. Their source is **frozen** here rather
 than deleted, so bringing one back is a move — not a rewrite.
 
 Nothing under `backlog/` ships. It is outside every build, `tsconfig`, ESLint,
-Prettier, and Storybook glob in this repo, which is deliberate: shelved source is
+Prettier, and Ladle glob in this repo, which is deliberate: shelved source is
 a snapshot of a moment, not living code. It will drift as the packages evolve and
 that is fine — it is a starting point for re-adaptation, not a maintained tree.
 Nothing here is checked by `pnpm verify`.

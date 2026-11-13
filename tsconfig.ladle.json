@@ -4,8 +4,8 @@
     "types": ["node", "vite/client"]
   },
   "include": [
-    ".storybook/**/*.ts",
-    ".storybook/**/*.tsx",
+    ".ladle/**/*.ts",
+    ".ladle/**/*.tsx",
     "packages/react/src/**/*.stories.tsx",
     "packages/oklava/src/**/*.stories.tsx"
   ]

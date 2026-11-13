@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Editable } from './Editable';
+import { Editable } from './Editable.js';
+import type { EditableProps } from './Editable.js';
 
-const meta = {
+export default {
   title: 'Components/Editable',
-  component: Editable,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     label: 'Recipe name',
     variant: 'primary',
@@ -18,29 +16,29 @@ const meta = {
   },
   argTypes: {
     activationMode: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['focus', 'dblclick', 'click', 'none'],
     },
     submitMode: {
-      control: 'inline-radio',
+      control: { type: 'inline-radio' },
       options: ['enter', 'blur', 'both', 'none'],
     },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof Editable>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<EditableProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<EditableProps> = (args) => (
+  <Editable {...args} />
+);
 
-export const Playground: Story = {};
+export const DoubleClickToEdit: Story<EditableProps> = (args) => (
+  <Editable {...args} />
+);
+DoubleClickToEdit.args = { activationMode: 'dblclick' };
 
-export const DoubleClickToEdit: Story = {
-  args: { activationMode: 'dblclick' },
-};
-
-export const Empty: Story = {
-  args: { defaultValue: '', placeholder: 'Click to add a name…' },
-};
+export const Empty: Story<EditableProps> = (args) => <Editable {...args} />;
+Empty.args = { defaultValue: '', placeholder: 'Click to add a name…' };

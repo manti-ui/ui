@@ -14,14 +14,20 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    tokens (`@manti-ui/tokens` / token-backed `--manti-*` and `--variant-*` CSS
    variables). Never hard-code raw values (hex colors, px sizes, magic numbers);
    if a token is missing, add it to `@manti-ui/tokens` first, then consume it.
-   `@manti-ui/tokens` is the single source of truth: its primitive ramps and
-   scale values are **generated** into the `--manti-*` custom properties in
-   `packages/styles/src/tokens.css` (the `@tokens:generated` region) by
-   `pnpm gen:tokens`. Never hand-edit that region; after changing the contract,
-   regenerate it — the styles build fails if it is stale. The theme-aware roles
-   (`light-dark()` surfaces/text/elevation/panel) and the `--variant-*`
-   vocabulary below the region stay hand-authored. Tokens form three tiers:
-   primitive ramps → semantic roles/variants → **component tokens**
+   `@manti-ui/tokens` is the single source of truth. Its primitive ramps are
+   the 12-step scales of `@radix-ui/colors`, taken verbatim: the neutral `gray`
+   is Radix `slate`, and `orange`, `green`, `amber`, `red` and `blue` are the
+   Radix scales of the same name. `pnpm gen:tokens` emits each stop as one
+   `light-dark()` pair of Radix's light and dark step (`--manti-orange-9` holds
+   Radix `orange9` and `orangeDark9`), together with the scale values, into the
+   `--manti-*` custom properties in `packages/styles/src/tokens.css` (the
+   `@tokens:generated` region). Never hand-edit that region; after changing the
+   contract, regenerate it; the styles build fails if it is stale. A theme
+   names Radix scales from the `radixScales` catalog, never a free color, and
+   there is no generated ramp and no neutral hue knob. The semantic roles
+   (surfaces/text/panel) and the `--variant-*` vocabulary below the region stay
+   hand-authored. Tokens form three tiers: primitive ramps → semantic
+   roles/variants → **component tokens**
    (`--manti-{component}-{property}`, public and semver-stable, each defaulting
    to a semantic token). When a component needs an _independent_ structural value
    (radius, padding, sizing, gap, typography), expose it as a component token
@@ -29,15 +35,28 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    values as private `--_*`. Register every component token in the
    `componentTokens` map of `@manti-ui/tokens`.
 3. **Color-scale roles and interaction progression are mandatory.** Primitive
-   ramps are ordered `1`–`12`, but components must consume semantic roles or the
-   `--variant-*` vocabulary rather than picking primitive stops directly. Use
-   `1`–`2` for canvas/subtle surfaces; `3` for component rest, `4` for hover and
-   keyboard highlight, `5` for pressed/selected/checked; `6` for quiet chrome,
-   `7` for interactive borders and low-emphasis controls, `8` for focus rings
-   and strong interactive chrome; `9` for solid fills, `10` for solid hover;
-   `11` for supporting text and `12` for high-contrast text. Input-like controls
-   (including Input, Textarea, Select, Combobox, NumberInput, PinInput,
-   TagsInput, Editable, DatePicker, TimePicker, ColorPicker, and Clipboard) use
+   ramps are ordered `1`–`12` with Radix step semantics, and a step means the
+   same job in both schemes because each stop is a light/dark pair. Components
+   must consume semantic roles or the `--variant-*` vocabulary rather than
+   picking primitive stops directly. Use `1`–`2` for app and subtle backgrounds;
+   `3` for component rest, `4` for hover and keyboard highlight, `5` for
+   pressed/selected/checked; `6` for quiet chrome and separators, `7` for
+   interactive borders and low-emphasis controls, `8` for strong interactive
+   chrome and the variant focus ring (`--variant-ring`); `9` for solid fills,
+   `10` for solid hover; `11` for supporting text and `12` for high-contrast
+   text. Roles follow the Radix steps exactly, with no off-step exceptions:
+   the neutral `--manti-focus-ring` is `gray-8`, warning text and every
+   variant's `--variant-soft-text` are step `11`, and `--manti-text-subtle`
+   shares step `11` with `--manti-text-muted` (Radix has one low-contrast text
+   step). Labels on a solid fill use the fixed inks (`--manti-ink-light` /
+   `--manti-ink-dark`, consumed as `--manti-text-on-accent` /
+   `--manti-text-on-bright`), never a scale step, picked by Radix's step 9
+   rule: the light ink on every scale except Sky, Mint, Lime, Yellow and
+   Amber, which take the dark ink (`radixInk` in `@manti-ui/tokens`). The
+   contrast check reports these Radix-fixed pairs and does not gate them.
+   Input-like controls (including Input, Textarea, Select, Combobox,
+   NumberInput, PinInput, TagsInput, Editable, DatePicker, TimePicker,
+   ColorPicker, and Clipboard) use
    `--manti-border` at rest, strengthen to the neutral
    `--manti-border-strong` on hover, and use `--variant-ring` while active,
    focused, or open. The primary color must begin at active/focus/open for this
@@ -99,9 +118,9 @@ Zag.js behavior machines.
 - `packages/tokens/`: shared design-token contract.
 - `packages/styles/`: shared CSS and state selectors.
 - `packages/folds/`: framework-agnostic Zag.js behavior.
-- `packages/react/`: React renderer and Storybook stories.
+- `packages/react/`: React renderer and Ladle stories.
 - `packages/oklava/`: the drop-in theme devtools panel.
-- `.storybook/`: Storybook (react-vite) configuration — the single dev surface and visual gallery.
+- `.ladle/`: Ladle configuration — the single dev surface and visual gallery.
 - `design/logo-explorations/`: non-production brand exploration assets.
 - `docs/`: architecture and product vision.
 
@@ -114,13 +133,15 @@ Use Node `>=22.12.0` and `pnpm 10`.
 
 ```bash
 pnpm install          # Install all workspace dependencies
-pnpm dev              # build packages, then run Storybook at localhost:6006
-pnpm storybook        # Run Storybook only, no rebuild (use after a pnpm dev build)
-pnpm build            # Build the packages and Storybook (storybook-static/)
-pnpm build:storybook  # Generate storybook-static/
+pnpm dev              # build packages, then run Ladle at localhost:61000/ladle/
+pnpm ladle            # Run Ladle only, no rebuild (use after a pnpm dev build)
+pnpm build            # Build the packages and Ladle (ladle-static/)
+pnpm build:ladle      # Generate ladle-static/
+pnpm build:site       # Build the docs site with Ladle copied under dist/ladle
 pnpm lint             # Run ESLint
 pnpm typecheck        # Check packages and stories
-pnpm verify           # Run lint, typecheck, and all production builds
+pnpm check:types      # After a package build, type check a consumer under NodeNext and Bundler
+pnpm verify           # Run lint, typecheck, all production builds, and check:types
 pnpm gen:tokens       # Regenerate --manti-* CSS vars from the token contract
 pnpm gen:presets      # Regenerate the shipped theme presets in styles/src/themes
 ```
@@ -135,8 +156,13 @@ Use:
 
 - `PascalCase.tsx` for React components.
 - `camelCase` for functions and variables.
-- `*.stories.tsx` for Storybook stories.
+- `*.stories.tsx` for Ladle stories, in the format set by
+  `packages/react/src/components/README.md`.
 - semantic CSS names and tokens rather than raw product-specific colors.
+- full relative import paths ending in `.js` (`./meta.js`,
+  `./components/index.js`), never an extensionless path or a bare folder. The
+  emitted `.d.ts` files keep these paths, and a consumer on `NodeNext`
+  resolution cannot follow anything shorter.
 
 Keep Zag.js machines framework-agnostic and adapters thin. Public components
 require typed exports, keyboard support, visible focus states, and meaningful
@@ -144,7 +170,7 @@ screen-reader semantics.
 
 ## Testing Guidelines
 
-No unit-test framework or coverage threshold is configured yet. Every public component must include Storybook coverage for variants, disabled/error states, and meaningful interactions. Use the Storybook accessibility panel for WCAG checks and verify integration behavior through the component's stories.
+No unit-test framework or coverage threshold is configured yet. Every public component must include Ladle story coverage for variants, disabled/error states, and meaningful interactions. Use Ladle's a11y (axe) panel for WCAG checks and verify integration behavior through the component's stories.
 
 When automated tests are introduced, colocate them as `ComponentName.test.tsx`.
 
@@ -153,7 +179,7 @@ When automated tests are introduced, colocate them as `ComponentName.test.tsx`.
 `backlog/` holds frozen source for components that were built, then shelved
 (QrCode, Timer, Swipe). Each entry mirrors the component's original repo paths
 and carries a `README.md` with the reason plus a re-registration checklist. It is
-outside every build, tsconfig, ESLint, Prettier, and Storybook glob — nothing
+outside every build, tsconfig, ESLint, Prettier, and Ladle glob — nothing
 there is checked by `pnpm verify`, and it is expected to drift. `docs/zag-coverage.md`
 marks these 📦 (done, then shelved), never ⬜ (todo). Read `backlog/README.md`
 before re-adapting any of them, and shelve rather than delete a component.
@@ -167,4 +193,4 @@ consumers first.
 
 This workspace currently has no readable Git history. Until a project convention is established, use concise Conventional Commit messages, for example `feat(button): add loading state` or `docs: clarify token naming`.
 
-Pull requests should explain the behavioral change, list verification commands, link relevant issues, and include Storybook screenshots for visual changes. Avoid committing generated `dist/`, `storybook-static/`, or cache directories.
+Pull requests should explain the behavioral change, list verification commands, link relevant issues, and include Ladle screenshots for visual changes. Avoid committing generated `dist/`, `ladle-static/`, or cache directories.

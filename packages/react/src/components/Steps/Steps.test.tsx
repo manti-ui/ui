@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Steps } from './Steps';
+import { Steps } from './Steps.js';
 
 describe('Steps', () => {
   it('moves through step content with the built-in controls', async () => {

@@ -1,7 +1,7 @@
 import { forwardRef, useSyncExternalStore } from 'react';
 import type { HTMLAttributes } from 'react';
 
-import { cx } from '../../internal/props';
+import { cx } from '../../internal/props.js';
 
 export type KbdSize = 'sm' | 'md';
 

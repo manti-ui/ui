@@ -1,8 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { TreeView } from './TreeView';
+import { TreeView } from './TreeView.js';
+import type { TreeNode, TreeViewProps } from './TreeView.js';
+import { Button } from '../Button/Button.js';
+import { Text } from '../Text/Text.js';
 
-const tree = [
+const tree: TreeNode[] = [
   {
     value: 'recipes',
     label: 'recipes',
@@ -65,11 +69,8 @@ const file = (
   </svg>
 );
 
-const meta = {
+export default {
   title: 'Components/TreeView',
-  component: TreeView,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     items: tree,
     label: 'Cookbook',
@@ -78,25 +79,80 @@ const meta = {
     defaultExpandedValue: ['recipes', 'steamed'],
   },
   argTypes: {
-    selectionMode: { control: 'inline-radio', options: ['single', 'multiple'] },
+    selectionMode: {
+      control: { type: 'inline-radio' },
+      options: ['single', 'multiple'],
+    },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof TreeView>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<TreeViewProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<TreeViewProps> = (args) => (
+  <TreeView {...args} />
+);
 
-export const Playground: Story = {};
-
-export const MultiSelect: Story = {
-  args: { selectionMode: 'multiple', defaultSelectedValue: ['manti', 'momo'] },
+export const MultiSelect: Story<TreeViewProps> = (args) => (
+  <TreeView {...args} />
+);
+MultiSelect.args = {
+  selectionMode: 'multiple',
+  defaultSelectedValue: ['manti', 'momo'],
 };
 
-export const WithIcons: Story = {
-  args: {
-    icon: (_node, { isBranch }) => (isBranch ? folder : file),
-  },
+export const WithIcons: Story<TreeViewProps> = (args) => <TreeView {...args} />;
+WithIcons.args = {
+  icon: (_node, { isBranch }) => (isBranch ? folder : file),
+};
+
+const branchValues = (nodes: TreeNode[]): string[] =>
+  nodes.flatMap((node) =>
+    node.children != null && node.children.length > 0
+      ? [node.value, ...branchValues(node.children)]
+      : [],
+  );
+
+/**
+ * The parent owns the open and selected rows. The buttons change
+ * `expandedValue` directly, so the tree updates without a remount and keeps
+ * its focus.
+ */
+export const Controlled: Story<TreeViewProps> = (args) => {
+  const [expanded, setExpanded] = useState<string[]>(['recipes']);
+  const [selected, setSelected] = useState<string[]>(['manti']);
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 'var(--manti-space-3)',
+      }}
+    >
+      <div style={{ display: 'flex', gap: 'var(--manti-space-2)' }}>
+        <Button size="sm" onClick={() => setExpanded(branchValues(tree))}>
+          Expand all
+        </Button>
+        <Button size="sm" variant="secondary" onClick={() => setExpanded([])}>
+          Collapse all
+        </Button>
+      </div>
+      <TreeView
+        {...args}
+        expandedValue={expanded}
+        onExpandedChange={setExpanded}
+        selectedValue={selected}
+        onSelectionChange={setSelected}
+      />
+      <Text size="sm" emphasis="muted">
+        Expanded: {expanded.length > 0 ? expanded.join(', ') : 'none'} ·
+        Selected: {selected.length > 0 ? selected.join(', ') : 'none'}
+      </Text>
+    </div>
+  );
+};
+Controlled.args = {
+  defaultExpandedValue: undefined,
 };

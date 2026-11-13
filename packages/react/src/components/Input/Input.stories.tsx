@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { Input } from './Input';
+import { Input } from './Input.js';
+import type { InputProps } from './Input.js';
 
-const meta = {
+export default {
   title: 'Components/Input',
-  component: Input,
-  tags: ['autodocs'],
-  parameters: { layout: 'centered' },
   args: {
     label: 'Recipe name',
     placeholder: 'Kayseri mantısı',
@@ -14,9 +12,9 @@ const meta = {
     variant: 'default',
   },
   argTypes: {
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: { type: 'inline-radio' }, options: ['sm', 'md', 'lg'] },
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['default', 'fill'],
     },
   },
@@ -27,123 +25,105 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Input>;
+  meta: { layout: 'centered' },
+} satisfies StoryDefault<InputProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export const Playground: Story<InputProps> = (args) => <Input {...args} />;
 
-export const Playground: Story = {};
+export const Filled: Story<InputProps> = (args) => <Input {...args} />;
+Filled.args = { variant: 'fill', label: undefined, placeholder: 'Name' };
 
-export const Filled: Story = {
-  args: { variant: 'fill', label: undefined, placeholder: 'Name' },
+export const WithHint: Story<InputProps> = (args) => <Input {...args} />;
+WithHint.args = { hint: 'Shown to everyone browsing the cookbook.' };
+
+export const Invalid: Story<InputProps> = (args) => <Input {...args} />;
+Invalid.args = {
+  defaultValue: 'mantı',
+  error: 'This recipe name is already taken.',
 };
 
-export const WithHint: Story = {
-  args: { hint: 'Shown to everyone browsing the cookbook.' },
+export const WithLeftAndRight: Story<InputProps> = (args) => (
+  <Input {...args} />
+);
+WithLeftAndRight.args = {
+  label: 'Servings',
+  left: <span aria-hidden>−</span>,
+  right: 'people',
+  placeholder: '4',
+  type: 'number',
 };
 
-export const Invalid: Story = {
-  args: {
-    defaultValue: 'mantı',
-    error: 'This recipe name is already taken.',
-  },
-};
+export const Sizes: Story<InputProps> = (args) => (
+  <div style={{ display: 'grid', gap: '1rem' }}>
+    <Input {...args} size="sm" label="Small" />
+    <Input {...args} size="md" label="Medium" />
+    <Input {...args} size="lg" label="Large" />
+  </div>
+);
 
-export const WithLeftAndRight: Story = {
-  args: {
-    label: 'Servings',
-    left: <span aria-hidden>−</span>,
-    right: 'people',
-    placeholder: '4',
-    type: 'number',
-  },
-};
+export const Disabled: Story<InputProps> = (args) => <Input {...args} />;
+Disabled.args = { defaultValue: 'Locked recipe', disabled: true };
 
-export const Sizes: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '1rem' }}>
-      <Input {...args} size="sm" label="Small" />
-      <Input {...args} size="md" label="Medium" />
-      <Input {...args} size="lg" label="Large" />
-    </div>
-  ),
-};
-
-export const Disabled: Story = {
-  args: { defaultValue: 'Locked recipe', disabled: true },
-};
-
-export const RequiredWithoutMarker: Story = {
-  args: {
-    required: true,
-    requiredIndicator: null,
-    hint: 'Native required semantics remain active.',
-  },
+export const RequiredWithoutMarker: Story<InputProps> = (args) => (
+  <Input {...args} />
+);
+RequiredWithoutMarker.args = {
+  required: true,
+  requiredIndicator: null,
+  hint: 'Native required semantics remain active.',
 };
 
 /**
  * `type="password"` adds a show/hide toggle and a Caps Lock warning. Turn Caps
  * Lock on while focused to see the notice.
  */
-export const Password: Story = {
-  args: {
-    type: 'password',
-    label: 'Password',
-    placeholder: '••••••••',
-    hint: 'Use at least 8 characters.',
-    autoComplete: 'new-password',
-  },
+export const Password: Story<InputProps> = (args) => <Input {...args} />;
+Password.args = {
+  type: 'password',
+  label: 'Password',
+  placeholder: '••••••••',
+  hint: 'Use at least 8 characters.',
+  autoComplete: 'new-password',
 };
 
-export const PasswordInvalid: Story = {
-  args: {
-    type: 'password',
-    label: 'Password',
-    defaultValue: 'short',
-    error: 'Password must be at least 8 characters.',
-  },
+export const PasswordInvalid: Story<InputProps> = (args) => <Input {...args} />;
+PasswordInvalid.args = {
+  type: 'password',
+  label: 'Password',
+  defaultValue: 'short',
+  error: 'Password must be at least 8 characters.',
 };
 
-export const PasswordStartVisible: Story = {
-  args: {
-    type: 'password',
-    label: 'API secret',
-    defaultValue: 'mantı-makes-forty-to-a-spoon',
-    defaultPasswordVisible: true,
-  },
+export const PasswordStartVisible: Story<InputProps> = (args) => (
+  <Input {...args} />
+);
+PasswordStartVisible.args = {
+  type: 'password',
+  label: 'API secret',
+  defaultValue: 'mantı-makes-forty-to-a-spoon',
+  defaultPasswordVisible: true,
 };
 
 /** Opt out of the toggle when a secret should never be revealable on screen. */
-export const PasswordWithoutToggle: Story = {
-  args: {
-    type: 'password',
-    label: 'Recovery code',
-    defaultValue: 'mantı-mantı-mantı',
-    showPasswordToggle: false,
-  },
+export const PasswordWithoutToggle: Story<InputProps> = (args) => (
+  <Input {...args} />
+);
+PasswordWithoutToggle.args = {
+  type: 'password',
+  label: 'Recovery code',
+  defaultValue: 'mantı-mantı-mantı',
+  showPasswordToggle: false,
 };
 
 /**
  * The password props are inert for every other type — the same way `min`/`max`
  * only apply to `type="number"`.
  */
-export const Types: Story = {
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '1rem' }}>
-      <Input {...args} type="text" label="Text" placeholder="Kayseri mantısı" />
-      <Input
-        {...args}
-        type="email"
-        label="Email"
-        placeholder="mantı@wayv.dev"
-      />
-      <Input {...args} type="number" label="Servings" placeholder="4" />
-      <Input
-        {...args}
-        type="password"
-        label="Password"
-        placeholder="••••••••"
-      />
-    </div>
-  ),
-};
+export const Types: Story<InputProps> = (args) => (
+  <div style={{ display: 'grid', gap: '1rem' }}>
+    <Input {...args} type="text" label="Text" placeholder="Kayseri mantısı" />
+    <Input {...args} type="email" label="Email" placeholder="mantı@wayv.dev" />
+    <Input {...args} type="number" label="Servings" placeholder="4" />
+    <Input {...args} type="password" label="Password" placeholder="••••••••" />
+  </div>
+);

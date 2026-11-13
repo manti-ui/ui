@@ -1,12 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Story, StoryDefault } from '@ladle/react';
 
-import { SignaturePad } from './SignaturePad';
+import { SignaturePad } from './SignaturePad.js';
+import type { SignaturePadProps } from './SignaturePad.js';
 
-const meta = {
+export default {
   title: 'Components/SignaturePad',
-  component: SignaturePad,
-  tags: ['autodocs'],
-  parameters: { layout: 'padded' },
   args: {
     label: 'Sign here',
     variant: 'primary',
@@ -15,13 +13,13 @@ const meta = {
   },
   argTypes: {
     variant: {
-      control: 'select',
+      control: { type: 'select' },
       options: ['primary', 'secondary', 'tertiary', 'danger', 'outline'],
     },
   },
-} satisfies Meta<typeof SignaturePad>;
+  meta: { layout: 'padded' },
+} satisfies StoryDefault<SignaturePadProps>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Playground: Story = {};
+export const Playground: Story<SignaturePadProps> = (args) => (
+  <SignaturePad {...args} />
+);

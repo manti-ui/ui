@@ -2,7 +2,7 @@ import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Textarea } from './Textarea';
+import { Textarea } from './Textarea.js';
 
 describe('Textarea', () => {
   it('connects labels and described error text to the real textarea', () => {

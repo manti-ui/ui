@@ -12,8 +12,8 @@ import type {
   ReactNode,
   TextareaHTMLAttributes,
 } from 'react';
-import { useFocusVisible } from '../../internal/focusVisible';
-import { cx, dataBool } from '../../internal/props';
+import { useFocusVisible } from '../../internal/focusVisible.js';
+import { cx, dataBool } from '../../internal/props.js';
 
 export type TextareaVariant = 'default' | 'fill';
 

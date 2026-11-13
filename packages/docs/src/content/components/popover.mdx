@@ -21,6 +21,38 @@ there is not enough room on the requested side.
 
 <Demo name="popover/placements" center />
 
+## Width
+
+The panel sizes to its content (`width: max-content`) and stops growing at a
+default max width of `20rem`. It never grows past the viewport less a
+`--manti-space-8` gutter, so it stays on screen on narrow devices. At the
+default width, text and long words wrap inside the panel.
+
+For wider content, raise the cap with the `maxWidth` prop, or set a fixed
+`width`. A length `width` set without `maxWidth` becomes the cap too, so
+`width="24rem"` renders 24rem wide; a keyword such as `fit-content` keeps the
+default cap. Both stay clamped to the viewport.
+
+```tsx
+<Popover trigger={<Button>Notifications</Button>} maxWidth="28rem">
+  <NotificationList />
+</Popover>
+```
+
+Each prop writes its component token on the content part
+(`--manti-popover-max-width`, `--manti-popover-width`), so you can also set the
+token in a stylesheet instead:
+
+```css
+.notifications-popover {
+  --manti-popover-max-width: 28rem;
+}
+```
+
+Use `contentProps` to pass any other attribute to the content part, such as
+`style`, `aria-*` or `data-*`. The machine's own props win, and `className`
+and `style` compose with `className`, `width` and `maxWidth`.
+
 ## Close button
 
 Set `showCloseButton` to add an internal dismiss control.

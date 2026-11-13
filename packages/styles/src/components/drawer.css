@@ -29,12 +29,15 @@
   [data-scope='drawer'][data-part='content'] {
     /* Component tokens (Tier 3) — public per-component override surface; default to semantic tokens. See docs/styling.md. */
     --manti-drawer-size: 24rem;
+    --manti-drawer-close-size: var(--manti-space-8);
+    --manti-drawer-gap: var(--manti-space-3);
+    --manti-drawer-padding: var(--manti-space-6);
 
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--manti-space-3);
-    padding: var(--manti-space-6);
+    gap: var(--manti-drawer-gap);
+    padding: var(--manti-drawer-padding);
     background: var(--manti-panel-tint-strong);
     border: 1px solid var(--manti-panel-border);
     color: var(--manti-text);
@@ -127,6 +130,7 @@
   [data-scope='drawer'][data-part='title'] {
     margin: 0;
     padding-inline-end: var(--manti-space-6);
+    font-family: var(--manti-font-display);
     font-size: var(--manti-text-lg);
     font-weight: var(--manti-weight-semibold);
     line-height: var(--manti-leading-snug);
@@ -157,14 +161,18 @@
   }
 
   [data-scope='drawer'][data-part='close-trigger'] {
+    /* The hit area never drops below the 44px touch target, even when the
+       visual size is smaller; a larger visual size simply covers it. */
+    --_hit-size: max(var(--manti-drawer-close-size), var(--manti-space-11));
+
     position: absolute;
     top: var(--manti-space-4);
     inset-inline-end: var(--manti-space-4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--manti-space-8);
-    height: var(--manti-space-8);
+    width: var(--manti-drawer-close-size);
+    height: var(--manti-drawer-close-size);
     padding: 0;
     color: var(--manti-text-muted);
     background: transparent;
@@ -183,6 +191,17 @@
     &:active {
       background: var(--manti-fill-strong);
       color: var(--manti-text);
+    }
+
+    /* Invisible touch target, centered on the visual button. */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--_hit-size);
+      height: var(--_hit-size);
+      translate: -50% -50%;
     }
 
     &:focus-visible {
