@@ -1,0 +1,92 @@
+---
+title: v0.14.0
+slug: /changelog/v0.14.0
+group: Changelog
+order: 1
+date: '2026-11-14'
+description: Color moves to Radix Colors, overlays can mount inside your own dialog, Menu and Popover open without a trigger, and Combobox backs a remote search.
+---
+
+---
+
+# v0.14.0
+
+_Released 2026-11-14._
+
+## Color comes from Radix Colors
+
+Every primitive scale is now the 12-step Radix scale of the same name: `gray`
+is Radix `slate`, and `orange`, `green`, `amber`, `red` and `blue` keep their
+names. Each step is one `light-dark()` pair of the Radix light and dark step, so
+a step names the same job in both schemes: `--manti-gray-1` is the app
+background, `9` the solid fill, `12` high-contrast text.
+
+**Check anything that reads a raw step.** Role names (`--manti-bg`,
+`--manti-text`, `--manti-border`, ...) and the `--variant-*` vocabulary keep
+their jobs, but `--manti-{hue}-{N}` changes meaning. That includes the Tailwind
+bridge's `bg-orange-500` style utilities and stylesheets exported from Theme
+Studio. Check them in both schemes.
+
+- `--manti-cool-hue` is removed. To move the neutral, pick another Radix gray.
+- Labels on solid fills use the fixed inks `--manti-ink-light` and
+  `--manti-ink-dark`, through `--manti-text-on-accent` and the new
+  `--manti-text-on-bright`.
+- Presets and Oklava pick each variant and the neutral by Radix scale name
+  instead of a free color. A saved Oklava theme falls back to its preset's
+  scales.
+- `@manti-ui/tokens` adds the `radixScales` catalog, plus `colorScales`,
+  `alphaScales`, `colorInks` and their types.
+
+## Overlays inside your own dialog
+
+`PortalContainerProvider` sets where Manti overlays mount. Inside the app's
+own `showModal()` dialog or `popover` element, a Menu, Select or Popover then
+paints above it and takes input.
+
+```tsx
+const dialogRef = useRef<HTMLDialogElement>(null);
+
+<dialog ref={dialogRef}>
+  <PortalContainerProvider container={dialogRef}>
+    <Menu trigger={<Button>Actions</Button>} items={items} />
+  </PortalContainerProvider>
+</dialog>;
+```
+
+An overlay's own container, such as Tooltip's `portalContainer`, still wins.
+With no provider, nothing changes.
+
+## Menu and Popover without a trigger
+
+`Menu` and `Popover` no longer require a `trigger`. Open the panel with `open`
+and place it with `getAnchorRect`, for a context menu or a panel tied to a
+selection. Without a trigger, focus returns on close to the element that had it
+when the panel opened. `finalFocusEl` and `restoreFocus` change that.
+
+## Combobox backs a remote search
+
+- `inputValue`, `defaultInputValue` and `onInputValueChange` control the typed
+  text.
+- `filter={false}` renders `items` as given.
+- `loading` shows an announced spinner row.
+- `emptyContent` fills an empty listbox.
+- `minChars` keeps the listbox closed until the query is long enough.
+
+## Smaller changes
+
+- **Popover:** `width`, `maxWidth` and `contentProps`. The panel is clamped to
+  the viewport, and long words wrap.
+- **TreeView:** controlled `expandedValue` and `selectedValue`, with
+  `onExpandedChange`.
+- **Typography:** a `--manti-font-display` token, used by `Heading` and
+  component titles.
+- **Component tokens:** twelve more components expose their radius, padding, gap
+  and font size as public `--manti-{component}-*` tokens, so more of each
+  component can be restyled without overriding its CSS. Defaults are unchanged.
+- **Tokens:** `contrastPairs` exports the contrast pairs the repo checks, as
+  data.
+- **Toast:** `translations.regionLabel` localizes the region's accessible name.
+- **Types:** the `.d.ts` files import by full paths, so `NodeNext` and `Node16`
+  apps see every export.
+- **Docs:** the component gallery moved from Storybook to Ladle at
+  [/ladle](/ladle/). Old `/storybook` links redirect there.
