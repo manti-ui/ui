@@ -74,8 +74,8 @@
   }
 
   /* Text selection picks up the primary accent — the one deliberate spot of
-     brand colour outside the semantic variants. Mirrors how the primary variant
-     resolves its solid (tomato-9, the same in both themes). */
+     brand colour outside the semantic variants. It paints tomato-5, the
+     selected-state step, under gray-12 text. */
   ::selection {
     background: var(--manti-selection-bg);
     color: var(--manti-selection-text);
