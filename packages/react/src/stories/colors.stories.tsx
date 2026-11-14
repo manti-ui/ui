@@ -93,8 +93,9 @@ export const Primitives: Story = () => (
         Color ramps
       </Heading>
       <Text emphasis="muted">
-        Six Radix Colors scales under plain color names: gray (Radix slate),
-        orange, green, amber, red, and blue. Each step follows the theme.
+        Seven Radix Colors scales under plain color names: gray (Radix slate),
+        tomato (the primary), orange, green, amber, red, and blue. Each step
+        follows the theme.
       </Text>
     </div>
     <div style={stack}>

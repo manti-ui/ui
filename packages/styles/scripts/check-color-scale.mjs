@@ -19,7 +19,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const components = resolve(here, '../src/components');
 const tokensPath = resolve(here, '../src/tokens.css');
 const tokensTs = resolve(here, '../../tokens/src/index.ts');
-const primitive = /--manti-(gray|orange|green|amber|red|blue)-(\d+)/g;
+const primitive = /--manti-(gray|tomato|orange|green|amber|red|blue)-(\d+)/g;
 const rawColor = /(?:oklch|rgb|rgba|hsl|hsla)\(|#[0-9a-fA-F]{3,8}\b/;
 const files = (await readdir(components)).filter((file) =>
   file.endsWith('.css'),

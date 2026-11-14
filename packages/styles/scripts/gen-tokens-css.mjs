@@ -56,7 +56,7 @@ const ratio = (value, base) => {
 /**
  * A theme-aware step: Radix's light value and its dark value, so one custom
  * property carries the same step meaning in both schemes. Every opaque step is
- * a `light-dark()` pair, even where Radix gives both schemes one value (orange
+ * a `light-dark()` pair, even where Radix gives both schemes one value (tomato
  * 9), so the shape never depends on the data. An alpha scale Radix ships once
  * for both schemes (`blackA`) is emitted as its plain value.
  */
