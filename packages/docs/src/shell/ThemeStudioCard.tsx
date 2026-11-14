@@ -16,7 +16,7 @@ import { ExternalIcon } from './icons';
  */
 
 const SWATCHES = [
-  'var(--manti-orange-9)',
+  'var(--manti-tomato-9)',
   'var(--manti-gray-9)',
   'var(--manti-green-9)',
   'var(--manti-blue-9)',

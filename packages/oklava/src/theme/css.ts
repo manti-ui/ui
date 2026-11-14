@@ -122,7 +122,7 @@ export function buildThemeCss(
   // reaches them: Progress spends its `data-variant` slot on linear/circular
   // and reads `--manti-accent-fill` instead, and `::selection` reads its own
   // background. Retint them from the primary scale, on the steps the shipped
-  // roles read (fill 9, selection 5), or a themed app keeps a stray orange
+  // roles read (fill 9, selection 5), or a themed app keeps a stray tomato
   // progress bar and text selection.
   const primary = config.colors.primary;
   if (primary && primary !== baseScale(d, 'primary')) {
