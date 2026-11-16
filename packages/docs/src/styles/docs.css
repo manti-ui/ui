@@ -1695,7 +1695,7 @@
   }
 
   .docs-theme-option[data-theme-option='primary'] > span {
-    background: var(--manti-orange-9);
+    background: var(--manti-tomato-9);
   }
 
   .docs-theme-option[data-theme-option='info'] > span {

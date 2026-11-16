@@ -2,7 +2,7 @@
  * Manti UI tokens.
  *
  * Three layers of meaning:
- *   1. Primitive scales: Radix Colors steps (`--manti-orange-9`, ...), each
+ *   1. Primitive scales: Radix Colors steps (`--manti-tomato-9`, ...), each
  *      a `light-dark()` of Radix's light and dark step N.
  *   2. Semantic roles: surfaces, text, motion, radius, space. Color roles read
  *      a single step, so the theme follows `color-scheme` automatically.
@@ -35,6 +35,18 @@
     --manti-gray-10: light-dark(#80838d, #777b84);
     --manti-gray-11: light-dark(#60646c, #b0b4ba);
     --manti-gray-12: light-dark(#1c2024, #edeef0);
+    --manti-tomato-1: light-dark(#fffcfc, #181111);
+    --manti-tomato-2: light-dark(#fff8f7, #1f1513);
+    --manti-tomato-3: light-dark(#feebe7, #391714);
+    --manti-tomato-4: light-dark(#ffdcd3, #4e1511);
+    --manti-tomato-5: light-dark(#ffcdc2, #5e1c16);
+    --manti-tomato-6: light-dark(#fdbdaf, #6e2920);
+    --manti-tomato-7: light-dark(#f5a898, #853a2d);
+    --manti-tomato-8: light-dark(#ec8e7b, #ac4d39);
+    --manti-tomato-9: light-dark(#e54d2e, #e54d2e);
+    --manti-tomato-10: light-dark(#dd4425, #ec6142);
+    --manti-tomato-11: light-dark(#d13415, #ff977d);
+    --manti-tomato-12: light-dark(#5c271f, #fbd3cb);
     --manti-orange-1: light-dark(#fefcfb, #17120e);
     --manti-orange-2: light-dark(#fff7ed, #1e160f);
     --manti-orange-3: light-dark(#ffefd6, #331e0b);
@@ -157,6 +169,18 @@
     --manti-orange-a10: light-dark(#ef5f00, #ff801f);
     --manti-orange-a11: light-dark(#cc4e00, #ffa057);
     --manti-orange-a12: light-dark(#431200e2, #ffe0c2);
+    --manti-tomato-a1: light-dark(#ff000003, #f1121208);
+    --manti-tomato-a2: light-dark(#ff200008, #ff55330f);
+    --manti-tomato-a3: light-dark(#f52b0018, #ff35232b);
+    --manti-tomato-a4: light-dark(#ff35002c, #fd201142);
+    --manti-tomato-a5: light-dark(#ff2e003d, #fe332153);
+    --manti-tomato-a6: light-dark(#f92d0050, #ff4f3864);
+    --manti-tomato-a7: light-dark(#e7280067, #fd644a7d);
+    --manti-tomato-a8: light-dark(#db250084, #fe6d4ea7);
+    --manti-tomato-a9: light-dark(#df2600d1, #fe5431e4);
+    --manti-tomato-a10: light-dark(#d72400da, #ff6847eb);
+    --manti-tomato-a11: light-dark(#cd2200ea, #ff977d);
+    --manti-tomato-a12: light-dark(#460900e0, #ffd6cefb);
 
     /* Inks: one Radix step each, fixed across schemes */
     --manti-ink-light: #fcfcfd;
@@ -321,7 +345,7 @@
     --manti-danger-border: var(--manti-red-8);
     --manti-danger-text: var(--manti-red-11);
     --manti-warning-text: var(--manti-amber-11);
-    --manti-accent-fill: var(--manti-orange-9);
+    --manti-accent-fill: var(--manti-tomato-9);
     /* A light mark in both schemes (the color-picker thumb ring). */
     --manti-contrast-light: var(--manti-ink-light);
 
@@ -350,7 +374,7 @@
     /* Text selection — the one deliberate brand-coloured accent (consumed by
        `::selection` in base.css). Hand-authored, not part of the generated
        region above. */
-    --manti-selection-bg: var(--manti-orange-5);
+    --manti-selection-bg: var(--manti-tomato-5);
     --manti-selection-text: var(--manti-gray-12);
 
     /* Material — sleek translucent panel --------------------------------------- *
@@ -521,24 +545,24 @@
   }
 
   [data-variant='primary'] {
-    /* Radix orange: solid 9 → hover 10, soft 3 → 4 → 5, border 7, ring 8.
+    /* Radix tomato: solid 9 → hover 10, soft 3 → 4 → 5, border 7, ring 8.
        Soft text sits on step 11, Radix's low-contrast text step.
        The press darkens the hover toward the scheme's text color, which is
        the direction that gains contrast in each theme. */
-    --variant-solid: var(--manti-orange-9);
-    --variant-solid-hover: var(--manti-orange-10);
+    --variant-solid: var(--manti-tomato-9);
+    --variant-solid-hover: var(--manti-tomato-10);
     --variant-solid-active: color-mix(
       in oklab,
-      var(--manti-orange-10) 88%,
+      var(--manti-tomato-10) 88%,
       var(--manti-gray-12)
     );
-    --variant-soft-bg: var(--manti-orange-3);
-    --variant-soft-bg-hover: var(--manti-orange-4);
-    --variant-soft-bg-active: var(--manti-orange-5);
-    --variant-soft-text: var(--manti-orange-11);
-    --variant-border: var(--manti-orange-7);
-    --variant-text: var(--manti-orange-11);
-    --variant-ring: var(--manti-orange-8);
+    --variant-soft-bg: var(--manti-tomato-3);
+    --variant-soft-bg-hover: var(--manti-tomato-4);
+    --variant-soft-bg-active: var(--manti-tomato-5);
+    --variant-soft-text: var(--manti-tomato-11);
+    --variant-border: var(--manti-tomato-7);
+    --variant-text: var(--manti-tomato-11);
+    --variant-ring: var(--manti-tomato-8);
   }
 
   [data-variant='secondary'] {
@@ -659,7 +683,7 @@
    * ─────────────────────────────────────────────────────────────────────── */
   /* @variant-ink:generated:start */
   [data-variant='primary'] {
-    /* light ink, Lc 59+ in both themes */
+    /* light ink, Lc 69+ in both themes */
     --variant-on-solid: var(--manti-text-on-accent);
   }
   [data-variant='secondary'] {

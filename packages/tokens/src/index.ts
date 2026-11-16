@@ -4,8 +4,9 @@
  * Framework-agnostic design token contract for Manti UI.
  *
  * The metaphor is mantı: a dish that appears in many regions and forms. The
- * palette pairs a cool neutral `gray` (Radix `slate`) with `orange`, `green`,
- * `amber`, `red`, and `blue` accents, all taken verbatim from the Radix Colors
+ * palette pairs a cool neutral `gray` (Radix `slate`) with a `tomato` primary
+ * and `orange`, `green`, `amber`, `red`, and `blue` accents, all taken
+ * verbatim from the Radix Colors
  * 12-step scales (`@radix-ui/colors`) under plain, universally understood
  * color names.
  *
@@ -90,7 +91,9 @@ import {
   teal,
   tealDark,
   tomato,
+  tomatoA,
   tomatoDark,
+  tomatoDarkA,
   violet,
   violetA,
   violetDark,
@@ -103,11 +106,11 @@ import {
  * Scale step names. Radix numbers its steps `1…12`, and so does Manti: an
  * unbroken sequence makes "one step stronger" arithmetic instead of a lookup.
  * The Tailwind bridge (`packages/styles/src/tailwind-theme.css`) keeps the
- * 50…950 utility names and maps them onto these, so `bg-orange-500` keeps
+ * 50…950 utility names and maps them onto these, so `bg-tomato-500` keeps
  * resolving to Manti.
  *
- * Every step is theme-aware: `--manti-orange-3` is Radix `orange3` in light and
- * `orangeDark3` in dark, so a step means the same job in both schemes. 1–2
+ * Every step is theme-aware: `--manti-tomato-3` is Radix `tomato3` in light and
+ * `tomatoDark3` in dark, so a step means the same job in both schemes. 1–2
  * page/panel backgrounds, 3–5 component backgrounds, 6–8 borders and focus
  * rings, 9–10 the solid fills, 11–12 text.
  */
@@ -177,7 +180,9 @@ function scale(
 export const colorScales = {
   /** Cool neutral: every surface, text, and border color. */
   gray: scale('slate', slate, slateDark),
-  /** Primary. Warm orange, the signature Manti UI accent. */
+  /** Primary. Radix tomato, the signature Manti UI accent. */
+  tomato: scale('tomato', tomato, tomatoDark),
+  /** Orange. Available as a Radix scale; no shipped role reads it. */
   orange: scale('orange', orange, orangeDark),
   /** Success. */
   green: scale('green', green, greenDark),
@@ -191,10 +196,10 @@ export const colorScales = {
 
 /**
  * The translucent Radix scales the semantic roles read, emitted as
- * `--manti-{name}-a{step}`. Only what a role consumes ships: `gray` (`slateA`)
- * for the panel hairline, `black` (`blackA`, one scale for both schemes) for
+ * `--manti-{name}-a{step}`: `gray` (`slateA`) for the panel hairline, `black` (`blackA`, one scale for both schemes) for
  * the modal overlay, and `violet`, `pink` and `orange` for the three ambient
- * glows behind the app.
+ * glows behind the app. `tomato` (`tomatoA`) ships beside its opaque primary
+ * scale, so a translucent primary tint stays on Radix steps.
  */
 export const alphaScales = {
   gray: scale('slateA', slateA, slateDarkA),
@@ -202,13 +207,14 @@ export const alphaScales = {
   violet: scale('violetA', violetA, violetDarkA),
   pink: scale('pinkA', pinkA, pinkDarkA),
   orange: scale('orangeA', orangeA, orangeDarkA),
+  tomato: scale('tomatoA', tomatoA, tomatoDarkA),
 } as const satisfies Record<string, MantiColorScale>;
 
 /**
  * The two inks a solid fill may carry, each one Radix step held fixed across
  * schemes: the lightest light-scheme slate and the darkest dark-scheme slate.
  * A theme-aware step cannot do this job, because `--manti-gray-12` is dark in
- * light and light in dark, while a label on an orange fill needs the same ink
+ * light and light in dark, while a label on a tomato fill needs the same ink
  * in both. Emitted as `--manti-ink-light` / `--manti-ink-dark`.
  */
 export const colorInks = {
@@ -260,7 +266,7 @@ export const colorPrimitives = Object.fromEntries(
 
 /**
  * Color variants available to variant-driven components (button, badge,
- * alert, ...). `primary/secondary/tertiary` are an emphasis ladder (orange
+ * alert, ...). `primary/secondary/tertiary` are an emphasis ladder (tomato
  * solid → neutral soft → neutral ghost), `success/info/danger` are semantic
  * hues, and `outline` is a neutral bordered treatment.
  */
@@ -540,9 +546,9 @@ export type MantiPresetDefinition = {
 export const presets = {
   manti: {
     label: 'Manti',
-    description: 'The shipped default — warm orange over a cool neutral.',
+    description: 'The shipped default — Radix tomato over a cool neutral.',
     default: true,
-    colors: { primary: 'orange' },
+    colors: { primary: 'tomato' },
     neutral: 'slate',
   },
   violet: {

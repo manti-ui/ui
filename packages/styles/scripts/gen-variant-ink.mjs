@@ -45,7 +45,7 @@ const source = await readFile(CSS, 'utf8');
 
 /**
  * The Radix scale a variant's solid sits on, when that solid is a step 9
- * (`--variant-solid: var(--manti-orange-9)` → `orange`), else null.
+ * (`--variant-solid: var(--manti-tomato-9)` → `tomato`), else null.
  */
 function radixScaleOf(variant) {
   const blocks = source.matchAll(

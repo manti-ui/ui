@@ -76,7 +76,7 @@ export const VARIANTS: VariantMeta[] = [
   {
     key: 'primary',
     label: 'Primary',
-    fallback: 'orange',
+    fallback: 'tomato',
     hint: 'Solid actions, active states, focus rings',
   },
   {

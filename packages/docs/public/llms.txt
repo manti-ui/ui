@@ -151,12 +151,12 @@ differ from the system.
 Color scales, each a 12-step scale from `@radix-ui/colors` taken verbatim:
 
 ```text
-gray (Radix slate) orange green blue amber red
+gray (Radix slate) tomato orange green blue amber red
 ```
 
 `pnpm gen:tokens` emits every step as one `light-dark()` pair of the Radix light
 and dark step with the same number, for example
-`--manti-orange-9: light-dark(#f76b15, #f76b15)`. A step is not a fixed
+`--manti-tomato-9: light-dark(#e54d2e, #e54d2e)`. A step is not a fixed
 lightness: `gray-1` is the app background in both schemes. A step names a job,
 and the scheme picks the color.
 
@@ -234,7 +234,7 @@ import '@manti-ui/styles/themes/ocean.css';
 Each preset names Radix scales: `violet` (violet on mauve), `ocean` (sky on
 slate, info on cyan), `forest` (grass on sage, success on jade), `rose` (ruby on
 mauve, danger on tomato), `graphite` (slate on slate). The default theme
-(orange on slate) is a no-op and ships no file. A preset moves the `--variant-*`
+(tomato on slate) is a no-op and ships no file. A preset moves the `--variant-*`
 roles, the `--manti-gray-*` steps when its neutral is not slate,
 `--manti-accent-fill` and `--manti-selection-*`, and nothing about shape or
 density. Files sit in `@layer manti.theme`, so unlayered application CSS still

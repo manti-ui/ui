@@ -130,7 +130,9 @@ for (const [id, preset] of Object.entries(presets)) {
 console.log('\nGAMUT (primitive ramps)');
 const stops = [];
 for (const [name, value] of root) {
-  const m = name.match(/^--manti-(gray|orange|green|amber|red|blue)-(\d+)$/);
+  const m = name.match(
+    /^--manti-(gray|tomato|orange|green|amber|red|blue)-(\d+)$/,
+  );
   if (!m) continue;
   for (const theme of ['light', 'dark']) {
     const c = color(value, theme, root);

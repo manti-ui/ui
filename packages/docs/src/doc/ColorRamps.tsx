@@ -2,9 +2,10 @@ import { Button, Card, Text } from '@manti-ui/react';
 import { colorPrimitives, colorScales, variants } from '@manti-ui/tokens';
 
 /**
- * Renders every primitive ramp (gray, orange, green, amber, red, blue), each
- * labelled with the Radix Colors scale it is taken from. Every chip is the
- * step's `light-dark()` pair, so the ramp follows the page's color scheme.
+ * Renders every primitive ramp (gray, tomato, orange, green, amber, red,
+ * blue), each labelled with the Radix Colors scale it is taken from. Every
+ * chip is the step's `light-dark()` pair, so the ramp follows the page's color
+ * scheme.
  */
 export function ColorRamps() {
   return (

@@ -96,7 +96,7 @@ Notes for you, the agent:
 - \`--manti-accent-fill\` and \`--manti-selection-bg\` are branded roles that no
   \`[data-variant]\` block can reach (Progress spends its \`data-variant\` on
   linear/circular; \`::selection\` has its own pair). Keep them on the primary
-  scale or a themed app keeps a stray default-orange progress bar.
+  scale or a themed app keeps a stray default-tomato progress bar.
 - The radius ramp (\`--manti-radius-xs\` … \`--manti-radius-2xl\`) derives from
   \`--manti-radius-factor\`; override the factor rather than each step.
 - Spacing and type scales derive from \`--manti-space-1\` and

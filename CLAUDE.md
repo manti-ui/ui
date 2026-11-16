@@ -16,11 +16,11 @@ lives in `CLAUDE.md` — keep the two copies byte-for-byte in sync.
    if a token is missing, add it to `@manti-ui/tokens` first, then consume it.
    `@manti-ui/tokens` is the single source of truth. Its primitive ramps are
    the 12-step scales of `@radix-ui/colors`, taken verbatim: the neutral `gray`
-   is Radix `slate`, and `orange`, `green`, `amber`, `red` and `blue` are the
-   Radix scales of the same name. `pnpm gen:tokens` emits each stop as one
-   `light-dark()` pair of Radix's light and dark step (`--manti-orange-9` holds
-   Radix `orange9` and `orangeDark9`), together with the scale values, into the
-   `--manti-*` custom properties in `packages/styles/src/tokens.css` (the
+   is Radix `slate`, and `tomato` (the primary), `orange`, `green`, `amber`,
+   `red` and `blue` are the Radix scales of the same name. `pnpm gen:tokens`
+   emits each stop as one `light-dark()` pair of Radix's light and dark step
+   (`--manti-tomato-9` holds Radix `tomato9` and `tomatoDark9`), together
+   with the scale values, into the `--manti-*` custom properties in `packages/styles/src/tokens.css` (the
    `@tokens:generated` region). Never hand-edit that region; after changing the
    contract, regenerate it; the styles build fails if it is stale. A theme
    names Radix scales from the `radixScales` catalog, never a free color, and

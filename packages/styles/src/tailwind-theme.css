@@ -19,7 +19,7 @@
  *   font-weight, line-height, radius, easing, font-family, spacing).
  *   A host app that imports this file gets Manti's values for the standard
  *   utilities — that is the intent.
- * - Colors are exposed twice: by plain color name (`bg-orange-500`) and by
+ * - Colors are exposed twice: by plain color name (`bg-tomato-500`) and by
  *   semantic role (`bg-primary-500`). Both point at the same ramp.
  * - Stop naming is deliberately asymmetric. Manti's own scales are the Radix
  *   Colors steps `1…12`; Tailwind's utility names stay on the conventional
@@ -36,7 +36,7 @@
  * - Tailwind has eleven stop names against Manti's twelve, so the mapping is
  *   positional and step 6 ends up without a utility alias. Nothing is lost: the
  *   step is a real custom property in every setup that loads this file, so
- *   `bg-[var(--manti-orange-6)]` works. Do not "fix" the gap by shifting the
+ *   `bg-[var(--manti-tomato-6)]` works. Do not "fix" the gap by shifting the
  *   mapping; positional keeps every utility on the step it named before.
  * - Control height keeps a Manti-only key (`h-control-md`) — there is no
  *   Tailwind equivalent to override.
@@ -116,6 +116,18 @@
   --color-gray-900: var(--manti-gray-11);
   --color-gray-950: var(--manti-gray-12);
 
+  --color-tomato-50: var(--manti-tomato-1);
+  --color-tomato-100: var(--manti-tomato-2);
+  --color-tomato-200: var(--manti-tomato-3);
+  --color-tomato-300: var(--manti-tomato-4);
+  --color-tomato-400: var(--manti-tomato-5);
+  --color-tomato-500: var(--manti-tomato-7);
+  --color-tomato-600: var(--manti-tomato-8);
+  --color-tomato-700: var(--manti-tomato-9);
+  --color-tomato-800: var(--manti-tomato-10);
+  --color-tomato-900: var(--manti-tomato-11);
+  --color-tomato-950: var(--manti-tomato-12);
+
   --color-orange-50: var(--manti-orange-1);
   --color-orange-100: var(--manti-orange-2);
   --color-orange-200: var(--manti-orange-3);
@@ -177,17 +189,17 @@
   --color-blue-950: var(--manti-blue-12);
 
   /* Primitive ramps — semantic role aliases --------------------------------- */
-  --color-primary-50: var(--manti-orange-1);
-  --color-primary-100: var(--manti-orange-2);
-  --color-primary-200: var(--manti-orange-3);
-  --color-primary-300: var(--manti-orange-4);
-  --color-primary-400: var(--manti-orange-5);
-  --color-primary-500: var(--manti-orange-7);
-  --color-primary-600: var(--manti-orange-8);
-  --color-primary-700: var(--manti-orange-9);
-  --color-primary-800: var(--manti-orange-10);
-  --color-primary-900: var(--manti-orange-11);
-  --color-primary-950: var(--manti-orange-12);
+  --color-primary-50: var(--manti-tomato-1);
+  --color-primary-100: var(--manti-tomato-2);
+  --color-primary-200: var(--manti-tomato-3);
+  --color-primary-300: var(--manti-tomato-4);
+  --color-primary-400: var(--manti-tomato-5);
+  --color-primary-500: var(--manti-tomato-7);
+  --color-primary-600: var(--manti-tomato-8);
+  --color-primary-700: var(--manti-tomato-9);
+  --color-primary-800: var(--manti-tomato-10);
+  --color-primary-900: var(--manti-tomato-11);
+  --color-primary-950: var(--manti-tomato-12);
 
   --color-neutral-50: var(--manti-gray-1);
   --color-neutral-100: var(--manti-gray-2);

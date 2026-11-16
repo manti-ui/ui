@@ -68,7 +68,7 @@
     }
 
     /* Solid — the default treatment: a crisp, confident fill. Applies to
-       `primary` (branded orange), `danger`, and any custom variant.
+       `primary` (branded tomato), `danger`, and any custom variant.
        `secondary`/`tertiary`/`outline`/`link` opt out to the treatments below. A
        whisper of a top highlight gives it body without looking glossy. */
     &:not([data-variant='secondary']):not([data-variant='tertiary']):not(

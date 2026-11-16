@@ -18,7 +18,8 @@ Every primitive is a 12-step scale from [Radix Colors](https://www.radix-ui.com/
 | Scale    | Radix scale | Purpose     | Use it for                                             |
 | -------- | ----------- | ----------- | ------------------------------------------------------ |
 | `gray`   | `slate`     | Neutral UI  | Surfaces, borders, text, and secondary controls        |
-| `orange` | `orange`    | Primary     | Main actions, selected states, and the product accent  |
+| `tomato` | `tomato`    | Primary     | Main actions, selected states, and the product accent  |
+| `orange` | `orange`    | Accent      | Available as a Radix scale; no shipped role reads it   |
 | `green`  | `green`     | Success     | Positive feedback, completed states, and confirmations |
 | `blue`   | `blue`      | Information | Informational feedback, notices, and helpful context   |
 | `amber`  | `amber`     | Warning     | Caution, attention, and states that need review        |
@@ -30,7 +31,7 @@ Each step is available as `--manti-{scale}-{step}`, and each one is a
 `light-dark()` pair of the Radix light and dark step with the same number:
 
 ```css
---manti-orange-9: light-dark(#f76b15, #f76b15);
+--manti-tomato-9: light-dark(#e54d2e, #e54d2e);
 --manti-gray-1: light-dark(#fcfcfd, #111113);
 ```
 
@@ -135,7 +136,7 @@ is no hue to set. To move the neutral, pick another Radix gray.
 
 Manti ships seven variant palettes:
 
-- `primary` — orange, highest emphasis;
+- `primary` — tomato, highest emphasis;
 - `secondary` — neutral soft surface;
 - `success` — green feedback;
 - `info` — blue feedback;
